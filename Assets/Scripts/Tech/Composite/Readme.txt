@@ -1,10 +1,10 @@
-Composite Desing pattern (Structural Pattern)
+﻿Composite Desing pattern (Structural Pattern)
 
-Composite pattern s?p x?p c�c object theo c?u tr�c c�y ?? di?n gi?i 1 ph?n c?ng nh? to�n 
-b? h? th?ng ph�n c?p.
-Pattern n�y cho ph�p Client c� th? vi?t code gi?ng nhau ?? t??ng t�c v?i composite object n�y, 
-b?t k? ?� l� m?t ??i t??ng ri�ng l? hay t?p h?p c�c ??i t??ng.
-=> Ph� h?p c�c ??i t??ng c� ki?u c?u tr�c d?ng c�y
+Composite pattern sắp xếp các object theo cấu trúc cây để diễn giải 1 phần cũng như toàn 
+bộ hệ thống phân cấp.
+Pattern này cho phép Client có thể viết code giống nhau để tương tác với composite object này, 
+bất kể đó là một đối tượng riêng lẻ hay tập hợp các đối tượng.
+=> Phù hợp các đối tượng có kiểu cấu trúc dạng cây
 Parent
 	Child
 	Child
