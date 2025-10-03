@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        OpenCurrentScene(ScreenIds.LoadingScene);
+        //OpenCurrentScene(ScreenIds.LoadingScene);
     }
 
     public void OpenCurrentScene(string id)
