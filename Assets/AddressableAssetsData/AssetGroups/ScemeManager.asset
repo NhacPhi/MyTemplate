@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ScemeManager
+  m_EditorClassIdentifier: 
+  m_GroupName: ScemeManager
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 19a535a2fe7e0e64aadc02878fc4fbc2
+  m_SerializeEntries:
+  - m_GUID: 09791e9073bd7f742860a1cbd8fea208
+    m_Address: Assets/Scenes/Managers/GamePlay.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c534e2ed0bc19142baf68acef9cfc57
+    m_Address: Assets/Scenes/Managers/PersistentManagement.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ae48fbbbc262a524eb14683dfd9cf138, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: be97dfc74985151459679911c4f74ac9, type: 2}
+    - {fileID: 11400000, guid: a822e7fd2655cb0429064f30886a1cde, type: 2}

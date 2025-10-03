@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SceneLocation
+  m_EditorClassIdentifier: 
+  m_GroupName: SceneLocation
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 60b0252ac5f2c884a828f8c71e119fed
+  m_SerializeEntries:
+  - m_GUID: 73effe500422c434b8a22dcf4f92dfe3
+    m_Address: Assets/Scenes/Locations/Home.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99ded6f9ebd8fb847a22518a89a1af52
+    m_Address: Assets/Scenes/Locations/School.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ae48fbbbc262a524eb14683dfd9cf138, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b02a8b0744ce6264e8bf199cfd8f6070, type: 2}
+    - {fileID: 11400000, guid: ff61b9b08996ea24bace0503e0133a2f, type: 2}
