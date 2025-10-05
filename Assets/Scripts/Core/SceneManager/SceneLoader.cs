@@ -12,7 +12,6 @@ using Observer;
 public class SceneLoader : MonoBehaviour
 {
     [Inject] private UIManager _uiManager;
-    [SerializeField] private GameSceneSO _currentScene = default;
     [SerializeField] private GameSceneSO _sceneLocation = default;
 
     //Handle event load scene
@@ -42,13 +41,6 @@ public class SceneLoader : MonoBehaviour
 #if UNITY_EDITOR
         GameEvent.OnLoadColdStartupLocation -= LocationColdStartup;
 #endif
-    }
-    private void Start()
-    {
-        if (_currentlyLoadedScene == null)
-        {
-            GameEvent.OnLoadSceneLocation?.Invoke(_sceneLocation, true, false);
-        }
     }
 
     private void LoadLocation(GameSceneSO locationToLoad, bool showloadingScene = false, bool fadeScene = false)

@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using Observer;
 
 public class InitializationLoader : MonoBehaviour
 {
     [SerializeField] private GameSceneSO _managersScene = default;
+
+    [SerializeField] private GameSceneSO _currentScene = default;
 
     private void OnEnable()
     {
@@ -27,7 +30,8 @@ public class InitializationLoader : MonoBehaviour
     }
 
     private void LoadingScene(AsyncOperationHandle<SceneInstance> obj)
-    {   
+    {
+        GameEvent.OnLoadSceneLocation(_currentScene, true, false);
         SceneManager.UnloadSceneAsync(0);
     }
 
