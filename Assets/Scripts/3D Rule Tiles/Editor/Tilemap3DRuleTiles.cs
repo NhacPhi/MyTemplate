@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Globalization;
 
 public class Tilemap3DRuleTiles : EditorWindow
 {
@@ -260,7 +261,7 @@ public class Tilemap3DRuleTiles : EditorWindow
     private void BackupTiles()
     {
         // Create Text File to Save old tiles
-        string backupPath = "./Assets/Resources/3D Rule Tiles/Tilemap Backups/";
+        string backupPath = "./Assets/Data/Tilemap Backups/";
         string openSceneName = SceneManager.GetActiveScene().name;
         string fileName = "Backup Tiles " + openSceneName + ".txt";
         ToggleRuleTiles(null, true);
@@ -284,10 +285,10 @@ public class Tilemap3DRuleTiles : EditorWindow
 
     private void RestoreTilesFromBackup()
     {
-        string backupPath = "./Assets/Resources/3D Rule Tiles/Tilemap Backups/";
+        string backupPath = "./Assets/Data/Tilemap Backups/";
         string openSceneName = SceneManager.GetActiveScene().name;
         string fileName = "Backup Tiles " + openSceneName + ".txt";
-        string prefabPath = "3D Rule Tiles/Rule Tiles/";
+        string prefabPath = "Assets/Prefabs/Evn/Tile Map/";
 
         if (!File.Exists(backupPath + fileName))
         {
@@ -311,7 +312,8 @@ public class Tilemap3DRuleTiles : EditorWindow
                 Vector3 position = GetVector3(vector_string);
 
                 string prefab_string = line.Substring(0, line.IndexOf(","));
-                GameObject prefab = Resources.Load<GameObject>(prefabPath + prefab_string);
+                string path = prefabPath + prefab_string + ".prefab";
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (prefab == null)
                 {
                     Debug.Log("Prefab for: " + prefabPath + prefab_string + "\nDoes not exist.");
@@ -345,9 +347,9 @@ public class Tilemap3DRuleTiles : EditorWindow
     public Vector3 GetVector3(string vector_string)
     {
         string[] temp = vector_string.Substring(1, vector_string.Length - 2).Split(',');
-        float x = float.Parse(temp[0]);
-        float y = float.Parse(temp[1]);
-        float z = float.Parse(temp[2]);
+        float x = float.Parse(temp[0], CultureInfo.InvariantCulture);
+        float y = float.Parse(temp[1], CultureInfo.InvariantCulture);
+        float z = float.Parse(temp[2], CultureInfo.InvariantCulture);
         Vector3 rValue = new Vector3(x, y, z);
         return rValue;
     }
