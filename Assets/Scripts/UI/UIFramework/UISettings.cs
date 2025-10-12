@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace UIFramework
 {
@@ -19,7 +21,7 @@ namespace UIFramework
         [SerializeField] private bool deactivateScreenGOs = true;
 
 
-
+        [Inject] private IObjectResolver _objectResolver;
 
 
 
@@ -31,6 +33,7 @@ namespace UIFramework
             if (instanceAndRegisterScreens) {
                 foreach (var screen in screensToRegister) {
                     var screenInstance = Instantiate(screen);
+                    _objectResolver?.InjectGameObject(screenInstance);
                     var screenController = screenInstance.GetComponent<IUIScreenController>();
 
                     if (screenController != null) {
