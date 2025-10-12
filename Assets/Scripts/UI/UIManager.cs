@@ -1,24 +1,32 @@
 using deVoid.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UIFramework;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Tech.Json;
+using System;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField]private UISettings defaultUISettings = null;
+    [SerializeField] private UISettings _defaultUISettings = null;
 
-    private UIFrame uiFrame;
+    private UIFrame _uiFrame;
 
     private string currentWindow;
 
+    private void OnEnable()
+    {
+        UIEvent.OnClickNavigationButton += OnNavigatePanelStartGame;
+    }
+
+    private void OnDisable()
+    {
+        UIEvent.OnClickNavigationButton -= OnNavigatePanelStartGame;
+    }
     private void Awake()
     {
         //Signals.Get<StartSceneSignal>().AddListener(OnStartDemo);
-        uiFrame = defaultUISettings.CreateUIInstance();
+        _uiFrame = _defaultUISettings.CreateUIInstance();
     }
 
     private async UniTask Init(CancellationToken token)
@@ -26,24 +34,51 @@ public class UIManager : MonoBehaviour
         //var uiSettings = await AddressablesManager.Instance.LoadAssetAsync<UISettings>(
         //       AddressConstant.UISetting, token: token);
 
-        //defaultUISettings = uiSettings;
+        //_defaultUISettings = uiSettings;
 
         //AddressablesManager.Instance.RemoveAsset(AddressConstant.UISetting);
-    }
-
-    private void Start()
-    {
-        //OpenCurrentScene(ScreenIds.LoadingScene);
     }
 
     public void OpenCurrentScene(string id)
     {
         currentWindow = id;
-        uiFrame.OpenWindow(currentWindow);
+        _uiFrame.OpenWindow(currentWindow);
     }
 
     public void CloseCurrentScene()
     {
-        uiFrame.CloseWindow(currentWindow);
+        _uiFrame.CloseWindow(currentWindow);
+    }
+
+    public void ShowPanel(string id)
+    {
+        _uiFrame.ShowPanel(id);
+    }
+
+    private void OnNavigatePanelStartGame(string id)
+    {
+        _uiFrame.HidePanel(ScreenIds.PanelStartGame);
+
+        switch(id)
+        {
+            case ScreenIds.GameInfoScene:
+                _uiFrame.OpenWindow(id);
+                break;
+            case ScreenIds.GameSettingsScene:
+                _uiFrame.OpenWindow(id);
+                break;
+            case ScreenIds.PopupConfirm:
+                Action cancle = () => { _uiFrame.ShowPanel(ScreenIds.PanelStartGame); };
+                Action confirm = () => {
+                    Application.Quit();
+                };
+                string message = LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION");
+                ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties("Remind", message, "Confirm", "Cancel", confirm, cancle);
+                _uiFrame.OpenWindow(id, popupProps);
+                break;
+            default:
+                _uiFrame.OpenWindow(id);
+                break;
+        }
     }
 }

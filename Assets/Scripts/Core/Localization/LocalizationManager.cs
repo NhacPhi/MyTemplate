@@ -21,12 +21,12 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
 
         _isReady = false;
 
-        string addressKey = $"Localization_{languageCode}.txt";
+        string addressKey = $"Localization_{languageCode}";
 
         try
         {
             //Load file text from Addressable
-            TextAsset textAsset = await Addressables.LoadAsset<TextAsset>(addressKey).Task;
+            TextAsset textAsset = await Addressables.LoadAssetAsync<TextAsset>(addressKey).Task;
 
             if(textAsset == null)
             {

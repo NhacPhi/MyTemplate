@@ -107,12 +107,13 @@ public class SceneLoader : MonoBehaviour
 
         _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
 
+        _loadingOperationHandle.Completed += OnNewSceneLoaded;
+
         if (_isShowLoading)
         {
             _uiManager.CloseCurrentScene();
         }
 
-        _loadingOperationHandle.Completed += OnNewSceneLoaded;
     }
 
     private void OnNewSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
