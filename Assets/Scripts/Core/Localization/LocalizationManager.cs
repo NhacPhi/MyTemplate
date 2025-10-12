@@ -63,7 +63,7 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
     public string GetLocalizedValue(string key)
     {
         if (!_isReady || !_localization.ContainsKey(key)) return _missingTextString;
-        return _localization[key];
+        return _localization[key].Replace("\\n", "\n");
     }
 
     public bool IsReady => _isReady;

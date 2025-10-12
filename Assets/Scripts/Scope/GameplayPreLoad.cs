@@ -6,35 +6,41 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using Cysharp.Threading.Tasks;
+using System;
 
 namespace Core.Scope
 {
-    public class GameplayPreLoad : IAsyncStartable
+    public class GameplayPreLoad : IAsyncStartable, IPreload
     {
         [Inject] private EventManager _evnetManager;
+        [Inject] private SaveSystem _saveSystem;
+        [Inject] private UIManager _uiManager;
+
+        public bool IsDone;
+
         public async UniTask StartAsync(CancellationToken cancellation = default)
         {
-            //var tasks = new List<UniTask>()
-            //{
+            IsDone = false;
+            _saveSystem.Init();
+            _saveSystem.LoadSaveDataFromDisk();
+            //_saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
+            var tasks = new List<UniTask>()
+            {
+                LocalizationManager.Instance.LoadLocalizedText(_saveSystem.Settings.CurrentLocalized),
+            };
 
-            //};
-            //_eventManager.Init(tasks, cancellation);  
+            await UniTask.WhenAll(tasks);
 
-            //await UniTask.WhenAll(tasks);
-            await UniTask.Delay(5000);
+            _uiManager.OpenCurrentScene(ScreenIds.StartGameScene);
+            _uiManager.ShowPanel(ScreenIds.PanelStartGame);
+
+            IsDone = true;
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
+        public Action OnLoadDone { get; set; }
 
-        }
+        public bool IsLoadDone() => IsDone;
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 
 }

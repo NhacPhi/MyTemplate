@@ -1093,8 +1093,9 @@ GameObject:
   - component: {fileID: 7455990566642346497}
   - component: {fileID: 8313749499049478035}
   - component: {fileID: 3083328140630915233}
+  - component: {fileID: 8467395576777866921}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: UI_GAME_INFO_CONTENT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,14 +1148,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Gi\u1EDBi thi\u1EC7u\r\n95% \u0111\xE3 th\xEDch tr\xF2 ch\u01A1i \u0111i\u1EC7n
-    t\u1EED n\xE0y\r\nNg\u01B0\u1EDDi d\xF9ng Google\r\nBlack Myth: Wukong l\xE0
-    m\u1ED9t tr\xF2 ch\u01A1i h\xE0nh \u0111\u1ED9ng nh\u1EADp vai do studio Game
-    Science t\u1EEB Trung Qu\u1ED1c ph\xE1t tri\u1EC3n v\xE0 ph\xE1t h\xE0nh, d\u1EF1a
-    tr\xEAn cu\u1ED1n ti\u1EC3u thuy\u1EBFt T\xE2y du k\xFD. Tr\xF2 ch\u01A1i \u0111\xE3
-    \u0111\u01B0\u1EE3c ph\xE1t h\xE0nh v\xE0o ng\xE0y 20 th\xE1ng 8 n\u0103m 2024
-    tr\xEAn PlayStation 5 v\xE0 Windows, phi\xEAn b\u1EA3n d\xE0nh cho Xbox Series
-    X/S c\u0169ng \u0111ang \u0111\u01B0\u1EE3c ph\xE1t tri\u1EC3n."
+  m_text: "Gi\u1EDBi thi\u1EC7u.\\n95% \u0111\xE3 th\xEDch tr\xF2 ch\u01A1i \u0111i\u1EC7n
+    t\u1EED n\xE0y.\\nKing of the Monkey l\xE0 m\u1ED9t tr\xF2 ch\u01A1i h\xE0nh
+    \u0111\u1ED9ng nh\u1EADp vai do studio Game Science t\u1EEB Trung Qu\u1ED1c ph\xE1t
+    tri\u1EC3n v\xE0 ph\xE1t h\xE0nh, d\u1EF1a tr\xEAn cu\u1ED1n ti\u1EC3u thuy\u1EBFt
+    T\xE2y du k\xFD. Tr\xF2 ch\u01A1i \u0111\xE3 \u0111\u01B0\u1EE3c ph\xE1t h\xE0nh
+    v\xE0o ng\xE0y 20 th\xE1ng 8 n\u0103m 2024 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2b3a2769411de14b890d67a8c7df03c, type: 2}
   m_sharedMaterial: {fileID: -1356209992524661383, guid: f2b3a2769411de14b890d67a8c7df03c, type: 2}
@@ -1223,6 +1222,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8467395576777866921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810741858847568578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7856331b66818514e94e98c6b0946ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8295968371243734608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,6 +1360,7 @@ MonoBehaviour:
     hideOnForegroundLost: 1
     windowQueuePriority: 0
     isPopup: 0
+  btnClose: {fileID: 5228639437208414669}
 --- !u!1 &8316285084313876135
 GameObject:
   m_ObjectHideFlags: 0

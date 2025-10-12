@@ -10,13 +10,9 @@ public class LocalizedText : MonoBehaviour
     private void Awake()
     {
         _stringID = gameObject.name;
-    }
-    private void OnEnable()
-    {
         UIEvent.OnLanguageChanged += UpdateText;
     }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         UIEvent.OnLanguageChanged -= UpdateText;
     }

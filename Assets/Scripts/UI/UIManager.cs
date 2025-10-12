@@ -81,4 +81,9 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+
+    public void ShowPopupConfirmSettings(PopupSettingProperties popup)
+    {
+        _uiFrame.OpenWindow(ScreenIds.PopupConfirmSettings, popup);
+    }
 }

@@ -11,4 +11,5 @@ public class ScreenIds
 
     // Popup
     public const string PopupConfirm = "PopupConfirm";
+    public const string PopupConfirmSettings = "PopupConfirmSettings";
 }
