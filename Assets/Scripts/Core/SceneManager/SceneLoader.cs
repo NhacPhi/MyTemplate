@@ -55,7 +55,7 @@ public class SceneLoader : MonoBehaviour
         //Show loading screen
         if(_isShowLoading)
         {
-            _uiManager.OpenCurrentScene(ScreenIds.LoadingScene);
+            _uiManager.OpenWindowScene(ScreenIds.LoadingScene);
         }
 
 
@@ -111,7 +111,7 @@ public class SceneLoader : MonoBehaviour
 
         if (_isShowLoading)
         {
-            _uiManager.CloseCurrentScene();
+            _uiManager.CloseWindowScene();
         }
 
     }

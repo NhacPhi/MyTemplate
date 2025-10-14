@@ -2,28 +2,30 @@ using System;
 
 public class SaveSystem
 {
-    private string _saveSettingsFileName = "settings.json";
+    private string saveSettingsFileName = "settings.json";
+    private string savePlayerFileName = "player.json";
 
-    private SettingSave _settings;
+    private SettingSave settings;
+    private PlayerSave player;
 
-    public SettingSave Settings => _settings;
+    public SettingSave Settings => settings;
+    public PlayerSave Player => player;
 
     public void Init()
     {
-        _settings = new SettingSave();
+        settings = new SettingSave();
+        player = new PlayerSave();
     }
 
-    public bool LoadSaveDataFromDisk()
+    public void LoadSaveDataFromDisk()
     {
-        if (FileManager.LoadFromFile(_saveSettingsFileName, out _settings))
-        {
-            return true;
-        }
-        return false;
+        FileManager.LoadFromFile(saveSettingsFileName, out settings);
+        FileManager.LoadFromFile(savePlayerFileName, out player);
     }
 
     public void SaveDataToDisk()
     {
-        FileManager.WriteToFile(_saveSettingsFileName, _settings);
+        FileManager.WriteToFile(saveSettingsFileName, settings);
+        FileManager.WriteToFile(savePlayerFileName, player);
     }
 }

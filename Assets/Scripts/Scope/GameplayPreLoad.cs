@@ -31,7 +31,7 @@ namespace Core.Scope
 
             await UniTask.WhenAll(tasks);
 
-            _uiManager.OpenCurrentScene(ScreenIds.StartGameScene);
+            _uiManager.OpenWindowScene(ScreenIds.StartGameScene);
             _uiManager.ShowPanel(ScreenIds.PanelStartGame);
 
             IsDone = true;

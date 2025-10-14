@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     private UIFrame _uiFrame;
 
     private string currentWindow;
+    private string currentPanel;
 
     private void OnEnable()
     {
@@ -39,20 +40,30 @@ public class UIManager : MonoBehaviour
         //AddressablesManager.Instance.RemoveAsset(AddressConstant.UISetting);
     }
 
-    public void OpenCurrentScene(string id)
+    public void OpenWindowScene(string id)
     {
         currentWindow = id;
         _uiFrame.OpenWindow(currentWindow);
     }
 
-    public void CloseCurrentScene()
+    public void CloseWindowScene()
     {
         _uiFrame.CloseWindow(currentWindow);
     }
 
     public void ShowPanel(string id)
     {
+        currentPanel = id;
         _uiFrame.ShowPanel(id);
+    }
+    public void HidePanel()
+    {
+        _uiFrame.HidePanel(currentPanel);
+    }
+
+    public void CloseAllWindows()
+    {
+        _uiFrame.CloseAllWindows();
     }
 
     private void OnNavigatePanelStartGame(string id)
