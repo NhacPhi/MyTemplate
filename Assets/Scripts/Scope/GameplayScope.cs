@@ -16,11 +16,11 @@ namespace Core.Scope
             // Data Service
             builder.Register<EventManager>(Lifetime.Scoped);
             builder.Register<SaveSystem>(Lifetime.Scoped);
-            builder.Register<SaveSystem>(Lifetime.Scoped);
 
             // Hireachy
             builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
             builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
+            builder.RegisterComponentInHierarchy<ItemDataBase>().AsSelf();
 
             builder.RegisterComponent(uiSetings);
 
