@@ -17,12 +17,14 @@ namespace Core.Scope
             builder.Register<EventManager>(Lifetime.Scoped);
             builder.Register<SaveSystem>(Lifetime.Scoped);
 
+            builder.RegisterComponent(uiSetings);
+
             // Hireachy
             builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
             builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
             builder.RegisterComponentInHierarchy<ItemDataBase>().AsSelf();
 
-            builder.RegisterComponent(uiSetings);
+
 
             //Entry point
             builder.RegisterEntryPoint<GameplayPreLoad>(Lifetime.Scoped).As<IPreload>();

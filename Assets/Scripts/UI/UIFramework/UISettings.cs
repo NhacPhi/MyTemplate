@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using VContainer;
 using VContainer.Unity;
 
@@ -32,8 +33,9 @@ namespace UIFramework
 
             if (instanceAndRegisterScreens) {
                 foreach (var screen in screensToRegister) {
-                    var screenInstance = Instantiate(screen);
-                    _objectResolver?.InjectGameObject(screenInstance);
+                    screen.SetActive(false);
+                    var screenInstance = _objectResolver.Instantiate(screen); //Instantiate(screen);
+                    //_objectResolver?.InjectGameObject(screenInstance);
                     var screenController = screenInstance.GetComponent<IUIScreenController>();
 
                     if (screenController != null) {
