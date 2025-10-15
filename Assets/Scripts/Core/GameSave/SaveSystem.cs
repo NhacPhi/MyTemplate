@@ -1,5 +1,11 @@
 using System;
 
+public enum TypeGameSave
+{
+    GameSetting,
+    Player
+}
+
 public class SaveSystem
 {
     private string saveSettingsFileName = "settings.json";
@@ -23,9 +29,16 @@ public class SaveSystem
         FileManager.LoadFromFile(savePlayerFileName, out player);
     }
 
-    public void SaveDataToDisk()
+    public void SaveDataToDisk(TypeGameSave type)
     {
-        FileManager.WriteToFile(saveSettingsFileName, settings);
-        FileManager.WriteToFile(savePlayerFileName, player);
+        switch (type)
+        {
+            case TypeGameSave.GameSetting:
+                FileManager.WriteToFile(saveSettingsFileName, settings);
+                break;
+            case TypeGameSave.Player:
+                FileManager.WriteToFile(savePlayerFileName, player);
+                break;
+        }
     }
 }
