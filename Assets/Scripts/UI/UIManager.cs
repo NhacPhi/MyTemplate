@@ -26,9 +26,9 @@ public class UIManager : MonoBehaviour
     }
     private void Awake()
     {
-        //Signals.Get<StartSceneSignal>().AddListener(OnStartDemo);
         _uiFrame = _defaultUISettings.CreateUIInstance();
     }
+
 
     private async UniTask Init(CancellationToken token)
     {
