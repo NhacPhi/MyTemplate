@@ -37,7 +37,7 @@ public class ConfirmPopupController : WindowController<ConfirmationPopupProperti
     [SerializeField] public Button btnConfirm;
     [SerializeField] public Button btnCancel;
 
-    private void Awake()
+    private void Start()
     {
         btnConfirm.onClick.AddListener(() => UI_Confirm());
         btnCancel.onClick.AddListener(() => UI_Cancel());

@@ -10,26 +10,28 @@ namespace Core.Scope
     public class GameplayPreLoad : IAsyncStartable, IPreload
     {
         [Inject] private EventManager _evnetManager;
-        [Inject] private SaveSystem _saveSystem;
-        [Inject] private UIManager _uiManager;
+        [Inject] private SaveSystem saveSystem;
+        [Inject] private UIManager uiManager;
+        [Inject] private CurrencyManager currencyMM;
 
         public bool IsDone;
 
         public async UniTask StartAsync(CancellationToken cancellation = default)
         {
             IsDone = false;
-            _saveSystem.Init();
-            _saveSystem.LoadSaveDataFromDisk();
-            //_saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
+            saveSystem.Init();
+            saveSystem.LoadSaveDataFromDisk();
+            currencyMM.Init();
+            //saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
             var tasks = new List<UniTask>()
             {
-                LocalizationManager.Instance.LoadLocalizedText(_saveSystem.Settings.CurrentLocalized),
+                LocalizationManager.Instance.LoadLocalizedText(saveSystem.Settings.CurrentLocalized),
             };
 
             await UniTask.WhenAll(tasks);
 
-            _uiManager.OpenWindowScene(ScreenIds.StartGameScene);
-            _uiManager.ShowPanel(ScreenIds.PanelStartGame);
+            uiManager.OpenWindowScene(ScreenIds.StartGameScene);
+            uiManager.ShowPanel(ScreenIds.PanelStartGame);
 
             IsDone = true;
         }

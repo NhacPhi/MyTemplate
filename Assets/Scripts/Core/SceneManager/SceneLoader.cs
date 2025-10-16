@@ -20,7 +20,7 @@ public class SceneLoader : MonoBehaviour
     private GameSceneSO _sceneToLoad;
     private GameSceneSO _currentlyLoadedScene;
 
-    private SceneInstance _gameplayManagerSceneInstance = new SceneInstance();
+    //private SceneInstance _gameplayManagerSceneInstance = new SceneInstance();
     private bool _isLoading = false; //To prevent a new loading request while already loading a new scene
     private bool _isShowLoading = false;
 

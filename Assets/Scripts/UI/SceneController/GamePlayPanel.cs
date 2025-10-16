@@ -8,7 +8,7 @@ public class GamePlayPanel : PanelController
 {
     [SerializeField] private Button btnClosePanel;
     [SerializeField] private Button btnChangeAvatar;
-    [Header("Player Info")]
+    [Header("PlayerInfo Info")]
     [SerializeField] private Image avatarIcon;
     [SerializeField] private TextMeshProUGUI txtLevel;
 
@@ -22,7 +22,7 @@ public class GamePlayPanel : PanelController
         {
             uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
             uiManager.HidePanel();
-            save.SaveDataToDisk(TypeGameSave.Player);
+            save.SaveDataToDisk(GameSaveType.PlayerInfo);
         });
 
         btnChangeAvatar.onClick.AddListener(OnChangeAvatar);
@@ -50,5 +50,5 @@ public class GamePlayPanel : PanelController
     public void UpdateAvatarIconOnPanel(string id)
     {
         avatarIcon.sprite = itemData.Avatars.Find(avatar => avatar.ID.Equals(id)).Icon;
-    }
+    }   
 }

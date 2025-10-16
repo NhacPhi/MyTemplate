@@ -15,7 +15,6 @@ public class NavigationButton
 {
     [SerializeField] public Button button;
     [SerializeField] public SceneID id;
-    public event Action<NavigationButton> onClick;
 
     public string StringID()
     {

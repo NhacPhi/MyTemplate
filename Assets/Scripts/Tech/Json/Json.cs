@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEditor;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json.Converters;
 
 namespace Tech.Json
 {
@@ -14,6 +15,7 @@ namespace Tech.Json
         private static JsonSerializerSettings settings = new JsonSerializerSettings()
         {
             TypeNameHandling = TypeNameHandling.Auto,
+            Converters = { new StringEnumConverter() },
             Formatting = Formatting.Indented,
         };
         

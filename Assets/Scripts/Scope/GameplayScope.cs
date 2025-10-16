@@ -16,6 +16,8 @@ namespace Core.Scope
             // Data Service
             builder.Register<EventManager>(Lifetime.Scoped);
             builder.Register<SaveSystem>(Lifetime.Scoped);
+            builder.Register<CurrencyManager>(Lifetime.Scoped);
+
 
             builder.RegisterComponent(uiSetings);
 
@@ -24,10 +26,10 @@ namespace Core.Scope
             builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
             builder.RegisterComponentInHierarchy<ItemDataBase>().AsSelf();
 
-
-
             //Entry point
             builder.RegisterEntryPoint<GameplayPreLoad>(Lifetime.Scoped).As<IPreload>();
+            //builder.RegisterEntryPoint<CurrencyManager>(Lifetime.Scoped).AsSelf();
+
 
             builder.RegisterBuildCallback(container =>
             {
@@ -45,7 +47,7 @@ namespace Core.Scope
             }
 
             //PlayerCtrl = objectResolver.Instantiate(PlayerPrefab).GetComponent<PlayerCtrl>();
-            //objectResolver.Resolve<TurnManager>().Player = PlayerCtrl;
+            //objectResolver.Resolve<TurnManager>().PlayerInfo = PlayerCtrl;
         }
     }
 

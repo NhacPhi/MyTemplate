@@ -1,9 +1,9 @@
 using System;
 
-public enum TypeGameSave
+public enum GameSaveType
 {
     GameSetting,
-    Player
+    PlayerInfo
 }
 
 public class SaveSystem
@@ -29,14 +29,14 @@ public class SaveSystem
         FileManager.LoadFromFile(savePlayerFileName, out player);
     }
 
-    public void SaveDataToDisk(TypeGameSave type)
+    public void SaveDataToDisk(GameSaveType type)
     {
         switch (type)
         {
-            case TypeGameSave.GameSetting:
+            case GameSaveType.GameSetting:
                 FileManager.WriteToFile(saveSettingsFileName, settings);
                 break;
-            case TypeGameSave.Player:
+            case GameSaveType.PlayerInfo:
                 FileManager.WriteToFile(savePlayerFileName, player);
                 break;
         }

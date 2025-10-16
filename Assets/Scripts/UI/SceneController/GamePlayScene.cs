@@ -8,6 +8,8 @@ public class GamePlayScene : WindowController
     [SerializeField] private Button btnPlayerInfo;
 
     [Inject] private UIManager uiManager;
+    [Inject] private CurrencyManager currencyMM;
+
     private void Start()
     {
         btnPlayerInfo.onClick.AddListener(() =>
@@ -15,5 +17,10 @@ public class GamePlayScene : WindowController
             uiManager.CloseAllWindows();
             uiManager.ShowPanel(ScreenIds.GamePlayPanel);
         });
+
+        foreach(var currency in currencyMM.Currencies)
+        {
+            UIEvent.OnCurrencyChanged?.Invoke(currency.Key, currency.Value);
+        }
     }
 }

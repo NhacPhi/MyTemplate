@@ -37,7 +37,7 @@ public class GameSettingsScene : WindowController
     public void OnCloseScene()
     {
         base.UI_Close();
-        save.SaveDataToDisk(TypeGameSave.GameSetting);
+        save.SaveDataToDisk(GameSaveType.GameSetting);
         uiManager.ShowPanel(ScreenIds.PanelStartGame);
     }
     
