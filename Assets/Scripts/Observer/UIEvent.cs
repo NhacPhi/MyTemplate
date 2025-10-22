@@ -7,5 +7,8 @@ public static class UIEvent
     public static Action<string> OnChanageAvatarPopup;
     public static Action<string> OnChanageAvatarPanel;
 
+    public static Action<ItemType> OnSelectToggleTap;
+    public static Action<string> OnSelectInventoryItem;
+
     public static Action<CurrencyType, int> OnCurrencyChanged;
 }

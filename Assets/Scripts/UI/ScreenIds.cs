@@ -7,6 +7,7 @@ public class ScreenIds
     public const string GameSettingsScene = "GameSettingsScene";
     public const string GamePlayScene = "GamePlayScene";
     public const string DialogueUIScene = "DialogueUIScene";
+    public const string InventoryScene = "InventoryScene";
 
 
     // Panel

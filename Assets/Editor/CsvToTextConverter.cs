@@ -6,6 +6,7 @@ using NPOI.XSSF.UserModel;
 using System.Text;
 using System.Collections.Generic;
 using Tech.Json;
+using System;
 
 public static class CsvToTextConverter
 {
@@ -112,8 +113,11 @@ public static class CsvToTextConverter
 
                 switch (sheetName)
                 {
-                    case "Avatar":
-                        ExportSheet<Avatar>(sheet, sheetName);
+                    case "AvatarConfig":
+                        ExportSheet<AvatarConfig>(sheet, sheetName);
+                        break;
+                    case "Weapon":
+                        ExportSheet<WeaponConfig>(sheet, sheetName);
                         break;
                     default: break;
                 }
@@ -153,7 +157,18 @@ public static class CsvToTextConverter
                     switch (cell.CellType)
                     {
                         case CellType.String:
-                            value = cell.StringCellValue;
+                            if (Enum.TryParse<Rare>(cell.StringCellValue, true, out var rare))
+                            {
+                                value = rare;
+                            }
+                            else if (Enum.TryParse<WeaponType>(cell.StringCellValue, true, out var type))
+                            {
+                                value = type;
+                            }
+                            else
+                            {
+                                value = cell.StringCellValue;
+                            }
                             break;
                         case CellType.Numeric:
                             if (field.PropertyType == typeof(int))

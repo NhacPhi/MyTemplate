@@ -24,14 +24,14 @@ public class CurrencyManager
     public void Add(CurrencyType type, int amount)
     {
         currencies[type] += amount;
-
+        Save();
         UIEvent.OnCurrencyChanged(type, currencies[type]);
     }
 
     public bool Spend(CurrencyType type, int amount)
     {
         if(GetValue(type) < amount) return false;
-
+        Save();
         currencies[type] -= amount;
 
         UIEvent.OnCurrencyChanged(type, amount); 
@@ -47,5 +47,12 @@ public class CurrencyManager
     private void Load()
     {
         currencies = save.Player.Currencies;
+    }
+    public void UpdateCurrency()
+    {
+        foreach (var currency in currencies)
+        {
+            UIEvent.OnCurrencyChanged?.Invoke(currency.Key, currency.Value);
+        }
     }
 }

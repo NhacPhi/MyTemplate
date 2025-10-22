@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class Avatar 
+public class AvatarConfig 
 {
     private string id;
 

@@ -7,6 +7,8 @@ public class GamePlayScene : WindowController
 {
     [SerializeField] private Button btnPlayerInfo;
 
+    [SerializeField] private Button btnInventory;
+
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
 
@@ -18,9 +20,13 @@ public class GamePlayScene : WindowController
             uiManager.ShowPanel(ScreenIds.GamePlayPanel);
         });
 
-        foreach(var currency in currencyMM.Currencies)
+        currencyMM.UpdateCurrency();
+
+        btnInventory.onClick.AddListener(() =>
         {
-            UIEvent.OnCurrencyChanged?.Invoke(currency.Key, currency.Value);
-        }
+            uiManager.HidePanel();
+            uiManager.OpenWindowScene(ScreenIds.InventoryScene);
+        });
     }
+
 }
