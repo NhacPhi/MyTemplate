@@ -7,6 +7,9 @@ using System.Text;
 using System.Collections.Generic;
 using Tech.Json;
 using System;
+using System.Reflection;
+using NPOI.Util.Collections;
+using System.Linq;
 
 public static class CsvToTextConverter
 {
@@ -101,7 +104,7 @@ public static class CsvToTextConverter
             return;
         }
 
-       using (FileStream stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read))
+        using (FileStream stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read))
         {
             IWorkbook workbook = new XSSFWorkbook(stream);
 
@@ -113,8 +116,8 @@ public static class CsvToTextConverter
 
                 switch (sheetName)
                 {
-                    case "AvatarConfig":
-                        ExportSheet<AvatarConfig>(sheet, sheetName);
+                    case "Food":
+                        ExportSheet<FoodConfig>(sheet, sheetName);
                         break;
                     case "Weapon":
                         ExportSheet<WeaponConfig>(sheet, sheetName);
@@ -136,18 +139,30 @@ public static class CsvToTextConverter
         IRow header = sheet.GetRow(0);
         int colCount = header.LastCellNum;
 
+
+        bool hasValue;
         // Đọc từng dòng
         for (int r = 1; r <= sheet.LastRowNum; r++)
         {
+            hasValue = true;
             IRow row = sheet.GetRow(r);
             if (row == null) continue;
 
             T obj = System.Activator.CreateInstance<T>();
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            Dictionary<string, PropertyInfo> propMap = properties.ToDictionary(p => p.Name.ToLower(), p => p);
+            var columnMap = new Dictionary<int, PropertyInfo>();
 
             for (int c = 0; c < colCount && c < properties.Length; c++)
             {
-                var field = properties[c];
+                string headerName = Normalize(header.GetCell(c)?.StringCellValue);
+                if (string.IsNullOrEmpty(headerName)) continue;
+
+                propMap.TryGetValue(headerName, out var prop);
+                if (prop == null) continue;
+
+                var field = prop;
                 ICell cell = row.GetCell(c);
                 if (cell == null) continue;
 
@@ -188,20 +203,30 @@ public static class CsvToTextConverter
 
                     if (value != null)
                         field.SetValue(obj, System.Convert.ChangeType(value, field.PropertyType));
+                    else
+                        hasValue = false;
                 }
                 catch (System.Exception ex)
                 {
                     Debug.LogError($"Lỗi đọc cột {c} hàng {r} trong sheet {sheetName}: {ex.Message}");
                 }
-                
+
             }
-            list.Add(obj);
+            if (hasValue)
+            {
+                list.Add(obj);
+            }
         }
 
         string folder = "Assets/Data/GameConfig/";
         string filePath = Path.Combine(folder, $"{sheetName}.json");
         Json.SaveJson(list, filePath);
         Debug.Log($"Xuất {sheetName}.json ({list.Count} dòng)");
+    }
+
+    private static string Normalize(string name)
+    {
+        return name?.Trim().Replace(" ", "").ToLower() ?? "";
     }
 }
 

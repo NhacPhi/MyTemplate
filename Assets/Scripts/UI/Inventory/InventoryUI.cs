@@ -20,6 +20,18 @@ public class InventoryUI : MonoBehaviour
     private List<GameObject> weapons = new();
     private List<GameObject> items = new();
 
+    private ItemCardInfoUI itemCard;
+    private WeaponCardInfoUI weaponCard;
+
+    private void Awake()
+    {
+        itemCard = iteamCardInfo.GetComponent<ItemCardInfoUI>();
+        weaponCard = weaponCardInfo.GetComponent<WeaponCardInfoUI>();
+    }
+    private void Start()
+    {
+        OnShowAllItemInInventory(ItemType.Item);
+    }
     private void OnEnable()
     {
         UIEvent.OnSelectToggleTap += OnShowAllItemInInventory;
@@ -36,12 +48,23 @@ public class InventoryUI : MonoBehaviour
         foreach (var item in save.Player.Weapons)
         {
             var obj = Instantiate(prefabWeapon, content.transform);
-            var weaponConfig = itemDataBase.GetWeaponConfig(item.ID);
-            var weaponSO = itemDataBase.GetWeaponSO(item.ID);
+            var weaponConfig = itemDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon,item.ID);
+            var weaponSO = itemDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, item.ID);
             obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.CurrentLevel, item.CurrentUpgrade);
             obj.SetActive(false);
             weapons.Add(obj);
         }
+
+        foreach(var item in save.Player.Items)
+        {
+            var obj = Instantiate(prefabItem, content.transform);
+            var weaponConfig = itemDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
+            var weaponSO = itemDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID);
+            obj.GetComponent<ItemUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.Count);
+            obj.SetActive(false);
+            items.Add(obj);
+        }
+        itemCard.UpdateItemCardInfor(save.Player.Items[0].ID);
     }
 
     public void OnShowAllItemInInventory(ItemType type)
@@ -63,6 +86,13 @@ public class InventoryUI : MonoBehaviour
                         item.gameObject.SetActive(true);
                         //item.transform.SetParent(content.transform, false);
                     }
+                    WeaponUI ui = weapons[0].gameObject.GetComponent<WeaponUI>();
+                    if(ui != null)
+                    {
+                        ui.OnSwitchStatusBoder(true);
+                        UIEvent.OnSelectInventoryItem?.Invoke(ui.ID);
+                        //weaponCard.UpdateWeaponCardInfor(ui.ID);
+                    }
                 }
                 break;
             case ItemType.Item:
@@ -71,7 +101,21 @@ public class InventoryUI : MonoBehaviour
                     {
                         weaponCardInfo.SetActive(false);
                         iteamCardInfo.SetActive(true);
+                        currentItemType = ItemType.Item;
                     }
+
+                    foreach (var item in items)
+                    {
+                        item.gameObject.SetActive(true);
+                        //item.transform.SetParent(content.transform, false);
+                    }
+                    ItemUI ui = items[0].gameObject.GetComponent<ItemUI>();
+                    if (ui != null)
+                    {
+                        UIEvent.OnSelectInventoryItem?.Invoke(ui.ID);
+                        ui.OnSwitchStatusBoder(true);
+                        //itemCard.UpdateItemCardInfor(ui.ID);
+                    }                 
                 }
                 break;
         }
@@ -97,6 +141,19 @@ public class InventoryUI : MonoBehaviour
                     }
                 }
             break;
+            case ItemType.Item:
+                {
+                    foreach (var item in items)
+                    {
+                        var obj = item.GetComponent<ItemUI>();
+                        obj.OnSwitchStatusBoder(false);
+                        if (obj.ID == id)
+                        {
+                            obj.OnSwitchStatusBoder(true);
+                        }
+                    }
+                }
+                break;
         }
     }
     

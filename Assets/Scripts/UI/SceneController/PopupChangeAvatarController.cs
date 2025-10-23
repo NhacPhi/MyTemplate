@@ -87,7 +87,7 @@ public class PopupChangeAvatarController : WindowController
 
     public void UpdateAvatarIcon(string id)
     {
-        avatarIcon.sprite = itemDataBase.Avatars.Find(avatar => avatar.ID.Equals(id)).Icon;
+        avatarIcon.sprite = itemDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
         currentAvatarID = id;
     }
 }

@@ -30,7 +30,9 @@ public enum ItemType
     Armor,
     Weapon,
     Shard,
-    Material
+    Material,
+    Avatar,
+    Food
 }
 
 public enum WeaponType

@@ -40,9 +40,9 @@ public class WeaponCardInfoUI : MonoBehaviour
 
     public void UpdateWeaponCardInfor(string id)
     {
-        Weapon weapon = save.GetWeapon(id);
-        WeaponConfig config = itemData.GetWeaponConfig(id);
-        WeaponSO weaponSO = itemData.GetWeaponSO(id);
+        Weapon weapon = save.Player.GetWeapon(id);
+        WeaponConfig config = itemData.GetItemConfigByID<WeaponConfig>(ItemType.Weapon, id);
+        WeaponSO weaponSO = itemData.GetItemSOByID<WeaponSO>(ItemType.Weapon, id);
         txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  "+ weapon.CurrentLevel.ToString();
         txtHPNumber.text = config.HP.ToString();

@@ -49,6 +49,6 @@ public class GamePlayPanel : PanelController
 
     public void UpdateAvatarIconOnPanel(string id)
     {
-        avatarIcon.sprite = itemData.Avatars.Find(avatar => avatar.ID.Equals(id)).Icon;
+        avatarIcon.sprite = itemData.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
     }   
 }

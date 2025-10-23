@@ -41,9 +41,4 @@ public class SaveSystem
                 break;
         }
     }
-
-    public Weapon GetWeapon(string id)
-    {
-        return player.Weapons.Find(v => v.ID == id);
-    }
 }
