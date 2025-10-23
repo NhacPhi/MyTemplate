@@ -32,7 +32,8 @@ public enum ItemType
     Shard,
     Material,
     Avatar,
-    Food
+    Food,
+    GemStone
 }
 
 public enum WeaponType

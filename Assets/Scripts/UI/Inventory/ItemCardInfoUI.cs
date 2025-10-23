@@ -42,12 +42,18 @@ public class ItemCardInfoUI : MonoBehaviour
                 {
                     FoodConfig config = itemData.GetItemConfigByID<FoodConfig>(ItemType.Food, id);
                     itemSO = itemData.GetItemSOByID<FoodSO>(ItemType.Food, id);
-                    txtUseful.text = LocalizationManager.Instance.GetLocalizedValue(config.Useful);
                     itemConfig = config;
                 }
             break;
+            case ItemType.GemStone:
+                {
+                    GemStoneConfig config = itemData.GetItemConfigByID<GemStoneConfig>(ItemType.GemStone, id);
+                    itemSO = itemData.GetItemSOByID<GemStoneSO>(ItemType.GemStone, id);
+                    itemConfig = config;
+                }
+                break;
         }
-
+        txtUseful.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Useful);
         icon.sprite = itemSO.Icon;
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
         txtOwned.text = item.Count.ToString();

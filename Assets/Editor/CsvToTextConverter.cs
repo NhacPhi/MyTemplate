@@ -122,6 +122,9 @@ public static class CsvToTextConverter
                     case "Weapon":
                         ExportSheet<WeaponConfig>(sheet, sheetName);
                         break;
+                    case "GemStone":
+                        ExportSheet<GemStoneConfig>(sheet, sheetName);
+                        break;
                     default: break;
                 }
             }

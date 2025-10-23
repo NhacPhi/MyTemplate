@@ -19,6 +19,7 @@ public class InventoryUI : MonoBehaviour
 
     private List<GameObject> weapons = new();
     private List<GameObject> items = new();
+    private List<GameObject> matterials = new();
 
     private ItemCardInfoUI itemCard;
     private WeaponCardInfoUI weaponCard;
@@ -60,9 +61,23 @@ public class InventoryUI : MonoBehaviour
             var obj = Instantiate(prefabItem, content.transform);
             var weaponConfig = itemDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
             var weaponSO = itemDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID);
+            if (weaponConfig == null || weaponSO == null)
+            {
+                Debug.Log("ItemID: " + item.ID);
+                continue;
+            }    
+
+
             obj.GetComponent<ItemUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.Count);
             obj.SetActive(false);
-            items.Add(obj);
+            if(item.Type == ItemType.Food)
+            {
+                items.Add(obj);
+            }
+            else if(item.Type == ItemType.GemStone)
+            {
+                matterials.Add(obj);
+            }
         }
         itemCard.UpdateItemCardInfor(save.Player.Items[0].ID);
     }
@@ -86,11 +101,11 @@ public class InventoryUI : MonoBehaviour
                         item.gameObject.SetActive(true);
                         //item.transform.SetParent(content.transform, false);
                     }
-                    WeaponUI ui = weapons[0].gameObject.GetComponent<WeaponUI>();
-                    if(ui != null)
+                    WeaponUI weonUI = weapons[0].gameObject.GetComponent<WeaponUI>();
+                    if(weonUI != null)
                     {
-                        ui.OnSwitchStatusBoder(true);
-                        UIEvent.OnSelectInventoryItem?.Invoke(ui.ID);
+                        weonUI.OnSwitchStatusBoder(true);
+                        UIEvent.OnSelectInventoryItem?.Invoke(weonUI.ID);
                         //weaponCard.UpdateWeaponCardInfor(ui.ID);
                     }
                 }
@@ -109,13 +124,34 @@ public class InventoryUI : MonoBehaviour
                         item.gameObject.SetActive(true);
                         //item.transform.SetParent(content.transform, false);
                     }
-                    ItemUI ui = items[0].gameObject.GetComponent<ItemUI>();
-                    if (ui != null)
+                    ItemUI itemUI = items[0].gameObject.GetComponent<ItemUI>();
+                    if (itemUI != null)
                     {
-                        UIEvent.OnSelectInventoryItem?.Invoke(ui.ID);
-                        ui.OnSwitchStatusBoder(true);
+                        UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
+                        itemUI.OnSwitchStatusBoder(true);
                         //itemCard.UpdateItemCardInfor(ui.ID);
                     }                 
+                }
+                break;
+            case ItemType.Material:
+                if (currentItemType != ItemType.Material)
+                {
+                    weaponCardInfo.SetActive(false);
+                    iteamCardInfo.SetActive(true);
+                }
+                currentItemType = ItemType.Material;
+
+                foreach (var item in matterials)
+                {
+                    item.gameObject.SetActive(true);
+                    //item.transform.SetParent(content.transform, false);
+                }
+                ItemUI materialUI = matterials[0].gameObject.GetComponent<ItemUI>();
+                if (materialUI != null)
+                {
+                    materialUI.OnSwitchStatusBoder(true);
+                    UIEvent.OnSelectInventoryItem?.Invoke(materialUI.ID);
+                    //weaponCard.UpdateWeaponCardInfor(ui.ID);
                 }
                 break;
         }
