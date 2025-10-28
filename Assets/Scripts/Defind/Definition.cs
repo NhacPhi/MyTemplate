@@ -46,4 +46,26 @@ public enum WeaponType
     Normal
 }
 
+public enum ArmorPart
+{
+    Helmet,
+    Chestplate,
+    Gloves,
+    Boots,
+    Belt,
+    Ring
+}
+
+public enum StatPool
+{
+    HP,
+    ATK,
+    DEF,
+    SPD,
+    ARM_PEN,
+    CRIT,
+    CIRT_DMG,
+    EFF_RES,
+    ACC
+}
 

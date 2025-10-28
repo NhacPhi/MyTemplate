@@ -15,7 +15,7 @@ public class PlayerSave
     private Dictionary<CurrencyType, int> currencies;
     private List<Weapon> weapons;
     List<Item> items;
-    
+    List<Armor> armors;
 
     public string PlayerName { get { return playerName; } set { playerName = value; } }
     public int Level { get { return level; } set { level = value; } }
@@ -24,6 +24,7 @@ public class PlayerSave
     public Dictionary<CurrencyType, int> Currencies { get { return currencies; } set { currencies = value; } }
     public List<Weapon> Weapons { get { return weapons; } set { weapons = value; } }
     public List<Item> Items { get { return items; } set { items = value; } }
+    public List<Armor> Armors { get { return armors; } set { armors = value; } }
     public PlayerSave() { }
 
     public Weapon GetWeapon(string id)
@@ -34,6 +35,11 @@ public class PlayerSave
     public Item GetItem(string id)
     {
         return items.Find(v => v.ID == id);
+    }
+
+    public Armor GetArmor(string id)
+    {
+        return armors.Find(v => v.InstanceID == id);
     }
 
     public List<Item> GetAllItemByType(ItemType type)

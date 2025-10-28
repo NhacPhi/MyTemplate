@@ -10,10 +10,12 @@ public class ItemDataBase : MonoBehaviour
     [SerializeField] private List<ItemBaseSO> weapons;
     [SerializeField] private List<ItemBaseSO> foods;
     [SerializeField] private List<ItemBaseSO> gemStones;
+    [SerializeField] private List<ItemBaseSO> armors;
 
     private List<WeaponConfig> weaponConfig;
     private List<FoodConfig> foodConfig;
     private List<GemStoneConfig> gemStoneConfig;
+    private List<BaseArmorConfig> baseArmorConfig;
     public List<ItemBaseSO> Avatars { get { return avatars; } }
 
     private Dictionary<ItemType, List<ItemBaseSO>> dictionaryItemSO = new();
@@ -24,6 +26,7 @@ public class ItemDataBase : MonoBehaviour
         dictionaryItemSO.Add(ItemType.Food, foods);
         dictionaryItemSO.Add(ItemType.Avatar, avatars);
         dictionaryItemSO.Add(ItemType.GemStone, gemStones);
+        dictionaryItemSO.Add(ItemType.Armor, armors);
     }
 
     private void LoadItemDataConfig()
@@ -33,10 +36,12 @@ public class ItemDataBase : MonoBehaviour
         string fileWeapon = "Weapon.json";
         string fileFood = "Food.json";
         string fileGemStone = "GemStone.json";
+        string fileBaseArmor = "BaseArmor.json";
 
         Json.LoadJson(Path.Combine(path, fileWeapon), out weaponConfig);
         Json.LoadJson(Path.Combine(path, fileFood), out foodConfig);
         Json.LoadJson(Path.Combine(path, fileGemStone), out gemStoneConfig);
+        Json.LoadJson(Path.Combine(path, fileBaseArmor), out baseArmorConfig);
     }
 
     public T GetItemConfigByID<T>(ItemType type, string id) where T : ItemBaseConfig
@@ -49,6 +54,8 @@ public class ItemDataBase : MonoBehaviour
                 return foodConfig.Find(food => food.ID == id) as T;
             case ItemType.GemStone:
                 return gemStoneConfig.Find(gemstone => gemstone.ID == id) as T;
+            case ItemType.Armor:
+                return baseArmorConfig.Find(armor => armor.ID == id) as T;
         }
         return null;
     }

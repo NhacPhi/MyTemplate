@@ -31,7 +31,7 @@ public class InitializationLoader : MonoBehaviour
 
     private void LoadingScene(AsyncOperationHandle<SceneInstance> obj)
     {
-        GameEvent.OnLoadSceneLocation(_currentScene, true, false);
+        GameEvent.OnLoadSceneLocation(_currentScene, false, false);
         SceneManager.UnloadSceneAsync(0);
     }
 

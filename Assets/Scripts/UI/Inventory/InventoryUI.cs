@@ -14,12 +14,14 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private GameObject weaponCardInfo;
     [SerializeField] private GameObject iteamCardInfo;
+    [SerializeField] private GameObject armorCardInfo;
 
     private ItemType currentItemType = ItemType.Item;
 
     private List<GameObject> weapons = new();
     private List<GameObject> items = new();
     private List<GameObject> matterials = new();
+    private List<GameObject> armors = new();
 
     private ItemCardInfoUI itemCard;
     private WeaponCardInfoUI weaponCard;
@@ -60,13 +62,7 @@ public class InventoryUI : MonoBehaviour
         {
             var obj = Instantiate(prefabItem, content.transform);
             var weaponConfig = itemDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
-            var weaponSO = itemDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID);
-            if (weaponConfig == null || weaponSO == null)
-            {
-                Debug.Log("ItemID: " + item.ID);
-                continue;
-            }    
-
+            var weaponSO = itemDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID); 
 
             obj.GetComponent<ItemUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.Count);
             obj.SetActive(false);
@@ -80,6 +76,16 @@ public class InventoryUI : MonoBehaviour
             }
         }
         itemCard.UpdateItemCardInfor(save.Player.Items[0].ID);
+
+        foreach (var item in save.Player.Armors)
+        {
+            var obj = Instantiate(prefabArmor, content.transform);
+            var armorConfig = itemDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
+            var armorSO = itemDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
+            obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorSO.Icon, itemDataBase.GetRareBG(item.Rare), item.Level);
+            obj.SetActive(false);
+            armors.Add(obj);
+        }
     }
 
     public void OnShowAllItemInInventory(ItemType type)
@@ -93,6 +99,7 @@ public class InventoryUI : MonoBehaviour
                     {
                         weaponCardInfo.SetActive(true);
                         iteamCardInfo.SetActive(false);
+                        armorCardInfo.SetActive(false);
                     }
                     currentItemType = ItemType.Weapon;
  
@@ -115,6 +122,7 @@ public class InventoryUI : MonoBehaviour
                     if (currentItemType != ItemType.Item)
                     {
                         weaponCardInfo.SetActive(false);
+                        armorCardInfo.SetActive(false);
                         iteamCardInfo.SetActive(true);
                         currentItemType = ItemType.Item;
                     }
@@ -137,6 +145,7 @@ public class InventoryUI : MonoBehaviour
                 if (currentItemType != ItemType.Material)
                 {
                     weaponCardInfo.SetActive(false);
+                    armorCardInfo.SetActive(false);
                     iteamCardInfo.SetActive(true);
                 }
                 currentItemType = ItemType.Material;
@@ -152,6 +161,31 @@ public class InventoryUI : MonoBehaviour
                     materialUI.OnSwitchStatusBoder(true);
                     UIEvent.OnSelectInventoryItem?.Invoke(materialUI.ID);
                     //weaponCard.UpdateWeaponCardInfor(ui.ID);
+                }
+                break;
+            case ItemType.Armor:
+                {
+                    if (currentItemType != ItemType.Armor)
+                    {
+                        weaponCardInfo.SetActive(false);
+                        armorCardInfo.SetActive(true);
+                        iteamCardInfo.SetActive(false);
+                    }
+
+                    currentItemType = ItemType.Armor;
+
+                    foreach (var item in armors)
+                    {
+                        item.gameObject.SetActive(true);
+                    }
+                    ArmorItemUI armorUI = armors[0].gameObject.GetComponent<ArmorItemUI>();
+
+                    if (armorUI != null)
+                    {
+                        armorUI.OnSwitchStatusBoder(true);
+                        UIEvent.OnSelectInventoryItem?.Invoke(armorUI.ID);
+                        //weaponCard.UpdateWeaponCardInfor(ui.ID);
+                    }
                 }
                 break;
         }
@@ -177,11 +211,24 @@ public class InventoryUI : MonoBehaviour
                     }
                 }
             break;
-            case ItemType.Item:
+            case ItemType.Material:
                 {
-                    foreach (var item in items)
+                    foreach (var item in matterials)
                     {
                         var obj = item.GetComponent<ItemUI>();
+                        obj.OnSwitchStatusBoder(false);
+                        if (obj.ID == id)
+                        {
+                            obj.OnSwitchStatusBoder(true);
+                        }
+                    }
+                }
+                break;
+            case ItemType.Armor:
+                {
+                    foreach (var item in armors)
+                    {
+                        var obj = item.GetComponent<ArmorItemUI>();
                         obj.OnSwitchStatusBoder(false);
                         if (obj.ID == id)
                         {

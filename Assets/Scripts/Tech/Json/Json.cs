@@ -17,6 +17,7 @@ namespace Tech.Json
             TypeNameHandling = TypeNameHandling.Auto,
             Converters = { new StringEnumConverter() },
             Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore
         };
         
         public static IEncryption Encryption = new AES(_key, _iv);

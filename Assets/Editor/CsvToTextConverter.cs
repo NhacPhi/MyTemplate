@@ -125,6 +125,9 @@ public static class CsvToTextConverter
                     case "GemStone":
                         ExportSheet<GemStoneConfig>(sheet, sheetName);
                         break;
+                    case "BaseArmor":
+                        ExportSheet<BaseArmorConfig>(sheet, sheetName);
+                        break;
                     default: break;
                 }
             }
@@ -183,6 +186,10 @@ public static class CsvToTextConverter
                             {
                                 value = type;
                             }
+                            else if (Enum.TryParse<ArmorPart>(cell.StringCellValue, true, out var part))
+                            {
+                                value = part;
+                            }
                             else
                             {
                                 value = cell.StringCellValue;
@@ -207,7 +214,9 @@ public static class CsvToTextConverter
                     if (value != null)
                         field.SetValue(obj, System.Convert.ChangeType(value, field.PropertyType));
                     else
+                    {
                         hasValue = false;
+                    }
                 }
                 catch (System.Exception ex)
                 {
