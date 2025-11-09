@@ -11,12 +11,12 @@ public class InventoryScene : WindowController
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
     [Inject] private SaveSystem save;
-    [Inject] private ItemDataBase itemData;
+    [Inject] private GameDataBase gameDataBase;
     private void Start()
     {
         btnExit.onClick.AddListener(OnClose);
         currencyMM.UpdateCurrency();
-        inventory.Init(save, itemData);
+        inventory.Init(save, gameDataBase);
     }
 
    public void OnClose()

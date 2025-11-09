@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using DG.Tweening;
 
 public static class Utility 
 {
@@ -45,5 +46,15 @@ public static class Utility
                 return LocalizationManager.Instance.GetLocalizedValue("STR_LEGENDARY_ARMOR");
         }
         return "";
+    }
+
+    public static int GetCharacterExpByLevel(int level)
+    {
+        return 1800 + 1000 * (level - 1) + 600 * (level - 1) * (level - 1);
+    }
+
+    public static int GetCharacterStatGrowthLevel(int level, float growth)
+    {
+        return Convert.ToInt32(growth * (level - 1) * (0.7f + 0.03f * (level - 1)));
     }
 }

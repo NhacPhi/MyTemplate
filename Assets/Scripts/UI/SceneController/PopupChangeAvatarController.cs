@@ -16,7 +16,7 @@ public class PopupChangeAvatarController : WindowController
 
     [SerializeField] private Image avatarIcon;
 
-    [Inject] private ItemDataBase itemDataBase;
+    [Inject] private GameDataBase gameDataBase;
 
     [Inject] private SaveSystem save;
 
@@ -63,7 +63,7 @@ public class PopupChangeAvatarController : WindowController
         foreach (Transform child in gridParent)
             Destroy(child.gameObject);
 
-        foreach (var avatar in itemDataBase.Avatars)
+        foreach (var avatar in gameDataBase.Avatars)
         {
             var obj = Instantiate(avatarPrefab, gridParent);
             var avatarUI = obj.GetComponent<AvatarToggleUI>();
@@ -87,7 +87,7 @@ public class PopupChangeAvatarController : WindowController
 
     public void UpdateAvatarIcon(string id)
     {
-        avatarIcon.sprite = itemDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
+        avatarIcon.sprite = gameDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
         currentAvatarID = id;
     }
 }

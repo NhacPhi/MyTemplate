@@ -16,20 +16,21 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject iteamCardInfo;
     [SerializeField] private GameObject armorCardInfo;
 
-    private ItemType currentItemType = ItemType.Item;
+    private ItemType currentItemType = ItemType.None;
 
     private List<GameObject> weapons = new();
     private List<GameObject> items = new();
     private List<GameObject> matterials = new();
     private List<GameObject> armors = new();
+    private List<GameObject> shards = new();
+
+    private Dictionary<ItemType, List<GameObject>> dictionaryObject = new();
 
     private ItemCardInfoUI itemCard;
-    private WeaponCardInfoUI weaponCard;
 
     private void Awake()
     {
         itemCard = iteamCardInfo.GetComponent<ItemCardInfoUI>();
-        weaponCard = weaponCardInfo.GetComponent<WeaponCardInfoUI>();
     }
     private void Start()
     {
@@ -37,158 +38,90 @@ public class InventoryUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        UIEvent.OnSelectToggleTap += OnShowAllItemInInventory;
+        UIEvent.OnSelectToggleInventoryTap += OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem += OnClickItemUI;
     }
 
     private void OnDisable()
     {
-        UIEvent.OnSelectToggleTap -= OnShowAllItemInInventory;
+        UIEvent.OnSelectToggleInventoryTap -= OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem -= OnClickItemUI;
     }
-    public void Init(SaveSystem save, ItemDataBase itemDataBase)
+    public void Init(SaveSystem save, GameDataBase gameDataBase)
     {
         foreach (var item in save.Player.Weapons)
         {
             var obj = Instantiate(prefabWeapon, content.transform);
-            var weaponConfig = itemDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon,item.ID);
-            var weaponSO = itemDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, item.ID);
-            obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.CurrentLevel, item.CurrentUpgrade);
+            var weaponConfig = gameDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon,item.ID);
+            var weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, item.ID);
+            obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, gameDataBase.GetRareBG(weaponConfig.Rare), item.CurrentLevel, item.CurrentUpgrade);
             obj.SetActive(false);
             weapons.Add(obj);
         }
+        dictionaryObject.Add(ItemType.Weapon, weapons);
 
-        foreach(var item in save.Player.Items)
+        foreach (var item in save.Player.Items)
         {
             var obj = Instantiate(prefabItem, content.transform);
-            var weaponConfig = itemDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
-            var weaponSO = itemDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID); 
-
-            obj.GetComponent<ItemUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, itemDataBase.GetRareBG(weaponConfig.Rare), item.Count);
+            var itemConfig = gameDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
+            var itemSO = gameDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID); 
+            if(itemConfig == null || itemSO == null)
+            {
+                Debug.Log("ItemSO id: " + item.ID);
+                continue;
+            }
+            obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rare, itemSO.Icon, gameDataBase.GetRareBG(itemConfig.Rare), item.Quanlity);
             obj.SetActive(false);
             if(item.Type == ItemType.Food)
             {
                 items.Add(obj);
             }
-            else if(item.Type == ItemType.GemStone)
+            else if(item.Type == ItemType.GemStone || item.Type == ItemType.Exp)
             {
                 matterials.Add(obj);
             }
+            else if (item.Type == ItemType.Shard)
+            {
+                obj.GetComponent<ItemUI>().ActiveFragIcon(true);
+                shards.Add(obj);
+            }
         }
+        dictionaryObject.Add(ItemType.Item, items);
+        dictionaryObject.Add(ItemType.Material, matterials);
+        dictionaryObject.Add(ItemType.Shard, shards);
         itemCard.UpdateItemCardInfor(save.Player.Items[0].ID);
 
         foreach (var item in save.Player.Armors)
         {
             var obj = Instantiate(prefabArmor, content.transform);
-            var armorConfig = itemDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
-            var armorSO = itemDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
-            obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorSO.Icon, itemDataBase.GetRareBG(item.Rare), item.Level);
+            var armorConfig = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
+            var armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
+            obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorSO.Icon, gameDataBase.GetRareBG(item.Rare), item.Level);
             obj.SetActive(false);
             armors.Add(obj);
         }
+        dictionaryObject.Add(ItemType.Armor, armors);
     }
 
     public void OnShowAllItemInInventory(ItemType type)
     {
+        if (currentItemType == type) return;
         DeActiveAllObjectInContent();
-        switch (type)
+        List<GameObject> listItems = dictionaryObject.GetValueOrDefault(type);
+        currentItemType = type;
+        if (listItems == null) return;
+        foreach (var item in listItems)
         {
-            case ItemType.Weapon:
-                {
-                    if(currentItemType != ItemType.Weapon)
-                    {
-                        weaponCardInfo.SetActive(true);
-                        iteamCardInfo.SetActive(false);
-                        armorCardInfo.SetActive(false);
-                    }
-                    currentItemType = ItemType.Weapon;
- 
-                    foreach (var item in weapons)
-                    {
-                        item.gameObject.SetActive(true);
-                        //item.transform.SetParent(content.transform, false);
-                    }
-                    WeaponUI weonUI = weapons[0].gameObject.GetComponent<WeaponUI>();
-                    if(weonUI != null)
-                    {
-                        weonUI.OnSwitchStatusBoder(true);
-                        UIEvent.OnSelectInventoryItem?.Invoke(weonUI.ID);
-                        //weaponCard.UpdateWeaponCardInfor(ui.ID);
-                    }
-                }
-                break;
-            case ItemType.Item:
-                {
-                    if (currentItemType != ItemType.Item)
-                    {
-                        weaponCardInfo.SetActive(false);
-                        armorCardInfo.SetActive(false);
-                        iteamCardInfo.SetActive(true);
-                        currentItemType = ItemType.Item;
-                    }
-
-                    foreach (var item in items)
-                    {
-                        item.gameObject.SetActive(true);
-                        //item.transform.SetParent(content.transform, false);
-                    }
-                    ItemUI itemUI = items[0].gameObject.GetComponent<ItemUI>();
-                    if (itemUI != null)
-                    {
-                        UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
-                        itemUI.OnSwitchStatusBoder(true);
-                        //itemCard.UpdateItemCardInfor(ui.ID);
-                    }                 
-                }
-                break;
-            case ItemType.Material:
-                if (currentItemType != ItemType.Material)
-                {
-                    weaponCardInfo.SetActive(false);
-                    armorCardInfo.SetActive(false);
-                    iteamCardInfo.SetActive(true);
-                }
-                currentItemType = ItemType.Material;
-
-                foreach (var item in matterials)
-                {
-                    item.gameObject.SetActive(true);
-                    //item.transform.SetParent(content.transform, false);
-                }
-                ItemUI materialUI = matterials[0].gameObject.GetComponent<ItemUI>();
-                if (materialUI != null)
-                {
-                    materialUI.OnSwitchStatusBoder(true);
-                    UIEvent.OnSelectInventoryItem?.Invoke(materialUI.ID);
-                    //weaponCard.UpdateWeaponCardInfor(ui.ID);
-                }
-                break;
-            case ItemType.Armor:
-                {
-                    if (currentItemType != ItemType.Armor)
-                    {
-                        weaponCardInfo.SetActive(false);
-                        armorCardInfo.SetActive(true);
-                        iteamCardInfo.SetActive(false);
-                    }
-
-                    currentItemType = ItemType.Armor;
-
-                    foreach (var item in armors)
-                    {
-                        item.gameObject.SetActive(true);
-                    }
-                    ArmorItemUI armorUI = armors[0].gameObject.GetComponent<ArmorItemUI>();
-
-                    if (armorUI != null)
-                    {
-                        armorUI.OnSwitchStatusBoder(true);
-                        UIEvent.OnSelectInventoryItem?.Invoke(armorUI.ID);
-                        //weaponCard.UpdateWeaponCardInfor(ui.ID);
-                    }
-                }
-                break;
+            item.gameObject.SetActive(true);
         }
+
+        weaponCardInfo.SetActive(type == ItemType.Weapon ? true : false);
+        iteamCardInfo.SetActive((type == ItemType.Item || type == ItemType.Material || type == ItemType.Shard || ItemType.Exp == type) ? true : false);
+        armorCardInfo.SetActive(type == ItemType.Armor ? true : false);
+
+        InventoryItemUI itemUI = listItems[0].gameObject.GetComponent<InventoryItemUI>();
+        itemUI.OnSwitchStatusBoder(true);
+        UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
 
         // Force rebuild UI layout
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
@@ -196,47 +129,16 @@ public class InventoryUI : MonoBehaviour
 
     public void OnClickItemUI(string id)
     {
-        switch (currentItemType)
+        List<GameObject> listItem = dictionaryObject.GetValueOrDefault(currentItemType);
+        if (listItem == null) return;
+        foreach (var item in listItem)
         {
-            case ItemType.Weapon:
-                {
-                    foreach (var item in weapons)
-                    {
-                        var obj = item.GetComponent<WeaponUI>();
-                        obj.OnSwitchStatusBoder(false);
-                        if(obj.ID == id)
-                        {
-                            obj.OnSwitchStatusBoder(true);
-                        }
-                    }
-                }
-            break;
-            case ItemType.Material:
-                {
-                    foreach (var item in matterials)
-                    {
-                        var obj = item.GetComponent<ItemUI>();
-                        obj.OnSwitchStatusBoder(false);
-                        if (obj.ID == id)
-                        {
-                            obj.OnSwitchStatusBoder(true);
-                        }
-                    }
-                }
-                break;
-            case ItemType.Armor:
-                {
-                    foreach (var item in armors)
-                    {
-                        var obj = item.GetComponent<ArmorItemUI>();
-                        obj.OnSwitchStatusBoder(false);
-                        if (obj.ID == id)
-                        {
-                            obj.OnSwitchStatusBoder(true);
-                        }
-                    }
-                }
-                break;
+            var obj = item.GetComponent<InventoryItemUI>();
+            obj.OnSwitchStatusBoder(false);
+            if (obj.ID == id)
+            {
+                obj.OnSwitchStatusBoder(true);
+            }
         }
     }
     

@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class CharacterToggle : ToggleBase
+{
+    [SerializeField] private CharacterTap type;
+    public CharacterTap Type => type;
+
+    private void OnEnable()
+    {
+        if(type == CharacterTap.Info) {
+            toggle.isOn = true;
+        }
+        else
+        {
+            toggle.isOn = false;
+        }    
+    }
+    public void Setup(ToggleGroup group, CharacterTap type)
+    {
+        toggle.group = group;
+        this.type = type;
+    }
+
+    public override void OnSelected(bool isOn)
+    {
+        if (isOn)
+        {
+            UIEvent.OnSelectToggleCharacterTap?.Invoke(type);
+        }
+    }
+}
+
+public enum CharacterTap
+{
+    None,
+    Info,
+    Cultivate,
+    Ascend,
+    Armor,
+    Relic
+}

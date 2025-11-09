@@ -120,7 +120,7 @@ public class MeshCombiner : MonoBehaviour
     {
         if (vertex_count > VertexLimit)
         {
-            Debug.Log("Too Many Vertices to combine full mesh, splitting into sub meshes: " + transform.parent.name + "/" + gameObject.name + "\n Vertex Count: " + vertex_count);
+            Debug.Log("Too Many Vertices to combine full mesh, splitting into sub meshes: " + transform.parent.name + "/" + gameObject.name + "\n Vertex Quanlity: " + vertex_count);
             return true;
         }
         return false;

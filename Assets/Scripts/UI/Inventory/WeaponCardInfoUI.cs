@@ -19,7 +19,7 @@ public class WeaponCardInfoUI : MonoBehaviour
     [SerializeField] private GameObject content;
 
     [Inject] private IObjectResolver _objectResolver;
-    [Inject] private ItemDataBase itemData;
+    [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
 
     // Start is called before the first frame update
@@ -40,9 +40,9 @@ public class WeaponCardInfoUI : MonoBehaviour
 
     public void UpdateWeaponCardInfor(string id)
     {
-        Weapon weapon = save.Player.GetWeapon(id);
-        WeaponConfig config = itemData.GetItemConfigByID<WeaponConfig>(ItemType.Weapon, id);
-        WeaponSO weaponSO = itemData.GetItemSOByID<WeaponSO>(ItemType.Weapon, id);
+        WeaponData weapon = save.Player.GetWeapon(id);
+        WeaponConfig config = gameDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon, id);
+        WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, id);
         txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  "+ weapon.CurrentLevel.ToString();
         txtHPNumber.text = config.HP.ToString();
@@ -55,6 +55,6 @@ public class WeaponCardInfoUI : MonoBehaviour
 
         // Force rebuild UI layout
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
-        weaponUI.Init(weapon.ID, config.Rare, weaponSO.Icon, itemData.GetRareBG(config.Rare), weapon.CurrentLevel, weapon.CurrentUpgrade);
+        weaponUI.Init(weapon.ID, config.Rare, weaponSO.Icon, gameDataBase.GetRareBG(config.Rare), weapon.CurrentLevel, weapon.CurrentUpgrade);
     }    
 }

@@ -128,6 +128,21 @@ public static class CsvToTextConverter
                     case "BaseArmor":
                         ExportSheet<BaseArmorConfig>(sheet, sheetName);
                         break;
+                    case "Shard":
+                        ExportSheet<ShardConfig>(sheet, sheetName);
+                        break;
+                    case "Character":
+                        ExportSheet<CharacterConfig>(sheet, sheetName);
+                        break;
+                    case "CharacterStat":
+                        ExportSheet<CharacterStatConfig>(sheet, sheetName);
+                        break;
+                    case "CharacterUpgrade":
+                        ExportSheet<CharacterUpgradeConfig>(sheet, sheetName);
+                        break;
+                    case "Exp":
+                        ExportSheet<ExpConfig>(sheet, sheetName);
+                        break;
                     default: break;
                 }
             }
@@ -182,16 +197,20 @@ public static class CsvToTextConverter
                             {
                                 value = rare;
                             }
-                            else if (Enum.TryParse<WeaponType>(cell.StringCellValue, true, out var type))
-                            {
-                                value = type;
-                            }
                             else if (Enum.TryParse<ArmorPart>(cell.StringCellValue, true, out var part))
                             {
                                 value = part;
                             }
-                            else
+                            else if (Enum.TryParse<CharacterRare>(cell.StringCellValue, true, out var characterRare))
                             {
+                                value = characterRare;
+                            }
+                            else if (Enum.TryParse<CharacterType>(cell.StringCellValue, true, out var characterType))
+                            {
+                                value = characterType;
+                            }
+                            else
+                            { 
                                 value = cell.StringCellValue;
                             }
                             break;

@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class ItemCardInfoUI : MonoBehaviour
 {
@@ -15,8 +14,9 @@ public class ItemCardInfoUI : MonoBehaviour
     [SerializeField] private GameObject content;
 
     [Inject] private IObjectResolver _objectResolver;
-    [Inject] private ItemDataBase itemData;
+    [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,30 +33,46 @@ public class ItemCardInfoUI : MonoBehaviour
     }
     public void UpdateItemCardInfor(string id)
     {
-        Item item = save.Player.GetItem(id);
+        ItemData item = save.Player.GetItem(id);
         ItemBaseConfig itemConfig = default;
         ItemBaseSO itemSO = default;
-        switch(item.Type)
+        string str = "";
+        switch (item.Type)
         {
             case ItemType.Food:
                 {
-                    FoodConfig config = itemData.GetItemConfigByID<FoodConfig>(ItemType.Food, id);
-                    itemSO = itemData.GetItemSOByID<FoodSO>(ItemType.Food, id);
+                    FoodConfig config = gameDataBase.GetItemConfigByID<FoodConfig>(ItemType.Food, id);
+                    itemSO = gameDataBase.GetItemSOByID<FoodSO>(ItemType.Food, id);
                     itemConfig = config;
                 }
             break;
             case ItemType.GemStone:
                 {
-                    GemStoneConfig config = itemData.GetItemConfigByID<GemStoneConfig>(ItemType.GemStone, id);
-                    itemSO = itemData.GetItemSOByID<GemStoneSO>(ItemType.GemStone, id);
+                    GemStoneConfig config = gameDataBase.GetItemConfigByID<GemStoneConfig>(ItemType.GemStone, id);
+                    itemSO = gameDataBase.GetItemSOByID<GemStoneSO>(ItemType.GemStone, id);
+                    itemConfig = config;
+                }
+                break;
+            case ItemType.Shard:
+                {
+                    ShardConfig config = gameDataBase.GetItemConfigByID<ShardConfig>(ItemType.Shard, id);
+                    itemSO = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, id);
+                    itemConfig = config;
+                }
+                break;
+            case ItemType.Exp:
+                {
+                    ExpConfig config = gameDataBase.GetItemConfigByID<ExpConfig>(ItemType.Exp, id);
+                    itemSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, id);
+                    str = string.Format(LocalizationManager.Instance.GetLocalizedValue(config.Useful), config.Exp);
                     itemConfig = config;
                 }
                 break;
         }
-        txtUseful.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Useful);
+        txtUseful.text = item.Type == ItemType.Exp ? str : LocalizationManager.Instance.GetLocalizedValue(itemConfig.Useful);
         icon.sprite = itemSO.Icon;
-        txtName.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
-        txtOwned.text = item.Count.ToString();
+        txtName.text = (item.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " " ) : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+        txtOwned.text = item.Quanlity.ToString();
         txtDes.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Description);
 
 

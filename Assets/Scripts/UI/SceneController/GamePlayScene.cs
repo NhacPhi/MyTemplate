@@ -8,6 +8,7 @@ public class GamePlayScene : WindowController
     [SerializeField] private Button btnPlayerInfo;
 
     [SerializeField] private Button btnInventory;
+    [SerializeField] private Button btnCharacter;
 
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
@@ -26,6 +27,12 @@ public class GamePlayScene : WindowController
         {
             uiManager.HidePanel();
             uiManager.OpenWindowScene(ScreenIds.InventoryScene);
+        });
+
+        btnCharacter.onClick.AddListener(() =>
+        {
+            uiManager.HidePanel();
+            uiManager.OpenWindowScene(ScreenIds.CharacterScene);
         });
     }
 

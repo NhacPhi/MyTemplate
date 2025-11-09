@@ -199,7 +199,7 @@ MonoBehaviour:
   origin: 2
   isOutAnimation: 0
   duration: 0.25
-  doFade: 0
+  doFade: 1
   fadeDurationPercent: 0.25
   ease: 1
 --- !u!114 &615791395343549323
@@ -216,9 +216,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   origin: 2
   isOutAnimation: 1
-  duration: 0.25
-  doFade: 0
-  fadeDurationPercent: 0.25
+  duration: 0.5
+  doFade: 1
+  fadeDurationPercent: 0.5
   ease: 1
 --- !u!1 &6294001556837335670
 GameObject:

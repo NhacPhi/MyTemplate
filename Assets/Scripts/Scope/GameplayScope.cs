@@ -24,7 +24,7 @@ namespace Core.Scope
             // Hireachy
             builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
             builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
-            builder.RegisterComponentInHierarchy<ItemDataBase>().AsSelf();
+            builder.RegisterComponentInHierarchy<GameDataBase>().AsSelf();
 
             //Entry point
             builder.RegisterEntryPoint<GameplayPreLoad>(Lifetime.Scoped).As<IPreload>();

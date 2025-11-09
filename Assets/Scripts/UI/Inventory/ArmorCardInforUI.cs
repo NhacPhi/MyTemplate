@@ -10,7 +10,7 @@ public class ArmorCardInforUI : MonoBehaviour
 
 
     [Inject] private IObjectResolver _objectResolver;
-    [Inject] private ItemDataBase itemData;
+    [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
 
     // Start is called before the first frame update
@@ -32,12 +32,12 @@ public class ArmorCardInforUI : MonoBehaviour
 
     public void UpdateArmorItemCardInfor(string id)
     {
-        Armor item = save.Player.GetArmor(id);
-        BaseArmorConfig config = itemData.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
-        ArmorSO armorSO = itemData.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
+        ArmorData item = save.Player.GetArmor(id);
+        BaseArmorConfig config = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
+        ArmorSO armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
 
         txtNameItem.text = Utility.GetArmorPartName(config.Part) + " " + Utility.GetArmorRaretName(item.Rare) + "-" + LocalizationManager.Instance.GetLocalizedValue(config.Name);
 
-        armor.Init(item.InstanceID, item.Rare, armorSO.Icon, itemData.GetRareBG(item.Rare), item.Level);
+        armor.Init(item.InstanceID, item.Rare, armorSO.Icon, gameDataBase.GetRareBG(item.Rare), item.Level);
     }
 }

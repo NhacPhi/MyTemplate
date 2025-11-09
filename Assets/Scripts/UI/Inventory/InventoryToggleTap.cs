@@ -1,17 +1,11 @@
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using Unity.VisualScripting;
 
-public class InventoryToggleTap : MonoBehaviour
+public class InventoryToggleTap : ToggleBase
 {
     [SerializeField] private ItemType type;
-    private Toggle toggle;
 
-    private void Start()
-    {
-        toggle = GetComponent<Toggle>();
-        toggle.onValueChanged.AddListener(OnSelected);
-    }
     public ItemType Type => type;
 
     public void Setup(ToggleGroup group, ItemType type)
@@ -20,11 +14,11 @@ public class InventoryToggleTap : MonoBehaviour
         this.type = type;
     }
 
-    private void OnSelected(bool isOn)
+    public override void OnSelected(bool isOn)
     {
         if (isOn)
         {
-            UIEvent.OnSelectToggleTap?.Invoke(type);
+            UIEvent.OnSelectToggleInventoryTap?.Invoke(type);
         }
     }
 }

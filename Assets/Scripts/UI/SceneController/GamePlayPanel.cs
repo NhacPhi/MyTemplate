@@ -14,7 +14,7 @@ public class GamePlayPanel : PanelController
 
     [Inject] private UIManager uiManager;
     [Inject] private SaveSystem save;
-    [Inject] private ItemDataBase itemData;
+    [Inject] private GameDataBase gameDataBase;
 
     private void Start()
     {
@@ -49,6 +49,6 @@ public class GamePlayPanel : PanelController
 
     public void UpdateAvatarIconOnPanel(string id)
     {
-        avatarIcon.sprite = itemData.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
+        avatarIcon.sprite = gameDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
     }   
 }

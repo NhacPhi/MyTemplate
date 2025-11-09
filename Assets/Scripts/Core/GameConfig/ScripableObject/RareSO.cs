@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "RareBG", menuName = "Game/Item/Rare")]
+[CreateAssetMenu(fileName = "RareBG", menuName = "Game/ItemData/Rare")]
 public class RareSO : ScriptableObject
 {
     [SerializeField] private Rare type;
