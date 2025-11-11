@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using DG.Tweening;
@@ -48,13 +48,34 @@ public static class Utility
         return "";
     }
 
+    // Stat Growth level
+    //Stat(level)=Base+Growth×(level-1)×(0.7+0.03×(level-1))
     public static int GetCharacterExpByLevel(int level)
     {
         return 1800 + 1000 * (level - 1) + 600 * (level - 1) * (level - 1);
     }
 
+    //Exp to upgrade
+    //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
     public static int GetCharacterStatGrowthLevel(int level, float growth)
     {
         return Convert.ToInt32(growth * (level - 1) * (0.7f + 0.03f * (level - 1)));
+    }
+
+    //Coin to upgrade
+    //Cost(level)=BaseCost+Growth×(level−1)2
+    public static int GetCoinNeedToUpgradeCacultivate(int level)
+    {
+        return 3000 + 2000 * (level - 1) * (level - 1);
+    }
+
+    public static int GetShardNeedToUpgradeAscend(int boostStats)
+    {
+        int boost = (boostStats - 1) / 3;
+        return 60 + 60 * boost;
+    }
+    public static int GetCoinNeedToUpgradeAscend(int boostStats)
+    {
+        return 8000 + 4000 * (boostStats - 1) * (boostStats - 1);
     }
 }

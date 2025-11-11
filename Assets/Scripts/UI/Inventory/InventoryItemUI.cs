@@ -14,6 +14,13 @@ public class InventoryItemUI : MonoBehaviour, IPointerClickHandler
     private string id;
     public string ID => id;
 
+    private bool canClick = true;
+    public bool CanClick
+    {
+        get { return canClick; }
+        set { canClick = value; }
+    }
+
     public virtual void Setup(string id, Rare rare , Sprite icon, Sprite background)
     {
         this.id = id;
@@ -27,12 +34,16 @@ public class InventoryItemUI : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         UIEvent.OnSelectInventoryItem?.Invoke(id);
+        UIEvent.OnSelectCharacterArmorUI?.Invoke(ID);
         OnSwitchStatusBoder(true);
     }
 
     public void OnSwitchStatusBoder(bool selected)
     {
-        boder.color = selected ? Definition.SeletedColor : color;
+        if(canClick)
+        {
+            boder.color = selected ? Definition.SeletedColor : color;
+        }
     }
 
     private void SetBoderFollowRare()

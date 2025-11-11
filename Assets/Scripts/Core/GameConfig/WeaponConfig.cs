@@ -12,5 +12,5 @@ public class WeaponConfig : ItemBaseConfig
     public CharacterType Type { get { return type; } set { type = value; } }
     public string SkillDes { get { return skillDes; } set { skillDes = value; } }
     public int HP { get { return hp; } set { hp = value; } }
-    public int Atk { get { return atk; } set { atk = value; } }
+    public int ATK { get { return atk; } set { atk = value; } }
 }

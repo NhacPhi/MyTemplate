@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+using System.Collections.Generic;
 
 public class CharacterCardCultivate : CharacterCard
 {
@@ -20,21 +21,35 @@ public class CharacterCardCultivate : CharacterCard
     [SerializeField] private TextMeshProUGUI txtNextATK;
     [SerializeField] private TextMeshProUGUI txtNextDEF;
 
+    [SerializeField] private List<ItemUI> exps;
+    [SerializeField] private TextMeshProUGUI txtCoin;
+    [SerializeField] private TextMeshProUGUI txtCoinUpdateLv10;
+
     [Inject] private IObjectResolver _objectResolver;
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
+
+    private void Awake()
+    {
+        UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardCultivate;
+    }
     // Start is called before the first frame update
     void Start()
     {
         _objectResolver.Inject(this);
+        for(int i = 0; i < exps.Count; i++)
+        {
+            ExpConfig expConfig = gameDataBase.ExpConfig[i];
+            ItemBaseSO expSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, expConfig.ID);
+            ItemData itemData = save.Player.GetItem(expConfig.ID);
+            exps[i].Init(expConfig.ID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), itemData.Quanlity);
+            exps[i].CanClick = false;
+        }
+
     }
 
-    private void OnEnable()
-    {
-        UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardCultivate;
-    }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardCultivate;
     }
@@ -81,6 +96,8 @@ public class CharacterCardCultivate : CharacterCard
             txtNextHP.text = txtNextATK.text = txtNextDEF.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
         }
 
+        txtCoin.text = Utility.GetCoinNeedToUpgradeCacultivate(data.Level + 1).ToString();
+        txtCoinUpdateLv10.text = (Utility.GetCoinNeedToUpgradeCacultivate(10) - Utility.GetCoinNeedToUpgradeCacultivate(data.Level)).ToString();
     }
 
 }

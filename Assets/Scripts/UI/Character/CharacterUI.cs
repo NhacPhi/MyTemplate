@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+using TMPro;
 
 public class CharacterUI : MonoBehaviour
 {
@@ -20,7 +21,12 @@ public class CharacterUI : MonoBehaviour
     [Inject] private IObjectResolver _objectResolver;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
+    [Inject] private CurrencyManager currencyMM;
+    [Inject] private CharacterStatManager characterStatMM;
+
     [SerializeField] private Image characterImage;
+    [SerializeField] private CharacterWeaponUI waeponUI;
+    [SerializeField] private TextMeshProUGUI txtPower;
 
     private string currentCharacter = "";
     private CharacterTap currentTap = CharacterTap.None;
@@ -43,7 +49,12 @@ public class CharacterUI : MonoBehaviour
         UIEvent.OnSelectCharacterAvatar -= SelectCharacterAvatar;
         UIEvent.OnSelectToggleCharacterTap -= ShowCharacterCard;
     }
-
+    private void Start()
+    {
+        currencyMM.UpdateCurrency();
+        ResetUI();
+        ShowCharacterCard(CharacterTap.Info);
+    }
     public void Init()
     {
         _objectResolver.Inject(this);
@@ -53,8 +64,6 @@ public class CharacterUI : MonoBehaviour
             obj.GetComponent<CharacterAvatar>().Init(character.ID, gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard,"shard_" + character.ID).Icon);
             avatars.Add(obj);
         }
-        ResetUI();
-        ShowCharacterCard(CharacterTap.Info);
     }
 
     private void ResetUI()
@@ -70,6 +79,16 @@ public class CharacterUI : MonoBehaviour
     {
         currentCharacter = id;
         characterImage.sprite = gameDataBase.GetCharacterSO(id).Icon;
+        string weaponID = save.Player.GetCharacter(currentCharacter).Weapon;
+        if(weaponID != "")
+        {
+            waeponUI.SetWeaponImage(gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, weaponID).BigIcon);
+        }
+        else
+        {
+            waeponUI.SetWeaponEmpty();
+        }
+
         foreach(var obj in avatars)
         {
             CharacterAvatar avatar = obj.gameObject.GetComponent<CharacterAvatar>();
@@ -84,6 +103,7 @@ public class CharacterUI : MonoBehaviour
                 }
             }
         }
+        txtPower.text = characterStatMM.GetCharacterPower(id).ToString();
     }
 
     public void ShowCharacterCard(CharacterTap type)

@@ -93,9 +93,7 @@ public enum StatPool
     EFF_RES,
     ACC
 }
-// Stat Growth level
-//Stat(level)=Base+Growth×(level?1)×(0.7+0.03×(level?1))
 
-//Exp to upgrade
-//ExpRequired(n)=1800+1000×(n?1)+600×(n?1)2
+
+
 

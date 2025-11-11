@@ -46,7 +46,7 @@ public class WeaponCardInfoUI : MonoBehaviour
         txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  "+ weapon.CurrentLevel.ToString();
         txtHPNumber.text = config.HP.ToString();
-        txtATKNumber.text = config.Atk.ToString();
+        txtATKNumber.text = config.ATK.ToString();
         txtDes.text = LocalizationManager.Instance.GetLocalizedValue(config.Description);
         txtSkillDes.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
 

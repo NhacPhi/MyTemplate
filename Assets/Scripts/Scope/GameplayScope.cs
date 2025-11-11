@@ -17,6 +17,7 @@ namespace Core.Scope
             builder.Register<EventManager>(Lifetime.Scoped);
             builder.Register<SaveSystem>(Lifetime.Scoped);
             builder.Register<CurrencyManager>(Lifetime.Scoped);
+            builder.Register<CharacterStatManager>(Lifetime.Scoped);
 
 
             builder.RegisterComponent(uiSetings);

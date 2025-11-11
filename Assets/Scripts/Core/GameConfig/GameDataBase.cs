@@ -66,6 +66,8 @@ public class GameDataBase : MonoBehaviour
         Json.LoadJson(Path.Combine(path, fileExpConfig), out expConfig);
     }
 
+    public List<ExpConfig> ExpConfig => expConfig;
+
     public T GetItemConfigByID<T>(ItemType type, string id) where T : ItemBaseConfig
     {
         switch (type)
@@ -117,6 +119,11 @@ public class GameDataBase : MonoBehaviour
     public CharacterUpgradeConfig GetCharacterUpgradeConfig(string id)
     {
         return characterUpgradeConfig.Find(charcter => charcter.ID == id);
+    }
+
+    public WeaponConfig GetWeaponConfig(string id)
+    {
+        return weaponConfig.Find(weapon => weapon.ID == id);
     }
     public Sprite GetRareBG(Rare type)
     {

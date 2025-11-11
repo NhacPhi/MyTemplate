@@ -14,6 +14,7 @@ public static class UIEvent
     //CharacterData
     public static Action<string> OnSelectCharacterAvatar;
     public static Action<CharacterTap> OnSelectToggleCharacterTap;
+    public static Action<string> OnSelectCharacterArmorUI;
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
 }

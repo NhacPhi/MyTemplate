@@ -22,14 +22,11 @@ public class CharacterCardInfo : CharacterCard
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
-    private void OnEnable()
+    [Inject] private CharacterStatManager characterStatMM;
+
+    private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardInfo;
-    }
-
-    private void OnDisable()
-    {
-        UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardInfo;
     }
 
     // Start is called before the first frame update
@@ -38,6 +35,10 @@ public class CharacterCardInfo : CharacterCard
         _objectResolver.Inject(this);
     }
 
+    private void OnDestroy()
+    {
+        UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardInfo;
+    }
     public void UpdateCharacterCardInfo(string id)
     {
         CharacterSO so = gameDataBase.GetCharacterSO(id);
@@ -52,15 +53,16 @@ public class CharacterCardInfo : CharacterCard
         txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString() ;
         iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
 
+        CharacterStatConfig stat = characterStatMM.GetCharacterStat(id);
 
-        txtHP.text = "1";
-        txtATK.text = "2";
-        txtDEF.text = "3";
-        txtSPD.text = "9";
-        txtDEFShred.text = "4";
-        txtCritRate.text = "5";
-        txtCriteDMG.text = "6";
-        txtPenetration.text = "7";
-        txtCritDGMRes.text = "8";
+        txtHP.text = stat.HP.ToString();
+        txtATK.text = stat.ATK.ToString();
+        txtDEF.text = stat.DEF.ToString();
+        txtSPD.text = stat.SPD.ToString();
+        txtDEFShred.text = stat.DEFShred.ToString();
+        txtCritRate.text = stat.CRITRate.ToString();
+        txtCriteDMG.text = stat.CRITDMG.ToString();
+        txtPenetration.text = stat.Penetration.ToString();
+        txtCritDGMRes.text = stat.CRITDMGRes.ToString();
     }
 }

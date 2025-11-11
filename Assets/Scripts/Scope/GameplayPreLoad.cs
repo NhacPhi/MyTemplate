@@ -13,6 +13,7 @@ namespace Core.Scope
         [Inject] private SaveSystem saveSystem;
         [Inject] private UIManager uiManager;
         [Inject] private CurrencyManager currencyMM;
+        [Inject] private CharacterStatManager characterStatMM;
 
         public bool IsDone;
 
@@ -22,6 +23,7 @@ namespace Core.Scope
             saveSystem.Init();
             saveSystem.LoadSaveDataFromDisk();
             currencyMM.Init();
+            characterStatMM.Init();
             //saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
             var tasks = new List<UniTask>()
             {
