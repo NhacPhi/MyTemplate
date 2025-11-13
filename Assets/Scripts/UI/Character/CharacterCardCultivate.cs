@@ -72,14 +72,14 @@ public class CharacterCardCultivate : CharacterCard
         sliderExp.value = data.Exp;
 
 
-        float currentHP = stat.HP + Utility.GetCharacterStatGrowthLevel(data.Level, upgrade.GrowthHP);
-        float nextHP = stat.HP + Utility.GetCharacterStatGrowthLevel(data.Level + 1, upgrade.GrowthHP);
+        float currentHP = stat.HP + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthHP);
+        float nextHP = stat.HP + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthHP);
 
-        float currentATK = stat.ATK + Utility.GetCharacterStatGrowthLevel(data.Level, upgrade.GrowthATK);
-        float nextATK = stat.ATK + Utility.GetCharacterStatGrowthLevel(data.Level + 1, upgrade.GrowthATK);
+        float currentATK = stat.ATK + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthATK);
+        float nextATK = stat.ATK + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthATK);
 
-        float currentDEF = stat.DEF + Utility.GetCharacterStatGrowthLevel(data.Level, upgrade.GrowthDEF);
-        float nextDEF = stat.DEF + Utility.GetCharacterStatGrowthLevel(data.Level + 1, upgrade.GrowthDEF);
+        float currentDEF = stat.DEF + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthDEF);
+        float nextDEF = stat.DEF + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthDEF);
 
         txtCurrentHP.text = currentHP.ToString();
         txtCurrentATK.text = currentATK.ToString();

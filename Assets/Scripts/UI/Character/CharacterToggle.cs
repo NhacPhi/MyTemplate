@@ -26,10 +26,25 @@ public class CharacterToggle : ToggleBase
 
     public override void OnSelected(bool isOn)
     {
-        if (isOn)
+        if(isOn)
         {
             UIEvent.OnSelectToggleCharacterTap?.Invoke(type);
+            if (type != CharacterTap.Relic)
+            {
+                UIEvent.OnCloseCharacterWeapon?.Invoke(true);
+                UIEvent.OnSlectectRelicTap?.Invoke(false);
+            }
+            else
+            {
+                UIEvent.OnCloseCharacterWeapon?.Invoke(false);
+                UIEvent.OnSlectectRelicTap?.Invoke(true);
+            }
         }
+    }
+
+    public void ActiveToggle()
+    {
+        toggle.isOn = true;
     }
 }
 

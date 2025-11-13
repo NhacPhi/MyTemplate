@@ -57,7 +57,7 @@ public static class Utility
 
     //Exp to upgrade
     //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
-    public static int GetCharacterStatGrowthLevel(int level, float growth)
+    public static int GetStatGrowthLevel(int level, float growth)
     {
         return Convert.ToInt32(growth * (level - 1) * (0.7f + 0.03f * (level - 1)));
     }
@@ -74,8 +74,23 @@ public static class Utility
         int boost = (boostStats - 1) / 3;
         return 60 + 60 * boost;
     }
-    public static int GetCoinNeedToUpgradeAscend(int boostStats)
+    public static int GetCoinNeedToAscendCharacter(int boostStats)
     {
         return 8000 + 4000 * (boostStats - 1) * (boostStats - 1);
+    }
+
+    public static int GetEssenceNeedToUpgradeWeapon(int level)
+    {
+        return 4200 + 3200 * (level - 1) * (level - 1);
+    }
+
+    public static int GetCoinNeedToUpgradeWeapon(int level)
+    {
+        return 5000 + 4800 * (level - 1) * (level - 1);
+    }
+
+    public static int GetCoinNeedToAsscendWeapon(int level)
+    {
+        return 12000 + 6000 * (level - 1) * (level - 1);
     }
 }

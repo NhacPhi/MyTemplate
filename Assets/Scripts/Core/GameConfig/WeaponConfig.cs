@@ -8,9 +8,13 @@ public class WeaponConfig : ItemBaseConfig
     private string skillDes;
     private int hp;
     private int atk;
+    private int growthHP;
+    private int growthATK;
 
     public CharacterType Type { get { return type; } set { type = value; } }
     public string SkillDes { get { return skillDes; } set { skillDes = value; } }
     public int HP { get { return hp; } set { hp = value; } }
     public int ATK { get { return atk; } set { atk = value; } }
+    public int GrowthHP { get { return growthHP; } set { growthHP = value; } }
+    public int GrowthATK { get { return growthATK; } set { growthATK = value; } }
 }

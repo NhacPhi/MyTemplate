@@ -39,6 +39,8 @@ public class CharacterWeaponUI : MonoBehaviour, IPointerClickHandler
         if(canClick)
         {
             //Open weapon menu
+            UIEvent.OnSelectToggleCharacterTap?.Invoke(CharacterTap.Relic);
+            UIEvent.OnSelectCharacterChangeWeapon?.Invoke("");
         }
     }
 }

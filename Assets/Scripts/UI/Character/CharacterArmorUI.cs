@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CharacterArmorUI : InventoryItemUI
+public class CharacterArmorUI : GameItemUI,IPointerClickHandler
 {
     [SerializeField] private ArmorPart type;
 
@@ -28,4 +29,9 @@ public class CharacterArmorUI : InventoryItemUI
        emptyIcon.gameObject.SetActive(empty);
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        UIEvent.OnSelectCharacterArmorUI?.Invoke(ID);
+        OnSwitchStatusBoder(true);
+    }
 }

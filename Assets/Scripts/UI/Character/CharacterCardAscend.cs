@@ -45,6 +45,6 @@ public class CharacterCardAscend : CharacterCard
         string shardID = "shard_" + config.ID;
         iconShard.sprite = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, shardID).Icon;
         txtNumberShard.text = save.Player.GetItem(shardID).Quanlity.ToString() + "/" + Utility.GetShardNeedToUpgradeAscend(data.BoostStats + 1);
-        txtCoin.text = Utility.GetCoinNeedToUpgradeAscend(data.BoostStats + 1).ToString();
+        txtCoin.text = Utility.GetCoinNeedToAscendCharacter(data.BoostStats + 1).ToString();
     }
 }

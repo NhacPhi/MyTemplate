@@ -54,6 +54,6 @@ public class CharacterStatManager
 
     private float GetStat(float baseStat, float growth, int level)
     {
-        return baseStat + Utility.GetCharacterStatGrowthLevel(level, growth);
+        return baseStat + Utility.GetStatGrowthLevel(level, growth);
     }
 }
