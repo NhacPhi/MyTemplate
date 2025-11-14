@@ -7,6 +7,7 @@ public enum CurrencyType
     Energy,
     Gem,
     Coin,
+    Essence,
     Ticket
 }
 public class CurrencyManager

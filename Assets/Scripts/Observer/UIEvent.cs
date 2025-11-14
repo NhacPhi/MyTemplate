@@ -26,5 +26,10 @@ public static class UIEvent
     public static Action<WeaponTap> OnSelectToggleWeaponTap;
     public static Action<string> OnSlelectWeaponEnchance;
 
+    // Armor
+    public static Action<ArmorPart> OnShowCharacterCategoryArmor;
+    public static Action<ArmorPart> OnUpdateCharacterCategoryArmor;
+    public static Action OnCloseCharacterCategoryArmor;
+
     public static Action<CurrencyType, int> OnCurrencyChanged;
 }

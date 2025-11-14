@@ -31,6 +31,7 @@ public class CharacterCardAscend : CharacterCard
     void Start()
     {
         _objectResolver.Inject(this);
+        UpdateCharacterCardAscend(save.Player.GetIDOfFirstCharacter().ID);
     }
 
     public void UpdateCharacterCardAscend(string id)

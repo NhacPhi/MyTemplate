@@ -19,6 +19,7 @@ public class WeaponAscendCard : MonoBehaviour
     [Inject] IObjectResolver _resolver;
     [Inject] GameDataBase gameDataBase;
     [Inject] SaveSystem save;
+
     private void Awake()
     {
         UIEvent.OnSlelectWeaponEnchance += UpdateWeaponAscendCard;

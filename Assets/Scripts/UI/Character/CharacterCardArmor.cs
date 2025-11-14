@@ -33,6 +33,7 @@ public class CharacterCardArmor : CharacterCard
     void Start()
     {
         _objectResolver.Inject(this);
+        UpdateCharacterCardArmor(save.Player.GetIDOfFirstCharacter().ID);
     }
 
     private void OnEnable()
@@ -104,16 +105,19 @@ public class CharacterCardArmor : CharacterCard
 
     private void SelectCharacterArmorUI(string id)
     {
-        Part part = save.Player.GetCharacter(currentCharacterID).Armors.Find(part => part.ID == id);
-        for (int i = 0; i < armors.Count; i++)
+        if (id != "")
         {
-            if (armors[i].Type == part.Type)
+            Part part = save.Player.GetCharacter(currentCharacterID).Armors.Find(part => part.ID == id);
+            for (int i = 0; i < armors.Count; i++)
             {
-                armors[i].OnSwitchStatusBoder(true);
-            }
-            else
-            {
-                armors[i].OnSwitchStatusBoder(false);
+                if (armors[i].Type == part.Type)
+                {
+                    armors[i].OnSwitchStatusBoder(true);
+                }
+                else
+                {
+                    armors[i].OnSwitchStatusBoder(false);
+                }
             }
         }
     }

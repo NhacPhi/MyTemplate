@@ -46,6 +46,7 @@ public class CharacterCardCultivate : CharacterCard
             exps[i].CanClick = false;
         }
 
+        UpdateCharacterCardCultivate(save.Player.GetIDOfFirstCharacter().ID);
     }
 
 

@@ -33,6 +33,7 @@ public class CharacterCardInfo : CharacterCard
     void Start()
     {
         _objectResolver.Inject(this);
+        UpdateCharacterCardInfo(save.Player.GetIDOfFirstCharacter().ID);
     }
 
     private void OnDestroy()

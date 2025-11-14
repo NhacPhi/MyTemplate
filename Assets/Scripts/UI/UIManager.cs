@@ -26,18 +26,12 @@ public class UIManager : MonoBehaviour
     }
     private void Awake()
     {
-        _uiFrame = _defaultUISettings.CreateUIInstance();
+
     }
 
-
-    private async UniTask Init(CancellationToken token)
+    public void Init()
     {
-        //var uiSettings = await AddressablesManager.Instance.LoadAssetAsync<UISettings>(
-        //       AddressConstant.UISetting, token: token);
-
-        //_defaultUISettings = uiSettings;
-
-        //AddressablesManager.Instance.RemoveAsset(AddressConstant.UISetting);
+        _uiFrame = _defaultUISettings.CreateUIInstance();
     }
 
     public void OpenWindowScene(string id)

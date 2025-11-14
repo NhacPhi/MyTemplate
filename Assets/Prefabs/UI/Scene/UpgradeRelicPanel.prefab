@@ -7981,6 +7981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4009112260101780068}
+  - component: {fileID: 4250765159644578605}
   m_Layer: 5
   m_Name: Currency
   m_TagString: Untagged
@@ -8009,6 +8010,20 @@ RectTransform:
   m_AnchoredPosition: {x: 16, y: -50.74701}
   m_SizeDelta: {x: 0, y: 101.494}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4250765159644578605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4573848896344193018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6023bd4cf4a5a5a4b8ca2a6cc5475301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtCoin: {fileID: 44693552511568790}
+  txtEssence: {fileID: 7555671793471155747}
 --- !u!1 &4641274487071136373
 GameObject:
   m_ObjectHideFlags: 0
@@ -9436,7 +9451,7 @@ GameObject:
   - component: {fileID: 2241891722903582234}
   - component: {fileID: 7555671793471155747}
   m_Layer: 5
-  m_Name: txtNumberCoin
+  m_Name: txtNumberEssence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

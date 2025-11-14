@@ -33,9 +33,7 @@ namespace UIFramework
 
             if (instanceAndRegisterScreens) {
                 foreach (var screen in screensToRegister) {
-                    screen.SetActive(false);
                     var screenInstance = _objectResolver.Instantiate(screen); //Instantiate(screen);
-                    //_objectResolver?.InjectGameObject(screenInstance);
                     var screenController = screenInstance.GetComponent<IUIScreenController>();
 
                     if (screenController != null) {

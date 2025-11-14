@@ -48,6 +48,11 @@ public class PlayerSave
     {
         return characters.Find(v => v.ID == id);
     }
+
+    public CharacterData GetIDOfFirstCharacter()
+    {
+        return characters[0];
+    }
     public List<ItemData> GetAllItemByType(ItemType type)
     {
         List<ItemData> list = new List<ItemData>();

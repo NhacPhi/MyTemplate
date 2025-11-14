@@ -31,6 +31,8 @@ public class CharacterArmorUI : GameItemUI,IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        UIEvent.OnShowCharacterCategoryArmor?.Invoke(type);
+        UIEvent.OnUpdateCharacterCategoryArmor?.Invoke(type);
         UIEvent.OnSelectCharacterArmorUI?.Invoke(ID);
         OnSwitchStatusBoder(true);
     }

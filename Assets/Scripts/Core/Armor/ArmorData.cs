@@ -8,11 +8,11 @@ public class ArmorData
     private int level;
     private Rare rare;
     private Dictionary<StatPool, int> baseStats;
-    private bool isEquip;
+    private string equip;
     public string InstanceID { get { return instanceID; } set { instanceID = value; } }
     public string TemplateID { get { return templateID; } set { templateID = value; } }
     public Rare Rare { get { return rare; } set { rare = value; } }
     public int Level { get { return level; } set { level = value; } }
     public Dictionary<StatPool, int> BaseStats { get { return baseStats; } set { baseStats = value; } }
-    public bool IsEquip { get { return isEquip; } set { isEquip = value; } }
+    public string Equip { get { return equip; } set { equip = value; } }
 }

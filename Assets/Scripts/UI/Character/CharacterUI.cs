@@ -30,6 +30,7 @@ public class CharacterUI : MonoBehaviour
 
     [SerializeField] private GameObject characterStatInfo;
     [SerializeField] private GameObject characterWeapon;
+    [SerializeField] private GameObject characterArmor;
 
     [SerializeField] private List<CharacterToggle> taps;
 
@@ -45,6 +46,10 @@ public class CharacterUI : MonoBehaviour
         UIEvent.OnSelectCharacterChangeWeapon += ShowCharacterWeapon;
         UIEvent.OnCloseCharacterWeapon += CloseCharacterWeapon;
         UIEvent.OnSlectectRelicTap += OnSelectedRelicTap;
+
+
+        UIEvent.OnShowCharacterCategoryArmor += ShowCharacterArmor;
+        UIEvent.OnCloseCharacterCategoryArmor += HideCharacterArmor;
         if (avatars.Count > 0 )
         {
             ResetUI();
@@ -62,6 +67,9 @@ public class CharacterUI : MonoBehaviour
         UIEvent.OnSelectCharacterChangeWeapon -= ShowCharacterWeapon;
         UIEvent.OnCloseCharacterWeapon -= CloseCharacterWeapon;
         UIEvent.OnSlectectRelicTap -= OnSelectedRelicTap;
+
+        UIEvent.OnShowCharacterCategoryArmor -= ShowCharacterArmor;
+        UIEvent.OnCloseCharacterCategoryArmor -= HideCharacterArmor;
     }
     private void Start()
     {
@@ -97,6 +105,7 @@ public class CharacterUI : MonoBehaviour
     {
         avatars[0].gameObject.GetComponent<CharacterAvatar>().HandleOnClickEvent();
         CloseCharacterWeapon(true);
+        HideCharacterArmor();
     }
 
     public void SelectCharacterAvatar(string id)
@@ -166,7 +175,7 @@ public class CharacterUI : MonoBehaviour
         {
             if (tap.Type == type)
             {
-                tap.ActiveToggle();
+                tap.ActiveToggle(true);
             }
         }
     }
@@ -190,6 +199,19 @@ public class CharacterUI : MonoBehaviour
             isOpenWeaponCategpry = false;
         }
     }
+
+    public void ShowCharacterArmor(ArmorPart part)
+    {
+        characterStatInfo.gameObject.SetActive(false);
+        characterArmor.gameObject.SetActive(true);
+    }
+
+    public void HideCharacterArmor()
+    {
+        characterStatInfo.gameObject.SetActive(true);
+        characterArmor.gameObject.SetActive(false);
+    }
+
 
     public void OnSelectedRelicTap(bool value)
     {

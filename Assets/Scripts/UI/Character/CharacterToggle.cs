@@ -29,6 +29,11 @@ public class CharacterToggle : ToggleBase
         if(isOn)
         {
             UIEvent.OnSelectToggleCharacterTap?.Invoke(type);
+            if (type != CharacterTap.Armor)
+            {
+                UIEvent.OnCloseCharacterCategoryArmor?.Invoke();
+            }
+
             if (type != CharacterTap.Relic)
             {
                 UIEvent.OnCloseCharacterWeapon?.Invoke(true);
@@ -40,11 +45,6 @@ public class CharacterToggle : ToggleBase
                 UIEvent.OnSlectectRelicTap?.Invoke(true);
             }
         }
-    }
-
-    public void ActiveToggle()
-    {
-        toggle.isOn = true;
     }
 }
 

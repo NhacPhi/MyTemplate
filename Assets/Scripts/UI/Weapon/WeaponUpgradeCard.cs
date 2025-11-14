@@ -39,7 +39,7 @@ public class WeaponUpgradeCard : MonoBehaviour
     }
     public void UpdatedWeaponUpgradeCard(string weaponID)
     {
-        if(weaponID != null)
+        if(weaponID != "")
         {
             WeaponConfig config = gameDataBase.GetWeaponConfig(weaponID);
             WeaponData data = save.Player.GetWeapon(weaponID);

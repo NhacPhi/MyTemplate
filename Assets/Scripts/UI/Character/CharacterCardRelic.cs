@@ -20,9 +20,10 @@ public class CharacterCardRelic : CharacterCard
     [SerializeField] private GameObject weaponEmpty;
 
     //Button
-    [SerializeField] private Button btnEquip;
+    [SerializeField] private Button btnEquipWeapon;
     [SerializeField] private Button btnChange;
     [SerializeField] private Button btnUnEquip;
+    [SerializeField] private Button btnEquip;
     [SerializeField] private Button btnUpgrade;
 
     [Inject] private IObjectResolver _objectResolver;
@@ -41,21 +42,33 @@ public class CharacterCardRelic : CharacterCard
     void Start()
     {
         _objectResolver.Inject(this);
-        btnEquip.onClick.AddListener(() =>
+        btnEquipWeapon.onClick.AddListener(() =>
         {
             UIEvent.OnSelectCharacterChangeWeapon?.Invoke("");
         });
 
         btnChange.onClick.AddListener(() =>
         {
-            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(currentWeapon);
+            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(originWeapon);
+            if (originWeapon != "")
+            {
+                btnUnEquip.gameObject.SetActive(true);
+            }
+            else
+            {
+                btnEquip.gameObject.SetActive(true);
+                btnUnEquip.gameObject.SetActive(false);
+            }
         });
 
         btnUpgrade.onClick.AddListener(() =>
         {
             uiManager.ShowPanel(ScreenIds.UpgradeRelicPanel);
-            UIEvent.OnSlelectWeaponEnchance?.Invoke(currentWeapon);
+            string weaponID = (originWeapon != currentWeapon && currentWeapon != null) ? currentWeapon : originWeapon;
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponID);
         });
+
+        UpdateCharacterCardWeapon(save.Player.GetIDOfFirstCharacter().ID);
     }
 
     private void OnEnable()
@@ -77,33 +90,62 @@ public class CharacterCardRelic : CharacterCard
 
     public void UpdateCharacterCardWeapon(string id)
     {
-        currentCharacter = id;
-        currentWeapon = save.Player.GetCharacter(id).Weapon;
-        if(currentWeapon != "" )
+        if (id != "")
         {
-            statInfo.gameObject.SetActive(true);
-            weaponEmpty.gameObject.SetActive(false);
-            WeaponConfig config = gameDataBase.GetWeaponConfig(currentWeapon);
-            WeaponData data = save.Player.GetWeapon(currentWeapon);
-            WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, currentWeapon);
+            currentCharacter = id;
+            originWeapon = save.Player.GetCharacter(id).Weapon;
+            if (originWeapon != "")
+            {
+                statInfo.gameObject.SetActive(true);
+                weaponEmpty.gameObject.SetActive(false);
+                WeaponConfig config = gameDataBase.GetWeaponConfig(originWeapon);
+                WeaponData data = save.Player.GetWeapon(originWeapon);
+                WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, originWeapon);
 
-            txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
-            txtLevel.text = data.CurrentLevel.ToString();
-            txtHP.text = config.HP.ToString();
-            txtATK.text = config.ATK.ToString();
+                txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
+                txtLevel.text = data.CurrentLevel.ToString();
+                txtHP.text = config.HP.ToString();
+                txtATK.text = config.ATK.ToString();
 
-            txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + " (Lv." + data.CurrentUpgrade + ")";
-            txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
-        }
-        else
-        {
-            statInfo.gameObject.SetActive(false);
-            weaponEmpty.gameObject.SetActive(true);
+                txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + " (Lv." + data.CurrentUpgrade + ")";
+                txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
+            }
+            else
+            {
+                statInfo.gameObject.SetActive(false);
+                weaponEmpty.gameObject.SetActive(true);
+            }
+
+            btnChange.gameObject.SetActive(true);
+            btnEquip.gameObject.SetActive(false);
+            btnUnEquip.gameObject.SetActive(false);
         }
     }
 
     public void UpdateWeaponInfo(string id)
     {
+        if (originWeapon != "")
+        {
+            btnChange.gameObject.SetActive(true);
+            btnUnEquip.gameObject.SetActive(false);
+        }
+        else
+        {
+            btnEquip.gameObject.SetActive(true);
+        }
+        btnChange.gameObject.SetActive(true);
+        currentWeapon = id;
+        if(originWeapon != null)
+        {
+            if (currentWeapon == originWeapon)
+            {
+                btnUnEquip.gameObject.SetActive(true);
+            }
+            else
+            {
+                btnChange.gameObject.SetActive(true);
+            }
+        }
         statInfo.gameObject.SetActive(true);
         weaponEmpty.gameObject.SetActive(false);
         WeaponConfig config = gameDataBase.GetWeaponConfig(id);
@@ -122,5 +164,7 @@ public class CharacterCardRelic : CharacterCard
     public void UpdateCharacterCardWeapon(bool close)
     {
         UpdateCharacterCardWeapon(currentCharacter);
+        btnChange.gameObject.SetActive(true);
+        currentWeapon = originWeapon;
     }
 }

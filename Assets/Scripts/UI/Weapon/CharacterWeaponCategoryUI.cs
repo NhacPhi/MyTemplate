@@ -17,9 +17,6 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     [Inject] private SaveSystem save;
 
     private List<GameObject> weapons = new();
-    private string currentWeaponID = "";
-
-    private bool isCharacterRelicTap = true;
 
     private void Awake()
     {
@@ -51,6 +48,7 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         });
         Init();
 
+        ResetWeaponCardCategory(save.Player.GetIDOfFirstCharacter().Weapon);
     }
 
     public void Init()
@@ -72,7 +70,6 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
 
     public void SelectedWeaponCard(string id)
     {
-        currentWeaponID = id;
         ResetWeaponCards();
     }
 

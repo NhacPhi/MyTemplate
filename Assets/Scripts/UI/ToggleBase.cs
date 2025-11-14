@@ -16,4 +16,9 @@ public class ToggleBase : MonoBehaviour
     {
 
     }
+
+    public void ActiveToggle(bool value)
+    {
+        toggle.isOn = value;
+    }
 }
