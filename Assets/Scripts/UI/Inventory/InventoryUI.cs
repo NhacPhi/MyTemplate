@@ -70,7 +70,7 @@ public class InventoryUI : MonoBehaviour
                 Debug.Log("ItemSO id: " + item.ID);
                 continue;
             }
-            obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rare, itemSO.Icon, gameDataBase.GetRareBG(itemConfig.Rare), item.Quanlity);
+            obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rare, itemSO.Icon, gameDataBase.GetRareBG(itemConfig.Rare), item.Quantity);
             obj.SetActive(false);
             if(item.Type == ItemType.Food)
             {

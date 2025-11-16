@@ -52,10 +52,9 @@ public class CharacterCardArmor : CharacterCard
         currentCharacterID = id;
         float hp, atk, def, spd, defShred, critRate, critDMG, penetration, critDMGRes;
         hp = atk = def = spd = defShred = critRate = critDMG = penetration = critDMGRes = 0;
-
-        if(save.Player.Armors.Count > 0)
+        armorDatas.Clear();
+        if (save.Player.GetCharacter(id).Armors.Count > 0)
         {
-            armorDatas.Clear();
             CharacterData data = save.Player.GetCharacter(id);
 
             foreach(var armorData in data.Armors)
@@ -79,10 +78,14 @@ public class CharacterCardArmor : CharacterCard
 
                     armor.UpdateArmorUI(armordata.InstanceID, armordata.Rare, armorSO.Icon, gameDataBase.GetRareBG(armordata.Rare), armordata.Level);
                 }
-                else
-                {
-                    armor.SwitchStatusArmorUI(true);
-                }
+            }
+        }
+        else
+        {
+            foreach (var armor in armors)
+            {
+                armor.ResetUI();
+                armor.SwitchStatusArmorUI(true);
             }
         }
 

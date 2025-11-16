@@ -29,6 +29,7 @@ public static class UIEvent
     // Armor
     public static Action<ArmorPart> OnShowCharacterCategoryArmor;
     public static Action<ArmorPart> OnUpdateCharacterCategoryArmor;
+    public static Action<ArmorPart> OnClickArmorIconCatergory;
     public static Action OnCloseCharacterCategoryArmor;
 
     public static Action<CurrencyType, int> OnCurrencyChanged;

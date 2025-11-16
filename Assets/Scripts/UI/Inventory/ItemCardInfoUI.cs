@@ -72,7 +72,7 @@ public class ItemCardInfoUI : MonoBehaviour
         txtUseful.text = item.Type == ItemType.Exp ? str : LocalizationManager.Instance.GetLocalizedValue(itemConfig.Useful);
         icon.sprite = itemSO.Icon;
         txtName.text = (item.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " " ) : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
-        txtOwned.text = item.Quanlity.ToString();
+        txtOwned.text = item.Quantity.ToString();
         txtDes.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Description);
 
 

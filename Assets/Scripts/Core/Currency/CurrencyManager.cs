@@ -56,4 +56,11 @@ public class CurrencyManager
             UIEvent.OnCurrencyChanged?.Invoke(currency.Key, currency.Value);
         }
     }
+
+    public int GetQuantityCurrecy(CurrencyType type)
+    {
+        int result;
+        save.Player.Currencies.TryGetValue(type, out result);
+        return result;
+    }
 }

@@ -42,7 +42,7 @@ public class CharacterCardCultivate : CharacterCard
             ExpConfig expConfig = gameDataBase.ExpConfig[i];
             ItemBaseSO expSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, expConfig.ID);
             ItemData itemData = save.Player.GetItem(expConfig.ID);
-            exps[i].Init(expConfig.ID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), itemData.Quanlity);
+            exps[i].Init(expConfig.ID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), itemData.Quantity);
             exps[i].CanClick = false;
         }
 

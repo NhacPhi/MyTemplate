@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
 using static UnityEditor.Progress;
+using UnityEditor.Experimental.GraphView;
 
 public class CharacterArmorCategoryUI : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     private List<GameObject> armors = new();
     private void Awake()
     {
-        UIEvent.OnUpdateCharacterCategoryArmor += UpdateCategoryArmor;
+        UIEvent.OnUpdateCharacterCategoryArmor += UpdateCategoryArmorAndToggles;
         Init();
     }
     // Start is called before the first frame update
@@ -33,10 +34,19 @@ public class CharacterArmorCategoryUI : MonoBehaviour
             UIEvent.OnCloseCharacterCategoryArmor?.Invoke();
         });
     }
+    private void OnEnable()
+    {
+        UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
+    }
 
+
+    private void OnDisable()
+    {
+        UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
+    }
     private void OnDestroy()
     {
-        UIEvent.OnUpdateCharacterCategoryArmor -= UpdateCategoryArmor;
+        UIEvent.OnUpdateCharacterCategoryArmor -= UpdateCategoryArmorAndToggles;
     }
 
     private void Init()
@@ -53,11 +63,19 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         }
     }
     
-    private void UpdateCategoryArmor(ArmorPart part)
+    private void UpdateCategoryArmorAndToggles(ArmorPart part)
     {
         DeActiveAllObjectInContent();
         GetArmorByPart(part);
         UpdateArmorPartToggles(part);
+        // Force rebuild UI layout
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+    }
+
+    private void UpdateCategoryArmor(ArmorPart part)
+    {
+        DeActiveAllObjectInContent();
+        GetArmorByPart(part);
         // Force rebuild UI layout
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }

@@ -11,7 +11,7 @@ public class ArmorPartToggle : ToggleBase
     {
         if (isOn)
         {
-            UIEvent.OnUpdateCharacterCategoryArmor?.Invoke(part);
+            UIEvent.OnClickArmorIconCatergory?.Invoke(part);
         }
     }
 }

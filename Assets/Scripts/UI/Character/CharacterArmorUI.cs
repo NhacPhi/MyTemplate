@@ -29,6 +29,11 @@ public class CharacterArmorUI : GameItemUI,IPointerClickHandler
        emptyIcon.gameObject.SetActive(empty);
     }
 
+    public void ResetUI()
+    {
+        id = "";
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         UIEvent.OnShowCharacterCategoryArmor?.Invoke(type);
