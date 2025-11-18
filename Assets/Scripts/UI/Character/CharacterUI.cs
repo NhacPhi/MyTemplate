@@ -34,6 +34,9 @@ public class CharacterUI : MonoBehaviour
 
     [SerializeField] private List<CharacterToggle> taps;
 
+    [SerializeReference] private GameObject currentArmorUI;
+    [SerializeField] private GameObject bgDetectTrigger;
+
     private string currentCharacter = "";
     private CharacterTap currentTap = CharacterTap.None;
 
@@ -50,6 +53,9 @@ public class CharacterUI : MonoBehaviour
 
         UIEvent.OnShowCharacterCategoryArmor += ShowCharacterArmor;
         UIEvent.OnCloseCharacterCategoryArmor += HideCharacterArmor;
+        UIEvent.OnClickArmorCategoryUI += ShowArmorStatTooltipUI;
+        UIEvent.OnShowTooltipUI += ShowBackgroundDetectTrigger;
+
         if (avatars.Count > 0 )
         {
             ResetUI();
@@ -70,6 +76,8 @@ public class CharacterUI : MonoBehaviour
 
         UIEvent.OnShowCharacterCategoryArmor -= ShowCharacterArmor;
         UIEvent.OnCloseCharacterCategoryArmor -= HideCharacterArmor;
+        UIEvent.OnClickArmorCategoryUI -= ShowArmorStatTooltipUI;
+        UIEvent.OnShowTooltipUI -= ShowBackgroundDetectTrigger;
     }
     private void Start()
     {
@@ -88,7 +96,7 @@ public class CharacterUI : MonoBehaviour
 
         currencyMM.UpdateCurrency();
         ResetUI();
-        ShowCharacterCard(CharacterTap.Info);
+        //ShowCharacterCard(CharacterTap.Info);
     }
 
     private void ResetUI()
@@ -216,5 +224,15 @@ public class CharacterUI : MonoBehaviour
     public void OnSelectedRelicTap(bool value)
     {
         isSelectedRelicTap = value;
+    }
+
+    public void ShowArmorStatTooltipUI(string id)
+    {
+        currentArmorUI.gameObject.SetActive(true);
+    }
+
+    public void ShowBackgroundDetectTrigger(bool value)
+    {
+        bgDetectTrigger.gameObject.SetActive(value);
     }
 }

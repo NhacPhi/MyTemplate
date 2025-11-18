@@ -28,6 +28,8 @@ public class ArmorCategoryUI : GameItemUI, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
+        UIEvent.OnClickArmorCategoryUI?.Invoke(id);
+        UIEvent.OnShowTooltipUI?.Invoke(true);
+        UIEvent.OnUpdateArmorTooltipUI?.Invoke(id);
     }
 }

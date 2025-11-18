@@ -3,6 +3,7 @@ using TMPro;
 using UIFramework;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameSettingsScene : WindowController
 {
@@ -77,8 +78,13 @@ public class GameSettingsScene : WindowController
                         langIndex = i;
                     }
                 }
+                List<string> texts = new List<string>();
+                foreach(var obj in Definition.SettingsLanguage)
+                {
+                    texts.Add(LocalizationManager.Instance.GetLocalizedValue("STR_" + obj.ToString()));
+                }
                 return popupProperties = new PopupSettingProperties(async () => { await LocalizationManager.Instance.LoadLocalizedText(save.Settings.CurrentLocalized);
-                    LoadGameSettingUI(); UIEvent.OnLanguageChanged?.Invoke(); }, null, SettingsType.LANGUAGE, langIndex, Definition.SettingsLanguage);
+                    LoadGameSettingUI(); UIEvent.OnLanguageChanged?.Invoke(); }, null, SettingsType.LANGUAGE, langIndex, texts);
         }
         return popupProperties;
     }

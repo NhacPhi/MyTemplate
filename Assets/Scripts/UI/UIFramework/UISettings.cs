@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -30,7 +31,10 @@ namespace UIFramework
 
         public UIFrame CreateUIInstance(bool instanceAndRegisterScreens = true) {
             var newUI = Instantiate(templateUIPrefab);
-
+#if UNITY_EDITOR
+            Scene targetScene = SceneManager.GetSceneByName("PersistentManagement");
+            SceneManager.MoveGameObjectToScene(newUI.gameObject, targetScene);
+#endif
             if (instanceAndRegisterScreens) {
                 foreach (var screen in screensToRegister) {
                     var screenInstance = _objectResolver.Instantiate(screen); //Instantiate(screen);

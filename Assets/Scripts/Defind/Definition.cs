@@ -81,17 +81,17 @@ public enum ArmorPart
     Ring
 }
 
-public enum StatPool
+public enum StatsPool
 {
     HP,
     ATK,
     DEF,
     SPD,
-    ARM_PEN,
-    CRIT,
-    CIRT_DMG,
-    EFF_RES,
-    ACC
+    DEF_SHRED,
+    CRIT_RATE,
+    CRIT_DMG,
+    PEN,
+    CRIT_DMG_RES
 }
 
 

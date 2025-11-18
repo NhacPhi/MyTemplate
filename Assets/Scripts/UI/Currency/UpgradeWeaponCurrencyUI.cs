@@ -29,7 +29,7 @@ public class UpgradeWeaponCurrencyUI : MonoBehaviour
             case CurrencyType.Coin:
                 txtCoin.text = amount.ToString();
                 break;
-            case CurrencyType.Essence:
+            case CurrencyType.RelicEssence:
                 txtEssence.text = amount.ToString();
                 break;
             default: break;

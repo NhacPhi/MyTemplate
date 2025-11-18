@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CurrencyUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI txtEnergy;
-    [SerializeField] private TextMeshProUGUI txtGem;
+    [SerializeField] private TextMeshProUGUI txtJade;
     [SerializeField] private TextMeshProUGUI txtCoin;
 
     private void OnEnable()
@@ -23,7 +23,7 @@ public class CurrencyUI : MonoBehaviour
         {
             case CurrencyType.Energy: txtEnergy.text = amount.ToString();
                 break;
-            case CurrencyType.Gem: txtGem.text = amount.ToString();
+            case CurrencyType.Jade: txtJade.text = amount.ToString();
                 break;
             case CurrencyType.Coin: txtCoin.text = amount.ToString();
                 break;

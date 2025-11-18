@@ -562,7 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5681973435388270800}
   m_Layer: 5
-  m_Name: Peach
+  m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 3808868975977052385}
   - component: {fileID: 957045143115123477}
   m_Layer: 5
-  m_Name: txtNumberCoin
+  m_Name: txtNumberJade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,7 +986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2457387263034890695}
   m_Layer: 5
-  m_Name: Gem
+  m_Name: Jade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtEnergy: {fileID: 5783550802505691537}
-  txtGem: {fileID: 957045143115123477}
+  txtJade: {fileID: 957045143115123477}
   txtCoin: {fileID: 1443826499040121193}
 --- !u!1 &7906364419231283696
 GameObject:
@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 8539548828333851194}
   - component: {fileID: 5783550802505691537}
   m_Layer: 5
-  m_Name: txtNumberCoin
+  m_Name: txtNumberEnergy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

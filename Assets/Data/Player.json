@@ -2,12 +2,13 @@
   "PlayerName": "Congyon",
   "Level": 1,
   "CurrentExp": 1,
-  "AvatarIcon": "WuKong_05",
+  "AvatarIcon": "WuKong",
   "Currencies": {
     "Energy": 1,
-    "Gem": 10,
+    "Jade": 10,
     "Coin": 100,
-    "Essence": 1000,
+    "RelicEssence": 1000,
+    "ArmorPrimorite": 1000,
     "Ticket": 0
   },
   "Weapons": [
@@ -269,10 +270,18 @@
       "TemplateID": "Armor01_Helmet",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -280,10 +289,18 @@
       "TemplateID": "Armor01_Chestplate",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -291,10 +308,18 @@
       "TemplateID": "Armor01_Gloves",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -302,10 +327,18 @@
       "TemplateID": "Armor01_Boots",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -313,10 +346,18 @@
       "TemplateID": "Armor01_Belt",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -324,10 +365,18 @@
       "TemplateID": "Armor01_Ring",
       "Rare": "Legendary",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "HP",
+          "Point": 100,
+          "Level": 1
+        },
+        {
+          "Type": "ATK",
+          "Point": 50,
+          "Level": 1
+        }
+      ],
       "Equip": "SunWukong"
     },
     {
@@ -335,10 +384,13 @@
       "TemplateID": "Armor05_Helmet",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     },
     {
@@ -346,10 +398,13 @@
       "TemplateID": "Armor05_Chestplate",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     },
     {
@@ -357,10 +412,13 @@
       "TemplateID": "Armor05_Gloves",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     },
     {
@@ -368,10 +426,13 @@
       "TemplateID": "Armor05_Boots",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     },
     {
@@ -379,10 +440,13 @@
       "TemplateID": "Armor05_Belt",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     },
     {
@@ -390,10 +454,13 @@
       "TemplateID": "Armor05_Ring",
       "Rare": "Uncommon",
       "Level": 1,
-      "BaseStats": {
-        "HP": 500,
-        "DEF": 80
-      },
+      "Stats": [
+        {
+          "Type": "DEF",
+          "Point": 100,
+          "Level": 1
+        }
+      ],
       "Equip": "None"
     }
   ],
@@ -410,8 +477,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "Nimbus_Cudgel",
@@ -454,8 +521,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "Ninefold_Staff",
@@ -473,8 +540,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "Nine_ToolThed_Rake",
@@ -492,8 +559,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",
@@ -511,8 +578,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",
@@ -530,8 +597,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",
@@ -549,8 +616,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",
@@ -568,8 +635,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",
@@ -587,8 +654,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "Triple_Edged_Blade",
@@ -606,8 +673,8 @@
         "DEFShredPoint": 0,
         "CRITRatePoint": 0,
         "RITDMGPoint": 0,
-        "EffectHitPoint": 0,
-        "EffecResPoint": 0
+        "PenetrationPoin": 0,
+        "CIRTDMGRes": 0
       },
       "BoostStats": 1,
       "Weapon": "",

@@ -31,6 +31,14 @@ public static class UIEvent
     public static Action<ArmorPart> OnUpdateCharacterCategoryArmor;
     public static Action<ArmorPart> OnClickArmorIconCatergory;
     public static Action OnCloseCharacterCategoryArmor;
+    public static Action<string> OnClickArmorCategoryUI;
+
+    public static Action<string> OnUpdateArmorTooltipUI;
+
+    //Tooltop
+    public static Action<bool> OnShowTooltipUI;
+    public static Action OnHideAllToolTipUI;
+
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
 }

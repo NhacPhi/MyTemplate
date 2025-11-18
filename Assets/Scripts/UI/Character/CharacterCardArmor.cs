@@ -24,6 +24,9 @@ public class CharacterCardArmor : CharacterCard
 
     List<ArmorData> armorDatas = new();
     private string currentCharacterID = "";
+
+    private string originArmorID = "";
+    private string currentArmorID = "";
     private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardArmor;
@@ -108,6 +111,7 @@ public class CharacterCardArmor : CharacterCard
 
     private void SelectCharacterArmorUI(string id)
     {
+        originArmorID = id;
         if (id != "")
         {
             Part part = save.Player.GetCharacter(currentCharacterID).Armors.Find(part => part.ID == id);

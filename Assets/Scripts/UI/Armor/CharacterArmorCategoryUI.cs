@@ -20,6 +20,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     [Inject] private SaveSystem save;
 
     private List<GameObject> armors = new();
+
     private void Awake()
     {
         UIEvent.OnUpdateCharacterCategoryArmor += UpdateCategoryArmorAndToggles;
@@ -65,11 +66,8 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     
     private void UpdateCategoryArmorAndToggles(ArmorPart part)
     {
-        DeActiveAllObjectInContent();
-        GetArmorByPart(part);
+        UpdateCategoryArmor(part);
         UpdateArmorPartToggles(part);
-        // Force rebuild UI layout
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
 
     private void UpdateCategoryArmor(ArmorPart part)

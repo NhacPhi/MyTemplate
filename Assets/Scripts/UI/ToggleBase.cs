@@ -9,6 +9,10 @@ public class ToggleBase : MonoBehaviour
     void Awake()
     {
         toggle = GetComponent<Toggle>();
+    }
+
+    private void Start()
+    {
         toggle.onValueChanged.AddListener(OnSelected);
     }
 

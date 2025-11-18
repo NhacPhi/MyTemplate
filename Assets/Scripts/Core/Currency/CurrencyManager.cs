@@ -5,9 +5,10 @@ using VContainer;
 public enum CurrencyType
 {
     Energy,
-    Gem,
+    Jade,
     Coin,
-    Essence,
+    RelicEssence,
+    ArmorPrimorite,
     Ticket
 }
 public class CurrencyManager

@@ -64,7 +64,7 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtNextHP.text = nextHP.ToString();
             txtNextATK.text = nextATK.ToString();
 
-            txtRelicEsscence.text = currencyMM.GetQuantityCurrecy(CurrencyType.Essence).ToString() + "/" + Utility.GetEssenceNeedToUpgradeWeapon(level).ToString();
+            txtRelicEsscence.text = currencyMM.GetQuantityCurrecy(CurrencyType.RelicEssence).ToString() + "/" + Utility.GetEssenceNeedToUpgradeWeapon(level).ToString();
             txtCoin.text = Utility.GetCoinNeedToUpgradeWeapon(level).ToString();
             txtCoinMaxLevel.text = (Utility.GetCoinNeedToUpgradeWeapon(10) - Utility.GetCoinNeedToUpgradeWeapon(level)).ToString();
         }
