@@ -13,7 +13,6 @@ public class CharacterCardAscend : CharacterCard
     [SerializeField] private TextMeshProUGUI txtNumberShard;
     [SerializeField] private TextMeshProUGUI txtCoin;
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
@@ -30,7 +29,6 @@ public class CharacterCardAscend : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         UpdateCharacterCardAscend(save.Player.GetIDOfFirstCharacter().ID);
     }
 

@@ -16,7 +16,6 @@ public class ArmorTooltipUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtTitleSet;
     [SerializeField] private TextMeshProUGUI txtDescriptionSet;
 
-    [Inject] IObjectResolver _resolver;
     [Inject] GameDataBase gameDataBase;
     [Inject] SaveSystem save;
     private void Awake()
@@ -24,10 +23,7 @@ public class ArmorTooltipUI : MonoBehaviour
         UIEvent.OnUpdateArmorTooltipUI += UpdateArmorUI;
     }
 
-    private void Start()
-    {
-        _resolver.Inject(this);
-    }
+
     private void OnEnable()
     {
         UIEvent.OnHideAllToolTipUI += Hide;

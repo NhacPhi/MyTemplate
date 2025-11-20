@@ -18,7 +18,7 @@ public class CharacterCardArmor : CharacterCard
     [SerializeField] private TextMeshProUGUI txtCritDGMRes;
 
     [SerializeField] private List<CharacterArmorUI> armors;
-    [Inject] private IObjectResolver _objectResolver;
+
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
@@ -35,7 +35,6 @@ public class CharacterCardArmor : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         UpdateCharacterCardArmor(save.Player.GetIDOfFirstCharacter().ID);
     }
 

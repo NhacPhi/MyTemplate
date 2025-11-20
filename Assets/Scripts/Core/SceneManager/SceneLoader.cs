@@ -6,7 +6,6 @@ using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using VContainer;
-using Observer;
 
 //Scene Manager
 public class SceneLoader : MonoBehaviour

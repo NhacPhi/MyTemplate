@@ -16,7 +16,6 @@ public class WeaponAscendCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtUse;
     [SerializeField] private TextMeshProUGUI txtCoin;
 
-    [Inject] IObjectResolver _resolver;
     [Inject] GameDataBase gameDataBase;
     [Inject] SaveSystem save;
 
@@ -24,11 +23,7 @@ public class WeaponAscendCard : MonoBehaviour
     {
         UIEvent.OnSlelectWeaponEnchance += UpdateWeaponAscendCard;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        _resolver.Inject(this);
-    }
+
 
     private void OnDestroy()
     {

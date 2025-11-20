@@ -5,6 +5,7 @@ using UnityEngine;
 using UIFramework;
 using System.Collections.Generic;
 using VContainer;
+using TMPro;
 
 [Serializable]
 public class SettingOption
@@ -23,6 +24,7 @@ public enum SettingsType
 [Serializable]
 public class PopupSettingProperties : WindowProperties
 {
+    public string title;
     public readonly Action confirmAction;
     public readonly Action cancelAction;
 
@@ -31,17 +33,19 @@ public class PopupSettingProperties : WindowProperties
 
     public List<string> content;
 
-    public PopupSettingProperties(Action confirmAction, Action cancelAction, SettingsType type, int index, List<string> content)
+    public PopupSettingProperties(Action confirmAction, Action cancelAction, SettingsType type, int index, List<string> content, string title)
     {
         this.confirmAction = confirmAction;
         this.cancelAction = cancelAction;
         this.type = type;
         this.index = index;
         this.content = content;
+        this.title = title;
     }
 }
 public class PopupSettingController : WindowController<PopupSettingProperties>
 {
+    [SerializeField] private TextMeshProUGUI title; 
     [SerializeField] private Button btnConfirm;
     [SerializeField] private Button btnCancel;
     private SettingsType type = 0;
@@ -62,6 +66,7 @@ public class PopupSettingController : WindowController<PopupSettingProperties>
         this.type = Properties.type;
         this.currentIndex = Properties.index;
         this.content = Properties.content;
+        this.title.text = Properties.title;
 
         for(int i = 0; i < options.Count; i++)
         {

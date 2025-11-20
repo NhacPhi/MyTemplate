@@ -12,16 +12,8 @@ public class ArmorCardInforUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtTitleSet;
     [SerializeField] private TextMeshProUGUI txtDescriptionSet;
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _objectResolver.Inject(this);
-    }
-
 
     private void OnEnable()
     {

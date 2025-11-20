@@ -12,7 +12,6 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     [SerializeField] private GameObject content;
 
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
 
@@ -40,7 +39,6 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         btnClose.onClick.AddListener(() =>
         {
             UIEvent.OnCloseCharacterWeapon?.Invoke(true);

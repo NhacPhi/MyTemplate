@@ -26,7 +26,6 @@ public class CharacterCardRelic : CharacterCard
     [SerializeField] private Button btnEquip;
     [SerializeField] private Button btnUpgrade;
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private UIManager uiManager;
@@ -41,7 +40,6 @@ public class CharacterCardRelic : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         btnEquipWeapon.onClick.AddListener(() =>
         {
             UIEvent.OnSelectCharacterChangeWeapon?.Invoke("");

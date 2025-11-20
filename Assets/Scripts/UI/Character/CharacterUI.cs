@@ -18,7 +18,6 @@ public class CharacterUI : MonoBehaviour
 
     List<GameObject> avatars = new();
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
     [Inject] private CurrencyManager currencyMM;
@@ -85,7 +84,6 @@ public class CharacterUI : MonoBehaviour
     }
     public void Init()
     {
-        _objectResolver.Inject(this);
         foreach (var character in save.Player.Characters)
         {
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);

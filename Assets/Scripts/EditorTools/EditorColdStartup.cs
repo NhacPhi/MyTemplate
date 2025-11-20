@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
-using Observer;
 
 public class EditorColdStartup : MonoBehaviour
 {

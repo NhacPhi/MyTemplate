@@ -20,7 +20,6 @@ public class WeaponUpgradeCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtCoin;
     [SerializeField] private TextMeshProUGUI txtCoinMaxLevel;
 
-    [Inject] IObjectResolver _resolver;
     [Inject] GameDataBase gameDataBase;
     [Inject] SaveSystem save;
     [Inject] CurrencyManager currencyMM;
@@ -28,11 +27,7 @@ public class WeaponUpgradeCard : MonoBehaviour
     {
         UIEvent.OnSlelectWeaponEnchance += UpdatedWeaponUpgradeCard;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        _resolver.Inject(this);
-    }
+
 
     private void OnDestroy()
     {

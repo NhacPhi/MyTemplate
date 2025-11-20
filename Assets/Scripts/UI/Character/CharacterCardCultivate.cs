@@ -25,7 +25,6 @@ public class CharacterCardCultivate : CharacterCard
     [SerializeField] private TextMeshProUGUI txtCoin;
     [SerializeField] private TextMeshProUGUI txtCoinUpdateLv10;
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
@@ -36,7 +35,6 @@ public class CharacterCardCultivate : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         for(int i = 0; i < exps.Count; i++)
         {
             ExpConfig expConfig = gameDataBase.ExpConfig[i];

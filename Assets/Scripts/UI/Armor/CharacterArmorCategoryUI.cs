@@ -15,7 +15,6 @@ public class CharacterArmorCategoryUI : MonoBehaviour
 
     [SerializeField] private List<ArmorPartToggle> toggles;
 
-    [Inject] private IObjectResolver _objectResolver;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
 
@@ -29,7 +28,6 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _objectResolver.Inject(this);
         btnClose.onClick.AddListener(() =>
         {
             UIEvent.OnCloseCharacterCategoryArmor?.Invoke();

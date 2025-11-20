@@ -68,7 +68,7 @@ public class GameSettingsScene : WindowController
                         index = i;
                     }
                 }
-                return popupProperties = new PopupSettingProperties(() => { LoadGameSettingUI(); },null, SettingsType.FPS, index, Definition.SettingsFPS);
+                return popupProperties = new PopupSettingProperties(() => { LoadGameSettingUI(); },null, SettingsType.FPS, index, Definition.SettingsFPS, "FPS");
             case SettingsType.LANGUAGE:
                 int langIndex = 0;
                 for(int i = 0; i < Definition.SettingsLanguage.Count; i++)
@@ -84,7 +84,7 @@ public class GameSettingsScene : WindowController
                     texts.Add(LocalizationManager.Instance.GetLocalizedValue("STR_" + obj.ToString()));
                 }
                 return popupProperties = new PopupSettingProperties(async () => { await LocalizationManager.Instance.LoadLocalizedText(save.Settings.CurrentLocalized);
-                    LoadGameSettingUI(); UIEvent.OnLanguageChanged?.Invoke(); }, null, SettingsType.LANGUAGE, langIndex, texts);
+                    LoadGameSettingUI(); UIEvent.OnLanguageChanged?.Invoke(); }, null, SettingsType.LANGUAGE, langIndex, texts, LocalizationManager.Instance.GetLocalizedValue("STR_LANGUAGE"));
         }
         return popupProperties;
     }

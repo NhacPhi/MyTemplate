@@ -10,6 +10,9 @@ public class GamePlayScene : WindowController
     [SerializeField] private Button btnInventory;
     [SerializeField] private Button btnCharacter;
 
+    [SerializeField] private Button btnAttack;
+    [SerializeField] private Button btnCatchSkill;
+
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
 
@@ -34,6 +37,9 @@ public class GamePlayScene : WindowController
             uiManager.HidePanel();
             uiManager.OpenWindowScene(ScreenIds.CharacterScene);
         });
+
+        btnAttack.onClick.AddListener(() => { GameEvent.OnPlayerAttack?.Invoke(); });
+        btnCatchSkill.onClick.AddListener(() => { GameEvent.OnPlayerTransform?.Invoke(); });
     }
 
 }
