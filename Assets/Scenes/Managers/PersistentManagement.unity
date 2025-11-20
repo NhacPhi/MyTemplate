@@ -434,7 +434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182177617}
-  - component: {fileID: 1182177616}
+  - component: {fileID: 1182177618}
   m_Layer: 0
   m_Name: Scope
   m_TagString: Untagged
@@ -442,23 +442,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1182177616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182177615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c38f538670a510f4ea8937d38b2ad30a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
-  uiSetings: {fileID: 11400000, guid: 06d20219f874f8947b5b905335e432c7, type: 2}
 --- !u!4 &1182177617
 Transform:
   m_ObjectHideFlags: 0
@@ -474,6 +457,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182177618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182177615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a6f9302fa766f4885ad94ba2dcd5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  uiSetings: {fileID: 11400000, guid: 06d20219f874f8947b5b905335e432c7, type: 2}
 --- !u!1 &1724497233
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a66a6a65c7929b4d8f114a4ffdbc91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneLocation: {fileID: 11400000, guid: d17a56e6f2ca9874a884493daf61f1d5, type: 2}
+  _gameplayScene: {fileID: 11400000, guid: 98ce98b2afe6d6643a0c7f3b887d7e67, type: 2}
+  _loadLocation: {fileID: 11400000, guid: 8dc720cd5af33694d9ed842c3fcad908, type: 2}
+  _loadMenu: {fileID: 11400000, guid: 5974300ab117c1241b4791ff72cc208b, type: 2}
+  _coldStartupLocation: {fileID: 11400000, guid: e55fafd33084d17459e9a2ae686056e8, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -526,6 +529,6 @@ SceneRoots:
   - {fileID: 1724497234}
   - {fileID: 1036735790}
   - {fileID: 1182177617}
-  - {fileID: 1076275671}
   - {fileID: 521646756}
   - {fileID: 246011173}
+  - {fileID: 1076275671}

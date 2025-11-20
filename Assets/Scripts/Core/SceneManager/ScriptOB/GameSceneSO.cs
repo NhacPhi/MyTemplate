@@ -13,6 +13,9 @@ public enum GameSceneType
     PersistenManager,
     GamePlay,
 
+    //Menu
+    Menu,
+
     //Location
     Location
 }

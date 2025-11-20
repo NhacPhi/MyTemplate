@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,11 @@ public class InitializationLoader : MonoBehaviour
 {
     [SerializeField] private GameSceneSO _managersScene = default;
 
-    [SerializeField] private GameSceneSO _currentScene = default;
+    [SerializeField] private GameSceneSO _menuToLoad = default;
+
+
+    [Header("Broadcasting on")]
+    [SerializeField] private AssetReference _menuLoadChannel = default;
 
     private void OnEnable()
     {
@@ -25,13 +30,19 @@ public class InitializationLoader : MonoBehaviour
 #endif
         Application.targetFrameRate = 60;
         // Load the persistent managers scene
-        _managersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadingScene;
+        _managersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadEventChannel;
     }
 
-    private void LoadingScene(AsyncOperationHandle<SceneInstance> obj)
+    private void LoadEventChannel(AsyncOperationHandle<SceneInstance> obj)
     {
-        GameEvent.OnLoadSceneLocation(_currentScene, false, false);
-        SceneManager.UnloadSceneAsync(0);
+        _menuLoadChannel.LoadAssetAsync<LoadEventChannelSO>().Completed += LoadMainMenu;
+    }
+
+    private void LoadMainMenu(AsyncOperationHandle<LoadEventChannelSO> obj)
+    {
+        obj.Result.RaiseEvent(_menuToLoad, true);
+
+        SceneManager.UnloadSceneAsync(0); //Initialization is the only scene in BuildSettings, thus it has index 0
     }
 
 }

@@ -10,6 +10,11 @@ public class StartGameScene : WindowController
 
     private void Start()
     {
-        btnPlayGame.onClick.AddListener(() => { uiManager.OpenWindowScene(ScreenIds.GamePlayScene); uiManager.HidePanel(); });
+        btnPlayGame.onClick.AddListener(() => { 
+            uiManager.OpenWindowScene(ScreenIds.GamePlayScene); 
+            uiManager.HidePanel();
+            GameEvent.OnStartNewGame?.Invoke();}
+        );
+
     }
 }

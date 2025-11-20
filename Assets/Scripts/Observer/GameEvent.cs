@@ -4,8 +4,13 @@ using UnityEngine;
 
 public static class GameEvent
 {
+    //Scene Load
     public static Action<GameSceneSO,bool, bool> OnLoadColdStartupLocation;
     public static Action<GameSceneSO, bool, bool> OnLoadSceneLocation;
+
+    //Gamestart
+    public static Action OnStartNewGame;
+
 
     public static Action<Vector2> OnPlayerMove;
     public static Action<Vector2> OnCameraMove;
