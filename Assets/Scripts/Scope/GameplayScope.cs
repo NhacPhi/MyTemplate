@@ -12,7 +12,10 @@ namespace Core.Scope
     {
         protected override void Configure(IContainerBuilder builder)
         {
-         
+            builder.Register<GameStateManager>(Lifetime.Scoped);
+
+            //Hireachy
+            builder.RegisterComponentInHierarchy<GameManager>().AsSelf();
         }
 
         private async UniTaskVoid Loading(IObjectResolver objectResolver)
