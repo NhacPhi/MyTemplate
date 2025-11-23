@@ -9,8 +9,10 @@ public class StepController : MonoBehaviour
 
     // Default Dialogue
     // Quest Data
-    [Inject] private GameStateManager gameState;
-
+    //[Inject] private GameStateManager gameState;
+    /// <summary>
+    ///
+    /// </summary>
     //Event
     // Win Dialogue Event
     // Lose Dialogue Evemt
@@ -20,14 +22,31 @@ public class StepController : MonoBehaviour
 
     // private DialogueData currentDialogue;
     // Start is called before the first frame update
+    //[Inject] IObjectResolver resolver;
+    [Inject] GameNarrativeData gameNarrativeData;
+    private DialogueData currentDialogue = new();
     void Start()
     {
-        
+        //resolver.Inject(this);
+        currentDialogue = gameNarrativeData.GetDialogueData(actor.ID);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void InteractWithCharacter()
+    {
+        if(currentDialogue != null)
+        {
+            StartDialogue();
+        }
+    }
+
+    private void StartDialogue()
+    {
+        GameEvent.OnStartDialogue(currentDialogue);
     }
 }

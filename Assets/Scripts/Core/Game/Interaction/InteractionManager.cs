@@ -9,6 +9,15 @@ public class InteractionManager : MonoBehaviour
 {
     //To store the objects we the player could potentially interact with
     private List<Interaction> potentialInteractions = new List<Interaction>();
+    private void OnEnable()
+    {
+        GameEvent.OnInteraction += OnInteractionButtonPress;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.OnInteraction -= OnInteractionButtonPress;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -54,5 +63,18 @@ public class InteractionManager : MonoBehaviour
     private void RequestUpdateUI(bool visible, InteractionType type)
     {
          UIEvent.OnInterationUI?.Invoke(visible, type);
+    }
+
+    private void OnInteractionButtonPress()
+    {
+        if (potentialInteractions.Count == 0)
+            return;
+
+        switch (potentialInteractions[0].type)
+        {
+            case InteractionType.Talk:
+                potentialInteractions[0].interactableObject.GetComponent<StepController>().InteractWithCharacter();
+                break;
+        }
     }
 }

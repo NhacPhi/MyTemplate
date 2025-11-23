@@ -195,81 +195,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &2848066923342977450
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6349637112923351368}
-  - component: {fileID: 7895922778157342591}
-  - component: {fileID: 451582095847836335}
-  m_Layer: 5
-  m_Name: SecondAvatar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &6349637112923351368
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2848066923342977450}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7097769533360989093}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -158.25732, y: 185}
-  m_SizeDelta: {x: 316.51477, y: 466.7555}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7895922778157342591
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2848066923342977450}
-  m_CullTransparentMesh: 1
---- !u!114 &451582095847836335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2848066923342977450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a144917f24326c140934a0fa1b051d6e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4608707678726376016
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +576,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00049591064}
-  m_SizeDelta: {x: 0, y: 0.0010071}
+  m_SizeDelta: {x: -500, y: 0.0010071}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2166170637630228936
 CanvasRenderer:
@@ -916,7 +841,6 @@ RectTransform:
   - {fileID: 5955796560721667024}
   - {fileID: 2022858986692819524}
   - {fileID: 3156711956695579986}
-  - {fileID: 6349637112923351368}
   - {fileID: 3188251841380220850}
   m_Father: {fileID: 2847753678519317403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -937,6 +861,7 @@ GameObject:
   - component: {fileID: 2613359276393212588}
   - component: {fileID: 7380394256555205188}
   - component: {fileID: 3218337002783620480}
+  - component: {fileID: 184683910773263880}
   m_Layer: 5
   m_Name: DialogueScene
   m_TagString: Untagged
@@ -982,8 +907,6 @@ MonoBehaviour:
     hideOnForegroundLost: 1
     windowQueuePriority: 0
     isPopup: 0
-  content: {fileID: 0}
-  choices: []
 --- !u!114 &7380394256555205188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,6 +943,20 @@ MonoBehaviour:
   doFade: 1
   fadeDurationPercent: 0.25
   ease: 1
+--- !u!114 &184683910773263880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7130642822561575452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a321bccc9754b429b606c6ef88bb31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 6616709855353511338}
+  avatar: {fileID: 7911541214750338007}
 --- !u!1 &7701050804745391201
 GameObject:
   m_ObjectHideFlags: 0

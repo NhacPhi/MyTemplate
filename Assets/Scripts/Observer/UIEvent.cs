@@ -44,4 +44,5 @@ public static class UIEvent
 
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
+
 }

@@ -178,6 +178,15 @@ public static class CsvToTextConverter
                     case "Actor":
                         ExportNarrativeSheet<ActorConfig>(sheet, sheetName);
                         break;
+                    case "Dialogues":
+                        ExportNarrativeSheet<DialogueConfig>(sheet, sheetName);
+                        break;
+                    case "Lines":
+                        ExportNarrativeSheet<LineConfig>(sheet, sheetName);
+                        break;
+                    case "Choices":
+                        ExportNarrativeSheet<ChoiceConfig>(sheet, sheetName);
+                        break;
                     default: break;
                 }
             }
@@ -330,7 +339,18 @@ public static class CsvToTextConverter
                     {
                         case CellType.String:
                             {
-                                value = cell.StringCellValue;
+                                if (Enum.TryParse<DialogueType>(cell.StringCellValue, true, out var dialogueType))
+                                {
+                                    value = dialogueType;
+                                }
+                                else if (Enum.TryParse<DialogueType>(cell.StringCellValue, true, out var choiceActionType))
+                                {
+                                    value = choiceActionType;
+                                }
+                                else
+                                {
+                                    value = cell.StringCellValue;                                  
+                                }
                             }
                             break;
                         case CellType.Numeric:

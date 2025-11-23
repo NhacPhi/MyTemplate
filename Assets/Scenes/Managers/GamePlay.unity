@@ -153,9 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: 
+    TypeName: RootScope
   autoRun: 1
-  autoInjectGameObjects: []
+  autoInjectGameObjects:
+  - {fileID: 468143944}
+  - {fileID: 1254577302}
 --- !u!4 &269922830
 Transform:
   m_ObjectHideFlags: 0
@@ -290,21 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9871ef7ab4d2c6b45bf09f0507afb247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actorsList:
-  - {fileID: 11400000, guid: 4f484fecb9880fd4eb14ef0187df68df, type: 2}
-  - {fileID: 11400000, guid: dd1f195d1b3911648a0ff1ec1e36acef, type: 2}
-  - {fileID: 11400000, guid: cd0613ac9feb9f449957e83e0ebf93d0, type: 2}
-  - {fileID: 11400000, guid: b4e2b8f2d524f8e41a18bb8cd50a2018, type: 2}
-  - {fileID: 11400000, guid: 2a0d19ef0dd152e4f8a8d0bd10171be2, type: 2}
-  - {fileID: 11400000, guid: 835e26dfedc1b4942a8ef6db5477cb89, type: 2}
-  - {fileID: 11400000, guid: 93f494407d79eda45b3e147c17b1a848, type: 2}
-  - {fileID: 11400000, guid: 4efca000cedc6bc4cb0ed2c59d954adc, type: 2}
-  - {fileID: 11400000, guid: 53e27d505d0878a4195a104498c583ab, type: 2}
-  - {fileID: 11400000, guid: 9e7d6b6957ff0c8468dd39d61477a77c, type: 2}
-  - {fileID: 11400000, guid: 58e1afdb9563dbb46966bc0e50b5c3c9, type: 2}
-  - {fileID: 11400000, guid: 1d86e1047b61de0498f4410b5325ca41, type: 2}
-  - {fileID: 11400000, guid: d139e7d50f14e1c4cbb722384917e2d4, type: 2}
-  - {fileID: 11400000, guid: 0a06e156e928bcd4bb2133dcc2f3796c, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

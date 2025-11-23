@@ -14,6 +14,7 @@ namespace Core.Scope
         [Inject] private UIManager uiManager;
         [Inject] private CurrencyManager currencyMM;
         [Inject] private CharacterStatManager characterStatMM;
+        [Inject] private GameNarrativeData gameNarrative;
 
         public bool IsDone;
 
@@ -24,6 +25,7 @@ namespace Core.Scope
             saveSystem.LoadSaveDataFromDisk();
             currencyMM.Init();
             characterStatMM.Init();
+
             //saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
             var tasks = new List<UniTask>()
             {
@@ -31,6 +33,7 @@ namespace Core.Scope
             };
 
             await UniTask.WhenAll(tasks);
+            gameNarrative.Init();
             uiManager.Init();
             uiManager.OpenWindowScene(ScreenIds.StartGameScene);
             uiManager.ShowPanel(ScreenIds.PanelStartGame);

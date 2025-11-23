@@ -17,4 +17,9 @@ public static class GameEvent
 
     public static Action OnPlayerAttack;
     public static Action OnPlayerTransform;
+
+    public static Action<DialogueData> OnStartDialogue;
+    public static Action<string, ActorData> OnOpenDialogue;
+
+    public static Action OnInteraction;
 }

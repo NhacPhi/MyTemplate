@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
 {
     // QuestManager
     // GameState
-    [Inject] GameStateManager gameState;
+    //[Inject] GameStateManager gameState;
     //InventoryMM
-
+    [Inject] GameNarrativeData gameNarrative;
 
     // Start is called before the first frame update
     void Start()

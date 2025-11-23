@@ -28,6 +28,7 @@ public class InteractionOption : MonoBehaviour, IPointerClickHandler
         {
             case InteractionType.Talk:
                 uiManager.OpenWindowScene(ScreenIds.DialogueScene);
+                GameEvent.OnInteraction?.Invoke();
                 break;
             case InteractionType.PickUp:
                 
