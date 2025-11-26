@@ -10,14 +10,19 @@ public class DialogueManager : MonoBehaviour
 
     private int counterDialogue;
     private int counterLine;
+
+    private bool reachedEndOfDialogue { get => counterDialogue >= currentDialogue.Lines.Count; }
+    private bool reachedEndOfLine { get=> counterLine >= currentDialogue.Lines[counterDialogue].Texts.Count; }
     private DialogueData currentDialogue = default;
-    private void OnEnable()
+    private void Awake()
     {
         GameEvent.OnStartDialogue += DisplayDialogueData;
+
     }
-    private void OnDisable()
+    private void Destroy()
     {
         GameEvent.OnStartDialogue -= DisplayDialogueData;
+
     }
 
     // Start is called before the first frame update
@@ -32,6 +37,7 @@ public class DialogueManager : MonoBehaviour
         //{
         //    gameState.UpdateGameState(GameState.Dialogue);
         //}
+        GameEvent.OnAdvanceDialogueEvent += OnAdvance;
 
         counterDialogue = 0;
         counterLine = 0;
@@ -51,5 +57,72 @@ public class DialogueManager : MonoBehaviour
     public void DisplayDialogueLine(string dialogueLine, ActorData actor)
     {
         GameEvent.OnOpenDialogue?.Invoke(dialogueLine, actor);
+    }
+
+    private void OnAdvance()
+    {
+        counterLine++;
+        if (!reachedEndOfLine)
+        {
+            ActorData actor = gameNarrativeData.GetActorData(currentDialogue.Lines[counterDialogue].ActorID);
+            DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
+        }
+        else if (currentDialogue.Lines[counterDialogue].ChoiceDatas != null 
+            & currentDialogue.Lines[counterDialogue].ChoiceDatas.Count > 0)
+        {
+            // Display Choice
+            DisplayChoices(currentDialogue.Lines[counterDialogue].ChoiceDatas);
+        }
+        else
+        {
+            counterDialogue++;
+            if(!reachedEndOfDialogue)
+            {
+                counterLine = 0;
+                ActorData actor = gameNarrativeData.GetActorData(currentDialogue.Lines[counterDialogue].ActorID);
+                DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
+            }
+            else
+            {
+                // Dialogue end and close DialogueUI
+                DialogueEndAndCloseDialogueUI();
+                counterLine = 0;
+            }
+        }
+    }
+
+    private void DisplayChoices(List<ChoiceData> choices)
+    {
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
+        GameEvent.OnMakeChocieUI += MakeDialogueChocie;
+        GameEvent.OnShowChoiceUI?.Invoke(choices);
+    }
+
+    private void MakeDialogueChocie(ChoiceData choice)
+    {
+        GameEvent.OnMakeChocieUI -= MakeDialogueChocie;
+        switch (choice.ActionType)
+        {
+            case ChoiceActionType.DoNothing:
+                if (choice.NextDialogue != null)
+                {
+                    DialogueData nextDialogue = gameNarrativeData.GetDialogueDataByID(choice.NextDialogue);
+                    DisplayDialogueData(nextDialogue);
+                }
+                else
+                    DialogueEndAndCloseDialogueUI();
+                break;
+        }
+    }
+
+    private void DialogueEndAndCloseDialogueUI()
+    {
+        // raise the special event for end of dialogue if any
+        currentDialogue.FinishDialogue();
+        // raise end dialogue event
+        GameEvent.OnEndDialogue?.Invoke(currentDialogue.Type);
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
+
+        // gameState reset state
     }
 }

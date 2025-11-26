@@ -28,7 +28,7 @@ public class StepController : MonoBehaviour
     void Start()
     {
         //resolver.Inject(this);
-        currentDialogue = gameNarrativeData.GetDialogueData(actor.ID);
+        currentDialogue = gameNarrativeData.GetDialogueDataByActorID(actor.ID);
     }
 
     // Update is called once per frame
@@ -48,5 +48,12 @@ public class StepController : MonoBehaviour
     private void StartDialogue()
     {
         GameEvent.OnStartDialogue(currentDialogue);
+        GameEvent.OnEndDialogue += EndDialogue;
+    }
+
+    private void EndDialogue(DialogueType type)
+    {
+        GameEvent.OnEndDialogue -= EndDialogue;
+
     }
 }

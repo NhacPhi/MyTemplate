@@ -68,12 +68,12 @@ public class GameNarrativeData : MonoBehaviour
                 var lineData = new LineData();
                 string text = LocalizationManager.Instance.GetLocalizedValue(line.Texts);
                 List<string> texts = text.Split('|').ToList();
-                ChoiceData choiceData = new();
+                List<ChoiceData> datas = new();
                 if(line.HasChoice)
                 {
-                    choiceData = choiceDatas.Find( c => c.LineID == line.ID);
+                    datas = choiceDatas.Where(c => c.LineID == line.ID).ToList();
                 }
-                lineData.InitData(line.ID,line.DialogueID, line.ActorID, texts, choiceData);
+                lineData.InitData(line.ID,line.DialogueID, line.ActorID, texts, datas);
                 lineDatas.Add(lineData);
             }
         }
@@ -103,8 +103,13 @@ public class GameNarrativeData : MonoBehaviour
         return actorDatas.Find(o => o.ID == id);
     }
 
-    public DialogueData GetDialogueData(string id)
+    public DialogueData GetDialogueDataByActorID(string id)
     {
         return dialogueDatas.Find(d => d.ActorID == id);
+    }
+
+    public DialogueData GetDialogueDataByID(string id)
+    {
+        return dialogueDatas.Find(d => d.ID == id);
     }
 }

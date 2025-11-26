@@ -8,9 +8,17 @@ public class DialogueChoiceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI content;
     [SerializeField] private Button button;
 
-    public void SetContent(string str, UnityAction action)
+    public void FillChoice(ChoiceData choice)
     {
-        content.text = str;
-        button.onClick.AddListener(action);
+        content.text = LocalizationManager.Instance.GetLocalizedValue(choice.Reponse);
+        button.onClick.AddListener(() =>
+        {
+            GameEvent.OnMakeChocieUI(choice);
+        });
+    }
+
+    public void RemoveEventOfButton()
+    {
+        button.onClick.RemoveAllListeners();
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 
 public static class GameEvent
@@ -20,6 +21,10 @@ public static class GameEvent
 
     public static Action<DialogueData> OnStartDialogue;
     public static Action<string, ActorData> OnOpenDialogue;
+    public static Action<DialogueType> OnEndDialogue;
+    public static Action OnAdvanceDialogueEvent;
+    public static Action<List<ChoiceData>> OnShowChoiceUI;
+    public static Action<ChoiceData> OnMakeChocieUI;
 
     public static Action OnInteraction;
 }
