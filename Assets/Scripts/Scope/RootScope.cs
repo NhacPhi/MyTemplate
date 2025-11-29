@@ -13,7 +13,7 @@ public class RootScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         // Data Service
-        builder.Register<EventManager>(Lifetime.Singleton);
+        //builder.Register<EventManager>(Lifetime.Singleton);
         builder.Register<SaveSystem>(Lifetime.Singleton);
         builder.Register<CurrencyManager>(Lifetime.Singleton);
         builder.Register<CharacterStatManager>(Lifetime.Singleton);

@@ -10,6 +10,7 @@ using System;
 using System.Reflection;
 using NPOI.Util.Collections;
 using System.Linq;
+using NUnit.Framework;
 
 public static class CsvToTextConverter
 {
@@ -175,7 +176,7 @@ public static class CsvToTextConverter
 
                 switch (sheetName)
                 {
-                    case "Actor":
+                    case "Actors":
                         ExportNarrativeSheet<ActorConfig>(sheet, sheetName);
                         break;
                     case "Dialogues":
@@ -186,6 +187,18 @@ public static class CsvToTextConverter
                         break;
                     case "Choices":
                         ExportNarrativeSheet<ChoiceConfig>(sheet, sheetName);
+                        break;
+                    case "Rewards":
+                        ExportRewards(sheetName, excelPath);
+                        break;
+                    case "QuestLines":
+                        ExportNarrativeSheet<QuestLineConfig>(sheet, sheetName);
+                        break;
+                    case "Quests":
+                        ExportNarrativeSheet<QuestConfig>(sheet, sheetName);
+                        break;
+                    case "Steps":
+                        ExportNarrativeSheet<StepConfig>(sheet, sheetName);
                         break;
                     default: break;
                 }
@@ -297,6 +310,53 @@ public static class CsvToTextConverter
         Json.SaveJson(list, filePath);
         Debug.Log($"Xuất {sheetName}.json ({list.Count} dòng)");
     }
+
+    public static void ExportRewards(string sheetName,string excelFilePath)
+    {
+        var rewardsDict = new Dictionary<string, RewardPayLoad>();
+
+        using (var fs = new FileStream(excelFilePath, FileMode.Open, FileAccess.Read))
+        {
+            IWorkbook workbook = new XSSFWorkbook(fs);
+            ISheet sheet = workbook.GetSheet(sheetName);
+
+            for (int rowIndex = 1; rowIndex <= sheet.LastRowNum; rowIndex++)
+            {
+                var row = sheet.GetRow(rowIndex);
+                if (row == null) continue;
+
+                string questId = row.GetCell(0)?.ToString()?.Trim();
+                string itemId = row.GetCell(1)?.ToString()?.Trim();
+                string countStr = row.GetCell(2)?.ToString()?.Trim();
+
+                if (string.IsNullOrEmpty(questId) || string.IsNullOrEmpty(itemId))
+                    continue;
+
+                int count = 1;
+                int.TryParse(countStr, out count);
+
+                if (!rewardsDict.TryGetValue(questId, out var reward))
+                {
+                    reward = new RewardPayLoad(questId);
+                    rewardsDict[questId] = reward;
+                }
+
+                reward.RewardItems.Add(new ItemReward(itemId, count));
+            }
+        }
+
+        // Chuyển Dictionary → List
+        var rewardsList = rewardsDict.Values.ToList();
+
+        string folder = "Assets/Data/Narrative/";
+        Directory.CreateDirectory(folder);
+
+        string filePath = Path.Combine(folder, $"{sheetName}.json");
+
+        Json.SaveJson(rewardsList, filePath);
+
+        Debug.Log($"Xuất {sheetName}.json ({rewardsList.Count} quest)");
+    }
     private static void ExportNarrativeSheet<T>(ISheet sheet, string sheetName)
     {
         List<T> list = new List<T>();
@@ -347,6 +407,10 @@ public static class CsvToTextConverter
                                 {
                                     value = choiceActionType;
                                 }
+                                else if (Enum.TryParse<StepType>(cell.StringCellValue, true, out var stepType))
+                                {
+                                    value = stepType;
+                                }
                                 else
                                 {
                                     value = cell.StringCellValue;                                  
@@ -365,7 +429,7 @@ public static class CsvToTextConverter
                             value = cell.BooleanCellValue;
                             break;
                         default:
-                            value = cell.ToString();
+                            value = "";//cell.ToString();
                             break;
                     }
 
@@ -397,5 +461,7 @@ public static class CsvToTextConverter
     {
         return name?.Trim().Replace(" ", "").ToLower() ?? "";
     }
+
+
 }
 

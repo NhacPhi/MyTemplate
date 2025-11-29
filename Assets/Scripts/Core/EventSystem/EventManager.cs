@@ -1,21 +1,23 @@
-using Cysharp.Threading.Tasks;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Threading;
-using UnityEngine;
-using VContainer;
+using Tech.Singleton;
 
-public class EventManager
+public class EventManager : Singleton<EventManager>
 {
-    [Inject] public UIManager UIManager { get; private set; }
+    private Dictionary<string, Action<BaseEvent>> eventListeners = new();
 
-    public void Init(List<UniTask> tasks, CancellationToken token = default)
+    public void Register(string eventId, Action<BaseEvent> handler)
     {
-
+        if(!eventListeners.ContainsKey(eventId))
+        {
+            eventListeners[eventId] = delegate { };
+        }
+        eventListeners[eventId] += handler;
     }
-
-    public void ShowLog()
+    
+    public void Publish(BaseEvent e)
     {
-        Debug.Log("LOL");
+        if (eventListeners.ContainsKey(e.EventID))
+            eventListeners[e.EventID]?.Invoke(e);
     }
 }

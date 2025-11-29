@@ -9,7 +9,7 @@ namespace Core.Scope
 {
     public class GameplayPreLoad : IAsyncStartable, IPreload
     {
-        [Inject] private EventManager _evnetManager;
+        //[Inject] private EventManager _evnetManager;
         [Inject] private SaveSystem saveSystem;
         [Inject] private UIManager uiManager;
         [Inject] private CurrencyManager currencyMM;

@@ -7,9 +7,9 @@ using Tech.Singleton;
 
 public class LocalizationManager : SingletonPersistent<LocalizationManager>
 {
-    private Dictionary<string, string> _localization = new Dictionary<string, string>();
-    private bool _isReady = false;
-    private string _missingTextString = "Localized text not found";
+    private Dictionary<string, string> localization = new Dictionary<string, string>();
+    private bool isReady = false;
+    private string missingTextString = "Localized text not found";
 
     private void Awake()
     {
@@ -17,9 +17,9 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
     }
     public async UniTask LoadLocalizedText(string languageCode)
     {
-        _localization.Clear();
+        localization.Clear();
 
-        _isReady = false;
+        isReady = false;
 
         string addressKey = $"Localization_{languageCode}";
 
@@ -45,11 +45,11 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
                 string key = line[..index].Trim();
                 string value = line[(index + 1)..].Trim();
 
-                _localization[key] = value;
+                localization[key] = value;
             }
 
-            _isReady = true;
-            Debug.Log($"Loaded localization: {languageCode} ({_localization.Count} entries)");
+            isReady = true;
+            Debug.Log($"Loaded localization: {languageCode} ({localization.Count} entries)");
 
             // Release resource (Addressables hold reference)
             Addressables.Release(textAsset);
@@ -63,9 +63,9 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
     public string GetLocalizedValue(string key)
     {
         if (key == null) return "";
-        if (!_isReady || !_localization.ContainsKey(key)) return _missingTextString;
-        return _localization[key].Replace("\\n", "\n");
+        if (!isReady || !localization.ContainsKey(key)) return missingTextString;
+        return localization[key].Replace("\\n", "\n");
     }
 
-    public bool IsReady => _isReady;
+    public bool IsReady => isReady;
 }

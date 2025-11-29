@@ -9,95 +9,172 @@ public class GameNarrativeData : MonoBehaviour
 {
     [SerializeField] private List<ActorSO> actorSOs;
 
-    private List<ActorConfig> actorConfigs = new();
-    private List<DialogueConfig> dialogueConfigs = new();
-    private List<LineConfig> lineConfigs = new();
-    private List<ChoiceConfig> choiceConfigs = new();
-
     private List<ActorData> actorDatas = new();
     private List<ChoiceData> choiceDatas = new();
     private List<LineData> lineDatas = new();
     private List<DialogueData> dialogueDatas = new();
 
+    private List<RewardPayLoad> rewards = new();
+    private List<StepData> steps = new();
+    private List<QuestData> quests = new();
+    private List<QuestLineData> questLines = new();
+
+    // Dict Cache
+    private Dictionary<string, ActorSO> actorSoDict;
+
     public void Init()
     {
         LoadGameNarrativeConfig();
-        Debug.Log("DialogueData: " + dialogueDatas);
     }
-
     private void LoadGameNarrativeConfig()
     {
         string path = "Assets/Data/Narrative/";
+        LoadActorData(path, "Actors.json");
+        LoadChoiceData(path, "Choices.json");
+        LoadLineData(path, "Lines.json");
+        LoadDialogueData(path, "Dialogues.json");
 
-        string fileActor = "Actor.json";
-        string fileDialogue = "Dialogues.json";
-        string fileLine = "Lines.json";
-        string fileChoice = "Choices.json";
+        LoadRewardData(path, "Rewards.json");
+        LoadStepData(path, "Steps.json");
+        LoadQuestData(path, "Quests.json");
+        LoadQuestLineData(path, "QuestLines.json");
+    }
+    
+    private void LoadActorData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<ActorConfig> actorConfigs);
 
-        Json.LoadJson(Path.Combine(path, fileActor), out actorConfigs);
-        Json.LoadJson(Path.Combine(path, fileDialogue), out dialogueConfigs);
-        Json.LoadJson(Path.Combine(path, fileLine), out lineConfigs);
-        Json.LoadJson(Path.Combine(path, fileChoice), out choiceConfigs);
+        var actorSoDict = actorSOs.ToDictionary(a => a.ID, a => a);
 
-        if(actorConfigs.Count > 0)
+        if (actorConfigs.Count > 0)
         {
-            foreach(var actor in actorConfigs)
+            foreach (var actor in actorConfigs)
             {
+                if (!actorSoDict.TryGetValue(actor.ID, out var so))
+                {
+                    Debug.LogWarning($"ActorSO missing for {actor.ID}");
+                    continue;
+                }
                 var actorData = new ActorData();
-                Sprite sprite = actorSOs.Find(a => a.ID == actor.ID).Texture;
-                actorData.InitData(actor.ID, actor.Name, sprite);
+                actorData.InitData(actor.ID, actor.Name, so.Texture);
                 actorDatas.Add(actorData);
             }
         }
+    }
+    private void LoadChoiceData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<ChoiceConfig> choiceConfigs);
 
-
-        if(choiceConfigs.Count > 0)
+        if (choiceConfigs.Count > 0)
         {
-            foreach(var choice in choiceConfigs)
+            foreach (var choice in choiceConfigs)
             {
                 var choiceData = new ChoiceData();
-                choiceData.InitData(choice.ID,choice.LineID, choice.Text, choice.ActionType, choice.NextDialogueID);
+                choiceData.InitData(choice.ID, choice.LineID, choice.Text, choice.ActionType, choice.NextDialogueID);
                 choiceDatas.Add(choiceData);
             }
         }
 
-        if(lineConfigs.Count > 0)
+    }
+
+    private void LoadLineData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<LineConfig> lineConfigs);
+
+        var choiceLookup = choiceDatas.GroupBy(c => c.LineID)
+                          .ToDictionary(g => g.Key, g => g.ToList());
+        if (lineConfigs.Count > 0)
         {
-            foreach(var line in lineConfigs)
+            foreach (var line in lineConfigs)
             {
                 var lineData = new LineData();
                 string text = LocalizationManager.Instance.GetLocalizedValue(line.Texts);
                 List<string> texts = text.Split('|').ToList();
-                List<ChoiceData> datas = new();
-                if(line.HasChoice)
-                {
-                    datas = choiceDatas.Where(c => c.LineID == line.ID).ToList();
-                }
-                lineData.InitData(line.ID,line.DialogueID, line.ActorID, texts, datas);
+
+                choiceLookup.TryGetValue(line.ID, out var choices);
+
+                lineData.InitData(line.ID, line.DialogueID, line.ActorID, texts, choices ?? new List<ChoiceData>());
+
                 lineDatas.Add(lineData);
             }
         }
-
-
+    }
+    private void LoadDialogueData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<DialogueConfig> dialogueConfigs);
+        var lineLookup = lineDatas.GroupBy(l => l.DialogueID)
+                      .ToDictionary(g => g.Key, g => g.ToList());
         if (dialogueConfigs.Count > 0)
         {
             foreach (var dialogue in dialogueConfigs)
             {
                 var dialogueData = new DialogueData();
-                List<LineData> lines = new List<LineData>();
-                foreach (var line in lineDatas)
-                {
-                    if (line.DialogueID == dialogue.ID)
-                    {
-                        lines.Add(line);
-                    }
-                }
-                dialogueData.InitData(dialogue.ID, dialogue.Type, lines, dialogue.ActorID);
+                lineLookup.TryGetValue(dialogue.ID, out var lines);
+                dialogueData.InitData(dialogue.ID, dialogue.Type, lines ?? new List<LineData>(), dialogue.ActorID);
                 dialogueDatas.Add(dialogueData);
+            }
+        }
+
+    }
+    private void LoadRewardData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out rewards);
+    }
+    private void LoadStepData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<StepConfig> stepConfigs);
+
+        var dialogueDict = dialogueDatas.ToDictionary(a => a.ID, a => a);
+        var rewardDict = rewards.ToDictionary(r => r.QuestID, r => r);
+        if (stepConfigs.Count > 0)
+        {
+            foreach(var step in stepConfigs)
+            {
+                var stepData = new StepData();
+                dialogueDict.TryGetValue(step.DialogueBeforeStep, out var dialogueBeforStep);
+                dialogueDict.TryGetValue(step.CompleteDialogue, out var completeDialogue);
+                dialogueDict.TryGetValue(step.IncompleteDialogue, out var inCompleteDialogue);
+                rewardDict.TryGetValue(step.RewardID, out var reward);
+                stepData.InitData(step.ID, step.QuestID, step.ActorID, dialogueBeforStep, completeDialogue, inCompleteDialogue,
+                    step.Type, step.RewardID, step.HasReward, reward, step.ID);
+
+                steps.Add(stepData);
+            }
+        }
+    }
+    private void LoadQuestData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<QuestConfig> questConfigs);
+        var stepLookup = steps.GroupBy(s => s.QuestID)
+                      .ToDictionary(g => g.Key, g => g.ToList());
+        if (questConfigs.Count > 0)
+        {
+            foreach(var quest in questConfigs)
+            {
+                QuestData questData = new QuestData();
+                stepLookup.TryGetValue(quest.ID, out var steps);
+                questData.InitData(quest.ID, quest.QuestLineID, steps, quest.EventID);
+                quests.Add(questData);
             }
         }
     }
 
+    private void LoadQuestLineData(string path, string fileName)
+    {
+        Json.LoadJson(Path.Combine(path, fileName), out List<QuestLineConfig> questLineConfigs);
+        var questLookup = quests.GroupBy(q => q.QuestLineID)
+                      .ToDictionary(g => g.Key, g => g.ToList());
+        if (questLineConfigs.Count > 0)
+        {
+            foreach (var questLine in questLineConfigs)
+            {
+                QuestLineData questLineData = new QuestLineData();
+                questLookup.TryGetValue(questLine.ID, out var quests);
+                questLineData.InitData(questLine.ID, quests, questLine.EventID);
+                questLines.Add(questLineData);
+            }
+        }
+    }
     public ActorData GetActorData(string id)
     {
         return actorDatas.Find(o => o.ID == id);
