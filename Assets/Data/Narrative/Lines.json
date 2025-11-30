@@ -1,7 +1,7 @@
 [
   {
     "ID": "L1-D1-Default-Dragon_king",
-    "DialogueID": "Default_Dragon_king",
+    "DialogueID": "Start_Quest_Dragon_king",
     "ActorID": "Dragon_king_Eatern_Sea",
     "Texts": "L1_D1_Default_Dragon_king_Eatern_Sea",
     "HasChoice": true
@@ -102,6 +102,13 @@
     "DialogueID": "Dragon_king_Choice_01",
     "ActorID": "Sun_Wukong",
     "Texts": "L12_D2_Default_Dragon_king_Eatern_Sea",
+    "HasChoice": false
+  },
+  {
+    "ID": "Default-Dragon_king",
+    "DialogueID": "Default_Dragon_king",
+    "ActorID": "Dragon_king_Eatern_Sea",
+    "Texts": "L_Deafult_Dragon_king_Eatern_Sea",
     "HasChoice": false
   }
 ]

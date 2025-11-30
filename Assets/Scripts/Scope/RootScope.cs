@@ -28,7 +28,7 @@ public class RootScope : LifetimeScope
         builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 
         //Entry point
-        builder.RegisterEntryPoint<GameplayPreLoad>(Lifetime.Singleton).As<IPreload>();
+        builder.RegisterEntryPoint<RootPreLoad>(Lifetime.Singleton).As<IPreload>();
 
     }
 }

@@ -19,6 +19,8 @@ public class GameNarrativeData : MonoBehaviour
     private List<QuestData> quests = new();
     private List<QuestLineData> questLines = new();
 
+    public List<QuestLineData> QuestLines => questLines;
+
     // Dict Cache
     private Dictionary<string, ActorSO> actorSoDict;
 
@@ -180,9 +182,9 @@ public class GameNarrativeData : MonoBehaviour
         return actorDatas.Find(o => o.ID == id);
     }
 
-    public DialogueData GetDialogueDataByActorID(string id)
+    public DialogueData GetDefaultDialogueDataByActorID(string id)
     {
-        return dialogueDatas.Find(d => d.ActorID == id);
+        return dialogueDatas.Find(d => (d.ActorID == id && d.Type == DialogueType.Default));
     }
 
     public DialogueData GetDialogueDataByID(string id)

@@ -21,27 +21,43 @@ public class StepController : MonoBehaviour
     // Start Dialogue Event
 
     // private DialogueData currentDialogue;
-    // Start is called before the first frame update
-    //[Inject] IObjectResolver resolver;
+
     [Inject] GameNarrativeData gameNarrativeData;
-    private DialogueData currentDialogue = new();
+    [Inject] QuestManager questManager;
+    private DialogueData defaultDialogue = new();
+
+    private DialogueData currentDialogue;
     void Start()
     {
         //resolver.Inject(this);
-        currentDialogue = gameNarrativeData.GetDialogueDataByActorID(actor.ID);
+        defaultDialogue = gameNarrativeData.GetDefaultDialogueDataByActorID(actor.ID);
     }
 
-    // Update is called once per frame
-    void Update()
+    void PlayDefaultDialogue()
     {
-        
+        if(defaultDialogue != null)
+        {
+            currentDialogue = defaultDialogue;
+            StartDialogue();
+        }
     }
-
+    // start a dialgoue when interation
+    // some Steps need to be instantanios. And do not need the interact button
+    // when interatoin again. restart same dialogue
     public void InteractWithCharacter()
     {
-        if(currentDialogue != null)
+        DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, false, false);
+
+        if(displayDialogue != null)
         {
+            currentDialogue = displayDialogue;
             StartDialogue();
+            Debug.Log("QuestLine Dialogue");
+        }
+        else
+        {
+            PlayDefaultDialogue();
+            Debug.Log("Default Dialogue");
         }
     }
 
@@ -49,11 +65,40 @@ public class StepController : MonoBehaviour
     {
         GameEvent.OnStartDialogue(currentDialogue);
         GameEvent.OnEndDialogue += EndDialogue;
+
+        GameEvent.OnWinDialogue += PlayWinDialogue;
+        GameEvent.OnLoseDialogue += PlayLoseDialogue;
     }
 
     private void EndDialogue(DialogueType type)
     {
         GameEvent.OnEndDialogue -= EndDialogue;
 
+        GameEvent.OnWinDialogue -= PlayWinDialogue;
+        GameEvent.OnLoseDialogue -= PlayLoseDialogue;
+
+    }
+
+    void PlayLoseDialogue()
+    {
+        if(questManager != null)
+        {
+            DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, true, false);
+            if(displayDialogue != null)
+            {
+                currentDialogue = displayDialogue;
+                StartDialogue();
+            }
+        }
+    }
+
+    void PlayWinDialogue()
+    {
+        DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, true, true);
+        if (displayDialogue != null)
+        {
+            currentDialogue = displayDialogue;
+            StartDialogue();
+        }
     }
 }

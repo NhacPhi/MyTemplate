@@ -94,13 +94,13 @@ public class DialogueManager : MonoBehaviour
     private void DisplayChoices(List<ChoiceData> choices)
     {
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
-        GameEvent.OnMakeChocieUI += MakeDialogueChocie;
+        GameEvent.OnMakeChocieUI += MakeDialogueChoice;
         GameEvent.OnShowChoiceUI?.Invoke(choices);
     }
 
-    private void MakeDialogueChocie(ChoiceData choice)
+    private void MakeDialogueChoice(ChoiceData choice)
     {
-        GameEvent.OnMakeChocieUI -= MakeDialogueChocie;
+        GameEvent.OnMakeChocieUI -= MakeDialogueChoice;
         switch (choice.ActionType)
         {
             case ChoiceActionType.DoNothing:
@@ -111,6 +111,26 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                     DialogueEndAndCloseDialogueUI();
+                break;
+            case ChoiceActionType.ContinueWithStep:
+                {
+
+                }
+                break;
+            case ChoiceActionType.WinningChoice:
+                {
+                    GameEvent.OnMakeWinChoice?.Invoke();
+                }
+                break;
+            case ChoiceActionType.LosingChoice:
+                {
+                    GameEvent.OnMakeLosingChoice?.Invoke();
+                }
+                break;
+            case ChoiceActionType.IncompleteStep:
+                {
+
+                }
                 break;
         }
     }

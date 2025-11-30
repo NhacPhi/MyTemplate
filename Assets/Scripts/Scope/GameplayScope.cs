@@ -5,17 +5,22 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using UIFramework;
+using Core.Scope;
 
     public class GameplayScope : LifetimeScope
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            //builder.Register<GameStateManager>(Lifetime.Scoped);
+        //builder.Register<GameStateManager>(Lifetime.Scoped);
+        builder.Register<QuestManager>(Lifetime.Singleton);
 
-            //Hireachy
-            //builder.RegisterComponentInHierarchy<GameManager>().AsSelf();
-            //builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
-        }
+        //Hireachy
+        //builder.RegisterComponentInHierarchy<GameManager>().AsSelf();
+        //builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
+
+        //Entry point
+        builder.RegisterEntryPoint<GameplayPreload>(Lifetime.Singleton).As<IPreload>();
+    }
 
     }
 
