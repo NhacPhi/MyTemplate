@@ -33,7 +33,7 @@ public static class GameEvent
     public static Action OnMakeWinChoice;
     public static Action OnMakeLosingChoice;
     public static Action OnContinueWithStepEvent;
-    
+
 
     public static Action OnInteraction;
 }

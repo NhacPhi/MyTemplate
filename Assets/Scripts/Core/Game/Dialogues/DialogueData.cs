@@ -17,7 +17,8 @@ public enum DialogueType
     Start,
     Completetion,
     Incompletion,
-    Default
+    Default,
+    Normal
 }
 public class DialogueData
 {

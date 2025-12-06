@@ -140,6 +140,7 @@ public class DialogueManager : MonoBehaviour
         // raise the special event for end of dialogue if any
         currentDialogue.FinishDialogue();
         // raise end dialogue event
+
         GameEvent.OnEndDialogue?.Invoke(currentDialogue.Type);
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
 
