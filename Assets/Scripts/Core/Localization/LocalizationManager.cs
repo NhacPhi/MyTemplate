@@ -26,7 +26,7 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
         try
         {
             //Load file text from Addressable
-            TextAsset textAsset = await Addressables.LoadAssetAsync<TextAsset>(addressKey).Task;
+            TextAsset textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(addressKey);
 
             if(textAsset == null)
             {

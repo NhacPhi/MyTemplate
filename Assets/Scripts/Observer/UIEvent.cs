@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public static class UIEvent
 {
@@ -44,5 +45,9 @@ public static class UIEvent
 
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
+
+    // TextPopup
+    public static Action<float, Vector3, bool> DamagePopup;
+    public static Action<float, Vector3> HealPopup;
 
 }

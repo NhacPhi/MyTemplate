@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tech.Singleton;
 using UnityEngine;
 using VContainer;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonPersistent<GameManager>
 {
     // QuestManager
     // GameState
