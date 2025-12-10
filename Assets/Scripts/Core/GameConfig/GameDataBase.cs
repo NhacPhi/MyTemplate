@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tech.Json;
 using System.IO;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+
 public class GameDataBase : MonoBehaviour
 {
     [SerializeField] private List<ItemBaseSO> avatars;
@@ -29,9 +32,9 @@ public class GameDataBase : MonoBehaviour
     public List<ItemBaseSO> Avatars { get { return avatars; } }
 
     private Dictionary<ItemType, List<ItemBaseSO>> dictionaryItemSO = new();
-    private void Start()
+    public void Start()
     {
-        LoadItemDataConfig();
+        //LoadItemDataConfig();
         dictionaryItemSO.Add(ItemType.Weapon, weapons);
         dictionaryItemSO.Add(ItemType.Food, foods);
         dictionaryItemSO.Add(ItemType.Avatar, avatars);
@@ -41,29 +44,89 @@ public class GameDataBase : MonoBehaviour
         dictionaryItemSO.Add(ItemType.Exp, exps);
     }
 
-    private void LoadItemDataConfig()
+    public async UniTask Init(CancellationToken cancellationToken = default)
     {
-        string path = "Assets/Data/GameConfig/";
+        string keyWeapon = "Weapon";
+        string keyFood = "Food";
+        string keyGemStone = "GemStone";
+        string keyBaseArmor = "BaseArmor";
+        string keyShardConfig = "Shard";
+        string keyCharacterConfig = "Character";
+        string keyCharacterStat = "CharacterStat";
+        string keyCharacterUpgrade = "CharacterUpgrade";
+        string keyExpConfig = "Exp";
 
-        string fileWeapon = "Weapon.json";
-        string fileFood = "Food.json";
-        string fileGemStone = "GemStone.json";
-        string fileBaseArmor = "BaseArmor.json";
-        string fileShardConfig = "Shard.json";
-        string fileCharacterConfig = "Character.json";
-        string fileCharacterStat = "CharacterStat.json";
-        string fileCharacterUpgrade = "CharacterUpgrade.json";
-        string fileExpConfig = "Exp.json";
+        var tasks = new List<UniTask>()
+        {
+            LoadWeaponConfig(keyWeapon, cancellationToken),
+            LoadFoodConfig(keyFood, cancellationToken),
+            LoadGemStoneConfig(keyGemStone,cancellationToken),
+            LoadBaseArmorConfig(keyBaseArmor, cancellationToken),
+            LoadShardConfig(keyShardConfig, cancellationToken),
+            LoadCharacterConfig(keyCharacterConfig, cancellationToken),
+            LoadCharacterUpgradeConfig(keyCharacterUpgrade, cancellationToken),
+            LoadCharacterStatConfig(keyCharacterStat, cancellationToken),
+            LoadExpConfig(keyExpConfig, cancellationToken)
+        };
 
-        Json.LoadJson(Path.Combine(path, fileWeapon), out weaponConfig);
-        Json.LoadJson(Path.Combine(path, fileFood), out foodConfig);
-        Json.LoadJson(Path.Combine(path, fileGemStone), out gemStoneConfig);
-        Json.LoadJson(Path.Combine(path, fileBaseArmor), out baseArmorConfig);
-        Json.LoadJson(Path.Combine(path, fileShardConfig), out shardConfig);
-        Json.LoadJson(Path.Combine(path, fileCharacterConfig), out characterConfig);
-        Json.LoadJson(Path.Combine(path, fileCharacterStat), out characterStatConfig);
-        Json.LoadJson(Path.Combine(path, fileCharacterUpgrade), out characterUpgradeConfig);
-        Json.LoadJson(Path.Combine(path, fileExpConfig), out expConfig);
+        await UniTask.WhenAll(tasks);
+    }
+
+    public async UniTask LoadWeaponConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        weaponConfig = Json.DeserializeObject<List<WeaponConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadFoodConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        foodConfig = Json.DeserializeObject<List<FoodConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+
+    public async UniTask LoadGemStoneConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        gemStoneConfig = Json.DeserializeObject<List<GemStoneConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+
+    public async UniTask LoadBaseArmorConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        baseArmorConfig = Json.DeserializeObject<List<BaseArmorConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadShardConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        shardConfig = Json.DeserializeObject<List<ShardConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadCharacterConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        characterConfig = Json.DeserializeObject<List<CharacterConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadCharacterStatConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        characterStatConfig = Json.DeserializeObject<List<CharacterStatConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadCharacterUpgradeConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        characterUpgradeConfig = Json.DeserializeObject<List<CharacterUpgradeConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+    }
+    public async UniTask LoadExpConfig(string key, CancellationToken cancellationToken = default)
+    {
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        expConfig = Json.DeserializeObject<List<ExpConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
     }
 
     public List<ExpConfig> ExpConfig => expConfig;

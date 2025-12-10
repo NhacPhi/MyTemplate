@@ -4,6 +4,8 @@ using UnityEngine;
 using Tech.Json;
 using System.IO;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class GameNarrativeData : MonoBehaviour 
 {
@@ -24,27 +26,28 @@ public class GameNarrativeData : MonoBehaviour
     // Dict Cache
     private Dictionary<string, ActorSO> actorSoDict;
 
-    public void Init()
+    public async UniTask LoadGameNarrativeConfig(CancellationToken cancellationToken = default)
     {
-        LoadGameNarrativeConfig();
-    }
-    private void LoadGameNarrativeConfig()
-    {
-        string path = "Assets/Data/Narrative/";
-        LoadActorData(path, "Actors.json");
-        LoadChoiceData(path, "Choices.json");
-        LoadLineData(path, "Lines.json");
-        LoadDialogueData(path, "Dialogues.json");
+        var tasks = new List<UniTask>()
+        {
+            LoadActorData("Actors", cancellationToken),
+            LoadChoiceData("Choices", cancellationToken),
+            LoadLineData("Lines", cancellationToken),
+            LoadDialogueData("Dialogues", cancellationToken),
 
-        LoadRewardData(path, "Rewards.json");
-        LoadStepData(path, "Steps.json");
-        LoadQuestData(path, "Quests.json");
-        LoadQuestLineData(path, "QuestLines.json");
+            LoadRewardData("Rewards", cancellationToken),
+            LoadStepData("Steps", cancellationToken),
+            LoadQuestData("Quests", cancellationToken),
+            LoadQuestLineData("QuestLines", cancellationToken)
+        };
+        await UniTask.WhenAll(tasks);
     }
     
-    private void LoadActorData(string path, string fileName)
+    private async UniTask LoadActorData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<ActorConfig> actorConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var actorConfigs = Json.DeserializeObject<List<ActorConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
 
         var actorSoDict = actorSOs.ToDictionary(a => a.ID, a => a);
 
@@ -63,9 +66,11 @@ public class GameNarrativeData : MonoBehaviour
             }
         }
     }
-    private void LoadChoiceData(string path, string fileName)
+    private async UniTask LoadChoiceData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<ChoiceConfig> choiceConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var choiceConfigs = Json.DeserializeObject<List<ChoiceConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
 
         if (choiceConfigs.Count > 0)
         {
@@ -79,9 +84,11 @@ public class GameNarrativeData : MonoBehaviour
 
     }
 
-    private void LoadLineData(string path, string fileName)
+    private async UniTask LoadLineData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<LineConfig> lineConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var lineConfigs = Json.DeserializeObject<List<LineConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
 
         var choiceLookup = choiceDatas.GroupBy(c => c.LineID)
                           .ToDictionary(g => g.Key, g => g.ToList());
@@ -101,9 +108,12 @@ public class GameNarrativeData : MonoBehaviour
             }
         }
     }
-    private void LoadDialogueData(string path, string fileName)
+    private async UniTask LoadDialogueData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<DialogueConfig> dialogueConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var dialogueConfigs = Json.DeserializeObject<List<DialogueConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+ 
         var lineLookup = lineDatas.GroupBy(l => l.DialogueID)
                       .ToDictionary(g => g.Key, g => g.ToList());
         if (dialogueConfigs.Count > 0)
@@ -118,13 +128,17 @@ public class GameNarrativeData : MonoBehaviour
         }
 
     }
-    private void LoadRewardData(string path, string fileName)
+    private async UniTask LoadRewardData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out rewards);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        rewards = Json.DeserializeObject<List<RewardPayLoad>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
     }
-    private void LoadStepData(string path, string fileName)
+    private async UniTask LoadStepData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<StepConfig> stepConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var stepConfigs = Json.DeserializeObject<List<StepConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
 
         var dialogueDict = dialogueDatas.ToDictionary(a => a.ID, a => a);
         var rewardDict = rewards.ToDictionary(r => r.QuestID, r => r);
@@ -144,9 +158,12 @@ public class GameNarrativeData : MonoBehaviour
             }
         }
     }
-    private void LoadQuestData(string path, string fileName)
+    private async UniTask LoadQuestData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<QuestConfig> questConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var questConfigs = Json.DeserializeObject<List<QuestConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+
         var stepLookup = steps.GroupBy(s => s.QuestID)
                       .ToDictionary(g => g.Key, g => g.ToList());
         if (questConfigs.Count > 0)
@@ -161,9 +178,12 @@ public class GameNarrativeData : MonoBehaviour
         }
     }
 
-    private void LoadQuestLineData(string path, string fileName)
+    private async UniTask LoadQuestLineData(string key, CancellationToken cancellationToken = default)
     {
-        Json.LoadJson(Path.Combine(path, fileName), out List<QuestLineConfig> questLineConfigs);
+        var textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(key, token: cancellationToken);
+        var questLineConfigs = Json.DeserializeObject<List<QuestLineConfig>>(textAsset.text);
+        AddressablesManager.Instance.RemoveAsset(key);
+
         var questLookup = quests.GroupBy(q => q.QuestLineID)
                       .ToDictionary(g => g.Key, g => g.ToList());
         if (questLineConfigs.Count > 0)
