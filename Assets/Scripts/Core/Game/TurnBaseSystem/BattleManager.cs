@@ -19,6 +19,9 @@ public class BattleManager : IInitializable, IDisposable, ITickable
 {
     private StateMachine<BattleState, BattleBaseState> stateMachine;
 
+    // List character List<Entity> characters;
+    // List Enemy List<Entity> enemies;
+
     // [Inject]
     public void Initialize()
     {

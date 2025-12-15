@@ -77,7 +77,7 @@ public class Stat
     }
 
 
-    protected virtual void ReCalculateValue()
+    public virtual void ReCalculateValue()
     {
         float baseConstant = 0f;
         float constant = 0f;

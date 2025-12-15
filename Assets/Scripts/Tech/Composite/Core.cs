@@ -8,9 +8,9 @@ namespace Tech.Composite
     {
         private List<CoreComponent> _coreCompoenents;
 
-        private void Awake()
+        private void Start()
         {
-            
+            Initialize();
         }
 
         private void Initialize()

@@ -17,5 +17,8 @@ public enum GameSceneType
     Menu,
 
     //Location
-    Location
+    Location,
+
+    //Battle
+    Battle
 }

@@ -5,9 +5,9 @@ public class ArmorStatsUI : MonoBehaviour
 {
     [SerializeReference] private TextMeshProUGUI txtStats;
     [SerializeReference] private TextMeshProUGUI txtLevel;
-    [SerializeReference] private StatsPool type;
+    [SerializeReference] private StatType type;
 
-    public StatsPool Type => type;
+    public StatType Type => type;
 
     public void UpdateStat(int value, int level)
     {

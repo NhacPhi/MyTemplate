@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tech.StateMachine
 {
-    public class StateMachine<StateID, BState> where StateID : Enum where BState : StateBase
+    public class StateMachine<StateID, BState> where StateID : Enum where BState : BaseState
     {
        public readonly Dictionary<StateID, BState> _states = new();
         public StateID CurrentStateID { get; private set; }

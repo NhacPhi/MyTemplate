@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tech.StateMachine;
 
-public class BattleBaseState : StateBase
+public class BattleBaseState : BaseState
 {
     protected StateMachine<BattleState, BattleBaseState> stateMachine;
 

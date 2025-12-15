@@ -13,10 +13,14 @@ public class HealthBar : MonoBehaviour
 
     [SerializeField] private GameObject ticketContainer;
 
-    private int maxHP = 9800;
+    private int MAX_HP = 9800;
     private int currentHP;
     private int currentDamage;
     private int currentShield;
+
+    private int shield = 0;
+
+    private int healh = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +30,7 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyUp(KeyCode.Space))
         {
             TakeDamage(2000);
             UIEvent.DamagePopup?.Invoke(2000, gameObject.transform.position, false);
@@ -45,20 +49,21 @@ public class HealthBar : MonoBehaviour
     }
     public void Setup()
     {
-        currentHP = currentDamage = currentShield = maxHP;
+        currentHP = currentDamage = currentShield = MAX_HP;
 
-        heathSlider.maxValue = maxHP;
+        heathSlider.maxValue = MAX_HP;
         heathSlider.value = currentHP;
 
-        damageSlider.maxValue = maxHP;
+        damageSlider.maxValue = MAX_HP;
         damageSlider.value = currentDamage;
 
-        shieldSlider.maxValue = maxHP;
+        shieldSlider.maxValue = MAX_HP;
+
         shieldSlider.value = currentShield;
 
 
 
-        ResetTick(maxHP);
+        ResetTick(MAX_HP);
     }
 
     private void ResetTick(int hp)
@@ -83,106 +88,93 @@ public class HealthBar : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        int finalDamage = 0;
-        if (HasShield())
+        // Has Shield
+        if(HasShield())
         {
-            finalDamage = damage - (currentShield - currentHP);
-
-            if (finalDamage > 0)
+            var result = shield - damage;
+            // Compare shield with damage
+            if (shield >= damage)
             {
-                // Shield k du lon
-                currentHP -= finalDamage;
-                currentShield = currentHP;
-
-                heathSlider.value = currentHP;
-                shieldSlider.value = currentShield;
-
-                StartCoroutine(EffectTakeDamage(finalDamage));
+                shield = result;
+                SetCurrentShield(currentShield - damage);
             }
             else
             {
-                if (OverShield())
-                {
-                    currentShield -= damage;
-                    shieldSlider.value = maxHP;
-                    float offset = ((float)currentHP / (float)currentShield) * maxHP;
-                    Debug.Log("LOL:" + offset);
-                    damageSlider.value = offset;
-                    heathSlider.value = offset;
+                shield = 0;
 
-                    ResetTick(currentShield);
-                }
-                else
-                {
-                    currentShield -= damage;
-                    shieldSlider.value = currentShield;
-                }
+                var newDamge = damage + result;
+                StartCoroutine(EffectTakeDamage(damage));
+
+                SetCurrentHP(currentHP - newDamge);
+                SetCurrentShield(currentHP);
             }
         }
         else
         {
-            currentHP -= damage;
-            heathSlider.value = currentHP;
-
-            currentShield = currentHP;
-            shieldSlider.value = currentShield;
-
+            // No Shield
             StartCoroutine(EffectTakeDamage(damage));
+            // Set value
+            SetCurrentHP(currentHP - damage);
+            SetCurrentShield(currentHP);
         }
 
+        CheckShield();
     }
     
     public void Heal(int value)
     {
-        StartCoroutine(EffectHeal(value));
+        if(currentHP < MAX_HP)
+        {
+            StartCoroutine(EffectHeal(value));
+        }
     }
 
     public void BuffShield(int value)
     {
-        currentShield += value;
-        if(OverShield())
-        {
-            shieldSlider.value = maxHP;
-            float offset = ((float)currentHP / (float)currentShield) * maxHP;
-            Debug.Log("LOL:" + offset);
-            damageSlider.value = offset;
-            heathSlider.value = offset;
+        shield += value;
 
-            ResetTick(currentShield);
-        }
-        else
-        {
-            shieldSlider.value = currentShield;
-        }
+        SetCurrentShield(currentShield + value);
+
+        CheckShield();
     }
 
     IEnumerator EffectHeal(int value)
     {
-        float hp = currentHP;
-
-        while(hp < currentHP + value)
+        if(CheckShieldOver())
         {
-            hp += 50;
-            shieldSlider.value = currentShield + hp - currentHP;
-            heathSlider.value = hp;
-            yield return new WaitForSeconds(0.01f);
-        }
+            float hp = healh;
 
-        if(HasShield())
-        {
-            currentShield = currentShield + value;
+            float ratio = value / (MAX_HP + shield);
+
+            float result = ratio * MAX_HP;
+
+            while (hp < healh + result)
+            {
+                heathSlider.value = hp;
+                damageSlider.value = hp;
+                hp += 50 / (MAX_HP + shield);
+                yield return new WaitForSeconds(0.01f);
+            }
         }
         else
         {
-            currentShield = currentHP +  value;
+            float hp = currentHP;
+
+            while (hp < currentHP + value)
+            {
+                heathSlider.value = hp;
+                damageSlider.value = hp;
+                hp += 50;
+                yield return new WaitForSeconds(0.01f);
+            }
+
         }
-        currentHP = currentHP + value;
 
-        currentDamage = currentHP;
+        //Set Value 
+        SetCurrentHP(currentHP + value);
+        SetCurrentShield(currentShield + value);
 
-        heathSlider.value = currentHP;
-        damageSlider.value = currentDamage;
-        shieldSlider.value = currentShield;
+        CheckShield();
     }
 
     IEnumerator EffectTakeDamage(int damage)
@@ -194,20 +186,53 @@ public class HealthBar : MonoBehaviour
             damageSlider.value = effect;
             yield return new WaitForSeconds(0.01f);
             effect -= 50;
-            effect -= 50;
         }
 
-        currentDamage = currentHP;
-        damageSlider.value = currentDamage;
     }
 
-    private bool HasShield()
+    bool HasShield()
     {
         return currentShield > currentHP;
     }
 
-    private bool OverShield()
+    private bool CheckShieldOver()
     {
-        return currentShield > maxHP;
+        return currentShield > MAX_HP;
+    }
+
+    private void SetCurrentHP(int hp)
+    {
+        if(hp > MAX_HP)
+            hp = MAX_HP;
+        currentHP = hp;
+        currentDamage = currentHP;
+
+        heathSlider.value = currentDamage;
+        damageSlider.value = currentDamage;
+    }
+
+    private void SetCurrentShield(int value)
+    {
+        currentShield = value;
+        shieldSlider.value = value;
+    }
+
+    private void CheckShield()
+    {
+        if (CheckShieldOver())
+        {
+            var sum = currentHP + shield;
+            ResetTick(sum);
+            float ratio = (float)shield / sum;
+            var result = MAX_HP - (float)ratio * MAX_HP;
+            heathSlider.value = result;
+            damageSlider.value = result;
+            healh = (int)result;
+            shieldSlider.value = MAX_HP;
+        }
+        else
+        {
+            ResetTick(MAX_HP);
+        }
     }
 }

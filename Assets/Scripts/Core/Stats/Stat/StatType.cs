@@ -2,13 +2,13 @@ using System;
 
 public enum StatType
 {
+    HP,
     ATK,
     DEF,
-    HP,
     SPD,
-    DEFShred,
-    CRITRate,
-    CRITDMG,
-    Pentration,
-    CRITDMGRes
+    DEF_SHRED,
+    CRIT_RATE,
+    CRIT_DMG,
+    PEN,
+    CRIT_DMG_RES
 }
