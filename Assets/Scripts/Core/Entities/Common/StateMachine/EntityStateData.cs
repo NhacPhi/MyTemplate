@@ -12,12 +12,14 @@ public enum EntityState
     ATTACK,
     HIT,
     MOVE_UP,
-    MOVE_DOWN
+    MOVE_DOWN,
+    MAIN_SKILL
 }
 
 public class EntityStateData : CoreComponent
 {
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
+    public EntityState NextStateAfterMoveext { get; set; } = EntityState.ATTACK;
     public Entity Entity { get; protected set; }
     public EntityStats StatsManager { get; protected set; }
     public AnimationSystemBase Anim { get; protected set; }
@@ -39,6 +41,8 @@ public class EntityStateData : CoreComponent
     //[field: SerializeField] public string MoveAnim { get; protected set; } = "Move";
     [field: SerializeField] public string AttackParam { get; protected set; } = "Attack";
     [field: SerializeField] public string HitParam { get; protected set; } = "Injured";
+
+    [field: SerializeField] public string MainSkillParam { get; protected set; } = "UltimateSkill";
 
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();
     public override void LoadComponent()

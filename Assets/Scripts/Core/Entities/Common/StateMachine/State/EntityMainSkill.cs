@@ -2,19 +2,18 @@ using Cysharp.Threading.Tasks;
 using System;
 using Tech.Pool;
 
-public class EntityAttack : EntityStateBase
+public class EntityMainSkill : EntityStateBase
 {
-    protected Action DamageCallBack;
-    protected Action ExitCallBack;
-    public EntityAttack(EntityStateData data) : base(data)
+    public EntityMainSkill(EntityStateData data) : base(data)
     {
 
     }
 
+
     public override void Enter()
     {
         var animData = GenericPool<AnimationData>.Get().Renew();
-        animData.ParameterName = data.AttackParam;
+        animData.ParameterName = data.MainSkillParam;
         animData.ParameterType = AnimatorParameterType.Trigger;
         data.Anim.Play(animData);
 

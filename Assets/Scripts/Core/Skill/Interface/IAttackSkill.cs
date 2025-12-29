@@ -1,18 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class IAttackSkill : MonoBehaviour
+using System;
+public interface IAttackSkill
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void OnDealDamage(ref float damageInput);
 }

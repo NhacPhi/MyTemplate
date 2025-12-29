@@ -11,6 +11,7 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
     = new StateMachine<EntityState, EntityStateBase>();
 
+
     [SerializeField] private AttackType attackType;
     //public IEntityAttack attack { get; private set; }
 
@@ -43,6 +44,7 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         StateManager.AddNewState(EntityState.HIT, new EntityTakeHit(entityStateData));
         StateManager.AddNewState(EntityState.MOVE_UP, new EntityMoveUp(entityStateData));
         StateManager.AddNewState(EntityState.MOVE_DOWN, new EntityMoveDown(entityStateData));
+        StateManager.AddNewState(EntityState.MAIN_SKILL, new EntityMainSkill(entityStateData));
     }
 
     protected virtual void Start()

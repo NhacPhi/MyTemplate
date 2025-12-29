@@ -14,26 +14,29 @@ public class CharacterController : Entity
     }
 
 
-
     protected override void Update()
     {
         base.Update();
         if(Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Base Attack");
-            HandleTurn(target.gameObject.GetComponent<Entity>());
+            var enemy = target.gameObject.GetComponent<Entity>();
+            HandleTurn(enemy);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Major Skill");
-
+            var enemy = target.gameObject.GetComponent<Entity>();
+            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Major);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Ultimate Skill");
-
+            var enemy = target.gameObject.GetComponent<Entity>(); 
+            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Main);
+            HandleTurn(enemy);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

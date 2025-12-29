@@ -1,7 +1,5 @@
 using Core.Scope;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
 using VContainer;
 using VContainer.Unity;

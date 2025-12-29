@@ -900,6 +900,7 @@ Transform:
   m_Children:
   - {fileID: 559271960}
   - {fileID: 148877075}
+  - {fileID: 1924473029}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &380681961
@@ -942,13 +943,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TimeToReadyMoveAttack>k__BackingField: 0.3
-  <TimeToAttack>k__BackingField: 0.85
-  <TimeToEndTurn>k__BackingField: 0.3
+  <TimeToAttack>k__BackingField: 1.3
+  <TimeToEndTurn>k__BackingField: 1.2
   <MoveSpeed>k__BackingField: 26
   <OffsetToTarget>k__BackingField: {x: 5, y: 0, z: 0}
   <IdleParam>k__BackingField: Idle
   <AttackParam>k__BackingField: Attack
   <HitParam>k__BackingField: Injured
+  <MainSkillParam>k__BackingField: UltimateSkill
 --- !u!114 &380681964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1146,6 @@ Transform:
   m_Children:
   - {fileID: 1361962715}
   - {fileID: 1453161288}
-  - {fileID: 1924473029}
   m_Father: {fileID: 380681960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &559271961
@@ -1320,6 +1321,7 @@ MonoBehaviour:
   <IdleParam>k__BackingField: Idle
   <AttackParam>k__BackingField: Attack
   <HitParam>k__BackingField: Injured
+  <MainSkillParam>k__BackingField: UltimateSkill
 --- !u!114 &619374516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3485,6 +3487,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1927823524}
+  - {fileID: 1584636082}
 --- !u!4 &1561069338
 Transform:
   m_ObjectHideFlags: 0
@@ -3500,6 +3503,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1584636082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584636084}
+  - component: {fileID: 1584636085}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1584636084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584636082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9638875, y: 0.48534724, z: 26.503948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1584636085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584636082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9824c06795564b4fb5c40605ea4403f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeEntities:
+  - {fileID: 380681961}
 --- !u!1 &1601789356
 GameObject:
   m_ObjectHideFlags: 0
@@ -4704,11 +4753,11 @@ Transform:
   m_GameObject: {fileID: 1924473028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.88, y: 1.8000001, z: 0}
-  m_LocalScale: {x: 3.3333335, y: 3.3333335, z: 3.3333335}
+  m_LocalPosition: {x: 3.8300004, y: 1.1800001, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 559271960}
+  m_Father: {fileID: 380681960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1924473030
 Animator:
@@ -4772,7 +4821,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 773619429, guid: a597313b137f7ff4383e2b99d7a7ae9e, type: 3}
+  m_Sprite: {fileID: 345015262, guid: 2d02f273bc0c8694bae8b0878b464ea1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4780,7 +4829,7 @@ SpriteRenderer:
   m_Size: {x: 3.78, y: 3.285}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1927823524
@@ -5234,3 +5283,4 @@ SceneRoots:
   - {fileID: 1623828144}
   - {fileID: 1874457590}
   - {fileID: 1927823526}
+  - {fileID: 1584636084}

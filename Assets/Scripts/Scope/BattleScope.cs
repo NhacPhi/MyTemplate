@@ -10,5 +10,7 @@ public class BattleScope : LifetimeScope
         //Entry point
         builder.RegisterEntryPoint<CombatText>(Lifetime.Scoped);
 
+        //builder.RegisterComponentInHierarchy<BattleManager>().AsSelf();
+        builder.RegisterComponentInHierarchy<BattleManager>().AsImplementedInterfaces();
     }
 }

@@ -1,15 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Tech.StateMachine;
 
-public class BattleBaseState : BaseState
+public enum BattleState
 {
-    protected StateMachine<BattleState, BattleBaseState> stateMachine;
+    SetupState, // Init data, spawn character, load inviroment
+    OrderState, // Decide order turn
+    BeginTurnBase, // Handle effect or buff
+    ActionState, // Player Chosce Skill or AI controller
+    ExecutionState, // Run skill animation, caculate damaage
+    EndTurnState, // Check Win or Lose Condition, handle skill cooldown
+    ResultState // Show UI for result of battle (handle reward)
+}
+public abstract class BattleBaseState : BaseState
+{
+    protected BattleManager battleManager;
 
-    public BattleBaseState(StateMachine<BattleState, BattleBaseState> stateMachine)
+    public BattleBaseState(BattleManager battleManager)
     {
-        this.stateMachine = stateMachine;
+        this.battleManager = battleManager;
     }
     public override void Enter()
     {
