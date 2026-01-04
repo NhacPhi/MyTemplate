@@ -15,65 +15,25 @@ MonoBehaviour:
   m_GroupName: Data
   m_Data:
     m_SerializedData: []
-  m_GUID: 9dff5ed2c836c4f4ca50bdeb4c6a5373
+  m_GUID: 9c7f1f3d09f9cd24cbf88bea3f74ebbc
   m_SerializeEntries:
-  - m_GUID: 71e77d6e62f583842a9a52a0d94e2424
+  - m_GUID: 5437ae200259b4a429e9cd0171b2f339
     m_Address: Localization_VIETNAMESE
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 762287fc23db8684dbba97d28d28d457
-    m_Address: CharacterUpgrade
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80d4ddbcbe4de5643a752c46f0798603
-    m_Address: CharacterStat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8059ea6478e7a0e4fa6020ce2c53f62b
-    m_Address: Character
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b9b6cce4766f1754c8533a19635c6d54
+  - m_GUID: 98f9850d4b894f04f81888dae16c0e27
     m_Address: Localization_ENGLISH
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8d0cb42afae7b1d429323d0fb638697a
-    m_Address: Avatar
+  - m_GUID: 5d600d3bbb8562f44943124cfb38a55b
+    m_Address: ItemsConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 976724f917ff25042ac3ac93f313c0b0
-    m_Address: BaseArmor
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 79e10cbe30bbde34fb333a6f0e82ea93
-    m_Address: Exp
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 022b56fd819f3194e9c55205d62fe1c9
-    m_Address: Food
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c82871ec18e203c4183c9bd08b288887
-    m_Address: GemStone
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ff74b97e8bedf08408df2cb7c5b66cf3
-    m_Address: Shard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 61c437bca1b5821468487a9611fed878
-    m_Address: Weapon
+  - m_GUID: dd8f07c867a16f842b5ab50c1b5f3748
+    m_Address: CharacterConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -121,5 +81,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: ae48fbbbc262a524eb14683dfd9cf138, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: cb29270691c928f41b27498e261f62d6, type: 2}
-    - {fileID: 11400000, guid: 96200ec8c1ec76f49a5b35ead14a5699, type: 2}
+    - {fileID: 11400000, guid: 1bdc155dbe55344409b029883b50675d, type: 2}
+    - {fileID: 11400000, guid: af171c4bd459e5b45b804e11c5c8756f, type: 2}

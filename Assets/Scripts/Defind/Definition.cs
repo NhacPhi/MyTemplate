@@ -46,31 +46,6 @@ public enum CharacterType
     Normal
 }
 
-
-public enum ItemType
-{
-    None,
-    Item,
-    Armor,
-    Weapon,
-    Shard,
-    Material,
-    Avatar,
-    Food,
-    GemStone,
-    Exp
-}
-
-public enum WeaponType
-{
-    Fighter,
-    Assassin,
-    Tank,
-    Mage,
-    Support,
-    Normal
-}
-
 public enum ArmorPart
 {
     Helmet,

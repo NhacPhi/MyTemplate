@@ -47,14 +47,14 @@ public class ArmorTooltipUI : MonoBehaviour
 
     public void UpdateArmorUI(string armorID)
     {
-        ArmorData armorData = save.Player.GetArmor(armorID);
-        BaseArmorConfig config = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, armorData.TemplateID);
-        ArmorSO armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, armorData.TemplateID);
+        ArmorSaveData armorData = save.Player.GetArmor(armorID);
+        ItemConfig armorConfig = gameDataBase.GetItemConfig(armorData.TemplateID);
         
-        armor.GetComponent<ArmorItemUI>().Init(armorData.InstanceID, armorData.Rare, armorSO.Icon, gameDataBase.GetRareBG(armorData.Rare), armorData.Level);
+        armor.GetComponent<ArmorItemUI>().Init(armorData.InstanceID, armorData.Rare, armorConfig.Icon, 
+            gameDataBase.GetBGItemByRare(armorData.Rare), armorData.Level);
         armor.CanClick = false;
 
-        txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
+        txtName.text = LocalizationManager.Instance.GetLocalizedValue(armorConfig.Name);
         txtScore.text = "100";
 
         ResetArmorStatsUI();
@@ -80,7 +80,7 @@ public class ArmorTooltipUI : MonoBehaviour
         }
     }
 
-    private void UpdateArmorStatsUI(ArmorStats stats)
+    private void UpdateArmorStatsUI(ArmorStatSaveData stats)
     {
         foreach (var armor in armorStats)
         {

@@ -69,14 +69,14 @@ public static class Utility
         return 3000 + 2000 * (level - 1) * (level - 1);
     }
 
-    public static int GetShardNeedToUpgradeAscend(int boostStats)
+    public static int GetShardNeedToUpgradeAscend(int boostStat )
     {
-        int boost = (boostStats - 1) / 3;
+        int boost = (boostStat - 1) / 3;
         return 60 + 60 * boost;
     }
-    public static int GetCoinNeedToAscendCharacter(int boostStats)
+    public static int GetCoinNeedToAscendCharacter(int boostStat)
     {
-        return 8000 + 4000 * (boostStats - 1) * (boostStats - 1);
+        return 8000 + 4000 * (boostStat - 1) * (boostStat - 1);
     }
 
     public static int GetEssenceNeedToUpgradeWeapon(int level)

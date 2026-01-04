@@ -18,7 +18,7 @@ public class RuntimeAnchorBase<T> : DescriptionBaseSO where T : UnityEngine.Obje
     {
         if (value == null)
         {
-            Debug.LogError("A null value was provided to the " + this.name + " runtime anchor.");
+            Debug.LogError("A null _value was provided to the " + this.name + " runtime anchor.");
             return;
         }
 

@@ -22,7 +22,7 @@ public class CharacterCardArmor : CharacterCard
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
-    List<ArmorData> armorDatas = new();
+    List<ArmorSaveData> ArmorSaveDatas = new();
     private string currentCharacterID = "";
 
     private string originArmorID = "";
@@ -54,14 +54,14 @@ public class CharacterCardArmor : CharacterCard
         currentCharacterID = id;
         float hp, atk, def, spd, defShred, critRate, critDMG, penetration, critDMGRes;
         hp = atk = def = spd = defShred = critRate = critDMG = penetration = critDMGRes = 0;
-        armorDatas.Clear();
+        ArmorSaveDatas.Clear();
         if (save.Player.GetCharacter(id).Armors.Count > 0)
         {
-            CharacterData data = save.Player.GetCharacter(id);
+            CharacterSaveData data = save.Player.GetCharacter(id);
 
-            foreach(var armorData in data.Armors)
+            foreach(var ArmorSaveData in data.Armors)
             {
-                armorDatas.Add(save.Player.GetArmor(armorData.ID));
+                ArmorSaveDatas.Add(save.Player.GetArmor(ArmorSaveData.ID));
             }
 
             //BaseArmorConfig armor = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, id);
@@ -73,12 +73,11 @@ public class CharacterCardArmor : CharacterCard
                 {
                     armor.SwitchStatusArmorUI(false);
 
-                    Part part = save.Player.GetCharacter(id).Armors.Find(part => part.Type == armor.Type);
-                    ArmorData armordata = armorDatas.Find(armor => armor.InstanceID == part.ID);
-                    BaseArmorConfig config = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, armordata.TemplateID);
-                    ArmorSO armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, armordata.TemplateID);
+                    PartSaveData part = save.Player.GetCharacter(id).Armors.Find(part => part.Type == armor.Type);
+                    ArmorSaveData armorData = ArmorSaveDatas.Find(armor => armor.InstanceID == part.ID);
+                    ItemConfig armorConfig = gameDataBase.GetItemConfig(armorData.TemplateID);
 
-                    armor.UpdateArmorUI(armordata.InstanceID, armordata.Rare, armorSO.Icon, gameDataBase.GetRareBG(armordata.Rare), armordata.Level);
+                    armor.UpdateArmorUI(armorData.InstanceID, armorData.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armorData.Rare), armorData.Level);
                 }
             }
         }
@@ -113,7 +112,7 @@ public class CharacterCardArmor : CharacterCard
         originArmorID = id;
         if (id != "")
         {
-            Part part = save.Player.GetCharacter(currentCharacterID).Armors.Find(part => part.ID == id);
+            PartSaveData part = save.Player.GetCharacter(currentCharacterID).Armors.Find(part => part.ID == id);
             for (int i = 0; i < armors.Count; i++)
             {
                 if (armors[i].Type == part.Type)

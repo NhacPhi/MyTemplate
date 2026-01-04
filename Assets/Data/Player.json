@@ -1,9 +1,80 @@
 {
-  "PlayerName": "Congyon",
-  "Level": 1,
-  "CurrentExp": 1,
-  "AvatarIcon": "WuKong_01",
-  "Currencies": {
+  "characters": [
+    {
+      "id": "SunWukong",
+      "level": 1,
+      "exp": 900,
+      "boot_stat": 1,
+      "weapon": "Nimbus_Cudgel"
+    },
+    {
+      "id": "TangSanZang",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": "Ninefold_Staff"
+    },
+    {
+      "id": "ZhuBaJie",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": "Nine_ToolThed_Rake"
+    },
+    {
+      "id": "ShaWujing",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    },
+    {
+      "id": "DragonKing",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    },
+    {
+      "id": "ThirdPrinceNezha",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    },
+    {
+      "id": "LittleWhiteDragon",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    },
+    {
+      "id": "BullDemonKing",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    },
+    {
+      "id": "ErlangShen",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": "Triple_Edged_Blade"
+    },
+    {
+      "id": "GuanyinBodhisattva",
+      "level": 1,
+      "exp": 0,
+      "boot_stat": 1,
+      "weapon": ""
+    }
+  ],
+  "player_name": "Congyon",
+  "level": 1,
+  "avatar_icon": "Wukong_avatar",
+  "currencies": {
     "Energy": 1,
     "Jade": 10,
     "Coin": 100,
@@ -11,692 +82,475 @@
     "ArmorPrimorite": 1000,
     "Ticket": 0
   },
-  "Weapons": [
+  "weapons": [
     {
-      "ID": "Nimbus_Cudgel",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "SunWukong"
+      "id": "Nimbus_Cudgel",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "SunWukong"
     },
     {
-      "ID": "Triple_Edged_Blade",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "ErlangShen"
+      "id": "Triple_Edged_Blade",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "ErlangShen"
     },
     {
-      "ID": "Vanguard_Of_Volition",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Vanguard_Of_Volition",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Ninefold_Staff",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "TangSanZang"
+      "id": "Ninefold_Staff",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "TangSanZang"
     },
     {
-      "ID": "Nine_ToolThed_Rake",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "ZhuBaJie"
+      "id": "Nine_ToolThed_Rake",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "ZhuBaJie"
     },
     {
-      "ID": "Nimbus_Cloud",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Nimbus_Cloud",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Sunburst_Spade",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Sunburst_Spade",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Reincarnation",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Reincarnation",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Ennead_spear",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Ennead_spear",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Crescent_Axe",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Crescent_Axe",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Bronze_Hammer",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Bronze_Hammer",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Plantain_Fan",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Plantain_Fan",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Wings_of_Phoenix",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Wings_of_Phoenix",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     },
     {
-      "ID": "Moonlit_Firelfy",
-      "CurrentLevel": 1,
-      "CurrentUpgrade": 1,
-      "Equip": "None"
+      "id": "Moonlit_Firelfy",
+      "current_level": 1,
+      "current_updgrade": 1,
+      "equip": "None"
     }
   ],
-  "Items": [
+  "items": [
     {
-      "ID": "common_exp",
-      "Quantity": 10,
-      "Type": "Exp"
+      "id": "common_exp",
+      "type": "Exp",
+      "quantity": 10
     },
     {
-      "ID": "fine_exp",
-      "Quantity": 5,
-      "Type": "Exp"
+      "id": "fine_exp",
+      "type": "Exp",
+      "quantity": 5
     },
     {
-      "ID": "rare_exp",
-      "Quantity": 3,
-      "Type": "Exp"
+      "id": "rare_exp",
+      "type": "Exp",
+      "quantity": 3
     },
     {
-      "ID": "supreme_exp",
-      "Quantity": 1,
-      "Type": "Exp"
+      "id": "supreme_exp",
+      "type": "Exp",
+      "quantity": 1
     },
     {
-      "ID": "Lamian_Noodies",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Lamian_Noodies",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Tofu_Soup",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Tofu_Soup",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Murshroom_Steamed_Buns",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Murshroom_Steamed_Buns",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Fried_Radish_Balls",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Fried_Radish_Balls",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Jade_Parcels",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Jade_Parcels",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Shirmp_Dumplings",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Shirmp_Dumplings",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Dragon_Bread_Noodies",
-      "Quantity": 1,
-      "Type": "Food"
+      "id": "Dragon_Bread_Noodies",
+      "type": "Food",
+      "quantity": 1
     },
     {
-      "ID": "Garnet_Gemstone",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Garnet_Gemstone",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Yellow_Jade_Gemstone",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Yellow_Jade_Gemstone",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Jade_Gemstone",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Jade_Gemstone",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Garnet_Chunk",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Garnet_Chunk",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Yellow_Jade_Chunk",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Yellow_Jade_Chunk",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Jade_Chunk",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Jade_Chunk",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Garnet_Fragment",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Garnet_Fragment",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Yellow_Jade_Fragment",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Yellow_Jade_Fragment",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Jade_Fragment",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Jade_Fragment",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Garnet_Sliver",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Garnet_Sliver",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Yellow_Jade_Sliver",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Yellow_Jade_Sliver",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "Jade_Sliver",
-      "Quantity": 1,
-      "Type": "GemStone"
+      "id": "Jade_Sliver",
+      "type": "Gemstone",
+      "quantity": 1
     },
     {
-      "ID": "shard_SunWukong",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "SunWukong",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_TangSanZang",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "TangSanZang",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_ZhuBaJie",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "ZhuBaJie",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_ShaWujing",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "ShaWujing",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_DragonKing",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "DragonKing",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_ThirdPrinceNezha",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "ThirdPrinceNezha",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_LittleWhiteDragon",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "LittleWhiteDragon",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_BullDemonKing",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "BullDemonKing",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_ErlangShen",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "ErlangShen",
+      "type": "Shard",
+      "quantity": 1
     },
     {
-      "ID": "shard_GuanyinBodhisattva",
-      "Quantity": 1,
-      "Type": "Shard"
+      "id": "GuanyinBodhisattva",
+      "type": "Shard",
+      "quantity": 1
     }
   ],
-  "Armors": [
+  "armors": [
     {
-      "InstanceID": "0f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Helmet",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Helmet",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "1f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Chestplate",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Chestplate",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "2f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Gloves",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "2f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Gloves",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "3f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Boots",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Boots",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "4f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Belt",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "4f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Belt",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "5f8fad5b-d9cb-469f-a165-70867728950e",
-      "TemplateID": "Armor01_Ring",
-      "Rare": "Legendary",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "5f8fad5b-d9cb-469f-a165-70867728950e",
+      "template_id": "Armor01_Ring",
+      "level": 1,
+      "rare": "Legendary",
+      "stats": [
         {
-          "Type": "HP",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "HP",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         },
         {
-          "Type": "ATK",
-          "Point": 50,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "ATK",
+          "point": 50,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "SunWukong"
+      "equip": "SunWukong"
     },
     {
-      "InstanceID": "0f8fad5b-d9cb-469f-a165-76867728950e",
-      "TemplateID": "Armor05_Helmet",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+      "template_id": "Armor05_Helmet",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
+      "equip": "None"
     },
     {
-      "InstanceID": "1f8fad5b-d9cb-469f-a165-75867728950e",
-      "TemplateID": "Armor05_Chestplate",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "1f8fad5b-d9cb-469f-a165-75867728950e",
+      "template_id": "Armor05_Chestplate",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
+      "equip": "None"
     },
     {
-      "InstanceID": "2f8fad5b-d9cb-469f-a165-74867728950e",
-      "TemplateID": "Armor05_Gloves",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
+      "template_id": "Armor05_Gloves",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
+      "equip": "None"
     },
     {
-      "InstanceID": "3f8fad5b-d9cb-469f-a165-73867728950e",
-      "TemplateID": "Armor05_Boots",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+      "template_id": "Armor05_Boots",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
+      "equip": "None"
     },
     {
-      "InstanceID": "4f8fad5b-d9cb-469f-a165-72867728950e",
-      "TemplateID": "Armor05_Belt",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+      "template_id": "Armor05_Belt",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
+      "equip": "None"
     },
     {
-      "InstanceID": "5f8fad5b-d9cb-469f-a165-71867728950e",
-      "TemplateID": "Armor05_Ring",
-      "Rare": "Uncommon",
-      "Level": 1,
-      "Stats": [
+      "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+      "template_id": "Armor05_Ring",
+      "level": 1,
+      "rare": "Uncommon",
+      "stats": [
         {
-          "Type": "DEF",
-          "Point": 100,
-          "Level": 1,
-          "ModifyType": "BaseConstant"
+          "type": "DEF",
+          "point": 100,
+          "level": 1,
+          "modifier_type": "BaseConstant"
         }
       ],
-      "Equip": "None"
-    }
-  ],
-  "Characters": [
-    {
-      "ID": "SunWukong",
-      "Level": 1,
-      "Exp": 900,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "Nimbus_Cudgel",
-      "Armors": [
-        {
-          "ID": "0f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Helmet"
-        },
-        {
-          "ID": "1f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Chestplate"
-        },
-        {
-          "ID": "2f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Gloves"
-        },
-        {
-          "ID": "3f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Boots"
-        },
-        {
-          "ID": "4f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Belt"
-        },
-        {
-          "ID": "5f8fad5b-d9cb-469f-a165-70867728950e",
-          "Type": "Ring"
-        }
-      ]
-    },
-    {
-      "ID": "TangSanZang",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "Ninefold_Staff",
-      "Armors": []
-    },
-    {
-      "ID": "ZhuBaJie",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "Nine_ToolThed_Rake",
-      "Armors": []
-    },
-    {
-      "ID": "ShaWujing",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
-    },
-    {
-      "ID": "DragonKing",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
-    },
-    {
-      "ID": "ThirdPrinceNezha",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
-    },
-    {
-      "ID": "LittleWhiteDragon",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
-    },
-    {
-      "ID": "BullDemonKing",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
-    },
-    {
-      "ID": "ErlangShen",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "Triple_Edged_Blade",
-      "Armors": []
-    },
-    {
-      "ID": "GuanyinBodhisattva",
-      "Level": 1,
-      "Exp": 0,
-      "Talents": {
-        "HPPoint": 0,
-        "ATKPoint": 0,
-        "DEFPoin": 0,
-        "SPDPoint": 0,
-        "DEFShredPoint": 0,
-        "CRITRatePoint": 0,
-        "RITDMGPoint": 0,
-        "PenetrationPoin": 0,
-        "CIRTDMGRes": 0
-      },
-      "BoostStats": 1,
-      "Weapon": "",
-      "Armors": []
+      "equip": "None"
     }
   ]
 }

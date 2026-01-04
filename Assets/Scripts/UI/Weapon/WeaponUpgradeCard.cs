@@ -37,9 +37,9 @@ public class WeaponUpgradeCard : MonoBehaviour
     {
         if(weaponID != "")
         {
-            WeaponConfig config = gameDataBase.GetWeaponConfig(weaponID);
-            WeaponData data = save.Player.GetWeapon(weaponID);
-            WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, weaponID);
+            var config = gameDataBase.GetItemConfig(weaponID);
+            WeaponSaveData data = save.Player.GetWeapon(weaponID);
+
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;
@@ -47,11 +47,15 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtNextLevel.text = level < 10 ? ((level + 1).ToString() + "/10") :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
 
-            int currentHP = config.HP + Utility.GetStatGrowthLevel(level, config.GrowthHP);
-            int nextHP = config.HP + Utility.GetStatGrowthLevel(level + 1, config.GrowthHP);
+            int currentHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP) +
+                Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));
+            int nextHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP)
+                + Utility.GetStatGrowthLevel(level + 1, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));
 
-            int currentATK = config.ATK + Utility.GetStatGrowthLevel(level, config.GrowthATK);
-            int nextATK = config.ATK + Utility.GetStatGrowthLevel(level + 1, config.GrowthATK);
+            int currentATK = config.Weapon.Stats.GetValueOrDefault(StatType.ATK) +
+                Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.ATK));
+            int nextATK = config.Weapon.Stats.GetValueOrDefault(StatType.ATK)
+                + Utility.GetStatGrowthLevel(level + 1, config.Weapon.Upgrades.GetValueOrDefault(StatType.ATK));
 
             txtCurentHP.text = currentHP.ToString();
             txtCurrentATK.text = currentATK.ToString();

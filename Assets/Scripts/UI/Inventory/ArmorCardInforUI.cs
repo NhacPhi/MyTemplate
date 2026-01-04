@@ -27,26 +27,32 @@ public class ArmorCardInforUI : MonoBehaviour
 
     public void UpdateArmorItemCardInfor(string id)
     {
-        ArmorData item = save.Player.GetArmor(id);
-        BaseArmorConfig config = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
-        ArmorSO armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
+        ArmorSaveData item = save.Player.GetArmor(id);
 
-        txtNameItem.text = Utility.GetArmorPartName(config.Part) + " " + Utility.GetArmorRaretName(item.Rare) + "-" + LocalizationManager.Instance.GetLocalizedValue(config.Name);
+        var itemConfig = gameDataBase.GetItemConfig(id);
 
-        ResetArmorStatsUI();
-
-        armor.Init(item.InstanceID, item.Rare, armorSO.Icon, gameDataBase.GetRareBG(item.Rare), item.Level);
-        armor.CanClick = false;
-        if(item.Stats.Count > 0)
+        if(itemConfig != null)
         {
-            foreach(var obj in item.Stats)
+            txtNameItem.text = Utility.GetArmorPartName(itemConfig.Armor.Part) + " " + Utility.GetArmorRaretName(item.Rare)
+                + "-" + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+
+            ResetArmorStatsUI();
+
+            armor.Init(item.InstanceID, item.Rare, itemConfig.Icon, itemConfig.IconBG, item.Level);
+            armor.CanClick = false;
+            if (item.Stats.Count > 0)
             {
-                UpdateArmorStatsUI(obj);
+                foreach (var obj in item.Stats)
+                {
+                    UpdateArmorStatsUI(obj);
+                }
             }
+
+            txtTitleSet.text = "ATK Set(0/6)";
+            txtDescriptionSet.text = "Increasece ATK by 20%";
         }
 
-        txtTitleSet.text = "ATK Set(0/6)";
-        txtDescriptionSet.text = "Increasece ATK by 20%";
+
     }
 
     private void ResetArmorStatsUI()
@@ -57,7 +63,7 @@ public class ArmorCardInforUI : MonoBehaviour
         }
     }
 
-    private void UpdateArmorStatsUI(ArmorStats stats)
+    private void UpdateArmorStatsUI(ArmorStatSaveData stats)
     {
         foreach(var armor in armorStats)
         {

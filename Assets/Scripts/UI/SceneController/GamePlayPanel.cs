@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 using TMPro;
-using VContainer;
+
 public class GamePlayPanel : PanelController
 {
     [SerializeField] private Button btnClosePanel;
@@ -49,6 +49,6 @@ public class GamePlayPanel : PanelController
 
     public void UpdateAvatarIconOnPanel(string id)
     {
-        avatarIcon.sprite = gameDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
+        avatarIcon.sprite = gameDataBase.GetItemConfig(id).Icon;
     }   
 }

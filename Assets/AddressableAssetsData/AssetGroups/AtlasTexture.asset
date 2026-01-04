@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AtlasTexture
+  m_EditorClassIdentifier: 
+  m_GroupName: AtlasTexture
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7615259d7bbab794282cc798f3df6acf
+  m_SerializeEntries:
+  - m_GUID: 700032f089d8f7e4aba8595451c56dad
+    m_Address: Atlas_consumables
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ed2a1e46ac753e479cc8eb74f7db77e
+    m_Address: Atlas_icon_armor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f6921e22f42cab43a8ae2961fc45bcc
+    m_Address: Atlas_icon_gemstone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1984ce7bbb660ee48a67f8b1f5695567
+    m_Address: Atlas_icon_weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81a55ff0404c37b419a088ea740c0795
+    m_Address: Atlas_icon_game
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4d69a4a45702dc458cae191b85de050
+    m_Address: Atlas_icon_character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8d8bb06fefd70046b3b49dff8f31f50
+    m_Address: Atlas_big_icon_character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed45da570b860c747a6a07374649aacb
+    m_Address: Atlas_big_icon_weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ae48fbbbc262a524eb14683dfd9cf138, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 48f366d73f44d2a46afcc4dce0351859, type: 2}
+    - {fileID: 11400000, guid: 7b89148f0adf1074f820d2f2794853c6, type: 2}

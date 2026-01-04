@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+using static UnityEditor.Progress;
 
 public class ItemCardInfoUI : MonoBehaviour
 {
@@ -27,53 +29,29 @@ public class ItemCardInfoUI : MonoBehaviour
     }
     public void UpdateItemCardInfor(string id)
     {
-        ItemData item = save.Player.GetItem(id);
-        ItemBaseConfig itemConfig = default;
-        ItemBaseSO itemSO = default;
+        ItemSaveData item = save.Player.GetItem(id);
+        var itemConfig = gameDataBase.GetItemConfig(id);
         string str = "";
-        switch (item.Type)
+        if(itemConfig != null)
         {
-            case ItemType.Food:
-                {
-                    FoodConfig config = gameDataBase.GetItemConfigByID<FoodConfig>(ItemType.Food, id);
-                    itemSO = gameDataBase.GetItemSOByID<FoodSO>(ItemType.Food, id);
-                    itemConfig = config;
-                }
-            break;
-            case ItemType.GemStone:
-                {
-                    GemStoneConfig config = gameDataBase.GetItemConfigByID<GemStoneConfig>(ItemType.GemStone, id);
-                    itemSO = gameDataBase.GetItemSOByID<GemStoneSO>(ItemType.GemStone, id);
-                    itemConfig = config;
-                }
-                break;
-            case ItemType.Shard:
-                {
-                    ShardConfig config = gameDataBase.GetItemConfigByID<ShardConfig>(ItemType.Shard, id);
-                    itemSO = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, id);
-                    itemConfig = config;
-                }
-                break;
-            case ItemType.Exp:
-                {
-                    ExpConfig config = gameDataBase.GetItemConfigByID<ExpConfig>(ItemType.Exp, id);
-                    itemSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, id);
-                    str = string.Format(LocalizationManager.Instance.GetLocalizedValue(config.Useful), config.Exp);
-                    itemConfig = config;
-                }
-                break;
+
+            if(itemConfig.Type == ItemType.Exp)
+            {
+                str = string.Format(LocalizationManager.Instance.GetLocalizedValue(itemConfig.UseDescription), itemConfig.Exp.Value);
+            }
+
+            txtUseful.text = item.Type == ItemType.Exp ? str : LocalizationManager.Instance.GetLocalizedValue(itemConfig.UseDescription);
+            icon.sprite = itemConfig.Icon;
+            txtName.text = (item.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+            txtOwned.text = item.Quantity.ToString();
+            txtDes.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Description);
+
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(txtDes.rectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(txtUseful.rectTransform);
+
+            // Force rebuild UI layout
+            LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
         }
-        txtUseful.text = item.Type == ItemType.Exp ? str : LocalizationManager.Instance.GetLocalizedValue(itemConfig.Useful);
-        icon.sprite = itemSO.Icon;
-        txtName.text = (item.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " " ) : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
-        txtOwned.text = item.Quantity.ToString();
-        txtDes.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Description);
-
-
-        LayoutRebuilder.ForceRebuildLayoutImmediate(txtDes.rectTransform);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(txtUseful.rectTransform);
-
-        // Force rebuild UI layout
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
 }

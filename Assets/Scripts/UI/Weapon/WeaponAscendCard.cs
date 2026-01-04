@@ -34,22 +34,23 @@ public class WeaponAscendCard : MonoBehaviour
     {
         if (weaponID != "")
         {
-            WeaponConfig config = gameDataBase.GetWeaponConfig(weaponID);
-            WeaponData data = save.Player.GetWeapon(weaponID);
-            WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, weaponID);
+            ItemConfig config = gameDataBase.GetItemConfig(weaponID);
+            WeaponSaveData data = save.Player.GetWeapon(weaponID);
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;
             txtLevel.text = level.ToString() + "/10";
 
-            int currentHP = config.HP + Utility.GetStatGrowthLevel(level, config.GrowthHP);
-            int currentATK = config.ATK + Utility.GetStatGrowthLevel(level + 1, config.GrowthATK);
+            int currentHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP) 
+                + Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));
+            int currentATK = config.Weapon.Stats.GetValueOrDefault(StatType.ATK) 
+                + Utility.GetStatGrowthLevel(level + 1, config.Weapon.Upgrades.GetValueOrDefault(StatType.ATK));
 
             txtCurentHP.text = currentHP.ToString();
             txtCurentATK.text = currentATK.ToString();
 
             txtNameAndLevel.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + "(Lv." + data.CurrentUpgrade.ToString() + ")";
-            txtUse.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
+            txtUse.text = LocalizationManager.Instance.GetLocalizedValue(config.UseDescription);
             txtCoin.text = Utility.GetCoinNeedToAsscendWeapon(data.CurrentUpgrade).ToString();
         }
     }

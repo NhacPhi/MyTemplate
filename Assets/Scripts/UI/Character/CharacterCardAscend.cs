@@ -35,15 +35,14 @@ public class CharacterCardAscend : CharacterCard
     public void UpdateCharacterCardAscend(string id)
     {
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterData data = save.Player.GetCharacter(id);
+        CharacterSaveData data = save.Player.GetCharacter(id);
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
-        iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
+        //iconRare.sprite = gameDataBase.GetCharacterConfig(id)(config.Rare).Icon;
 
-        string shardID = "shard_" + config.ID;
-        iconShard.sprite = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, shardID).Icon;
-        txtNumberShard.text = save.Player.GetItem(shardID).Quantity.ToString() + "/" + Utility.GetShardNeedToUpgradeAscend(data.BoostStats + 1);
-        txtCoin.text = Utility.GetCoinNeedToAscendCharacter(data.BoostStats + 1).ToString();
+        //iconShard.sprite = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, shardID).Icon;
+        //txtNumberShard.text = save.Player.GetItem(shardID).Quantity.ToString() + "/" + Utility.GetShardNeedToUpgradeAscend(data.BoostStat + 1);
+        txtCoin.text = Utility.GetCoinNeedToAscendCharacter(data.BoostStat + 1).ToString();
     }
 }

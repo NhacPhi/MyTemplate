@@ -42,7 +42,7 @@ public class CurrencyManager
 
     private void Save()
     {
-        save.Player.Currencies = currencies;
+        save.Player.SetCurrency(currencies);
         save.SaveDataToDisk(GameSaveType.PlayerInfo);
     }
 

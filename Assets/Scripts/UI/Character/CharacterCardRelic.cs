@@ -96,17 +96,16 @@ public class CharacterCardRelic : CharacterCard
             {
                 statInfo.gameObject.SetActive(true);
                 weaponEmpty.gameObject.SetActive(false);
-                WeaponConfig config = gameDataBase.GetWeaponConfig(originWeapon);
-                WeaponData data = save.Player.GetWeapon(originWeapon);
-                WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, originWeapon);
+                WeaponSaveData data = save.Player.GetWeapon(originWeapon);
+                ItemConfig weaponConfig = gameDataBase.GetItemConfig(originWeapon);
 
-                txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
+                txtName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
                 txtLevel.text = data.CurrentLevel.ToString();
-                txtHP.text = config.HP.ToString();
-                txtATK.text = config.ATK.ToString();
+                txtHP.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
+                txtATK.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
 
-                txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + " (Lv." + data.CurrentUpgrade + ")";
-                txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
+                txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name) + " (Lv." + data.CurrentUpgrade + ")";
+                txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.UseDescription);
             }
             else
             {
@@ -146,17 +145,16 @@ public class CharacterCardRelic : CharacterCard
         }
         statInfo.gameObject.SetActive(true);
         weaponEmpty.gameObject.SetActive(false);
-        WeaponConfig config = gameDataBase.GetWeaponConfig(id);
-        WeaponData data = save.Player.GetWeapon(id);
-        WeaponSO weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, id);
+        ItemConfig config = gameDataBase.GetItemConfig(id);
+        WeaponSaveData data = save.Player.GetWeapon(id);
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.CurrentLevel.ToString();
-        txtHP.text = config.HP.ToString();
-        txtATK.text = config.ATK.ToString();
+        txtHP.text = config.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
+        txtATK.text = config.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
 
         txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + " (Lv." + data.CurrentUpgrade + ")";
-        txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.SkillDes);
+        txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.UseDescription);
     }
 
     public void UpdateCharacterCardWeapon(bool close)

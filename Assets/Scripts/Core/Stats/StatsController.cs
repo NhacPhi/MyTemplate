@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using Tech.Composite;
+using System;
+
 public class StatsController : CoreComponent, IEffectable 
 {
     [field: SerializeField] public string EntityID { get; protected set; }
     protected Dictionary<StatType, Stat> stats;
     protected List<StatusEffect> statusEffects = new();
-    internal Dictionary<StatType, Stat> Stats => stats;
+    public Dictionary<StatType, Stat> Stats => stats;
     internal IReadOnlyCollection<StatusEffect> StatusEffect => statusEffects.AsReadOnly();
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Only Work On Editor
+    /// </summary>
+    public Action NotifyEditor;
+#endif
 
     public void InitStats(Dictionary<StatType, Stat> stats)
     {

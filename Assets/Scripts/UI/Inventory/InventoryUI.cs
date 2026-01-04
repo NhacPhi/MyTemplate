@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -52,39 +53,40 @@ public class InventoryUI : MonoBehaviour
         foreach (var item in save.Player.Weapons)
         {
             var obj = Instantiate(prefabWeapon, content.transform);
-            var weaponConfig = gameDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon,item.ID);
-            var weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, item.ID);
-            obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, gameDataBase.GetRareBG(weaponConfig.Rare), item.CurrentLevel, item.CurrentUpgrade);
-            obj.SetActive(false);
-            weapons.Add(obj);
+            var weaponConfig = gameDataBase.GetItemConfig(item.ID);
+            if(weaponConfig != null)
+            {
+                obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, item.CurrentLevel, item.CurrentUpgrade);
+                obj.SetActive(false);
+                weapons.Add(obj);
+            }
+            
         }
         dictionaryObject.Add(ItemType.Weapon, weapons);
 
         foreach (var item in save.Player.Items)
         {
             var obj = Instantiate(prefabItem, content.transform);
-            var itemConfig = gameDataBase.GetItemConfigByID<ItemBaseConfig>(item.Type, item.ID);
-            var itemSO = gameDataBase.GetItemSOByID<ItemBaseSO>(item.Type, item.ID); 
-            if(itemConfig == null || itemSO == null)
+            var itemConfig = gameDataBase.GetItemConfig(item.ID);
+            if (itemConfig != null)
             {
-                Debug.Log("ItemSO id: " + item.ID);
-                continue;
+                obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rarity, itemConfig.Icon, itemConfig.IconBG, item.Quantity);
+                obj.SetActive(false);
+                if (item.Type == ItemType.Food)
+                {
+                    items.Add(obj);
+                }
+                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp)
+                {
+                    matterials.Add(obj);
+                }
+                else if (item.Type == ItemType.Shard)
+                {
+                    obj.GetComponent<ItemUI>().ActiveFragIcon(true);
+                    shards.Add(obj);
+                }
             }
-            obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rare, itemSO.Icon, gameDataBase.GetRareBG(itemConfig.Rare), item.Quantity);
-            obj.SetActive(false);
-            if(item.Type == ItemType.Food)
-            {
-                items.Add(obj);
-            }
-            else if(item.Type == ItemType.GemStone || item.Type == ItemType.Exp)
-            {
-                matterials.Add(obj);
-            }
-            else if (item.Type == ItemType.Shard)
-            {
-                obj.GetComponent<ItemUI>().ActiveFragIcon(true);
-                shards.Add(obj);
-            }
+
         }
         dictionaryObject.Add(ItemType.Item, items);
         dictionaryObject.Add(ItemType.Material, matterials);
@@ -94,11 +96,13 @@ public class InventoryUI : MonoBehaviour
         foreach (var item in save.Player.Armors)
         {
             var obj = Instantiate(prefabArmor, content.transform);
-            var armorConfig = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, item.TemplateID);
-            var armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, item.TemplateID);
-            obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorSO.Icon, gameDataBase.GetRareBG(item.Rare), item.Level);
-            obj.SetActive(false);
-            armors.Add(obj);
+            var armorConfig = gameDataBase.GetItemConfig(item.TemplateID);
+            if(armorConfig != null)
+            {
+                obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
+                obj.SetActive(false);
+                armors.Add(obj);
+            }
         }
         dictionaryObject.Add(ItemType.Armor, armors);
     }

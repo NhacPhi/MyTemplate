@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
-using static UnityEditor.Progress;
-using UnityEditor.Experimental.GraphView;
+
 
 public class CharacterArmorCategoryUI : MonoBehaviour
 {
@@ -53,10 +51,9 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         foreach(var armor in save.Player.Armors)
         {
             var obj = Instantiate(prefabsUI, content.transform);
-            var arrmorConfig = gameDataBase.GetItemConfigByID<BaseArmorConfig>(ItemType.Armor, armor.TemplateID);
-            var armorSO = gameDataBase.GetItemSOByID<ArmorSO>(ItemType.Armor, armor.TemplateID);
-            Sprite avatar = armor.Equip != "None" ? gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, "shard_" + armor.Equip).Icon : null;
-            obj.GetComponent<ArmorCategoryUI>().Init(armor.InstanceID, armor.Rare, armorSO.Icon, gameDataBase.GetRareBG(armor.Rare), avatar, armor.Level, arrmorConfig.Part);
+            var armorConfig = gameDataBase.GetItemConfig(armor.TemplateID);
+            Sprite avatar = armor.Equip != "None" ? armorConfig.Icon : null;
+            obj.GetComponent<ArmorCategoryUI>().Init(armor.InstanceID, armor.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armor.Rare), avatar, armor.Level, armorConfig.Armor.Part);
             obj.SetActive(false);
             armors.Add(obj);
         }

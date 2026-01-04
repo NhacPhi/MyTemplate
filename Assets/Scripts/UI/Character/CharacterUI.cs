@@ -88,7 +88,8 @@ public class CharacterUI : MonoBehaviour
         {
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);
             string weaponID = save.Player.GetCharacter(character.ID).Weapon;
-            obj.GetComponent<CharacterAvatar>().Init(character.ID, weaponID, gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard,"shard_" + character.ID).Icon);
+            CharacterConfig config = gameDataBase.GetCharacterConfig(character.ID);
+            obj.GetComponent<CharacterAvatar>().Init(character.ID, weaponID, config.Icon);
             avatars.Add(obj);
         }
 
@@ -102,7 +103,7 @@ public class CharacterUI : MonoBehaviour
         currentCharacter = save.Player.Characters[0].ID;
         avatars[0].gameObject.GetComponent<CharacterAvatar>().SwitchStatus(true);
         ClickOnFristIconAvatar();
-        characterImage.sprite = gameDataBase.GetCharacterSO(save.Player.Characters[0].ID).Icon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Characters[0].ID).Icon;
         currentTap = CharacterTap.None;
         UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
     }
@@ -117,11 +118,11 @@ public class CharacterUI : MonoBehaviour
     public void SelectCharacterAvatar(string id)
     {
         currentCharacter = id;
-        characterImage.sprite = gameDataBase.GetCharacterSO(id).Icon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(id).Icon;
         string weaponID = save.Player.GetCharacter(currentCharacter).Weapon;
         if(weaponID != "")
         {
-            waeponUI.SetWeaponImage(gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, weaponID).BigIcon);
+            waeponUI.SetWeaponImage(gameDataBase.GetItemConfig(weaponID).Weapon.BigIcon);
         }
         else
         {

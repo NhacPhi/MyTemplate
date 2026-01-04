@@ -113,7 +113,7 @@ public class HealthBar : MonoBehaviour
         {
             // No Shield
             StartCoroutine(EffectTakeDamage(damage));
-            // Set value
+            // Set _value
             SetCurrentHP(currentHP - damage);
             SetCurrentShield(currentHP);
         }

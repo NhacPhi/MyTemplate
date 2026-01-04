@@ -33895,7 +33895,7 @@
             <ol>
             <li>ushort nChars</li>
             <li>byte is16BitFlag</li>
-            <li>byte[]/char[] characterData</li>
+            <li>byte[]/char[] CharacterSaveData</li>
             </ol>
             For this encoding, the is16BitFlag is always present even if nChars==0.
         </member>
@@ -33903,7 +33903,7 @@
             InputStream <c>in</c> is expected to contain:
             <ol>
             <li>byte is16BitFlag</li>
-            <li>byte[]/char[] characterData</li>
+            <li>byte[]/char[] CharacterSaveData</li>
             </ol>
             For this encoding, the is16BitFlag is always present even if nChars==0.
             <br/>
@@ -33916,7 +33916,7 @@
             <ol>
             <li>ushort nChars</li>
             <li>byte is16BitFlag</li>
-            <li>byte[]/char[] characterData</li>
+            <li>byte[]/char[] CharacterSaveData</li>
             </ol>
             For this encoding, the is16BitFlag is always present even if nChars==0.
         </member>
@@ -33924,7 +33924,7 @@
             OutputStream <c>out</c> will get:
             <ol>
             <li>byte is16BitFlag</li>
-            <li>byte[]/char[] characterData</li>
+            <li>byte[]/char[] CharacterSaveData</li>
             </ol>
             For this encoding, the is16BitFlag is always present even if nChars==0.
             <br/>

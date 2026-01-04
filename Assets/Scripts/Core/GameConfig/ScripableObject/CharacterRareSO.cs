@@ -2,7 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "Rare", menuName = "Game/ItemData/CharacterData/Rare")]
+[CreateAssetMenu(fileName = "Rare", menuName = "Game/ItemSaveData/CharacterSaveData/Rare")]
 public class CharacterRareSO : ScriptableObject
 {
     [SerializeField] private CharacterRare rare;

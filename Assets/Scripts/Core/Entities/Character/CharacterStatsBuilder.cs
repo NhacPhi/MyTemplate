@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterStatsBuilder : EntityStatsBuilder
 {
-    public EntityStatsBuilder ApplyArmorEquipment(List<ArmorData> armors)
+    public EntityStatsBuilder ApplyArmorEquipment(List<ArmorSaveData> armors)
     {
         foreach (var armor in armors)
         {
@@ -14,7 +14,7 @@ public class CharacterStatsBuilder : EntityStatsBuilder
                 if (!stats.ContainsKey(stat.Type))
                     stats[stat.Type] = new Stat(0);
 
-                stats[stat.Type].AddModifier(new Modifier(stat.Point, stat.ModifyType));
+                stats[stat.Type].AddModifier(new Modifier(stat.Point, stat.ModifierType));
             }
 
         }

@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using VContainer;
+using System.Collections.Generic;
 
 public class CharacterCardInfo : CharacterCard
 {
@@ -41,28 +42,26 @@ public class CharacterCardInfo : CharacterCard
     }
     public void UpdateCharacterCardInfo(string id)
     {
-        CharacterSO so = gameDataBase.GetCharacterSO(id);
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterData data = save.Player.GetCharacter(id);
-        if(so == null || config == null || data == null)
+        CharacterSaveData data = save.Player.GetCharacter(id);
+
+        if(config == null || data == null)
         {
             Debug.Log("Character Data null with id: " + id);
             return;
         }
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString() ;
-        iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
+        //iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
 
-        CharacterStatConfig stat = characterStatMM.GetCharacterStat(id);
-
-        txtHP.text = stat.HP.ToString();
-        txtATK.text = stat.ATK.ToString();
-        txtDEF.text = stat.DEF.ToString();
-        txtSPD.text = stat.SPD.ToString();
-        txtDEFShred.text = stat.DEFShred.ToString();
-        txtCritRate.text = stat.CRITRate.ToString();
-        txtCriteDMG.text = stat.CRITDMG.ToString();
-        txtPenetration.text = stat.Penetration.ToString();
-        txtCritDGMRes.text = stat.CRITDMGRes.ToString();
+        txtHP.text = config.Stats.GetValueOrDefault(StatType.HP).ToString();
+        txtATK.text = config.Stats.GetValueOrDefault(StatType.ATK).ToString();
+        txtDEF.text = config.Stats.GetValueOrDefault(StatType.DEF).ToString(); // stat.DEF.ToString();
+        txtSPD.text = "0"; // stat.SPD.ToString();
+        txtDEFShred.text = "0"; // stat.DEFShred.ToString();
+        txtCritRate.text = "0"; // stat.CRITRate.ToString();
+        txtCriteDMG.text = "0"; // stat.CRITDMG.ToString();
+        txtPenetration.text = "0"; // stat.Penetration.ToString();
+        txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
     }
 }

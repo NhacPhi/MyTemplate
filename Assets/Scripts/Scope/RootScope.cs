@@ -17,6 +17,8 @@ public class RootScope : LifetimeScope
         builder.Register<SaveSystem>(Lifetime.Singleton);
         builder.Register<CurrencyManager>(Lifetime.Singleton);
         builder.Register<CharacterStatManager>(Lifetime.Singleton);
+        builder.Register<AtlasProvider>(Lifetime.Singleton);
+        builder.Register<GameDataBase>(Lifetime.Singleton);
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);
 
         builder.RegisterComponent(uiSetings);
@@ -24,7 +26,7 @@ public class RootScope : LifetimeScope
         // Hireachy
         builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
         builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
-        builder.RegisterComponentInHierarchy<GameDataBase>().AsSelf();
+        //builder.RegisterComponentInHierarchy<GameDataBase>().AsSelf();
         builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 
         //Entry point

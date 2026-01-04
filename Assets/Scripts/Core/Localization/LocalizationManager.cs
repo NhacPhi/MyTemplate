@@ -4,12 +4,17 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine.AddressableAssets;
 using Tech.Singleton;
+using Tech.Json;
+using System.Reflection;
 
 public class LocalizationManager : SingletonPersistent<LocalizationManager>
 {
-    private Dictionary<string, string> localization = new Dictionary<string, string>();
+    private Dictionary<long, string> localization = new Dictionary<long, string>();
     private bool isReady = false;
     private string missingTextString = "Localized text not found";
+
+    // Cache l?i các Field c?a LocKeys ?? t?ng hi?u su?t Reflection
+    private Dictionary<string, long> keyCache = new Dictionary<string, long>();
 
     private void Awake()
     {
@@ -33,19 +38,14 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
                 Debug.LogError($"Don't find localization file: {addressKey}");
             }
 
-            string[] lines = textAsset.text.Split('\n');
+            //string[] lines = textAsset.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach(string line in lines )
+            localization = Json.DeserializeObject<Dictionary<long, string>>(textAsset.text);
+
+            if (localization == null)
             {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                if (!line.Contains("=")) continue;
-
-                int index = line.IndexOf('=');
-                string key = line[..index].Trim();
-                string value = line[(index + 1)..].Trim();
-
-                localization[key] = value;
+                localization = new Dictionary<long, string>();
+                Debug.LogError("Failed to parse localization JSON.");
             }
 
             isReady = true;
@@ -60,11 +60,43 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
 
     }
 
-    public string GetLocalizedValue(string key)
+    // Get content by uint id
+    public string GetLocalizedValue(long hashKey)
     {
-        if (key == null) return "";
-        if (!isReady || !localization.ContainsKey(key)) return missingTextString;
-        return localization[key].Replace("\\n", "\n");
+        if (!isReady) return "Loading...";
+
+        if (localization.TryGetValue(hashKey, out string value))
+        {
+            return value.Replace("\\n", "\n");
+        }
+
+        return missingTextString;
+    }
+
+    // Get content by string id
+    public string GetLocalizedValue(string stringID)
+    {
+        if (string.IsNullOrEmpty(stringID)) return "";
+
+        // check in cache before Reflection 
+        if (!keyCache.TryGetValue(stringID, out long hashKey))
+        {
+            //uuse Reflection to get Lockeys
+            FieldInfo field = typeof(LocKeys).GetField(stringID, BindingFlags.Public | BindingFlags.Static);
+
+            if (field != null && field.IsLiteral) // IsLiteral make sure is constant
+            {
+                hashKey = (long)field.GetValue(null);
+                keyCache[stringID] = hashKey; // cache data
+            }
+            else
+            {
+                Debug.LogWarning($"Key ID '{stringID}' not found in LocKeys class.");
+                return missingTextString;
+            }
+        }
+
+        return GetLocalizedValue(hashKey);
     }
 
     public bool IsReady => isReady;

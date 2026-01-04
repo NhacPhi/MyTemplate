@@ -50,7 +50,7 @@ public class PopupChangeAvatarController : WindowController
 
         UIEvent.OnChanageAvatarPanel?.Invoke(currentAvatarID);
 
-        save.Player.AvatarIcon = currentAvatarID;
+        save.Player.SetAvatarIcon(currentAvatarID);
     }
 
     public void OnCancel()
@@ -63,11 +63,11 @@ public class PopupChangeAvatarController : WindowController
         foreach (Transform child in gridParent)
             Destroy(child.gameObject);
 
-        foreach (var avatar in gameDataBase.Avatars)
+        foreach (var avatar in gameDataBase.AvatarDict)
         {
             var obj = Instantiate(avatarPrefab, gridParent);
             var avatarUI = obj.GetComponent<AvatarToggleUI>();
-            avatarUI.Setup(avatar.Icon, toggleGroup, avatar.ID);
+            avatarUI.Setup(avatar.Value.Icon, toggleGroup, avatar.Key);
             var togle = obj.GetComponent<Toggle>();
             if (togle != null)
             {
@@ -87,7 +87,11 @@ public class PopupChangeAvatarController : WindowController
 
     public void UpdateAvatarIcon(string id)
     {
-        avatarIcon.sprite = gameDataBase.GetItemSOByID<AvatarIconSO>(ItemType.Avatar, id).Icon;
-        currentAvatarID = id;
+        gameDataBase.AvatarDict.TryGetValue(id, out var avatar);
+        if (avatar != null)
+        {
+            avatarIcon.sprite = avatar.Icon;
+            currentAvatarID = id;
+        }
     }
 }

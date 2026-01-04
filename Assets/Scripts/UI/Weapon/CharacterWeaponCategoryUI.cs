@@ -54,10 +54,10 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         foreach (var item in save.Player.Weapons)
         {
             var obj = Instantiate(prefabsUI, content.transform);
-            var weaponConfig = gameDataBase.GetItemConfigByID<WeaponConfig>(ItemType.Weapon, item.ID);
-            var weaponSO = gameDataBase.GetItemSOByID<WeaponSO>(ItemType.Weapon, item.ID);
-            Sprite avatar = item.Equip != "None" ? gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, "shard_" + item.Equip).Icon : null;
-            obj.GetComponent<WeaponCategoryUI>().Init(item.ID, weaponConfig.Rare, weaponSO.Icon, gameDataBase.GetRareBG(weaponConfig.Rare), avatar, item.CurrentLevel, item.CurrentUpgrade);
+            var weaponConfig = gameDataBase.GetItemConfig(item.ID);
+
+            Sprite avatar = item.Equip != "None" ? gameDataBase.GetCharacterConfig(item.Equip).Icon : null;
+            obj.GetComponent<WeaponCategoryUI>().Init(item.ID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
             obj.SetActive(true);
             weapons.Add(obj);
         }
