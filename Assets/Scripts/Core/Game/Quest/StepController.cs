@@ -20,17 +20,17 @@ public class StepController : MonoBehaviour
 
     // Start Dialogue Event
 
-    // private DialogueData currentDialogue;
+    // private DialogueConfig currentDialogue;
 
     [Inject] GameNarrativeData gameNarrativeData;
     [Inject] QuestManager questManager;
-    private DialogueData defaultDialogue = new();
+    private DialogueConfig defaultDialogue = new();
 
-    private DialogueData currentDialogue;
+    private DialogueConfig currentDialogue;
     void Start()
     {
         //resolver.Inject(this);
-        defaultDialogue = gameNarrativeData.GetDefaultDialogueDataByActorID(actor.ID);
+        defaultDialogue = gameNarrativeData.GetDefaultDialogueConfigByActorID(actor.ID);
     }
 
     void PlayDefaultDialogue()
@@ -46,7 +46,7 @@ public class StepController : MonoBehaviour
     // when interatoin again. restart same dialogue
     public void InteractWithCharacter()
     {
-        DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, false, false);
+        DialogueConfig displayDialogue = questManager.InteractWithCharacter(actor.ID, false, false);
 
         if(displayDialogue != null)
         {
@@ -83,7 +83,7 @@ public class StepController : MonoBehaviour
     {
         if(questManager != null)
         {
-            DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, true, false);
+            DialogueConfig displayDialogue = questManager.InteractWithCharacter(actor.ID, true, false);
             if(displayDialogue != null)
             {
                 currentDialogue = displayDialogue;
@@ -94,7 +94,7 @@ public class StepController : MonoBehaviour
 
     void PlayWinDialogue()
     {
-        DialogueData displayDialogue = questManager.InteractWithCharacter(actor.ID, true, true);
+        DialogueConfig displayDialogue = questManager.InteractWithCharacter(actor.ID, true, true);
         if (displayDialogue != null)
         {
             currentDialogue = displayDialogue;

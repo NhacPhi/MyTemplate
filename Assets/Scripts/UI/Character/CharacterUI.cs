@@ -103,7 +103,7 @@ public class CharacterUI : MonoBehaviour
         currentCharacter = save.Player.Characters[0].ID;
         avatars[0].gameObject.GetComponent<CharacterAvatar>().SwitchStatus(true);
         ClickOnFristIconAvatar();
-        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Characters[0].ID).Icon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Characters[0].ID).BigIcon;
         currentTap = CharacterTap.None;
         UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
     }
@@ -118,7 +118,7 @@ public class CharacterUI : MonoBehaviour
     public void SelectCharacterAvatar(string id)
     {
         currentCharacter = id;
-        characterImage.sprite = gameDataBase.GetCharacterConfig(id).Icon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(id).BigIcon;
         string weaponID = save.Player.GetCharacter(currentCharacter).Weapon;
         if(weaponID != "")
         {

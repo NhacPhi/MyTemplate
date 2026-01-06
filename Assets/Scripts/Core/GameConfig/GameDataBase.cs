@@ -15,21 +15,21 @@ public class GameDataBase
     private Dictionary<string, ItemConfig> ItemConfigs = new Dictionary<string, ItemConfig>();
     private Dictionary<string, CharacterConfig> CharacterConfigs = new Dictionary<string, CharacterConfig>();
 
-    private const string ItemConfigsAdress = "ItemsConfig";
+    private const string ItemConfigsAddress = "ItemsConfig";
 
-    private const string CharacterConfigsAdress = "CharacterConfig";
+    private const string CharacterConfigsAddress = "CharacterConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
         var (itemText, characterText) = await UniTask.WhenAll(
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ItemConfigsAdress, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(CharacterConfigsAdress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ItemConfigsAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(CharacterConfigsAddress, token: cancellationToken)
         );
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
         CharacterConfigs = Json.DeserializeObject<Dictionary<string, CharacterConfig>>(characterText.text);
 
-        AddressablesManager.Instance.RemoveAsset(ItemConfigsAdress);
-        AddressablesManager.Instance.RemoveAsset(CharacterConfigsAdress);
+        AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
+        AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
         var atlasAddresses = new HashSet<string>();
@@ -44,7 +44,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_big_icon_character");
 
 
-        foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
+        //foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
 
         var preloadTasks = atlasAddresses
             .Where(addr => !string.IsNullOrEmpty(addr))
@@ -60,7 +60,7 @@ public class GameDataBase
 
             if (config.Type == ItemType.Weapon && config.Weapon != null)
             {
-                config.Weapon.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_weapon", item.Key);
+                config.Weapon.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_weapon", item.Key + "_big");
             }
         }
 
@@ -68,7 +68,7 @@ public class GameDataBase
         {
             var config = charItem.Value;
             config.Icon = atlasProvider.GetSprite("Atlas_icon_character", charItem.Key);
-            config.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_character", charItem.Key);
+            config.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_character", charItem.Key + "_big");
         }
     }
 

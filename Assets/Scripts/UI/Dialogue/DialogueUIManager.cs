@@ -46,7 +46,7 @@ public class DialogueUIManager : MonoBehaviour
         });
     }
 
-    private void OpenUIDialogue(string str, ActorData actor)
+    private void OpenUIDialogue(string str, ActorConfig actor)
     {
         SetDialogue(str, actor);
     }
@@ -56,16 +56,16 @@ public class DialogueUIManager : MonoBehaviour
         uiManager.CloseWindowScene();
     }
 
-    public void SetDialogue(string str, ActorData actor)
+    public void SetDialogue(string str, ActorConfig actor)
     {
         choicesManager.DisableAllCHoiceUI();
         choicesManager.gameObject.SetActive(false);
         typeWriteEffect.Play(str);
-        avatarActor.sprite = actor.Image;
+        avatarActor.sprite = actor.ActorSo.Texture;
         nameActor.text = LocalizationManager.Instance.GetLocalizedValue(actor.Name);
     }
 
-    private void ShowChoices(List<ChoiceData> choices)
+    private void ShowChoices(List<ChoiceCompement> choices)
     {
         choicesManager.FillChoices(choices);
         choicesManager.gameObject.SetActive(true);

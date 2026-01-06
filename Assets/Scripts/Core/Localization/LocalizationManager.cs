@@ -70,6 +70,8 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
             return value.Replace("\\n", "\n");
         }
 
+        if (hashKey == 0)
+            return "";
         return missingTextString;
     }
 

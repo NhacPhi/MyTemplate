@@ -20,12 +20,12 @@ public static class GameEvent
     public static Action OnPlayerTransform;
 
     // Dialgoue
-    public static Action<DialogueData> OnStartDialogue;
-    public static Action<string, ActorData> OnOpenDialogue;
+    public static Action<DialogueConfig> OnStartDialogue;
+    public static Action<string, ActorConfig> OnOpenDialogue;
     public static Action<DialogueType> OnEndDialogue;
     public static Action OnAdvanceDialogueEvent;
-    public static Action<List<ChoiceData>> OnShowChoiceUI;
-    public static Action<ChoiceData> OnMakeChocieUI;
+    public static Action<List<ChoiceCompement>> OnShowChoiceUI;
+    public static Action<ChoiceCompement> OnMakeChocieUI;
     public static Action OnWinDialogue;
     public static Action OnLoseDialogue;
 

@@ -29,7 +29,7 @@ public class ArmorCardInforUI : MonoBehaviour
     {
         ArmorSaveData item = save.Player.GetArmor(id);
 
-        var itemConfig = gameDataBase.GetItemConfig(id);
+        var itemConfig = gameDataBase.GetItemConfig(item.TemplateID);
 
         if(itemConfig != null)
         {
@@ -38,7 +38,7 @@ public class ArmorCardInforUI : MonoBehaviour
 
             ResetArmorStatsUI();
 
-            armor.Init(item.InstanceID, item.Rare, itemConfig.Icon, itemConfig.IconBG, item.Level);
+            armor.Init(item.InstanceID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;
             if (item.Stats.Count > 0)
             {

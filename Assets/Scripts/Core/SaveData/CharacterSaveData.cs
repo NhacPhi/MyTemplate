@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System;
 
+[Serializable]
 public class CharacterSaveData
 {
     [JsonProperty("id")]

@@ -1,27 +1,118 @@
-[
-  {
-    "ID": "Default_Dragon_king",
-    "Type": "Default",
-    "ActorID": "Dragon_king_Eatern_Sea"
-  },
-  {
-    "ID": "Dragon_king_Choice_01",
-    "Type": "Start",
-    "ActorID": "Dragon_king_Eatern_Sea"
-  },
-  {
-    "ID": "Dragon_king_Choice_02",
-    "Type": "Start",
-    "ActorID": "Dragon_king_Eatern_Sea"
-  },
-  {
-    "ID": "Dragon_king_Choice_03",
-    "Type": "Start",
-    "ActorID": "Dragon_king_Eatern_Sea"
-  },
-  {
-    "ID": "Start_Quest_Dragon_king",
-    "Type": "Start",
-    "ActorID": "Dragon_king_Eatern_Sea"
-  }
-]
+{
+    "Default_Dragon_king": {
+        "type": "Default",
+        "lines": [
+            {
+                "text_hash": 1704258770,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            }
+        ]
+    },
+    "Dragon_king_Choice_01": {
+        "type": "Normal",
+        "lines": [
+            {
+                "text_hash": 3781309601,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 2023784589,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            },
+            {
+                "text_hash": 28475850,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 4185680871,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            },
+            {
+                "text_hash": 1312286639,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 863818873,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            },
+            {
+                "text_hash": 2829132552,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 3774071538,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            },
+            {
+                "text_hash": 478813756,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 1890897720,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            },
+            {
+                "text_hash": 11198412,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            },
+            {
+                "text_hash": 4071570339,
+                "actor_id": "Sun_Wukong",
+                "choices": []
+            }
+        ]
+    },
+    "Dragon_king_Choice_02": {
+        "type": "Normal",
+        "lines": [
+            {
+                "text_hash": 1544058991,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            }
+        ]
+    },
+    "Dragon_king_Choice_03": {
+        "type": "Normal",
+        "lines": [
+            {
+                "text_hash": 1644457189,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": []
+            }
+        ]
+    },
+    "Start_Quest_Dragon_king": {
+        "type": "Start",
+        "lines": [
+            {
+                "text_hash": 305787861,
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "choices": [
+                    {
+                        "text_hash": 2339743662,
+                        "type": "DoNothing",
+                        "next_dialogue": "Dragon_king_Choice_01"
+                    },
+                    {
+                        "text_hash": 665085368,
+                        "type": "DoNothing",
+                        "next_dialogue": "Dragon_king_Choice_03"
+                    }
+                ]
+            }
+        ]
+    }
+}

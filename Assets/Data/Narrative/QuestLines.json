@@ -1,8 +1,24 @@
-[
-  {
-    "ID": "Default_01",
-    "Name": "Default_QuestLine_Name",
-    "Description": "Default_QuestLine_Description",
-    "EventID": ""
-  }
-]
+{
+    "Default_01": {
+        "name_hash": 958540059,
+        "des_hash": 3272208194,
+        "quests": [
+            {
+                "name_hash": 958540059,
+                "des_hash": 3272208194,
+                "steps": [
+                    {
+                        "actor_id": "Dragon_king_Eatern_Sea",
+                        "previous_diagoue": "Start_Quest_Dragon_king",
+                        "completed_dialogue": "",
+                        "incomplete_dialogue": "",
+                        "type": "Dialogue",
+                        "item_id": "",
+                        "has_reward": true,
+                        "reward_id": "Default_01"
+                    }
+                ]
+            }
+        ]
+    }
+}

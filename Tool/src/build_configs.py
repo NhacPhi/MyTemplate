@@ -1,20 +1,8 @@
 import pandas as pd
-import mmh3
-import json
-import os
-import re
 
 import config
+from src.build import BaseBuilder
 from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel
-
-class BaseBuilder:
-    def get_hash(self, key):
-        if pd.isna(key) or str(key).strip() == "": return 0
-        return mmh3.hash(str(key).strip(), signed=False)
-    def export_json(self, data, filename):
-        path = os.path.join(config.OUTPUT_FOLDER, f"{filename}.json")
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -86,7 +74,7 @@ class ItemConfigBuilder(BaseBuilder):
 
 
         final_data = {item_id: item.to_dict() for item_id, item in master_data.items()}
-        self.export_json(final_data, "ItemConfig")
+        self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER ,final_data, "ItemConfig")
 
 class CharacterConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -144,4 +132,4 @@ class CharacterConfigBuilder(BaseBuilder):
                     character_data[char_id].upgrades = char_stats
         
         final_data = {character_id: character.to_dict() for character_id, character in character_data.items()}
-        self.export_json(final_data, "CharacterConfig")
+        self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_data, "CharacterConfig")

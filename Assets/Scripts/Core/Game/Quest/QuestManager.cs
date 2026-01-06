@@ -1,11 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VContainer;
 
 public class QuestManager 
 {
-    private List<QuestLineData> questLines = new();
+    private Dictionary<string, QuestLineConfig> questLines = new();
 
     //event listen
     // continueWithStepEvent
@@ -20,16 +21,16 @@ public class QuestManager
     // giveItemEvent
     // rewardItemEven
 
-    private QuestLineData currentQuestLine;
-    private QuestData currentQuest;
-    private StepData currentStep;
-    private int currentQuestLineIndex;
+    private QuestLineConfig currentQuestLine;
+    private QuestCompoment currentQuest;
+    private StepCompoment currentStep;
+    private string currentQuestLineIndex;
     private int currentQuestIndex;
     private int currentStepIndex;
 
     // function
     // void StartQuestLine()
-    //bool HasStep(ActorData actorToCheckWith)
+    //bool HasStep(ActorConfig actorToCheckWith)
 
     [Inject] GameNarrativeData gameNarrativeData;
 
@@ -52,16 +53,41 @@ public class QuestManager
     }
     void StartQuestLine()
     {
-        questLines = gameNarrativeData.QuestLines;
-        if(questLines != null)
+        // Check from Player Profile
+
+        // exam
+        //questLines = gameNarrativeData.QuestLineConfigs;
+        //if(questLines != null)
+        //{
+        //    if(questLines.Exists(o => !o.IsDone))
+        //    {
+        //        currentQuestLineIndex =  questLines.FindIndex(o => !o.IsDone);
+        //        if(currentQuestLineIndex >= 0)
+        //        {
+        //            currentQuestLine = questLines.Find(o => !o.IsDone);
+        //        }
+        //    }
+        //}
+
+        questLines = gameNarrativeData.QuestLineConfigs;
+
+        if (questLines != null)
         {
-            if(questLines.Exists(o => !o.IsDone))
+            // Tìm QuestLine đầu tiên chưa hoàn thành (IsDone == false)
+            // Sử dụng LINQ FirstOrDefault để lấy ra object thỏa mãn điều kiện
+            var firstUnfinished = questLines.FirstOrDefault(kvp => !kvp.Value.IsDone);
+
+            // Kiểm tra xem có tìm thấy bản ghi nào không (nếu Key là string, null nghĩa là không thấy)
+            if (firstUnfinished.Key != null)
             {
-                currentQuestLineIndex =  questLines.FindIndex(o => !o.IsDone);
-                if(currentQuestLineIndex >= 0)
-                {
-                    currentQuestLine = questLines.Find(o => !o.IsDone);
-                }
+                currentQuestLine = firstUnfinished.Value;
+                currentQuestLineIndex = firstUnfinished.Key; // Trong Dictionary, Index thường chính là Key (ID)
+            }
+            else
+            {
+                // Xử lý khi tất cả Quest đã hoàn thành hoặc Dictionary trống
+                currentQuestLine = null;
+                currentQuestLineIndex = null;
             }
         }
     }
@@ -93,7 +119,7 @@ public class QuestManager
 
         return false;
     }
-    public DialogueData InteractWithCharacter(string actor, bool isCheckValidity, bool isValid)
+    public DialogueConfig InteractWithCharacter(string actor, bool isCheckValidity, bool isValid)
     {
         if(currentQuest == null)
         {
@@ -109,16 +135,16 @@ public class QuestManager
             {
                 if(isValid)
                 {
-                    return currentStep.CompleteDialogue;
+                    return gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue);
                 }
                 else
                 {
-                    return currentStep.IncompleteDialogue;
+                    return gameNarrativeData.GetDialogueConfigByID(currentStep.IncompleteDialogue);
                 }
             }
             else
             {
-                return currentStep.DialogueBeforeStep;
+                return gameNarrativeData.GetDialogueConfigByID(currentStep.PreviousDialogue);
             }
         }
         return null;
@@ -190,7 +216,7 @@ public class QuestManager
                     break;
                 case StepType.Dialogue:
                     {
-                        if(currentStep.CompleteDialogue != null)
+                        if(gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue) != null)
                         {
                             // Call CompleteDialogue
                         }
@@ -258,7 +284,9 @@ public class QuestManager
 
             }
 
-            if (questLines.Exists(o => o.IsDone))
+            var questline = questLines.FirstOrDefault(kvp => !kvp.Value.IsDone);
+
+            if (questline.Value != null)
             {
                 StartQuestLine();
 
@@ -276,7 +304,7 @@ public class QuestManager
         switch (dialogueType)
         {
             case DialogueType.Completetion:
-                if (currentStep.HasReward && currentStep.Reward != null)
+                if (currentStep.HasReward && currentStep.RewardID != null)
                 {
                     //ItemStack itemStack = new ItemStack(_currentStep.RewardItem, _currentStep.RewardItemCount);
                     //_rewardItemEvent.RaiseEvent(itemStack);

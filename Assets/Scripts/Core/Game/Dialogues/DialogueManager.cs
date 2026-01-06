@@ -13,15 +13,15 @@ public class DialogueManager : MonoBehaviour
 
     private bool reachedEndOfDialogue { get => counterDialogue >= currentDialogue.Lines.Count; }
     private bool reachedEndOfLine { get=> counterLine >= currentDialogue.Lines[counterDialogue].Texts.Count; }
-    private DialogueData currentDialogue = default;
+    private DialogueConfig currentDialogue = default;
     private void Awake()
     {
-        GameEvent.OnStartDialogue += DisplayDialogueData;
+        GameEvent.OnStartDialogue += DisplayDialogueConfig;
 
     }
     private void Destroy()
     {
-        GameEvent.OnStartDialogue -= DisplayDialogueData;
+        GameEvent.OnStartDialogue -= DisplayDialogueConfig;
 
     }
 
@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    public void DisplayDialogueData(DialogueData dialogueData)
+    public void DisplayDialogueConfig(DialogueConfig dialogueData)
     {
         //if(gameState.CurrentGameState != GameState.Cutscene) // the dialgue state is implied in the cutscene state
         //{
@@ -45,7 +45,7 @@ public class DialogueManager : MonoBehaviour
 
         if(currentDialogue.Lines != null)
         {
-            ActorData actor = gameNarrativeData.GetActorData(currentDialogue.Lines[counterLine].ActorID);
+            ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterLine].ActorID);
             DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
         }
         else
@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void DisplayDialogueLine(string dialogueLine, ActorData actor)
+    public void DisplayDialogueLine(string dialogueLine, ActorConfig actor)
     {
         GameEvent.OnOpenDialogue?.Invoke(dialogueLine, actor);
     }
@@ -64,14 +64,14 @@ public class DialogueManager : MonoBehaviour
         counterLine++;
         if (!reachedEndOfLine)
         {
-            ActorData actor = gameNarrativeData.GetActorData(currentDialogue.Lines[counterDialogue].ActorID);
+            ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterDialogue].ActorID);
             DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
         }
-        else if (currentDialogue.Lines[counterDialogue].ChoiceDatas != null 
-            & currentDialogue.Lines[counterDialogue].ChoiceDatas.Count > 0)
+        else if (currentDialogue.Lines[counterDialogue].Chocies != null 
+            & currentDialogue.Lines[counterDialogue].Chocies.Count > 0)
         {
             // Display Choice
-            DisplayChoices(currentDialogue.Lines[counterDialogue].ChoiceDatas);
+            DisplayChoices(currentDialogue.Lines[counterDialogue].Chocies);
         }
         else
         {
@@ -79,7 +79,7 @@ public class DialogueManager : MonoBehaviour
             if(!reachedEndOfDialogue)
             {
                 counterLine = 0;
-                ActorData actor = gameNarrativeData.GetActorData(currentDialogue.Lines[counterDialogue].ActorID);
+                ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterDialogue].ActorID);
                 DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
             }
             else
@@ -91,14 +91,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void DisplayChoices(List<ChoiceData> choices)
+    private void DisplayChoices(List<ChoiceCompement> choices)
     {
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
         GameEvent.OnMakeChocieUI += MakeDialogueChoice;
         GameEvent.OnShowChoiceUI?.Invoke(choices);
     }
 
-    private void MakeDialogueChoice(ChoiceData choice)
+    private void MakeDialogueChoice(ChoiceCompement choice)
     {
         GameEvent.OnMakeChocieUI -= MakeDialogueChoice;
         switch (choice.ActionType)
@@ -106,8 +106,8 @@ public class DialogueManager : MonoBehaviour
             case ChoiceActionType.DoNothing:
                 if (choice.NextDialogue != null)
                 {
-                    DialogueData nextDialogue = gameNarrativeData.GetDialogueDataByID(choice.NextDialogue);
-                    DisplayDialogueData(nextDialogue);
+                    DialogueConfig nextDialogue = gameNarrativeData.GetDialogueConfigByID(choice.NextDialogue);
+                    DisplayDialogueConfig(nextDialogue);
                 }
                 else
                     DialogueEndAndCloseDialogueUI();
@@ -138,7 +138,7 @@ public class DialogueManager : MonoBehaviour
     private void DialogueEndAndCloseDialogueUI()
     {
         // raise the special event for end of dialogue if any
-        currentDialogue.FinishDialogue();
+        //currentDialogue.FinishDialogue();
         // raise end dialogue event
 
         GameEvent.OnEndDialogue?.Invoke(currentDialogue.Type);

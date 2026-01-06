@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "newActor", menuName = "Game/Narrative/Actor")]
+[CreateAssetMenu(fileName = "newActor", menuName = "Game/Narrative/ActorSo")]
 public class ActorSO : ScriptableObject
 {
     [SerializeField] private string id;

@@ -25,8 +25,8 @@ def export_localization(excel_path):
         return
     
     # create folder if not exit
-    if not os.path.exists(config.OUTPUT_FOLDER):
-        os.makedirs(config.OUTPUT_FOLDER)
+    if not os.path.exists(config.OUTPUT_GAME_LOCALIZATION_FOLDER):
+        os.makedirs(config.OUTPUT_GAME_LOCALIZATION_FOLDER)
 
     print(f"Processing... : {excel_path}")
 
@@ -64,11 +64,11 @@ def export_localization(excel_path):
                 unique_entries[key_val] = h
 
          # export to json 
-        vn_path = os.path.join(config.OUTPUT_FOLDER, 'Localization_VIETNAMESE.json')
+        vn_path = os.path.join(config.OUTPUT_GAME_LOCALIZATION_FOLDER, 'Localization_VIETNAMESE.json')
         with open(vn_path, 'w', encoding ='utf-8') as f:
             json.dump(loc_vn, f, indent=4, ensure_ascii=False)
 
-        en_path = os.path.join(config.OUTPUT_FOLDER, 'Localization_ENGLISH.json')
+        en_path = os.path.join(config.OUTPUT_GAME_LOCALIZATION_FOLDER, 'Localization_ENGLISH.json')
         with open(en_path, 'w', encoding = 'utf-8') as f:
             json.dump(loc_en, f, indent=4, ensure_ascii=False)
 
