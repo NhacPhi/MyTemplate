@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EntityMoveUp : EntityStateBase
 {
+    private Vector2 _currentVelocity = Vector2.zero;
     public EntityMoveUp(EntityStateData data) : base(data)
     {
 
@@ -28,8 +29,13 @@ public class EntityMoveUp : EntityStateBase
         var entityTransform = data.Entity.transform;
         var targetPos = data.MovePosition;
 
-        entityTransform.position = Vector2.MoveTowards(entityTransform.position,
-            targetPos, data.MoveSpeed * Time.deltaTime);
+        entityTransform.position = Vector2.SmoothDamp(
+            entityTransform.position,
+            targetPos,
+            ref _currentVelocity,
+            data.SmoothTime,
+            data.MoveSpeed
+            );
 
         return Vector3.Distance(entityTransform.position, targetPos) < 0.01f;
     }
