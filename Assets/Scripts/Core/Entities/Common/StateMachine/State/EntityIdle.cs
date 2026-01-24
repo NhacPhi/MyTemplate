@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Tech.Pool;
 
 public class EntityIdle : EntityStateBase
 {
@@ -12,5 +10,9 @@ public class EntityIdle : EntityStateBase
     public override void Enter()
     {
         // handle Animation
+        var animData = GenericPool<AnimationData>.Get().Renew();
+        animData.AnimationName = data.IdleAnimation;
+        data.Anim.Play(animData);
+        GenericPool<AnimationData>.Return(animData);
     }
 }

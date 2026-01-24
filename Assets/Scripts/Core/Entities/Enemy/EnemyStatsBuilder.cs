@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyStatsBuilder : EntityStatsBuilder
 {
+    //public override EntityStats Build()
+    //{
+    //    return new EnemyStats(stats);
+    //}
     public override EntityStats Build()
     {
-        return new EnemyStats(stats);
+        throw new System.NotImplementedException();
     }
 }

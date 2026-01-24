@@ -10,5 +10,6 @@ public enum StatType
     CRIT_RATE,
     CRIT_DMG,
     PEN,
-    CRIT_DMG_RES
+    CRIT_DMG_RES,
+    None
 }

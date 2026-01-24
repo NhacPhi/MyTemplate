@@ -30,14 +30,23 @@ class ItemModel:
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}
-
+@dataclass
+class AttributeComponent:
+    max_stat_type: str
+    start_percent: float
 @dataclass
 class CharacterModel:
     name_hash: int
     rare: str
     type: str
     stats: Dict[str, int] = field(default_factory=dict) # stats config
+    attributes: Dict[str, AttributeComponent] = field(default_factory=dict) # attribute config
     upgrades: Dict[str, int] = field(default_factory=dict) # stats upgrade
+
+    def __post_init__(self):
+        # auto add shield 
+        if "shield" not in self.attributes:
+            self.attributes["shield"] = AttributeComponent(max_stat_type="None", start_percent=0.0)
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}

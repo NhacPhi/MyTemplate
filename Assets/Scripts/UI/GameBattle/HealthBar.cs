@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : BaseStatUI
 {
     [SerializeField] private GameObject[] ticks; 
     [SerializeField] private Slider heathSlider;
@@ -14,6 +14,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private GameObject ticketContainer;
 
     private int MAX_HP = 9800;
+    private int MAX_STICK = 1000;
     private int currentHP;
     private int currentDamage;
     private int currentShield;
@@ -21,12 +22,6 @@ public class HealthBar : MonoBehaviour
     private int shield = 0;
 
     private int healh = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Setup();
-    }
 
     private void Update()
     {
@@ -47,8 +42,10 @@ public class HealthBar : MonoBehaviour
             BuffShield(1000);
         }
     }
-    public void Setup()
+    public void Setup(float value)
     {
+        MAX_HP = (int)value;
+
         currentHP = currentDamage = currentShield = MAX_HP;
 
         heathSlider.maxValue = MAX_HP;
@@ -68,7 +65,7 @@ public class HealthBar : MonoBehaviour
 
     private void ResetTick(int hp)
     {
-        int tickCount = hp / 3000;
+        int tickCount = hp / MAX_STICK;
 
         foreach (var tick in ticks)
         {
@@ -76,7 +73,7 @@ public class HealthBar : MonoBehaviour
         }
 
 
-        float offset = (ticketContainer.GetComponent<RectTransform>().rect.width * 3000) / hp;
+        float offset = (ticketContainer.GetComponent<RectTransform>().rect.width * MAX_STICK) / hp;
         float offsetTick = offset;
         for (int i = 0; i < tickCount; i++)
         {
@@ -234,5 +231,15 @@ public class HealthBar : MonoBehaviour
         {
             ResetTick(MAX_HP);
         }
+    }
+
+    public override void Init(float value)
+    {
+        Setup(value);
+    }
+
+    public override void HandleValueChange(StatEvtArgs stat)
+    {
+        TakeDamage((int)stat.Value);
     }
 }

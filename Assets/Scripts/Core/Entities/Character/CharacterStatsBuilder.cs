@@ -20,6 +20,11 @@ public class CharacterStatsBuilder : EntityStatsBuilder
         }
         return this;
     }
+
+    public override EntityStats Build()
+    {
+        throw new System.NotImplementedException();
+    }
     // Apply Bonus Armorset
     // Apply Weapon
     // Apply Level
@@ -28,8 +33,8 @@ public class CharacterStatsBuilder : EntityStatsBuilder
     /// ...
     /// </summary>
     /// <returns></returns>
-    public override EntityStats Build()
-    {
-        return new CharacterStats(stats);
-    }
+    //public override EntityStats Build()
+    //{
+    //    return new CharacterStats(stats);
+    //}
 }

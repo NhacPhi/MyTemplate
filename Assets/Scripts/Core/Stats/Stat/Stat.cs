@@ -11,12 +11,13 @@ public class Stat
 
     private bool isDirty = true;
     private float value;
-    public virtual float Value
+    public float Value
     {
         get
         {
             if(isDirty)
             {
+                ReCalculateValue();
                 isDirty = false;
             }
 
@@ -83,24 +84,28 @@ public class Stat
         float constant = 0f;
         float percent = 0f;
 
-        foreach(Modifier modifier in statModifiers)
+        if(statModifiers!= null)
         {
-            switch(modifier.Type)
+            foreach (Modifier modifier in statModifiers)
             {
-                case ModifyType.BaseConstant:
-                    baseConstant += modifier.Value;
-                    continue;
-                case ModifyType.Constant:
-                    constant += modifier.Value;
-                    continue;
-                case ModifyType.Percent:
-                    percent += modifier.Value;
-                    continue;
-            };
+                switch (modifier.Type)
+                {
+                    case ModifyType.BaseConstant:
+                        baseConstant += modifier.Value;
+                        continue;
+                    case ModifyType.Constant:
+                        constant += modifier.Value;
+                        continue;
+                    case ModifyType.Percent:
+                        percent += modifier.Value;
+                        continue;
+                };
+            }
 
-            float filaValue = (BaseValue + baseConstant) * (1f + percent) + constant;
-
-            value = (float)Math.Round(filaValue,0);
         }
+
+        float filaValue = (BaseValue + baseConstant) * (1f + percent) + constant;
+
+        value = (float)Math.Round(filaValue, 0);
     }
 }

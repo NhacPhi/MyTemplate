@@ -1,88 +1,29 @@
-<h1><div align="center"> Entities Status System With Attribute And Stat And Effect </div></h1>
+1. Attribute quản lý những gì? (Current Value)
+Attribute đại diện cho trạng thái hiện tại của nhân vật. Nó luôn có một điểm tựa là MaxValue (được lấy từ một Stat).
 
-Attribute Is Value Like Hp, Exp, Mana, Stamina,... Dynamic values that frequently change during gameplay.
+HP (Máu): Value là máu hiện tại, MaxValue là chỉ số Max HP.
 
-Stat Is Value Like MaxHp, MaxStamina, ATK, DEF, CritDmg, CritRate,... Fixed or calculated values that determine limits or effects in the game.
+MP/Mana/Energy (Năng lượng): Value là mana hiện tại, MaxValue là Max Mana.
 
-Effect Is Buff Or DeBuff Like Poison, ATK Increase In 1 Second, ...
+Stamina (Thể lực): Dùng để chạy nhanh, leo trèo.
 
-To Add Stat Or Attribute Modify StatType Or AttributeType enum
+EXP (Kinh nghiệm): Value là Exp hiện tại, MaxValue là Exp cần để lên cấp.
 
-Attribute Max Value Need Linking To Stat Mean Stat Is Max Value Of Attribute
+Shield (Giáp ảo): Một số game coi Shield là một Attribute tạm thời.
 
-See Assets/Data/EntitiesStat.json For Example
-Each Of Entities Has ID To Define Stats
+Đặc điểm: Attribute luôn thay đổi liên tục trong trận đấu thông qua các hành động như nhận sát thương, hồi máu, dùng chiêu thức.
 
-![](StatsEX1.png)
+2. Stat quản lý những gì? (Final Value)
+Stat là các chỉ số "tĩnh" hơn, dùng để tính toán đầu ra/đầu vào cho các công thức combat.
 
-Search ID Button Will Search All Entities Stats In Assets/Data/EntitiesStat.json For Faster Input
-All Attribute And Stat Entity Has Will Show
+Max HP, Max MP: (Làm mốc cho Attribute).
 
-Change EntitiesStat.json Path In StatsControllerEditor
+ATK (Tấn công), DEF (Phòng thủ).
 
-![](StatsEX2.png)
+Crit Rate, Crit Damage.
 
-Runtime Debugging On PlayMode
+Elemental Mastery/Physical DMG Bonus (Trong Genshin).
 
-![](StatsEX3.png)
+Move Speed (Tốc độ di chuyển).
 
-Change Value Of Attribute
-
-```
-GetAttribute(AttributeType.Hp).Value += 1f;
-GetAttribute(AttributeType.Hp).SetValueWithoutNotify(newValue);
-```
-
-SetValueWithoutNotify Will Not Call Callback Change
-
-Change Value Of Stat 
-
-```
-AddModifier(StatType.MaxHp, new Modifer(1f, ModifyType.Constant));
-```
-
-Formula Of ModifyType
-
-```
-float baseConstant = 0f;
-float constant = 0f;
-float percent = 0f;
-
-foreach (Modifier modifier in _statModifiers)
-{
-    switch (modifier.Type)
-    {
-        case ModifyType.BaseConstant:
-            baseConstant += modifier.Value; continue;
-        case ModifyType.Constant:
-            constant += modifier.Value; continue;
-        case ModifyType.Percent:
-            percent += modifier.Value; continue;
-    };
-}
-
-float _finalValue = (BaseValue + baseConstant) * (1f + percent) + constant;
-
-_value = (float)Math.Round(_finalValue, 4);
-
-```
-
-<h3><div align="center"> FinalValue = (BaseValue + BaseConstant) × (1 + Percent) + Constant </div></h3>
-
-AddModifierWithoutNotify(StatType.MaxHp, new Modifer(1f, ModifyType.Constant) Similar Attribute
-
-Renew To Reset All Stat, Attribute, Effect 
-Example: Use OnEnemySpawnFrom Pool 
-
-```
-OnEnable()
-{
-    Renew();
-}
-```
-
-Apply Effect On Entity Can Stackable
-```
-public void ApplyEffect(YourStatusEffect effect)
-```
-#KatTheDev
+Đặc điểm: Stat chỉ thay đổi khi nhân vật lên cấp, mặc trang bị hoặc nhận được Buff/Debuff.

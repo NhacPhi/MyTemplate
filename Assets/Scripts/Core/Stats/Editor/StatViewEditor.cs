@@ -16,7 +16,10 @@ public class StatViewEditor : ViewEditor
     public StatViewEditor() { 
     }
 
-    ~StatViewEditor() { }
+    ~StatViewEditor() {
+        if (statsController == null) return;
+        statsController.NotifyEditor -= Rebuild;
+    }
 
     protected override void SetTitle()
     {

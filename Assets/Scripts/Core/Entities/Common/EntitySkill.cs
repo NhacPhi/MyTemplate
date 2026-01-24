@@ -53,4 +53,14 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
         Skills.Add(Skill.Main, mainSkill);
     }
+
+    public void ApplyAttackSkill(ref float damage)
+    {
+
+    }
+
+    public void ApplyDefenseSkill(ref float damage, Transform attacker)
+    {
+        
+    }
 }

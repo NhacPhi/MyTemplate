@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class EnemyStats : EntityStats
 {
-    public EnemyStats(Dictionary<StatType, Stat> stats) : base(stats)
-    {
 
-    }
 }

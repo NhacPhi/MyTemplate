@@ -21,17 +21,16 @@ namespace Stats.Editor
         private VisualElement _Body;
 
         private const string _errorMessage = "ID Not Found";
-        private const string _alllAttribute = "All Attributes";
-        private const string _allStats = "All Stats";
+        private const string _allAttributes = "All Attributes: ";
+        private const string _allStats = "All Stats: ";
 
         private string _search;
 
         private string text;
         private Dictionary<string, StatsDataHolder> dataBase;
-        //private List<CharacterStatConfig> characterStatConfigs;
 
-        //private StatsDataHolder statsHolder;
-        //private CharacterStatConfig statsHolder;
+        private StatsDataHolder statsHolder;
+
         private SerializedProperty _idProperty;
 
         public override VisualElement CreateInspectorGUI()
@@ -45,15 +44,14 @@ namespace Stats.Editor
 
             try
             {
-                text = File.ReadAllText("Assets/Data/GameConfig/CharacterStat.json");
+                text = File.ReadAllText("Assets/Data/GameConfig/CharacterConfig.json");
             }
             catch(Exception)
             {
                 return null;
             }
 
-            //dataBase = Json.DeserializeObject<Dictionary<string, StatsDataHolder>>(text);
-            //characterStatConfigs = Json.DeserializeObject<List<CharacterStatConfig>>(text);
+            dataBase = Json.DeserializeObject<Dictionary<string, StatsDataHolder>>(text);
 
             StringSearch search = ScriptableObject.CreateInstance<StringSearch>();
 
@@ -64,10 +62,10 @@ namespace Stats.Editor
                 _idProperty.serializedObject.ApplyModifiedProperties();
             };
 
-            //foreach(var key in characterStatConfigs)
-            //{
-            //    search.Keys.Add(key.ID);
-            //}
+            foreach (var key in dataBase)
+            {
+                search.Keys.Add(key.Key);
+            }
 
             var button = new Button(() =>
             {
@@ -102,12 +100,11 @@ namespace Stats.Editor
             serializedObject.Update();
             _Body.Clear();
 
-            //statsHolder = characterStatConfigs.Find(x => x.ID == _idProperty.stringValue);
-            //if (statsHolder == null)
-            //{
-            //    _Body.Add(new HelpBox(_errorMessage, HelpBoxMessageType.Error));
-            //    return;
-            //}
+            if (!dataBase.TryGetValue(_idProperty.stringValue, out statsHolder))
+            {
+                _Body.Add(new HelpBox(_errorMessage, HelpBoxMessageType.Error));
+                return;
+            }
 
             if (!target) return;
 
@@ -118,36 +115,49 @@ namespace Stats.Editor
 
             if (playMode)
             {
+                _Body.Add(new AttributeViewEditor(controller));
                 _Body.Add(new StatViewEditor(controller));
                 return;
             }
 
-            //InitBodyInEditor(statsHolder, controller);
+            InitBodyInEditor(statsHolder, controller);
         }
 
-        //private void InitBodyInEditor(CharacterStatConfig statsHolder, StatsController controller)
-        //{
-        //    try
-        //    {
-        //        var statsView = new StatViewEditor();
+        private void InitBodyInEditor(StatsDataHolder statsHolder, StatsController controller)
+        {
+            try
+            {
+                var attributesView = new AttributeViewEditor();
+                var statsView = new StatViewEditor();
 
-        //        var labelStats = new Label(_allStats);
-        //        labelStats.style.fontSize = 12;
-        //        labelStats.style.unityFontStyleAndWeight = FontStyle.Bold;
-        //        statsView.Body.Add(labelStats);
+                var labelAttribites = new Label(_allAttributes);
+                labelAttribites.style.fontSize = 12;
+                labelAttribites.style.unityFontStyleAndWeight = FontStyle.Bold;
+                attributesView.Body.Add(labelAttribites);
 
-        //        //foreach (StatType key in statsHolder.Stats.Keys)
-        //        //{
-        //        //    labelStats.text += key.ToString() + " | ";
-        //        //}
+                var labelStats = new Label(_allStats);
+                labelStats.style.fontSize = 12;
+                labelStats.style.unityFontStyleAndWeight = FontStyle.Bold;
+                statsView.Body.Add(labelStats);
 
-        //        _Body.Add(statsView);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Debug.LogException(e);
-        //    }
-        //}
+                foreach (AttributeType key in statsHolder.Attributes.Keys)
+                {
+                    labelAttribites.text += key.ToString() + " | ";
+                }
+
+                foreach (StatType key in statsHolder.Stats.Keys)
+                {
+                    labelStats.text += key.ToString() + " | ";
+                }
+
+                _Body.Add(attributesView);
+                _Body.Add(statsView);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
     }
 }
 #endif

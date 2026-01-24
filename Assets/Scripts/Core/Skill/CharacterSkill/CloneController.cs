@@ -7,7 +7,7 @@ public class CloneController : MonoBehaviour
 
     [SerializeField] private Animator smoke;
 
-    public async UniTask ActiveClone()
+    public async UniTask ActiveClone(DamageBonus damageBonus, Tech.Composite.Core source, Tech.Composite.Core target)
     {
         smoke.SetTrigger("Start");
 
@@ -15,7 +15,11 @@ public class CloneController : MonoBehaviour
 
         character.gameObject.SetActive(true);
 
-        await UniTask.Delay(1200);
+        await UniTask.Delay(600);
+
+        DamageFormular.DealDamage(damageBonus, source, target);
+
+        await UniTask.Delay(600);
 
         character.gameObject.SetActive(false);
     }

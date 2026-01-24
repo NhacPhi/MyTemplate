@@ -1,54 +1,74 @@
 using System;
 using UnityEngine;
 
+
 [Serializable]
 public class Attribute
 {
     private float _value;
     private float _minValue;
     private Stat _maxValue;
-
     public float Minvalue => _minValue;
-    public float MaxValue => _maxValue?.Value ?? 0;
+    public float MaxValue => _maxValue != null ? _maxValue.Value : Utility.MAX_STAT_VALUE;
 
     public Action<Attribute> OnValueChange;
+
     public float Value
     {
-        get
-        {
-            _value = Math.Clamp(_value, _minValue, MaxValue);
-            return _value;
-        }
-
+        get => _value;
         set
         {
             var newValue = Math.Clamp(value, _minValue, MaxValue);
-
-            if (_value.Equals(newValue)) return;
+            if (Mathf.Approximately(_value, newValue)) return;
 
             _value = newValue;
-
             OnValueChange?.Invoke(this);
         }
     }
-
 
     public Attribute(float minValue, Stat maxValue, float startPercent, StatsController controller)
     {
         _minValue = minValue;
         _maxValue = maxValue;
 
-        _value = Mathf.Lerp(minValue, MaxValue, startPercent); 
+
+        if (_maxValue != null)
+        {
+            _maxValue.OnValueChange += HandleMaxStatChanged;
+        }
+
+        InitValue(startPercent);
+    }
+
+    private void InitValue(float startPercent)
+    {
+        if (_maxValue != null)
+            _value = Mathf.Lerp(_minValue, _maxValue.Value, startPercent);
+        else
+            _value = _minValue;
+    }
+
+
+    private void HandleMaxStatChanged(Stat stat)
+    {
+        Value = _value; 
     }
 
     public void Reset(float startPercent)
     {
-        _value = Mathf.Lerp(_minValue, MaxValue, startPercent);
+        InitValue(startPercent);
         OnValueChange?.Invoke(this);
     }
 
     public void SetValueWithoutNotify(float value)
     {
-        _value = Mathf.Clamp(_value, _minValue, MaxValue);
+        _value = Math.Clamp(value, _minValue, MaxValue);
+    }
+
+
+    public void Dispose()
+    {
+        if (_maxValue != null)
+            _maxValue.OnValueChange -= HandleMaxStatChanged;
     }
 }

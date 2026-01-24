@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 public class StatsDataHolder
 {
-    [JsonProperty("Stats")]
+    [JsonProperty("stats")]
     public IReadOnlyDictionary<StatType, float> Stats;
 
-    //[JsonProperty("Attribute")]
-    //public IReadOnlyDictionary<AttributeType, Attribute> Attributes;
+    [JsonProperty("attributes")]
+    public IReadOnlyDictionary<AttributeType, AttributeComponent> Attributes;
 
     public float GetStat(StatType type)
     {

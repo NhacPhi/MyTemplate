@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public static class Utility 
 {
+   public const float MAX_STAT_VALUE = 1000000;
    public static string GenarateID()
     {
         return Guid.NewGuid().ToString();

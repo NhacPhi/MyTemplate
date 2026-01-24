@@ -11,4 +11,9 @@
     Ctrl + Shift + P => Python: Select Interpreter => CHọn Path => venv/Scripts/python.exe
 4. Import lib
     Sử dựng lệnh pip: pip install lib_name
-    List Lib: pandas (excel or CSV), nmh3(hash map)
+    List Lib: pandas (excel or CSV), mmh3(hash map), openpyxl
+
+
+Các bước để sử dụng tool build data
+1. Chạy phải setup_evn.cmd để cài đặt lib
+2. Chạy file run.cmd để build tất cả các data cần thiết cho game (Thực hiện bước này mỗi lần sửa file excel trong folder data)

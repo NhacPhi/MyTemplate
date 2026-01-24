@@ -8,6 +8,16 @@
             "def": 400,
             "atk": 2000
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 375,
             "def": 40,
@@ -22,6 +32,16 @@
             "hp": 2500,
             "def": 280,
             "atk": 1650
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
         },
         "upgrades": {
             "hp": 175,
@@ -38,6 +58,16 @@
             "def": 400,
             "atk": 1350
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 350,
             "def": 36,
@@ -52,6 +82,16 @@
             "hp": 2900,
             "def": 300,
             "atk": 1380
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
         },
         "upgrades": {
             "hp": 232,
@@ -68,6 +108,16 @@
             "def": 340,
             "atk": 1320
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 234,
             "def": 27,
@@ -82,6 +132,16 @@
             "hp": 2650,
             "def": 325,
             "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
         },
         "upgrades": {
             "hp": 238,
@@ -98,6 +158,16 @@
             "def": 300,
             "atk": 1800
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 220,
             "def": 24,
@@ -112,6 +182,16 @@
             "hp": 4250,
             "def": 420,
             "atk": 1500
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
         },
         "upgrades": {
             "hp": 425,
@@ -128,6 +208,16 @@
             "def": 350,
             "atk": 2100
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 370,
             "def": 35,
@@ -143,10 +233,45 @@
             "def": 330,
             "atk": 1950
         },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
         "upgrades": {
             "hp": 300,
             "def": 33,
             "atk": 195
+        }
+    },
+    "Enemy1": {
+        "name_hash": 3001573445,
+        "rare": "R",
+        "type": "Mage",
+        "stats": {
+            "hp": 2500,
+            "def": 280,
+            "atk": 1650
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
         }
     }
 }

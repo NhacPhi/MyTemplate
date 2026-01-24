@@ -11,28 +11,30 @@ public abstract class AnimationSystemBase : CoreComponent
 
 public class AnimationData
 {
-    public string ParameterName;
+    public string AnimationName;
 
-    public AnimatorParameterType ParameterType;
-
-    public object Value;
-
-    public int Hash => Animator.StringToHash(ParameterName);
+    public float Transition = 0.1f;
+    public float TimeScale = 1f;
+    public int Layer = 0;
+    private int _hash = 0;
+    public int Hash
+    {
+        get
+        {
+            if (_hash == 0 && !string.IsNullOrEmpty(AnimationName))
+                _hash = Animator.StringToHash(AnimationName);
+            return _hash;
+        }
+    }
 
     public AnimationData Renew()
     {
-        ParameterName = string.Empty;
-        ParameterType = AnimatorParameterType.Trigger;
-        Value = null;
-
+        AnimationName = string.Empty;
+        _hash = 0; 
+        Transition = 0.1f;
+        TimeScale = 1f;
+        Layer = 0;
         return this;
     }
 }
 
-public enum AnimatorParameterType
-{
-    Trigger,
-    Bool,
-    Int,
-    Float
-}

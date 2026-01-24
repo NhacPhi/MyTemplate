@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -7,11 +7,22 @@ using System;
 
 public class StatsController : CoreComponent, IEffectable 
 {
+    //protected StatsDataHolder statsHolder;
+    protected CharacterConfig configHolder;
+    [Inject] GameDataBase DataBase;
+
     [field: SerializeField] public string EntityID { get; protected set; }
+
+    //protected List<StatusEffect> statusEffects = new();
+    //public IReadOnlyCollection<StatusEffect> StatusEffect => statusEffects.AsReadOnly();
+
     protected Dictionary<StatType, Stat> stats;
-    protected List<StatusEffect> statusEffects = new();
     public Dictionary<StatType, Stat> Stats => stats;
-    internal IReadOnlyCollection<StatusEffect> StatusEffect => statusEffects.AsReadOnly();
+
+    public Action<StatEvtArgs> OnStatChange;
+
+    protected Dictionary<AttributeType, Attribute> attributes;
+    public Dictionary<AttributeType, Attribute> Atributes => attributes;
 
 #if UNITY_EDITOR
     /// <summary>
@@ -20,17 +31,88 @@ public class StatsController : CoreComponent, IEffectable
     public Action NotifyEditor;
 #endif
 
-    public void InitStats(Dictionary<StatType, Stat> stats)
+    public override void LoadComponent()
+    {
+        base.LoadComponent();
+        InitAttribute();
+    }
+
+    private void InitAttribute()
+    {
+        if(attributes != null)
+        {
+            return;
+        }
+
+        attributes = new Dictionary<AttributeType, Attribute>();
+
+        if(configHolder == null)
+        {
+            configHolder = DataBase.GetCharacterConfig(EntityID);
+        }
+
+        InitStats();
+
+        foreach(AttributeType key in configHolder.Attributes.Keys)
+        {
+            Stat maxStat = null;
+            AttributeComponent attributeConponent = configHolder.Attributes[key];
+            if(attributeConponent.StatMaxStatType != StatType.None)
+            {
+                maxStat = stats[attributeConponent.StatMaxStatType];
+            }
+            Attribute attribute = new(0, maxStat, attributeConponent.SttartPercent, this);
+#if UNITY_EDITOR
+            attribute.OnValueChange += HandleNotifyEditor;
+#endif
+
+            attributes.Add(key, attribute);
+        }
+#if UNITY_EDITOR
+        NotifyEditor?.Invoke();
+#endif
+    }
+    public void InitStats()
     {
         if (stats != null) return;
 
+        if (configHolder == null)
+        {
+            Debug.Log("Object: " + gameObject.name);
+            configHolder = DataBase.GetCharacterConfig(EntityID);
+        }
+
+
         this.stats = new Dictionary<StatType, Stat>();
 
-        foreach (var kv in stats)
+        foreach (var key in configHolder.Stats.Keys)
         {
-            this.stats.Add(kv.Key, kv.Value);
+            Stat stat = new(configHolder.Stats[key]);
+#if UNITY_EDITOR
+            stat.OnValueChange += HandleNotifyEditor;
+#endif
+            stats.Add(key, stat);
         }
-        // stats.add(stat)
+#if UNITY_EDITOR
+        NotifyEditor?.Invoke();
+#endif
+    }
+
+    public Attribute GetAttribute(AttributeType type)
+    {
+        InitAttribute();
+        return attributes.GetValueOrDefault(type);
+    }
+
+    public Stat GetStat(StatType type)
+    {
+        InitStats();
+        return stats.GetValueOrDefault(type);
+    }
+
+    public void UpdateStat(StatEvtArgs stats)
+    {
+        OnStatChange?.Invoke(stats);
     }
 
     public virtual void Renew()
@@ -40,12 +122,12 @@ public class StatsController : CoreComponent, IEffectable
             stat.ClearAllModifiers();
         }
 
-        foreach(var effect in statusEffects)
-        {
-            effect.Stop();
-        }
+        //foreach(var effect in statusEffects)
+        //{
+        //    effect.Stop();
+        //}
 
-        statusEffects.Clear();
+        //statusEffects.Clear();
     }
 
     public virtual void AddModifier(StatType type, Modifier modifier)
@@ -96,7 +178,7 @@ public class StatsController : CoreComponent, IEffectable
         if(!isExist)
         {
             var clone = effect.Clone();
-            statusEffects.Add(clone);
+            //statusEffects.Add(clone);
             clone.StartEffect();
             return;
         }
@@ -112,21 +194,21 @@ public class StatsController : CoreComponent, IEffectable
         if(ignoreStack)
         {
             cloneEffect.Stop();
-            statusEffects.Remove(cloneEffect);
+            //statusEffects.Remove(cloneEffect);
             return;
         }
 
         if (effect.IsStackable && cloneEffect.RemoveStack() > 0) return;
 
         cloneEffect.Stop();
-        statusEffects.Remove(cloneEffect);
+        //statusEffects.Remove(cloneEffect);
     }
     public bool HasEffect<T>() where T : StatusEffect
     {
-        foreach(var effect in statusEffects)
-        {
-            if(effect.GetType() == typeof(T)) return true;
-        }
+        //foreach(var effect in statusEffects)
+        //{
+        //    if(effect.GetType() == typeof(T)) return true;
+        //}
 
         return false;
     }
@@ -136,33 +218,29 @@ public class StatsController : CoreComponent, IEffectable
         cloneEffect = null;
         if(effect == null) return false;
 
-        foreach (var m_effect in statusEffects)
-        {
-            if(!effect.Equals(m_effect)) continue;
+        //foreach (var m_effect in statusEffects)
+        //{
+        //    if(!effect.Equals(m_effect)) continue;
 
-            cloneEffect = m_effect;
-            return true;
-        }
+        //    cloneEffect = m_effect;
+        //    return true;
+        //}
 
         return false;
     }
 
     protected virtual void Update()
     {
-        if(statusEffects == null) return;
-        for(int i = statusEffects.Count - 1; i >= 0; i--)
-        {
-            var effect = statusEffects[i];
-            effect.Update();
-            if (!effect.IsStop) continue;
-            statusEffects.RemoveAt(i);
-        }
+        //if(statusEffects == null) return;
+        //for(int i = statusEffects.Count - 1; i >= 0; i--)
+        //{
+        //    var effect = statusEffects[i];
+        //    effect.Update();
+        //    if (!effect.IsStop) continue;
+        //    statusEffects.RemoveAt(i);
+        //}
     }
 
-    public Stat GetStat(StatType type)
-    {
-        return stats.GetValueOrDefault(type);
-    }
 
     public void CalculateStatsValue()
     {
@@ -171,4 +249,11 @@ public class StatsController : CoreComponent, IEffectable
             stat.Value.ReCalculateValue();
         }
     }
+
+#if UNITY_EDITOR
+    private void HandleNotifyEditor(object value)
+    {
+        NotifyEditor?.Invoke();
+    }
+#endif
 }

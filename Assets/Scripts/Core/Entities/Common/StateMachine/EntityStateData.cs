@@ -27,7 +27,6 @@ public class EntityStateData : CoreComponent
 
     // param
     [field: SerializeField] public float TimeToReadyMoveAttack { get; protected set; } = 0.3f;
-    [field: SerializeField] public float TimeToAttack { get; protected set; } = 1f;
     [field: SerializeField] public float TimeToEndTurn { get; protected set; } = 0.3f;
     [field: SerializeField] public float MoveSpeed { get; protected set; } = 8f;
 
@@ -39,12 +38,12 @@ public class EntityStateData : CoreComponent
     [NonSerialized] public Vector3 MovePosition;
 
     [field: Header("Animmation Parameters")]
-    [field: SerializeField] public string IdleParam { get; protected set; } = "Idle";
+    [field: SerializeField] public string IdleAnimation { get; protected set; } = "Idle";
     //[field: SerializeField] public string MoveAnim { get; protected set; } = "Move";
-    [field: SerializeField] public string AttackParam { get; protected set; } = "Attack";
-    [field: SerializeField] public string HitParam { get; protected set; } = "Injured";
+    [field: SerializeField] public string AttackAnimation{ get; protected set; } = "Attack";
+    [field: SerializeField] public string HitAnimation { get; protected set; } = "Injured";
 
-    [field: SerializeField] public string MainSkillParam { get; protected set; } = "UltimateSkill";
+    [field: SerializeField] public string MainSkillAnimaiton{ get; protected set; } = "UltimateSkill";
 
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();
     public override void LoadComponent()

@@ -2,7 +2,7 @@ import pandas as pd
 
 import config
 from src.build import BaseBuilder
-from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel
+from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel, AttributeComponent
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -114,7 +114,21 @@ class CharacterConfigBuilder(BaseBuilder):
                             char_stats[col] = int(row[col]) if not pd.isna(row[col]) else 0
                     character_data[char_id].stats = char_stats
 
-    
+        # Handle character attribute
+        if "CharacterAttribute" in all_sheets:
+            df = all_sheets["CharacterAttribute"]
+
+            for _, row, in df.iterrows():
+                char_id = str(row['ID']).strip()
+                if char_id in character_data:
+                    attr_type = str(row['AttributeType']).strip()
+
+                    attr_comp = AttributeComponent(
+                        max_stat_type = str(row['StatLink']).strip() if not pd.isna(row['StatLink']) else "None",
+                        start_percent = float(row['StartPercent']) if not pd.isna(row['StartPercent']) else 0.0
+                    )
+                character_data[char_id].attributes[attr_type] = attr_comp
+
         # Handle character upgrade
         if "CharacterUpgrade" in all_sheets:
             df = all_sheets["CharacterUpgrade"]
