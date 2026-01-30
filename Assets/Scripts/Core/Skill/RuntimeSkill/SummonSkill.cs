@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Tech.Logger;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
@@ -52,7 +51,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             {
                 FlatValue = 0,
                 DamageMultiplier = 1.2f
-            }, caster, caster.target.GetComponent<Entity>()); ;;
+            }, caster, caster.target.GetComponent<Entity>());
         }
         
         clonePrefab.gameObject.SetActive(false);
@@ -105,6 +104,7 @@ public class SummonSkillData : SkillData
     public Vector3 Offset = new Vector3(3.64f, 1.18f, 0);
 
     public Vector3 OffsetTarget = new Vector3(5, 0, 0);
+
     public string vfxEffectReference = "Smoke_Wukong";
 
     public string cloneReference = "Clone";

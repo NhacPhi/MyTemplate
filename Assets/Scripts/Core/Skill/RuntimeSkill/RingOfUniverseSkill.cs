@@ -1,0 +1,93 @@
+using Cysharp.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using UnityEngine;
+using static Unity.VisualScripting.Member;
+
+public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProjectileSkill, IAsyncInitializer
+{
+    private RingOfUniverseData skillData;
+    private GameObject ringPrefab;
+    private Entity _caster;
+
+    public RingOfUniverseSkill(EntityStats owner, RingOfUniverseData skillData) : base(owner)
+    {
+        this.skillData = skillData;
+    }
+
+    public override void Execute(Entity caster)
+    {
+        _caster = caster;
+        _ = ThrowProjectile(skillData, caster);
+    }
+
+    public override SkillData GetSkillData() => skillData;
+
+
+    public void OnDealDamage(ref float damageInput)
+    {
+        
+    }
+
+    public GameObject ActiveProjectiles => throw new System.NotImplementedException();
+
+    public void OnProjectileHit(Entity target, GameObject projectile)
+    {
+        var damage = new DamageBonus()
+        {
+            FlatValue = 0,
+            DamageMultiplier = 1.2f
+        };
+        DamageFormular.DealDamage(damage, _caster, target);
+    }
+
+    public void OnProjectileReturned(GameObject projectitle)
+    {
+        ringPrefab.gameObject.SetActive(false);
+    }
+
+    public async UniTask ThrowProjectile(SkillData data, Entity caster)
+    {
+        ringPrefab.transform.SetParent(caster.transform);
+        ringPrefab.transform.localPosition = skillData.Offset;
+        ringPrefab.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        ringPrefab.gameObject.SetActive(true);
+
+        var controller = ringPrefab.GetComponent<ProjectileController>();
+
+        Vector3 throwDir = caster.target.transform.position - caster.transform.position;
+
+        float maxDis = Vector3.Distance(caster.transform.position, caster.target.transform.position) + 0.5f;
+        controller.Initialize(
+            caster: caster,
+            skill: this,
+            direction: throwDir,
+            maxDist: maxDis
+            );
+    }
+
+    public async UniTask InitializeAsync(CancellationToken token)
+    {
+        var vfxRef = skillData.ringObjectReference;
+
+        if (vfxRef != null)
+        {
+            GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(vfxRef);
+            ringPrefab = Object.Instantiate(ring, Vector3.zero, Quaternion.identity);
+            ringPrefab.gameObject.SetActive(false);
+            AddressablesManager.Instance.RemoveAsset(vfxRef);
+
+        }
+    }
+}
+
+
+public class RingOfUniverseData: SkillData
+{
+    public Vector3 Offset = new Vector3(1.68f, -1.43f, 0);
+
+    public string ringObjectReference = "Ring_Of_Universe";
+
+    public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new RingOfUniverseSkill(owner, this);
+}

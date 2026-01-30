@@ -567,6 +567,12 @@ public static class LocKeys
 
     public const long STR_RESIST_DEFBUFF = 3991180129;
 
+    public const long STR_FIRELANCE_RING_DAMASL_NAME = 2277535047;
+
+    public const long STR_FIRELANCE_RING_DAMASL_DES = 2917497002;
+
+    public const long STR_FIRELANCE_RING_DAMASL_SKILL = 323500067;
+
     public const long WUKONG_FIRSTSKIL_NAME = 762970985;
 
     public const long WUKONG_FIRSTSKIL_DES = 1999978302;
