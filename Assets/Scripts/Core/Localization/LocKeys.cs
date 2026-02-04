@@ -573,6 +573,8 @@ public static class LocKeys
 
     public const long STR_FIRELANCE_RING_DAMASL_SKILL = 323500067;
 
+    public const long STR_THE_BOY_SAGE = 1785742370;
+
     public const long WUKONG_FIRSTSKIL_NAME = 762970985;
 
     public const long WUKONG_FIRSTSKIL_DES = 1999978302;

@@ -16,14 +16,14 @@ public class AttributeSlider : AttributeTextValue
         SetUpValue();
     }
 
-    protected override void HandleValueChange(Attribute attribute)
+    public override void HandleValueChange(AttributeEvtArgs attribute)
     {
         this.LastValue = attribute.Value;
         this.LastMaxValue = attribute.MaxValue;
         SetUpValue();
     }
 
-    protected override void HandleMaxValueChange(Stat stat)
+    public override void HandleMaxValueChange(Stat stat)
     {
         this.LastMaxValue = stat.Value;
         SetUpValue();

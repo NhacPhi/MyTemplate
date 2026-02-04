@@ -45,6 +45,7 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         StateManager.AddNewState(EntityState.MOVE_UP, new EntityMoveUp(entityStateData));
         StateManager.AddNewState(EntityState.MOVE_DOWN, new EntityMoveDown(entityStateData));
         StateManager.AddNewState(EntityState.MAIN_SKILL, new EntityMainSkill(entityStateData));
+        StateManager.AddNewState(EntityState.MAJOR_SKILL, new EntityMajorSkill(entityStateData));
     }
 
     protected virtual void Start()

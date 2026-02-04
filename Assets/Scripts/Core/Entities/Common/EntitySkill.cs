@@ -36,7 +36,10 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
         //SkillData dataMajor = new SummonSkillData();
         //SkillData dataMajor = new RingOfUniverseData();
-        SkillData dataMajor = new FireballData();
+        //SkillData dataMajor = new FireBallData(); 
+        //SkillData dataMajor = new BuffShieldData();
+        //SkillData dataMajor = new ThunderBallData();
+        SkillData dataMajor = new HealingData();
         SkillRuntime majorSkill = dataMajor.CreateRuntimeSkill(entityStats);
 
         Skills.Add(Skill.Major, majorSkill);

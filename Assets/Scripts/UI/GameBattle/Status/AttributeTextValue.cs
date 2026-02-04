@@ -37,14 +37,14 @@ public class AttributeTextValue : BaseAttributeUI
         SetTextValue();
     }
 
-    protected override void HandleValueChange(Attribute attribute)
+    public override void HandleValueChange(AttributeEvtArgs attribute)
     {
         LastValue = attribute.Value;
         LastMaxValue = attribute.MaxValue;
         SetTextValue();
     }
 
-    protected override void HandleMaxValueChange(Stat stat)
+    public override void HandleMaxValueChange(Stat stat)
     {
         LastMaxValue = stat.Value;
         SetTextValue();

@@ -1,15 +1,13 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
 public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
 {
-    private FireballData skillData;
+    private FireBallData skillData;
     private GameObject firreBallPrefab;
     private Entity _caster;
-    public FireballSkill(EntityStats owner, FireballData skillData) : base(owner)
+    public FireballSkill(EntityStats owner, FireBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
@@ -65,7 +63,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
     }
 }
 
-public class FireballData : SkillData
+public class FireBallData : SkillData
 {
     public Vector3 Offset = new Vector3(1.16f, -1f, 0);
 

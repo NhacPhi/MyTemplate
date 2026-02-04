@@ -19,13 +19,13 @@ public abstract class BaseAttributeUI : MonoBehaviour
         switch (AttributeID)
         {
             case AttributeType.Hp:
-                PlayerStatusAction.OnExpChange += HandleValueChange;
+
                 return;
             case AttributeType.Shield:
-                PlayerStatusAction.OnLvChange += HandleValueChange;
+
                 return;
         }
     }
-    protected abstract void HandleValueChange(Attribute attribute);
-    protected abstract void HandleMaxValueChange(Stat stat);
+    public abstract void HandleValueChange(AttributeEvtArgs attribute);
+    public abstract void HandleMaxValueChange(Stat stat);
 }

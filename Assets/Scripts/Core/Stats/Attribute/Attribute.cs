@@ -8,6 +8,8 @@ public class Attribute
     private float _value;
     private float _minValue;
     private Stat _maxValue;
+
+    private AttributeType _type;
     public float Minvalue => _minValue;
     public float MaxValue => _maxValue != null ? _maxValue.Value : Utility.MAX_STAT_VALUE;
 
@@ -25,6 +27,8 @@ public class Attribute
             OnValueChange?.Invoke(this);
         }
     }
+
+    public AttributeType Type => _type;
 
     public Attribute(float minValue, Stat maxValue, float startPercent, StatsController controller)
     {

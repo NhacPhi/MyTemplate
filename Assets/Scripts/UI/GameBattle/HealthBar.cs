@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-public class HealthBar : BaseStatUI
+public class HealthBar : BaseAttributeUI
 {
     [SerializeField] private GameObject[] ticks; 
     [SerializeField] private Slider heathSlider;
@@ -42,11 +42,11 @@ public class HealthBar : BaseStatUI
             BuffShield(1000);
         }
     }
-    public void Setup(float value)
+    public void Setup(float hp, float maxHP)
     {
-        MAX_HP = (int)value;
+        MAX_HP = (int)maxHP;
 
-        currentHP = currentDamage = currentShield = MAX_HP;
+        currentHP = currentDamage = currentShield = (int)hp;
 
         heathSlider.maxValue = MAX_HP;
         heathSlider.value = currentHP;
@@ -233,13 +233,38 @@ public class HealthBar : BaseStatUI
         }
     }
 
-    public override void Init(float value)
+    public override void Init(float hp, float maxHp)
     {
-        Setup(value);
+        Setup(hp, maxHp);
     }
 
-    public override void HandleValueChange(StatEvtArgs stat)
+    public override void HandleValueChange(AttributeEvtArgs attribute)
     {
-        TakeDamage((int)stat.Value);
+        switch (attribute.Attribute)
+        {
+            case AttributeType.Hp:
+                {
+                    if(currentHP > attribute.Value)
+                    {
+                        int damge = currentHP - (int)attribute.Value;
+                        TakeDamage(damge);
+                    }
+                    else
+                    {
+                        int healing = (int)attribute.Value - currentHP;
+                        Heal(healing);
+                    }
+                    
+                }
+                break;
+            case AttributeType.Shield:
+                BuffShield((int)attribute.Value);
+                break;
+        }
+    }
+
+    public override void HandleMaxValueChange(Stat stat)
+    {
+
     }
 }

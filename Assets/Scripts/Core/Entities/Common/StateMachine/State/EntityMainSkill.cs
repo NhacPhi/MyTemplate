@@ -30,7 +30,7 @@ public class EntityMainSkill : EntityStateBase
         data.Anim.Play(animData);
 
 
-        data.Anim.RegisterEventAtTime(0.6f, DamageCallBack);
+        data.Anim.RegisterEventAtTime(data.TimeTriggerDamge, DamageCallBack);
         data.Anim.RegisterEventAtTime(0.95f, ExitCallBack);
     }
 

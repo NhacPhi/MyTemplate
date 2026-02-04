@@ -27,15 +27,43 @@ public class EntityStats : StatsController, IDamagable
         var hp = GetAttribute(AttributeType.Hp);
         hp.Value -= damage;
 
-        OnStatChange?.Invoke(new StatEvtArgs()
+        OnAtributeChange?.Invoke(new AttributeEvtArgs()
         {
-            Stat = StatType.HP,
-            Value = damage,
+            Attribute = AttributeType.Hp,
+            Value = hp.Value,
+            MaxValue= hp.MaxValue,
         });
 
-        if (!(hp.Value <= 0)) return;
+        //if (!(hp.Value <= 0)) return;
 
         HandleDeath();
+    }
+
+    public void BuffShield(float value)
+    {
+        var shield = GetAttribute(AttributeType.Shield);
+        shield.Value = value;
+
+        OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        {
+            Attribute = AttributeType.Shield,
+            Value = shield.Value,
+            MaxValue = shield.MaxValue,
+        });
+
+    }
+
+    public void HealingHP(float value)
+    {
+        var hp = GetAttribute(AttributeType.Hp);
+        hp.Value += value;
+
+        OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        {
+            Attribute = AttributeType.Hp,
+            Value = hp.Value,
+            MaxValue = hp.MaxValue,
+        });
     }
 
     protected virtual void HandleDeath()
@@ -50,7 +78,14 @@ public class EntityStats : StatsController, IDamagable
     private void CallEvent()
     {
         //Test
-        //var hp = GetStat(StatType.HP);
+        var hp = GetAttribute(AttributeType.Hp);
+        //OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        //{
+        //    Attribute = AttributeType.Hp,
+        //    Value = hp.Value,
+        //    MaxValue= hp.MaxValue,
+        //});
+
 
 
         //OnStatChange?.Invoke(new StatEvtArgs()
@@ -60,14 +95,14 @@ public class EntityStats : StatsController, IDamagable
         //});
 
 
-    //    def.OnValueChange += (args) =>
-    //    {
-    //        PlayerStatusAction.OnDefChange?.Invoke(args);
-    //    };
+        //    def.OnValueChange += (args) =>
+        //    {
+        //        PlayerStatusAction.OnDefChange?.Invoke(args);
+        //    };
 
-    //    atk.OnValueChange += (args) =>
-    //    {
-    //        PlayerStatusAction.OnAtkChange?.Invoke(args);
-    //    };
+        //    atk.OnValueChange += (args) =>
+        //    {
+        //        PlayerStatusAction.OnAtkChange?.Invoke(args);
+        //    };
     }
 }

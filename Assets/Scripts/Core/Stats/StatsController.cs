@@ -24,6 +24,8 @@ public class StatsController : CoreComponent, IEffectable
     protected Dictionary<AttributeType, Attribute> attributes;
     public Dictionary<AttributeType, Attribute> Atributes => attributes;
 
+    public Action<AttributeEvtArgs> OnAtributeChange;
+
 #if UNITY_EDITOR
     /// <summary>
     /// Only Work On Editor

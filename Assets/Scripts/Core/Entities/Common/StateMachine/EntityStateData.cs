@@ -13,7 +13,8 @@ public enum EntityState
     HIT,
     MOVE_UP,
     MOVE_DOWN,
-    MAIN_SKILL
+    MAIN_SKILL,
+    MAJOR_SKILL
 }
 
 public class EntityStateData : CoreComponent
@@ -39,11 +40,15 @@ public class EntityStateData : CoreComponent
 
     [field: Header("Animmation Parameters")]
     [field: SerializeField] public string IdleAnimation { get; protected set; } = "Idle";
-    //[field: SerializeField] public string MoveAnim { get; protected set; } = "Move";
+
     [field: SerializeField] public string AttackAnimation{ get; protected set; } = "Attack";
     [field: SerializeField] public string HitAnimation { get; protected set; } = "Injured";
 
     [field: SerializeField] public string MainSkillAnimaiton{ get; protected set; } = "UltimateSkill";
+
+    [field: SerializeField] public string MajorAnimaiton { get; protected set; } = "MajorSkill";
+
+    [field: SerializeField] public float TimeTriggerDamge { get; protected set; } = 0.7f;
 
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();
     public override void LoadComponent()

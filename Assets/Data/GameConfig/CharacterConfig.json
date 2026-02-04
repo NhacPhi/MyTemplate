@@ -90,7 +90,7 @@
             },
             "hp": {
                 "max_stat_type": "HP",
-                "start_percent": 1.0
+                "start_percent": 0.8
             }
         },
         "upgrades": {
@@ -273,5 +273,22 @@
             "def": 20,
             "atk": 115
         }
+    },
+    "TheBoySage": {
+        "name_hash": 1785742370,
+        "rare": "SSR",
+        "type": "Assassin",
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            }
+        },
+        "upgrades": {}
     }
 }
