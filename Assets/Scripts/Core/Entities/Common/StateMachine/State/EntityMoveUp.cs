@@ -19,9 +19,9 @@ public class EntityMoveUp : EntityStateBase
     {
         if (!MoveToTarget()) return;
 
-        data.StateManager.ChangeState(data.NextStateAfterMoveext);
+        data.StateManager.ChangeState(data.NextStateAfterMoveNext);
 
-        data.NextStateAfterMoveext = EntityState.ATTACK;
+        data.NextStateAfterMoveNext = EntityState.ATTACK;
     }
 
     protected virtual bool MoveToTarget()

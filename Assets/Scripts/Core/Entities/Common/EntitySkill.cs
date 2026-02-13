@@ -7,6 +7,7 @@ using UnityEngine;
 
 public enum Skill
 {
+    Base,
     Major,
     Main
 }
@@ -34,12 +35,25 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
     {
         entityStats = gameObject.GetComponent<EntityStats>();
 
+
+        //Baas Skill
+        //SkillData baseAttackDta = new BaseAttackData();
+        //SkillRuntime baseSkill = baseAttackDta.CreateRuntimeSkill(entityStats);
+        //Skills.Add(Skill.Base, baseSkill);
+
+        //var init = baseSkill as IAsyncInitializer;
+        //if (init != null)
+        //{
+        //    await init.InitializeAsync(token);
+        //}
+
+        //Major Skill
         //SkillData dataMajor = new SummonSkillData();
         //SkillData dataMajor = new RingOfUniverseData();
         //SkillData dataMajor = new FireBallData(); 
-        //SkillData dataMajor = new BuffShieldData();
+        SkillData dataMajor = new BuffShieldData();
         //SkillData dataMajor = new ThunderBallData();
-        SkillData dataMajor = new HealingData();
+        //SkillData dataMajor = new HealingData();
         SkillRuntime majorSkill = dataMajor.CreateRuntimeSkill(entityStats);
 
         Skills.Add(Skill.Major, majorSkill);
@@ -53,8 +67,16 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         }
 
 
-        SkillData dataMain = new EmpoweredAttackData();
+        //SkillData dataMain = new EmpoweredAttackData();
+        //SkillRuntime mainSkill = dataMain.CreateRuntimeSkill(entityStats);
+        SkillData dataMain = new PoisonBallData();
         SkillRuntime mainSkill = dataMain.CreateRuntimeSkill(entityStats);
+        var init = mainSkill as IAsyncInitializer;
+        if (init != null)
+        {
+            await init.InitializeAsync(token);
+        }
+
 
         Skills.Add(Skill.Main, mainSkill);
     }

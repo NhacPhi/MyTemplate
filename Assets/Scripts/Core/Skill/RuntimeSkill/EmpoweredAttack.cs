@@ -23,7 +23,7 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
         EntityStateData state = caster.GetComponent<EntityStateData>();
         if (state != null)
         {
-            state.NextStateAfterMoveext = EntityState.MAIN_SKILL;
+            state.NextStateAfterMoveNext = EntityState.MAIN_SKILL;
             //state.StateManager.ChangeState(EntityState.MOVE_UP);
         }
     }

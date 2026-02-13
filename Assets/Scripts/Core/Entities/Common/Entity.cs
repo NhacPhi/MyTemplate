@@ -11,8 +11,6 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
     = new StateMachine<EntityState, EntityStateBase>();
 
-
-    [SerializeField] private AttackType attackType;
     //public IEntityAttack attack { get; private set; }
 
     protected EntityStateData entityStateData;
@@ -58,10 +56,10 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         StateManager.CurrentState.LogicUpdate();
     }
     public bool IsEndTurn { get; set; }
-    public virtual void HandleTurn(Entity target)
+    public virtual void HandleTurn(Entity target, bool isMain)
     {
         IsEndTurn = false;
         entityStateData.CurrentTarget = target;
-        entityStateData.HandleTurn();
+        entityStateData.HandleTurn(isMain);
     }
 }

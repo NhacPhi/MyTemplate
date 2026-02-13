@@ -20,7 +20,7 @@ public enum EntityState
 public class EntityStateData : CoreComponent
 {
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
-    public EntityState NextStateAfterMoveext { get; set; } = EntityState.ATTACK;
+    public EntityState NextStateAfterMoveNext { get; set; } = EntityState.ATTACK;
     public Entity Entity { get; protected set; }
     public EntityStats StatsManager { get; protected set; }
     public AnimationSystemBase Anim { get; protected set; }
@@ -50,6 +50,8 @@ public class EntityStateData : CoreComponent
 
     [field: SerializeField] public float TimeTriggerDamge { get; protected set; } = 0.7f;
 
+    [SerializeField] private AttackType attackType;
+
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();
     public override void LoadComponent()
     {
@@ -60,15 +62,22 @@ public class EntityStateData : CoreComponent
         RootPosition = Entity.transform.position;
     }
 
-    public virtual void HandleTurn()
+    public virtual void HandleTurn(bool isMain)
     {
-        _ = WaitToReadyAttack();
+        _ = WaitToReadyAttack(isMain);
     }
 
-    protected virtual async UniTaskVoid WaitToReadyAttack()
+    protected virtual async UniTaskVoid WaitToReadyAttack(bool isMain)
     {
         await UniTask.WaitForSeconds(TimeToReadyMoveAttack, cancellationToken: Token);
         MovePosition = CurrentTarget.gameObject.transform.position - OffsetToTarget;
-        StateManager.ChangeState(EntityState.MOVE_UP);
+        if(attackType == AttackType.Melee || isMain)
+        {
+            StateManager.ChangeState(EntityState.MOVE_UP);
+        }
+        else
+        {
+            StateManager.ChangeState(EntityState.ATTACK);
+        }
     }
 }
