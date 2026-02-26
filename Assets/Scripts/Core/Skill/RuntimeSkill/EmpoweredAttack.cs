@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,11 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
             state.NextStateAfterMoveNext = EntityState.MAIN_SKILL;
             //state.StateManager.ChangeState(EntityState.MOVE_UP);
         }
+    }
+
+    public async UniTask PerformSummon(SkillData config, Entity caster)
+    {
+
     }
 }
 

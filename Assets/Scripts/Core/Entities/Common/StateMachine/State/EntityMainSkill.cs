@@ -29,8 +29,8 @@ public class EntityMainSkill : EntityStateBase
         animData.AnimationName = data.MainSkillAnimaiton;
         data.Anim.Play(animData);
 
-
-        data.Anim.RegisterEventAtTime(data.TimeTriggerDamge, DamageCallBack);
+        if(data.IsEmpoweredAttack)
+            data.Anim.RegisterEventAtTime(data.TimeTriggerDamge, DamageCallBack);
         data.Anim.RegisterEventAtTime(0.95f, ExitCallBack);
     }
 

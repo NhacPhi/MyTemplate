@@ -10,7 +10,7 @@ public class EntityMajorSkill : EntityStateBase
     {
         ExitCallBack = () =>
         {
-            data.StateManager.ChangeState(EntityState.IDLE);
+            data.StateManager.ChangeState(EntityState.MOVE_DOWN);
         };
     }
 

@@ -48,6 +48,8 @@ public class EntityStateData : CoreComponent
 
     [field: SerializeField] public string MajorAnimaiton { get; protected set; } = "MajorSkill";
 
+    [field: SerializeField] public bool IsEmpoweredAttack { get; protected set; } = true;
+
     [field: SerializeField] public float TimeTriggerDamge { get; protected set; } = 0.7f;
 
     [SerializeField] private AttackType attackType;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
 {
     private FireBallData skillData;
-    private GameObject firreBallPrefab;
+    private GameObject fireBallPrefab;
     private Entity _caster;
     public FireballSkill(EntityStats owner, FireBallData skillData) : base(owner)
     {
@@ -15,12 +15,12 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
     public override void Execute(Entity caster)
     {
         _caster = caster;
-        firreBallPrefab.transform.SetParent(caster.transform);
-        firreBallPrefab.transform.localPosition = skillData.Offset;
-        firreBallPrefab.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
-        firreBallPrefab.gameObject.SetActive(true);
+        fireBallPrefab.transform.SetParent(caster.transform);
+        fireBallPrefab.transform.localPosition = skillData.Offset;
+        fireBallPrefab.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
+        fireBallPrefab.gameObject.SetActive(true);
 
-        var controller = firreBallPrefab.GetComponent<FireballController>();
+        var controller = fireBallPrefab.GetComponent<FireballController>();
 
         Vector3 flyDir = caster.target.transform.position - caster.transform.position;
 
@@ -40,8 +40,8 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
         if (objRef != null)
         {
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
-            firreBallPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
-            firreBallPrefab.gameObject.SetActive(false);
+            fireBallPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
+            fireBallPrefab.gameObject.SetActive(false);
             AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
