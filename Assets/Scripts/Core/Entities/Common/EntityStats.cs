@@ -34,7 +34,7 @@ public class EntityStats : StatsController, IDamagable
             MaxValue= hp.MaxValue,
         });
 
-        //if (!(hp.Value <= 0)) return;
+        if (!(hp.Value <= 0)) return;
 
         HandleDeath();
     }
@@ -68,7 +68,9 @@ public class EntityStats : StatsController, IDamagable
 
     protected virtual void HandleDeath()
     {
-
+        IsDead = true;
+        OnDeath?.Invoke();
+        gameObject.SetActive(false);
     }
     public override void Renew()
     {

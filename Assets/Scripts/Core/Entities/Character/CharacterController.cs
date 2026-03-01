@@ -37,7 +37,7 @@ public class CharacterController : Entity
             Debug.Log("Ultimate Skill");
             var enemy = target.gameObject.GetComponent<Entity>(); 
             gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Main);
-            //HandleTurn(enemy, true);
+            HandleTurn(enemy, true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

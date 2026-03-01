@@ -194,7 +194,7 @@ public class SceneLoader : MonoBehaviour
 
     private void StartGameplay()
     {
-        //_onSceneReady.RaiseEvent(); //Spawn system will spawn the PigChef in a gameplay scene
+        GameEvent.OnSceneReady?.Invoke(); //Spawn system will spawn the PigChef in a gameplay scene
     }
 
     private void ExitGame()
