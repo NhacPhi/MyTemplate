@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5806058690923687961}
   - component: {fileID: 6725721484392600925}
   - component: {fileID: 8478640504470997897}
-  - component: {fileID: 1738745313721912533}
-  m_Layer: 0
+  - component: {fileID: 7542124857634433249}
+  m_Layer: 7
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4831,7 +4831,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!65 &1738745313721912533
+--- !u!65 &7542124857634433249
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4846,9 +4846,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 1}
-  m_Center: {x: 0, y: 0, z: -3}
+  m_Size: {x: 5.5, y: 5.5, z: 1}
+  m_Center: {x: -0.018410325, y: -0.042648315, z: 0}

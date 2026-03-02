@@ -1,3 +1,4 @@
+﻿using SixLabors.ImageSharp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class Protagonist : MonoBehaviour
 
     private bool equipWeapon = false;
     private bool isClone = false;
+
+    public LayerMask groundLayer;
 
     private void OnEnable()
     {
@@ -54,23 +57,25 @@ public class Protagonist : MonoBehaviour
         }
     }
 
-    private void PlayerMovement(Vector2 vec)
+    private void PlayerMovement(Vector2 input)
     {
-        if (vec.x > 0)
+        if(input.magnitude > 0)
         {
-            //characterPlayer.flipX = true;
-            objPlayer.transform.localScale = new Vector3(-1,1,1);
-        }
-        else
-        {
-            //characterPlayer.flipX = false;
-            objPlayer.transform.localScale = new Vector3(1, 1, 1);
-        }
-        
-        moveVector.x = vec.x;
-        moveVector.z = vec.y;
+            if (input.x > 0) objPlayer.transform.localScale = new Vector3(-1, 1, 1);
+            else if (input.x < 0) objPlayer.transform.localScale = new Vector3(1, 1, 1);
 
-        transform.position = transform.position + moveVector * velocity * Time.deltaTime;
+            Vector3 moveDir = new Vector3(input.x, 0, input.y).normalized;
+
+            //transform.position = transform.position + moveDir * velocity * Time.deltaTime;
+
+            Vector3 nextPosition = transform.position + moveDir * velocity * Time.deltaTime;
+
+            if (Physics.Raycast(nextPosition - Vector3.forward, Vector3.down, 5f, groundLayer))
+            {
+                Debug.DrawRay(nextPosition, Vector3.down * 5, UnityEngine.Color.red);
+                transform.position = nextPosition;
+            }
+        }
 
     }
 
