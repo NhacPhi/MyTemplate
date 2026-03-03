@@ -133,6 +133,20 @@ public static class LocKeys
 
     public const long UI_COOK = 3722374149;
 
+    public const long UI_LOCATION = 3194833446;
+
+    public const long UI_MAP = 2323105838;
+
+    public const long UI_WATER_CURTAIN_CAVE = 653197829;
+
+    public const long UI_EAST_SEA = 3711557157;
+
+    public const long UI_FLAMING_MOUNTAINS = 3049495036;
+
+    public const long UI_HEAVENLY_PLACE = 3439086849;
+
+    public const long UI_GO = 1438659175;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

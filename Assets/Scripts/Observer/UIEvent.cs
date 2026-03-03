@@ -43,6 +43,10 @@ public static class UIEvent
     // GamePlay
     public static Action<bool, InteractionType> OnInterationUI;
 
+    // Map
+    public static Action<LocationID> OnOpenMapUIWithCurrentLocation;
+    public static Action OnLocationToLoad;
+    public static Action<GameSceneSO, Sprite> OnSelectToggleMap;
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
 

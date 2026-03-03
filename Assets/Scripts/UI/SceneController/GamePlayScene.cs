@@ -1,3 +1,4 @@
+using NPOI.OpenXmlFormats.Spreadsheet;
 using UIFramework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class GamePlayScene : WindowController
 
     [SerializeField] private Button btnInventory;
     [SerializeField] private Button btnCharacter;
+    [SerializeField] private Button btnMap;
 
     [SerializeField] private Button btnAttack;
     [SerializeField] private Button btnCatchSkill;
@@ -30,6 +32,12 @@ public class GamePlayScene : WindowController
         {
             uiManager.HidePanel();
             uiManager.OpenWindowScene(ScreenIds.InventoryScene);
+        });
+
+        btnMap.onClick.AddListener(() =>
+        {
+            uiManager.HidePanel();
+            uiManager.OpenWindowScene(ScreenIds.MapScene);
         });
 
         btnCharacter.onClick.AddListener(() =>

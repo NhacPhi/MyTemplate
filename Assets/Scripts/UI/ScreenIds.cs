@@ -9,6 +9,7 @@ public class ScreenIds
     public const string DialogueScene = "DialogueScene";
     public const string InventoryScene = "InventoryScene";
     public const string CharacterScene = "CharacterScene";
+    public const string MapScene = "MapScene";
 
 
     // Panel

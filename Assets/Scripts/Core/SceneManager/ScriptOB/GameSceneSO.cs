@@ -22,3 +22,12 @@ public enum GameSceneType
     //Battle
     Battle
 }
+
+public enum LocationID
+{
+    None,
+    Home,
+    Ocean,
+    Sky,
+    Tutorial
+}

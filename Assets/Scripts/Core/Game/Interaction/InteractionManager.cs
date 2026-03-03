@@ -1,10 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
 
-public enum InteractionType { None = 0, PickUp, Cook, Talk };
+public enum InteractionType { None = 0, PickUp, Cook, Talk, LocationInfo };
 public class InteractionManager : MonoBehaviour
 {
     //To store the objects we the player could potentially interact with
@@ -49,8 +49,13 @@ public class InteractionManager : MonoBehaviour
         {
             newPotentialInteraction.type = InteractionType.Talk;
         }
+        else if(obj.CompareTag("LocationInfo"))
+        {
+            newPotentialInteraction.type = InteractionType.LocationInfo;
+        }
 
         potentialInteractions.Add(newPotentialInteraction);
+
         RequestUpdateUI(true, newPotentialInteraction.type);
     }
 
@@ -74,6 +79,12 @@ public class InteractionManager : MonoBehaviour
         {
             case InteractionType.Talk:
                 potentialInteractions[0].interactableObject.GetComponent<StepController>().InteractWithCharacter();
+                break;
+            case InteractionType.LocationInfo:
+                // Show giao diện MapUI
+                RequestUpdateUI(false, InteractionType.None);
+                potentialInteractions.Clear();
+                UIEvent.OnLocationToLoad?.Invoke();
                 break;
         }
     }

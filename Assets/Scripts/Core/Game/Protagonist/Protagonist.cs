@@ -73,6 +73,7 @@ public class Protagonist : MonoBehaviour
             if (Physics.Raycast(nextPosition - Vector3.forward, Vector3.down, 5f, groundLayer))
             {
                 Debug.DrawRay(nextPosition, Vector3.down * 5, UnityEngine.Color.red);
+
                 transform.position = nextPosition;
             }
         }
