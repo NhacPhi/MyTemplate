@@ -1,16 +1,21 @@
-using System;
+﻿using System;
 using System.IO;
 using UnityEngine;
 using Tech.Json;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public static class FileManager
 {
     public static bool WriteToFile<T>(string fileName, T content)
     {
-#if UNITY_ANDROID
-        var fullPath = Path.Combine(Application.dataPath, fileName);
+        string fullPath;
+#if UNITY_EDITOR
+        fullPath = Path.Combine("Assets/Data", fileName);
+#elif UNITY_ANDROID
+        fullPath = Path.Combine(Application.persistentDataPath, fileName);
 #else
-        var fullPath = Path.Combine("Assets/Data", fileName);
+        fullPath = Path.Combine("Assets/Data", fileName);
 #endif
 
 
@@ -28,15 +33,26 @@ public static class FileManager
 
     public static bool LoadFromFile<T>(string fileName, out T result)
     {
-
-#if UNITY_ANDROID
-        var fullPath = Path.Combine(Application.dataPath, fileName);
+        string fullPath;
+#if UNITY_EDITOR
+        fullPath = Path.Combine("Assets/Data", fileName);
+#elif UNITY_ANDROID
+        fullPath = Path.Combine(Application.persistentDataPath, fileName);
 #else
-        var fullPath = Path.Combine("Assets/Data", fileName);
+        fullPath = Path.Combine("Assets/Data", fileName);
 #endif
         if (!File.Exists(fullPath))
         {
-            File.WriteAllText(fullPath, "");
+            var handle = Addressables.LoadAssetAsync<TextAsset>(fileName);
+
+            var textAsset = handle.WaitForCompletion();
+
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                File.WriteAllText(fullPath, textAsset.text);
+            }
+            Addressables.Release(handle);
         }
 
         try

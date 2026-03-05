@@ -18,11 +18,14 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         UIEvent.OnClickNavigationButton += OnNavigatePanelStartGame;
+        UIEvent.OnToggleLoadingScene += ToggleLoadingScene;
+
     }
 
     private void OnDisable()
     {
         UIEvent.OnClickNavigationButton -= OnNavigatePanelStartGame;
+        UIEvent.OnToggleLoadingScene -= ToggleLoadingScene;
     }
     private void Awake()
     {
@@ -43,6 +46,11 @@ public class UIManager : MonoBehaviour
     public void CloseWindowScene()
     {
         _uiFrame.CloseWindow(currentWindow);
+    }
+
+    public void CloseWindowScene(string id)
+    {
+        _uiFrame.CloseWindow(id);
     }
 
     public void ShowPanel(string id)
@@ -90,5 +98,13 @@ public class UIManager : MonoBehaviour
     public void ShowPopupConfirmSettings(PopupSettingProperties popup)
     {
         _uiFrame.OpenWindow(ScreenIds.PopupConfirmSettings, popup);
+    }
+
+    public void ToggleLoadingScene(bool isOn)
+    {
+        if (isOn)
+            OpenWindowScene(ScreenIds.LoadingScene);
+        else
+            CloseWindowScene(ScreenIds.LoadingScene);
     }
 }

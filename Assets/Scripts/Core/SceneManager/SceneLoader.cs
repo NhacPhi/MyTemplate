@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -33,7 +33,7 @@ public class SceneLoader : MonoBehaviour
     private bool _showLoadingScreen;
 
     private SceneInstance _gameplayManagerSceneInstance = new SceneInstance();
-    private float _fadeDuration = .5f;
+    private float _fadeDuration = .1f;
     private bool _isLoading = false; //To prevent a new loading request while already loading a new scene
 
     private void OnEnable()
@@ -133,29 +133,33 @@ public class SceneLoader : MonoBehaviour
     /// </summary>
     private IEnumerator UnloadPreviousScene()
     {
+        _isLoading = true; // Khóa loading lại
         //_inputReader.DisableAllInput();
         //_fadeRequestChannel.FadeOut(_fadeDuration);
 
         yield return new WaitForSeconds(_fadeDuration);
 
-        if (_currentlyLoadedScene != null) //would be null if the game was started in Initialisation
+        // 2. UNLOAD QUYẾT LIỆT
+        if (_loadingOperationHandle.IsValid())
         {
-            if (_currentlyLoadedScene.sceneReference.OperationHandle.IsValid())
-            {
-                //Unload the scene through its AssetReference, i.e. through the Addressable system
-                _currentlyLoadedScene.sceneReference.UnLoadScene();
-            }
-#if UNITY_EDITOR
-            else
-            {
-                //Only used when, after a "cold start", the player moves to a new scene
-                //Since the AsyncOperationHandle has not been used (the scene was already open in the editor),
-                //the scene needs to be unloaded using regular SceneManager instead of as an Addressable
-                SceneManager.UnloadSceneAsync(_currentlyLoadedScene.sceneReference.editorAsset.name);
-            }
-#endif
+            // Phải dùng yield return để Android có thời gian dọn RAM
+            var unloadOp = Addressables.UnloadSceneAsync(_loadingOperationHandle);
+            yield return unloadOp;
+            Debug.Log("Scene cũ đã được Unload hoàn toàn.");
         }
+#if UNITY_EDITOR
+        else if (_currentlyLoadedScene != null)
+        {
+            // Fix cho Cold Start trong Editor
+            AsyncOperation op = SceneManager.UnloadSceneAsync(_currentlyLoadedScene.sceneReference.editorAsset.name);
+            if (op != null) yield return op;
+        }
+#endif
 
+        // Đợi 1 frame để Unity cập nhật lại Hierarchy
+        yield return null;
+
+        // 3. LOAD SCENE MỚI
         LoadNewScene();
     }
 
@@ -164,10 +168,10 @@ public class SceneLoader : MonoBehaviour
     /// </summary>
     private void LoadNewScene()
     {
-        //if (_showLoadingScreen)
-        //{
-        //    _toggleLoadingScreen.RaiseEvent(true);
-        //}
+        if (_showLoadingScreen)
+        {
+            UIEvent.OnToggleLoadingScene?.Invoke(true);
+        }
 
         _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
         _loadingOperationHandle.Completed += OnNewSceneLoaded;
@@ -175,21 +179,24 @@ public class SceneLoader : MonoBehaviour
 
     private void OnNewSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
     {
-        //Save loaded scenes (to be unloaded at next load request)
-        _currentlyLoadedScene = _sceneToLoad;
+        if (obj.Status == AsyncOperationStatus.Succeeded)
+        {
+            //Save loaded scenes (to be unloaded at next load request)
+            _currentlyLoadedScene = _sceneToLoad;
 
-        Scene s = obj.Result.Scene;
-        SceneManager.SetActiveScene(s);
-        LightProbes.TetrahedralizeAsync();
+            Scene s = obj.Result.Scene;
+            SceneManager.SetActiveScene(s);
+            LightProbes.TetrahedralizeAsync();
 
-        _isLoading = false;
+            _isLoading = false;
 
-        //if (_showLoadingScreen)
-        //    _toggleLoadingScreen.RaiseEvent(false);
+            if (_showLoadingScreen)
+                UIEvent.OnToggleLoadingScene?.Invoke(false);
 
-        //_fadeRequestChannel.FadeIn(_fadeDuration);
+            //_fadeRequestChannel.FadeIn(_fadeDuration);
 
-        StartGameplay();
+            StartGameplay();
+        }    
     }
 
     private void StartGameplay()

@@ -9,7 +9,7 @@ public enum GameSaveType
 public class SaveSystem
 {
     private string saveSettingsFileName = "settings.json";
-    private string savePlayerFileName = "player.json";
+    private string savePlayerFileName = "Player.json";
 
     private SettingSave settings;
     private PlayerSave player;

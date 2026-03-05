@@ -13,12 +13,13 @@ public class MapScene : WindowController
 
     [SerializeField] private LoadEventChannelSO _loadLocation = default;
 
-    private GameSceneSO currentScene;
+    [SerializeField] private GameSceneSO currentScene;
     private void Awake()
     {
         btnGo.onClick.AddListener(()=>
         {
-            _loadLocation.RaiseEvent(currentScene, false);
+            _loadLocation.RaiseEvent(currentScene, true);
+            uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
         });
     }
 

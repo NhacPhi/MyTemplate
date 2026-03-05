@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class StartGame : MonoBehaviour
 {
@@ -31,7 +28,7 @@ public class StartGame : MonoBehaviour
         hasSaveData = false;
         // SaveSystem.Player => WriteEmptySaveFile
         // SaveSystem.Player =?> SetNEwGameData();
-        loadLocation.RaiseEvent(locationsToLoad, false);
+        loadLocation.RaiseEvent(locationsToLoad, true);
     }
 
     private void ContinuePreviousGame()

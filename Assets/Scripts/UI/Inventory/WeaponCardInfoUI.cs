@@ -2,8 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using static Org.BouncyCastle.Math.EC.ECCurve;
-using static UnityEditor.Progress;
+
 
 public class WeaponCardInfoUI : MonoBehaviour
 {

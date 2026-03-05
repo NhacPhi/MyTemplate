@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: JsonData
+  m_EditorClassIdentifier: 
+  m_GroupName: JsonData
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9c7f1f3d09f9cd24cbf88bea3f74ebbc
+  m_SerializeEntries:
+  - m_GUID: 5437ae200259b4a429e9cd0171b2f339
+    m_Address: Localization_VIETNAMESE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98f9850d4b894f04f81888dae16c0e27
+    m_Address: Localization_ENGLISH
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d600d3bbb8562f44943124cfb38a55b
+    m_Address: ItemsConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd8f07c867a16f842b5ab50c1b5f3748
+    m_Address: CharacterConfig
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a91409156ef2be748993e8ad6d1c1266
+    m_Address: QuestLines
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 040f2429f0873f04e8bd787b2b7092fc
+    m_Address: Dialogues
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25de73a56e5f2aa488b979c329ec399e
+    m_Address: Actors
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c88577406ce2294691687b639e16dca
+    m_Address: Player.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5fd914cb2528434da48d8f54ee76d64
+    m_Address: settings.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ae48fbbbc262a524eb14683dfd9cf138, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1bdc155dbe55344409b029883b50675d, type: 2}
+    - {fileID: 11400000, guid: af171c4bd459e5b45b804e11c5c8756f, type: 2}

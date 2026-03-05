@@ -2,8 +2,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Animations;
-using Unity.VisualScripting;
+
 
 public class AnimatorSystem : AnimationSystemBase
 {

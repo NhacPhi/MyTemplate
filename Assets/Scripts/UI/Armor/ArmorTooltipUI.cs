@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using VContainer;
-using static UnityEditor.Progress;
+
 
 public class ArmorTooltipUI : MonoBehaviour
 {
