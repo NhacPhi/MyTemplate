@@ -2,7 +2,7 @@ import pandas as pd
 
 import config
 from src.build import BaseBuilder
-from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel, AttributeComponent
+from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel, AttributeComponent, BattleModel, StageEnemiesCompoment
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -147,3 +147,47 @@ class CharacterConfigBuilder(BaseBuilder):
         
         final_data = {character_id: character.to_dict() for character_id, character in character_data.items()}
         self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_data, "CharacterConfig")
+
+        # Battle Config
+        battle_data = {}
+
+        if "BattleConfig" in all_sheets:
+            df_battle = all_sheets["BattleConfig"]
+
+            for _, row in df_battle.iterrows():
+                battle_id = str(row['ID']).strip()
+                if pd.isna(battle_id) or not battle_id:
+                    continue
+
+                name_hash=self.get_hash(row['Name']),
+                background = str(row['BackGrouind']).strip() if pd.notna(row['BackGrouind']) else ""
+                reward = str(row['Reward']).strip() if pd.notna(row['Reward']) else ""
+
+                battle_data[battle_id] = BattleModel(
+                    name_hash=name_hash,
+                    background=background,
+                    reward=reward,
+                    enemies=[] 
+                )
+
+        if "StageEnemies" in all_sheets:
+            df_enemies = all_sheets["StageEnemies"]
+
+            for _, row in df_enemies.iterrows():
+                battle_id = str(row['BattleID']).strip()
+
+                if battle_id in battle_data:
+                    slot = int(row['Slot']) if pd.notna(row['Slot']) else 1
+                    enemy_id = str(row['Enemy_ID']).strip() if pd.notna(row['Enemy_ID']) else ""
+                    level = int(row['Level']) if pd.notna(row['Level']) else 1
+
+                    enemy_comp = StageEnemiesCompoment(
+                        slot=slot,
+                        enemy_id=enemy_id,
+                        enemy_level=level
+                    )
+
+                    battle_data[battle_id].enemies.append(enemy_comp)
+
+        final_battle_data = {b_id: battle.to_dict() for b_id, battle in battle_data.items()}
+        self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_battle_data, "BattleConfig")

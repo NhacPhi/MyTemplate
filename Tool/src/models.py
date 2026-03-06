@@ -30,6 +30,7 @@ class ItemModel:
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}
+# Character Config-------------------------
 @dataclass
 class AttributeComponent:
     max_stat_type: str
@@ -50,8 +51,26 @@ class CharacterModel:
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}
+    
+# Battle Config-----------------------
+@dataclass
+class StageEnemiesCompoment:
+    slot: int
+    enemy_id: str
+    enemy_level: int
+
+@dataclass
+class BattleModel:
+    name_hash: int
+    background: str
+    reward: str
+    enemies: List[StageEnemiesCompoment]
+
+    def to_dict(self):
+        return {k: v for k, v in asdict(self).items() if v is not None}
 
 
+# Game Narrative -------------------------------------------------------------------------------------
 @dataclass
 class ChoiceModel:
     text_hash: int

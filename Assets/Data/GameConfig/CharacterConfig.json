@@ -249,7 +249,7 @@
             "atk": 195
         }
     },
-    "Enemy1": {
+    "VanguardTiger": {
         "name_hash": 3001573445,
         "rare": "R",
         "type": "Mage",
@@ -268,11 +268,7 @@
                 "start_percent": 1.0
             }
         },
-        "upgrades": {
-            "hp": 175,
-            "def": 20,
-            "atk": 115
-        }
+        "upgrades": {}
     },
     "TheBoySage": {
         "name_hash": 1785742370,
@@ -287,8 +283,116 @@
             "shield": {
                 "max_stat_type": "None",
                 "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
             }
         },
-        "upgrades": {}
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
+        }
+    },
+    "GoldHornKing": {
+        "name_hash": 364139391,
+        "rare": "SSR",
+        "type": "Assassin",
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
+        }
+    },
+    "SilverHornKing": {
+        "name_hash": 3794146551,
+        "rare": "SSR",
+        "type": "Assassin",
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
+        }
+    },
+    "YellowWindMonster": {
+        "name_hash": 3634311150,
+        "rare": "SSR",
+        "type": "Assassin",
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
+        }
+    },
+    "GoldfishDemon": {
+        "name_hash": 2441987291,
+        "rare": "SSR",
+        "type": "Assassin",
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 175,
+            "def": 20,
+            "atk": 115
+        }
     }
 }

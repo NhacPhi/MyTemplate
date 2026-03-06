@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 
-public enum InteractionType { None = 0, PickUp, Cook, Talk, LocationInfo };
+public enum InteractionType { None = 0, PickUp, Cook, Talk, Fighting };
 public class InteractionManager : MonoBehaviour
 {
     //To store the objects we the player could potentially interact with
@@ -49,9 +49,9 @@ public class InteractionManager : MonoBehaviour
         {
             newPotentialInteraction.type = InteractionType.Talk;
         }
-        else if(obj.CompareTag("LocationInfo"))
+        else if(obj.CompareTag("Fighting"))
         {
-            newPotentialInteraction.type = InteractionType.LocationInfo;
+            newPotentialInteraction.type = InteractionType.Fighting;
         }
 
         potentialInteractions.Add(newPotentialInteraction);
@@ -80,11 +80,8 @@ public class InteractionManager : MonoBehaviour
             case InteractionType.Talk:
                 potentialInteractions[0].interactableObject.GetComponent<StepController>().InteractWithCharacter();
                 break;
-            case InteractionType.LocationInfo:
-                // Show giao diện MapUI
-                RequestUpdateUI(false, InteractionType.None);
-                potentialInteractions.Clear();
-                UIEvent.OnLocationToLoad?.Invoke();
+            case InteractionType.Fighting:
+
                 break;
         }
     }

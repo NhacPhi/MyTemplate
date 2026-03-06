@@ -14,22 +14,28 @@ public class GameDataBase
 
     private Dictionary<string, ItemConfig> ItemConfigs = new Dictionary<string, ItemConfig>();
     private Dictionary<string, CharacterConfig> CharacterConfigs = new Dictionary<string, CharacterConfig>();
+    private Dictionary<string, BattleConfig> BattleConfigs = new Dictionary<string, BattleConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
     private const string CharacterConfigsAddress = "CharacterConfig";
+
+    private const string BattleConfigAddress = "BattleConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
-        var (itemText, characterText) = await UniTask.WhenAll(
+        var (itemText, characterText, battleText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ItemConfigsAddress, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(CharacterConfigsAddress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(CharacterConfigsAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(BattleConfigAddress, token: cancellationToken)
         );
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
         CharacterConfigs = Json.DeserializeObject<Dictionary<string, CharacterConfig>>(characterText.text);
+        BattleConfigs = Json.DeserializeObject<Dictionary<string, BattleConfig>>(battleText.text);
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
+        AddressablesManager.Instance.RemoveAsset(BattleConfigAddress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
         var atlasAddresses = new HashSet<string>();

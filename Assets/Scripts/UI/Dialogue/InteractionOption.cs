@@ -36,7 +36,7 @@ public class InteractionOption : MonoBehaviour, IPointerClickHandler
             case InteractionType.Cook:
 
                 break;
-            case InteractionType.LocationInfo:
+            case InteractionType.Fighting:
                 GameEvent.OnInteraction?.Invoke();
                 break;
         }

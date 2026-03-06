@@ -133,7 +133,7 @@ public static class LocKeys
 
     public const long UI_COOK = 3722374149;
 
-    public const long UI_LOCATION = 3194833446;
+    public const long UI_FIGHTING = 3943674617;
 
     public const long UI_MAP = 2323105838;
 
@@ -590,6 +590,16 @@ public static class LocKeys
     public const long STR_THE_BOY_SAGE = 1785742370;
 
     public const long STR_LOADING = 4121618100;
+
+    public const long STR_GOLD_HORN_KING = 364139391;
+
+    public const long STR_SILVER_HORN_KING = 3794146551;
+
+    public const long STR_YELLOW_WIND_MONSTER = 3634311150;
+
+    public const long STR_GOLD_FISH_DEMON = 2441987291;
+
+    public const long STR_BATTLE_TUTORIAL = 441973586;
 
     public const long WUKONG_FIRSTSKIL_NAME = 762970985;
 

@@ -36,7 +36,7 @@ public class InteractionUI : MonoBehaviour
             case InteractionType.Cook:
                 interaction.gameObject.SetActive(value);
                 break;
-            case InteractionType.LocationInfo:
+            case InteractionType.Fighting:
                 interaction.gameObject.SetActive(value);
                 break;
         }
