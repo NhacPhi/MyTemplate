@@ -19,6 +19,7 @@ public class RootScope : LifetimeScope
         builder.Register<CharacterStatManager>(Lifetime.Singleton);
         builder.Register<AtlasProvider>(Lifetime.Singleton);
         builder.Register<GameDataBase>(Lifetime.Singleton);
+        builder.Register<BattleSessionContext>(Lifetime.Singleton);
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);
 
         builder.RegisterComponent(uiSetings);

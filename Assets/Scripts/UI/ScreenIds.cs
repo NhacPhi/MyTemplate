@@ -10,7 +10,9 @@ public class ScreenIds
     public const string InventoryScene = "InventoryScene";
     public const string CharacterScene = "CharacterScene";
     public const string MapScene = "MapScene";
-
+    public const string PartySetupScene = "PartySetupScene";
+    public const string PrepareBattleScene = "PrepareBattleScene";
+    public const string BattleUIScene = "BattleUIScene";
 
     // Panel
     public const string PanelStartGame = "PanelStartGame";

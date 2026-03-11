@@ -11,6 +11,7 @@ public class GamePlayScene : WindowController
     [SerializeField] private Button btnInventory;
     [SerializeField] private Button btnCharacter;
     [SerializeField] private Button btnMap;
+    [SerializeField] private Button btnPartySetup;
 
     [SerializeField] private Button btnAttack;
     [SerializeField] private Button btnCatchSkill;
@@ -44,6 +45,13 @@ public class GamePlayScene : WindowController
         {
             uiManager.HidePanel();
             uiManager.OpenWindowScene(ScreenIds.CharacterScene);
+        });
+
+        btnPartySetup.onClick.AddListener(() =>
+        {
+            uiManager.HidePanel();
+            uiManager.OpenWindowScene(ScreenIds.PartySetupScene);
+            UIEvent.OnPrepareBattleData?.Invoke();
         });
 
         btnAttack.onClick.AddListener(() => { GameEvent.OnPlayerAttack?.Invoke(); });

@@ -37,7 +37,7 @@ public static class LocKeys
 
     public const long UI_CHARACTER = 1515031455;
 
-    public const long UI_BOOKSHELF = 394571878;
+    public const long UI_PARTY_SETUP = 1612861900;
 
     public const long UI_ITEM = 2446833152;
 
@@ -146,6 +146,8 @@ public static class LocKeys
     public const long UI_HEAVENLY_PLACE = 3439086849;
 
     public const long UI_GO = 1438659175;
+
+    public const long UI_SAVE = 2171549745;
 
     public const long STR_JADE_EMPEROR = 2602519814;
 
@@ -600,6 +602,8 @@ public static class LocKeys
     public const long STR_GOLD_FISH_DEMON = 2441987291;
 
     public const long STR_BATTLE_TUTORIAL = 441973586;
+
+    public const long STR_VANGUARD_TIGER = 2865654881;
 
     public const long WUKONG_FIRSTSKIL_NAME = 762970985;
 

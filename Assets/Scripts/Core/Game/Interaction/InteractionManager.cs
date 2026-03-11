@@ -81,7 +81,7 @@ public class InteractionManager : MonoBehaviour
                 potentialInteractions[0].interactableObject.GetComponent<StepController>().InteractWithCharacter();
                 break;
             case InteractionType.Fighting:
-
+                potentialInteractions[0].interactableObject.GetComponent<BattleTrigger>().OpenPrepareScene();
                 break;
         }
     }

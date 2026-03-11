@@ -20,6 +20,10 @@ public class CharacterCardInfo : CharacterCard
     [SerializeField] private TextMeshProUGUI txtPenetration;
     [SerializeField] private TextMeshProUGUI txtCritDGMRes;
 
+    [SerializeField] private Image imgAttack;
+    [SerializeField] private Image imgMajorSkill;
+    [SerializeField] private Image imgUltimateSkill;
+
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
 
@@ -63,5 +67,9 @@ public class CharacterCardInfo : CharacterCard
         txtCriteDMG.text = "0"; // stat.CRITDMG.ToString();
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
+
+        imgAttack.sprite = config.AttackIcon;
+        imgMajorSkill.sprite = config.MajorSkillIcon;
+        imgUltimateSkill.sprite = config.UltimateSkillIcon;
     }
 }

@@ -48,6 +48,8 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_icon_game");
         atlasAddresses.Add("Atlas_icon_character");
         atlasAddresses.Add("Atlas_big_icon_character");
+        atlasAddresses.Add("Atlas_image_character");
+        atlasAddresses.Add("Atlas_skill_ui");
 
 
         //foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
@@ -75,6 +77,10 @@ public class GameDataBase
             var config = charItem.Value;
             config.Icon = atlasProvider.GetSprite("Atlas_icon_character", charItem.Key);
             config.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_character", charItem.Key + "_big");
+            config.Image = atlasProvider.GetSprite("Atlas_image_character", "img_" + charItem.Key);
+            config.AttackIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Attack");
+            config.MajorSkillIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Major");
+            config.UltimateSkillIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Ultimate");
         }
     }
 
@@ -125,6 +131,12 @@ public class GameDataBase
     {
         CharacterConfigs.TryGetValue(key, out CharacterConfig character);
         return character;
+    }
+
+    public BattleConfig GetBattleConfig(string key)
+    {
+        BattleConfigs.TryGetValue(key, out BattleConfig battleConfig);
+        return battleConfig;
     }
 
     public Sprite GetBGItemByRare(Rare rare)

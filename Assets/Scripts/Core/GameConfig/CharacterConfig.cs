@@ -31,6 +31,17 @@ public class CharacterConfig
     [JsonIgnore]
     public Sprite BigIcon { get; set; }
 
+    [JsonIgnore]
+    public Sprite Image { get; set; }
+
+    [JsonIgnore]
+    public Sprite AttackIcon { get; set; }
+
+    [JsonIgnore]
+    public Sprite MajorSkillIcon { get; set; }
+
+    [JsonIgnore]
+    public Sprite UltimateSkillIcon { get; set; }
     public AttributeComponent GetAttribute(AttributeType type)
     {
         if (Attributes.TryGetValue(type, out AttributeComponent value))

@@ -45,9 +45,9 @@ public static class UIEvent
 
     // Map
     public static Action<LocationID> OnOpenMapUIWithCurrentLocation;
-    public static Action OnLocationToLoad;
     public static Action<GameSceneSO, Sprite> OnSelectToggleMap;
     public static Action<bool> OnToggleLoadingScene;
+    public static Action OnPrepareBattleData;
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
 

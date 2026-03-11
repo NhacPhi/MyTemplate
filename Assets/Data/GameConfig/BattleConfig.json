@@ -1,8 +1,6 @@
 {
     "Tutorial_Default": {
-        "name_hash": [
-            441973586
-        ],
+        "name_hash": 441973586,
         "background": "Default",
         "reward": "Default_01",
         "enemies": [
@@ -19,6 +17,11 @@
             {
                 "slot": 3,
                 "enemy_id": "VanguardTiger",
+                "enemy_level": 5
+            },
+            {
+                "slot": 5,
+                "enemy_id": "YellowWindMonster",
                 "enemy_level": 5
             }
         ]

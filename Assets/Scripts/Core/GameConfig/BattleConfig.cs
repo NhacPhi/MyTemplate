@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class BattleConfig
 {
-    [JsonProperty("nam_hash")]
+    [JsonProperty("name_hash")]
     public long Name;
 
     [JsonProperty("background")]

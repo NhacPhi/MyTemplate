@@ -31,6 +31,9 @@ public class PlayerSave
     [JsonProperty("characters")]
     public List<CharacterSaveData> Characters;
 
+    [JsonProperty("active_slots")]
+    public List<ActiveSlotData> ActiveSlots;
+
     public PlayerSave() { }
 
     public WeaponSaveData GetWeapon(string id)

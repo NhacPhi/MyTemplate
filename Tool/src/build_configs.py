@@ -159,7 +159,7 @@ class CharacterConfigBuilder(BaseBuilder):
                 if pd.isna(battle_id) or not battle_id:
                     continue
 
-                name_hash=self.get_hash(row['Name']),
+                name_hash=self.get_hash(row['Name'])
                 background = str(row['BackGrouind']).strip() if pd.notna(row['BackGrouind']) else ""
                 reward = str(row['Reward']).strip() if pd.notna(row['Reward']) else ""
 
