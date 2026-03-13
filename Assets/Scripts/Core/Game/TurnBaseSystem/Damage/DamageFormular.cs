@@ -10,7 +10,7 @@ public static class DamageFormular
 
         DealDamage(damageBonus, sourceCore, targetCore);
     }
-    //Damage Not Aplly Any Skill = SourceATk* Multiplier + FlatValue - TargetDef
+    //Damage Not Aplly Any SkillCharacter = SourceATk* Multiplier + FlatValue - TargetDef
     public static void DealDamage(DamageBonus damageBonus, Tech.Composite.Core source, Tech.Composite.Core target)
     {
         GetStatsAndSkillSystem(source, out var sourceStats, out var sourceSkill);
@@ -44,7 +44,7 @@ public static class DamageFormular
         out IDamagable entityStats, out EntitySkill entitySkill)
     {
         entityStats = core.GetCoreComponent<IDamagable>();
-        //Need Change Skill To Interface
+        //Need Change SkillCharacter To Interface
         entitySkill = core.GetCoreComponent<EntitySkill>();
     }
 }

@@ -1,9 +1,8 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-//using Tech.Logger;
 using Tech.Singleton;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,13 +11,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class AddressablesManager : SingletonPersistent<AddressablesManager>
 {
     private readonly Dictionary<object, AsyncOperationHandle> _dicAsset = new();
-    private static AddressablesManager[] a;
 
     protected override void Awake()
     {
         base.Awake();
         Addressables.InitializeAsync();
     }
+
     public async UniTask<T> LoadAssetAsync<T>(object key, Action onFailed = null, CancellationToken token = default) where T : class
     {
         if (token == default)
@@ -26,10 +25,17 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
             token = this.GetCancellationTokenOnDestroy();
         }
 
-        if (_dicAsset.TryGetValue(key, out var value))
+        // 1. KIỂM TRA CACHE TRƯỚC
+        if (_dicAsset.TryGetValue(key, out var existingHandle))
         {
-            return value.Result as T;
+            // Nếu Asset đang được tải dở bởi một chỗ khác, ta chỉ việc đứng chờ chung
+            if (!existingHandle.IsDone)
+            {
+                await existingHandle.ToUniTask(cancellationToken: token);
+            }
+            return existingHandle.Result as T;
         }
+
         try
         {
             AsyncOperationHandle<T> opHandle;
@@ -43,23 +49,31 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
                 opHandle = Addressables.LoadAssetAsync<T>(key);
             }
 
+            // 2. THÊM VÀO DICTIONARY NGAY LẬP TỨC TRƯỚC KHI AWAIT
+            // Để đánh dấu là "Tôi đang xử lý Key này rồi, ai đến sau thì chờ nhé"
+            _dicAsset.Add(key, opHandle);
+
             await opHandle.ToUniTask(cancellationToken: token);
 
             if (opHandle.Status == AsyncOperationStatus.Succeeded)
             {
-                _dicAsset.Add(key, opHandle);
                 return (T)opHandle.Result;
             }
+            else
+            {
+                // Nếu tải lỗi, phải dọn dẹp để lần sau còn thử lại được
+                _dicAsset.Remove(key);
+            }
         }
-        catch (KeyNotFoundException)
+        catch (Exception)
         {
-
+            _dicAsset.Remove(key);
         }
 
-        //LogCommon.LogWarning($"Load Asset Failed: {key}");
         onFailed?.Invoke();
         return default;
     }
+
     public async UniTask<List<T>> LoadAssetsAsync<T>(object key, Action onFailed = null, CancellationToken token = default)
     {
         if (token == default)
@@ -67,37 +81,50 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
             token = this.GetCancellationTokenOnDestroy();
         }
 
-        if (_dicAsset.TryGetValue(key, out var value))
+        // Áp dụng logic an toàn tương tự như LoadAssetAsync
+        if (_dicAsset.TryGetValue(key, out var existingHandle))
         {
-            return value.Result as List<T>;
+            if (!existingHandle.IsDone)
+            {
+                await existingHandle.ToUniTask(cancellationToken: token);
+            }
+            return existingHandle.Result as List<T>;
         }
+
         try
         {
             var opHandle = Addressables.LoadAssetsAsync<T>(key, null);
+
+            // Đánh dấu vào Cache ngay
+            _dicAsset.Add(key, opHandle);
 
             await opHandle.ToUniTask(cancellationToken: token);
 
             if (opHandle.Status == AsyncOperationStatus.Succeeded)
             {
-                _dicAsset.Add(key, opHandle);
                 return (List<T>)opHandle.Result;
+            }
+            else
+            {
+                _dicAsset.Remove(key);
             }
         }
         catch (Exception)
         {
-            // ignored
+            _dicAsset.Remove(key);
         }
 
-        //LogCommon.LogWarning($"Load Asset Failed: {key}");
         onFailed?.Invoke();
         return default;
     }
+
     public void RemoveAsset(object key)
     {
         if (!_dicAsset.TryGetValue(key, out var value)) return;
         Addressables.ReleaseInstance(value);
         _dicAsset.Remove(key);
     }
+
     public bool TryGetAssetInCache<T>(string key, out T result) where T : class
     {
         if (_dicAsset.TryGetValue(key, out var opHandle))
@@ -126,6 +153,8 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
 
         await opHandle.ToUniTask(cancellationToken: token);
 
+        // Lưu ý: InstantiateAsync sinh ra Instance. Việc gán đè key như thế này 
+        // có thể ghi đè lên Prefab gốc trong Cache nếu dùng chung Key.
         _dicAsset[key] = opHandle;
         return opHandle.Result;
     }

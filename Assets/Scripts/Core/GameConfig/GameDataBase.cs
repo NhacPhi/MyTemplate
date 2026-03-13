@@ -6,7 +6,6 @@ using System.Threading;
 using UnityEngine.U2D;
 using VContainer;
 using System.Linq;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class GameDataBase
 {
@@ -145,8 +144,6 @@ public class GameDataBase
 
         return atlasProvider.GetSprite("Atlas_icon_game", spriteID);
     }
-
-
 }
 
 

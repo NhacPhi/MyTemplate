@@ -21,22 +21,22 @@ public class CharacterController : Entity
         {
             Debug.Log("Base Attack");
             var enemy = target.gameObject.GetComponent<Entity>();
-            //gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Base);
+            //gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Base);
             HandleTurn(enemy, false);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Major Skill");
+            Debug.Log("Major SkillCharacter");
             var enemy = target.gameObject.GetComponent<Entity>();
-            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Major);
+            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Major);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("Ultimate Skill");
+            Debug.Log("Ultimate SkillCharacter");
             var enemy = target.gameObject.GetComponent<Entity>(); 
-            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(Skill.Main);
+            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Ultimate);
             HandleTurn(enemy, true);
         }
 

@@ -28,17 +28,14 @@ public class BattleSetupState : BattleBaseState
     {
         var token = battleManager.DestroyCancellationToken;
 
-        List<UniTask> loadTasks = new List<UniTask>();
+        await battleManager.LoadEntitiesDataAsync(token);
 
+        battleManager.SetupEntitiesPosition();
+        battleManager.SetTarget();
+    }
 
-        foreach(Entity entity in battleManager.activeEntities)
-        {
-            EntitySkill skill = entity.gameObject.GetComponent<EntitySkill>();
-
-            loadTasks.Add(skill.InitializeAsync(token));
-        }
-
-        await UniTask.WhenAll(loadTasks);
-
+    public override void OnUpdate()
+    {
+       
     }
 }

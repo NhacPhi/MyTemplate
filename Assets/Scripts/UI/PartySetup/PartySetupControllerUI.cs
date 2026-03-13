@@ -326,8 +326,11 @@ public class PartySetupControllerUI : MonoBehaviour
         // Chúng ta cần Copy danh sách Values ra một List tạm để tránh lỗi khi vừa duyệt vừa xóa Dictionary
         var iconsToDeselect = _activeUISlots.Values.Select(ui => ui.CharacterID).ToList();
 
-        // 3. Xóa toàn bộ Data trong SaveSystem
-        _saveSystem.Player.ActiveSlots.Clear();
+        // 3. CẬP NHẬT DATA: Không Clear() mà duyệt qua các slot đang hoạt động để set trống
+        foreach (var slot in _saveSystem.Player.ActiveSlots)
+        {
+            slot.CharacterID = "";
+        }
 
         // 4. Hiệu ứng và Xóa toàn bộ Object UI nhân vật
         foreach (var uiSlot in _activeUISlots.Values)

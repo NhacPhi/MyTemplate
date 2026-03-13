@@ -3,6 +3,11 @@
         "name_hash": 2444176861,
         "rare": "UR",
         "type": "Fighter",
+        "skills": {
+            "base": "Melee",
+            "major": "Summon",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 3750,
             "def": 400,
@@ -28,6 +33,11 @@
         "name_hash": 3001573445,
         "rare": "R",
         "type": "Mage",
+        "skills": {
+            "base": "Range",
+            "major": "BuffShield",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2500,
             "def": 280,
@@ -53,6 +63,11 @@
         "name_hash": 2972224548,
         "rare": "SSR",
         "type": "Tanker",
+        "skills": {
+            "base": "Melee",
+            "major": "BuffShield",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 3900,
             "def": 400,
@@ -78,6 +93,11 @@
         "name_hash": 3239655590,
         "rare": "SR",
         "type": "Support",
+        "skills": {
+            "base": "Melee",
+            "major": "Healing",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2900,
             "def": 300,
@@ -90,7 +110,7 @@
             },
             "hp": {
                 "max_stat_type": "HP",
-                "start_percent": 0.8
+                "start_percent": 1.0
             }
         },
         "upgrades": {
@@ -103,6 +123,11 @@
         "name_hash": 2884431123,
         "rare": "SR",
         "type": "Support",
+        "skills": {
+            "base": "Melee",
+            "major": "None",
+            "ultimate": "None"
+        },
         "stats": {
             "hp": 2930,
             "def": 340,
@@ -128,6 +153,11 @@
         "name_hash": 249484924,
         "rare": "SSR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "FireRing",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2650,
             "def": 325,
@@ -153,6 +183,11 @@
         "name_hash": 916722960,
         "rare": "SR",
         "type": "ADCarry",
+        "skills": {
+            "base": "Melee",
+            "major": "ThunderBall",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2750,
             "def": 300,
@@ -178,6 +213,11 @@
         "name_hash": 2040095356,
         "rare": "SSR",
         "type": "Tanker",
+        "skills": {
+            "base": "Melee",
+            "major": "BuffShield",
+            "ultimate": "PosionBall"
+        },
         "stats": {
             "hp": 4250,
             "def": 420,
@@ -203,6 +243,11 @@
         "name_hash": 279287384,
         "rare": "UR",
         "type": "Fighter",
+        "skills": {
+            "base": "Melee",
+            "major": "None",
+            "ultimate": "None"
+        },
         "stats": {
             "hp": 3700,
             "def": 350,
@@ -228,6 +273,11 @@
         "name_hash": 1698233879,
         "rare": "UR",
         "type": "Mage",
+        "skills": {
+            "base": "Range",
+            "major": "None",
+            "ultimate": "None"
+        },
         "stats": {
             "hp": 3000,
             "def": 330,
@@ -253,6 +303,11 @@
         "name_hash": 2865654881,
         "rare": "R",
         "type": "Mage",
+        "skills": {
+            "base": "Melee",
+            "major": "None",
+            "ultimate": "None"
+        },
         "stats": {
             "hp": 6000,
             "def": 280,
@@ -274,6 +329,11 @@
         "name_hash": 1785742370,
         "rare": "UR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "FireBall",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2650,
             "def": 325,
@@ -299,6 +359,11 @@
         "name_hash": 364139391,
         "rare": "SSR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "EmpowerAttack",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2650,
             "def": 325,
@@ -324,6 +389,11 @@
         "name_hash": 3794146551,
         "rare": "SSR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "Torando",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2650,
             "def": 325,
@@ -349,8 +419,13 @@
         "name_hash": 3634311150,
         "rare": "UR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "Suriken",
+            "ultimate": "DivineWind"
+        },
         "stats": {
-            "hp": 2650,
+            "hp": 6000,
             "def": 325,
             "atk": 2400
         },
@@ -374,6 +449,11 @@
         "name_hash": 2441987291,
         "rare": "SSR",
         "type": "Assassin",
+        "skills": {
+            "base": "Melee",
+            "major": "EmpowerAttack",
+            "ultimate": "EmpowerAttack"
+        },
         "stats": {
             "hp": 2650,
             "def": 325,

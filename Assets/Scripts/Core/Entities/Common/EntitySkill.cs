@@ -4,20 +4,38 @@ using System.Collections.Generic;
 using System.Threading;
 using Tech.Composite;
 using UnityEngine;
-
-public enum Skill
+using VContainer;
+public enum SkillCharacter
 {
     Base,
     Major,
-    Main
+    Ultimate
+}
+
+public enum Skill
+{
+    None,
+    Melee,
+    Range,
+    Summon,
+    BuffShield,
+    Healing,
+    FireRing,
+    ThunderBall,
+    FireBall,
+    EmpowerAttack,
+    Torando,
+    Suriken,
+    PosionBall,
+    DivineWind
 }
 
 public class EntitySkill : CoreComponent, IAsyncInitializer
 {
-    public Dictionary<Skill, SkillRuntime> Skills = new Dictionary<Skill, SkillRuntime>();
+    public Dictionary<SkillCharacter, SkillRuntime> Skills = new Dictionary<SkillCharacter, SkillRuntime>();
     //private SkillRuntime baseSkill;
     private EntityStats entityStats;
-
+    [Inject] GameDataBase _gameDataBase;
     private void Start()
     {
         //entityStats = core.GetCoreComponent<EntityStats>();
@@ -26,7 +44,7 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         //baseSkill = data.CreateRuntimeSkill(entityStats);
     }
 
-    public void ExecuteMainSkill(Skill type)
+    public void ExecuteMainSkill(SkillCharacter type)
     {
         Skills.GetValueOrDefault(type).Execute(GetComponent<Entity>());
     }
@@ -35,56 +53,36 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
     {
         entityStats = gameObject.GetComponent<EntityStats>();
 
+        var characterConfig = _gameDataBase.GetCharacterConfig(entityStats.EntityID);
+        var majorSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Major);
 
-        //Baas Skill
-        //SkillData baseAttackDta = new BaseAttackData();
-        //SkillRuntime baseSkill = baseAttackDta.CreateRuntimeSkill(entityStats);
-        //Skills.Add(Skill.Base, baseSkill);
+        SkillData dataMajor = SkillDataFactory.Create(majorSkillID);
 
-        //var init = baseSkill as IAsyncInitializer;
-        //if (init != null)
-        //{
-        //    await init.InitializeAsync(token);
-        //}
-
-        //Major Skill
-        //SkillData dataMajor = new SummonSkillData();
-        //SkillData dataMajor = new RingOfUniverseData();
-        //SkillData dataMajor = new FireBallData(); 
-        //SkillData dataMajor = new BuffShieldData();
-        //SkillData dataMajor = new ThunderBallData();
-        //SkillData dataMajor = new HealingData();
-        SkillData dataMajor = new MajorAttackData();
-        //SkillData dataMajor = new TorandoData();
-        //SkillData dataMajor = new SurikenData();
         SkillRuntime majorSkill = dataMajor.CreateRuntimeSkill(entityStats);
 
-        Skills.Add(Skill.Major, majorSkill);
+        var initializerMajor = majorSkill as IAsyncInitializer;
 
-
-
-        var initializer = majorSkill as IAsyncInitializer;
-        if (initializer != null)
+        if (initializerMajor != null)
         {
-            await initializer.InitializeAsync(token);
+            await initializerMajor.InitializeAsync(token);
         }
 
+        Skills.Add(SkillCharacter.Major, majorSkill);
 
-        SkillData dataMain = new EmpoweredAttackData();
-        SkillRuntime mainSkill = dataMain.CreateRuntimeSkill(entityStats);
+        var ultimateSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Ultimate);
 
-        //SkillData dataMain = new PoisonBallData();
-        //SkillData dataMain = new DivineWindData();
-        //SkillRuntime mainSkill = dataMain.CreateRuntimeSkill(entityStats);
+        SkillData dataUltiamte = SkillDataFactory.Create(ultimateSkillID);
 
-        //var init = mainSkill as IAsyncInitializer;
-        //if (init != null)
-        //{
-        //    await init.InitializeAsync(token);
-        //}
+        SkillRuntime ultimateSkill = dataUltiamte.CreateRuntimeSkill(entityStats);
 
+        var initializerUltimate = ultimateSkill as IAsyncInitializer;
 
-        Skills.Add(Skill.Main, mainSkill);
+        if (initializerUltimate != null)
+        {
+            await initializerUltimate.InitializeAsync(token);
+        }
+
+        Skills.Add(SkillCharacter.Ultimate, ultimateSkill);
     }
 
     public void ApplyAttackSkill(ref float damage)

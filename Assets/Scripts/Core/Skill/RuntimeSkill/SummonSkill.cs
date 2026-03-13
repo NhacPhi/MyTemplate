@@ -17,7 +17,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
 
     public override void Execute(Entity caster)
     {
-        //Debug.Log($"[Skill] Initialize - ID: {this.GetHashCode()}");
+        //Debug.Log($"[SkillCharacter] Initialize - ID: {this.GetHashCode()}");
         _ = PerformSummon(skillData, caster); 
     }
 
@@ -103,7 +103,7 @@ public class SummonSkillData : SkillData
 {
     public Vector3 Offset = new Vector3(3.64f, 1.18f, 0);
 
-    public Vector3 OffsetTarget = new Vector3(5, 0, 0);
+    public Vector3 OffsetTarget = new Vector3(7, 0, 0);
 
     public string vfxEffectReference = "Smoke_Wukong";
 

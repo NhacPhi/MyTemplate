@@ -25,6 +25,9 @@ public class CharacterConfig
     [JsonProperty("upgrades")]
     public Dictionary<StatType, int> Upgrades;
 
+    [JsonProperty("skills")]
+    public Dictionary<SkillCharacter, Skill> Skills;
+
     [JsonIgnore]
     public Sprite Icon { get; set; }
 

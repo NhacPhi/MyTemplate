@@ -92,10 +92,17 @@ class CharacterConfigBuilder(BaseBuilder):
 
                 character_id = str(row['ID']).strip()
 
+                skill_data = {
+                    "base": str(row['Base']).strip() if not pd.isna(row['Base']) else "None",
+                    "major": str(row['Major']).strip() if not pd.isna(row['Major']) else "None",
+                    "ultimate": str(row['Ultimate']).strip() if not pd.isna(row['Ultimate']) else "None"
+                }
+
                 character_data[character_id] = CharacterModel(
                     name_hash=self.get_hash(row['Name']),
                     rare=str(row['Rare']),
                     type=str(row['Type']),
+                    skills=skill_data
                 )
 
         # Handle character stats

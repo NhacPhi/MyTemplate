@@ -61,13 +61,18 @@ public class EntityStateData : CoreComponent
         StateManager = Entity.StateManager;
         Anim = Entity.GetCoreComponent<AnimationSystemBase>();
         StatsManager = Entity.GetCoreComponent<EntityStats>();
-        RootPosition = Entity.transform.position;
+        //RootPosition = Entity.transform.position;
     }
 
     public virtual void HandleTurn(bool isMain)
     {
         _ = WaitToReadyAttack(isMain);
     }
+
+    public void SetRootTransform()
+    {
+        RootPosition = Entity.transform.position;
+    }    
 
     protected virtual async UniTaskVoid WaitToReadyAttack(bool isMain)
     {

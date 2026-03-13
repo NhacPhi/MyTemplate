@@ -6,7 +6,8 @@ using Tech.StateMachine;
 
 public abstract class Entity : Tech.Composite.Core, ITurn
 {
-    [SerializeField] public GameObject target;
+    //Test
+    public GameObject target;
     // Statte Machine
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
     = new StateMachine<EntityState, EntityStateBase>();
@@ -61,5 +62,10 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         IsEndTurn = false;
         entityStateData.CurrentTarget = target;
         entityStateData.HandleTurn(isMain);
+    }
+
+    public void SetTaget(Entity enemy)
+    {
+        target = enemy.gameObject;
     }
 }
