@@ -29,9 +29,9 @@ public class EntityStateData : CoreComponent
     // param
     [field: SerializeField] public float TimeToReadyMoveAttack { get; protected set; } = 0.3f;
     [field: SerializeField] public float TimeToEndTurn { get; protected set; } = 0.3f;
-    [field: SerializeField] public float MoveSpeed { get; protected set; } = 8f;
+    [field: SerializeField] public float MoveSpeed { get; protected set; } = 12f;
 
-    [field: SerializeField] public float SmoothTime { get; protected set; } = 0.15f;
+    [field: SerializeField] public float SmoothTime { get; protected set; } = 0.3f;
     [field: SerializeField] public Vector3 OffsetToTarget { get; protected set; } = Vector3.right * 5;
     public Vector3 RootPosition { get; protected set; }
 

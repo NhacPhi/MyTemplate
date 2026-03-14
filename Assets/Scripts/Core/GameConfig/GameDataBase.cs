@@ -77,7 +77,7 @@ public class GameDataBase
             config.Icon = atlasProvider.GetSprite("Atlas_icon_character", charItem.Key);
             config.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_character", charItem.Key + "_big");
             config.Image = atlasProvider.GetSprite("Atlas_image_character", "img_" + charItem.Key);
-            config.AttackIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Attack");
+            config.BaseSkillIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Attack");
             config.MajorSkillIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Major");
             config.UltimateSkillIcon = atlasProvider.GetSprite("Atlas_skill_ui", charItem.Key + "_Ultimate");
         }

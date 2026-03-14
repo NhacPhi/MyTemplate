@@ -68,4 +68,9 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     {
         target = enemy.gameObject;
     }
+
+    public virtual void ExecuteSkill(SkillCharacter type)
+    {
+
+    }
 }

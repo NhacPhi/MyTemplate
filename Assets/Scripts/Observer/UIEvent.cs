@@ -55,4 +55,9 @@ public static class UIEvent
     public static Action<float, Vector3, bool> DamagePopup;
     public static Action<float, Vector3> HealPopup;
 
+    // Battle
+    public static Action<SkillCharacter> OnChooseSkillCharacter;
+    public static Action<Entity> OnChooseTargetEnemy;
+    public static Action OnExecuteSkill;
+    public static Action<Sprite, Sprite, Sprite> OnUpdateSkillCharacterUI;
 }

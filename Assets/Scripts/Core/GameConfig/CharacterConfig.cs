@@ -38,7 +38,7 @@ public class CharacterConfig
     public Sprite Image { get; set; }
 
     [JsonIgnore]
-    public Sprite AttackIcon { get; set; }
+    public Sprite BaseSkillIcon { get; set; }
 
     [JsonIgnore]
     public Sprite MajorSkillIcon { get; set; }

@@ -47,16 +47,19 @@ public class ThunderBallController : MonoBehaviour
         if (other.gameObject == _caster.gameObject) return;
 
         //if (other.isTrigger) return;
-
-        _hasHit = true;
-
-        Entity target = other.GetComponent<Entity>();
-
-        if (_skillHandler != null)
+        if(other.gameObject == _caster.target)
         {
-            _skillHandler.OnProjectileImpact(target, transform.position);
-            anim.SetTrigger("Detected");
+            _hasHit = true;
+
+            Entity target = other.GetComponent<Entity>();
+
+            if (_skillHandler != null)
+            {
+                _skillHandler.OnProjectileImpact(target, transform.position);
+                anim.SetTrigger("Detected");
+            }
         }
+
     }
 
     public void DeActiveObject()

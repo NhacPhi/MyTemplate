@@ -123,47 +123,63 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void SwapActiveSlots(int posA, int posB)
     {
-        // 1. Lấy dữ liệu Data và UI
+        // 1. Lấy dữ liệu Data hiện tại (có thể null nếu ô đó chưa bao giờ được tạo)
         var dataA = _saveSystem.Player.ActiveSlots.Find(s => s.Position == posA);
         var dataB = _saveSystem.Player.ActiveSlots.Find(s => s.Position == posB);
 
+        // 2. Lấy UI hiện tại
         _activeUISlots.TryGetValue(posA, out CharacterSlotUI uiA);
         _activeUISlots.TryGetValue(posB, out CharacterSlotUI uiB);
 
         if (uiA == null && uiB == null) return;
 
-        // --- CẬP NHẬT DATA ---
+        // --- CẬP NHẬT DATA (GIỮ SLOT, CHỈ ĐỔI ID) ---
+
+        // Lấy ID hiện tại (nếu data null thì coi như ID rỗng)
         string idA = dataA != null ? dataA.CharacterID : "";
         string idB = dataB != null ? dataB.CharacterID : "";
 
-        if (dataA != null) dataA.CharacterID = idB;
-        if (dataB != null) dataB.CharacterID = idA;
+        // Cập nhật ID cho ô A (nhận ID của B)
+        if (dataA != null)
+        {
+            dataA.CharacterID = idB;
+        }
+        else
+        {
+            // Nếu ô A chưa có trong Data, tạo mới nó với ID của B
+            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData{ Position = posA, CharacterID = idB });
+        }
 
-        // --- CẬP NHẬT UI ---
+        // Cập nhật ID cho ô B (nhận ID của A)
+        if (dataB != null)
+        {
+            dataB.CharacterID = idA;
+        }
+        else
+        {
+            // Nếu ô B chưa có trong Data, tạo mới nó với ID của A
+            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData { Position = posB, CharacterID = idA });
+        }
+
+        // --- CẬP NHẬT UI (Giữ nguyên logic di chuyển mượt mà của ông) ---
         Transform slotATrans = _slotPositions[posA - 1].transform;
         Transform slotBTrans = _slotPositions[posB - 1].transform;
 
-        // Nếu có nhân vật ở ô A -> Di chuyển sang Slot B
         if (uiA != null)
         {
             uiA.CurrentPosition = posB;
-            // Gán cha mới là Slot B
             uiA.transform.SetParent(slotBTrans, true);
-            // Di chuyển mượt mà tới vị trí local (0, Offset, 0) của cha mới
             uiA.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad);
         }
 
-        // Nếu có nhân vật ở ô B -> Di chuyển sang Slot A
         if (uiB != null)
         {
             uiB.CurrentPosition = posA;
-            // Gán cha mới là Slot A
             uiB.transform.SetParent(slotATrans, true);
-            // Di chuyển mượt mà tới vị trí local (0, Offset, 0) của cha mới
             uiB.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad);
         }
 
-        // --- CẬP NHẬT DICTIONARY ---
+        // --- CẬP NHẬT DICTIONARY UI ---
         _activeUISlots[posA] = uiB;
         _activeUISlots[posB] = uiA;
 

@@ -37,6 +37,6 @@ public class EntityMoveUp : EntityStateBase
             data.MoveSpeed
             );
 
-        return Vector3.Distance(entityTransform.position, targetPos) < 0.01f;
+        return Vector3.Distance(entityTransform.position, targetPos) < 0.2f;
     }
 }

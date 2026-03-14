@@ -46,6 +46,8 @@ public class EnemyManager
 
         var enemyUIPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>("CharacterUI", token: cancellation);
 
+        var targetHitboxPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>("TargetHitbox", token: cancellation);
+
         foreach (var config in battleConfig.Enemies)
         {
             var prefab = _enemyPrefabsCache.GetValueOrDefault(config.EnemyID);
@@ -54,7 +56,12 @@ public class EnemyManager
             {
                 var enemyInstance = _objectResolver.Instantiate(prefab,
                        prefab.transform.position, Quaternion.identity);
-                var enemyUI = _objectResolver.Instantiate(enemyUIPrefab, enemyUIPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
+
+                var enemyUI = _objectResolver.Instantiate(enemyUIPrefab,
+                    enemyUIPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
+
+                var hitbox = _objectResolver.Instantiate(targetHitboxPrefab,
+                    targetHitboxPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
 
                 //enemyUI.transform.SetParent(enemyInstance.transform);
 

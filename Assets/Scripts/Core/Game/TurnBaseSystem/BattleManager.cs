@@ -1,14 +1,12 @@
-using System.Collections;
+﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using UnityEngine;
-using Tech.StateMachine;
-using System;
-using VContainer.Unity;
+using System.Linq;
 using System.Threading;
-using VContainer;
-using VContainer.Unity;
-using Cysharp.Threading.Tasks;
+using Tech.StateMachine;
+using UnityEngine;
 using UnityEngine.Rendering;
+using VContainer;
+
 public class BattleManager : MonoBehaviour
 {
     public StateMachine<BattleState, BattleBaseState> StateMachine;
@@ -35,9 +33,28 @@ public class BattleManager : MonoBehaviour
 
     float OffsetY = 4;
 
+    // Current pram
+    public Entity _CurrentCharacter;
+    private SkillCharacter _currentSkill;
+
+    public Entity _CurrentEnemy;
     private void Start()
     {
         InitStateMachine();
+    }
+
+    private void OnEnable()
+    {
+        UIEvent.OnChooseSkillCharacter += SetupCurrentSkillCharacter;
+        UIEvent.OnChooseTargetEnemy += SetCurrentTarget;
+        UIEvent.OnExecuteSkill += ExecuteSkillEntity;
+    }
+
+    private void OnDisable()
+    {
+        UIEvent.OnChooseSkillCharacter -= SetupCurrentSkillCharacter;
+        UIEvent.OnChooseTargetEnemy -= SetCurrentTarget;
+        UIEvent.OnExecuteSkill -= ExecuteSkillEntity;
     }
 
     public async UniTask LoadEntitiesDataAsync(CancellationToken cancellation = default)
@@ -99,18 +116,39 @@ public class BattleManager : MonoBehaviour
     //Test
     public void SetTarget()
     {
-        var character = _characters.GetValueOrDefault("SunWukong").GetComponent<Entity>();
+        _CurrentCharacter = _characters.First().Value.GetComponent<Entity>();
 
-        var enemy = _enemies[0].gameObject.GetComponent<Entity>();
+        var characterConfig = _gameDataBase.GetCharacterConfig(_characters.First().Key);
 
-        character.SetTaget(enemy);
+        var baseSkill = characterConfig.BaseSkillIcon;
+        var majorSkill = characterConfig.MajorSkillIcon;
+        var ultimateSKill = characterConfig.UltimateSkillIcon;
+
+        UIEvent.OnUpdateSkillCharacterUI?.Invoke(baseSkill, majorSkill, ultimateSKill);
+    }
+
+    public void ExecuteSkillEntity()
+    {
+        _CurrentCharacter.ExecuteSkill(_currentSkill);
+    }
+
+    public void SetupCurrentSkillCharacter(SkillCharacter type)
+    {
+        _currentSkill = type;
+    }
+    
+    public void SetCurrentTarget(Entity target)
+    {
+        _CurrentEnemy = target;
+
+        _CurrentCharacter.SetTaget(_CurrentEnemy);
     }
 
     private void InitStateMachine()
     {
         StateMachine = new StateMachine<BattleState, BattleBaseState>();
         //SetupState, // Init data, spawn character, load inviroment
-        //OrderState, // Decide order enemy
+        //OrderState, // Decide player or enemy to do action. 
         //BeginTurnBase, // Handle effect or buff
         //ActionState, // Player Chosce SkillCharacter or AI controller
         //ExecutionState, // Run skill animation, caculate damaage

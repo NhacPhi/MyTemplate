@@ -68,7 +68,7 @@ public class CharacterCardInfo : CharacterCard
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 
-        imgAttack.sprite = config.AttackIcon;
+        imgAttack.sprite = config.BaseSkillIcon;
         imgMajorSkill.sprite = config.MajorSkillIcon;
         imgUltimateSkill.sprite = config.UltimateSkillIcon;
     }

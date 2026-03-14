@@ -6,44 +6,34 @@ using UnityEngine;
 
 public class CharacterController : Entity
 {
-    //[SerializeField] private HealthBar healthUI;
-
-    private void Awake()
+    public override void ExecuteSkill(SkillCharacter type)
     {
+        switch(type)
+        {
+            case SkillCharacter.Base:
+                Debug.Log("Base Attack");
+                var enemy = target.gameObject.GetComponent<Entity>();
+                //gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Base);
+                HandleTurn(enemy, false);
+                break;
+            case SkillCharacter.Major:
+                Debug.Log("Major SkillCharacter");
+                //var enemy = target.gameObject.GetComponent<Entity>();
+                gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Major);
+                break;
 
+            case SkillCharacter.Ultimate:
+                Debug.Log("Ultimate SkillCharacter");
+                var enemy_ultimate = target.gameObject.GetComponent<Entity>();
+                gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Ultimate);
+                HandleTurn(enemy_ultimate, true);
+                break;
+        }
     }
 
 
     protected override void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Base Attack");
-            var enemy = target.gameObject.GetComponent<Entity>();
-            //gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Base);
-            HandleTurn(enemy, false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Major SkillCharacter");
-            var enemy = target.gameObject.GetComponent<Entity>();
-            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Major);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Ultimate SkillCharacter");
-            var enemy = target.gameObject.GetComponent<Entity>(); 
-            gameObject.GetComponent<EntitySkill>().ExecuteMainSkill(SkillCharacter.Ultimate);
-            HandleTurn(enemy, true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Take Hit");
-            entityStateData.StateManager.ChangeState(EntityState.HIT);
-        }
     }
 }
