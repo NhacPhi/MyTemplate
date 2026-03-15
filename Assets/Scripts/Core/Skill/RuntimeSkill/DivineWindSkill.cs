@@ -41,7 +41,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         var controller = divineWindPrefab.GetComponent<DivineWindController>();
 
-        Vector3 flyDir = caster.target.transform.position - caster.transform.position;
+        Vector3 flyDir = caster.Target.transform.position - caster.transform.position;
 
         controller.Initialize(
            caster: caster,
@@ -91,7 +91,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         await UniTask.Delay(500, delayTiming: PlayerLoopTiming.Update,
             cancellationToken: target.GetCancellationTokenOnDestroy());
 
-        if (target != null)
+        if (target != null && target.gameObject.activeInHierarchy)
         {
             DamageFormular.DealDamage(damage, _caster, target);
         }

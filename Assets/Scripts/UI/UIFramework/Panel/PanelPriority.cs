@@ -14,7 +14,7 @@ namespace UIFramework
     [System.Serializable] 
     public class PanelPriorityLayerListEntry {
         [SerializeField] 
-        [Tooltip("The panel priority type for a given target para-layer")]
+        [Tooltip("The panel priority type for a given Target para-layer")]
         private PanelPriority priority;
         [SerializeField] 
         [Tooltip("The GameObject that should house all Panels tagged with this priority")]

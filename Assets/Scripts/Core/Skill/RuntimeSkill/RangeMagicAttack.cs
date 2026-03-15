@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class BaseAttack : SkillRuntime, IAsyncInitializer
+public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
 {
-    private BaseAttackData skillData;
+    private RangeMagicAttackData skillData;
 
     private GameObject energyBurstPrefab;
 
     private Entity _caster;
-    public BaseAttack(EntityStats owner, BaseAttackData skillData) : base(owner)
+    public RangeMagicAttack(EntityStats owner, RangeMagicAttackData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
@@ -23,9 +23,12 @@ public class BaseAttack : SkillRuntime, IAsyncInitializer
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
+        var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy_ultimate, false);
+
         energyBurstPrefab.gameObject.SetActive(false);
         await UniTask.Delay(1000);
-        energyBurstPrefab.transform.position = caster.target.transform.position;
+        energyBurstPrefab.transform.position = caster.Target.transform.position;
         energyBurstPrefab.gameObject.SetActive(true);
     }
 
@@ -46,10 +49,10 @@ public class BaseAttack : SkillRuntime, IAsyncInitializer
     }
 }
 
-public class BaseAttackData : SkillData
+public class RangeMagicAttackData : SkillData
 {
     public string energyBurstReference = "Energy_Burst";
-    public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new BaseAttack(owner, this);
+    public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new RangeMagicAttack(owner, this);
 }
 
 

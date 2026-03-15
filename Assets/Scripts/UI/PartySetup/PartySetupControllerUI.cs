@@ -118,6 +118,7 @@ public class PartySetupControllerUI : MonoBehaviour
     public void SavePartySetup()
     {
         CleanData();
+        ReorganizeActiveSlotsData();
         _saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
     }
 
@@ -370,5 +371,30 @@ public class PartySetupControllerUI : MonoBehaviour
         ReorderHierarchy();
 
         Debug.Log("Đã xóa tất cả nhân vật khỏi đội hình!");
+    }
+
+    public void ReorganizeActiveSlotsData()
+    {
+        // 1. Lấy danh sách các slot đang có nhân vật (ID không rỗng)
+        // Sắp xếp chúng theo thứ tự Position hiện tại (ví dụ: 1, 4, 6...)
+        var sortedSlots = _saveSystem.Player.ActiveSlots
+            .Where(s => !string.IsNullOrEmpty(s.CharacterID))
+            .OrderBy(s => s.Position)
+            .ToList();
+
+        // 2. Xóa sạch danh sách cũ để chuẩn bị nạp lại dữ liệu đã sắp xếp
+        _saveSystem.Player.ActiveSlots.Clear();
+
+        // 3. Gán lại vị trí mới bắt đầu từ 1 và nạp lại vào Save System
+        for (int i = 0; i < sortedSlots.Count; i++)
+        {
+            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData
+            {
+                Position = i + 1, // Vị trí mới: 1, 2, 3...
+                CharacterID = sortedSlots[i].CharacterID
+            });
+        }
+
+        Debug.Log($"Đã sắp xếp lại {sortedSlots.Count} nhân vật theo thứ tự slot liên tục.");
     }
 }

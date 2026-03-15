@@ -5,13 +5,33 @@ using UnityEngine;
 public class EntityMoveDown : EntityStateBase
 {
     private Vector2 _currentVelocity = Vector2.zero;
+
+    private bool _isSortingRender;
+
+    private float _dist = 0;
     public EntityMoveDown(EntityStateData data) : base(data)
     {
 
     }
 
+    public override void Enter()
+    {
+        _isSortingRender = false;
+        _dist = Vector3.Distance(data.RootPosition, data.Entity.Target.transform.position);
+    }
+
     public override void LogicUpdate()
     {
+        if (!_isSortingRender)
+        {
+            var dist = Vector3.Distance(data.Entity.transform.position, data.RootPosition);
+            if (dist < _dist / 2)
+            {
+                data.Entity.SetRenderOrder(data.Entity.RenderOrder);
+                _isSortingRender = true;
+            }
+        }
+
         if (!MoveToRoot()) return;
 
         data.StateManager.ChangeState(EntityState.IDLE);

@@ -17,6 +17,7 @@ public enum Skill
     None,
     Melee,
     Range,
+    MajorAttack,
     Summon,
     BuffShield,
     Healing,
@@ -54,6 +55,24 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         entityStats = gameObject.GetComponent<EntityStats>();
 
         var characterConfig = _gameDataBase.GetCharacterConfig(entityStats.EntityID);
+
+        // Base Skill
+        var baseSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Base);
+        SkillData dataBaseSkill = SkillDataFactory.Create(baseSkillID);
+
+        SkillRuntime baseSkill = dataBaseSkill.CreateRuntimeSkill(entityStats);
+
+        var initializerBase = baseSkill as IAsyncInitializer;
+
+        if (initializerBase != null)
+        {
+            await initializerBase.InitializeAsync(token);
+        }
+
+        Skills.Add(SkillCharacter.Base, baseSkill);
+
+
+        //Majojr Skill 
         var majorSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Major);
 
         SkillData dataMajor = SkillDataFactory.Create(majorSkillID);
@@ -69,6 +88,7 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
         Skills.Add(SkillCharacter.Major, majorSkill);
 
+        // Ultimate Skill
         var ultimateSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Ultimate);
 
         SkillData dataUltiamte = SkillDataFactory.Create(ultimateSkillID);

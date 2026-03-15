@@ -5,6 +5,10 @@ using UnityEngine;
 public class EntityMoveUp : EntityStateBase
 {
     private Vector2 _currentVelocity = Vector2.zero;
+
+    private bool _isSortingRender;
+
+    private float _dist = 0;
     public EntityMoveUp(EntityStateData data) : base(data)
     {
 
@@ -12,11 +16,22 @@ public class EntityMoveUp : EntityStateBase
 
     public override void Enter()
     {
- 
+        _isSortingRender = false;
+        _dist = Vector3.Distance(data.Entity.transform.position, data.Entity.Target.transform.position);
     }
 
     public override void LogicUpdate()
     {
+        if(!_isSortingRender)
+        {
+            var dist = Vector3.Distance(data.Entity.transform.position, data.Entity.Target.transform.position);
+            if(dist < _dist/2)
+            {
+                data.Entity.SetRenderOrder(data.Entity.Target.gameObject.GetComponent<Entity>().RenderOrder + 1);
+                _isSortingRender = true;
+            }
+        }
+
         if (!MoveToTarget()) return;
 
         data.StateManager.ChangeState(data.NextStateAfterMoveNext);

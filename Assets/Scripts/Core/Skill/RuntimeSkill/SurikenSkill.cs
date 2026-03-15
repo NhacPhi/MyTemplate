@@ -40,7 +40,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
         var controller = surikenPrefab.GetComponent<FireballController>();
 
-        Vector3 flyDir = caster.target.transform.position - caster.transform.position;
+        Vector3 flyDir = caster.Target.transform.position - caster.transform.position;
 
         controller.Initialize(
            caster: caster,

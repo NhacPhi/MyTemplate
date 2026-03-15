@@ -50,6 +50,10 @@ public class EntityStateData : CoreComponent
 
     [field: SerializeField] public bool IsEmpoweredAttack { get; protected set; } = true;
 
+    [field: SerializeField] public bool IsMajorAttack { get; protected set; } = false;
+
+    [field: SerializeField] public float RadioTimeTriggerDamgeMajor { get; protected set; } = 0.7f;
+
     [field: SerializeField] public float TimeTriggerDamge { get; protected set; } = 0.7f;
 
     [SerializeField] private AttackType attackType;

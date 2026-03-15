@@ -21,26 +21,27 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
     public override void Execute(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        _ = Perform(skillData, caster);
     }
 
-    public async UniTask PerformSummon(SkillData config, Entity caster)
+    public async UniTask Perform(SkillData config, Entity caster)
     {
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy, true);
         //Trigger Animation
         EntityStateData state = caster.GetComponent<EntityStateData>();
         if (state != null)
         {
             state.NextStateAfterMoveNext = EntityState.MAJOR_SKILL;
-            state.StateManager.ChangeState(EntityState.MOVE_UP);
         }
-        await UniTask.Delay(2000);
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
+        //await UniTask.Delay(2000);
+        //var damage = new DamageBonus()
+        //{
+        //    FlatValue = 0,
+        //    DamageMultiplier = 1.5f
+        //};
 
-        DamageFormular.DealDamage(damage, caster, caster.target.GetComponent<Entity>());
+        //DamageFormular.DealDamage(damage, caster, caster.Target.GetComponent<Entity>());
     }
 }
 

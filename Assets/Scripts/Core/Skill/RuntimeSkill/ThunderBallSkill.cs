@@ -38,7 +38,9 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         var controller = firreBallPrefab.GetComponent<ThunderBallController>();
 
-        Vector3 flyDir = caster.target.transform.position - caster.transform.position;
+        var vec = new Vector3(caster.transform.position.x + skillData.Offset.x, caster.transform.position.y + skillData.Offset.y, caster.transform.position.z);
+
+        Vector3 flyDir = caster.Target.transform.position - vec;
 
         controller.Initialize(
             caster: caster,

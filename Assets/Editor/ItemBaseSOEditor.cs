@@ -9,7 +9,7 @@ public class ItemBaseSOEditor : Editor
 
         //DrawDefaultInspector();
 
-        //ItemBaseSO item  = (ItemBaseSO)target;
+        //ItemBaseSO item  = (ItemBaseSO)Target;
 
         //if(item.Icon != null)
         //{

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ActionState : BattleBaseState
 {
     // If player: Bật UI quản lý Battle Scene lên. else enemy tắt CharacterUI chuyến sang ExecutetionState
-    // player chọn skill và target => chuyển sang thực thi với current skill và current target (xử lý cho kill AOE )
+    // player chọn skill và Target => chuyển sang thực thi với current skill và current Target (xử lý cho kill AOE )
     public ActionState(BattleManager battleManager) : base(battleManager) { }
 
     public override void Enter()

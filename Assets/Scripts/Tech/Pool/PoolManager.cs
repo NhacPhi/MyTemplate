@@ -1,10 +1,9 @@
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Tech.Singleton;
-using VContainer;
-using System;
 using System.Linq;
+using Tech.Singleton;
+using UnityEngine;
+using VContainer;
 using Object = UnityEngine.Object;
 
 namespace Tech.Pool
@@ -12,8 +11,8 @@ namespace Tech.Pool
     public enum PoolType
     {
         Projectile,
-        Enemy,
         VFX,
+        Enemy,
         None
     }
 
@@ -35,22 +34,22 @@ namespace Tech.Pool
             holder.transform.SetParent(transform);
             var child = new Transform[transform.childCount];
 
-            for(int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
                 child[i] = transform.GetChild(i);
             }
 
-            foreach(PoolType pool in Enum.GetValues(typeof(PoolType)))
+            foreach (PoolType pool in Enum.GetValues(typeof(PoolType)))
             {
-                if(pool == PoolType.None) continue;
-                 
+                if (pool == PoolType.None) continue;
+
                 var poolName = pool.ToString();
 
-                Transform exitTransform = child.FirstOrDefault(x => x.name == poolName);
+                Transform existTransform = child.FirstOrDefault(x => x.name == poolName);
 
-                if(exitTransform)
+                if (existTransform)
                 {
-                    _poolsHolder.Add(pool, exitTransform);
+                    _poolsHolder.Add(pool, existTransform);
                     continue;
                 }
 
@@ -60,48 +59,64 @@ namespace Tech.Pool
             }
         }
 
-        public GameObject SpawnObject(GameObject objectToSpawn, Vector3 postion, Quaternion rotaion, PoolType poolType = PoolType.None)
+        public GameObject SpawnObject(GameObject objectToSpawn, Vector3 position, Quaternion rotation, PoolType poolType = PoolType.None)
         {
-           var spawnableObject = Spawn(objectToSpawn, postion, rotaion, poolType);
-
-            if(poolType != PoolType.None)
-            {
-                spawnableObject.transform.SetParent(GetPoolParent(poolType).transform);
-            }
-
-            return spawnableObject;
-        }
-
-        public T SpawnObject<T>(T objectToSpawn, Vector3 postion, Quaternion rotaion
-            , PoolType poolType = PoolType.None) where T : Component
-        {
-            var spawnableObject = Spawn(objectToSpawn, postion, rotaion, poolType);
+            var spawnableObj = Spawn(objectToSpawn, position, rotation, poolType);
 
             if (poolType != PoolType.None)
             {
-                spawnableObject.transform.SetParent(GetPoolParent(poolType).transform);
+                spawnableObj.transform.SetParent(GetPoolParent(poolType).transform);
             }
 
-            return spawnableObject;
+            return spawnableObj;
         }
-        private T Spawn<T>(T obj, Vector3 position, Quaternion rotaion, PoolType poolType = PoolType.None) where T : Object
+
+        public T SpawnObject<T>(T objectToSpawn, Vector3 position, Quaternion rotation,
+            PoolType poolType = PoolType.None) where T : Component
         {
-            if(!_objectPools.ContainsKey(obj))
+            Debug.Log("LOL1");
+            var spawnableObj = Spawn(objectToSpawn, position, rotation, poolType);
+            Debug.Log("LOL2");
+            if (poolType != PoolType.None)
             {
-                _objectPools.Add(obj, new Pool(obj));
+                spawnableObj.transform.SetParent(GetPoolParent(poolType).transform);
             }
-
-            T spawnableObject = _objectPools[obj].GetPool(_objectResolver, position, rotaion) as T;
-
-            return spawnableObject;
+            if (objectToSpawn == null)
+            {
+                Debug.Log("PoolManager: objectToSpawn (Prefab) truyền vào đã bị NULL!");
+                return null;
+            }
+            return spawnableObj;
         }
 
-        public void ClearnPool(bool includePersistent)
+        private T Spawn<T>(T obj, Vector3 position, Quaternion rotation, PoolType poolType = PoolType.None) where T : Object
+        {
+            Debug.Log("PoolManager0: spawnableObj (Prefab) truyền vào đã bị NULL!");
+            if (!_objectPools.ContainsKey(obj))
+            {
+                Debug.Log("PoolManager1: spawnableObj (Prefab) truyền vào đã bị NULL!");
+                _objectPools.Add(obj, new Pool(obj));
+                Debug.Log("PoolManager2: spawnableObj (Prefab) truyền vào đã bị NULL!");
+            }
+
+            Debug.Log("PoolManager3: spawnableObj (Prefab) truyền vào đã bị NULL!");
+            T spawnableObj = _objectPools[obj].GetPool(_objectResolver, position, rotation) as T;
+
+            if (spawnableObj == null)
+            {
+                Debug.Log("PoolManager4: spawnableObj (Prefab) truyền vào đã bị NULL!");
+                return null;
+            }
+
+            return spawnableObj;
+        }
+
+        public void ClearPool(bool includePersistent)
         {
             if (!includePersistent) return;
+
             _objectPools.Clear();
         }
-
         public GameObject GetPoolParent(PoolType poolType)
         {
             return _poolsHolder[poolType].gameObject;

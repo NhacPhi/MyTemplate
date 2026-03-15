@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tech.Composite;
 using Tech.StateMachine;
+using UnityEngine.Rendering;
 
 public abstract class Entity : Tech.Composite.Core, ITurn
 {
     //Test
-    public GameObject target;
+    public GameObject Target;
+
+    public int RenderOrder = 0;
     // Statte Machine
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
     = new StateMachine<EntityState, EntityStateBase>();
@@ -66,11 +69,22 @@ public abstract class Entity : Tech.Composite.Core, ITurn
 
     public void SetTaget(Entity enemy)
     {
-        target = enemy.gameObject;
+        Target = enemy.gameObject;
     }
 
     public virtual void ExecuteSkill(SkillCharacter type)
     {
 
+    }
+
+    // Render order
+    public void SetRenderOrder(int order)
+    {
+        var sortingGP = gameObject.GetComponent<SortingGroup>();
+
+        if(sortingGP != null)
+        {
+            sortingGP.sortingOrder = order;
+        }
     }
 }

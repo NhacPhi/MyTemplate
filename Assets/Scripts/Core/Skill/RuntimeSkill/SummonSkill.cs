@@ -40,7 +40,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
 
         effectPrefab.gameObject.SetActive(false);
 
-        clonePrefab.gameObject.transform.position = caster.target.transform.position - skillData.OffsetTarget;
+        clonePrefab.gameObject.transform.position = caster.Target.transform.position - skillData.OffsetTarget;
         clonePrefab.gameObject.SetActive(true);
 
         var cloneController = clonePrefab.GetComponent<CloneController>(); 
@@ -51,7 +51,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             {
                 FlatValue = 0,
                 DamageMultiplier = 1.2f
-            }, caster, caster.target.GetComponent<Entity>());
+            }, caster, caster.Target.GetComponent<Entity>());
         }
         
         clonePrefab.gameObject.SetActive(false);

@@ -210,6 +210,8 @@ MonoBehaviour:
   <MainSkillAnimaiton>k__BackingField: UltimateSkill
   <MajorAnimaiton>k__BackingField: MajorSkill
   <IsEmpoweredAttack>k__BackingField: 1
+  <IsMajorAttack>k__BackingField: 0
+  <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
   <TimeTriggerDamge>k__BackingField: 0.7
   attackType: 0
 --- !u!114 &3030845712690434453
@@ -224,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abfdb52f6815d0c4da3f0779d93685ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
+  RenderOrder: 0
 --- !u!114 &5527412889611734811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,8 +260,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7982483, y: 4.573886, z: 0.3}
-  m_Center: {x: 0, y: -0.9799346, z: 0}
+  m_Size: {x: 0.3, y: 3, z: 0.4}
+  m_Center: {x: -0.24295233, y: -0.2477076, z: 0}
 --- !u!1 &7911791600680810468
 GameObject:
   m_ObjectHideFlags: 0

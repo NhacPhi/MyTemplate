@@ -41,21 +41,25 @@ public class FireballController : MonoBehaviour
         if (other.gameObject == _caster.gameObject) return;
 
         //if (other.isTrigger) return;
-
-        _hasHit = true;
-
-        Entity target = other.GetComponent<Entity>();
-
-        if(_skillHandler != null)
+        if (other.gameObject == _caster.Target)
         {
-            _skillHandler.OnProjectileImpact(target, transform.position);
-            gameObject.SetActive(false);
+            _hasHit = true;
+
+            Entity target = other.GetComponent<Entity>();
+
+            if (_skillHandler != null)
+            {
+                _skillHandler.OnProjectileImpact(target, transform.position);
+                gameObject.SetActive(false);
+            }
+
+            if (target != null)
+            {
+                explosionObj.transform.position = other.transform.position;
+                explosionObj.gameObject.SetActive(true);
+            }
         }
 
-        if(target != null)
-        {
-            explosionObj.transform.position = other.transform.position;
-            explosionObj.gameObject.SetActive(true);
-        }
+
     }
 }

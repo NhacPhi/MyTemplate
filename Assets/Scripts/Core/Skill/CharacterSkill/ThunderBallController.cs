@@ -11,7 +11,7 @@ public class ThunderBallController : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Sprite image;
     private bool _hasHit = false;
-    private GameObject explosionObj;
+    //private GameObject explosionObj;
     private Animator anim;
 
     private SpriteRenderer originSprite;
@@ -30,7 +30,7 @@ public class ThunderBallController : MonoBehaviour
         _skillHandler = skill;
         _flyDirection = direction.normalized;
         _hasHit = false;
-        explosionObj.gameObject.SetActive(false);
+        //explosionObj.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -47,7 +47,7 @@ public class ThunderBallController : MonoBehaviour
         if (other.gameObject == _caster.gameObject) return;
 
         //if (other.isTrigger) return;
-        if(other.gameObject == _caster.target)
+        if(other.gameObject == _caster.Target)
         {
             _hasHit = true;
 

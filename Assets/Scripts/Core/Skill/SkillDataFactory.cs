@@ -10,6 +10,12 @@ public static class SkillDataFactory
         {
             case Skill.None: return null;
 
+            case Skill.Melee: return new MeleeAttackData();
+
+            case Skill.Range: return new RangeMagicAttackData();
+
+            case Skill.MajorAttack: return new MajorAttackData();
+
             case Skill.Summon: return new SummonSkillData();
 
             case Skill.BuffShield: return new BuffShieldData();

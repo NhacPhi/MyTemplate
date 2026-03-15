@@ -1,6 +1,7 @@
 using Core.Scope;
 using System.Collections;
 using System.Collections.Generic;
+using Tech.Pool;
 using UIFramework;
 using UnityEngine;
 using VContainer;
@@ -27,6 +28,7 @@ public class RootScope : LifetimeScope
         // Hireachy
         builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
         builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
+        builder.RegisterComponentInHierarchy<PoolManager>().AsSelf();
         //builder.RegisterComponentInHierarchy<GameDataBase>().AsSelf();
         builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 

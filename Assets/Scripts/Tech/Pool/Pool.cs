@@ -22,9 +22,15 @@ namespace Tech.Pool
         {
             GameObject go = null;
 
-            if(_inActiveObject.Count > 0)
+            while (_inActiveObject.Count > 0)
             {
                 var tmp = _inActiveObject.Pop();
+
+                if (tmp == null)
+                {
+                    continue;
+                }
+
                 go = GetInstnace(tmp);
                 go.transform.position = position;
                 go.transform.rotation = rotaion;

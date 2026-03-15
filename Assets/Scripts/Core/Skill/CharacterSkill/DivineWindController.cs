@@ -38,21 +38,24 @@ public class DivineWindController : MonoBehaviour
         if (_hasHit) return;
 
         if (other.gameObject == _caster.gameObject) return;
-
-        _hasHit = true;
-
-        Entity target = other.GetComponent<Entity>();
-
-        if (_skillHandler != null)
+        if(other.gameObject == _caster.Target)
         {
-            _skillHandler.OnProjectileImpact(target, transform.position);
-            gameObject.SetActive(false);
-        }
+            _hasHit = true;
 
-        if(elipEffect != null)
-        {
-            effectPrefab.transform.position = other.transform.position;
-            effectPrefab.gameObject.SetActive(true);
+            Entity target = other.GetComponent<Entity>();
+
+            if (_skillHandler != null)
+            {
+                _skillHandler.OnProjectileImpact(target, transform.position);
+                gameObject.SetActive(false);
+            }
+
+            if (elipEffect != null)
+            {
+                effectPrefab.transform.position = other.transform.position;
+                effectPrefab.gameObject.SetActive(true);
+            }
         }
+        
     }
 }

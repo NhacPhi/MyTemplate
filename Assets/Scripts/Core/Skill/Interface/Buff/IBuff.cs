@@ -9,6 +9,6 @@ public interface IBuff
     //bool IsFinished { get; }
 
     void OnApply(Entity target);
-    //void OnRemove(Entity target);
+    //void OnRemove(Entity Target);
     //void OnRefresh();
 }

@@ -56,9 +56,9 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
 
         var controller = ringPrefab.GetComponent<ProjectileController>();
 
-        Vector3 throwDir = caster.target.transform.position - caster.transform.position;
+        Vector3 throwDir = caster.Target.transform.position - caster.transform.position;
 
-        float maxDis = Vector3.Distance(caster.transform.position, caster.target.transform.position) + 0.5f;
+        float maxDis = Vector3.Distance(caster.transform.position, caster.Target.transform.position) - 1f;
         controller.Initialize(
             caster: caster,
             skill: this,

@@ -16,7 +16,7 @@ namespace Tech.Singleton
                 if (_instace) return _instace;
 
                 _instace = new GameObject(typeof(T).Name).AddComponent<T>();
-                return null;
+                return _instace;
             }
         }
 

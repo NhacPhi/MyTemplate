@@ -2,10 +2,13 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 using VContainer.Unity;
+using VContainer;
 using Tech.Pool;
 using UnityEngine.AddressableAssets;
 public class CombatText : IInitializable, IDisposable
 {
+    [Inject] IObjectResolver _objectResolver;
+
     public const string Address = "Combat Text";
     private CombatTextUI popupPrefab;
     public void Initialize()
@@ -27,11 +30,14 @@ public class CombatText : IInitializable, IDisposable
         {
             popupPrefab = prefab.GetComponent<CombatTextUI>();
         }
-        AddressablesManager.Instance.RemoveAsset(Address);
+
+        //var clone = PoolManager.Instance.SpawnObject(popupPrefab, Vector3.zero, Quaternion.identity);
+        //AddressablesManager.Instance.RemoveAsset(Address);
     }
     public void CreateDamagePopup(float damage, Vector3 position, bool isCris)
     {
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
+        //var clone = _objectResolver.Instantiate(popupPrefab, position, Quaternion.identity);
         clone.SetValue(damage);
         if(isCris)
             clone.TMP.color = Color.yellow;

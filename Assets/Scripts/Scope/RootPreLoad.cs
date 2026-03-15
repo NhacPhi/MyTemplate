@@ -17,7 +17,7 @@ namespace Core.Scope
         [Inject] private CharacterStatManager characterStatMM;
         [Inject] private GameNarrativeData gameNarrative;
         [Inject] private GameDataBase gameDataBase;
-        [Inject] private IObjectResolver _objectResolver;
+        //[Inject] private IObjectResolver _objectResolver;
         public bool IsDone;
 
         public async UniTask StartAsync(CancellationToken cancellation = default)
@@ -26,6 +26,8 @@ namespace Core.Scope
 
             await UniTask.WaitUntil(() => AddressablesManager.Instance && GameManager.Instance
                 && PoolManager.Instance && LocalizationManager.Instance, cancellationToken: cancellation);
+
+            //_objectResolver.Inject(PoolManager.Instance);
             saveSystem.Init();
             saveSystem.LoadSaveDataFromDisk();
             currencyMM.Init();
@@ -35,7 +37,7 @@ namespace Core.Scope
             {
                 LocalizationManager.Instance.LoadLocalizedText(saveSystem.Settings.CurrentLocalized),
             };
-            _objectResolver.Inject(PoolManager.Instance);
+
             await UniTask.WhenAll(tasks);
             await gameDataBase.Init(cancellation);
             await gameNarrative.LoadGameNarrativeConfig(cancellation);

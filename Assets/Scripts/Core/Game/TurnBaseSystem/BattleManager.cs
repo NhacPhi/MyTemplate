@@ -72,9 +72,19 @@ public class BattleManager : MonoBehaviour
     {
         // Load locaiton of character 
         var activeSlot = _saveSystem.Player.ActiveSlots;
+
+        int order = 0;
+
         foreach(var slot in activeSlot)
         {
-            if(slot.CharacterID != "")
+            if(order == 3 )
+            {
+                order = 0;
+            }
+
+            order++;
+
+            if (slot.CharacterID != "")
             {
                 var key = slot.CharacterID;
                 var slot_position = slot.Position;
@@ -86,7 +96,9 @@ public class BattleManager : MonoBehaviour
                 {
                     SortingGroup sp = character.gameObject.AddComponent<SortingGroup>();
 
-                    sp.sortingOrder = slot_position;
+                    sp.sortingOrder = order;
+
+                    character.gameObject.GetComponent<Entity>().RenderOrder = order;
                 }
                 character.transform.position = pos + Vector3.up * OffsetY;
 
@@ -96,8 +108,15 @@ public class BattleManager : MonoBehaviour
 
         var battleConfig = _gameDataBase.GetBattleConfig(_battleSession.PendingBattleID);
 
+        order = 0;
         for(int i = 0; i < _enemies.Count; i++)
         {
+            if (order == 3)
+            {
+                order = 0;
+            }
+
+            order++;
             //var key = enemyConfig.EnemyID;
             var slot_position = battleConfig.Enemies[i].Slot;
             var enemy = _enemies[i];
@@ -108,7 +127,9 @@ public class BattleManager : MonoBehaviour
             {
                 SortingGroup sp = enemy.gameObject.AddComponent<SortingGroup>();
 
-                sp.sortingOrder = slot_position;
+                sp.sortingOrder = order;
+
+                enemy.gameObject.GetComponent<Entity>().RenderOrder = order;
             }
         }
     }
@@ -116,9 +137,9 @@ public class BattleManager : MonoBehaviour
     //Test
     public void SetTarget()
     {
-        _CurrentCharacter = _characters.First().Value.GetComponent<Entity>();
+        _CurrentCharacter = _characters.GetValueOrDefault("SunWukong").GetComponent<Entity>();
 
-        var characterConfig = _gameDataBase.GetCharacterConfig(_characters.First().Key);
+        var characterConfig = _gameDataBase.GetCharacterConfig("SunWukong");
 
         var baseSkill = characterConfig.BaseSkillIcon;
         var majorSkill = characterConfig.MajorSkillIcon;

@@ -20,12 +20,13 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
     public override void Execute(Entity caster)
     {
+        var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy_ultimate, true);
         //Trigger Animation
         EntityStateData state = caster.GetComponent<EntityStateData>();
         if (state != null)
         {
             state.NextStateAfterMoveNext = EntityState.MAIN_SKILL;
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
         }
     }
 
