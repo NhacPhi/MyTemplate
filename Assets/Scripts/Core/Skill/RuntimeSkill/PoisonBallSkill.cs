@@ -9,25 +9,26 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     private PosionBallData skillData;
     private GameObject firreBallPrefab;
     private Entity _caster;
+
+    private UniTaskCompletionSource _skillEnd;
     public PoisonBallSkill(EntityStats owner, PosionBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
+        _skillEnd = new UniTaskCompletionSource();
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
+        var state = caster.GetComponent<EntityStateData>();
 
-        if (stateData != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAIN_SKILL);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
 
         await UniTask.Delay(1000);
 
@@ -46,6 +47,12 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
             skill: this,
             direction: flyDir
             );
+
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
+
+        await _skillEnd.Task;
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -77,6 +84,8 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
             DamageMultiplier = 1.5f
         };
         DamageFormular.DealDamage(damage, _caster, target);
+
+        _skillEnd.TrySetResult();
     }
 }
 

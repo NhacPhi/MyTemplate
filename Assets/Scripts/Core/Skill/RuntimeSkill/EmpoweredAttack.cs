@@ -18,21 +18,29 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
         // Caculate damge
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy_ultimate, true);
-        //Trigger Animation
-        EntityStateData state = caster.GetComponent<EntityStateData>();
-        if (state != null)
-        {
-            state.NextStateAfterMoveNext = EntityState.MAIN_SKILL;
-        }
-    }
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
 
-    public async UniTask PerformSummon(SkillData config, Entity caster)
-    {
+        caster.HandleTurn(enemy);
 
+        var state = caster.GetComponent<EntityStateData>();
+
+        caster.StateManager.ChangeState(EntityState.MOVE_UP);
+
+        await state.WaitForMoveEnd();
+
+        caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
+
+        await state.WaitForHitFrame();
+
+        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.MOVE_DOWN);
+
+        await state.WaitForMoveEnd();
     }
 }
 

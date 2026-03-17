@@ -7,13 +7,15 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
     private FireBallData skillData;
     private GameObject fireBallPrefab;
     private Entity _caster;
+    private UniTaskCompletionSource _skillEnd;
     public FireballSkill(EntityStats owner, FireBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
+        _skillEnd = new UniTaskCompletionSource();
         _caster = caster;
         fireBallPrefab.transform.SetParent(caster.transform);
         fireBallPrefab.transform.localPosition = skillData.Offset;
@@ -29,6 +31,8 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
             skill: this,
             direction: flyDir
             );
+
+        await _skillEnd.Task;
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -60,6 +64,8 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
             DamageMultiplier = 1.5f
         };
         DamageFormular.DealDamage(damage, _caster, target);
+
+        _skillEnd.TrySetResult();
     }
 }
 

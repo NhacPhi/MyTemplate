@@ -11,11 +11,19 @@ public class ActionState : BattleBaseState
 
     public override void Enter()
     {
-
+        
     }
 
     public override void Exit()
     {
+        battleManager.IsExecutedAction = false;
+    }
 
+    public override void OnUpdate()
+    {
+        if(battleManager.IsExecutedAction)
+        {
+            battleManager.StateMachine.ChangeState(BattleState.ExecutionState);
+        }
     }
 }

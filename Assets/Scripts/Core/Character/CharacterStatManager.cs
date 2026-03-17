@@ -31,7 +31,7 @@ public class CharacterStatManager
                 //    character.ATK = GetStat(stat.ATK, upgrade.GrowthATK, data.Level) + weaponATK;
                 //    character.DEF = GetStat(stat.DEF, upgrade.GrowthDEF, data.Level);
                 //    character.DEFShred = stat.DEFShred;
-                //    character.SPD = stat.SPD;
+                //    character.SPEED = stat.SPEED;
                 //    character.CRITDMG = stat.CRITDMG;
                 //    character.CRITRate = stat.CRITRate;
                 //    character.Penetration = stat.Penetration;
@@ -52,7 +52,7 @@ public class CharacterStatManager
     {
         //CharacterStatConfig character = GetCharacterStat(id);
         //float power = 0;
-        //power = 1.5f * character.ATK + 2.2f * character.DEF + 1.2f * character.HP + 3 * character.SPD + 
+        //power = 1.5f * character.ATK + 2.2f * character.DEF + 1.2f * character.HP + 3 * character.SPEED + 
         //    + character.DEFShred * 1.6f + 1.5f *  character.CRITDMG + character.CRITRate * 2f + character.Penetration * 1.3f + character.CRITDMGRes;
         //return Convert.ToInt32(power);
         return 0;

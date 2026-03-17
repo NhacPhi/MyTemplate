@@ -8,28 +8,31 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
     private ThunderBallData skillData;
     private GameObject firreBallPrefab;
     private Entity _caster;
+
+    private UniTaskCompletionSource _skillEnd;
     public ThunderBallSkill(EntityStats owner, ThunderBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
+        _skillEnd = new UniTaskCompletionSource();
 
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
+        var state = caster.GetComponent<EntityStateData>();
 
-        if (stateData != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAJOR_SKILL);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
         await UniTask.Delay(1000);
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);
         firreBallPrefab.transform.localPosition = skillData.Offset;
@@ -47,6 +50,8 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
             skill: this,
             direction: flyDir
             );
+
+        await _skillEnd.Task;
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -78,6 +83,8 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
             DamageMultiplier = 1.5f
         };
         DamageFormular.DealDamage(damage, _caster, target);
+
+        _skillEnd.TrySetResult();
     }
 }
 

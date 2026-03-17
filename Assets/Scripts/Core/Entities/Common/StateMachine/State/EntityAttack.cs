@@ -5,19 +5,12 @@ using Tech.Pool;
 
 public class EntityAttack : EntityStateBase
 {
-    protected Action DamageCallBack;
+    protected Action HitCallBack;
     protected Action ExitCallBack;
     public EntityAttack(EntityStateData data) : base(data)
     {
-        DamageCallBack = () =>
-        {
-            DamageFormular.DealDamage(DamageBonus.GetDefault(), data.Entity, data.CurrentTarget);
-        };
-
-        ExitCallBack = () =>
-        {
-            data.StateManager.ChangeState(EntityState.MOVE_DOWN);
-        };
+        HitCallBack = () => data.TriggerHitFrame();
+        ExitCallBack = () => data.TriggerAnimEnd();
     }
 
     public override void Enter()
@@ -26,7 +19,7 @@ public class EntityAttack : EntityStateBase
         animData.AnimationName = data.AttackAnimation;
         data.Anim.Play(animData);
 
-        data.Anim.RegisterEventAtTime(0.6f, DamageCallBack);
+        data.Anim.RegisterEventAtTime(0.6f, HitCallBack);
         data.Anim.RegisterEventAtTime(0.95f, ExitCallBack);
 
     }

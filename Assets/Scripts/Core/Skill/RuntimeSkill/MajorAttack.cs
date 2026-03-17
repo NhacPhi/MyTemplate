@@ -19,21 +19,34 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         // Caculate damge
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = Perform(skillData, caster);
+        await PerformSkillAsync(skillData, caster);
     }
 
-    public async UniTask Perform(SkillData config, Entity caster)
+    public async UniTask PerformSkillAsync(SkillData config, Entity caster)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy, true);
-        //Trigger Animation
-        EntityStateData state = caster.GetComponent<EntityStateData>();
-        if (state != null)
-        {
-            state.NextStateAfterMoveNext = EntityState.MAJOR_SKILL;
-        }
+        caster.HandleTurn(enemy);
+
+        var state = caster.GetComponent<EntityStateData>();
+
+        caster.StateManager.ChangeState(EntityState.MOVE_UP);
+
+        await state.WaitForMoveEnd();
+
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+
+        await state.WaitForHitFrame();
+
+        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.MOVE_DOWN);
+
+        await state.WaitForMoveEnd();
+
         //await UniTask.Delay(2000);
         //var damage = new DamageBonus()
         //{

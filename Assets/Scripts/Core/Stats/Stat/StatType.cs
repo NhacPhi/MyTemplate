@@ -5,7 +5,7 @@ public enum StatType
     HP,// MaxHP
     ATK,
     DEF,
-    SPD,
+    SPEED,
     DEF_SHRED,
     CRIT_RATE,
     CRIT_DMG,

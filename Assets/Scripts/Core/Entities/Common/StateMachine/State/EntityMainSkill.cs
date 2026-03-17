@@ -4,22 +4,12 @@ using Tech.Pool;
 
 public class EntityMainSkill : EntityStateBase
 {
-    protected Action DamageCallBack;
+    protected Action HitCallBack;
     protected Action ExitCallBack;
     public EntityMainSkill(EntityStateData data) : base(data)
     {
-        DamageCallBack = () =>
-        {
-            DamageFormular.DealDamage(new DamageBonus() {
-                FlatValue = 0,
-                DamageMultiplier = 2f
-            }, data.Entity, data.CurrentTarget);
-        };
-
-        ExitCallBack = () =>
-        {
-            data.StateManager.ChangeState(EntityState.MOVE_DOWN);
-        };
+        HitCallBack = () => data.TriggerHitFrame();
+        ExitCallBack = () => data.TriggerAnimEnd();
     }
 
 
@@ -29,8 +19,7 @@ public class EntityMainSkill : EntityStateBase
         animData.AnimationName = data.MainSkillAnimaiton;
         data.Anim.Play(animData);
 
-        if(data.IsEmpoweredAttack)
-            data.Anim.RegisterEventAtTime(data.TimeTriggerDamge, DamageCallBack);
+        data.Anim.RegisterEventAtTime(data.TimeTriggerDamge, HitCallBack);
         data.Anim.RegisterEventAtTime(0.95f, ExitCallBack);
     }
 

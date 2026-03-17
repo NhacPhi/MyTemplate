@@ -9,18 +9,22 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
     private SurikenData skillData;
     private GameObject surikenPrefab;
     private Entity _caster;
+
+    private UniTaskCompletionSource _skillEnd;
     public SurikenSkill(EntityStats owner, SurikenData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
         _ = PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
+        _skillEnd = new UniTaskCompletionSource();
+
         EntityStateData stateData = caster.GetComponent<EntityStateData>();
 
         if (stateData != null)
@@ -47,6 +51,8 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
            skill: this,
            direction: flyDir
            );
+
+        await _skillEnd.Task;
     }
     public override SkillData GetSkillData() => skillData;
     public async UniTask InitializeAsync(CancellationToken token)
@@ -76,6 +82,8 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
             DamageMultiplier = 1.5f
         };
         DamageFormular.DealDamage(damage, _caster, target);
+
+        _skillEnd.TrySetResult();
     }
 
 }

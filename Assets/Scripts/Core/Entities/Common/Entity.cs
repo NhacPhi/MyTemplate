@@ -4,6 +4,7 @@ using UnityEngine;
 using Tech.Composite;
 using Tech.StateMachine;
 using UnityEngine.Rendering;
+using Cysharp.Threading.Tasks;
 
 public abstract class Entity : Tech.Composite.Core, ITurn
 {
@@ -16,6 +17,7 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     = new StateMachine<EntityState, EntityStateBase>();
 
     //public IEntityAttack attack { get; private set; }
+
 
     protected EntityStateData entityStateData;
     protected override void LoadComponent()
@@ -60,11 +62,11 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         StateManager.CurrentState.LogicUpdate();
     }
     public bool IsEndTurn { get; set; }
-    public virtual void HandleTurn(Entity target, bool isMain)
+    public virtual void HandleTurn(Entity target)
     {
         IsEndTurn = false;
         entityStateData.CurrentTarget = target;
-        entityStateData.HandleTurn(isMain);
+        entityStateData.HandleTurn();
     }
 
     public void SetTaget(Entity enemy)
@@ -72,10 +74,11 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         Target = enemy.gameObject;
     }
 
-    public virtual void ExecuteSkill(SkillCharacter type)
+    public virtual async UniTask ExecuteSkillAsync(SkillCharacter type)
     {
 
     }
+
 
     // Render order
     public void SetRenderOrder(int order)

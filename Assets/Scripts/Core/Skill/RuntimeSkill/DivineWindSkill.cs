@@ -10,17 +10,21 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     private GameObject divineWindPrefab;
 
     private Entity _caster;
+
+    private UniTaskCompletionSource _skillEnd;
     public DivineWindSkill(EntityStats owner, DivineWindData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
         _ = PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
+        _skillEnd = new UniTaskCompletionSource();
+
         EntityStateData stateData = caster.GetComponent<EntityStateData>();
 
         if (stateData != null)
@@ -48,6 +52,8 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
            skill: this,
            direction: flyDir
            );
+
+        await _skillEnd.Task;
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -95,6 +101,8 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         {
             DamageFormular.DealDamage(damage, _caster, target);
         }
+
+        _skillEnd.TrySetResult();
     }
 }
 

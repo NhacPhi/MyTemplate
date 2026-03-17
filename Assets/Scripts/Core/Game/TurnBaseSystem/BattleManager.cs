@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private List<Transform> _characterPosisions;
     [SerializeField] private List<Transform> _enemiesPositions;
     public List<Entity> ActiveEntities => _activeEntities;
+    public Dictionary<string, Entity> Characters => _characters;
+    public List<Entity> Enemies => _enemies; 
 
     [Inject] private SaveSystem _saveSystem;
     [Inject] private BattleSessionContext _battleSession;
@@ -35,11 +38,18 @@ public class BattleManager : MonoBehaviour
 
     // Current pram
     public Entity _CurrentCharacter;
-    private SkillCharacter _currentSkill;
+    public SkillCharacter _CurrentSkill;
 
     public Entity _CurrentEnemy;
+
+    public bool IsExecutedAction = false;
+
+    public TurnOrderSystem TurnSystem { get; private set; }
+
+    public Queue<Func<UniTask>> ActionQueue = new Queue<Func<UniTask>>();
     private void Start()
     {
+        TurnSystem = new TurnOrderSystem();
         InitStateMachine();
     }
 
@@ -57,6 +67,10 @@ public class BattleManager : MonoBehaviour
         UIEvent.OnExecuteSkill -= ExecuteSkillEntity;
     }
 
+    public void EnqueueAction(Func<UniTask> action)
+    {
+        ActionQueue.Enqueue(action);
+    }
     public async UniTask LoadEntitiesDataAsync(CancellationToken cancellation = default)
     {
         var enemiesTask = _enemyManger.LoadAndSpawnEnemiesAsync(cancellation);
@@ -137,9 +151,7 @@ public class BattleManager : MonoBehaviour
     //Test
     public void SetTarget()
     {
-        _CurrentCharacter = _characters.GetValueOrDefault("SunWukong").GetComponent<Entity>();
-
-        var characterConfig = _gameDataBase.GetCharacterConfig("SunWukong");
+        var characterConfig = _gameDataBase.GetCharacterConfig(_CurrentCharacter.GetComponent<EntityStats>().EntityID);
 
         var baseSkill = characterConfig.BaseSkillIcon;
         var majorSkill = characterConfig.MajorSkillIcon;
@@ -150,12 +162,12 @@ public class BattleManager : MonoBehaviour
 
     public void ExecuteSkillEntity()
     {
-        _CurrentCharacter.ExecuteSkill(_currentSkill);
+        IsExecutedAction = true;
     }
 
     public void SetupCurrentSkillCharacter(SkillCharacter type)
     {
-        _currentSkill = type;
+        _CurrentSkill = type;
     }
     
     public void SetCurrentTarget(Entity target)

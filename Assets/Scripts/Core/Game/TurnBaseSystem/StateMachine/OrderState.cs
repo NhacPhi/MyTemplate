@@ -13,7 +13,13 @@ public class OrderState : BattleBaseState
 
     public override void Enter()
     {
+        Entity nextCharacter = battleManager.TurnSystem.GetNextCharacter();
 
+        battleManager._CurrentCharacter = nextCharacter;
+
+        battleManager.SetTarget();
+
+        battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
     }
 
     public override void Exit()

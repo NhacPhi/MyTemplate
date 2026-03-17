@@ -16,20 +16,32 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
-        var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy_ultimate, false);
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
+        var state = caster.GetComponent<EntityStateData>();
 
-        energyBurstPrefab.gameObject.SetActive(false);
-        await UniTask.Delay(1000);
+        caster.StateManager.ChangeState(EntityState.ATTACK);
+
+        await state.WaitForHitFrame();
+
+        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+
         energyBurstPrefab.transform.position = caster.Target.transform.position;
         energyBurstPrefab.gameObject.SetActive(true);
+
+        //await UniTask.Delay(1000);
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
+
+        energyBurstPrefab.gameObject.SetActive(false);
     }
 
     public override SkillData GetSkillData() => skillData;

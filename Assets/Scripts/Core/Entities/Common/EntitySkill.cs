@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Tech.Composite;
@@ -45,9 +44,9 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         //baseSkill = data.CreateRuntimeSkill(entityStats);
     }
 
-    public void ExecuteMainSkill(SkillCharacter type)
+    public async UniTask ExecuteSkillAsync(SkillCharacter type)
     {
-        Skills.GetValueOrDefault(type).Execute(GetComponent<Entity>());
+        await Skills.GetValueOrDefault(type).ExecuteAsync(GetComponent<Entity>());
     }
 
     public async UniTask InitializeAsync(CancellationToken token)

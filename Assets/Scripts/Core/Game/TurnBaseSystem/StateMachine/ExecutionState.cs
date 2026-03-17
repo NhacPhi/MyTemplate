@@ -10,12 +10,28 @@ public class ExecutionState : BattleBaseState
     // Áp dụng Hiệu ứng phụ (Buff/Debuff)
     public ExecutionState(BattleManager battleManager) : base(battleManager) { }
 
-    public override void Enter()
+    public override async void Enter()
+    {
+        battleManager.EnqueueAction(async () =>
+        {
+            await battleManager._CurrentCharacter.ExecuteSkillAsync(battleManager._CurrentSkill);
+        });
+
+        while (battleManager.ActionQueue.Count > 0)
+        {
+            var nextAction = battleManager.ActionQueue.Dequeue();
+            await nextAction.Invoke();
+        }
+
+        battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
+    }
+
+    public override void Exit()
     {
 
     }
 
-    public override void Exit()
+    public override void OnUpdate()
     {
 
     }

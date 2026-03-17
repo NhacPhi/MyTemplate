@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using Tech.Composite;
 using Tech.StateMachine;
@@ -20,7 +20,6 @@ public enum EntityState
 public class EntityStateData : CoreComponent
 {
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
-    public EntityState NextStateAfterMoveNext { get; set; } = EntityState.ATTACK;
     public Entity Entity { get; protected set; }
     public EntityStats StatsManager { get; protected set; }
     public AnimationSystemBase Anim { get; protected set; }
@@ -48,16 +47,59 @@ public class EntityStateData : CoreComponent
 
     [field: SerializeField] public string MajorAnimaiton { get; protected set; } = "MajorSkill";
 
-    [field: SerializeField] public bool IsEmpoweredAttack { get; protected set; } = true;
-
-    [field: SerializeField] public bool IsMajorAttack { get; protected set; } = false;
-
     [field: SerializeField] public float RadioTimeTriggerDamgeMajor { get; protected set; } = 0.7f;
 
     [field: SerializeField] public float TimeTriggerDamge { get; protected set; } = 0.7f;
 
     [SerializeField] private AttackType attackType;
 
+
+    // ==========================================
+    private UniTaskCompletionSource _hitFrameTcs;
+    private UniTaskCompletionSource _animEndTcs;
+    private UniTaskCompletionSource _moveEndTcs;
+
+    public UniTaskCompletionSource HitFrameTcs => _hitFrameTcs;
+    public UniTaskCompletionSource AnimEndTcs => _animEndTcs;
+    public UniTaskCompletionSource MoveEndTcs => _moveEndTcs;
+
+    public UniTask WaitForHitFrame()
+    {
+        _hitFrameTcs = new UniTaskCompletionSource();
+        return _hitFrameTcs.Task;
+    }
+
+    public UniTask WaitForAnimEnd()
+    {
+        _animEndTcs = new UniTaskCompletionSource();
+        return _animEndTcs.Task;
+    }
+
+    public UniTask WaitForMoveEnd()
+    {
+        _moveEndTcs = new UniTaskCompletionSource();
+        return _moveEndTcs.Task;
+    }
+
+
+    public void TriggerHitFrame()
+    {
+        _hitFrameTcs?.TrySetResult();
+        _hitFrameTcs = null;
+    }
+
+    public void TriggerAnimEnd()
+    {
+        _animEndTcs?.TrySetResult();
+        _animEndTcs = null;
+    }
+
+    public void TriggerMoveEnd()
+    {
+        _moveEndTcs?.TrySetResult();
+        _moveEndTcs = null;
+    }
+    // ==========================================
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();
     public override void LoadComponent()
     {
@@ -68,27 +110,13 @@ public class EntityStateData : CoreComponent
         //RootPosition = Entity.transform.position;
     }
 
-    public virtual void HandleTurn(bool isMain)
+    public virtual void HandleTurn()
     {
-        _ = WaitToReadyAttack(isMain);
+        MovePosition = CurrentTarget.gameObject.transform.position - OffsetToTarget;
     }
 
     public void SetRootTransform()
     {
         RootPosition = Entity.transform.position;
     }    
-
-    protected virtual async UniTaskVoid WaitToReadyAttack(bool isMain)
-    {
-        await UniTask.WaitForSeconds(TimeToReadyMoveAttack, cancellationToken: Token);
-        MovePosition = CurrentTarget.gameObject.transform.position - OffsetToTarget;
-        if(attackType == AttackType.Melee || isMain)
-        {
-            StateManager.ChangeState(EntityState.MOVE_UP);
-        }
-        else
-        {
-            StateManager.ChangeState(EntityState.ATTACK);
-        }
-    }
 }

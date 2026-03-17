@@ -31,7 +31,15 @@ public class BattleSetupState : BattleBaseState
         await battleManager.LoadEntitiesDataAsync(token);
 
         battleManager.SetupEntitiesPosition();
-        battleManager.SetTarget();
+
+        battleManager.ActiveEntities.Clear();
+        battleManager.ActiveEntities.AddRange(battleManager.Characters.Values);
+        //battleManager.ActiveEntities.AddRange(battleManager.Enemies);
+
+        battleManager.TurnSystem.Inititalize(battleManager.ActiveEntities);
+
+
+        battleManager.StateMachine.ChangeState(BattleState.OrderState);
     }
 
     public override void OnUpdate()

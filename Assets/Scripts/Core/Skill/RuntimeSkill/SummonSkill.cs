@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncInitializer
 {
@@ -15,10 +16,10 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         this.skillData = data;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
         //Debug.Log($"[SkillCharacter] Initialize - ID: {this.GetHashCode()}");
-        _ = PerformSummon(skillData, caster); 
+        await PerformSummon(skillData, caster); 
     }
 
     public override SkillData GetSkillData() => skillData;

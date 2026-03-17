@@ -61,7 +61,7 @@ public class CharacterCardInfo : CharacterCard
         txtHP.text = config.Stats.GetValueOrDefault(StatType.HP).ToString();
         txtATK.text = config.Stats.GetValueOrDefault(StatType.ATK).ToString();
         txtDEF.text = config.Stats.GetValueOrDefault(StatType.DEF).ToString(); // stat.DEF.ToString();
-        txtSPD.text = "0"; // stat.SPD.ToString();
+        txtSPD.text = "0"; // stat.SPEED.ToString();
         txtDEFShred.text = "0"; // stat.DEFShred.ToString();
         txtCritRate.text = "0"; // stat.CRITRate.ToString();
         txtCriteDMG.text = "0"; // stat.CRITDMG.ToString();

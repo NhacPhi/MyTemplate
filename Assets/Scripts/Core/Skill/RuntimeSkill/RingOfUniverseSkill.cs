@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
+
 
 public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProjectileSkill, IAsyncInitializer
 {
@@ -11,15 +11,18 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
     private GameObject ringPrefab;
     private Entity _caster;
 
+    private UniTaskCompletionSource _skillEnd;
+
     public RingOfUniverseSkill(EntityStats owner, RingOfUniverseData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
         _caster = caster;
-        _ = ThrowProjectile(skillData, caster);
+       
+        await ThrowProjectile(skillData, caster);
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -45,10 +48,13 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
     public void OnProjectileReturned(GameObject projectitle)
     {
         ringPrefab.gameObject.SetActive(false);
+        _skillEnd.TrySetResult();
     }
 
     public async UniTask ThrowProjectile(SkillData data, Entity caster)
     {
+        _skillEnd = new UniTaskCompletionSource();
+
         ringPrefab.transform.SetParent(caster.transform);
         ringPrefab.transform.localPosition = skillData.Offset;
         ringPrefab.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -65,6 +71,8 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
             direction: throwDir,
             maxDist: maxDis
             );
+
+        await _skillEnd.Task;
     }
 
     public async UniTask InitializeAsync(CancellationToken token)

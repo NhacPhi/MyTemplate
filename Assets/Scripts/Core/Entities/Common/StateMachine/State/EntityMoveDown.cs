@@ -34,6 +34,8 @@ public class EntityMoveDown : EntityStateBase
 
         if (!MoveToRoot()) return;
 
+        data.TriggerMoveEnd();
+
         data.StateManager.ChangeState(EntityState.IDLE);
     }
 

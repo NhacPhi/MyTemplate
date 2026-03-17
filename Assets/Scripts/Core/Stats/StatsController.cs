@@ -26,6 +26,16 @@ public class StatsController : CoreComponent, IEffectable
 
     public Action<AttributeEvtArgs> OnAtributeChange;
 
+    private float _currentAV;
+    public float CurrentAV
+    {
+        get => _currentAV;
+        set
+        {
+            _currentAV = Mathf.Max(0, value); ;
+        }
+    }
+
 #if UNITY_EDITOR
     /// <summary>
     /// Only Work On Editor

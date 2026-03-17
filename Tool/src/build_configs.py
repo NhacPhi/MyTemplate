@@ -110,7 +110,7 @@ class CharacterConfigBuilder(BaseBuilder):
             df = all_sheets["CharacterStat"]
 
             # defind clomums
-            stat_columns = ['hp', 'def', 'atk']
+            stat_columns = ['hp', 'def', 'atk', "speed"]
             
             for _, row, in df.iterrows():
                 char_id = str(row['ID']).strip()

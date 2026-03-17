@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 
 public abstract class SkillRuntime
@@ -11,5 +12,5 @@ public abstract class SkillRuntime
 
     public abstract SkillData GetSkillData();
 
-    public abstract void Execute(Entity caster);
+    public abstract UniTask ExecuteAsync(Entity caster);
 }

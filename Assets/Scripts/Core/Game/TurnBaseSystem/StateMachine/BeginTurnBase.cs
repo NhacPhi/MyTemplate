@@ -12,7 +12,7 @@ public class BeginTurnBase : BattleBaseState
 
     public override void Enter()
     {
-
+        battleManager.StateMachine.ChangeState(BattleState.ActionState);
     }
 
     public override void Exit()

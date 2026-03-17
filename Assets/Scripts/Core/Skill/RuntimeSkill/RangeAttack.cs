@@ -14,24 +14,20 @@ public class RangeAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
         var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy_ultimate, false);
+        caster.HandleTurn(enemy_ultimate);
 
         //Trigger Animation
         EntityStateData state = caster.GetComponent<EntityStateData>();
-        if (state != null)
-        {
-            state.NextStateAfterMoveNext = EntityState.ATTACK;
 
-        }
     }
     public void OnDealDamage(ref float damgeInput)
     {
         // Caculate damge
     }
-    //public async UniTask Perform(SkillData config, Entity caster)
+    //public async UniTask PerformSkillAsync(SkillData config, Entity caster)
     //{
 
     //}

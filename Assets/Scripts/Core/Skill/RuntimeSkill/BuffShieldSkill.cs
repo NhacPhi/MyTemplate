@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class BuffShieldSkill : SkillRuntime
 {
     private BuffShieldData skillData;
@@ -10,18 +10,23 @@ public class BuffShieldSkill : SkillRuntime
     {
         this.skillData = skillData;
     }
-    public override void Execute(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster)
     {
-        //MajorSkill
-        //Trigger Animation
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
-        EntityStats state = caster.GetComponent<EntityStats>();
-        if (state != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAJOR_SKILL);
-            state.BuffShield(1000);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
+
+        var state = caster.GetComponent<EntityStateData>();
+
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+
+        await state.WaitForHitFrame();
+
+        EntityStats stat = caster.GetComponent<EntityStats>();
+        stat.BuffShield(1000);
+
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
     }
 
     public override SkillData GetSkillData() => skillData;
