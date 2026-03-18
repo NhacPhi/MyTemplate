@@ -605,17 +605,187 @@ public static class LocKeys
 
     public const long STR_VANGUARD_TIGER = 2865654881;
 
-    public const long WUKONG_FIRSTSKIL_NAME = 762970985;
+    public const long SUNWUKONG_B_NAME = 1067287368;
 
-    public const long WUKONG_FIRSTSKIL_DES = 1999978302;
+    public const long SUNWUKONG_B_DES = 3336390912;
 
-    public const long WUKONG_SECONDSKILL_NAME = 1921542908;
+    public const long SUNWUKONG_M_NAME = 3239352682;
 
-    public const long WUKONG_SECONDSKILL_DES = 674011253;
+    public const long SUNWUKONG_M_DES = 3419521401;
 
-    public const long WUKONG_THIRDSKILL_NAME = 4013442750;
+    public const long SUNWUKONG_U_NAME = 3696005978;
 
-    public const long WUKONG_THIRDSKILL_DES = 45078604;
+    public const long SUNWUKONG_U_DES = 22218017;
+
+    public const long TANGSANZANG_B_NAME = 4101531952;
+
+    public const long TANGSANZANG_M_NAME = 1803905392;
+
+    public const long TANGSANZANG_U_NAME = 3075645164;
+
+    public const long TANGSANZANG_B_DES = 389073617;
+
+    public const long TANGSANZANG_M_DES = 1806441278;
+
+    public const long TANGSANZANG_U_DES = 2203572624;
+
+    public const long ZHUBAJIE_B_NAME = 887970513;
+
+    public const long ZHUBAJIE_M_NAME = 2722680510;
+
+    public const long ZHUBAJIE_U_NAME = 3212780353;
+
+    public const long ZHUBAJIE_B_DES = 1621767208;
+
+    public const long ZHUBAJIE_M_DES = 1430700502;
+
+    public const long ZHUBAJIE_U_DES = 3559824929;
+
+    public const long SHAWUJING_B_NAME = 912099643;
+
+    public const long SHAWUJING_M_NAME = 3800924881;
+
+    public const long SHAWUJING_U_NAME = 4271876280;
+
+    public const long SHAWUJING_B_DES = 3914413104;
+
+    public const long SHAWUJING_M_DES = 3778048083;
+
+    public const long DRAGONKING_B_NAME = 2087350282;
+
+    public const long DRAGONKING_M_NAME = 2457540170;
+
+    public const long DRAGONKING_U_NAME = 2442178655;
+
+    public const long DRAGONKING_B_DES = 4284271022;
+
+    public const long DRAGONKING_M_DES = 491717580;
+
+    public const long DRAGONKING_U_DES = 1983184445;
+
+    public const long THIRDPRINCENEZHA_B_NAME = 3960779279;
+
+    public const long THIRDPRINCENEZHA_M_NAME = 2518536810;
+
+    public const long THIRDPRINCENEZHA_U_NAME = 598886642;
+
+    public const long THIRDPRINCENEZHA_B_DES = 2059288544;
+
+    public const long THIRDPRINCENEZHA_M_DES = 3428244814;
+
+    public const long THIRDPRINCENEZHA_U_DES = 1060479304;
+
+    public const long LITTLEWHITEDRAGON_B_NAME = 987708377;
+
+    public const long LITTLEWHITEDRAGON_M_NAME = 1937668250;
+
+    public const long LITTLEWHITEDRAGON_U_NAME = 232672404;
+
+    public const long LITTLEWHITEDRAGON_B_DES = 2644499163;
+
+    public const long LITTLEWHITEDRAGON_M_DES = 3635238380;
+
+    public const long LITTLEWHITEDRAGON_U_DES = 699246327;
+
+    public const long BULLDEMONKING_B_NAME = 3729828721;
+
+    public const long BULLDEMONKING_M_NAME = 3191543977;
+
+    public const long BULLDEMONKING_U_NAME = 2707740248;
+
+    public const long BULLDEMONKING_B_DES = 1933137142;
+
+    public const long BULLDEMONKING_M_DES = 2241444781;
+
+    public const long BULLDEMONKING_U_DES = 1509573623;
+
+    public const long ERLANGSHEN_B_NAME = 1097877494;
+
+    public const long ERLANGSHEN_M_NAME = 3312233495;
+
+    public const long ERLANGSHEN_U_NAME = 56125714;
+
+    public const long ERLANGSHEN_B_DES = 4280878459;
+
+    public const long ERLANGSHEN_M_DES = 603761648;
+
+    public const long ERLANGSHEN_U_DES = 4054124890;
+
+    public const long GUANYINBODHISATTVA_B_NAME = 2003724100;
+
+    public const long GUANYINBODHISATTVA_M_NAME = 1350552570;
+
+    public const long GUANYINBODHISATTVA_U_NAME = 692807574;
+
+    public const long GUANYINBODHISATTVA_B_DES = 3989031508;
+
+    public const long GUANYINBODHISATTVA_M_DES = 2542808218;
+
+    public const long GUANYINBODHISATTVA_U_DES = 3110919530;
+
+    public const long VANGUARDTIGER_B_NAME = 2407734047;
+
+    public const long VANGUARDTIGER_B_DES = 163734896;
+
+    public const long THEBOYSAGE_B_NAME = 4088634325;
+
+    public const long THEBOYSAGE_M_NAME = 681340976;
+
+    public const long THEBOYSAGE_U_NAME = 3266720559;
+
+    public const long THEBOYSAGE_B_DES = 2865375096;
+
+    public const long THEBOYSAGE_M_DES = 3131333227;
+
+    public const long THEBOYSAGE_U_DES = 3263716658;
+
+    public const long GOLDHORNKING_B_NAME = 3284977142;
+
+    public const long GOLDHORNKING_M_NAME = 2605397208;
+
+    public const long GOLDHORNKING_U_NAME = 757041620;
+
+    public const long GOLDHORNKING_B_DES = 3336153369;
+
+    public const long GOLDHORNKING_M_DES = 1608077493;
+
+    public const long GOLDHORNKING_U_DES = 355619658;
+
+    public const long SILVERHORNKING_B_NAME = 3604073782;
+
+    public const long SILVERHORNKING_M_NAME = 3935859252;
+
+    public const long SILVERHORNKING_U_NAME = 4284829501;
+
+    public const long SILVERHORNKING_B_DES = 167254605;
+
+    public const long SILVERHORNKING_M_DES = 1924121733;
+
+    public const long SILVERHORNKING_U_DES = 2032288666;
+
+    public const long YELLOWWINDMONSTER_B_NAME = 3118816832;
+
+    public const long YELLOWWINDMONSTER_M_NAME = 2883884739;
+
+    public const long YELLOWWINDMONSTER_U_NAME = 4250590855;
+
+    public const long YELLOWWINDMONSTER_B_DES = 4190240252;
+
+    public const long YELLOWWINDMONSTER_M_DES = 3235113244;
+
+    public const long YELLOWWINDMONSTER_U_DES = 2534825317;
+
+    public const long GOLDFISHDEMON_B_NAME = 3902236339;
+
+    public const long GOLDFISHDEMON_M_NAME = 4265829752;
+
+    public const long GOLDFISHDEMON_U_NAME = 4170096292;
+
+    public const long GOLDFISHDEMON_B_DES = 1376192449;
+
+    public const long GOLDFISHDEMON_M_DES = 909228250;
+
+    public const long GOLDFISHDEMON_U_DES = 3530900397;
 
     public const long DEBUFF_DEF_NAME = 651413426;
 

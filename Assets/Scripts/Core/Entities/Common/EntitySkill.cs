@@ -46,7 +46,7 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
     public async UniTask ExecuteSkillAsync(SkillCharacter type)
     {
-        await Skills.GetValueOrDefault(type).ExecuteAsync(GetComponent<Entity>());
+        await Skills.GetValueOrDefault(type).ExecuteAsync(core as Entity);
     }
 
     public async UniTask InitializeAsync(CancellationToken token)
@@ -54,54 +54,33 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         entityStats = gameObject.GetComponent<EntityStats>();
 
         var characterConfig = _gameDataBase.GetCharacterConfig(entityStats.EntityID);
-
-        // Base Skill
-        var baseSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Base);
-        SkillData dataBaseSkill = SkillDataFactory.Create(baseSkillID);
-
-        SkillRuntime baseSkill = dataBaseSkill.CreateRuntimeSkill(entityStats);
-
-        var initializerBase = baseSkill as IAsyncInitializer;
-
-        if (initializerBase != null)
+        foreach(var kvp in characterConfig.Skills)
         {
-            await initializerBase.InitializeAsync(token);
-        }
+            SkillCharacter skillType = kvp.Key;
+            SkillConponent skillConfig = kvp.Value;
 
-        Skills.Add(SkillCharacter.Base, baseSkill);
+            if(skillConfig.Skill != Skill.None)
+            {
+                SkillData skillData = SkillDataFactory.Create(skillConfig.Skill);
 
+                skillData.DamageMultiplier = skillConfig.DamageMultiplier;
 
-        //Majojr Skill 
-        var majorSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Major);
+                skillData.MaxCoolDown = skillConfig.MaxCooldown;
 
-        SkillData dataMajor = SkillDataFactory.Create(majorSkillID);
+                skillData.FlatDamage = skillConfig.FlatDamage;
 
-        SkillRuntime majorSkill = dataMajor.CreateRuntimeSkill(entityStats);
+                SkillRuntime skillRuntime = skillData.CreateRuntimeSkill(entityStats);
 
-        var initializerMajor = majorSkill as IAsyncInitializer;
+                var initializer = skillRuntime as IAsyncInitializer;
 
-        if (initializerMajor != null)
-        {
-            await initializerMajor.InitializeAsync(token);
-        }
+                if (initializer != null)
+                {
+                    await initializer.InitializeAsync(token);
+                }
 
-        Skills.Add(SkillCharacter.Major, majorSkill);
-
-        // Ultimate Skill
-        var ultimateSkillID = characterConfig.Skills.GetValueOrDefault(SkillCharacter.Ultimate);
-
-        SkillData dataUltiamte = SkillDataFactory.Create(ultimateSkillID);
-
-        SkillRuntime ultimateSkill = dataUltiamte.CreateRuntimeSkill(entityStats);
-
-        var initializerUltimate = ultimateSkill as IAsyncInitializer;
-
-        if (initializerUltimate != null)
-        {
-            await initializerUltimate.InitializeAsync(token);
-        }
-
-        Skills.Add(SkillCharacter.Ultimate, ultimateSkill);
+                Skills.Add(skillType, skillRuntime);
+            } 
+        }    
     }
 
     public void ApplyAttackSkill(ref float damage)
@@ -113,4 +92,9 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
     {
         
     }
+
+    //public bool IsSkillReady(SkillCharacter type)
+    //{
+
+    //}
 }

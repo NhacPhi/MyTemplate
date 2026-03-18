@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 6044296753504176612}
   - component: {fileID: 2913178327910769972}
   - component: {fileID: 8393971912570073465}
+  - component: {fileID: 344798449703776220}
   m_Layer: 0
   m_Name: BullDemonKing
   m_TagString: Untagged
@@ -336,7 +337,7 @@ MonoBehaviour:
   <HitAnimation>k__BackingField: Injured
   <MainSkillAnimaiton>k__BackingField: UltimateSkill
   <MajorAnimaiton>k__BackingField: MajorSkill
-  <IsEmpoweredAttack>k__BackingField: 0
+  <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
   <TimeTriggerDamge>k__BackingField: 0.5
   attackType: 0
 --- !u!114 &8393971912570073465
@@ -352,6 +353,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EntityID>k__BackingField: BullDemonKing
+--- !u!65 &344798449703776220
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2456069910155421974}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 3, z: 0.4}
+  m_Center: {x: 0, y: -0.2477076, z: 0}
 --- !u!1 &2649586760728683393
 GameObject:
   m_ObjectHideFlags: 0

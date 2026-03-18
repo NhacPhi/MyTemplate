@@ -4,9 +4,30 @@
         "rare": "UR",
         "type": "Fighter",
         "skills": {
-            "base": "Melee",
-            "major": "Summon",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 1067287368,
+                "des_hash": 3336390912,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 3239352682,
+                "des_hash": 3419521401,
+                "skill": "Summon",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 3696005978,
+                "des_hash": 22218017,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 3750,
@@ -35,9 +56,30 @@
         "rare": "R",
         "type": "Mage",
         "skills": {
-            "base": "Range",
-            "major": "BuffShield",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 4101531952,
+                "des_hash": 389073617,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 1803905392,
+                "des_hash": 1806441278,
+                "skill": "BuffShield",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 3075645164,
+                "des_hash": 2203572624,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2500,
@@ -66,9 +108,30 @@
         "rare": "SSR",
         "type": "Tanker",
         "skills": {
-            "base": "Melee",
-            "major": "BuffShield",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 887970513,
+                "des_hash": 1621767208,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 2722680510,
+                "des_hash": 1430700502,
+                "skill": "BuffShield",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 3212780353,
+                "des_hash": 3559824929,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 3900,
@@ -97,9 +160,30 @@
         "rare": "SR",
         "type": "Support",
         "skills": {
-            "base": "Melee",
-            "major": "Healing",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 912099643,
+                "des_hash": 3914413104,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 3800924881,
+                "des_hash": 3778048083,
+                "skill": "Healing",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 4271876280,
+                "des_hash": 1345070445,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2900,
@@ -128,9 +212,30 @@
         "rare": "SR",
         "type": "Support",
         "skills": {
-            "base": "Melee",
-            "major": "None",
-            "ultimate": "None"
+            "Base": {
+                "name_hash": 2087350282,
+                "des_hash": 4284271022,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 2457540170,
+                "des_hash": 491717580,
+                "skill": "None",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 2442178655,
+                "des_hash": 1983184445,
+                "skill": "None",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2930,
@@ -159,15 +264,36 @@
         "rare": "SSR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "FireRing",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 3960779279,
+                "des_hash": 2059288544,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 2518536810,
+                "des_hash": 3428244814,
+                "skill": "FireRing",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 598886642,
+                "des_hash": 1060479304,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2650,
             "def": 325,
             "atk": 2400,
-            "speed": 100
+            "speed": 95
         },
         "attributes": {
             "shield": {
@@ -190,15 +316,36 @@
         "rare": "SR",
         "type": "ADCarry",
         "skills": {
-            "base": "Melee",
-            "major": "ThunderBall",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 987708377,
+                "des_hash": 2644499163,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 1937668250,
+                "des_hash": 3635238380,
+                "skill": "ThunderBall",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 232672404,
+                "des_hash": 699246327,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2750,
             "def": 300,
             "atk": 1800,
-            "speed": 105
+            "speed": 95
         },
         "attributes": {
             "shield": {
@@ -221,15 +368,36 @@
         "rare": "SSR",
         "type": "Tanker",
         "skills": {
-            "base": "Melee",
-            "major": "BuffShield",
-            "ultimate": "PosionBall"
+            "Base": {
+                "name_hash": 3729828721,
+                "des_hash": 1933137142,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 3191543977,
+                "des_hash": 2241444781,
+                "skill": "BuffShield",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 2707740248,
+                "des_hash": 1509573623,
+                "skill": "PosionBall",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 4250,
             "def": 420,
             "atk": 1500,
-            "speed": 110
+            "speed": 95
         },
         "attributes": {
             "shield": {
@@ -252,15 +420,36 @@
         "rare": "UR",
         "type": "Fighter",
         "skills": {
-            "base": "Melee",
-            "major": "None",
-            "ultimate": "None"
+            "Base": {
+                "name_hash": 1097877494,
+                "des_hash": 4280878459,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 3312233495,
+                "des_hash": 603761648,
+                "skill": "None",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 56125714,
+                "des_hash": 4054124890,
+                "skill": "None",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 3700,
             "def": 350,
             "atk": 2100,
-            "speed": 115
+            "speed": 95
         },
         "attributes": {
             "shield": {
@@ -283,15 +472,36 @@
         "rare": "UR",
         "type": "Mage",
         "skills": {
-            "base": "Range",
-            "major": "None",
-            "ultimate": "None"
+            "Base": {
+                "name_hash": 2003724100,
+                "des_hash": 3989031508,
+                "skill": "Range",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 1350552570,
+                "des_hash": 2542808218,
+                "skill": "None",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 692807574,
+                "des_hash": 3110919530,
+                "skill": "None",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 3000,
             "def": 330,
             "atk": 1950,
-            "speed": 120
+            "speed": 95
         },
         "attributes": {
             "shield": {
@@ -314,15 +524,36 @@
         "rare": "R",
         "type": "Mage",
         "skills": {
-            "base": "Melee",
-            "major": "None",
-            "ultimate": "None"
+            "Base": {
+                "name_hash": 2407734047,
+                "des_hash": 163734896,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "damage_multiplier": 0.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "damage_multiplier": 0.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2500,
             "def": 280,
             "atk": 1650,
-            "speed": 125
+            "speed": 70
         },
         "attributes": {
             "shield": {
@@ -341,15 +572,36 @@
         "rare": "UR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "FireBall",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 4088634325,
+                "des_hash": 2865375096,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 681340976,
+                "des_hash": 3131333227,
+                "skill": "FireBall",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 3266720559,
+                "des_hash": 3263716658,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2650,
             "def": 325,
             "atk": 2400,
-            "speed": 130
+            "speed": 80
         },
         "attributes": {
             "shield": {
@@ -372,15 +624,36 @@
         "rare": "SSR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "MajorAttack",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 3284977142,
+                "des_hash": 3336153369,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 2605397208,
+                "des_hash": 1608077493,
+                "skill": "MajorAttack",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 757041620,
+                "des_hash": 355619658,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2650,
             "def": 325,
             "atk": 2400,
-            "speed": 135
+            "speed": 80
         },
         "attributes": {
             "shield": {
@@ -403,15 +676,36 @@
         "rare": "SSR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "Torando",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 3604073782,
+                "des_hash": 167254605,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 3935859252,
+                "des_hash": 1924121733,
+                "skill": "Torando",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 4284829501,
+                "des_hash": 2032288666,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2650,
             "def": 325,
             "atk": 2400,
-            "speed": 140
+            "speed": 80
         },
         "attributes": {
             "shield": {
@@ -434,15 +728,36 @@
         "rare": "UR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "Suriken",
-            "ultimate": "DivineWind"
+            "Base": {
+                "name_hash": 3118816832,
+                "des_hash": 4190240252,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 2883884739,
+                "des_hash": 3235113244,
+                "skill": "Suriken",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 4250590855,
+                "des_hash": 2534825317,
+                "skill": "DivineWind",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
-            "hp": 6000,
+            "hp": 3900,
             "def": 325,
             "atk": 2400,
-            "speed": 145
+            "speed": 80
         },
         "attributes": {
             "shield": {
@@ -465,15 +780,36 @@
         "rare": "SSR",
         "type": "Assassin",
         "skills": {
-            "base": "Melee",
-            "major": "MajorAttack",
-            "ultimate": "EmpowerAttack"
+            "Base": {
+                "name_hash": 3902236339,
+                "des_hash": 1376192449,
+                "skill": "Melee",
+                "damage_multiplier": 1.0,
+                "max_cooldown": 0,
+                "flat_damage": 100.0
+            },
+            "Major": {
+                "name_hash": 4265829752,
+                "des_hash": 909228250,
+                "skill": "MajorAttack",
+                "damage_multiplier": 1.5,
+                "max_cooldown": 4,
+                "flat_damage": 100.0
+            },
+            "Ultimate": {
+                "name_hash": 4170096292,
+                "des_hash": 3530900397,
+                "skill": "EmpowerAttack",
+                "damage_multiplier": 1.8,
+                "max_cooldown": 5,
+                "flat_damage": 100.0
+            }
         },
         "stats": {
             "hp": 2650,
             "def": 325,
             "atk": 2400,
-            "speed": 150
+            "speed": 80
         },
         "attributes": {
             "shield": {

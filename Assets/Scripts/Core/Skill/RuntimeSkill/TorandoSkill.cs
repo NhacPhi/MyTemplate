@@ -26,13 +26,12 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
         _skillEnd = new UniTaskCompletionSource();
 
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
 
-        if (stateData != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAJOR_SKILL);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        var state = caster.GetCoreComponent<EntityStateData>();
+
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
         await UniTask.Delay(1000);
 
@@ -52,7 +51,8 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
            skill: this,
            direction: flyDir
            );
-
+        await state.WaitForAnimEnd();
+        caster.StateManager.ChangeState(EntityState.IDLE);
         await _skillEnd.Task;
     }
 
@@ -79,20 +79,17 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
     public void OnProjectileImpact(Entity target, Vector2 contactPoint)
     {
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         _skillEnd.TrySetResult();
+
+        PutOnCooldown();
     }
 }
 
 public class TorandoData : SkillData
 {
-    public Vector3 Offset = new Vector3(3, 0, 0);
+    public Vector3 Offset = new Vector3(-3, 0, 0);
 
     public string torandoReference = "Torando";
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new TorandoSkill(owner, this);

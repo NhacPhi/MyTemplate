@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 746037052814250426}
   - component: {fileID: 7367925132280507623}
   - component: {fileID: 2947256297259670875}
+  - component: {fileID: -7780586867475083367}
   m_Layer: 0
   m_Name: TheBoySage
   m_TagString: Untagged
@@ -508,8 +509,6 @@ MonoBehaviour:
   <HitAnimation>k__BackingField: Injured
   <MainSkillAnimaiton>k__BackingField: UltimateSkill
   <MajorAnimaiton>k__BackingField: MajorSkill
-  <IsEmpoweredAttack>k__BackingField: 1
-  <IsMajorAttack>k__BackingField: 0
   <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
   <TimeTriggerDamge>k__BackingField: 0.7
   attackType: 0
@@ -526,6 +525,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EntityID>k__BackingField: TheBoySage
+--- !u!65 &-7780586867475083367
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4812460875221913262}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 3, z: 0.4}
+  m_Center: {x: 0, y: -0.2477076, z: 0}
 --- !u!1 &6022330659094144210
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,36 @@ public class OrderState : BattleBaseState
     {
         Entity nextCharacter = battleManager.TurnSystem.GetNextCharacter();
 
-        battleManager._CurrentCharacter = nextCharacter;
+        battleManager.CurrentCharacter = nextCharacter;
+        
+        var pos_char = battleManager.CurrentCharacter.gameObject.transform.position;
 
-        battleManager.SetTarget();
+        var pos = new Vector3(pos_char.x, pos_char.y - battleManager.OffsetY, pos_char.z);
 
-        battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
+        battleManager.SeletionCircle.transform.position = pos;
+
+        UIEvent.OnUpdateEntityPrediction?.Invoke(battleManager.TurnSystem.PredictTurnOrder());
+
+        var enemyBrain = nextCharacter.GetCoreComponent<EnemyBrain>();
+
+        if(enemyBrain != null)
+        {
+            UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
+
+            battleManager.StateMachine.ChangeState(BattleState.EnemyTurnsState);
+        }
+        else
+        {
+            UIEvent.OnSwithActiveSkilCharacter?.Invoke(true);
+
+            UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCharacter);
+
+            battleManager.CurrentSkill = SkillCharacter.Base;
+
+            battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
+        }
+
+
     }
 
     public override void Exit()

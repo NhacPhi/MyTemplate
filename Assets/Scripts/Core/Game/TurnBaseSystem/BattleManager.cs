@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private List<Transform> _characterPosisions;
     [SerializeField] private List<Transform> _enemiesPositions;
+    [SerializeField] public GameObject SeletionCircle;
     public List<Entity> ActiveEntities => _activeEntities;
     public Dictionary<string, Entity> Characters => _characters;
     public List<Entity> Enemies => _enemies; 
@@ -34,13 +35,39 @@ public class BattleManager : MonoBehaviour
     [Inject] private EnemyManager _enemyManger;
     [Inject] private CharacterManager _characterManager;
 
-    float OffsetY = 4;
+    public float OffsetY = 4;
+
+    private Entity _currentCharacter;
+    private Entity _currentEnemy;
+    private SkillCharacter _currentSkill;
+
+    private BattleResult _resultBattle;
+    public BattleResult ResultBattle
+    {
+        get { return _resultBattle; }
+        set { _resultBattle = value; }
+    }
 
     // Current pram
-    public Entity _CurrentCharacter;
-    public SkillCharacter _CurrentSkill;
+    public Entity CurrentCharacter 
+    { 
+    
+        get { return _currentCharacter; }
+        set { _currentCharacter = value; }
+    }
+    public SkillCharacter CurrentSkill
+    {
 
-    public Entity _CurrentEnemy;
+        get { return _currentSkill; }
+        set { _currentSkill = value; }
+    }
+
+    public Entity CurrentEnemy
+    {
+        get { return _currentEnemy; }
+        set { _currentEnemy = value; }
+    }
+
 
     public bool IsExecutedAction = false;
 
@@ -148,18 +175,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    //Test
-    public void SetTarget()
-    {
-        var characterConfig = _gameDataBase.GetCharacterConfig(_CurrentCharacter.GetComponent<EntityStats>().EntityID);
-
-        var baseSkill = characterConfig.BaseSkillIcon;
-        var majorSkill = characterConfig.MajorSkillIcon;
-        var ultimateSKill = characterConfig.UltimateSkillIcon;
-
-        UIEvent.OnUpdateSkillCharacterUI?.Invoke(baseSkill, majorSkill, ultimateSKill);
-    }
-
     public void ExecuteSkillEntity()
     {
         IsExecutedAction = true;
@@ -167,14 +182,14 @@ public class BattleManager : MonoBehaviour
 
     public void SetupCurrentSkillCharacter(SkillCharacter type)
     {
-        _CurrentSkill = type;
+        _currentSkill = type;
     }
     
     public void SetCurrentTarget(Entity target)
     {
-        _CurrentEnemy = target;
+        _currentEnemy = target;
 
-        _CurrentCharacter.SetTaget(_CurrentEnemy);
+        _currentCharacter.SetTaget(CurrentEnemy);
     }
 
     private void InitStateMachine()
@@ -190,6 +205,7 @@ public class BattleManager : MonoBehaviour
         StateMachine.AddNewState(BattleState.SetupState, new BattleSetupState(this));
         StateMachine.AddNewState(BattleState.OrderState, new OrderState(this));
         StateMachine.AddNewState(BattleState.BeginTurnBase, new BeginTurnBase(this));
+        StateMachine.AddNewState(BattleState.EnemyTurnsState, new EnemyTurnState(this));
         StateMachine.AddNewState(BattleState.ActionState, new ActionState(this));
         StateMachine.AddNewState(BattleState.ExecutionState, new ExecutionState(this));
         StateMachine.AddNewState(BattleState.EndTurnState, new EndTurnState(this));

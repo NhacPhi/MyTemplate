@@ -160,10 +160,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2423420615553583077}
-  - component: {fileID: 8878238751508384483}
   - component: {fileID: 3030845712690434453}
+  - component: {fileID: 1910063967990003906}
+  - component: {fileID: 5065259592488986734}
+  - component: {fileID: 8878238751508384483}
   - component: {fileID: 5527412889611734811}
   - component: {fileID: 230106654403172418}
+  - component: {fileID: -118552306721251981}
   m_Layer: 0
   m_Name: 'VanguardTiger '
   m_TagString: Untagged
@@ -187,33 +190,6 @@ Transform:
   - {fileID: 113844008546535805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8878238751508384483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5746289351697080583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9153bdd6baeed93428b47fbd6035d255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TimeToReadyMoveAttack>k__BackingField: 0.3
-  <TimeToEndTurn>k__BackingField: 0.3
-  <MoveSpeed>k__BackingField: 8
-  <SmoothTime>k__BackingField: 0.15
-  <OffsetToTarget>k__BackingField: {x: 5, y: 0, z: 0}
-  <IdleAnimation>k__BackingField: Idle
-  <AttackAnimation>k__BackingField: Attack
-  <HitAnimation>k__BackingField: Injured
-  <MainSkillAnimaiton>k__BackingField: UltimateSkill
-  <MajorAnimaiton>k__BackingField: MajorSkill
-  <IsEmpoweredAttack>k__BackingField: 1
-  <IsMajorAttack>k__BackingField: 0
-  <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
-  <TimeTriggerDamge>k__BackingField: 0.7
-  attackType: 0
 --- !u!114 &3030845712690434453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +204,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   RenderOrder: 0
+--- !u!114 &1910063967990003906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5746289351697080583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a685d312c24776044a247eedaa250c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5065259592488986734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5746289351697080583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a829d24d9df364346ad827e7768dfffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8878238751508384483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5746289351697080583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9153bdd6baeed93428b47fbd6035d255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TimeToReadyMoveAttack>k__BackingField: 0.3
+  <TimeToEndTurn>k__BackingField: 0.3
+  <MoveSpeed>k__BackingField: 50
+  <SmoothTime>k__BackingField: 0.15
+  <OffsetToTarget>k__BackingField: {x: -8, y: 0, z: 0}
+  <IdleAnimation>k__BackingField: Idle
+  <AttackAnimation>k__BackingField: Attack
+  <HitAnimation>k__BackingField: Injured
+  <MainSkillAnimaiton>k__BackingField: UltimateSkill
+  <MajorAnimaiton>k__BackingField: MajorSkill
+  <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
+  <TimeTriggerDamge>k__BackingField: 0.7
+  attackType: 0
 --- !u!114 &5527412889611734811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +287,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 3, z: 0.4}
   m_Center: {x: -0.24295233, y: -0.2477076, z: 0}
+--- !u!65 &-118552306721251981
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5746289351697080583}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7911791600680810468
 GameObject:
   m_ObjectHideFlags: 0

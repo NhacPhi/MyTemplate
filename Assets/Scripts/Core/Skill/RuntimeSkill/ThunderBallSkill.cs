@@ -26,13 +26,12 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
-        var state = caster.GetComponent<EntityStateData>();
+        var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
         await UniTask.Delay(1000);
 
-        caster.StateManager.ChangeState(EntityState.IDLE);
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);
         firreBallPrefab.transform.localPosition = skillData.Offset;
@@ -51,7 +50,15 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
             direction: flyDir
             );
 
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
+
         await _skillEnd.Task;
+
+        await UniTask.Delay(500);
+
+        PutOnCooldown();
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -77,12 +84,7 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
     public void OnProjectileImpact(Entity target, Vector2 contactPoint)
     {
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         _skillEnd.TrySetResult();
     }

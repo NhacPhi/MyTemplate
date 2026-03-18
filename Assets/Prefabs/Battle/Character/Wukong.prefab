@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 4267977402119219788}
   - component: {fileID: 8125668102333609033}
   - component: {fileID: 1058762182866175624}
+  - component: {fileID: -5970854443273503231}
   m_Layer: 0
   m_Name: Wukong
   m_TagString: Untagged
@@ -284,7 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4997db1c2952b3a41a811f23755ff1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  Target: {fileID: 0}
+  RenderOrder: 0
 --- !u!114 &4267977402119219788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +321,7 @@ MonoBehaviour:
   <HitAnimation>k__BackingField: Injured
   <MainSkillAnimaiton>k__BackingField: UltimateSkill
   <MajorAnimaiton>k__BackingField: MajorSkill
-  <IsEmpoweredAttack>k__BackingField: 1
+  <RadioTimeTriggerDamgeMajor>k__BackingField: 0.7
   <TimeTriggerDamge>k__BackingField: 0.7
   attackType: 0
 --- !u!114 &1058762182866175624
@@ -335,3 +337,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EntityID>k__BackingField: SunWukong
+--- !u!65 &-5970854443273503231
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138682483313706592}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 3, z: 0.4}
+  m_Center: {x: 0, y: -0.2477076, z: 0}

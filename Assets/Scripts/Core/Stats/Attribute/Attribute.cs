@@ -75,4 +75,16 @@ public class Attribute
         if (_maxValue != null)
             _maxValue.OnValueChange -= HandleMaxStatChanged;
     }
+
+    public float GetPercent()
+    {
+        float max = MaxValue;
+
+        if (Mathf.Approximately(max, _minValue))
+        {
+            return 0f;
+        }
+
+        return Mathf.Clamp01((_value - _minValue) / (max - _minValue));
+    }
 }

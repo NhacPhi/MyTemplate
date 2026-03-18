@@ -35,13 +35,20 @@ class ItemModel:
 class AttributeComponent:
     max_stat_type: str
     start_percent: float
-
+@dataclass
+class SkillComponent:
+    name_hash: str
+    des_hash: str
+    skill: str
+    damage_multiplier: float
+    max_cooldown: int
+    flat_damage: float
 @dataclass
 class CharacterModel:
     name_hash: int
     rare: str
     type: str
-    skills: Dict[str, str]= field(default_factory=dict) # skill config
+    skills: Dict[str, SkillComponent]= field(default_factory=dict) # skill config
     stats: Dict[str, int] = field(default_factory=dict) # stats config
     attributes: Dict[str, AttributeComponent] = field(default_factory=dict) # attribute config
     upgrades: Dict[str, int] = field(default_factory=dict) # stats upgrade

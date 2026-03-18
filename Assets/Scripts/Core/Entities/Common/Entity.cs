@@ -76,7 +76,12 @@ public abstract class Entity : Tech.Composite.Core, ITurn
 
     public virtual async UniTask ExecuteSkillAsync(SkillCharacter type)
     {
+        await gameObject.GetComponent<EntitySkill>().ExecuteSkillAsync(type);
+    }
 
+    public string GetEntityID()
+    {
+        return GetComponent<EntityStats>().EntityID;
     }
 
 

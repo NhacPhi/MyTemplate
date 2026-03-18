@@ -29,7 +29,7 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
 
-        var state = caster.GetComponent<EntityStateData>();
+        var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MOVE_UP);
 
@@ -39,13 +39,15 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
         await state.WaitForHitFrame();
 
-        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+        DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
 
         await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.MOVE_DOWN);
 
         await state.WaitForMoveEnd();
+
+        PutOnCooldown();
 
         //await UniTask.Delay(2000);
         //var damage = new DamageBonus()

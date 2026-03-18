@@ -2,7 +2,7 @@ import pandas as pd
 
 import config
 from src.build import BaseBuilder
-from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, CharacterModel, AttributeComponent, BattleModel, StageEnemiesCompoment
+from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, SkillComponent, CharacterModel, AttributeComponent, BattleModel, StageEnemiesCompoment
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -83,6 +83,26 @@ class CharacterConfigBuilder(BaseBuilder):
         print(f"Processing character config: {self.file_path}")
         
         all_sheets = pd.read_excel(self.file_path, sheet_name=None)
+
+
+        skill_lookup = {}
+        if "SkillConfig" in all_sheets:
+            df_skills = all_sheets["SkillConfig"]
+            for _, row in df_skills.iterrows():
+                if pd.isna(row['ID']): continue
+            
+                skill_id = str(row['ID']).strip()
+                
+                # Đóng gói dữ liệu thành SkillComponent
+                skill_lookup[skill_id] = SkillComponent(
+                    name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else "",
+                    des_hash=self.get_hash((row['Des']).strip()) if not pd.isna(row['Des']) else "",
+                    skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
+                    damage_multiplier=float(row['DamageMultiplier']) if not pd.isna(row['DamageMultiplier']) else 0.0,
+                    max_cooldown=int(row['MaxCooldown']) if not pd.isna(row['MaxCooldown']) else 0,
+                    flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0
+                )
+
         character_data = {}
         # CharacterConfig
         if "Character" in all_sheets:
@@ -92,11 +112,17 @@ class CharacterConfigBuilder(BaseBuilder):
 
                 character_id = str(row['ID']).strip()
 
-                skill_data = {
-                    "base": str(row['Base']).strip() if not pd.isna(row['Base']) else "None",
-                    "major": str(row['Major']).strip() if not pd.isna(row['Major']) else "None",
-                    "ultimate": str(row['Ultimate']).strip() if not pd.isna(row['Ultimate']) else "None"
-                }
+                base_id = str(row['Base']).strip() if not pd.isna(row['Base']) else None
+                major_id = str(row['Major']).strip() if not pd.isna(row['Major']) else None
+                ultimate_id = str(row['Ultimate']).strip() if not pd.isna(row['Ultimate']) else None
+
+                skill_data = {}
+                if base_id and base_id in skill_lookup:
+                    skill_data["Base"] = skill_lookup[base_id]
+                if major_id and major_id in skill_lookup:
+                    skill_data["Major"] = skill_lookup[major_id]
+                if ultimate_id and ultimate_id in skill_lookup:
+                    skill_data["Ultimate"] = skill_lookup[ultimate_id]
 
                 character_data[character_id] = CharacterModel(
                     name_hash=self.get_hash(row['Name']),

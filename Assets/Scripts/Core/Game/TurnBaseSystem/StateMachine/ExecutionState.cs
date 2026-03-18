@@ -14,7 +14,7 @@ public class ExecutionState : BattleBaseState
     {
         battleManager.EnqueueAction(async () =>
         {
-            await battleManager._CurrentCharacter.ExecuteSkillAsync(battleManager._CurrentSkill);
+            await battleManager.CurrentCharacter.ExecuteSkillAsync(battleManager.CurrentSkill);
         });
 
         while (battleManager.ActionQueue.Count > 0)

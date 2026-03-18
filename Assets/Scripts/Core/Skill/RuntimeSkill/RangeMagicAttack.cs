@@ -25,13 +25,13 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
-        var state = caster.GetComponent<EntityStateData>();
+        var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.ATTACK);
 
         await state.WaitForHitFrame();
 
-        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+        DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
 
         energyBurstPrefab.transform.position = caster.Target.transform.position;
         energyBurstPrefab.gameObject.SetActive(true);
@@ -42,6 +42,8 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
         caster.StateManager.ChangeState(EntityState.IDLE);
 
         energyBurstPrefab.gameObject.SetActive(false);
+
+        PutOnCooldown();
     }
 
     public override SkillData GetSkillData() => skillData;

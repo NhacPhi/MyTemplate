@@ -33,6 +33,8 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
             );
 
         await _skillEnd.Task;
+
+        PutOnCooldown();
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -58,12 +60,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
 
     public void OnProjectileImpact(Entity target, Vector2 contactPoint)
     {
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         _skillEnd.TrySetResult();
     }

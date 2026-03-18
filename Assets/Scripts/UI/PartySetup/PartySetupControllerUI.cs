@@ -297,7 +297,6 @@ public class PartySetupControllerUI : MonoBehaviour
         int position = characterUI.CurrentPosition;
         string characterID = characterUI.CharacterID;
 
-        // 1. Xóa Data trong SaveSystem
         var activeList = _saveSystem.Player.ActiveSlots;
         var dataToRemove = activeList.Find(s => s.Position == position);
         if (dataToRemove != null)
@@ -305,16 +304,15 @@ public class PartySetupControllerUI : MonoBehaviour
             activeList.Remove(dataToRemove);
         }
 
-        // 2. Xóa khỏi Dictionary quản lý
         if (_activeUISlots.ContainsKey(position))
         {
             _activeUISlots.Remove(position);
         }
 
-        // 3. Cập nhật trạng thái Icon ở danh sách dưới (Bỏ Highlight)
+
         UpdateIconSelectedState(characterID, false);
 
-        // 4. Hiệu ứng thu nhỏ rồi biến mất
+
         characterUI.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
         {
             Destroy(characterUI.gameObject);
@@ -325,8 +323,6 @@ public class PartySetupControllerUI : MonoBehaviour
 
     private void UpdateIconSelectedState(string characterID, bool isSelected)
     {
-        // Tìm trong danh sách Icon UI (Bạn nên lưu danh sách này lúc Start)
-        // Giả sử bạn lưu danh sách Icon vào List<CharacterIconUI> _allIcons;
         var iconUI = _characterIconUI.FirstOrDefault(i => i.ID == characterID);
         if (iconUI != null)
         {
@@ -336,20 +332,19 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void RemoveAllCharacters()
     {
-        // 1. Kiểm tra xem có nhân vật nào không
+
         if (_activeUISlots.Count == 0) return;
 
-        // 2. Lấy danh sách ID để cập nhật Icon phía dưới sau khi xóa
-        // Chúng ta cần Copy danh sách Values ra một List tạm để tránh lỗi khi vừa duyệt vừa xóa Dictionary
+
         var iconsToDeselect = _activeUISlots.Values.Select(ui => ui.CharacterID).ToList();
 
-        // 3. CẬP NHẬT DATA: Không Clear() mà duyệt qua các slot đang hoạt động để set trống
+
         foreach (var slot in _saveSystem.Player.ActiveSlots)
         {
             slot.CharacterID = "";
         }
 
-        // 4. Hiệu ứng và Xóa toàn bộ Object UI nhân vật
+
         foreach (var uiSlot in _activeUISlots.Values)
         {
             uiSlot.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
@@ -358,16 +353,14 @@ public class PartySetupControllerUI : MonoBehaviour
             });
         }
 
-        // 5. Dọn dẹp Dictionary quản lý
         _activeUISlots.Clear();
 
-        // 6. Cập nhật lại toàn bộ Icon ở danh sách dưới (Bỏ dấu tích/Highlight)
+
         foreach (var id in iconsToDeselect)
         {
             UpdateIconSelectedState(id, false);
         }
 
-        // 7. Sắp xếp lại Layer và Lưu dữ liệu
         ReorderHierarchy();
 
         Debug.Log("Đã xóa tất cả nhân vật khỏi đội hình!");
@@ -375,26 +368,7 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void ReorganizeActiveSlotsData()
     {
-        // 1. Lấy danh sách các slot đang có nhân vật (ID không rỗng)
-        // Sắp xếp chúng theo thứ tự Position hiện tại (ví dụ: 1, 4, 6...)
         var sortedSlots = _saveSystem.Player.ActiveSlots
-            .Where(s => !string.IsNullOrEmpty(s.CharacterID))
-            .OrderBy(s => s.Position)
-            .ToList();
-
-        // 2. Xóa sạch danh sách cũ để chuẩn bị nạp lại dữ liệu đã sắp xếp
-        _saveSystem.Player.ActiveSlots.Clear();
-
-        // 3. Gán lại vị trí mới bắt đầu từ 1 và nạp lại vào Save System
-        for (int i = 0; i < sortedSlots.Count; i++)
-        {
-            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData
-            {
-                Position = i + 1, // Vị trí mới: 1, 2, 3...
-                CharacterID = sortedSlots[i].CharacterID
-            });
-        }
-
-        Debug.Log($"Đã sắp xếp lại {sortedSlots.Count} nhân vật theo thứ tự slot liên tục.");
+            .OrderBy(s => s.Position);
     }
 }

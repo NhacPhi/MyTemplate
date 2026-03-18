@@ -16,26 +16,28 @@ public class HealingSkill : SkillRuntime
 
     public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSkill(skillData, caster);
     }
-    public async UniTask PerformSummon(SkillData config, Entity caster)
+    public async UniTask PerformSkill(SkillData config, Entity caster)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
 
-        var state = caster.GetComponent<EntityStateData>();
+        var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
         await state.WaitForHitFrame();
 
-        EntityStats stat = caster.GetComponent<EntityStats>();
+        EntityStats stat = caster.GetCoreComponent<EntityStats>();
 
         stat.HealingHP(1000);
 
         await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.IDLE);
+
+        PutOnCooldown();
     }
 
 

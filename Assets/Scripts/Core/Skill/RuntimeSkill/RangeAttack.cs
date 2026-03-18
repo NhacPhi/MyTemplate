@@ -20,7 +20,7 @@ public class RangeAttack : SkillRuntime, IAttackSkill
         caster.HandleTurn(enemy_ultimate);
 
         //Trigger Animation
-        EntityStateData state = caster.GetComponent<EntityStateData>();
+        EntityStateData state = caster.GetCoreComponent<EntityStateData>();
 
     }
     public void OnDealDamage(ref float damgeInput)

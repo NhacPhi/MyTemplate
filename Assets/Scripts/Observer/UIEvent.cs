@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public static class UIEvent
 {
@@ -59,5 +61,8 @@ public static class UIEvent
     public static Action<SkillCharacter> OnChooseSkillCharacter;
     public static Action<Entity> OnChooseTargetEnemy;
     public static Action OnExecuteSkill;
-    public static Action<Sprite, Sprite, Sprite> OnUpdateSkillCharacterUI;
+    public static Action<Entity> OnUpdateSkillCharacterUI;
+    public static Action<List<Entity>> OnUpdateEntityPrediction;
+    public static Action<bool> OnSwithActiveSkilCharacter;
+    public static Action<BattleResult> OnShowBattleResultUI;
 }

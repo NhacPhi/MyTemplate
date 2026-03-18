@@ -18,20 +18,19 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
     public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
         _skillEnd = new UniTaskCompletionSource();
 
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
 
-        if (stateData != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAJOR_SKILL);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        var state = caster.GetCoreComponent<EntityStateData>();
+
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
         await UniTask.Delay(600);
 
@@ -52,7 +51,16 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
            direction: flyDir
            );
 
+
+        await state.WaitForAnimEnd();
+
+        caster.StateManager.ChangeState(EntityState.IDLE);
+
         await _skillEnd.Task;
+
+        await UniTask.Delay(600);
+
+        PutOnCooldown();
     }
     public override SkillData GetSkillData() => skillData;
     public async UniTask InitializeAsync(CancellationToken token)
@@ -76,12 +84,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
     public void OnProjectileImpact(Entity target, Vector2 contactPoint)
     {
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         _skillEnd.TrySetResult();
     }
@@ -90,7 +93,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
 public class SurikenData : SkillData
 {
-    public Vector3 Offset = new Vector3(5f, 0f, 0);
+    public Vector3 Offset = new Vector3(-5f, 0f, 0);
 
     public string surikenRefernce = "Suriken";
 

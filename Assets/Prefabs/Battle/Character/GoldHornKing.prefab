@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1074258378754839752}
   - component: {fileID: 6183284411284737536}
   - component: {fileID: 1528425992184861741}
+  - component: {fileID: -3960865422426270167}
   m_Layer: 0
   m_Name: GoldHornKing
   m_TagString: Untagged
@@ -84,8 +85,6 @@ MonoBehaviour:
   <HitAnimation>k__BackingField: Injured
   <MainSkillAnimaiton>k__BackingField: UltimateSkill
   <MajorAnimaiton>k__BackingField: MajorSkill
-  <IsEmpoweredAttack>k__BackingField: 1
-  <IsMajorAttack>k__BackingField: 1
   <RadioTimeTriggerDamgeMajor>k__BackingField: 0.4
   <TimeTriggerDamge>k__BackingField: 0.5
   attackType: 0
@@ -102,6 +101,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <EntityID>k__BackingField: GoldHornKing
+--- !u!65 &-3960865422426270167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841364078996113051}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 3, z: 0.4}
+  m_Center: {x: 0, y: -0.2477076, z: 0}
 --- !u!1 &2865821293193629182
 GameObject:
   m_ObjectHideFlags: 0

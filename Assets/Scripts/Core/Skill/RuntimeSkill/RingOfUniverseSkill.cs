@@ -37,12 +37,7 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
 
     public void OnProjectileHit(Entity target, GameObject projectile)
     {
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.2f
-        };
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
     }
 
     public void OnProjectileReturned(GameObject projectitle)
@@ -73,6 +68,8 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
             );
 
         await _skillEnd.Task;
+
+        PutOnCooldown();
     }
 
     public async UniTask InitializeAsync(CancellationToken token)

@@ -48,14 +48,12 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
 
         if(cloneController != null)
         {
-            await cloneController.ActiveClone(new DamageBonus()
-            {
-                FlatValue = 0,
-                DamageMultiplier = 1.2f
-            }, caster, caster.Target.GetComponent<Entity>());
+            await cloneController.ActiveClone(CalculateRawDamage(), caster, caster.Target.GetComponent<Entity>());
         }
         
         clonePrefab.gameObject.SetActive(false);
+
+        PutOnCooldown();
     }                              
 
     public void ClearSummons()

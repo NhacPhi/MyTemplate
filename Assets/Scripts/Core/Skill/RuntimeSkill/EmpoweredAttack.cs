@@ -24,7 +24,7 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         caster.HandleTurn(enemy);
 
-        var state = caster.GetComponent<EntityStateData>();
+        var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MOVE_UP);
 
@@ -34,13 +34,15 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         await state.WaitForHitFrame();
 
-        DamageFormular.DealDamage(DamageBonus.GetDefault(), caster, enemy);
+        DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
 
         await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.MOVE_DOWN);
 
         await state.WaitForMoveEnd();
+
+        PutOnCooldown();
     }
 }
 

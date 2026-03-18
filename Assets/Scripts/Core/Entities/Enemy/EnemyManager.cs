@@ -64,6 +64,7 @@ public class EnemyManager
                     targetHitboxPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
 
                 //enemyUI.transform.SetParent(enemyInstance.transform);
+                await enemyInstance.gameObject.GetComponent<EntitySkill>().InitializeAsync(token: cancellation);
 
                 RectTransform rect = enemyUI.GetComponent<RectTransform>();
 

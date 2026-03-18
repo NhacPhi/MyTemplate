@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
@@ -18,22 +19,24 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     }
     public override async UniTask ExecuteAsync(Entity caster)
     {
-        _ = PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster);
     }
 
     public async UniTask PerformSummon(SkillData config, Entity caster)
     {
         _skillEnd = new UniTaskCompletionSource();
 
-        EntityStateData stateData = caster.GetComponent<EntityStateData>();
+        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        caster.HandleTurn(enemy);
 
-        if (stateData != null)
-        {
-            stateData.StateManager.ChangeState(EntityState.MAIN_SKILL);
-            //state.StateManager.ChangeState(EntityState.MOVE_UP);
-        }
+        var state = caster.GetCoreComponent<EntityStateData>();
 
-        await UniTask.Delay(1000);
+        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+
+        await state.WaitForAnimEnd();
+        caster.StateManager.ChangeState(EntityState.IDLE);
+
+        //await UniTask.Delay(1000);
 
         _caster = caster;
 
@@ -54,6 +57,8 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
            );
 
         await _skillEnd.Task;
+
+        PutOnCooldown();
     }
 
     public override SkillData GetSkillData() => skillData;
@@ -86,29 +91,25 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     {
         if (target == null) return;
 
-        var damage = new DamageBonus()
-        {
-            FlatValue = 0,
-            DamageMultiplier = 1.5f
-        };
-
-        DamageFormular.DealDamage(damage, _caster, target);
+        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         await UniTask.Delay(500, delayTiming: PlayerLoopTiming.Update,
             cancellationToken: target.GetCancellationTokenOnDestroy());
 
         if (target != null && target.gameObject.activeInHierarchy)
         {
-            DamageFormular.DealDamage(damage, _caster, target);
+            DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
         }
 
         _skillEnd.TrySetResult();
+
+        await UniTask.Delay(500);
     }
 }
 
 public class DivineWindData : SkillData
 {
-    public Vector3 Offset = new Vector3(4, 0, 0);
+    public Vector3 Offset = new Vector3(-4, 0, 0);
 
     public string torandoReference = "Divine_Wind";
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new DivineWindSkill(owner, this);

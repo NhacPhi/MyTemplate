@@ -4,8 +4,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 
-
-
 public class BattleSetupState : BattleBaseState
 {
     public BattleSetupState(BattleManager battleManager) : base(battleManager) { }
@@ -24,7 +22,7 @@ public class BattleSetupState : BattleBaseState
  
     }
 
-    private async UniTaskVoid LoadAllResourceBeforeStartBattle()
+    private async UniTask LoadAllResourceBeforeStartBattle()
     {
         var token = battleManager.DestroyCancellationToken;
 
@@ -34,10 +32,13 @@ public class BattleSetupState : BattleBaseState
 
         battleManager.ActiveEntities.Clear();
         battleManager.ActiveEntities.AddRange(battleManager.Characters.Values);
-        //battleManager.ActiveEntities.AddRange(battleManager.Enemies);
+        battleManager.ActiveEntities.AddRange(battleManager.Enemies);
 
         battleManager.TurnSystem.Inititalize(battleManager.ActiveEntities);
 
+        battleManager.ResultBattle = BattleResult.Flee;
+
+        await UniTask.Delay(1000);
 
         battleManager.StateMachine.ChangeState(BattleState.OrderState);
     }

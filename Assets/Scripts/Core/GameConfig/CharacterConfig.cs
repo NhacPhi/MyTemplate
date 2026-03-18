@@ -26,7 +26,7 @@ public class CharacterConfig
     public Dictionary<StatType, int> Upgrades;
 
     [JsonProperty("skills")]
-    public Dictionary<SkillCharacter, Skill> Skills;
+    public Dictionary<SkillCharacter, SkillConponent> Skills;
 
     [JsonIgnore]
     public Sprite Icon { get; set; }
@@ -75,4 +75,26 @@ public class AttributeComponent
 
     [JsonProperty("start_percent")]
     public float SttartPercent;
+}
+
+[Serializable]
+public class SkillConponent
+{
+    [JsonProperty("name_hash")]
+    public string Name { get; set; }
+
+    [JsonProperty("des_hash")]
+    public string Description { get; set; }
+
+    [JsonProperty("skill")]
+    public Skill Skill { get; set; }
+
+    [JsonProperty("damage_multiplier")]
+    public float DamageMultiplier { get; set; }
+
+    [JsonProperty("max_cooldown")]
+    public int MaxCooldown { get; set; }
+
+    [JsonProperty("flat_damage")]
+    public float FlatDamage { get; set; }
 }
