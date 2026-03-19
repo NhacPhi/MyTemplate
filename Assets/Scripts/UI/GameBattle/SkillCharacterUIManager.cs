@@ -15,12 +15,15 @@ public class SkillCharacterUIManager : MonoBehaviour
     [SerializeField] private List<Image> _preditionAvatar;
 
     [SerializeField] private GameObject _skill;
+
+    [SerializeField] private GameObject _bossUI;
     [Inject] private GameDataBase _gameData;
     private void OnEnable()
     {
         UIEvent.OnUpdateSkillCharacterUI += UpdateSkillCharacterUI;
         UIEvent.OnUpdateEntityPrediction += UpdatePredictionAvatar;
         UIEvent.OnSwithActiveSkilCharacter += SkillSwitchOnOff;
+        UIEvent.OnActiveBossUI+= ActiveBossUI;
     }
 
     private void OnDisable()
@@ -28,6 +31,7 @@ public class SkillCharacterUIManager : MonoBehaviour
         UIEvent.OnUpdateSkillCharacterUI -= UpdateSkillCharacterUI;
         UIEvent.OnUpdateEntityPrediction -= UpdatePredictionAvatar;
         UIEvent.OnSwithActiveSkilCharacter -= SkillSwitchOnOff;
+        UIEvent.OnActiveBossUI -= ActiveBossUI;
     }
 
     public void UpdateSkillCharacterUI(Entity character)
@@ -44,6 +48,29 @@ public class SkillCharacterUIManager : MonoBehaviour
         _baseSkill.SetIconSkill(baseSkill);
         _majorSkill.SetIconSkill(majorSkill);
         _ultimateSkill.SetIconSkill(ultimateSKill);
+
+        var skillConfig = characterConfig.Skills;
+
+        foreach (var kvp in skillConfig)
+        {
+            SkillCharacter type = kvp.Key;
+            SkillComponent data = kvp.Value;
+
+            int currentCD = character.GetCoreComponent<EntitySkill>().GetCurrentCooldown(type);
+
+            switch (type)
+            {
+                case SkillCharacter.Base:
+                    _baseSkill.UpdateSkillUI(data, currentCD);
+                    break;
+                case SkillCharacter.Major:
+                    _majorSkill.UpdateSkillUI(data, currentCD);
+                    break;
+                case SkillCharacter.Ultimate:
+                    _ultimateSkill.UpdateSkillUI(data, currentCD);
+                    break;
+            }
+        }
     }
 
     public void UpdatePredictionAvatar(List<Entity> entities)
@@ -67,5 +94,10 @@ public class SkillCharacterUIManager : MonoBehaviour
     public void SkillSwitchOnOff(bool isOn)
     {
         _skill.gameObject.SetActive(isOn);
+    }
+
+    public void ActiveBossUI(bool active)
+    {
+        _bossUI.SetActive(active);
     }
 }

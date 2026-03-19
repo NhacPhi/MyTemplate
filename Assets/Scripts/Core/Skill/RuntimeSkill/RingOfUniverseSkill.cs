@@ -81,7 +81,7 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(vfxRef);
             ringPrefab = Object.Instantiate(ring, Vector3.zero, Quaternion.identity);
             ringPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(vfxRef);
+            //AddressablesManager.Instance.RemoveAsset(vfxRef);
 
         }
     }

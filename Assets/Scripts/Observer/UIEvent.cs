@@ -65,4 +65,7 @@ public static class UIEvent
     public static Action<List<Entity>> OnUpdateEntityPrediction;
     public static Action<bool> OnSwithActiveSkilCharacter;
     public static Action<BattleResult> OnShowBattleResultUI;
+    // BossUI
+    public static Action<bool> OnActiveBossUI;
+    public static Action<Entity> OnUpdateBossUI;
 }

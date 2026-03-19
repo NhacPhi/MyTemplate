@@ -76,7 +76,7 @@ public class ProjectileController : MonoBehaviour
     {
         Entity target = other.GetComponent<Entity>();
 
-        if(target != null && target != _caster)
+        if(other.gameObject == _caster.Target)
         {
             _skillHandler.OnProjectileHit(target, this.gameObject);
         }

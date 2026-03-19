@@ -9,8 +9,16 @@ public class EnemyTurnState : BattleBaseState
 
     public override async void Enter()
     {
+        UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
+
         var brain = battleManager.CurrentCharacter.GetCoreComponent<EnemyBrain>();
 
+        var skillManager = battleManager.CurrentCharacter.GetCoreComponent<EntitySkill>();
+
+        if (skillManager != null)
+        {
+            skillManager.TickCooldowns();
+        }
 
         var playerTeam = battleManager.Characters.Values.ToList();
 

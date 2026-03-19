@@ -12,11 +12,13 @@ public class BossBrain : EnemyBrain
 
         var stats = weakestTarget.GetCoreComponent<EntityStats>();
 
-        if (stats.GetAttribute(AttributeType.Hp).GetPercent() > 0.8f)
+        var skillManager = _entity.GetCoreComponent<EntitySkill>();
+
+        if (stats.GetAttribute(AttributeType.Hp).GetPercent() > 0.3f && skillManager.IsSkillReady(SkillCharacter.Ultimate))
         {
             return new EnemyDecision { SkillType = SkillCharacter.Ultimate, Target = weakestTarget };
         }
-        else if (stats.GetAttribute(AttributeType.Hp).GetPercent() < 0.45f)
+        else if (skillManager.IsSkillReady(SkillCharacter.Major))
         {
             return new EnemyDecision { SkillType = SkillCharacter.Major, Target = weakestTarget };
         }

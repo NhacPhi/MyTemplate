@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour
 
     private Entity _currentCharacter;
     private Entity _currentEnemy;
+    private Entity _boss;
     private SkillCharacter _currentSkill;
 
     private BattleResult _resultBattle;
@@ -60,6 +61,11 @@ public class BattleManager : MonoBehaviour
 
         get { return _currentSkill; }
         set { _currentSkill = value; }
+    }
+
+    public Entity Boss
+    {
+        get { return _boss; }
     }
 
     public Entity CurrentEnemy
@@ -118,12 +124,12 @@ public class BattleManager : MonoBehaviour
 
         foreach(var slot in activeSlot)
         {
-            if(order == 3 )
+            if(order == 6)
             {
                 order = 0;
             }
 
-            order++;
+            order += 2;
 
             if (slot.CharacterID != "")
             {
@@ -152,12 +158,12 @@ public class BattleManager : MonoBehaviour
         order = 0;
         for(int i = 0; i < _enemies.Count; i++)
         {
-            if (order == 3)
+            if (order == 6)
             {
                 order = 0;
             }
 
-            order++;
+            order += 2;
             //var key = enemyConfig.EnemyID;
             var slot_position = battleConfig.Enemies[i].Slot;
             var enemy = _enemies[i];
@@ -171,6 +177,20 @@ public class BattleManager : MonoBehaviour
                 sp.sortingOrder = order;
 
                 enemy.gameObject.GetComponent<Entity>().RenderOrder = order;
+            }
+        }
+    }
+
+    public void CheckBattleHasBosss()
+    {
+        foreach(var enemy in _enemies)
+        {
+            var bossBrain = enemy.GetCoreComponent<BossBrain>();
+
+            if(bossBrain != null)
+            {
+                _boss = enemy;
+                return;
             }
         }
     }

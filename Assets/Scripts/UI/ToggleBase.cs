@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 public class ToggleBase : MonoBehaviour
 {
     protected Toggle toggle;
+
+
     // Start is called before the first frame update
     void Awake()
     {

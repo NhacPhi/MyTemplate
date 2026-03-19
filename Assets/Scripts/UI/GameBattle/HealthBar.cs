@@ -25,22 +25,22 @@ public class HealthBar : BaseAttributeUI
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            TakeDamage(2000);
-            UIEvent.DamagePopup?.Invoke(2000, gameObject.transform.position, false);
-        }
+        //if(Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    TakeDamage(2000);
+        //    UIEvent.DamagePopup?.Invoke(2000, gameObject.transform.position, false);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Heal(2000);
-            UIEvent.HealPopup?.Invoke(2000, gameObject.transform.position);
-        }
+        //if(Input.GetKeyDown(KeyCode.H))
+        //{
+        //    Heal(2000);
+        //    UIEvent.HealPopup?.Invoke(2000, gameObject.transform.position);
+        //}
 
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            BuffShield(1000);
-        }
+        //if(Input.GetKeyDown(KeyCode.B))
+        //{
+        //    BuffShield(1000);
+        //}
     }
     public void Setup(float hp, float maxHP)
     {

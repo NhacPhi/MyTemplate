@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine.Rendering;
 
 public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncInitializer
 {
@@ -42,6 +43,9 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         effectPrefab.gameObject.SetActive(false);
 
         clonePrefab.gameObject.transform.position = caster.Target.transform.position - skillData.OffsetTarget;
+
+        clonePrefab.gameObject.GetComponent<SortingGroup>().sortingOrder = caster.Target.GetComponent<SortingGroup>().sortingOrder + 1;
+
         clonePrefab.gameObject.SetActive(true);
 
         var cloneController = clonePrefab.GetComponent<CloneController>(); 
@@ -94,7 +98,11 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             clonePrefab.gameObject.SetActive(false);
         }
 
-
+        if (clonePrefab.GetComponent<SortingGroup>() == null)
+        {
+            SortingGroup sp = clonePrefab.gameObject.AddComponent<SortingGroup>();
+            sp.sortingOrder = 0;
+        }
     }
 }
 

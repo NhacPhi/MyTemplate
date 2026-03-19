@@ -57,7 +57,7 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         foreach(var kvp in characterConfig.Skills)
         {
             SkillCharacter skillType = kvp.Key;
-            SkillConponent skillConfig = kvp.Value;
+            SkillComponent skillConfig = kvp.Value;
 
             if(skillConfig.Skill != Skill.None)
             {
@@ -97,4 +97,41 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
     //{
 
     //}
+
+    public void TickCooldowns()
+    {
+        foreach (var runtime in Skills.Values)
+        {
+            runtime.TickCooldown();
+        }
+    }
+
+    public SkillRuntime GetSkill(SkillCharacter type)
+    {
+        if (Skills.TryGetValue(type, out SkillRuntime runtime))
+        {
+            return runtime;
+        }
+        return null;
+    }
+
+    public bool IsSkillReady(SkillCharacter type)
+    {
+        var skill = GetSkill(type);
+        if (skill != null)
+        {
+            return skill.IsReady();
+        }
+        return false;
+    }
+
+    public int GetCurrentCooldown(SkillCharacter type)
+    {
+        var skill = GetSkill(type);
+        if (skill != null)
+        {
+            return skill.CurrentCooldown;
+        }
+        return 0;
+    }
 }

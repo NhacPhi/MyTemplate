@@ -26,7 +26,7 @@ public class CharacterConfig
     public Dictionary<StatType, int> Upgrades;
 
     [JsonProperty("skills")]
-    public Dictionary<SkillCharacter, SkillConponent> Skills;
+    public Dictionary<SkillCharacter, SkillComponent> Skills;
 
     [JsonIgnore]
     public Sprite Icon { get; set; }
@@ -78,7 +78,7 @@ public class AttributeComponent
 }
 
 [Serializable]
-public class SkillConponent
+public class SkillComponent
 {
     [JsonProperty("name_hash")]
     public string Name { get; set; }

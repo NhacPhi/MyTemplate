@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ToggleSkillCharacterUI : ToggleBase
+
+public class SkillBossUI : MonoBehaviour
 {
     [SerializeField] private SkillCharacter _type;
     [SerializeField] private Image _icon;
@@ -13,20 +14,9 @@ public class ToggleSkillCharacterUI : ToggleBase
     {
         _icon.sprite = sprite;
     }
-
-    public override void OnSelected(bool isOn)
-    {
-        if(isOn)
-        {
-            UIEvent.OnChooseSkillCharacter?.Invoke(_type);
-        }
-    }
-
     public void UpdateSkillUI(SkillComponent skillData, int currentCooldown)
     {
         bool isReady = currentCooldown <= 0;
-
-        toggle.interactable = isReady;
 
         if (isReady)
         {

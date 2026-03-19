@@ -27,20 +27,16 @@ public class OrderState : BattleBaseState
 
         var enemyBrain = nextCharacter.GetCoreComponent<EnemyBrain>();
 
-        if(enemyBrain != null)
-        {
-            UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
 
+        if (battleManager.Boss)
+            UIEvent.OnUpdateBossUI(battleManager.Boss);
+
+        if (enemyBrain != null)
+        {
             battleManager.StateMachine.ChangeState(BattleState.EnemyTurnsState);
         }
         else
         {
-            UIEvent.OnSwithActiveSkilCharacter?.Invoke(true);
-
-            UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCharacter);
-
-            battleManager.CurrentSkill = SkillCharacter.Base;
-
             battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
         }
 

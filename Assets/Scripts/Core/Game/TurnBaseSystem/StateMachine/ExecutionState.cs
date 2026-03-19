@@ -23,6 +23,8 @@ public class ExecutionState : BattleBaseState
             await nextAction.Invoke();
         }
 
+        Dictionary<SkillCharacter, SkillRuntime> activeSkills = battleManager.CurrentCharacter.GetCoreComponent<EntitySkill>().Skills;
+
         battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
     }
 

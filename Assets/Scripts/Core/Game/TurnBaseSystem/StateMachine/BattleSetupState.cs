@@ -36,6 +36,11 @@ public class BattleSetupState : BattleBaseState
 
         battleManager.TurnSystem.Inititalize(battleManager.ActiveEntities);
 
+        battleManager.CheckBattleHasBosss();
+
+        if (battleManager.Boss)
+            UIEvent.OnActiveBossUI(true);
+
         battleManager.ResultBattle = BattleResult.Flee;
 
         await UniTask.Delay(1000);
