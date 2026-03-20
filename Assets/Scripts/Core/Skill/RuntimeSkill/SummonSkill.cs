@@ -9,8 +9,8 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
 {
     private SummonSkillData skillData;
     private GameObject effectPrefab;
-    private GameObject clonePrefab;
-    private bool isLoaded = false;
+    private List<GameObject> clonePrefabs = new List<GameObject>();
+
 
     public SummonSkill(EntityStats owner, SummonSkillData data) : base(owner)
     {
@@ -42,20 +42,39 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
 
         effectPrefab.gameObject.SetActive(false);
 
-        clonePrefab.gameObject.transform.position = caster.Target.transform.position - skillData.OffsetTarget;
-
-        clonePrefab.gameObject.GetComponent<SortingGroup>().sortingOrder = caster.Target.GetComponent<SortingGroup>().sortingOrder + 1;
-
-        clonePrefab.gameObject.SetActive(true);
-
-        var cloneController = clonePrefab.GetComponent<CloneController>(); 
-
-        if(cloneController != null)
+        for(int i = 0; i < caster.Targets.Count; i++)
         {
-            await cloneController.ActiveClone(CalculateRawDamage(), caster, caster.Target.GetComponent<Entity>());
+            clonePrefabs[i].gameObject.transform.position = caster.Targets[i].transform.position - skillData.OffsetTarget;
+
+            clonePrefabs[i].gameObject.GetComponent<SortingGroup>().sortingOrder = caster.Targets[i].GetComponent<SortingGroup>().sortingOrder + 1;
+
+            clonePrefabs[i].gameObject.SetActive(true);
         }
-        
-        clonePrefab.gameObject.SetActive(false);
+        List<UniTask> activeCloneTasks = new List<UniTask>();
+
+        for (int i = 0; i < caster.Targets.Count; i++)
+        {
+            var cloneController = clonePrefabs[i].GetComponent<CloneController>();
+
+            if (cloneController != null)
+            {
+                activeCloneTasks.Add(cloneController.ActiveClone(CalculateRawDamage(), caster, caster.Targets[i].GetComponent<Entity>()));
+                int randomStartDelay = UnityEngine.Random.Range(100, 300);
+                await UniTask.Delay(randomStartDelay);
+            }
+        }
+
+
+        if (activeCloneTasks.Count > 0)
+        {
+            await UniTask.WhenAll(activeCloneTasks);
+        }
+
+
+        for (int i = 0; i < caster.Targets.Count; i++)
+        {
+            clonePrefabs[i].gameObject.SetActive(false);
+        }
 
         PutOnCooldown();
     }                              
@@ -94,14 +113,20 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         if(cloneRef != null)
         {
             GameObject clone = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(cloneRef);
-            clonePrefab = Object.Instantiate(clone, Vector3.zero, Quaternion.identity);
-            clonePrefab.gameObject.SetActive(false);
-        }
+            for (int i = 0; i < skillData.NumberClone; i++)
+            {
+                var clonePrefab = Object.Instantiate(clone, Vector3.zero, Quaternion.identity);
+                clonePrefab.gameObject.SetActive(false);
 
-        if (clonePrefab.GetComponent<SortingGroup>() == null)
-        {
-            SortingGroup sp = clonePrefab.gameObject.AddComponent<SortingGroup>();
-            sp.sortingOrder = 0;
+                if (clonePrefab.GetComponent<SortingGroup>() == null)
+                {
+                    SortingGroup sp = clonePrefab.gameObject.AddComponent<SortingGroup>();
+                    sp.sortingOrder = 0;
+                }
+
+                clonePrefabs.Add(clonePrefab);
+            }
+
         }
     }
 }
@@ -115,6 +140,8 @@ public class SummonSkillData : SkillData
     public string vfxEffectReference = "Smoke_Wukong";
 
     public string cloneReference = "Clone";
+
+    public int NumberClone = 6;
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new SummonSkill(owner, this);
 }
 

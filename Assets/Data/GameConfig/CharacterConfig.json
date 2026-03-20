@@ -17,8 +17,8 @@
                 "name_hash": 3239352682,
                 "des_hash": 3419521401,
                 "skill": "Summon",
-                "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
+                "target_type": "AllEnemies",
+                "damage_multiplier": 1.0,
                 "max_cooldown": 4,
                 "flat_damage": 100.0
             },
@@ -36,7 +36,7 @@
             "hp": 3750,
             "def": 400,
             "atk": 2000,
-            "speed": 100
+            "speed": 111
         },
         "attributes": {
             "shield": {
@@ -72,7 +72,7 @@
                 "name_hash": 1803905392,
                 "des_hash": 1806441278,
                 "skill": "BuffShield",
-                "target_type": "Selft",
+                "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
                 "flat_damage": 100.0
@@ -91,7 +91,7 @@
             "hp": 2500,
             "def": 280,
             "atk": 1650,
-            "speed": 111
+            "speed": 90
         },
         "attributes": {
             "shield": {
@@ -127,7 +127,7 @@
                 "name_hash": 2722680510,
                 "des_hash": 1430700502,
                 "skill": "BuffShield",
-                "target_type": "Selft",
+                "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
                 "flat_damage": 100.0
@@ -182,7 +182,7 @@
                 "name_hash": 3800924881,
                 "des_hash": 3778048083,
                 "skill": "Healing",
-                "target_type": "Selft",
+                "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
                 "flat_damage": 100.0
@@ -402,7 +402,7 @@
                 "name_hash": 3191543977,
                 "des_hash": 2241444781,
                 "skill": "BuffShield",
-                "target_type": "Selft",
+                "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
                 "flat_damage": 100.0

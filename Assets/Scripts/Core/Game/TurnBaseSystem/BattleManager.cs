@@ -37,8 +37,8 @@ public class BattleManager : MonoBehaviour
 
     public float OffsetY = 4;
 
-    private Entity _currentCharacter;
-    private Entity _currentEnemy;
+    private Entity _currentCaster;
+
     private Entity _boss;
     private SkillCharacter _currentSkill;
 
@@ -50,11 +50,11 @@ public class BattleManager : MonoBehaviour
     }
 
     // Current pram
-    public Entity CurrentCharacter 
+    public Entity CurrentCaster 
     { 
     
-        get { return _currentCharacter; }
-        set { _currentCharacter = value; }
+        get { return _currentCaster; }
+        set { _currentCaster = value; }
     }
     public SkillCharacter CurrentSkill
     {
@@ -66,12 +66,6 @@ public class BattleManager : MonoBehaviour
     public Entity Boss
     {
         get { return _boss; }
-    }
-
-    public Entity CurrentEnemy
-    {
-        get { return _currentEnemy; }
-        set { _currentEnemy = value; }
     }
 
 
@@ -91,14 +85,14 @@ public class BattleManager : MonoBehaviour
 
     private void OnEnable()
     {
-        UIEvent.OnChooseSkillCharacter += SetupCurrentSkillCharacter;
+        UIEvent.OnChooseSkillCharacter += SetupCurrentSkillCaster;
         UIEvent.OnChooseTargetEnemy += SetCurrentTarget;
         UIEvent.OnExecuteSkill += ExecuteSkillEntity;
     }
 
     private void OnDisable()
     {
-        UIEvent.OnChooseSkillCharacter -= SetupCurrentSkillCharacter;
+        UIEvent.OnChooseSkillCharacter -= SetupCurrentSkillCaster;
         UIEvent.OnChooseTargetEnemy -= SetCurrentTarget;
         UIEvent.OnExecuteSkill -= ExecuteSkillEntity;
     }
@@ -147,9 +141,12 @@ public class BattleManager : MonoBehaviour
                     SortingGroup sp = character.gameObject.AddComponent<SortingGroup>();
 
                     sp.sortingOrder = order;
-
-                    character.gameObject.GetComponent<Entity>().RenderOrder = order;
                 }
+
+                character.RenderOrder = order;
+
+                character.Team = TeamSide.Player;
+
                 character.transform.position = pos + Vector3.up * OffsetY;
 
                 character.gameObject.GetComponent<EntityStateData>().SetRootTransform();
@@ -181,9 +178,11 @@ public class BattleManager : MonoBehaviour
                 SortingGroup sp = enemy.gameObject.AddComponent<SortingGroup>();
 
                 sp.sortingOrder = order;
-
-                enemy.gameObject.GetComponent<Entity>().RenderOrder = order;
             }
+
+            enemy.RenderOrder = order;
+
+            enemy.Team = TeamSide.Enemy;
         }
     }
 
@@ -214,27 +213,27 @@ public class BattleManager : MonoBehaviour
         IsExecutedAction = true;
     }
 
-    public void SetupCurrentSkillCharacter(SkillCharacter type)
+    public void SetupCurrentSkillCaster(SkillCharacter type)
     {
         _currentSkill = type;
 
-        var skill = _currentCharacter.GetCoreComponent<EntitySkill>().Skills.GetValueOrDefault(_currentSkill);
+        var skill = _currentCaster.GetCoreComponent<EntitySkill>().Skills.GetValueOrDefault(_currentSkill);
 
         if(skill != null)
         {
-            var validTargets = TargetSystem.GetValidTargetsForSkill(skill, CurrentCharacter, _characters.Values.ToList(), _enemies);
+            var validTargets = TargetSystem.GetValidTargetsForSkill(skill, CurrentCaster, _characters.Values.ToList(), _enemies);
 
             TargetSystem.HighlightTargets(_activeEntities, validTargets);
         }
 
-        _currentCharacter.SetRenderValid(true);
+        _currentCaster.SetRenderValid(true);
     }
     
     public void SetCurrentTarget(Entity target)
     {
-        _currentEnemy = target;
-
-        _currentCharacter.SetTaget(CurrentEnemy);
+        SkillTargetType type = _currentCaster.GetCoreComponent<EntitySkill>()
+            .Skills.GetValueOrDefault(_currentSkill).GetSkillData().TargetType;
+        _currentCaster.SetTargets(TargetSystem.GetTargets(_currentCaster, type, target, _activeEntities));
     }
 
     private void InitStateMachine()

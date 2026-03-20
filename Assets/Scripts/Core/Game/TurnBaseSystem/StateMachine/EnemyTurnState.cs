@@ -11,9 +11,9 @@ public class EnemyTurnState : BattleBaseState
     {
         UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
 
-        var brain = battleManager.CurrentCharacter.GetCoreComponent<EnemyBrain>();
+        var brain = battleManager.CurrentCaster.GetCoreComponent<EnemyBrain>();
 
-        var skillManager = battleManager.CurrentCharacter.GetCoreComponent<EntitySkill>();
+        var skillManager = battleManager.CurrentCaster.GetCoreComponent<EntitySkill>();
 
         if (skillManager != null)
         {

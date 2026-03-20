@@ -1,265 +1,117 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
+using DG.Tweening; // Khuyên dùng DOTween để code mượt và ngắn hơn Coroutine
 
 public class HealthBar : BaseAttributeUI
 {
-    [SerializeField] private GameObject[] ticks; 
-    [SerializeField] private Slider heathSlider;
-    [SerializeField] private Slider damageSlider;
-    [SerializeField] private Slider shieldSlider;
+    [Header("Sliders")]
+    [SerializeField] private Slider healthSlider;   // Lớp máu chính (Xanh)
+    [SerializeField] private Slider shieldSlider;   // Lớp giáp ảo (Trắng/Vàng)
+    [SerializeField] private Slider damageSlider;   // Lớp hiệu ứng sát thương (Trắng mờ/Đỏ)
 
-    [SerializeField] private GameObject ticketContainer;
+    [Header("Tick Settings")]
+    [SerializeField] private GameObject tickPrefab;
+    [SerializeField] private RectTransform tickContainer;
+    private List<GameObject> activeTicks = new List<GameObject>();
 
-    private int MAX_HP = 9800;
-    private int MAX_STICK = 1000;
-    private int currentHP;
-    private int currentDamage;
-    private int currentShield;
-
-    private int shield = 0;
-
-    private int healh = 0;
-
-    private void Update()
-    {
-        //if(Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    TakeDamage(2000);
-        //    UIEvent.DamagePopup?.Invoke(2000, gameObject.transform.position, false);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.H))
-        //{
-        //    Heal(2000);
-        //    UIEvent.HealPopup?.Invoke(2000, gameObject.transform.position);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.B))
-        //{
-        //    BuffShield(1000);
-        //}
-    }
-    public void Setup(float hp, float maxHP)
-    {
-        MAX_HP = (int)maxHP;
-
-        currentHP = currentDamage = currentShield = (int)hp;
-
-        heathSlider.maxValue = MAX_HP;
-        heathSlider.value = currentHP;
-
-        damageSlider.maxValue = MAX_HP;
-        damageSlider.value = currentDamage;
-
-        shieldSlider.maxValue = MAX_HP;
-
-        shieldSlider.value = currentShield;
-
-
-
-        ResetTick(MAX_HP);
-    }
-
-    private void ResetTick(int hp)
-    {
-        int tickCount = hp / MAX_STICK;
-
-        foreach (var tick in ticks)
-        {
-            tick.gameObject.SetActive(false);
-        }
-
-
-        float offset = (ticketContainer.GetComponent<RectTransform>().rect.width * MAX_STICK) / hp;
-        float offsetTick = offset;
-        for (int i = 0; i < tickCount; i++)
-        {
-            ticks[i].gameObject.SetActive(true);
-            ticks[i].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetTick, 0);
-            offsetTick += offset;
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        // Has Shield
-        if(HasShield())
-        {
-            var result = shield - damage;
-            // Compare shield with damage
-            if (shield >= damage)
-            {
-                shield = result;
-                SetCurrentShield(currentShield - damage);
-            }
-            else
-            {
-                shield = 0;
-
-                var newDamge = damage + result;
-                StartCoroutine(EffectTakeDamage(damage));
-
-                SetCurrentHP(currentHP - newDamge);
-                SetCurrentShield(currentHP);
-            }
-        }
-        else
-        {
-            // No Shield
-            StartCoroutine(EffectTakeDamage(damage));
-            // Set _value
-            SetCurrentHP(currentHP - damage);
-            SetCurrentShield(currentHP);
-        }
-
-        CheckShield();
-    }
-    
-    public void Heal(int value)
-    {
-        if(currentHP < MAX_HP)
-        {
-            StartCoroutine(EffectHeal(value));
-        }
-    }
-
-    public void BuffShield(int value)
-    {
-        shield += value;
-
-        SetCurrentShield(currentShield + value);
-
-        CheckShield();
-    }
-
-    IEnumerator EffectHeal(int value)
-    {
-        if(CheckShieldOver())
-        {
-            float hp = healh;
-
-            float ratio = value / (MAX_HP + shield);
-
-            float result = ratio * MAX_HP;
-
-            while (hp < healh + result)
-            {
-                heathSlider.value = hp;
-                damageSlider.value = hp;
-                hp += 50 / (MAX_HP + shield);
-                yield return new WaitForSeconds(0.01f);
-            }
-        }
-        else
-        {
-            float hp = currentHP;
-
-            while (hp < currentHP + value)
-            {
-                heathSlider.value = hp;
-                damageSlider.value = hp;
-                hp += 50;
-                yield return new WaitForSeconds(0.01f);
-            }
-
-        }
-
-        //Set Value 
-        SetCurrentHP(currentHP + value);
-        SetCurrentShield(currentShield + value);
-
-        CheckShield();
-    }
-
-    IEnumerator EffectTakeDamage(int damage)
-    {
-        float effect = currentDamage; 
-
-        while(effect >= currentDamage - damage)
-        {
-            damageSlider.value = effect;
-            yield return new WaitForSeconds(0.01f);
-            effect -= 50;
-        }
-
-    }
-
-    bool HasShield()
-    {
-        return currentShield > currentHP;
-    }
-
-    private bool CheckShieldOver()
-    {
-        return currentShield > MAX_HP;
-    }
-
-    private void SetCurrentHP(int hp)
-    {
-        if(hp > MAX_HP)
-            hp = MAX_HP;
-        currentHP = hp;
-        currentDamage = currentHP;
-
-        heathSlider.value = currentDamage;
-        damageSlider.value = currentDamage;
-    }
-
-    private void SetCurrentShield(int value)
-    {
-        currentShield = value;
-        shieldSlider.value = value;
-    }
-
-    private void CheckShield()
-    {
-        if (CheckShieldOver())
-        {
-            var sum = currentHP + shield;
-            ResetTick(sum);
-            float ratio = (float)shield / sum;
-            var result = MAX_HP - (float)ratio * MAX_HP;
-            heathSlider.value = result;
-            damageSlider.value = result;
-            healh = (int)result;
-            shieldSlider.value = MAX_HP;
-        }
-        else
-        {
-            ResetTick(MAX_HP);
-        }
-    }
+    private const float TICK_UNIT = 1000f; // Mỗi 1000 máu 1 vạch lớn (hoặc 100 máu vạch nhỏ)
+    private float maxHP;
+    private float currentHP;
+    private float currentShield;
 
     public override void Init(float hp, float maxHp)
     {
-        Setup(hp, maxHp);
+        this.maxHP = maxHp;
+        this.currentHP = hp;
+        this.currentShield = 0;
+
+        UpdateVisuals(immediate: true);
     }
 
-    public override void HandleValueChange(AttributeEvtArgs attribute)
+    public override void HandleValueChange(AttributeEvtArgs args)
     {
-        switch (attribute.Attribute)
+        switch (args.Attribute)
         {
             case AttributeType.Hp:
-                {
-                    if(currentHP > attribute.Value)
-                    {
-                        int damge = currentHP - (int)attribute.Value;
-                        TakeDamage(damge);
-                    }
-                    else
-                    {
-                        int healing = (int)attribute.Value - currentHP;
-                        Heal(healing);
-                    }
-                    
-                }
+                float oldHP = currentHP;
+                currentHP = args.Value;
+                UpdateVisuals(immediate: false, isDamage: currentHP < oldHP);
                 break;
+
             case AttributeType.Shield:
-                BuffShield((int)attribute.Value);
+                currentShield = args.Value;
+                UpdateVisuals(immediate: false);
                 break;
+        }
+    }
+
+    private void UpdateVisuals(bool immediate, bool isDamage = true)
+    {
+        // Trong LoL, nếu Shield > 0, thanh slider sẽ hiển thị dựa trên tổng (MaxHP + Shield vượt trội)
+        // Tuy nhiên đơn giản nhất là giữ Slider Max = MaxHP, và Shield layer nằm đè lên.
+        float totalDisplayMax = Mathf.Max(maxHP, currentHP + currentShield);
+
+        healthSlider.maxValue = totalDisplayMax;
+        shieldSlider.maxValue = totalDisplayMax;
+        damageSlider.maxValue = totalDisplayMax;
+
+        if (immediate)
+        {
+            healthSlider.value = currentHP;
+            shieldSlider.value = currentHP + currentShield;
+            damageSlider.value = currentHP;
+        }
+        else
+        {
+            // Hiệu ứng thanh máu chính
+            healthSlider.value = currentHP;
+
+            // Hiệu ứng thanh Giáp ảo (Shield nằm từ vị trí HP đi tới)
+            shieldSlider.value = currentHP + currentShield;
+
+            // Hiệu ứng thanh Damage trễ (giống LoL)
+            if (isDamage)
+            {
+                // Đợi 0.5s rồi mới tụt thanh damageSlider
+                DOTween.To(() => damageSlider.value, x => damageSlider.value = x, currentHP, 0.5f)
+                    .SetDelay(0.3f)
+                    .SetEase(Ease.OutQuad);
+            }
+            else
+            {
+                // Nếu là hồi máu thì thanh damage chạy theo ngay
+                damageSlider.value = currentHP;
+            }
+        }
+
+        UpdateTicks(totalDisplayMax);
+    }
+
+    private void UpdateTicks(float totalAmount)
+    {
+        int tickCount = Mathf.FloorToInt(totalAmount / TICK_UNIT);
+        float containerWidth = tickContainer.rect.width;
+
+        // Quản lý Pool đơn giản cho Ticks
+        while (activeTicks.Count < tickCount)
+        {
+            activeTicks.Add(Instantiate(tickPrefab, tickContainer));
+        }
+
+        for (int i = 0; i < activeTicks.Count; i++)
+        {
+            if (i < tickCount)
+            {
+                activeTicks[i].SetActive(true);
+                float xPos = ((i + 1) * TICK_UNIT / totalAmount) * containerWidth;
+                ((RectTransform)activeTicks[i].transform).anchoredPosition = new Vector2(xPos, 0);
+            }
+            else
+            {
+                activeTicks[i].SetActive(false);
+            }
         }
     }
 

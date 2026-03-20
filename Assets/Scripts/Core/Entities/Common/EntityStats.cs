@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using VContainer;
 using System;
@@ -24,19 +24,57 @@ public class EntityStats : StatsController, IDamagable
     public virtual void TakeDamage(float damage, Transform attacker)
     {
         OnHit?.Invoke(damage, attacker);
+
         var hp = GetAttribute(AttributeType.Hp);
-        hp.Value -= damage;
+        var shield = GetAttribute(AttributeType.Shield);
 
-        OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        float remainingDamage = damage;
+
+
+        // --- BƯỚC 1: XỬ LÝ GIÁP ẢO ---
+        if (shield.Value > 0)
         {
-            Attribute = AttributeType.Hp,
-            Value = hp.Value,
-            MaxValue= hp.MaxValue,
-        });
+            if (shield.Value >= remainingDamage)
+            {
+                // Shield đủ cân toàn bộ damage
+                shield.Value -= remainingDamage;
+                remainingDamage = 0;
+            }
+            else
+            {
+                // Shield bị vỡ hoàn toàn, còn dư damage
+                remainingDamage -= shield.Value;
+                shield.Value = 0;
+            }
 
-        if (!(hp.Value <= 0)) return;
+            // Cập nhật UI cho Shield
+            OnAtributeChange?.Invoke(new AttributeEvtArgs()
+            {
+                Attribute = AttributeType.Shield,
+                Value = shield.Value,
+                MaxValue = shield.MaxValue,
+            });
+        }
 
-        HandleDeath();
+
+        if (remainingDamage > 0)
+        {
+            hp.Value -= remainingDamage;
+
+            // Cập nhật UI cho HP
+            OnAtributeChange?.Invoke(new AttributeEvtArgs()
+            {
+                Attribute = AttributeType.Hp,
+                Value = hp.Value,
+                MaxValue = hp.MaxValue,
+            });
+        }
+
+        // --- BƯỚC 3: KIỂM TRA ĐIỀU KIỆN CHẾT ---
+        if (hp.Value <= 0)
+        {
+            HandleDeath();
+        }
     }
 
     public void BuffShield(float value)

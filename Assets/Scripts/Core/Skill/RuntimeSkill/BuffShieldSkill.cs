@@ -22,7 +22,10 @@ public class BuffShieldSkill : SkillRuntime
         await state.WaitForHitFrame();
 
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
-        stat.BuffShield(1000);
+
+        var shield = CalculateRawDamage().FlatValue + CalculateRawDamage().DamageMultiplier * stat.GetStat(StatType.ATK).Value;
+
+        stat.BuffShield(shield);
 
         await state.WaitForAnimEnd();
 

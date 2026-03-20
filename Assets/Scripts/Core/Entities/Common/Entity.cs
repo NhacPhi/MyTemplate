@@ -9,12 +9,18 @@ using VContainer.Unity;
 
 public enum BattleRow { Front, Back }
 public enum BattleColumn { Left, Center, Right }
+
+public enum TeamSide { Player, Enemy }
 public abstract class Entity : Tech.Composite.Core, ITurn
 {
     //Test
-    public GameObject Target;
+    public List<GameObject> Targets { get; protected set; } = new List<GameObject>(); // Could be Enemy or Ally
+
+    public GameObject Target => Targets[0];
 
     public int RenderOrder = 0;
+
+    public TeamSide Team;
 
     [Header("Position info")]
     public BattleRow Row;
@@ -76,9 +82,16 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         entityStateData.HandleTurn();
     }
 
-    public void SetTaget(Entity enemy)
+    public void SetTarget(Entity enemy)
     {
-        Target = enemy.gameObject;
+        Targets.Clear();
+        if (enemy != null) Targets.Add(enemy.gameObject);
+    }
+
+    public void SetTargets(List<Entity> enemies)
+    {
+        Targets.Clear();
+        foreach (var e in enemies) Targets.Add(e.gameObject);
     }
 
     public virtual async UniTask ExecuteSkillAsync(SkillCharacter type)

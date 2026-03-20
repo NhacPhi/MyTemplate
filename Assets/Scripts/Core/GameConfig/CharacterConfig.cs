@@ -77,24 +77,6 @@ public class AttributeComponent
     public float SttartPercent;
 }
 
-public enum SkillTargetType
-{
-    // Single Target
-    SingleEnemy, // Áp dụng 1 kẻ địch
-    SingleAlly, // Áp dụng 1 đồng minh
-    Selft, // Chỉ Tác dụng lên mịnh
-
-    // Full Aoe
-    AllEnemies,
-    AllAllies,
-
-    //Position Aoe
-    EnemyColumn,
-    EnemyRow,
-
-    // Special
-    DeadAlly // Hồi sinh
-}
 [Serializable]
 public class SkillComponent
 {

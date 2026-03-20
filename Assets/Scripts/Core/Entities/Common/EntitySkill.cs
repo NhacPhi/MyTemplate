@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using Tech.Composite;
@@ -28,6 +28,25 @@ public enum Skill
     Suriken,
     PosionBall,
     DivineWind
+}
+
+public enum SkillTargetType
+{
+    // Single Target
+    SingleEnemy, // Áp dụng 1 kẻ địch
+    SingleAlly, // Áp dụng 1 đồng minh
+    Self, // Chỉ Tác dụng lên mịnh
+
+    // Full Aoe
+    AllEnemies,
+    AllAllies,
+
+    //Position Aoe
+    EnemyColumn,
+    EnemyRow,
+
+    // Special
+    DeadAlly // Hồi sinh
 }
 
 public class EntitySkill : CoreComponent, IAsyncInitializer

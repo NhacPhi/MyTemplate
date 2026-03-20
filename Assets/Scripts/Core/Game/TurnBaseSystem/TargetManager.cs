@@ -60,14 +60,54 @@ public class TargetManager
 
         switch (targetType)
         {
+            //Single
             case SkillTargetType.SingleEnemy:
                 return GetValidEtitiesByColumnLogic(enemyTeam);
-            case SkillTargetType.Selft:
+            case SkillTargetType.Self:
                 return new List<Entity>() { caster };
+            case SkillTargetType.SingleAlly:
+                return allyTeam;
+
+            // Full Aoe
+            case SkillTargetType.AllEnemies:
+                return enemyTeam;
+            case SkillTargetType.AllAllies:
+                return allyTeam;
 
             default:
                 return new List<Entity>();
         }
 
+    }
+
+    public List<Entity> GetTargets(Entity caster, SkillTargetType targetType, Entity selectedEntity, List<Entity> allEntities)
+    {
+        List<Entity> targets = new List<Entity>();
+
+        switch (targetType)
+        {
+            //Single
+            case SkillTargetType.Self:
+                targets.Add(caster);
+                break;
+            case SkillTargetType.SingleEnemy:
+                if (selectedEntity != null) targets.Add(selectedEntity);
+                break;
+            case SkillTargetType.SingleAlly:
+                if (selectedEntity != null) targets.Add(selectedEntity);
+                break;
+            // Full Aoe
+            case SkillTargetType.AllEnemies:
+                targets = allEntities
+                    .Where(e => e.Team != caster.Team && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                break;
+            case SkillTargetType.AllAllies:
+                targets = allEntities
+                    .Where(e => e.Team == caster.Team && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                break;
+        }
+
+
+        return targets;
     }
 }

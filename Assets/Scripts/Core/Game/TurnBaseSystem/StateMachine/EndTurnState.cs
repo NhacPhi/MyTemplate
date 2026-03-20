@@ -31,7 +31,7 @@ public class EndTurnState : BattleBaseState
             return;
         }
 
-        battleManager.TurnSystem.ResetEntityAV(battleManager.CurrentCharacter);
+        battleManager.TurnSystem.ResetEntityAV(battleManager.CurrentCaster);
         battleManager.StateMachine.ChangeState(BattleState.OrderState);
     }
 

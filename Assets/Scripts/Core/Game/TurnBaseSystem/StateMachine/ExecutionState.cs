@@ -14,7 +14,7 @@ public class ExecutionState : BattleBaseState
     {
         battleManager.EnqueueAction(async () =>
         {
-            await battleManager.CurrentCharacter.ExecuteSkillAsync(battleManager.CurrentSkill);
+            await battleManager.CurrentCaster.ExecuteSkillAsync(battleManager.CurrentSkill);
         });
 
         while (battleManager.ActionQueue.Count > 0)
@@ -23,7 +23,7 @@ public class ExecutionState : BattleBaseState
             await nextAction.Invoke();
         }
 
-        Dictionary<SkillCharacter, SkillRuntime> activeSkills = battleManager.CurrentCharacter.GetCoreComponent<EntitySkill>().Skills;
+        Dictionary<SkillCharacter, SkillRuntime> activeSkills = battleManager.CurrentCaster.GetCoreComponent<EntitySkill>().Skills;
 
         battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
     }

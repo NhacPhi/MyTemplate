@@ -15,9 +15,9 @@ public class OrderState : BattleBaseState
     {
         Entity nextCharacter = battleManager.TurnSystem.GetNextCharacter();
 
-        battleManager.CurrentCharacter = nextCharacter;
+        battleManager.CurrentCaster = nextCharacter;
         
-        var pos_char = battleManager.CurrentCharacter.gameObject.transform.position;
+        var pos_char = battleManager.CurrentCaster.gameObject.transform.position;
 
         var pos = new Vector3(pos_char.x, pos_char.y - battleManager.OffsetY, pos_char.z);
 

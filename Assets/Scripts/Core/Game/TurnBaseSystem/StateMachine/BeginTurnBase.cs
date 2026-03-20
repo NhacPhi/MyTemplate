@@ -12,7 +12,7 @@ public class BeginTurnBase : BattleBaseState
 
     public override void Enter()
     {
-        var skillManager = battleManager.CurrentCharacter.GetCoreComponent<EntitySkill>();
+        var skillManager = battleManager.CurrentCaster.GetCoreComponent<EntitySkill>();
 
         if (skillManager != null)
         {
@@ -21,9 +21,9 @@ public class BeginTurnBase : BattleBaseState
 
         UIEvent.OnSwithActiveSkilCharacter?.Invoke(true);
 
-        UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCharacter);
+        UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCaster);
 
-        battleManager.SetupCurrentSkillCharacter(SkillCharacter.Base);
+        battleManager.SetupCurrentSkillCaster(SkillCharacter.Base);
 
         battleManager.StateMachine.ChangeState(BattleState.ActionState);
     }
