@@ -63,6 +63,8 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
             {
                 SkillData skillData = SkillDataFactory.Create(skillConfig.Skill);
 
+                skillData.TargetType = skillConfig.TargetType;
+
                 skillData.DamageMultiplier = skillConfig.DamageMultiplier;
 
                 skillData.MaxCoolDown = skillConfig.MaxCooldown;

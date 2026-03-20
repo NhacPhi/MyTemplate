@@ -72,7 +72,7 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             firreBallPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
             firreBallPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

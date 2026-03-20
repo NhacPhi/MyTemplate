@@ -67,7 +67,7 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             torandoPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
             torandoPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

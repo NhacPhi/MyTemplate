@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 public class TargetHitbox : MonoBehaviour, IPointerClickHandler
 {
     private Entity target;
+
+    [SerializeField] private GameObject _circleUI;
     private void Awake()
     {
         target = gameObject.GetComponentInParent<Entity>();
@@ -18,5 +20,10 @@ public class TargetHitbox : MonoBehaviour, IPointerClickHandler
                 UIEvent.OnExecuteSkill?.Invoke();
             }
         }
+    }
+
+    public void SetTargetVisual(bool active)
+    {
+        _circleUI.gameObject.SetActive(active);
     }
 }

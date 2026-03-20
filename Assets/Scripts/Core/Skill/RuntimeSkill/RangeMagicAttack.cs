@@ -57,7 +57,7 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             energyBurstPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
             energyBurstPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

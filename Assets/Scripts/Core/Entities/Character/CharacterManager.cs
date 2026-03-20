@@ -49,6 +49,8 @@ public class CharacterManager
 
             var characterUI = _objectResolver.Instantiate(characterUIPrefab, prefabEntity.transform.position, Quaternion.identity, characterInstance.transform);
 
+            var targetHitboxPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>("TargetHitbox", token: cancellation);
+
             //characterUI.transform.SetParent(characterInstance.transform);
 
             RectTransform rect = characterUI.GetComponent<RectTransform>();
@@ -61,6 +63,9 @@ public class CharacterManager
             }
 
             await characterInstance.gameObject.GetComponent<EntitySkill>().InitializeAsync(token: cancellation);
+
+            _objectResolver.Instantiate(targetHitboxPrefab,
+                    targetHitboxPrefab.transform.position, Quaternion.identity, characterInstance.transform);
 
             spawnedCharacters.Add(kvp.Key, characterInstance);
         }

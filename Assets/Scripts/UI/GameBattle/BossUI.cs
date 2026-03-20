@@ -15,6 +15,8 @@ public class BossUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _txtBossName;
 
+    [SerializeField] private Image _bossAvatar;
+
     [SerializeField] Slider _bossHP;
 
     [Inject] private GameDataBase _gameData;
@@ -32,6 +34,8 @@ public class BossUI : MonoBehaviour
     public void UpdateSkillBossUI(Entity boss)
     {
         var characterConfig = _gameData.GetCharacterConfig(boss.GetEntityID());
+
+        var avatar = characterConfig.Icon;
 
         var baseSkill = characterConfig.BaseSkillIcon;
         var majorSkill = characterConfig.MajorSkillIcon;
@@ -72,6 +76,8 @@ public class BossUI : MonoBehaviour
         _bossHP.maxValue = characterHp.MaxValue;
 
         _bossHP.value = characterHp.Value;
+
+        _bossAvatar.sprite = avatar;
 
     }
 }

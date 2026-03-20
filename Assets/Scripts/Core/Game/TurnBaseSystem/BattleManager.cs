@@ -78,11 +78,14 @@ public class BattleManager : MonoBehaviour
     public bool IsExecutedAction = false;
 
     public TurnOrderSystem TurnSystem { get; private set; }
+    public TargetManager TargetSystem { get; private set; }
 
     public Queue<Func<UniTask>> ActionQueue = new Queue<Func<UniTask>>();
     private void Start()
     {
         TurnSystem = new TurnOrderSystem();
+        TargetSystem = new TargetManager();
+
         InitStateMachine();
     }
 
@@ -150,6 +153,8 @@ public class BattleManager : MonoBehaviour
                 character.transform.position = pos + Vector3.up * OffsetY;
 
                 character.gameObject.GetComponent<EntityStateData>().SetRootTransform();
+
+                SetEntityPositionBySlot(character, slot_position);
             }         
         }
 
@@ -158,6 +163,7 @@ public class BattleManager : MonoBehaviour
         order = 0;
         for(int i = 0; i < _enemies.Count; i++)
         {
+            SetEntityPositionBySlot(Enemies[i], battleConfig.Enemies[i].Slot);
             if (order == 6)
             {
                 order = 0;
@@ -179,6 +185,14 @@ public class BattleManager : MonoBehaviour
                 enemy.gameObject.GetComponent<Entity>().RenderOrder = order;
             }
         }
+    }
+
+    public void SetEntityPositionBySlot(Entity entity, int slot)
+    {
+        entity.Row = (slot <= 3) ? BattleRow.Front : BattleRow.Back;
+
+        int columnIndex = (slot - 1) % 3;
+        entity.Column = (BattleColumn)columnIndex;
     }
 
     public void CheckBattleHasBosss()
@@ -203,6 +217,17 @@ public class BattleManager : MonoBehaviour
     public void SetupCurrentSkillCharacter(SkillCharacter type)
     {
         _currentSkill = type;
+
+        var skill = _currentCharacter.GetCoreComponent<EntitySkill>().Skills.GetValueOrDefault(_currentSkill);
+
+        if(skill != null)
+        {
+            var validTargets = TargetSystem.GetValidTargetsForSkill(skill, CurrentCharacter, _characters.Values.ToList(), _enemies);
+
+            TargetSystem.HighlightTargets(_activeEntities, validTargets);
+        }
+
+        _currentCharacter.SetRenderValid(true);
     }
     
     public void SetCurrentTarget(Entity target)

@@ -5,13 +5,20 @@ using Tech.Composite;
 using Tech.StateMachine;
 using UnityEngine.Rendering;
 using Cysharp.Threading.Tasks;
+using VContainer.Unity;
 
+public enum BattleRow { Front, Back }
+public enum BattleColumn { Left, Center, Right }
 public abstract class Entity : Tech.Composite.Core, ITurn
 {
     //Test
     public GameObject Target;
 
     public int RenderOrder = 0;
+
+    [Header("Position info")]
+    public BattleRow Row;
+    public BattleColumn Column;
     // Statte Machine
     public StateMachine<EntityState, EntityStateBase> StateManager { get; protected set; }
     = new StateMachine<EntityState, EntityStateBase>();
@@ -93,6 +100,52 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         if(sortingGP != null)
         {
             sortingGP.sortingOrder = order;
+        }
+    }
+
+    public void SetTargetableVisual(bool isTargetable)
+    {
+
+        SetRenderValid(isTargetable);
+
+        var hitBox = GetComponentInChildren<TargetHitbox>();
+        if (hitBox != null)
+        {
+            var collider = hitBox.GetComponent<Collider>();
+            if(collider != null)
+            {
+                collider.enabled = isTargetable;
+                hitBox.SetTargetVisual(isTargetable);
+            }
+        }
+    }
+
+    public void ResetTargetVisual()
+    {
+        SetRenderValid(true);
+
+        var hitBox = GetComponentInChildren<TargetHitbox>();
+
+        if (hitBox != null)
+        {
+            var collider = hitBox.GetComponent<Collider>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+                hitBox.SetTargetVisual(false);
+            }
+        }
+    }
+
+    public void SetRenderValid(bool valid)
+    {
+        SpriteRenderer[] allRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+        Color displayColor = valid ? Color.white : new Color(0.6f, 0.6f, 0.6f, 1f);
+
+        foreach (var sr in allRenderers)
+        {
+            sr.color = displayColor;
         }
     }
 }

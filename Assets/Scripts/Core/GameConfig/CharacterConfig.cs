@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -77,6 +77,24 @@ public class AttributeComponent
     public float SttartPercent;
 }
 
+public enum SkillTargetType
+{
+    // Single Target
+    SingleEnemy, // Áp dụng 1 kẻ địch
+    SingleAlly, // Áp dụng 1 đồng minh
+    Selft, // Chỉ Tác dụng lên mịnh
+
+    // Full Aoe
+    AllEnemies,
+    AllAllies,
+
+    //Position Aoe
+    EnemyColumn,
+    EnemyRow,
+
+    // Special
+    DeadAlly // Hồi sinh
+}
 [Serializable]
 public class SkillComponent
 {
@@ -88,6 +106,9 @@ public class SkillComponent
 
     [JsonProperty("skill")]
     public Skill Skill { get; set; }
+
+    [JsonProperty("target_type")]
+    public SkillTargetType TargetType { get; set;}
 
     [JsonProperty("damage_multiplier")]
     public float DamageMultiplier { get; set; }

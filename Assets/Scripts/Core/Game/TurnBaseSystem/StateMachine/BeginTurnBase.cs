@@ -23,7 +23,7 @@ public class BeginTurnBase : BattleBaseState
 
         UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCharacter);
 
-        battleManager.CurrentSkill = SkillCharacter.Base;
+        battleManager.SetupCurrentSkillCharacter(SkillCharacter.Base);
 
         battleManager.StateMachine.ChangeState(BattleState.ActionState);
     }

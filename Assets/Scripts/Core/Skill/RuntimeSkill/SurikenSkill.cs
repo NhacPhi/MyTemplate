@@ -72,7 +72,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
             GameObject suriken = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             surikenPrefab = Object.Instantiate(suriken, Vector3.zero, suriken.transform.rotation);
             surikenPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

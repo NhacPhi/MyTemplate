@@ -6,6 +6,8 @@ public abstract class SkillData
 
     public string ID { get; protected set; }
 
+    public SkillTargetType TargetType;
+
     public float DamageMultiplier;
 
     public int MaxCoolDown;

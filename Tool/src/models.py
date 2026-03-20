@@ -40,6 +40,7 @@ class SkillComponent:
     name_hash: str
     des_hash: str
     skill: str
+    target_type: str
     damage_multiplier: float
     max_cooldown: int
     flat_damage: float

@@ -11,7 +11,7 @@ public class ActionState : BattleBaseState
 
     public override void Enter()
     {
-        
+
     }
 
     public override void Exit()
@@ -23,6 +23,7 @@ public class ActionState : BattleBaseState
     {
         if(battleManager.IsExecutedAction)
         {
+            battleManager.TargetSystem.ResetTargetVisuals(battleManager.ActiveEntities);
             battleManager.StateMachine.ChangeState(BattleState.ExecutionState);
         }
     }

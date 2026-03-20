@@ -48,7 +48,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             fireBallPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
             fireBallPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

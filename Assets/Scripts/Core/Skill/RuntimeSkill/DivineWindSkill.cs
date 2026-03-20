@@ -31,7 +31,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         var state = caster.GetCoreComponent<EntityStateData>();
 
-        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+        caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
 
         await state.WaitForAnimEnd();
         caster.StateManager.ChangeState(EntityState.IDLE);
@@ -72,7 +72,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);
             divineWindPrefab = Object.Instantiate(ring, Vector3.zero, ring.transform.rotation);
             divineWindPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(objRef);
+            //AddressablesManager.Instance.RemoveAsset(objRef);
 
         }
     }

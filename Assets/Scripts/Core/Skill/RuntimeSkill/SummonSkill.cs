@@ -85,7 +85,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             GameObject smoke = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(vfxRef);
             effectPrefab = Object.Instantiate(smoke, Vector3.zero, Quaternion.identity);
             effectPrefab.gameObject.SetActive(false);
-            AddressablesManager.Instance.RemoveAsset(vfxRef);
+            //AddressablesManager.Instance.RemoveAsset(vfxRef);
 
         }
 

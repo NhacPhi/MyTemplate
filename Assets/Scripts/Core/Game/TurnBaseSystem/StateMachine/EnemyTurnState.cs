@@ -20,7 +20,7 @@ public class EnemyTurnState : BattleBaseState
             skillManager.TickCooldowns();
         }
 
-        var playerTeam = battleManager.Characters.Values.ToList();
+        var playerTeam = battleManager.TargetSystem.GetValidEtitiesByColumnLogic(battleManager.Characters.Values.ToList());
 
 
         EnemyDecision decision = await brain.DecideAsync(playerTeam);
