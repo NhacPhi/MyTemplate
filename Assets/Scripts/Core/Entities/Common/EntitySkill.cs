@@ -4,6 +4,8 @@ using System.Threading;
 using Tech.Composite;
 using UnityEngine;
 using VContainer;
+using System.Linq;
+
 public enum SkillCharacter
 {
     Base,
@@ -26,7 +28,7 @@ public enum Skill
     EmpowerAttack,
     Torando,
     Suriken,
-    PosionBall,
+    PoisonBall,
     DivineWind
 }
 
@@ -82,6 +84,8 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
             {
                 SkillData skillData = SkillDataFactory.Create(skillConfig.Skill);
 
+                skillData.ID = skillConfig.ID;
+
                 skillData.TargetType = skillConfig.TargetType;
 
                 skillData.DamageMultiplier = skillConfig.DamageMultiplier;
@@ -89,6 +93,15 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
                 skillData.MaxCoolDown = skillConfig.MaxCooldown;
 
                 skillData.FlatDamage = skillConfig.FlatDamage;
+
+                if(skillConfig.EffectID != null)
+                {
+                    skillData.Effect = _gameDataBase.GetEffectConfig(skillConfig.EffectID);
+                }
+                else
+                {
+                    skillData.Effect = null;
+                }
 
                 SkillRuntime skillRuntime = skillData.CreateRuntimeSkill(entityStats);
 
@@ -113,11 +126,6 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
     {
         
     }
-
-    //public bool IsSkillReady(SkillCharacter type)
-    //{
-
-    //}
 
     public void TickCooldowns()
     {
@@ -154,5 +162,20 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
             return skill.CurrentCooldown;
         }
         return 0;
+    }
+
+    public EntityState MatchSkillCharacterToEntityState(SkillRuntime skill)
+    {
+        var type = Skills.FirstOrDefault(x => x.Value == skill).Key;
+        switch (type)
+        {
+            case SkillCharacter.Base:
+                return EntityState.ATTACK;
+            case SkillCharacter.Major:
+                return EntityState.MAJOR_SKILL;
+            case SkillCharacter.Ultimate:
+                return EntityState.MAIN_SKILL;
+        }
+        return EntityState.ATTACK;
     }
 }

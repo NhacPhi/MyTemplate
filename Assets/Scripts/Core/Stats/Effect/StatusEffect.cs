@@ -7,6 +7,7 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
 {
     public bool IsStop { get; protected set; }
     public StatsController Target { get; protected set; }
+
     protected int turn;
     public abstract EffectConfig Data { get; }
     public abstract string ID { get; }
@@ -14,8 +15,8 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
     public virtual int CurrentStack => 1;
     public virtual int MaxStack => Data.MaxStack;
     public virtual int Duration => Data.Duration;
-    public virtual bool IsUnique => Data.Unique;
-    public virtual bool IsStackable => Data.IsStatackable;
+    public virtual bool IsUnique => true; // Data.Unique;
+    public virtual bool IsStackable => Data.MaxStack > 1;
 
     public StatusEffect(StatsController target)
     {
@@ -30,15 +31,18 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
         turn = 0;
         OnStart();
     }
-    public void Update()
+    public void Tick()
     {
+        if (IsStop) return;
+
         turn += 1;
-        if(turn >= Duration)
+
+        OnTick();
+
+        if (turn >= Duration)
         {
             Stop();
         }
-
-        WhileActive();
     }
     public void Stop()
     {
@@ -51,9 +55,15 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
         IsStop = true;
     }
     protected virtual void OnStart() { }
-    protected virtual void WhileActive() { }
+    protected virtual void OnTick() { }
     protected virtual void OnStop() { }
-    public virtual void AddStack() { }
+    public virtual void AddStack() 
+    {
+        if (IsStackable && CurrentStack < MaxStack)
+        {
+            turn = 0;
+        }
+    }
 
     public virtual int RemoveStack() => 0;
     public abstract StatusEffect Clone();
@@ -61,6 +71,8 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
     public virtual string GetID() => this.ID;
     public virtual bool Equals(StatusEffect other)
     {
+        if (other == null) return false;
+
         return this.GetID() == other.GetID()
             && this.GetType() == other.GetType();
     }

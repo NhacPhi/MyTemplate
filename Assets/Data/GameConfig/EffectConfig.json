@@ -1,0 +1,72 @@
+{
+    "EFF_Posion_def": {
+        "name_hash": 2191638895,
+        "des_hash": 2278866855,
+        "type": "Poison",
+        "target_stat": "None",
+        "modify_type": "None",
+        "duration": 2,
+        "max_stack": 100,
+        "value": 100
+    },
+    "EFF_Stun_def": {
+        "name_hash": 481093344,
+        "des_hash": 1519390178,
+        "type": "Stun",
+        "target_stat": "None",
+        "modify_type": "None",
+        "duration": 1,
+        "max_stack": 100,
+        "value": 100
+    },
+    "EFF_BufATK_def": {
+        "name_hash": 562538897,
+        "des_hash": 198365168,
+        "type": "StatBuff",
+        "target_stat": "ATK",
+        "modify_type": "Constant",
+        "duration": 2,
+        "max_stack": 100,
+        "value": 100
+    },
+    "EFF_BufDEF_def": {
+        "name_hash": 209041975,
+        "des_hash": 2257527410,
+        "type": "StatBuff",
+        "target_stat": "DEF",
+        "modify_type": "Constant",
+        "duration": 2,
+        "max_stack": 100,
+        "value": 100
+    },
+    "EFF_BufSpd_def": {
+        "name_hash": 4234704328,
+        "des_hash": 87995034,
+        "type": "StatBuff",
+        "target_stat": "SPEED",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 20,
+        "value": 20
+    },
+    "EFF_DefSpd_def": {
+        "name_hash": 914363166,
+        "des_hash": 3990611550,
+        "type": "StatDebuff",
+        "target_stat": "SPEED",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": -20,
+        "value": -20
+    },
+    "EFF_ResetDef": {
+        "name_hash": 2867466854,
+        "des_hash": 2507386581,
+        "type": "ResetDebuff",
+        "target_stat": "None",
+        "modify_type": "None",
+        "duration": 1,
+        "max_stack": 0,
+        "value": 0
+    }
+}

@@ -17,7 +17,7 @@ public class BuffShieldSkill : SkillRuntime
 
         var state = caster.GetCoreComponent<EntityStateData>();
 
-        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+        caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
 
         await state.WaitForHitFrame();
 

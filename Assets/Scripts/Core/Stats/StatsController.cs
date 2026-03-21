@@ -13,8 +13,8 @@ public class StatsController : CoreComponent, IEffectable
 
     [field: SerializeField] public string EntityID { get; protected set; }
 
-    //protected List<StatusEffect> statusEffects = new();
-    //public IReadOnlyCollection<StatusEffect> StatusEffect => statusEffects.AsReadOnly();
+    protected List<StatusEffect> statusEffects = new List<StatusEffect>();
+    public IReadOnlyCollection<StatusEffect> StatusEffect => statusEffects.AsReadOnly();
 
     protected Dictionary<StatType, Stat> stats;
     public Dictionary<StatType, Stat> Stats => stats;

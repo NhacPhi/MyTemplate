@@ -14,27 +14,33 @@ public class GameDataBase
     private Dictionary<string, ItemConfig> ItemConfigs = new Dictionary<string, ItemConfig>();
     private Dictionary<string, CharacterConfig> CharacterConfigs = new Dictionary<string, CharacterConfig>();
     private Dictionary<string, BattleConfig> BattleConfigs = new Dictionary<string, BattleConfig>();
+    private Dictionary<string, EffectConfig> EffectConfigs = new Dictionary<string, EffectConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
     private const string CharacterConfigsAddress = "CharacterConfig";
 
     private const string BattleConfigAddress = "BattleConfig";
+
+    private const string EffectConfigAddress = "EffectConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
-        var (itemText, characterText, battleText) = await UniTask.WhenAll(
+        var (itemText, characterText, battleText, effectText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ItemConfigsAddress, token: cancellationToken),
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(CharacterConfigsAddress, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(BattleConfigAddress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(BattleConfigAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(EffectConfigAddress, token: cancellationToken)
         );
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
         CharacterConfigs = Json.DeserializeObject<Dictionary<string, CharacterConfig>>(characterText.text);
         BattleConfigs = Json.DeserializeObject<Dictionary<string, BattleConfig>>(battleText.text);
+        EffectConfigs =  Json.DeserializeObject<Dictionary<string,EffectConfig>>(effectText.text);
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(BattleConfigAddress);
+        AddressablesManager.Instance.RemoveAsset(EffectConfigAddress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
         var atlasAddresses = new HashSet<string>();
@@ -143,6 +149,12 @@ public class GameDataBase
         string spriteID = GetRarityID(rare);
 
         return atlasProvider.GetSprite("Atlas_icon_game", spriteID);
+    }
+
+    public EffectConfig GetEffectConfig(string key)
+    {
+        EffectConfigs.TryGetValue(key, out EffectConfig effectConfig);
+        return effectConfig;
     }
 }
 

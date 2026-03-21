@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
 {
-    private PosionBallData skillData;
+    private PoíonBallData skillData;
     private GameObject firreBallPrefab;
     private Entity _caster;
 
     private UniTaskCompletionSource _skillEnd;
-    public PoisonBallSkill(EntityStats owner, PosionBallData skillData) : base(owner)
+    public PoisonBallSkill(EntityStats owner, PoíonBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
@@ -86,7 +86,7 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     }
 }
 
-public class PosionBallData : SkillData
+public class PoíonBallData : SkillData
 {
     public Vector3 Offset = new Vector3(6.29f, -0.67f, 0);
 

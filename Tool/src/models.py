@@ -35,15 +35,20 @@ class ItemModel:
 class AttributeComponent:
     max_stat_type: str
     start_percent: float
+
 @dataclass
 class SkillComponent:
-    name_hash: str
-    des_hash: str
+    id: str
+    name_hash: int
+    des_hash: int
     skill: str
     target_type: str
     damage_multiplier: float
     max_cooldown: int
     flat_damage: float
+    effect_id: str
+
+
 @dataclass
 class CharacterModel:
     name_hash: int
@@ -59,6 +64,20 @@ class CharacterModel:
         if "shield" not in self.attributes:
             self.attributes["shield"] = AttributeComponent(max_stat_type="None", start_percent=0.0)
 
+    def to_dict(self):
+        return {k: v for k, v in asdict(self).items() if v is not None}
+    
+# Effect Skill Config
+@dataclass
+class EffectSkillModel:
+    name_hash: int
+    des_hash: int
+    type: str
+    target_stat: str
+    modify_type: str
+    duration: int
+    max_stack: int
+    value: int 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}
     

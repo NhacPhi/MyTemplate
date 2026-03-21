@@ -80,11 +80,14 @@ public class AttributeComponent
 [Serializable]
 public class SkillComponent
 {
+    [JsonProperty("id")]
+    public string ID { get; set; }
+
     [JsonProperty("name_hash")]
-    public string Name { get; set; }
+    public long Name { get; set; }
 
     [JsonProperty("des_hash")]
-    public string Description { get; set; }
+    public long Description { get; set; }
 
     [JsonProperty("skill")]
     public Skill Skill { get; set; }
@@ -100,4 +103,7 @@ public class SkillComponent
 
     [JsonProperty("flat_damage")]
     public float FlatDamage { get; set; }
+
+    [JsonProperty("effect_id")]
+    public string EffectID { get; set; }
 }

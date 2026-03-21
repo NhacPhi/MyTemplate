@@ -25,13 +25,15 @@ public class HealingSkill : SkillRuntime
 
         var state = caster.GetCoreComponent<EntityStateData>();
 
-        caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
+        caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
 
         await state.WaitForHitFrame();
 
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
 
-        stat.HealingHP(1000);
+        var hp = CalculateRawDamage().FlatValue + CalculateRawDamage().DamageMultiplier * stat.GetStat(StatType.ATK).Value;
+
+        stat.HealingHP(hp);
 
         await state.WaitForAnimEnd();
 

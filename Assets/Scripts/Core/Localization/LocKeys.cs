@@ -799,6 +799,10 @@ public static class LocKeys
 
     public const long BUFF_DEF_DES = 2257527410;
 
+    public const long BUFF_SPEED_NAME = 4234704328;
+
+    public const long BUFF_SPEED_DES = 87995034;
+
     public const long DEBUFF_RECEIVE_NAME = 661868908;
 
     public const long DEBUFF_RECEIVE_DES = 243717783;
@@ -818,5 +822,13 @@ public static class LocKeys
     public const long DEBUFF_STUN_NAME = 481093344;
 
     public const long DEBUFF_STUN_DES = 1519390178;
+
+    public const long DEBUFF_SPEED_NAME = 914363166;
+
+    public const long DEBUFF_SPEED_DES = 3990611550;
+
+    public const long EFF_POSION_NAME = 2191638895;
+
+    public const long EFF_POSION_DES = 2278866855;
 
 }

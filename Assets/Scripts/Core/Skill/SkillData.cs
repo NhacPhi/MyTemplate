@@ -2,9 +2,9 @@ using UnityEngine;
 
 public abstract class SkillData
 {
-    private string id;
+    //private string id;
 
-    public string ID { get; protected set; }
+    public string ID { get; set; }
 
     public SkillTargetType TargetType;
 
@@ -13,6 +13,8 @@ public abstract class SkillData
     public int MaxCoolDown;
 
     public float FlatDamage;
+
+    public EffectConfig Effect;
 
     public abstract SkillRuntime CreateRuntimeSkill(EntityStats owner);
 }

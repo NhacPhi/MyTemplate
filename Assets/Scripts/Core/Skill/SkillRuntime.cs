@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using System;
 
 public abstract class SkillRuntime
@@ -41,5 +41,17 @@ public abstract class SkillRuntime
             FlatValue = GetSkillData().FlatDamage,
             DamageMultiplier = GetSkillData().DamageMultiplier
         };
+    }
+
+    protected virtual void ApplyEffectsToTarget(Entity target)
+    {
+        var targetStats = target.GetCoreComponent<StatsController>();
+        if (targetStats == null) return;
+
+        var attachedEffect = GetSkillData().Effect;
+
+        StatusEffect newEffect = EffectFactory.CreateEffect(GetSkillData().ID, attachedEffect, targetStats);
+
+        targetStats.ApplyEffect(newEffect);
     }
 }

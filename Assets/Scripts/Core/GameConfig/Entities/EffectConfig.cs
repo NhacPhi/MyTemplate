@@ -1,23 +1,40 @@
 using System;
+using Newtonsoft.Json;
+public enum EffectType
+{
+    None,
+
+    Poison,
+    Stun,
+    StatBuff,
+    StatDebuff,
+    ResetDebuff
+}
+
 
 public class EffectConfig
 {
-    private string id;
-    private string name;
-    private string description;
+    [JsonProperty("name_hash")]
+    public long Name { get; set; }
 
-    private StatusEffect effectType;
-    private bool unique;
-    private bool isStackable;
-    private int maxStack;
-    private int duration; // turn count
+    [JsonProperty("des_hash")]
+    public long Description { get; set; }
 
-    public string ID { get { return id; } set { id = value; } }
-    public string Name { get { return name; } set { name = value; } }
-    public string Description { get { return description; } set { description = value; } }
-    public StatusEffect EffectType { get { return effectType; } set { effectType = value; } }
-    public bool Unique { get { return unique; } set { unique = value; } }
-    public bool IsStatackable { get { return isStackable; } set { isStackable = value; } }
-    public int MaxStack { get { return maxStack; } set { maxStack = value; }  }
-    public int Duration { get { return duration; } set { duration = value; } }
+    [JsonProperty("type")]
+    public EffectType Type { get; set; }
+
+    [JsonProperty("target_stat")]
+    public StatType TargetStat { get; set; }
+
+    [JsonProperty("modify_type")]
+    public ModifyType ModifyType { get; set; }
+
+    [JsonProperty("duration")]
+    public int Duration { get; set; }
+
+    [JsonProperty("max_stack")]
+    public int MaxStack { get; set; }
+
+    [JsonProperty("value")]
+    public int Value { get; set; }
 }

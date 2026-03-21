@@ -5,31 +5,37 @@
         "type": "Fighter",
         "skills": {
             "Base": {
+                "id": "SunWukong_B",
                 "name_hash": 1067287368,
                 "des_hash": 3336390912,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "SunWukong_M",
                 "name_hash": 3239352682,
                 "des_hash": 3419521401,
                 "skill": "Summon",
                 "target_type": "AllEnemies",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "SunWukong_U",
                 "name_hash": 3696005978,
                 "des_hash": 22218017,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -60,31 +66,37 @@
         "type": "Mage",
         "skills": {
             "Base": {
+                "id": "TangSanZang_B",
                 "name_hash": 4101531952,
                 "des_hash": 389073617,
                 "skill": "Range",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "TangSanZang_M",
                 "name_hash": 1803905392,
                 "des_hash": 1806441278,
                 "skill": "BuffShield",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "TangSanZang_U",
                 "name_hash": 3075645164,
                 "des_hash": 2203572624,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_Stun_def"
             }
         },
         "stats": {
@@ -115,31 +127,37 @@
         "type": "Tanker",
         "skills": {
             "Base": {
+                "id": "ZhuBaJie_B",
                 "name_hash": 887970513,
                 "des_hash": 1621767208,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "ZhuBaJie_M",
                 "name_hash": 2722680510,
                 "des_hash": 1430700502,
                 "skill": "BuffShield",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "ZhuBaJie_U",
                 "name_hash": 3212780353,
                 "des_hash": 3559824929,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_BufDEF_def"
             }
         },
         "stats": {
@@ -170,35 +188,41 @@
         "type": "Support",
         "skills": {
             "Base": {
+                "id": "ShaWujing_B",
                 "name_hash": 912099643,
                 "des_hash": 3914413104,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "ShaWujing_M",
                 "name_hash": 3800924881,
                 "des_hash": 3778048083,
                 "skill": "Healing",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_BufATK_def"
             },
             "Ultimate": {
+                "id": "ShaWujing_U",
                 "name_hash": 4271876280,
                 "des_hash": 1345070445,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
-            "hp": 2900,
+            "hp": 3200,
             "def": 300,
             "atk": 1380,
             "speed": 90
@@ -225,31 +249,37 @@
         "type": "Support",
         "skills": {
             "Base": {
+                "id": "DragonKing_B",
                 "name_hash": 2087350282,
                 "des_hash": 4284271022,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "DragonKing_M",
                 "name_hash": 2457540170,
                 "des_hash": 491717580,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "DragonKing_U",
                 "name_hash": 2442178655,
                 "des_hash": 1983184445,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -280,31 +310,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "ThirdPrinceNezha_B",
                 "name_hash": 3960779279,
                 "des_hash": 2059288544,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "ThirdPrinceNezha_M",
                 "name_hash": 2518536810,
                 "des_hash": 3428244814,
                 "skill": "FireRing",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "ThirdPrinceNezha_U",
                 "name_hash": 598886642,
                 "des_hash": 1060479304,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_BufSpd_def"
             }
         },
         "stats": {
@@ -335,31 +371,37 @@
         "type": "ADCarry",
         "skills": {
             "Base": {
+                "id": "LittleWhiteDragon_B",
                 "name_hash": 987708377,
                 "des_hash": 2644499163,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "LittleWhiteDragon_M",
                 "name_hash": 1937668250,
                 "des_hash": 3635238380,
                 "skill": "ThunderBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "LittleWhiteDragon_U",
                 "name_hash": 232672404,
                 "des_hash": 699246327,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -390,31 +432,37 @@
         "type": "Tanker",
         "skills": {
             "Base": {
+                "id": "BullDemonKing_B",
                 "name_hash": 3729828721,
                 "des_hash": 1933137142,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "BullDemonKing_M",
                 "name_hash": 3191543977,
                 "des_hash": 2241444781,
                 "skill": "BuffShield",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "BullDemonKing_U",
                 "name_hash": 2707740248,
                 "des_hash": 1509573623,
-                "skill": "PosionBall",
+                "skill": "PoisonBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_Posion_def"
             }
         },
         "stats": {
@@ -445,31 +493,37 @@
         "type": "Fighter",
         "skills": {
             "Base": {
+                "id": "ErlangShen_B",
                 "name_hash": 1097877494,
                 "des_hash": 4280878459,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "ErlangShen_M",
                 "name_hash": 3312233495,
                 "des_hash": 603761648,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "ErlangShen_U",
                 "name_hash": 56125714,
                 "des_hash": 4054124890,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -500,31 +554,37 @@
         "type": "Mage",
         "skills": {
             "Base": {
+                "id": "GuanyinBodhisattva_B",
                 "name_hash": 2003724100,
                 "des_hash": 3989031508,
                 "skill": "Range",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "GuanyinBodhisattva_M",
                 "name_hash": 1350552570,
                 "des_hash": 2542808218,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "GuanyinBodhisattva_U",
                 "name_hash": 692807574,
                 "des_hash": 3110919530,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -555,31 +615,37 @@
         "type": "Mage",
         "skills": {
             "Base": {
+                "id": "VanguardTiger_B",
                 "name_hash": 2407734047,
                 "des_hash": 163734896,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "None_Skill",
                 "name_hash": 318310275,
                 "des_hash": 1671057782,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 0.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "None_Skill",
                 "name_hash": 318310275,
                 "des_hash": 1671057782,
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 0.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -606,31 +672,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "TheBoySage_B",
                 "name_hash": 4088634325,
                 "des_hash": 2865375096,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "TheBoySage_M",
                 "name_hash": 681340976,
                 "des_hash": 3131333227,
                 "skill": "FireBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "TheBoySage_U",
                 "name_hash": 3266720559,
                 "des_hash": 3263716658,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -661,31 +733,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "GoldHornKing_B",
                 "name_hash": 3284977142,
                 "des_hash": 3336153369,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "GoldHornKing_M",
                 "name_hash": 2605397208,
                 "des_hash": 1608077493,
                 "skill": "MajorAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "GoldHornKing_U",
                 "name_hash": 757041620,
                 "des_hash": 355619658,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -716,31 +794,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "SilverHornKing_B",
                 "name_hash": 3604073782,
                 "des_hash": 167254605,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "SilverHornKing_M",
                 "name_hash": 3935859252,
                 "des_hash": 1924121733,
                 "skill": "Torando",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "SilverHornKing_U",
                 "name_hash": 4284829501,
                 "des_hash": 2032288666,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -771,31 +855,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "YellowWindMonster_B",
                 "name_hash": 3118816832,
                 "des_hash": 4190240252,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "YellowWindMonster_M",
                 "name_hash": 2883884739,
                 "des_hash": 3235113244,
                 "skill": "Suriken",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "EFF_DefSpd_def"
             },
             "Ultimate": {
+                "id": "YellowWindMonster_U",
                 "name_hash": 4250590855,
                 "des_hash": 2534825317,
                 "skill": "DivineWind",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {
@@ -826,31 +916,37 @@
         "type": "Assassin",
         "skills": {
             "Base": {
+                "id": "GoldfishDemon_B",
                 "name_hash": 3902236339,
                 "des_hash": 1376192449,
                 "skill": "Melee",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.0,
                 "max_cooldown": 0,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Major": {
+                "id": "GoldfishDemon_M",
                 "name_hash": 4265829752,
                 "des_hash": 909228250,
                 "skill": "MajorAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             },
             "Ultimate": {
+                "id": "GoldfishDemon_U",
                 "name_hash": 4170096292,
                 "des_hash": 3530900397,
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
-                "flat_damage": 100.0
+                "flat_damage": 100.0,
+                "effect_id": "None"
             }
         },
         "stats": {

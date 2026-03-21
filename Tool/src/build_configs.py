@@ -2,7 +2,7 @@ import pandas as pd
 
 import config
 from src.build import BaseBuilder
-from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, SkillComponent, CharacterModel, AttributeComponent, BattleModel, StageEnemiesCompoment
+from src.models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, SkillComponent, CharacterModel, EffectSkillModel, AttributeComponent, BattleModel, StageEnemiesCompoment
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -84,7 +84,7 @@ class CharacterConfigBuilder(BaseBuilder):
         
         all_sheets = pd.read_excel(self.file_path, sheet_name=None)
 
-
+    # Skill Config
         skill_lookup = {}
         if "SkillConfig" in all_sheets:
             df_skills = all_sheets["SkillConfig"]
@@ -95,13 +95,15 @@ class CharacterConfigBuilder(BaseBuilder):
                 
                 # Đóng gói dữ liệu thành SkillComponent
                 skill_lookup[skill_id] = SkillComponent(
+                    id=skill_id,
                     name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else "",
                     des_hash=self.get_hash((row['Des']).strip()) if not pd.isna(row['Des']) else "",
                     skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
                     damage_multiplier=float(row['DamageMultiplier']) if not pd.isna(row['DamageMultiplier']) else 0.0,
                     max_cooldown=int(row['MaxCooldown']) if not pd.isna(row['MaxCooldown']) else 0,
-                    flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0
+                    flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0,
+                    effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None"
                 )
 
         character_data = {}
@@ -182,6 +184,39 @@ class CharacterConfigBuilder(BaseBuilder):
         final_data = {character_id: character.to_dict() for character_id, character in character_data.items()}
         self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_data, "CharacterConfig")
 
+        # Effect Skill Config
+        effect_skill_data = {}
+        if "EffectConfig" in all_sheets:
+            df_battle = all_sheets["EffectConfig"]
+
+            for _, row in df_battle.iterrows():
+                effect_id = str(row['ID']).strip()
+                if pd.isna(effect_id) or not effect_id:
+                    continue             
+
+                name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else ""
+                des_hash=self.get_hash((row['Des'].strip())) if not pd.isna(row['Des']) else ""
+                type=str(row['Type']).strip() if pd.notna(row['Type']) else "None"
+                target_stat=str(row['TargetStat']).strip() if pd.notna(row['TargetStat']) else "None"
+                modify_type = str(row['ModifyType']).strip() if pd.notna(row['ModifyType']) else "None"
+                duration=int(row['Duration']) if not pd.isna(row['Duration']) else 0
+                value=int(row['Value']) if not pd.isna(row['Value']) else 0
+                max_stack=int(row['Value']) if not pd.isna(row['Value']) else 0
+
+                effect_skill_data[effect_id] = EffectSkillModel(
+                    name_hash=name_hash,
+                    des_hash=des_hash,
+                    type=type,
+                    target_stat=target_stat,
+                    modify_type=modify_type,
+                    duration=duration,
+                    value=value,
+                    max_stack=max_stack
+                )
+            
+        final_effect_data = {e_id: effect.to_dict() for e_id, effect in effect_skill_data.items()}
+        self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_effect_data, "EffectConfig")
+
         # Battle Config
         battle_data = {}
 
@@ -194,7 +229,7 @@ class CharacterConfigBuilder(BaseBuilder):
                     continue
 
                 name_hash=self.get_hash(row['Name'])
-                background = str(row['BackGrouind']).strip() if pd.notna(row['BackGrouind']) else ""
+                background = str(row['BackGround']).strip() if pd.notna(row['BackGround']) else ""
                 reward = str(row['Reward']).strip() if pd.notna(row['Reward']) else ""
 
                 battle_data[battle_id] = BattleModel(
