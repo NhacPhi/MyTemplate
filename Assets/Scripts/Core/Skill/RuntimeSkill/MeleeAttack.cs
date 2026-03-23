@@ -13,7 +13,7 @@ public class MeleeAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
 

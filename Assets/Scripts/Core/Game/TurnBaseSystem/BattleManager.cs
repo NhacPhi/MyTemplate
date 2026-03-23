@@ -37,6 +37,13 @@ public class BattleManager : MonoBehaviour
 
     public float OffsetY = 4;
 
+    public int GlobalTurnID { get; private set; } = 0;
+
+    public void NextCharacterTurn()
+    {
+        GlobalTurnID++; // Lượt 1, Lượt 2, Lượt 3...
+    }
+
     private Entity _currentCaster;
 
     private Entity _boss;
@@ -249,7 +256,7 @@ public class BattleManager : MonoBehaviour
         StateMachine.AddNewState(BattleState.SetupState, new BattleSetupState(this));
         StateMachine.AddNewState(BattleState.OrderState, new OrderState(this));
         StateMachine.AddNewState(BattleState.BeginTurnBase, new BeginTurnBase(this));
-        StateMachine.AddNewState(BattleState.EnemyTurnsState, new EnemyTurnState(this));
+        //StateMachine.AddNewState(BattleState.EnemyTurnsState, new EnemyTurnState(this));
         StateMachine.AddNewState(BattleState.ActionState, new ActionState(this));
         StateMachine.AddNewState(BattleState.ExecutionState, new ExecutionState(this));
         StateMachine.AddNewState(BattleState.EndTurnState, new EndTurnState(this));

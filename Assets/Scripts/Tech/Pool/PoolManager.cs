@@ -74,16 +74,14 @@ namespace Tech.Pool
         public T SpawnObject<T>(T objectToSpawn, Vector3 position, Quaternion rotation,
             PoolType poolType = PoolType.None) where T : Component
         {
-            Debug.Log("LOL1");
             var spawnableObj = Spawn(objectToSpawn, position, rotation, poolType);
-            Debug.Log("LOL2");
+
             if (poolType != PoolType.None)
             {
                 spawnableObj.transform.SetParent(GetPoolParent(poolType).transform);
             }
             if (objectToSpawn == null)
             {
-                Debug.Log("PoolManager: objectToSpawn (Prefab) truyền vào đã bị NULL!");
                 return null;
             }
             return spawnableObj;
@@ -91,20 +89,15 @@ namespace Tech.Pool
 
         private T Spawn<T>(T obj, Vector3 position, Quaternion rotation, PoolType poolType = PoolType.None) where T : Object
         {
-            Debug.Log("PoolManager0: spawnableObj (Prefab) truyền vào đã bị NULL!");
             if (!_objectPools.ContainsKey(obj))
             {
-                Debug.Log("PoolManager1: spawnableObj (Prefab) truyền vào đã bị NULL!");
                 _objectPools.Add(obj, new Pool(obj));
-                Debug.Log("PoolManager2: spawnableObj (Prefab) truyền vào đã bị NULL!");
             }
 
-            Debug.Log("PoolManager3: spawnableObj (Prefab) truyền vào đã bị NULL!");
             T spawnableObj = _objectPools[obj].GetPool(_objectResolver, position, rotation) as T;
 
             if (spawnableObj == null)
             {
-                Debug.Log("PoolManager4: spawnableObj (Prefab) truyền vào đã bị NULL!");
                 return null;
             }
 

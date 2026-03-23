@@ -74,7 +74,7 @@ public class AttributeComponent
     public StatType StatMaxStatType;
 
     [JsonProperty("start_percent")]
-    public float SttartPercent;
+    public float StartPercent;
 }
 
 [Serializable]

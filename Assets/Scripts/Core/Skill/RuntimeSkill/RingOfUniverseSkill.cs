@@ -18,7 +18,7 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
         this.skillData = skillData;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         _caster = caster;
        

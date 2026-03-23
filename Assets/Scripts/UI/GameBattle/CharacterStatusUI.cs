@@ -20,7 +20,7 @@ public class CharacterStatusUI : MonoBehaviour
         if (entity != null)
         {
             InitAttributes();
-            entity.OnAtributeChange += HandleAttributesChangeEvent;
+            entity.OnAttributeChange += HandleAttributesChangeEvent;
         }
     }
 

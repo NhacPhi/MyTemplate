@@ -94,9 +94,9 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         foreach (var e in enemies) Targets.Add(e.gameObject);
     }
 
-    public virtual async UniTask ExecuteSkillAsync(SkillCharacter type)
+    public virtual async UniTask ExecuteSkillAsync(SkillCharacter type, int currentTurnID)
     {
-        await gameObject.GetComponent<EntitySkill>().ExecuteSkillAsync(type);
+        await gameObject.GetComponent<EntitySkill>().ExecuteSkillAsync(type, currentTurnID);
     }
 
     public string GetEntityID()

@@ -15,7 +15,7 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
         this.skillData = skillData;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster,int currentTurnID)
     {
         await PerformSummon(skillData, caster);
     }

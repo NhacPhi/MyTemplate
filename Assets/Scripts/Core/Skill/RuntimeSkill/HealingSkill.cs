@@ -14,11 +14,11 @@ public class HealingSkill : SkillRuntime
 
 
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        await PerformSkill(skillData, caster);
+        await PerformSkill(skillData, caster, currentTurnID);
     }
-    public async UniTask PerformSkill(SkillData config, Entity caster)
+    public async UniTask PerformSkill(SkillData config, Entity caster,int currentTurnID)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
@@ -27,8 +27,6 @@ public class HealingSkill : SkillRuntime
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
 
-        await state.WaitForHitFrame();
-
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
 
         var hp = CalculateRawDamage().FlatValue + CalculateRawDamage().DamageMultiplier * stat.GetStat(StatType.ATK).Value;
@@ -36,6 +34,11 @@ public class HealingSkill : SkillRuntime
         stat.HealingHP(hp);
 
         await state.WaitForAnimEnd();
+
+        if (!caster.GetCoreComponent<EntityStats>().IsDead)
+        {
+            ApplyEffectsToTarget(caster, currentTurnID);
+        }
 
         caster.StateManager.ChangeState(EntityState.IDLE);
 

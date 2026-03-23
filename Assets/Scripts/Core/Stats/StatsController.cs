@@ -22,9 +22,15 @@ public class StatsController : CoreComponent, IEffectable
     public Action<StatEvtArgs> OnStatChange;
 
     protected Dictionary<AttributeType, Attribute> attributes;
-    public Dictionary<AttributeType, Attribute> Atributes => attributes;
+    public Dictionary<AttributeType, Attribute> Attributes => attributes;
 
-    public Action<AttributeEvtArgs> OnAtributeChange;
+    // Update Hearth bar
+    public Action<AttributeEvtArgs> OnAttributeChange;
+
+    // Update Effect 
+    public Action<StatusEffect> OnEffectAdded;  
+    public Action<StatusEffect> OnEffectRemoved; 
+    public Action<StatusEffect> OnEffectUpdated;
 
     private float _currentAV;
     public float CurrentAV
@@ -73,7 +79,7 @@ public class StatsController : CoreComponent, IEffectable
             {
                 maxStat = stats[attributeConponent.StatMaxStatType];
             }
-            Attribute attribute = new(0, maxStat, attributeConponent.SttartPercent, this);
+            Attribute attribute = new(0, maxStat, attributeConponent.StartPercent, this);
 #if UNITY_EDITOR
             attribute.OnValueChange += HandleNotifyEditor;
 #endif
@@ -134,12 +140,12 @@ public class StatsController : CoreComponent, IEffectable
             stat.ClearAllModifiers();
         }
 
-        //foreach(var effect in statusEffects)
-        //{
-        //    effect.Stop();
-        //}
+        foreach (var effect in statusEffects)
+        {
+            effect.Stop();
+        }
 
-        //statusEffects.Clear();
+        statusEffects.Clear();
     }
 
     public virtual void AddModifier(StatType type, Modifier modifier)
@@ -166,38 +172,44 @@ public class StatsController : CoreComponent, IEffectable
         stats[type].RemoveModifierWithoutNotify(modifier);
     }
 
-    public void ApplyEffect(StatusEffect effect)
+    public void ApplyEffect(StatusEffect effect, int currentTurnID)
     {
-        if(effect == null || effect.MaxStack <= 0) return;
+        if (effect == null || effect.MaxStack <= 0) return;
 
         bool isExist = FindEffect(effect, out var existEffect);
 
-        bool stackIsFull = false; 
-
-        if(isExist && effect.IsStackable)
-        {
-            stackIsFull = existEffect.CurrentStack >= existEffect.MaxStack;
-        }
-
-        if (effect.IsUnique && isExist)
-        {
-            if(existEffect.IsStackable && !stackIsFull)
-            {
-                existEffect.AddStack();
-            }
-        }
-
-        if(!isExist)
+        // 1. NẾU CHƯA TỒN TẠI (Hoặc tồn tại nhưng IsUnique = false -> Cho phép tạo mới)
+        if (!isExist || !effect.IsUnique)
         {
             var clone = effect.Clone();
-            //statusEffects.Add(clone);
-            clone.StartEffect();
+            statusEffects.Add(clone);
+            clone.StartEffect(currentTurnID);
+
+            OnEffectAdded?.Invoke(clone);
             return;
         }
 
-        if (stackIsFull) return;
+        // 2. NẾU ĐÃ TỒN TẠI VÀ LÀ HIỆU ỨNG ĐỘC NHẤT (IsUnique = true)
+        if (existEffect.IsStackable)
+        {
+            if (existEffect.CurrentStack < existEffect.MaxStack)
+            {
+                // Vẫn còn chỗ -> Tăng Stack (Thường trong hàm AddStack bạn cũng đã có lệnh turn = 0 rồi)
+                existEffect.AddStack(currentTurnID);
+            }
+            else
+            {
+                // Đã Max Stack -> Không tăng độ đau, chỉ làm mới thời gian
+                existEffect.ResetDuration();
+            }
 
-        existEffect.AddStack();
+            OnEffectUpdated?.Invoke(existEffect);
+        }
+        else
+        {
+            // Không cho cộng dồn (VD: Choáng) -> Chỉ làm mới thời gian
+            existEffect.ResetDuration();
+        }
     }
     public void RemoveEffect(StatusEffect effect, bool ignoreStack)
     {
@@ -206,21 +218,28 @@ public class StatsController : CoreComponent, IEffectable
         if(ignoreStack)
         {
             cloneEffect.Stop();
-            //statusEffects.Remove(cloneEffect);
+            statusEffects.Remove(cloneEffect);
+            OnEffectRemoved?.Invoke(cloneEffect);
             return;
         }
 
-        if (effect.IsStackable && cloneEffect.RemoveStack() > 0) return;
+        if (effect.IsStackable && cloneEffect.RemoveStack() > 0)
+        {
+            OnEffectUpdated?.Invoke(cloneEffect);
+            return;
+        }
 
         cloneEffect.Stop();
-        //statusEffects.Remove(cloneEffect);
+        statusEffects.Remove(cloneEffect);
+
+        OnEffectRemoved?.Invoke(cloneEffect);
     }
     public bool HasEffect<T>() where T : StatusEffect
     {
-        //foreach(var effect in statusEffects)
-        //{
-        //    if(effect.GetType() == typeof(T)) return true;
-        //}
+        foreach (var effect in statusEffects)
+        {
+            if (effect.GetType() == typeof(T)) return true;
+        }
 
         return false;
     }
@@ -228,29 +247,68 @@ public class StatsController : CoreComponent, IEffectable
     protected bool FindEffect(StatusEffect effect, out StatusEffect cloneEffect)
     {
         cloneEffect = null;
-        if(effect == null) return false;
+        if (effect == null) return false;
 
-        //foreach (var m_effect in statusEffects)
-        //{
-        //    if(!effect.Equals(m_effect)) continue;
 
-        //    cloneEffect = m_effect;
-        //    return true;
-        //}
+        foreach (var m_effect in statusEffects)
+        {
+            if (!effect.Equals(m_effect)) continue;
+
+            cloneEffect = m_effect;
+            return true;
+        }
 
         return false;
     }
 
-    protected virtual void Update()
+    public void ProcessStartOfTurn()
     {
-        //if(statusEffects == null) return;
-        //for(int i = statusEffects.Count - 1; i >= 0; i--)
-        //{
-        //    var effect = statusEffects[i];
-        //    effect.Update();
-        //    if (!effect.IsStop) continue;
-        //    statusEffects.RemoveAt(i);
-        //}
+        if (statusEffects == null || statusEffects.Count == 0) return;
+
+        // Cho các effect chạy logic đầu lượt (VD: Giải trừ, Hồi Năng lượng)
+        for (int i = statusEffects.Count - 1; i >= 0; i--)
+        {
+            statusEffects[i].OnStartOfTurn();
+        }
+    }
+
+    public void ProcessEndOfTurn(int currentTurnID)
+    {
+        if (statusEffects == null || statusEffects.Count == 0) return;
+
+        for (int i = statusEffects.Count - 1; i >= 0; i--)
+        {
+            var effect = statusEffects[i];
+
+            // 1. Chạy logic cuối lượt (VD: Trừ máu độc, Hồi máu Regen)
+            effect.OnEndOfTurn();
+
+            // 2. Giảm thời gian tồn tại của Effect
+            effect.ReduceDuration(currentTurnID);
+
+            // 3. Dọn dẹp nếu hết hạn
+            if (effect.IsStop)
+            {
+                statusEffects.RemoveAt(i);
+                OnEffectRemoved?.Invoke(effect); // Báo UI tắt Icon
+            }
+            else
+            {
+                OnEffectUpdated?.Invoke(effect); // Báo UI cập nhật số Hiệp
+            }
+        }
+    }
+
+    public bool CanTakeTurn()
+    {
+        foreach (var effect in statusEffects)
+        {
+            // Tùy vào cách bạn định nghĩa Enum EffectType trong EffectConfig
+            // Ví dụ: if (effect.Data.EffectType == EffectType.Stun) return false;
+
+            if (effect.Data.Type == EffectType.Stun) return false;
+        }
+        return true;
     }
 
 

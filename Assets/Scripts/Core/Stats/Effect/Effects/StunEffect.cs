@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,10 @@ public class StunEffect : StatusEffect
 {
     private EffectConfig _data;
     private string _effectID;
+
+    private GameObject _stunEff;
+
+    private const string stunAddress = "StunEff";
 
     // Constructor giống hệt StatBuffEffect
     public StunEffect(string effectID, EffectConfig data, StatsController target, StatsController caster = null)
@@ -18,16 +23,29 @@ public class StunEffect : StatusEffect
     protected override void OnStart()
     {
         // Khi bắt đầu dính choáng: 
-        // Không cần đụng vào Stats. Thường ở đây ta sẽ bật Animation choáng, hoặc hiện Icon lốc xoáy trên đầu.
-        Debug.Log($"[Effect] {Target.EntityID} đã bị CHOÁNG (Stun) trong {_data.Duration} lượt!");
 
-        // Ví dụ nếu bạn có State Manager, bạn có thể ép nó chuyển state luôn:
+
+        Debug.Log($"[Effect] {Target.EntityID} đã bị CHOÁNG (Stun) trong {_data.Duration} lượt!");
+        SpawnVFXAsync().Forget();
         // Target.GetComponent<Entity>().StateManager.ChangeState(EntityState.STUNNED);
     }
 
-    public override void AddStack()
+    private async UniTaskVoid SpawnVFXAsync()
     {
-        base.AddStack(); // Hàm cha lo việc reset biến 'turn' về 0 để làm mới thời gian choáng
+        GameObject vfxPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(stunAddress);
+
+        if (this.IsStop || Target == null || vfxPrefab == null)
+        {
+            return;
+        }
+
+        _stunEff = GameObject.Instantiate(vfxPrefab, Target.gameObject.transform);
+        _stunEff.transform.localPosition = Vector3.zero;
+    }
+
+    public override void AddStack(int currentTurnID)
+    {
+        base.AddStack(currentTurnID); // Hàm cha lo việc reset biến 'turn' về 0 để làm mới thời gian choáng
 
         // Choáng thường không có Stack (Ví dụ: Không có "Choáng x2"). 
         // Việc đập thêm 1 chiêu choáng vào đứa đang bị choáng chỉ đơn giản là reset lại thời gian (Refresh duration).
@@ -36,8 +54,8 @@ public class StunEffect : StatusEffect
 
     protected override void OnStop()
     {
-        // Khi hết choáng:
-        // Tắt Animation choáng, xóa Icon trên đầu.
+        GameObject.Destroy(_stunEff);
+        _stunEff = null;
         Debug.Log($"[Effect] {Target.EntityID} đã HẾT CHOÁNG, lấy lại ý thức!");
     }
 

@@ -368,7 +368,6 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void ReorganizeActiveSlotsData()
     {
-        var sortedSlots = _saveSystem.Player.ActiveSlots
-            .OrderBy(s => s.Position);
+        _saveSystem.Player.ActiveSlots.Sort((slotA, slotB) => slotA.Position.CompareTo(slotB.Position));
     }
 }

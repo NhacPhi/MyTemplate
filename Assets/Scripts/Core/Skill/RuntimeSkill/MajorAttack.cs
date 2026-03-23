@@ -19,7 +19,7 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         // Caculate damge
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         await PerformSkillAsync(skillData, caster);
     }

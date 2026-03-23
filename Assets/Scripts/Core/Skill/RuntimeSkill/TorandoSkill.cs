@@ -16,7 +16,7 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
         this.skillData = skillData;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         await PerformSummon(skillData, caster);
     }

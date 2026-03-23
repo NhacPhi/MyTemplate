@@ -48,7 +48,7 @@ public class EntityStats : StatsController, IDamagable
             }
 
             // Cập nhật UI cho Shield
-            OnAtributeChange?.Invoke(new AttributeEvtArgs()
+            OnAttributeChange?.Invoke(new AttributeEvtArgs()
             {
                 Attribute = AttributeType.Shield,
                 Value = shield.Value,
@@ -62,7 +62,7 @@ public class EntityStats : StatsController, IDamagable
             hp.Value -= remainingDamage;
 
             // Cập nhật UI cho HP
-            OnAtributeChange?.Invoke(new AttributeEvtArgs()
+            OnAttributeChange?.Invoke(new AttributeEvtArgs()
             {
                 Attribute = AttributeType.Hp,
                 Value = hp.Value,
@@ -82,7 +82,7 @@ public class EntityStats : StatsController, IDamagable
         var shield = GetAttribute(AttributeType.Shield);
         shield.Value = value;
 
-        OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        OnAttributeChange?.Invoke(new AttributeEvtArgs()
         {
             Attribute = AttributeType.Shield,
             Value = shield.Value,
@@ -96,7 +96,7 @@ public class EntityStats : StatsController, IDamagable
         var hp = GetAttribute(AttributeType.Hp);
         hp.Value += value;
 
-        OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        OnAttributeChange?.Invoke(new AttributeEvtArgs()
         {
             Attribute = AttributeType.Hp,
             Value = hp.Value,
@@ -119,7 +119,7 @@ public class EntityStats : StatsController, IDamagable
     {
         //Test
         var hp = GetAttribute(AttributeType.Hp);
-        //OnAtributeChange?.Invoke(new AttributeEvtArgs()
+        //OnAttributeChange?.Invoke(new AttributeEvtArgs()
         //{
         //    Attribute = AttributeType.Hp,
         //    Value = hp.Value,

@@ -10,7 +10,7 @@ public class BuffShieldSkill : SkillRuntime
     {
         this.skillData = skillData;
     }
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
@@ -18,8 +18,6 @@ public class BuffShieldSkill : SkillRuntime
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
-
-        await state.WaitForHitFrame();
 
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
 

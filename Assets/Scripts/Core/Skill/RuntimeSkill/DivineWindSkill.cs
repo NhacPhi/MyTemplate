@@ -17,7 +17,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     {
         this.skillData = skillData;
     }
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         await PerformSummon(skillData, caster);
     }
@@ -57,7 +57,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
            );
 
         await _skillEnd.Task;
-
+        await UniTask.Delay(1000);
         PutOnCooldown();
     }
 
@@ -102,8 +102,6 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         }
 
         _skillEnd.TrySetResult();
-
-        await UniTask.Delay(500);
     }
 }
 

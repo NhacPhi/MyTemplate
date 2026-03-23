@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 public abstract class SkillRuntime
 {
@@ -14,7 +15,7 @@ public abstract class SkillRuntime
 
     public abstract SkillData GetSkillData();
 
-    public abstract UniTask ExecuteAsync(Entity caster);
+    public abstract UniTask ExecuteAsync(Entity caster,int currentTurnID = 0);
 
     public bool IsReady()
     {
@@ -43,15 +44,61 @@ public abstract class SkillRuntime
         };
     }
 
-    protected virtual void ApplyEffectsToTarget(Entity target)
+    protected virtual void ApplyEffectsToTarget(Entity caster, int currentTurnID)
     {
-        var targetStats = target.GetCoreComponent<StatsController>();
-        if (targetStats == null) return;
+        var targetEnities = GetEffectTargets(caster);
 
-        var attachedEffect = GetSkillData().Effect;
+        if (targetEnities == null) return;
 
-        StatusEffect newEffect = EffectFactory.CreateEffect(GetSkillData().ID, attachedEffect, targetStats);
+        foreach ( var target in targetEnities )
+        {
+            var targetStats = target.GetCoreComponent<StatsController>();
 
-        targetStats.ApplyEffect(newEffect);
+
+            if (targetStats == null) continue;
+
+            var attachedEffect = GetSkillData().Effect;
+
+            StatusEffect newEffect = EffectFactory.CreateEffect(GetSkillData().ID, attachedEffect, targetStats);
+
+            targetStats.ApplyEffect(newEffect, currentTurnID);
+        }
+
+       
+    }
+
+    private List<Entity> GetEffectTargets(Entity caster)
+    {
+        List<Entity> targetList = new List<Entity>();
+
+        switch (GetSkillData().TargetType)
+        {
+            case SkillTargetType.Self:
+                targetList.Add(caster);
+                break;
+
+            case SkillTargetType.SingleEnemy:
+                if (caster.Target != null) targetList.Add(caster.Target.gameObject.GetComponent<Entity>());
+                break;
+
+            case SkillTargetType.SingleAlly:
+                // Giả sử entitySelect lúc này đóng vai trò là đồng minh được chọn
+                if (caster.Target != null) targetList.Add(caster.Target.gameObject.GetComponent<Entity>());
+                break;
+
+            case SkillTargetType.AllEnemies:
+                if (caster.Targets != null)
+                    foreach (var target in caster.Targets) { targetList.Add(target.gameObject.GetComponent<Entity>()); }
+                break;
+
+            case SkillTargetType.AllAllies:
+                if (caster.Targets != null)
+                    foreach (var target in caster.Targets) { targetList.Add(target.gameObject.GetComponent<Entity>()); }
+                break;
+
+                // Xử lý các trường hợp đặc biệt khác (Column, Row, DeadAlly...)
+        }
+
+        return targetList;
     }
 }

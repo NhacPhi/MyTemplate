@@ -84,7 +84,7 @@
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0,
+                "flat_damage": 0.0,
                 "effect_id": "None"
             },
             "Ultimate": {
@@ -157,11 +157,11 @@
                 "damage_multiplier": 1.8,
                 "max_cooldown": 5,
                 "flat_damage": 100.0,
-                "effect_id": "EFF_BufDEF_def"
+                "effect_id": "None"
             }
         },
         "stats": {
-            "hp": 3900,
+            "hp": 3200,
             "def": 400,
             "atk": 1350,
             "speed": 85
@@ -206,8 +206,8 @@
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0,
-                "effect_id": "EFF_BufATK_def"
+                "flat_damage": 0.0,
+                "effect_id": "EFF_BufDEF_def"
             },
             "Ultimate": {
                 "id": "ShaWujing_U",
@@ -222,7 +222,7 @@
             }
         },
         "stats": {
-            "hp": 3200,
+            "hp": 3900,
             "def": 300,
             "atk": 1380,
             "speed": 90
@@ -446,12 +446,12 @@
                 "id": "BullDemonKing_M",
                 "name_hash": 3191543977,
                 "des_hash": 2241444781,
-                "skill": "BuffShield",
+                "skill": "StatModifier",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
                 "max_cooldown": 4,
-                "flat_damage": 100.0,
-                "effect_id": "None"
+                "flat_damage": 0.0,
+                "effect_id": "EFF_BufATK_def"
             },
             "Ultimate": {
                 "id": "BullDemonKing_U",
@@ -649,9 +649,9 @@
             }
         },
         "stats": {
-            "hp": 2500,
+            "hp": 3500,
             "def": 280,
-            "atk": 1650,
+            "atk": 2650,
             "speed": 70
         },
         "attributes": {
@@ -872,8 +872,8 @@
                 "skill": "Suriken",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
-                "flat_damage": 100.0,
+                "max_cooldown": 2,
+                "flat_damage": 1000.0,
                 "effect_id": "EFF_DefSpd_def"
             },
             "Ultimate": {
@@ -883,16 +883,16 @@
                 "skill": "DivineWind",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None"
             }
         },
         "stats": {
-            "hp": 3900,
+            "hp": 4900,
             "def": 325,
             "atk": 2400,
-            "speed": 80
+            "speed": 100
         },
         "attributes": {
             "shield": {

@@ -13,7 +13,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
         this.skillData = skillData;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         _skillEnd = new UniTaskCompletionSource();
         _caster = caster;

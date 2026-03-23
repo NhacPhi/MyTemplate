@@ -18,6 +18,8 @@ public static class SkillDataFactory
 
             case Skill.Summon: return new SummonSkillData();
 
+            case Skill.StatModifier: return new StatModifierData();
+
             case Skill.BuffShield: return new BuffShieldData();
 
             case Skill.Healing: return new HealingData();

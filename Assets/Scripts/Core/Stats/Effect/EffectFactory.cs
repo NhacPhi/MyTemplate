@@ -15,7 +15,6 @@ public class EffectFactory
                 return null;
             case EffectType.Poison:
                 return new PoisonEffect(efectfID, effectData, target);
-                return null;
             case EffectType.Stun:
                 return new StunEffect(efectfID, effectData, target); ;
             case EffectType.StatBuff:

@@ -23,23 +23,10 @@ public class OrderState : BattleBaseState
 
         battleManager.SeletionCircle.transform.position = pos;
 
-        UIEvent.OnUpdateEntityPrediction?.Invoke(battleManager.TurnSystem.PredictTurnOrder());
-
-        var enemyBrain = nextCharacter.GetCoreComponent<EnemyBrain>();
-
-
         if (battleManager.Boss)
             UIEvent.OnUpdateBossUI(battleManager.Boss);
 
-        if (enemyBrain != null)
-        {
-            battleManager.StateMachine.ChangeState(BattleState.EnemyTurnsState);
-        }
-        else
-        {
-            battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
-        }
-
+        battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
 
     }
 

@@ -12,6 +12,9 @@ public class EndTurnState : BattleBaseState
 
     public override void Enter()
     {
+        var stats = battleManager.CurrentCaster.GetCoreComponent<StatsController>();
+        stats.ProcessEndOfTurn(battleManager.GlobalTurnID);
+
         bool isAllEnemiesDead = battleManager.Enemies.All(e => e.GetCoreComponent<EntityStats>().IsDead);
 
         if(isAllEnemiesDead)
@@ -33,6 +36,7 @@ public class EndTurnState : BattleBaseState
 
         battleManager.TurnSystem.ResetEntityAV(battleManager.CurrentCaster);
         battleManager.StateMachine.ChangeState(BattleState.OrderState);
+        battleManager.NextCharacterTurn();
     }
 
     public override void Exit()

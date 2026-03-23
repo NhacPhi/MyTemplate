@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using NPOI.SS.Formula.Functions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,12 +17,12 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         this.skillData = skillData;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        await PerformSummon(skillData, caster);
+        await PerformSummon(skillData, caster, currentTurnID);
     }
 
-    public async UniTask PerformSummon(SkillData config, Entity caster)
+    public async UniTask PerformSummon(SkillData config, Entity caster,int currentTurnID)
     {
         _skillEnd = new UniTaskCompletionSource();
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
@@ -40,7 +41,7 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         var controller = firreBallPrefab.GetComponent<FireballController>();
 
-        Vector3 flyDir = caster.Target.transform.position - caster.transform.position;
+        Vector3 flyDir = caster.Target.transform.position +  - (caster.transform.position + skillData.Offset);
 
         controller.Initialize(
             caster: caster,
@@ -53,6 +54,11 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         caster.StateManager.ChangeState(EntityState.IDLE);
 
         await _skillEnd.Task;
+
+        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
+        {
+            ApplyEffectsToTarget(caster, currentTurnID);
+        }
 
         PutOnCooldown();
     }

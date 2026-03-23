@@ -162,6 +162,83 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &5037092566044951802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4543822493046979072}
+  - component: {fileID: 5417508016417812061}
+  - component: {fileID: 496466242330945897}
+  m_Layer: 0
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4543822493046979072
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037092566044951802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4222024440868624153}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.0789, y: 0.1969}
+  m_SizeDelta: {x: 1.6578, y: 1.0546}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5417508016417812061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037092566044951802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &496466242330945897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037092566044951802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 0
 --- !u!1 &5049554749073868165
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4222024440868624153}
   - component: {fileID: 7803907169741251133}
+  - component: {fileID: 1060209471760378331}
   m_Layer: 0
   m_Name: CharacterStatus
   m_TagString: Untagged
@@ -354,6 +432,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2535088263337812938}
+  - {fileID: 4543822493046979072}
   m_Father: {fileID: 3486035646290463465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -373,6 +452,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dbac121f45e4a4996a5fdbf9586ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1060209471760378331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860717948696397658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812d3bf3804a18d469db797a9aceec0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectUIPrefab: {fileID: 4375210395627321893, guid: 2660bc189dd5e5e419aaa85e046ffa56, type: 3}
+  _containt: {fileID: 5037092566044951802}
+  _iconAtk: {fileID: 21300000, guid: 3e7614f5e8891734999528fae45799e1, type: 3}
+  _iconDef: {fileID: 21300000, guid: a74790f77df63184889dea0869ab1e09, type: 3}
+  _iconPoison: {fileID: 21300000, guid: 55b954f748118d24baef9113029af81f, type: 3}
+  _iconSpeed: {fileID: 21300000, guid: a8f528040f7ca7243a7cf5cebf0d7c06, type: 3}
+  _iconExac: {fileID: 21300000, guid: d7b63eb6589b04b45966a5310dc357cf, type: 3}
+  _iconBuff: {fileID: 2022026803, guid: 2133d91373793a046bd8c631cf749481, type: 3}
+  _iconDebuff: {fileID: -1856244629, guid: 2133d91373793a046bd8c631cf749481, type: 3}
 --- !u!1 &6404069127916668268
 GameObject:
   m_ObjectHideFlags: 0

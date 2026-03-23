@@ -37,4 +37,17 @@ public class EffectConfig
 
     [JsonProperty("value")]
     public int Value { get; set; }
+
+    public bool IsBuff()
+    {
+        if(Type == EffectType.StatBuff) return true;
+
+        return false;
+    }
+
+    public bool IsEffectUI()
+    {
+        if(Type == EffectType.StatBuff || Type == EffectType.StatDebuff || Type == EffectType.Poison) return true;
+        return false;
+    }
 }

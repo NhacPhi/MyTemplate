@@ -26,6 +26,7 @@ public class Stat
     }
 
     public Action<Stat> OnValueChange;
+
     private List<Modifier> statModifiers;
     public int ModifierCount => statModifiers.Count;
     public Stat()
@@ -33,7 +34,7 @@ public class Stat
         statModifiers = new List<Modifier>();
     }
 
-    public Stat(float baseValue)
+    public Stat(float baseValue) : this()
     {
         this.baseValue = baseValue;
     }

@@ -14,7 +14,7 @@ public class RangeAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         var enemy_ultimate = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy_ultimate);

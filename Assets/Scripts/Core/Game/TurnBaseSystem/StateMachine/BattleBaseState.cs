@@ -5,7 +5,6 @@ public enum BattleState
 {
     SetupState, // Init data, spawn character, load inviroment
     OrderState, // Decide order turn
-    EnemyTurnsState, // Handle Enemy Turn
     BeginTurnBase, // Handle effect or buff
     ActionState, // Player Chosce SkillCharacter or AI controller
     ExecutionState, // Run skill animation, caculate damaage

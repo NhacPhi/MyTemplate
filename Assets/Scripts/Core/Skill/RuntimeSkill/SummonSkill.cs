@@ -17,7 +17,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         this.skillData = data;
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         //Debug.Log($"[SkillCharacter] Initialize - ID: {this.GetHashCode()}");
         await PerformSummon(skillData, caster); 

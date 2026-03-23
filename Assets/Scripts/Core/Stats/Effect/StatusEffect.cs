@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,39 +9,46 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
     public StatsController Target { get; protected set; }
 
     protected int turn;
+    public int Turn => turn;
     public abstract EffectConfig Data { get; }
     public abstract string ID { get; }
 
-    public virtual int CurrentStack => 1;
+    public virtual int CurrentStack { get; protected set; } = 1;
     public virtual int MaxStack => Data.MaxStack;
     public virtual int Duration => Data.Duration;
     public virtual bool IsUnique => true; // Data.Unique;
     public virtual bool IsStackable => Data.MaxStack > 1;
 
+    public int AppliedTurnID { get; set; }
     public StatusEffect(StatsController target)
     {
         this.Target = target;
     }
 
-    internal void StartEffect()
+    internal void StartEffect(int currentTurnID)
     {
         if (!this.Target) return;
 
         IsStop = false;
         turn = 0;
+        AppliedTurnID = currentTurnID;
         OnStart();
     }
-    public void Tick()
+    public virtual void OnStartOfTurn() { }
+    public virtual void OnEndOfTurn() { }
+    public virtual void ReduceDuration(int currentTurnID)
     {
-        if (IsStop) return;
+        if (IsStop || Duration <= 0) return;
+
+        if (AppliedTurnID == currentTurnID) return;
 
         turn += 1;
 
-        OnTick();
+        if (Duration <= 0) return;
 
         if (turn >= Duration)
         {
-            Stop();
+            Stop(); 
         }
     }
     public void Stop()
@@ -55,14 +62,24 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
         IsStop = true;
     }
     protected virtual void OnStart() { }
-    protected virtual void OnTick() { }
+
     protected virtual void OnStop() { }
-    public virtual void AddStack() 
+    public virtual void AddStack(int currentTurnID) 
     {
         if (IsStackable && CurrentStack < MaxStack)
         {
-            turn = 0;
+            if (IsStackable && CurrentStack < MaxStack)
+            {
+                CurrentStack++;
+                AppliedTurnID = currentTurnID;
+                ResetDuration(); 
+            }
         }
+    }
+
+    public virtual void ResetDuration()
+    {
+        turn = 0;
     }
 
     public virtual int RemoveStack() => 0;

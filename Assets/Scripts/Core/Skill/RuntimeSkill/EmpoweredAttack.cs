@@ -18,7 +18,7 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
         // Caculate damge
     }
 
-    public override async UniTask ExecuteAsync(Entity caster)
+    public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
 
@@ -33,6 +33,11 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
 
         await state.WaitForHitFrame();
+
+        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
+        {
+            ApplyEffectsToTarget(caster, currentTurnID);
+        }
 
         DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
 

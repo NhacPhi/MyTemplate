@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEffectable
 {
-    public void ApplyEffect(StatusEffect effect);
+    public void ApplyEffect(StatusEffect effect, int currentTurnID);
     public void RemoveEffect(StatusEffect effect, bool ignoreStack);
     public bool HasEffect<T>() where T : StatusEffect;
 }

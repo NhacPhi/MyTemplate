@@ -33,11 +33,11 @@ public class AttributeViewEditor : ViewEditor
 
     protected override void Rebuild()
     {
-        if (statsController == null || statsController.Atributes == null) return;
+        if (statsController == null || statsController.Attributes == null) return;
 
         Body.Clear();
 
-        foreach(AttributeType key in statsController.Atributes.Keys)
+        foreach(AttributeType key in statsController.Attributes.Keys)
         {
             var root = new VisualElement();
             root.style.flexDirection = FlexDirection.Row;

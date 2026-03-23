@@ -21,6 +21,7 @@ public enum Skill
     MajorAttack,
     Summon,
     BuffShield,
+    StatModifier,
     Healing,
     FireRing,
     ThunderBall,
@@ -65,9 +66,9 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         //baseSkill = data.CreateRuntimeSkill(entityStats);
     }
 
-    public async UniTask ExecuteSkillAsync(SkillCharacter type)
+    public async UniTask ExecuteSkillAsync(SkillCharacter type, int currentTurnID)
     {
-        await Skills.GetValueOrDefault(type).ExecuteAsync(core as Entity);
+        await Skills.GetValueOrDefault(type).ExecuteAsync(core as Entity, currentTurnID);
     }
 
     public async UniTask InitializeAsync(CancellationToken token)
