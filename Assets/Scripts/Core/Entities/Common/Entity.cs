@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tech.Composite;
@@ -6,6 +6,7 @@ using Tech.StateMachine;
 using UnityEngine.Rendering;
 using Cysharp.Threading.Tasks;
 using VContainer.Unity;
+using VContainer;
 
 public enum BattleRow { Front, Back }
 public enum BattleColumn { Left, Center, Right }
@@ -30,7 +31,14 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     = new StateMachine<EntityState, EntityStateBase>();
 
     //public IEntityAttack attack { get; private set; }
+    public IAudioManager Audio { get; private set; }
 
+
+    [Inject]
+    public void Construct(IAudioManager audioManager)
+    {
+        Audio = audioManager;
+    }
 
     protected EntityStateData entityStateData;
     protected override void LoadComponent()
@@ -159,6 +167,14 @@ public abstract class Entity : Tech.Composite.Core, ITurn
         foreach (var sr in allRenderers)
         {
             sr.color = displayColor;
+        }
+    }
+
+    public void PlaySFX(string soundID)
+    {
+        if (Audio != null && soundID != null)
+        {
+            Audio.PlaySFXAsync(soundID).Forget();
         }
     }
 }

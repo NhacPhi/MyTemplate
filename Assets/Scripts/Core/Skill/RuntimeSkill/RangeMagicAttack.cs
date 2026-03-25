@@ -28,7 +28,7 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.ATTACK);
-
+        caster.PlaySFX(skillData.Sound);
         await state.WaitForHitFrame();
 
         DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
@@ -51,7 +51,7 @@ public class RangeMagicAttack : SkillRuntime, IAsyncInitializer
     public async UniTask InitializeAsync(CancellationToken token)
     {
         var objRef = skillData.energyBurstReference;
-
+        
         if (objRef != null)
         {
             GameObject ring = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(objRef);

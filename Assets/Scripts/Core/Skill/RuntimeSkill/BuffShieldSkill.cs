@@ -18,7 +18,7 @@ public class BuffShieldSkill : SkillRuntime
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
-
+        caster.PlaySFX(skillData.Sound);
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
 
         var shield = CalculateRawDamage().FlatValue + CalculateRawDamage().DamageMultiplier * stat.GetStat(StatType.ATK).Value;

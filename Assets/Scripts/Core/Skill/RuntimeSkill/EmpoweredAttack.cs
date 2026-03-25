@@ -32,6 +32,8 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
 
+        caster.PlaySFX(skillData.Sound);
+
         await state.WaitForHitFrame();
 
         if (!enemy.GetCoreComponent<EntityStats>().IsDead)

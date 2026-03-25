@@ -22,6 +22,7 @@ public class CharacterUI : MonoBehaviour
     [Inject] private SaveSystem save;
     [Inject] private CurrencyManager currencyMM;
     [Inject] private CharacterStatManager characterStatMM;
+    [Inject] private AudioManager audioManager;
 
     [SerializeField] private Image characterImage;
     [SerializeField] private CharacterWeaponUI waeponUI;
@@ -118,6 +119,7 @@ public class CharacterUI : MonoBehaviour
     public void SelectCharacterAvatar(string id)
     {
         currentCharacter = id;
+        audioManager.PlaySFXAsync(currentCharacter);
         characterImage.sprite = gameDataBase.GetCharacterConfig(id).BigIcon;
         string weaponID = save.Player.GetCharacter(currentCharacter).Weapon;
         if(weaponID != "")

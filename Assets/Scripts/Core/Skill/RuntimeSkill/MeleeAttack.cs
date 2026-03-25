@@ -27,6 +27,8 @@ public class MeleeAttack : SkillRuntime, IAttackSkill
 
         caster.StateManager.ChangeState(EntityState.ATTACK);
 
+        caster.PlaySFX(skillData.Sound);
+
         await state.WaitForHitFrame();
 
         DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);

@@ -16,5 +16,7 @@ public abstract class SkillData
 
     public EffectConfig Effect;
 
+    public string Sound { get; set; }
+
     public abstract SkillRuntime CreateRuntimeSkill(EntityStats owner);
 }

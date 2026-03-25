@@ -9,11 +9,17 @@ using VContainer.Unity;
 
 public class RootScope : LifetimeScope
 {
+    [SerializeField] private AudioManager _audioManager;
+
+    [SerializeField] private List<AudioDatabase> _activeAudioDatabases;
+
     [SerializeField] UISettings uiSetings;
 
     protected override void Configure(IContainerBuilder builder)
     {
         // Data Service
+        _audioManager.Init(_activeAudioDatabases);
+
         //builder.Register<EventManager>(Lifetime.Singleton);
         builder.Register<SaveSystem>(Lifetime.Singleton);
         builder.Register<CurrencyManager>(Lifetime.Singleton);
@@ -21,6 +27,8 @@ public class RootScope : LifetimeScope
         builder.Register<AtlasProvider>(Lifetime.Singleton);
         builder.Register<GameDataBase>(Lifetime.Singleton);
         builder.Register<BattleSessionContext>(Lifetime.Singleton);
+
+        builder.RegisterComponent(_audioManager).AsImplementedInterfaces().AsSelf();
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);
 
         builder.RegisterComponent(uiSetings);

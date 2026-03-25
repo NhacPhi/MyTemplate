@@ -103,7 +103,8 @@ class CharacterConfigBuilder(BaseBuilder):
                     damage_multiplier=float(row['DamageMultiplier']) if not pd.isna(row['DamageMultiplier']) else 0.0,
                     max_cooldown=int(row['MaxCooldown']) if not pd.isna(row['MaxCooldown']) else 0,
                     flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0,
-                    effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None"
+                    effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None",
+                    sound=str(row['Sound']).strip() if not pd.isna(row['Sound']) else ""
                 )
 
         character_data = {}
@@ -249,11 +250,13 @@ class CharacterConfigBuilder(BaseBuilder):
                     slot = int(row['Slot']) if pd.notna(row['Slot']) else 1
                     enemy_id = str(row['Enemy_ID']).strip() if pd.notna(row['Enemy_ID']) else ""
                     level = int(row['Level']) if pd.notna(row['Level']) else 1
+                    boss = bool(row['Boss']) if pd.notna(row['Boss']) else False
 
                     enemy_comp = StageEnemiesCompoment(
                         slot=slot,
                         enemy_id=enemy_id,
-                        enemy_level=level
+                        enemy_level=level,
+                        boss=boss
                     )
 
                     battle_data[battle_id].enemies.append(enemy_comp)

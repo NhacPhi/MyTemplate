@@ -7,22 +7,63 @@
             {
                 "slot": 1,
                 "enemy_id": "VanguardTiger",
-                "enemy_level": 5
+                "enemy_level": 5,
+                "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "VanguardTiger",
-                "enemy_level": 5
+                "enemy_level": 5,
+                "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "VanguardTiger",
-                "enemy_level": 5
+                "enemy_level": 5,
+                "boss": false
+            },
+            {
+                "slot": 4,
+                "enemy_id": "GoldHornKing",
+                "enemy_level": 5,
+                "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "YellowWindMonster",
-                "enemy_level": 5
+                "enemy_level": 5,
+                "boss": true
+            },
+            {
+                "slot": 6,
+                "enemy_id": "SilverHornKing",
+                "enemy_level": 5,
+                "boss": false
+            }
+        ]
+    },
+    "Battle_Test": {
+        "name_hash": 441973586,
+        "background": "Default",
+        "reward": "Default_01",
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "VanguardTiger",
+                "enemy_level": 5,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "VanguardTiger",
+                "enemy_level": 5,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "VanguardTiger",
+                "enemy_level": 5,
+                "boss": false
             }
         ]
     }

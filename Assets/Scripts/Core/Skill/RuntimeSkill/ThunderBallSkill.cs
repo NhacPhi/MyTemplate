@@ -30,6 +30,8 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
 
+        caster.PlaySFX(skillData.Sound);
+
         await UniTask.Delay(1000);
 
         _caster = caster;

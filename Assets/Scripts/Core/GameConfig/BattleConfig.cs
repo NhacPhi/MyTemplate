@@ -30,4 +30,7 @@ public class StageEnemyCompoment
 
     [JsonProperty("enemy_level")]
     public int EnemyLevel;
+
+    [JsonProperty("boss")]
+    public bool IsBoss;
 }

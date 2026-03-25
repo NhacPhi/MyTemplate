@@ -37,7 +37,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         effectPrefab.transform.SetParent(caster.transform);
         effectPrefab.transform.localPosition = skillData.Offset;
         effectPrefab.gameObject.SetActive(true);
-
+        caster.PlaySFX(config.Sound);
         await UniTask.Delay(800);
 
         effectPrefab.gameObject.SetActive(false);

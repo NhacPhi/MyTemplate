@@ -95,6 +95,8 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
                 skillData.FlatDamage = skillConfig.FlatDamage;
 
+                skillData.Sound = skillConfig.Sound;
+
                 if(skillConfig.EffectID != null)
                 {
                     skillData.Effect = _gameDataBase.GetEffectConfig(skillConfig.EffectID);

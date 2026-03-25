@@ -47,6 +47,7 @@ class SkillComponent:
     max_cooldown: int
     flat_damage: float
     effect_id: str
+    sound: str
 
 
 @dataclass
@@ -87,6 +88,7 @@ class StageEnemiesCompoment:
     slot: int
     enemy_id: str
     enemy_level: int
+    boss: bool
 
 @dataclass
 class BattleModel:

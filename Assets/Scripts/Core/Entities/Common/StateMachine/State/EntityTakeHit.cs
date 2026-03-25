@@ -13,7 +13,6 @@ public class EntityTakeHit : EntityStateBase
         var animData = GenericPool<AnimationData>.Get().Renew();
         animData.AnimationName = data.HitAnimation;
         animData.Transition = 0.1f;
-
         data.Anim.Play(animData);
         GenericPool<AnimationData>.Return(animData);
 

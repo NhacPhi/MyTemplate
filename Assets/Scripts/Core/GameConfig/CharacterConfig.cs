@@ -106,4 +106,7 @@ public class SkillComponent
 
     [JsonProperty("effect_id")]
     public string EffectID { get; set; }
+
+    [JsonProperty("sound")]
+    public string Sound { get; set; }
 }
