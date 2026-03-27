@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 7367925132280507623}
   - component: {fileID: 2947256297259670875}
   - component: {fileID: -7780586867475083367}
+  - component: {fileID: 7393979422042867705}
   m_Layer: 0
   m_Name: TheBoySage
   m_TagString: Untagged
@@ -473,8 +474,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4997db1c2952b3a41a811f23755ff1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
   RenderOrder: 0
+  Team: 0
+  Row: 0
+  Column: 0
 --- !u!114 &746037052814250426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,7 +506,7 @@ MonoBehaviour:
   <TimeToEndTurn>k__BackingField: 1.2
   <MoveSpeed>k__BackingField: 50
   <SmoothTime>k__BackingField: 0.15
-  <OffsetToTarget>k__BackingField: {x: 7.5, y: 0, z: 0}
+  <OffsetToTarget>k__BackingField: {x: -7.5, y: 0, z: 0}
   <IdleAnimation>k__BackingField: Idle
   <AttackAnimation>k__BackingField: Attack
   <HitAnimation>k__BackingField: Injured
@@ -546,6 +549,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 3, z: 0.4}
   m_Center: {x: 0, y: -0.2477076, z: 0}
+--- !u!114 &7393979422042867705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4812460875221913262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e935d8e7248e26247bc83d1f82c7d96e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6022330659094144210
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +589,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1823438095976689615}

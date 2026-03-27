@@ -19,7 +19,7 @@ public class StatModifierSkill : SkillRuntime
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
-
+        caster.PlaySFX(skillData.Sound);
         if (!enemy.GetCoreComponent<EntityStats>().IsDead)
         {
             ApplyEffectsToTarget(caster, currentTurnID);

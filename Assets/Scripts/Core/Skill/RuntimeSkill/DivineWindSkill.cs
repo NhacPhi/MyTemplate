@@ -32,7 +32,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
-
+        caster.PlaySFX(skillData.Sound);
         await state.WaitForAnimEnd();
         caster.StateManager.ChangeState(EntityState.IDLE);
 
@@ -90,7 +90,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     private async UniTask HandleDoubleDamageAsync(Entity target)
     {
         if (target == null) return;
-
+        _caster.PlaySFX(skillData.SFXID);
         DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         await UniTask.Delay(500, delayTiming: PlayerLoopTiming.Update,
@@ -110,6 +110,8 @@ public class DivineWindData : SkillData
     public Vector3 Offset = new Vector3(-4, 0, 0);
 
     public string torandoReference = "Divine_Wind";
+
+    public string SFXID = "Wind_Impact";
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new DivineWindSkill(owner, this);
 }
 

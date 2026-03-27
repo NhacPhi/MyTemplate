@@ -36,7 +36,7 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         await state.WaitForMoveEnd();
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
-
+        caster.PlaySFX(skillData.Sound);
         await state.WaitForHitFrame();
 
         DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);

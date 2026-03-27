@@ -13,6 +13,8 @@ public class ProjectileController : MonoBehaviour
     private Entity _caster;
     private IReturningProjectileSkill _skillHandler;
 
+    [SerializeField] private AudioDataConfig _audioTrigerrDetect;
+
     private Vector3 _startPosition;
     private Vector3 _throwDirection;
     public float _moveSpeed;
@@ -78,6 +80,7 @@ public class ProjectileController : MonoBehaviour
 
         if(other.gameObject == _caster.Target)
         {
+            _caster.PlaySFX(_audioTrigerrDetect.AudioID);
             _skillHandler.OnProjectileHit(target, this.gameObject);
         }
     }

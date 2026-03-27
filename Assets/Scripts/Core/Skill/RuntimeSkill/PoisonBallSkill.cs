@@ -30,8 +30,8 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
-
-        await UniTask.Delay(1000);
+        caster.PlaySFX(skillData.Sound);
+        await UniTask.Delay(1500);
 
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);

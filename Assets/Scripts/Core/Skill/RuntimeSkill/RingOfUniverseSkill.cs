@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 
 public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProjectileSkill, IAsyncInitializer
@@ -58,7 +59,7 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
         var controller = ringPrefab.GetComponent<ProjectileController>();
 
         Vector3 throwDir = caster.Target.transform.position - caster.transform.position;
-
+        caster.PlaySFX(skillData.Sound);
         float maxDis = Vector3.Distance(caster.transform.position, caster.Target.transform.position) - 1f;
         controller.Initialize(
             caster: caster,

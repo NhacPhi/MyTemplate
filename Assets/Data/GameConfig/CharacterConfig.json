@@ -23,7 +23,7 @@
                 "skill": "Summon",
                 "target_type": "AllEnemies",
                 "damage_multiplier": 1.0,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "Wind_Blow"
@@ -35,7 +35,7 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "SunWukong_Main"
@@ -87,7 +87,7 @@
                 "skill": "BuffShield",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 0.0,
                 "effect_id": "None",
                 "sound": "TangSanZang_Major"
@@ -99,7 +99,7 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "EFF_Stun_def",
                 "sound": "TangSanZang_Main"
@@ -151,7 +151,7 @@
                 "skill": "BuffShield",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Major"
@@ -163,7 +163,7 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Main"
@@ -215,7 +215,7 @@
                 "skill": "Healing",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 0.0,
                 "effect_id": "EFF_BufDEF_def",
                 "sound": "ShaWujing_Major"
@@ -227,7 +227,7 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ShaWujing_Main"
@@ -279,7 +279,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -291,7 +291,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -334,7 +334,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "ThirdPrinceNezha_Attack"
             },
             "Major": {
                 "id": "ThirdPrinceNezha_M",
@@ -343,10 +343,10 @@
                 "skill": "FireRing",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "ThirdPrinceNezha_Major"
             },
             "Ultimate": {
                 "id": "ThirdPrinceNezha_U",
@@ -355,10 +355,10 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
-                "effect_id": "EFF_BufSpd_def",
-                "sound": ""
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Main"
             }
         },
         "stats": {
@@ -407,7 +407,7 @@
                 "skill": "ThunderBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LittleWhiteDragon_Major"
@@ -419,7 +419,7 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LittleWhiteDragon_Main"
@@ -462,7 +462,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "VanguardTiger_Attack"
             },
             "Major": {
                 "id": "BullDemonKing_M",
@@ -471,10 +471,10 @@
                 "skill": "StatModifier",
                 "target_type": "Self",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 0.0,
                 "effect_id": "EFF_BufATK_def",
-                "sound": ""
+                "sound": "BullDemonKing_Major"
             },
             "Ultimate": {
                 "id": "BullDemonKing_U",
@@ -483,10 +483,10 @@
                 "skill": "PoisonBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "EFF_Posion_def",
-                "sound": ""
+                "sound": "BullDemonKing_Main"
             }
         },
         "stats": {
@@ -535,7 +535,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -547,7 +547,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -599,7 +599,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -611,7 +611,7 @@
                 "skill": "None",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": ""
@@ -714,7 +714,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "TheBoySage_Attack"
             },
             "Major": {
                 "id": "TheBoySage_M",
@@ -723,10 +723,10 @@
                 "skill": "FireBall",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "TheBoySage_Major"
             },
             "Ultimate": {
                 "id": "TheBoySage_U",
@@ -735,10 +735,10 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "TheBoySage_Main"
             }
         },
         "stats": {
@@ -778,7 +778,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldHornKing_Attack"
             },
             "Major": {
                 "id": "GoldHornKing_M",
@@ -787,10 +787,10 @@
                 "skill": "MajorAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldHornKing_Major"
             },
             "Ultimate": {
                 "id": "GoldHornKing_U",
@@ -799,10 +799,10 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldHornKing_Main"
             }
         },
         "stats": {
@@ -842,7 +842,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "SilverHornKing_Attack"
             },
             "Major": {
                 "id": "SilverHornKing_M",
@@ -851,10 +851,10 @@
                 "skill": "Torando",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "SilverHornKing_Major"
             },
             "Ultimate": {
                 "id": "SilverHornKing_U",
@@ -863,10 +863,10 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldHornKing_Main"
             }
         },
         "stats": {
@@ -906,7 +906,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "YellowWindMonster_Attack"
             },
             "Major": {
                 "id": "YellowWindMonster_M",
@@ -915,10 +915,10 @@
                 "skill": "Suriken",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 2,
+                "max_cooldown": 3,
                 "flat_damage": 1000.0,
-                "effect_id": "EFF_DefSpd_def",
-                "sound": ""
+                "effect_id": "None",
+                "sound": "YellowWindMonster_Major"
             },
             "Ultimate": {
                 "id": "YellowWindMonster_U",
@@ -927,10 +927,10 @@
                 "skill": "DivineWind",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 3,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "YellowWindMonster_Main"
             }
         },
         "stats": {
@@ -970,7 +970,7 @@
                 "max_cooldown": 0,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldfishDemon_Attack"
             },
             "Major": {
                 "id": "GoldfishDemon_M",
@@ -979,10 +979,10 @@
                 "skill": "MajorAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.5,
-                "max_cooldown": 4,
+                "max_cooldown": 3,
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "GoldfishDemon_Major"
             },
             "Ultimate": {
                 "id": "GoldfishDemon_U",
@@ -991,10 +991,10 @@
                 "skill": "EmpowerAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": 1.8,
-                "max_cooldown": 5,
+                "max_cooldown": 4,
                 "flat_damage": 100.0,
-                "effect_id": "None",
-                "sound": ""
+                "effect_id": "EFF_Stun_def",
+                "sound": "GoldfishDemon_Main"
             }
         },
         "stats": {

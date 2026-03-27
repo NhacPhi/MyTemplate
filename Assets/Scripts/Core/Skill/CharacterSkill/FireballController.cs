@@ -13,6 +13,8 @@ public class FireballController : MonoBehaviour
     [SerializeField] private float _speed;
     private bool _hasHit = false;
     private GameObject explosionObj;
+
+    [SerializeField] private AudioDataConfig _audioTrigerrDetect;
     private void Awake()
     {
         explosionObj = Instantiate(explosionVFX, Vector3.zero, Quaternion.identity);
@@ -49,6 +51,10 @@ public class FireballController : MonoBehaviour
 
             if (_skillHandler != null)
             {
+                if (_audioTrigerrDetect != null)
+                {
+                    _caster.PlaySFX(_audioTrigerrDetect.AudioID);
+                }
                 _skillHandler.OnProjectileImpact(target, transform.position);
                 gameObject.SetActive(false);
             }

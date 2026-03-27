@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
 {
@@ -25,7 +26,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
         var controller = fireBallPrefab.GetComponent<FireballController>();
 
         Vector3 flyDir = caster.Target.transform.position - caster.transform.position;
-
+        caster.PlaySFX(skillData.Sound);
         controller.Initialize(
             caster: caster,
             skill: this,
