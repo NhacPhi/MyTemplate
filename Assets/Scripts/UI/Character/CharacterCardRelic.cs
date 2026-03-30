@@ -31,7 +31,7 @@ public class CharacterCardRelic : CharacterCard
     [Inject] private UIManager uiManager;
 
     private string currentWeapon = "";
-    private string originWeapon = "";
+    private string weaponUUID = "";
     private string currentCharacter = "";
     private void Awake()
     {
@@ -47,8 +47,8 @@ public class CharacterCardRelic : CharacterCard
 
         btnChange.onClick.AddListener(() =>
         {
-            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(originWeapon);
-            if (originWeapon != "")
+            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(weaponUUID);
+            if (weaponUUID != "")
             {
                 btnUnEquip.gameObject.SetActive(true);
             }
@@ -62,11 +62,11 @@ public class CharacterCardRelic : CharacterCard
         btnUpgrade.onClick.AddListener(() =>
         {
             uiManager.ShowPanel(ScreenIds.UpgradeRelicPanel);
-            string weaponID = (originWeapon != currentWeapon && currentWeapon != null) ? currentWeapon : originWeapon;
-            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponID);
+            string weaponUUID = (this.weaponUUID != currentWeapon && currentWeapon != null) ? currentWeapon : this.weaponUUID;
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
         });
 
-        UpdateCharacterCardWeapon(save.Player.GetIDOfFirstCharacter().ID);
+        UpdateCharacterCardWeapon(save.Player.Roster.GetIDOfFirstCharacter().ID);
     }
 
     private void OnEnable()
@@ -91,13 +91,13 @@ public class CharacterCardRelic : CharacterCard
         if (id != "")
         {
             currentCharacter = id;
-            originWeapon = save.Player.GetCharacter(id).Weapon;
-            if (originWeapon != "")
+            weaponUUID = save.Player.Roster.GetCharacter(id).Weapon;
+            if (weaponUUID != "")
             {
                 statInfo.gameObject.SetActive(true);
                 weaponEmpty.gameObject.SetActive(false);
-                WeaponSaveData data = save.Player.GetWeapon(originWeapon);
-                ItemConfig weaponConfig = gameDataBase.GetItemConfig(originWeapon);
+                WeaponSaveData data = save.Player.Inventory.GetWeapon(weaponUUID);
+                ItemConfig weaponConfig = gameDataBase.GetItemConfig(data.TemplateID);
 
                 txtName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
                 txtLevel.text = data.CurrentLevel.ToString();
@@ -119,9 +119,9 @@ public class CharacterCardRelic : CharacterCard
         }
     }
 
-    public void UpdateWeaponInfo(string id)
+    public void UpdateWeaponInfo(string uuid)
     {
-        if (originWeapon != "")
+        if (weaponUUID != "")
         {
             btnChange.gameObject.SetActive(true);
             btnUnEquip.gameObject.SetActive(false);
@@ -131,10 +131,10 @@ public class CharacterCardRelic : CharacterCard
             btnEquip.gameObject.SetActive(true);
         }
         btnChange.gameObject.SetActive(true);
-        currentWeapon = id;
-        if(originWeapon != null)
+        currentWeapon = uuid;
+        if(weaponUUID != null)
         {
-            if (currentWeapon == originWeapon)
+            if (currentWeapon == weaponUUID)
             {
                 btnUnEquip.gameObject.SetActive(true);
             }
@@ -145,8 +145,9 @@ public class CharacterCardRelic : CharacterCard
         }
         statInfo.gameObject.SetActive(true);
         weaponEmpty.gameObject.SetActive(false);
-        ItemConfig config = gameDataBase.GetItemConfig(id);
-        WeaponSaveData data = save.Player.GetWeapon(id);
+        WeaponSaveData data = save.Player.Inventory.GetWeapon(uuid);
+        ItemConfig config = gameDataBase.GetItemConfig(data.TemplateID);
+
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.CurrentLevel.ToString();
@@ -161,6 +162,6 @@ public class CharacterCardRelic : CharacterCard
     {
         UpdateCharacterCardWeapon(currentCharacter);
         btnChange.gameObject.SetActive(true);
-        currentWeapon = originWeapon;
+        currentWeapon = weaponUUID;
     }
 }

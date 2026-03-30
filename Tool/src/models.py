@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, asdict
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Optional
 
 @dataclass
 class WeaponComponent:
@@ -12,9 +12,26 @@ class ExpComponent:
     value: int
 
 @dataclass
+class SubStatPoolData:
+    type: str
+    min: float
+    max: float
+    mod_type: str
+
+# Cấu trúc của Main Stat
+@dataclass
+class MainStatData:
+    type: str
+    value: float
+    mod_type: str
+
+@dataclass
 class ArmorComponent:
     part: str
     armor_set: str
+    main_stat: Optional[MainStatData] = None
+    # default_factory=list giúp khởi tạo mảng rỗng mặc định nếu không có data
+    random_substat_pool: List[SubStatPoolData] = field(default_factory=list)
 
 @dataclass
 class ItemModel:

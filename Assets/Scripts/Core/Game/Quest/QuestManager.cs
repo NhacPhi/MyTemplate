@@ -81,7 +81,7 @@ public class QuestManager
             if (firstUnfinished.Key != null)
             {
                 currentQuestLine = firstUnfinished.Value;
-                currentQuestLineIndex = firstUnfinished.Key; // Trong Dictionary, Index thường chính là Key (ID)
+                currentQuestLineIndex = firstUnfinished.Key; // Trong Dictionary, Index thường chính là Key (UUID)
             }
             else
             {

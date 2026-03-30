@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using VContainer;
 using System.Collections.Generic;
+using Tech.Logger;
 
 public class CharacterCardInfo : CharacterCard
 {
@@ -24,10 +25,8 @@ public class CharacterCardInfo : CharacterCard
     [SerializeField] private Image imgMajorSkill;
     [SerializeField] private Image imgUltimateSkill;
 
-    [Inject] private SaveSystem save;
+    [Inject] PlayerCharacterManager characterManager;
     [Inject] private GameDataBase gameDataBase;
-
-    [Inject] private CharacterStatManager characterStatMM;
 
     private void Awake()
     {
@@ -37,7 +36,7 @@ public class CharacterCardInfo : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCharacterCardInfo(save.Player.GetIDOfFirstCharacter().ID);
+        UpdateCharacterCardInfo(characterManager.GetFirstCharacter().SaveData.ID);
     }
 
     private void OnDestroy()
@@ -46,30 +45,31 @@ public class CharacterCardInfo : CharacterCard
     }
     public void UpdateCharacterCardInfo(string id)
     {
-        CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = save.Player.GetCharacter(id);
-
-        if(config == null || data == null)
+        var characterProfile = characterManager.GetCharacter(id);
+        CharacterConfig characterConfig = gameDataBase.GetCharacterConfig(id);
+        if (characterManager == null)
         {
-            Debug.Log("Character Data null with id: " + id);
+            LogCommon.Log("Character Data null with id: " + id);
             return;
         }
-        txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
-        txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString() ;
+
+
+        txtName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
+        txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString() ;
         //iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
 
-        txtHP.text = config.Stats.GetValueOrDefault(StatType.HP).ToString();
-        txtATK.text = config.Stats.GetValueOrDefault(StatType.ATK).ToString();
-        txtDEF.text = config.Stats.GetValueOrDefault(StatType.DEF).ToString(); // stat.DEF.ToString();
-        txtSPD.text = "0"; // stat.SPEED.ToString();
+        txtHP.text = characterProfile.GetTotalStat(StatType.HP).ToString();
+        txtATK.text = characterProfile.GetTotalStat(StatType.ATK).ToString();
+        txtDEF.text = characterProfile.GetTotalStat(StatType.DEF).ToString(); // stat.DEF.ToString();
+        txtSPD.text = characterProfile.GetTotalStat(StatType.SPEED).ToString();
         txtDEFShred.text = "0"; // stat.DEFShred.ToString();
         txtCritRate.text = "0"; // stat.CRITRate.ToString();
         txtCriteDMG.text = "0"; // stat.CRITDMG.ToString();
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 
-        imgAttack.sprite = config.BaseSkillIcon;
-        imgMajorSkill.sprite = config.MajorSkillIcon;
-        imgUltimateSkill.sprite = config.UltimateSkillIcon;
+        imgAttack.sprite = characterConfig.BaseSkillIcon;
+        imgMajorSkill.sprite = characterConfig.MajorSkillIcon;
+        imgUltimateSkill.sprite = characterConfig.UltimateSkillIcon;
     }
 }

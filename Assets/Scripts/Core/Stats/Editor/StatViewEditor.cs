@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatViewEditor : ViewEditor
 {
-    private const string statTitle = "Stats";
+    private const string statTitle = "Substats";
     private readonly Color backgroundColor = new Color(0.345098f, 0.345098f, 0.345098f);
 
     public StatViewEditor(StatsController stats) : base(stats)

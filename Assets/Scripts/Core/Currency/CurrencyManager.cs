@@ -42,13 +42,13 @@ public class CurrencyManager
 
     private void Save()
     {
-        save.Player.SetCurrency(currencies);
+        save.Player.Inventory.SetCurrency(currencies);
         save.SaveDataToDisk(GameSaveType.PlayerInfo);
     }
 
     private void Load()
     {
-        currencies = save.Player.Currencies;
+        currencies = save.Player.Inventory.Currencies;
     }
     public void UpdateCurrency()
     {
@@ -61,7 +61,7 @@ public class CurrencyManager
     public int GetQuantityCurrecy(CurrencyType type)
     {
         int result;
-        save.Player.Currencies.TryGetValue(type, out result);
+        save.Player.Inventory.Currencies.TryGetValue(type, out result);
         return result;
     }
 }

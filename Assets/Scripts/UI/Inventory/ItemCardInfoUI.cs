@@ -28,7 +28,7 @@ public class ItemCardInfoUI : MonoBehaviour
     }
     public void UpdateItemCardInfor(string id)
     {
-        ItemSaveData item = save.Player.GetItem(id);
+        ItemSaveData item = save.Player.Inventory.GetItem(id);
         var itemConfig = gameDataBase.GetItemConfig(id);
         string str = "";
         if(itemConfig != null)

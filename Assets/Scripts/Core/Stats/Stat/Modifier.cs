@@ -6,7 +6,7 @@ public enum ModifyType
 {
     None,
     BaseConstant, // Tăng vào chỉ số gốc
-    Constant, // Tăng vào chỉ số được giới hạn
+    Constant, // Tăng vào chỉ số được giới hạn = Flat Bonus
     Percent, // Tăng theo %
 }
 

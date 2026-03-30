@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
+using System.Linq;
 
 public class CharacterWeaponCategoryUI : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
 
 
     [Inject] private GameDataBase gameDataBase;
-    [Inject] private SaveSystem save;
+    [Inject] private InventoryManager inventory;
 
     private List<GameObject> weapons = new();
 
@@ -46,18 +47,18 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         });
         Init();
 
-        ResetWeaponCardCategory(save.Player.GetIDOfFirstCharacter().Weapon);
+        ResetWeaponCardCategory(inventory.Weapons.FirstOrDefault().UUID);
     }
 
     public void Init()
     {
-        foreach (var item in save.Player.Weapons)
+        foreach (var item in inventory.Weapons)
         {
             var obj = Instantiate(prefabsUI, content.transform);
-            var weaponConfig = gameDataBase.GetItemConfig(item.ID);
+            var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
 
             Sprite avatar = item.Equip != "None" ? gameDataBase.GetCharacterConfig(item.Equip).Icon : null;
-            obj.GetComponent<WeaponCategoryUI>().Init(item.ID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
+            obj.GetComponent<WeaponCategoryUI>().Init(item.UUID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
             obj.SetActive(true);
             weapons.Add(obj);
         }

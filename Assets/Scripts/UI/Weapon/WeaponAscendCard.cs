@@ -34,8 +34,8 @@ public class WeaponAscendCard : MonoBehaviour
     {
         if (weaponID != "")
         {
-            ItemConfig config = gameDataBase.GetItemConfig(weaponID);
-            WeaponSaveData data = save.Player.GetWeapon(weaponID);
+            WeaponSaveData data = save.Player.Inventory.GetWeapon(weaponID);
+            ItemConfig config = gameDataBase.GetItemConfig(data.TemplateID);
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;

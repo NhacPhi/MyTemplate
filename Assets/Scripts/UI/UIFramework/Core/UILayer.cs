@@ -44,7 +44,7 @@ namespace UIFramework {
                 ShowScreen(ctl);
             }
             else {
-                Debug.LogError("[AUILayerController] Screen ID " + screenId + " not registered to this layer!");
+                Debug.LogError("[AUILayerController] Screen UUID " + screenId + " not registered to this layer!");
             }
         }
 
@@ -54,7 +54,7 @@ namespace UIFramework {
                 ShowScreen(ctl, properties);
             }
             else {
-                Debug.LogError("[AUILayerController] Screen ID " + screenId + " not registered!");
+                Debug.LogError("[AUILayerController] Screen UUID " + screenId + " not registered!");
             }
         }
 
@@ -64,7 +64,7 @@ namespace UIFramework {
                 HideScreen(ctl);
             }
             else {
-                Debug.LogError("[AUILayerController] Could not hide Screen ID " + screenId + " as it is not registered to this layer!");
+                Debug.LogError("[AUILayerController] Could not hide Screen UUID " + screenId + " as it is not registered to this layer!");
             }
         }
 

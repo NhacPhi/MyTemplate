@@ -38,13 +38,13 @@ public class CharacterCardCultivate : CharacterCard
         for(int i = 0; i < exps.Count; i++)
         {
             //ExpConfig expConfig = gameDataBase.ExpConfig[i];
-            //ItemBaseSO expSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, expConfig.ID);
-            //ItemSaveData ItemSaveData = save.Player.GetItem(expConfig.ID);
-            //exps[i].Init(expConfig.ID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), ItemSaveData.Quantity);
+            //ItemBaseSO expSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, expConfig.UUID);
+            //ItemSaveData ItemSaveData = inventoryManager.Player.GetItem(expConfig.UUID);
+            //exps[i].Init(expConfig.UUID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), ItemSaveData.Quantity);
             //exps[i].CanClick = false;
         }
 
-        UpdateCharacterCardCultivate(save.Player.GetIDOfFirstCharacter().ID);
+        UpdateCharacterCardCultivate(save.Player.Roster.GetIDOfFirstCharacter().ID);
     }
 
 
@@ -56,7 +56,7 @@ public class CharacterCardCultivate : CharacterCard
     public void UpdateCharacterCardCultivate(string id)
     {
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = save.Player.GetCharacter(id);
+        CharacterSaveData data = save.Player.Roster.GetCharacter(id);
         //CharacterUpgradeConfig upgrade = gameDataBase.GetCharacterUpgradeConfig(id);
         //CharacterStatConfig stat = gameDataBase.GetCharacterStatConfig(id);
 

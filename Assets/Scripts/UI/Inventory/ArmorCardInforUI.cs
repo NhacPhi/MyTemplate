@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using VContainer;
+using System.Linq;
 
 public class ArmorCardInforUI : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class ArmorCardInforUI : MonoBehaviour
 
     public void UpdateArmorItemCardInfor(string id)
     {
-        ArmorSaveData item = save.Player.GetArmor(id);
+        ArmorSaveData item = save.Player.Inventory.GetArmor(id);
 
         var itemConfig = gameDataBase.GetItemConfig(item.TemplateID);
 
@@ -38,15 +39,21 @@ public class ArmorCardInforUI : MonoBehaviour
 
             ResetArmorStatsUI();
 
-            armor.Init(item.InstanceID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
+            armor.Init(item.UUID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;
-            if (item.Stats.Count > 0)
+            if (item.Substats.Count > 0)
             {
-                foreach (var obj in item.Stats)
+                foreach (var obj in item.Substats)
                 {
                     UpdateArmorStatsUI(obj);
                 }
             }
+
+            var mainstat = gameDataBase.GetItemConfig(item.TemplateID).Armor.MainStat;
+            var mainstatUI = armorStats.FirstOrDefault(u => u.Type == mainstat.Type);
+            mainstatUI.gameObject.SetActive(true);
+            mainstatUI.gameObject.transform.SetAsFirstSibling();
+            mainstatUI.UpdateStat((int)mainstat.Value, item.Level);
 
             txtTitleSet.text = "ATK Set(0/6)";
             txtDescriptionSet.text = "Increasece ATK by 20%";
@@ -63,14 +70,14 @@ public class ArmorCardInforUI : MonoBehaviour
         }
     }
 
-    private void UpdateArmorStatsUI(ArmorStatSaveData stats)
+    private void UpdateArmorStatsUI(RolledSubStat stats)
     {
         foreach(var armor in armorStats)
         {
             if(armor.Type == stats.Type)
             {
                 armor.gameObject.SetActive(true);
-                armor.UpdateStat(stats.Point, stats.Level);
+                armor.UpdateStat(stats.Value, stats.Level);
             }
         }
     }

@@ -7,7 +7,7 @@ public enum AttributeType
     Hp,
     Shield,
     Energy,
-    // Stats
+    // Substats
     ActionPoin, //Peeds
     Fury,
     // Buff/Debuff or Duration-based

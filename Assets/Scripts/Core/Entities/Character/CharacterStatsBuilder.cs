@@ -9,12 +9,12 @@ public class CharacterStatsBuilder : EntityStatsBuilder
     {
         foreach (var armor in armors)
         {
-            foreach (var stat in armor.Stats)
+            foreach (var stat in armor.Substats)
             {
                 if (!stats.ContainsKey(stat.Type))
                     stats[stat.Type] = new Stat(0);
 
-                stats[stat.Type].AddModifier(new Modifier(stat.Point, stat.ModifierType));
+                stats[stat.Type].AddModifier(new Modifier(stat.Value, stat.ModifierType));
             }
 
         }

@@ -4,8 +4,11 @@ using System;
 [System.Serializable]
 public class WeaponSaveData
 {
-    [JsonProperty("id")]
-    public string ID;
+    [JsonProperty("uuid")]
+    public string UUID;
+
+    [JsonProperty("template_id")]
+    public string TemplateID;
 
     [JsonProperty("current_level")]
     public int CurrentLevel;

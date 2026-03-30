@@ -28,7 +28,7 @@ public class PopupChangeAvatarController : WindowController
         btnCancel.onClick.AddListener(OnCancel);
         btnComfirm.onClick.AddListener(OnConfirm);
 
-        currentAvatarID = save.Player.AvatarIcon;
+        currentAvatarID = save.Player.Account.AvatarIcon;
 
         GenerateAvatars();
 
@@ -50,7 +50,7 @@ public class PopupChangeAvatarController : WindowController
 
         UIEvent.OnChanageAvatarPanel?.Invoke(currentAvatarID);
 
-        save.Player.SetAvatarIcon(currentAvatarID);
+        save.Player.Account.SetAvatarIcon(currentAvatarID);
     }
 
     public void OnCancel()

@@ -14,9 +14,9 @@ namespace Core.Scope
         [Inject] private SaveSystem saveSystem;
         [Inject] private UIManager uiManager;
         [Inject] private CurrencyManager currencyMM;
-        [Inject] private CharacterStatManager characterStatMM;
         [Inject] private GameNarrativeData gameNarrative;
         [Inject] private GameDataBase gameDataBase;
+        [Inject] private PlayerCharacterManager playerCharacterManager;
         //[Inject] private IObjectResolver _objectResolver;
         public bool IsDone;
 
@@ -32,6 +32,7 @@ namespace Core.Scope
             saveSystem.LoadSaveDataFromDisk();
             currencyMM.Init();
 
+
             //saveSystem.Settings.SaveSetting(60,5,"VIETNAMESE");
             var tasks = new List<UniTask>()
             {
@@ -42,8 +43,8 @@ namespace Core.Scope
             await gameDataBase.Init(cancellation);
             await gameNarrative.LoadGameNarrativeConfig(cancellation);
 
-            characterStatMM.Init();
 
+            playerCharacterManager.Init();
             uiManager.Init();
             uiManager.OpenWindowScene(ScreenIds.StartGameScene);
             uiManager.ShowPanel(ScreenIds.PanelStartGame);

@@ -37,7 +37,7 @@ public class PartySetupControllerUI : MonoBehaviour
     }
     public void InitData()
     {
-        foreach(var slot in _saveSystem.Player.ActiveSlots)
+        foreach(var slot in _saveSystem.Player.Roster.ActiveSlots)
         {
             if(slot.CharacterID != "")
             {
@@ -61,7 +61,7 @@ public class PartySetupControllerUI : MonoBehaviour
             }
         }
 
-        var characters = _saveSystem.Player.Characters;
+        var characters = _saveSystem.Player.Roster.Characters;
 
         foreach(var character in characters)
         {
@@ -125,8 +125,8 @@ public class PartySetupControllerUI : MonoBehaviour
     public void SwapActiveSlots(int posA, int posB)
     {
         // 1. Lấy dữ liệu Data hiện tại (có thể null nếu ô đó chưa bao giờ được tạo)
-        var dataA = _saveSystem.Player.ActiveSlots.Find(s => s.Position == posA);
-        var dataB = _saveSystem.Player.ActiveSlots.Find(s => s.Position == posB);
+        var dataA = _saveSystem.Player.Roster.ActiveSlots.Find(s => s.Position == posA);
+        var dataB = _saveSystem.Player.Roster.ActiveSlots.Find(s => s.Position == posB);
 
         // 2. Lấy UI hiện tại
         _activeUISlots.TryGetValue(posA, out CharacterSlotUI uiA);
@@ -134,32 +134,32 @@ public class PartySetupControllerUI : MonoBehaviour
 
         if (uiA == null && uiB == null) return;
 
-        // --- CẬP NHẬT DATA (GIỮ SLOT, CHỈ ĐỔI ID) ---
+        // --- CẬP NHẬT DATA (GIỮ SLOT, CHỈ ĐỔI UUID) ---
 
-        // Lấy ID hiện tại (nếu data null thì coi như ID rỗng)
+        // Lấy UUID hiện tại (nếu data null thì coi như UUID rỗng)
         string idA = dataA != null ? dataA.CharacterID : "";
         string idB = dataB != null ? dataB.CharacterID : "";
 
-        // Cập nhật ID cho ô A (nhận ID của B)
+        // Cập nhật UUID cho ô A (nhận UUID của B)
         if (dataA != null)
         {
             dataA.CharacterID = idB;
         }
         else
         {
-            // Nếu ô A chưa có trong Data, tạo mới nó với ID của B
-            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData{ Position = posA, CharacterID = idB });
+            // Nếu ô A chưa có trong Data, tạo mới nó với UUID của B
+            _saveSystem.Player.Roster.ActiveSlots.Add(new ActiveSlotData{ Position = posA, CharacterID = idB });
         }
 
-        // Cập nhật ID cho ô B (nhận ID của A)
+        // Cập nhật UUID cho ô B (nhận UUID của A)
         if (dataB != null)
         {
             dataB.CharacterID = idA;
         }
         else
         {
-            // Nếu ô B chưa có trong Data, tạo mới nó với ID của A
-            _saveSystem.Player.ActiveSlots.Add(new ActiveSlotData { Position = posB, CharacterID = idA });
+            // Nếu ô B chưa có trong Data, tạo mới nó với UUID của A
+            _saveSystem.Player.Roster.ActiveSlots.Add(new ActiveSlotData { Position = posB, CharacterID = idA });
         }
 
         // --- CẬP NHẬT UI (Giữ nguyên logic di chuyển mượt mà của ông) ---
@@ -251,7 +251,7 @@ public class PartySetupControllerUI : MonoBehaviour
     private void AddCharacterToSlot(string characterID, int position)
     {
         // --- CẬP NHẬT DATA ---
-        var activeList = _saveSystem.Player.ActiveSlots;
+        var activeList = _saveSystem.Player.Roster.ActiveSlots;
         var slotData = activeList.Find(s => s.Position == position);
 
         if (slotData != null)
@@ -297,7 +297,7 @@ public class PartySetupControllerUI : MonoBehaviour
         int position = characterUI.CurrentPosition;
         string characterID = characterUI.CharacterID;
 
-        var activeList = _saveSystem.Player.ActiveSlots;
+        var activeList = _saveSystem.Player.Roster.ActiveSlots;
         var dataToRemove = activeList.Find(s => s.Position == position);
         if (dataToRemove != null)
         {
@@ -339,7 +339,7 @@ public class PartySetupControllerUI : MonoBehaviour
         var iconsToDeselect = _activeUISlots.Values.Select(ui => ui.CharacterID).ToList();
 
 
-        foreach (var slot in _saveSystem.Player.ActiveSlots)
+        foreach (var slot in _saveSystem.Player.Roster.ActiveSlots)
         {
             slot.CharacterID = "";
         }
@@ -368,6 +368,6 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void ReorganizeActiveSlotsData()
     {
-        _saveSystem.Player.ActiveSlots.Sort((slotA, slotB) => slotA.Position.CompareTo(slotB.Position));
+        _saveSystem.Player.Roster.ActiveSlots.Sort((slotA, slotB) => slotA.Position.CompareTo(slotB.Position));
     }
 }

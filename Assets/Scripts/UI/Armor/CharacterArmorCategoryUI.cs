@@ -14,7 +14,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     [SerializeField] private List<ArmorPartToggle> toggles;
 
     [Inject] private GameDataBase gameDataBase;
-    [Inject] private SaveSystem save;
+    [Inject] private InventoryManager inventory;
 
     private List<GameObject> armors = new();
 
@@ -48,12 +48,12 @@ public class CharacterArmorCategoryUI : MonoBehaviour
 
     private void Init()
     {
-        foreach(var armor in save.Player.Armors)
+        foreach(var armor in inventory.Armors)
         {
             var obj = Instantiate(prefabsUI, content.transform);
             var armorConfig = gameDataBase.GetItemConfig(armor.TemplateID);
-            Sprite avatar = armor.Equip != "None" ? armorConfig.Icon : null;
-            obj.GetComponent<ArmorCategoryUI>().Init(armor.InstanceID, armor.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armor.Rare), avatar, armor.Level, armorConfig.Armor.Part);
+            Sprite avatar = armor.Equip != "None" ? gameDataBase.GetCharacterConfig(armor.Equip).Icon : null;
+            obj.GetComponent<ArmorCategoryUI>().Init(armor.UUID, armor.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armor.Rare), avatar, armor.Level, armorConfig.Armor.Part);
             obj.SetActive(false);
             armors.Add(obj);
         }

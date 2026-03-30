@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class ArmorSaveData
 {
     [JsonProperty("instance_id")]
-    public string InstanceID;
+    public string UUID;
 
     [JsonProperty("template_id")]
     public string TemplateID;
@@ -17,8 +17,8 @@ public class ArmorSaveData
     [JsonProperty("rare")]
     public Rare Rare;
 
-    [JsonProperty("stats")]
-    public List<ArmorStatSaveData> Stats;
+    [JsonProperty("substats")]
+    public List<RolledSubStat> Substats;
 
     [JsonProperty("equip")]
     public string Equip;

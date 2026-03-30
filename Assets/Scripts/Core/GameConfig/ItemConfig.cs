@@ -119,6 +119,36 @@ public class ArmorComponent
 
     [JsonProperty("armor_set")]
     public string ArmorSet;
+
+    [JsonProperty("main_stat")]
+    public MainStatConfig MainStat;
+
+    [JsonProperty("random_substat_pool")]
+    public List<SubStatPoolConfig> RandomSubstatPool;
+}
+
+[Serializable]
+public class SubStatPoolConfig
+{
+    [JsonProperty("type")]
+    public StatType Type;
+
+    [JsonProperty("min")]
+    public float Min;
+
+    [JsonProperty("max")]
+    public float Max;
+
+    [JsonProperty("mod_type")] 
+    public ModifyType ModifierType;
+}
+
+[Serializable]
+public class MainStatConfig
+{
+    [JsonProperty("type")] public StatType Type;
+    [JsonProperty("value")] public float Value;
+    [JsonProperty("mod_type")] public ModifyType ModifierType;
 }
 
 

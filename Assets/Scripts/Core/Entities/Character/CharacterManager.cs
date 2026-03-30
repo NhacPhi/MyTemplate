@@ -18,7 +18,7 @@ public class CharacterManager
     private Dictionary<string, Entity> _characterPrefabsCache = new Dictionary<string, Entity>();
     public async UniTask<Dictionary<string, Entity>> LoadAndSpawnCharactersAsync(CancellationToken cancellation = default)
     {
-        var activeSlots = _saveSystem.Player.ActiveSlots;
+        var activeSlots = _saveSystem.Player.Roster.ActiveSlots;
 
         var characterUIPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>("CharacterUI", token: cancellation);
 

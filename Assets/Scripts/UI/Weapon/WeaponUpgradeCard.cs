@@ -38,7 +38,7 @@ public class WeaponUpgradeCard : MonoBehaviour
         if(weaponID != "")
         {
             var config = gameDataBase.GetItemConfig(weaponID);
-            WeaponSaveData data = save.Player.GetWeapon(weaponID);
+            WeaponSaveData data = save.Player.Inventory.GetWeapon(weaponID);
 
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);

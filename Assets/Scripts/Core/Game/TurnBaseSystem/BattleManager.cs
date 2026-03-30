@@ -122,7 +122,7 @@ public class BattleManager : MonoBehaviour
     public void SetupEntitiesPosition()
     {
         // Load locaiton of character 
-        var activeSlot = _saveSystem.Player.ActiveSlots;
+        var activeSlot = _saveSystem.Player.Roster.ActiveSlots;
 
         int order = 0;
 

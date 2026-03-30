@@ -21,7 +21,6 @@ public class CharacterUI : MonoBehaviour
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
     [Inject] private CurrencyManager currencyMM;
-    [Inject] private CharacterStatManager characterStatMM;
     [Inject] private AudioManager audioManager;
 
     [SerializeField] private Image characterImage;
@@ -85,10 +84,10 @@ public class CharacterUI : MonoBehaviour
     }
     public void Init()
     {
-        foreach (var character in save.Player.Characters)
+        foreach (var character in save.Player.Roster.Characters)
         {
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);
-            string weaponID = save.Player.GetCharacter(character.ID).Weapon;
+            string weaponID = save.Player.Roster.GetCharacter(character.ID).Weapon;
             CharacterConfig config = gameDataBase.GetCharacterConfig(character.ID);
             obj.GetComponent<CharacterAvatar>().Init(character.ID, weaponID, config.Icon);
             avatars.Add(obj);
@@ -101,10 +100,10 @@ public class CharacterUI : MonoBehaviour
 
     private void ResetUI()
     {
-        currentCharacter = save.Player.Characters[0].ID;
+        currentCharacter = save.Player.Roster.Characters[0].ID;
         avatars[0].gameObject.GetComponent<CharacterAvatar>().SwitchStatus(true);
         ClickOnFristIconAvatar();
-        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Characters[0].ID).BigIcon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Roster.Characters[0].ID).BigIcon;
         currentTap = CharacterTap.None;
         UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
     }
@@ -121,10 +120,13 @@ public class CharacterUI : MonoBehaviour
         currentCharacter = id;
         audioManager.PlaySFXAsync(currentCharacter);
         characterImage.sprite = gameDataBase.GetCharacterConfig(id).BigIcon;
-        string weaponID = save.Player.GetCharacter(currentCharacter).Weapon;
-        if(weaponID != "")
+        string weaponID = save.Player.Roster.GetCharacter(currentCharacter).Weapon;
+
+        var weaponTemplateID = string.IsNullOrEmpty(weaponID) ? "": (save.Player.Inventory.GetWeapon(weaponID).TemplateID);
+
+        if (weaponTemplateID != "")
         {
-            waeponUI.SetWeaponImage(gameDataBase.GetItemConfig(weaponID).Weapon.BigIcon);
+            waeponUI.SetWeaponImage(gameDataBase.GetItemConfig(weaponTemplateID).Weapon.BigIcon);
         }
         else
         {
@@ -145,7 +147,7 @@ public class CharacterUI : MonoBehaviour
                 }
             }
         }
-        txtPower.text = characterStatMM.GetCharacterPower(id).ToString();
+        //txtPower.text = characterStatMM.GetCharacterPower(id).ToString();
 
         foreach (var obj in avatars)
         {

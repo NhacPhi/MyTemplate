@@ -35,7 +35,7 @@ public class EnemyManager
                 }
                 else
                 {
-                    LogCommon.LogError($"[EnemyManager] Không tìm thấy Prefab cho ID: {key}");
+                    LogCommon.LogError($"[EnemyManager] Không tìm thấy Prefab cho UUID: {key}");
                     continue;
                 }
             }

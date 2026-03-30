@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
                 }
                 else
                 {
-                    LogCommon.LogWarning($"[Audio] duplocated audio ID: {config.AudioID}!");
+                    LogCommon.LogWarning($"[Audio] duplocated audio UUID: {config.AudioID}!");
                 }
             }
         }

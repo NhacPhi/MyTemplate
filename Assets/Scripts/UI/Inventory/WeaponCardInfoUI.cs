@@ -32,10 +32,10 @@ public class WeaponCardInfoUI : MonoBehaviour
         UIEvent.OnSelectInventoryItem -= UpdateWeaponCardInfor;
     }
 
-    public void UpdateWeaponCardInfor(string id)
+    public void UpdateWeaponCardInfor(string uuid)
     {
-        WeaponSaveData weapon = save.Player.GetWeapon(id);
-        var weaponConfig = gameDataBase.GetItemConfig(id);
+        WeaponSaveData weapon = save.Player.Inventory.GetWeapon(uuid);
+        var weaponConfig = gameDataBase.GetItemConfig(weapon.TemplateID);
         
         if (weaponConfig != null)
         {
@@ -53,7 +53,7 @@ public class WeaponCardInfoUI : MonoBehaviour
 
             // Force rebuild UI layout
             LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
-            weaponUI.Init(weapon.ID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, weapon.CurrentLevel, weapon.CurrentUpgrade);
+            weaponUI.Init(weapon.UUID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, weapon.CurrentLevel, weapon.CurrentUpgrade);
         }
     }    
 }

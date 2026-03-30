@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +29,9 @@ public class InventoryUI : MonoBehaviour
 
     private ItemCardInfoUI itemCard;
 
+    private InventoryManager _inventoryManager;
+    private GameDataBase _gameDataBase;
+
     private void Awake()
     {
         itemCard = iteamCardInfo.GetComponent<ItemCardInfoUI>();
@@ -48,88 +51,110 @@ public class InventoryUI : MonoBehaviour
         UIEvent.OnSelectToggleInventoryTap -= OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem -= OnClickItemUI;
     }
-    public void Init(SaveSystem save, GameDataBase gameDataBase)
+    public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase)
     {
-        foreach (var item in save.Player.Weapons)
+        _inventoryManager = inventoryManager;
+        _gameDataBase = gameDataBase;
+
+        _inventoryManager.OnInventoryChanged += RefreshData;
+
+        RefreshData(); // Gọi lần đầu để vẽ UI
+
+        OnShowAllItemInInventory(ItemType.Item);
+    }
+
+    private void RefreshData()
+    {
+        ClearAllOldUI();
+
+        // 2. VẼ WEAPONS
+        foreach (var item in _inventoryManager.Weapons)
         {
             var obj = Instantiate(prefabWeapon, content.transform);
-            var weaponConfig = gameDataBase.GetItemConfig(item.ID);
-            if(weaponConfig != null)
+            var weaponConfig = _gameDataBase.GetItemConfig(item.TemplateID); 
             {
-                obj.GetComponent<WeaponUI>().Init(item.ID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, item.CurrentLevel, item.CurrentUpgrade);
+                obj.GetComponent<WeaponUI>().Init(item.UUID, weaponConfig.Rarity, 
+                    weaponConfig.Icon, weaponConfig.IconBG, item.CurrentLevel, item.CurrentUpgrade);
                 obj.SetActive(false);
                 weapons.Add(obj);
             }
-            
         }
-        dictionaryObject.Add(ItemType.Weapon, weapons);
+        dictionaryObject[ItemType.Weapon] = weapons;
 
-        foreach (var item in save.Player.Items)
+        // 3. VẼ ITEMS
+        foreach (var item in _inventoryManager.Items) // Đã đổi sang Dictionary theo bài trước
         {
             var obj = Instantiate(prefabItem, content.transform);
-            var itemConfig = gameDataBase.GetItemConfig(item.ID);
+            var itemConfig = _gameDataBase.GetItemConfig(item.ID);
             if (itemConfig != null)
             {
                 obj.GetComponent<ItemUI>().Init(item.ID, itemConfig.Rarity, itemConfig.Icon, itemConfig.IconBG, item.Quantity);
                 obj.SetActive(false);
-                if (item.Type == ItemType.Food)
-                {
-                    items.Add(obj);
-                }
-                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp)
-                {
-                    matterials.Add(obj);
-                }
-                else if (item.Type == ItemType.Shard)
-                {
-                    obj.GetComponent<ItemUI>().ActiveFragIcon(true);
-                    shards.Add(obj);
-                }
+
+                if (item.Type == ItemType.Food) items.Add(obj);
+                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp) matterials.Add(obj);
+                else if (item.Type == ItemType.Shard) shards.Add(obj);
             }
-
         }
-        dictionaryObject.Add(ItemType.Item, items);
-        dictionaryObject.Add(ItemType.Material, matterials);
-        dictionaryObject.Add(ItemType.Shard, shards);
-        itemCard.UpdateItemCardInfor(save.Player.Items[0].ID);
+        dictionaryObject[ItemType.Item] = items;
+        dictionaryObject[ItemType.Material] = matterials;
+        dictionaryObject[ItemType.Shard] = shards;
 
-        foreach (var item in save.Player.Armors)
+        // 4. VẼ ARMORS
+        foreach (var item in _inventoryManager.Armors)
         {
             var obj = Instantiate(prefabArmor, content.transform);
-            var armorConfig = gameDataBase.GetItemConfig(item.TemplateID);
-            if(armorConfig != null)
+            var armorConfig = _gameDataBase.GetItemConfig(item.TemplateID);
+            if (armorConfig != null)
             {
-                obj.GetComponent<ArmorItemUI>().Init(item.InstanceID, item.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
+                obj.GetComponent<ArmorItemUI>().Init(item.UUID, item.Rare, armorConfig.Icon, 
+                    _gameDataBase.GetBGItemByRare(item.Rare), item.Level);
                 obj.SetActive(false);
                 armors.Add(obj);
             }
         }
-        dictionaryObject.Add(ItemType.Armor, armors);
+        dictionaryObject[ItemType.Armor] = armors;
+
+        // Nếu đang ở tab nào thì bật hiển thị lại tab đó
+        ItemType tempType = currentItemType == ItemType.None ? ItemType.Item : currentItemType;
+        currentItemType = ItemType.None; // Reset để hàm OnShow chịu chạy
+        OnShowAllItemInInventory(tempType);
     }
 
     public void OnShowAllItemInInventory(ItemType type)
     {
         if (currentItemType == type) return;
+
         DeActiveAllObjectInContent();
-        List<GameObject> listItems = dictionaryObject.GetValueOrDefault(type);
         currentItemType = type;
-        if (listItems == null) return;
-        foreach (var item in listItems)
+
+        List<GameObject> listItems = dictionaryObject.GetValueOrDefault(type);
+        if (listItems == null || listItems.Count == 0)
         {
-            item.gameObject.SetActive(true);
+            // 🌟 NẾU KHÔNG CÓ ĐỒ: Ẩn Card Info đi và dừng lại, CHỐNG CRASH!
+            weaponCardInfo.SetActive(false);
+            iteamCardInfo.SetActive(false);
+            armorCardInfo.SetActive(false);
+            return;
         }
 
-        weaponCardInfo.SetActive(type == ItemType.Weapon ? true : false);
-        iteamCardInfo.SetActive((type == ItemType.Item || type == ItemType.Material || type == ItemType.Shard || ItemType.Exp == type) ? true : false);
-        armorCardInfo.SetActive(type == ItemType.Armor ? true : false);
+        foreach (var item in listItems)
+        {
+            item.SetActive(true);
+        }
 
-        InventoryItemUI itemUI = listItems[0].gameObject.GetComponent<InventoryItemUI>();
+        weaponCardInfo.SetActive(type == ItemType.Weapon);
+        iteamCardInfo.SetActive(type == ItemType.Item || type == ItemType.Material || type == ItemType.Shard || type == ItemType.Exp);
+        armorCardInfo.SetActive(type == ItemType.Armor);
+
+        // 🌟 Lấy món đồ đầu tiên một cách an toàn
+        InventoryItemUI itemUI = listItems[0].GetComponent<InventoryItemUI>();
         itemUI.OnSwitchStatusBoder(true);
         UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
 
-        // Force rebuild UI layout
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
+
 
     public void OnClickItemUI(string id)
     {
@@ -145,14 +170,26 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
-    
+
     private void DeActiveAllObjectInContent()
     {
-        InventoryItemUI[] objects = content.GetComponentsInChildren<InventoryItemUI>();
-        foreach (var obj in objects)
+        foreach (var list in dictionaryObject.Values)
         {
-            obj.gameObject.SetActive(false);
+            foreach (var obj in list)
+            {
+                obj.SetActive(false);
+            }
         }
+    }
+
+    private void ClearAllOldUI()
+    {
+        foreach (var list in dictionaryObject.Values)
+        {
+            foreach (var obj in list) Destroy(obj);
+            list.Clear();
+        }
+        dictionaryObject.Clear();
     }
 }
  

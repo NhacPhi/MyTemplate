@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using VContainer;
 
 
@@ -17,7 +17,7 @@ public class ArmorTooltipUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtDescriptionSet;
 
     [Inject] GameDataBase gameDataBase;
-    [Inject] SaveSystem save;
+    [Inject] InventoryManager inventoryManager;
     private void Awake()
     {
         UIEvent.OnUpdateArmorTooltipUI += UpdateArmorUI;
@@ -47,11 +47,11 @@ public class ArmorTooltipUI : MonoBehaviour
 
     public void UpdateArmorUI(string armorID)
     {
-        ArmorSaveData armorData = save.Player.GetArmor(armorID);
-        ItemConfig armorConfig = gameDataBase.GetItemConfig(armorData.TemplateID);
+        ArmorSaveData armorSaveData = inventoryManager.GetArmor(armorID);
+        ItemConfig armorConfig = gameDataBase.GetItemConfig(armorSaveData.TemplateID);
         
-        armor.GetComponent<ArmorItemUI>().Init(armorData.InstanceID, armorData.Rare, armorConfig.Icon, 
-            gameDataBase.GetBGItemByRare(armorData.Rare), armorData.Level);
+        armor.GetComponent<ArmorItemUI>().Init(armorSaveData.UUID, armorSaveData.Rare, armorConfig.Icon, 
+            gameDataBase.GetBGItemByRare(armorSaveData.Rare), armorSaveData.Level);
         armor.CanClick = false;
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(armorConfig.Name);
@@ -59,13 +59,20 @@ public class ArmorTooltipUI : MonoBehaviour
 
         ResetArmorStatsUI();
 
-        if (armorData.Stats.Count > 0)
+        if (armorSaveData.Substats.Count > 0)
         {
-            foreach (var obj in armorData.Stats)
+            foreach (var obj in armorSaveData.Substats)
             {
-                UpdateArmorStatsUI(obj);
+                UpdateArmorSubstatsUI(obj);
             }
         }
+
+        var mainstat = gameDataBase.GetItemConfig(armorSaveData.TemplateID).Armor.MainStat;
+
+        var mainstatUI = armorStats.FirstOrDefault(u => u.Type == mainstat.Type);
+        mainstatUI.gameObject.SetActive(true);
+        mainstatUI.gameObject.transform.SetAsFirstSibling();
+        mainstatUI.UpdateStat((int)mainstat.Value, armorSaveData.Level);
 
         txtTitleSet.text = "ATK Set(0/6)";
         txtDescriptionSet.text = "Increasece ATK by 20%";
@@ -80,15 +87,16 @@ public class ArmorTooltipUI : MonoBehaviour
         }
     }
 
-    private void UpdateArmorStatsUI(ArmorStatSaveData stats)
+    private void UpdateArmorSubstatsUI(RolledSubStat stats)
     {
         foreach (var armor in armorStats)
         {
             if (armor.Type == stats.Type)
             {
                 armor.gameObject.SetActive(true);
-                armor.UpdateStat(stats.Point, stats.Level);
+                armor.UpdateStat(stats.Value, stats.Level);
             }
         }
     }
+
 }

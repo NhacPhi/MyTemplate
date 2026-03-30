@@ -20,9 +20,9 @@ namespace Stats.Editor
         private VisualElement _Head;
         private VisualElement _Body;
 
-        private const string _errorMessage = "ID Not Found";
+        private const string _errorMessage = "UUID Not Found";
         private const string _allAttributes = "All Attributes: ";
-        private const string _allStats = "All Stats: ";
+        private const string _allStats = "All Substats: ";
 
         private string _search;
 
@@ -74,7 +74,7 @@ namespace Stats.Editor
             });
 
             button.style.height = 20;
-            button.text = "Search ID";
+            button.text = "Search UUID";
             var idField = new TextField();
             _idProperty = serializedObject.FindProperty("<EntityID>k__BackingField");
             idField.BindProperty(_idProperty);

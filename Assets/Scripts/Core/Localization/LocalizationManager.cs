@@ -93,7 +93,7 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
             }
             else
             {
-                Debug.LogWarning($"Key ID '{stringID}' not found in LocKeys class.");
+                Debug.LogWarning($"Key UUID '{stringID}' not found in LocKeys class.");
                 return missingTextString;
             }
         }

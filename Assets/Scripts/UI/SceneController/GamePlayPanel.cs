@@ -30,9 +30,9 @@ public class GamePlayPanel : PanelController
 
     private void OnEnable()
     {
-        txtLevel.text = save.Player.Level.ToString();
+        txtLevel.text = save.Player.Account.Level.ToString();
 
-        UpdateAvatarIconOnPanel(save.Player.AvatarIcon);
+        UpdateAvatarIconOnPanel(save.Player.Account.AvatarIcon);
 
         UIEvent.OnChanageAvatarPanel += UpdateAvatarIconOnPanel;
     }

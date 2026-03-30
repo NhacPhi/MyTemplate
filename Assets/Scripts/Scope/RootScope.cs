@@ -23,11 +23,12 @@ public class RootScope : LifetimeScope
         //builder.Register<EventManager>(Lifetime.Singleton);
         builder.Register<SaveSystem>(Lifetime.Singleton);
         builder.Register<CurrencyManager>(Lifetime.Singleton);
-        builder.Register<CharacterStatManager>(Lifetime.Singleton);
         builder.Register<AtlasProvider>(Lifetime.Singleton);
         builder.Register<GameDataBase>(Lifetime.Singleton);
         builder.Register<BattleSessionContext>(Lifetime.Singleton);
 
+        builder.Register<InventoryManager>(Lifetime.Singleton);
+        builder.Register<PlayerCharacterManager>(Lifetime.Singleton);
         builder.RegisterComponent(_audioManager).AsImplementedInterfaces().AsSelf();
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);
 
