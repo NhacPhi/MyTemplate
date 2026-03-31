@@ -21,7 +21,7 @@ public class WeaponUpgradeCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtCoinMaxLevel;
 
     [Inject] GameDataBase gameDataBase;
-    [Inject] SaveSystem save;
+    [Inject] InventoryManager inventory;
     [Inject] CurrencyManager currencyMM;
     private void Awake()
     {
@@ -33,16 +33,15 @@ public class WeaponUpgradeCard : MonoBehaviour
     {
         UIEvent.OnSlelectWeaponEnchance -= UpdatedWeaponUpgradeCard;
     }
-    public void UpdatedWeaponUpgradeCard(string weaponID)
+    public void UpdatedWeaponUpgradeCard(string weaponUUID)
     {
-        if(weaponID != "")
+        if(weaponUUID != "")
         {
-            var config = gameDataBase.GetItemConfig(weaponID);
-            WeaponSaveData data = save.Player.Inventory.GetWeapon(weaponID);
-
+            var weaponSave = inventory.GetWeapon(weaponUUID);
+            var config = gameDataBase.GetItemConfig(weaponSave.TemplateID);
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
-            int level = data.CurrentLevel;
+            int level = weaponSave.CurrentLevel;
             txtLevel.text = level.ToString() + "/10";
             txtNextLevel.text = level < 10 ? ((level + 1).ToString() + "/10") :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");

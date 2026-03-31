@@ -10,6 +10,7 @@ using VContainer.Unity;
 public class RootScope : LifetimeScope
 {
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private AutoSaveManager _autoSave;
 
     [SerializeField] private List<AudioDatabase> _activeAudioDatabases;
 
@@ -38,7 +39,7 @@ public class RootScope : LifetimeScope
         builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
         builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
         builder.RegisterComponentInHierarchy<PoolManager>().AsSelf();
-        //builder.RegisterComponentInHierarchy<GameDataBase>().AsSelf();
+        builder.RegisterComponentInHierarchy<AutoSaveManager>().AsSelf();
         builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 
         //Entry point

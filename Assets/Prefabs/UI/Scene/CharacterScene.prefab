@@ -15483,7 +15483,7 @@ GameObject:
   - component: {fileID: 9201628096494013898}
   - component: {fileID: 9127603641071071975}
   m_Layer: 5
-  m_Name: UI_CHANGE
+  m_Name: UI_EQUIP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15536,7 +15536,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Change
+  m_text: Equip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2b3a2769411de14b890d67a8c7df03c, type: 2}
   m_sharedMaterial: {fileID: -1356209992524661383, guid: f2b3a2769411de14b890d67a8c7df03c, type: 2}
@@ -18094,7 +18094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnClose: {fileID: 4654714297167774225}
-  prefabsUI: {fileID: 7431161551219926872, guid: d83b9e1527955e04abef2862b12d409e, type: 3}
+  prefabsUI: {fileID: 5552900630016432301, guid: d83b9e1527955e04abef2862b12d409e, type: 3}
   content: {fileID: 2704609684499369611}
 --- !u!1 &2601959935468861885
 GameObject:
@@ -22314,7 +22314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8300632288555048363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48806,7 +48806,6 @@ MonoBehaviour:
   txtSkill: {fileID: 8218073467542498385}
   statInfo: {fileID: 3143676756576105259}
   weaponEmpty: {fileID: 828944499246722385}
-  btnEquipWeapon: {fileID: 1286860046872493506}
   btnChange: {fileID: 1838794590806873294}
   btnUnEquip: {fileID: 7917375080514472619}
   btnEquip: {fileID: 7873028877244808754}

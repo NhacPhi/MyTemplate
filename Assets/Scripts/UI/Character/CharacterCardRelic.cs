@@ -20,18 +20,18 @@ public class CharacterCardRelic : CharacterCard
     [SerializeField] private GameObject weaponEmpty;
 
     //Button
-    [SerializeField] private Button btnEquipWeapon;
     [SerializeField] private Button btnChange;
     [SerializeField] private Button btnUnEquip;
     [SerializeField] private Button btnEquip;
     [SerializeField] private Button btnUpgrade;
 
-    [Inject] private SaveSystem save;
+    [Inject] private PlayerCharacterManager playerCharacterManager;
+    [Inject] private InventoryManager inventoryManager;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private UIManager uiManager;
 
-    private string currentWeapon = "";
-    private string weaponUUID = "";
+    private string currentWeaponSeleted = "";
+    private string weaponOfCharacter = "";
     private string currentCharacter = "";
     private void Awake()
     {
@@ -40,15 +40,10 @@ public class CharacterCardRelic : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        btnEquipWeapon.onClick.AddListener(() =>
-        {
-            UIEvent.OnSelectCharacterChangeWeapon?.Invoke("");
-        });
-
         btnChange.onClick.AddListener(() =>
         {
-            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(weaponUUID);
-            if (weaponUUID != "")
+            UIEvent.OnSelectCharacterChangeWeapon?.Invoke(weaponOfCharacter);
+            if (weaponOfCharacter != "")
             {
                 btnUnEquip.gameObject.SetActive(true);
             }
@@ -62,11 +57,28 @@ public class CharacterCardRelic : CharacterCard
         btnUpgrade.onClick.AddListener(() =>
         {
             uiManager.ShowPanel(ScreenIds.UpgradeRelicPanel);
-            string weaponUUID = (this.weaponUUID != currentWeapon && currentWeapon != null) ? currentWeapon : this.weaponUUID;
-            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(currentWeaponSeleted);
         });
 
-        UpdateCharacterCardWeapon(save.Player.Roster.GetIDOfFirstCharacter().ID);
+        btnEquip.onClick.AddListener(() =>
+        {
+            var character = playerCharacterManager.GetCharacter(currentCharacter);
+            character.EquipWeapon(currentWeaponSeleted);
+            UIEvent.OnUpdateSingleWeaponCard(currentWeaponSeleted);
+            weaponOfCharacter = currentWeaponSeleted;
+            UpdateWeaponInfo(currentWeaponSeleted);
+        });
+
+        btnUnEquip.onClick.AddListener(() =>
+        {
+            var character = playerCharacterManager.GetCharacter(currentCharacter);
+            character.UnEquipWeapon(currentWeaponSeleted);
+            UIEvent.OnUpdateSingleWeaponCard(currentWeaponSeleted);
+            weaponOfCharacter = "";
+            UpdateWeaponInfo(currentWeaponSeleted);
+        });
+
+        UpdateCharacterCardWeapon(playerCharacterManager.GetFirstCharacter().SaveData.ID);
     }
 
     private void OnEnable()
@@ -86,17 +98,18 @@ public class CharacterCardRelic : CharacterCard
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardWeapon;
     }
 
-    public void UpdateCharacterCardWeapon(string id)
+    public void UpdateCharacterCardWeapon(string characterid)
     {
-        if (id != "")
+        if (characterid != "")
         {
-            currentCharacter = id;
-            weaponUUID = save.Player.Roster.GetCharacter(id).Weapon;
-            if (weaponUUID != "")
+            currentCharacter = characterid;
+            var characterSave = playerCharacterManager.GetCharacter(characterid).SaveData;
+            weaponOfCharacter = characterSave.Weapon;
+            if (weaponOfCharacter != "")
             {
                 statInfo.gameObject.SetActive(true);
                 weaponEmpty.gameObject.SetActive(false);
-                WeaponSaveData data = save.Player.Inventory.GetWeapon(weaponUUID);
+                WeaponSaveData data = inventoryManager.GetWeapon(weaponOfCharacter);
                 ItemConfig weaponConfig = gameDataBase.GetItemConfig(data.TemplateID);
 
                 txtName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
@@ -121,31 +134,36 @@ public class CharacterCardRelic : CharacterCard
 
     public void UpdateWeaponInfo(string uuid)
     {
-        if (weaponUUID != "")
+        if(weaponOfCharacter != "")
         {
-            btnChange.gameObject.SetActive(true);
-            btnUnEquip.gameObject.SetActive(false);
-        }
-        else
-        {
-            btnEquip.gameObject.SetActive(true);
-        }
-        btnChange.gameObject.SetActive(true);
-        currentWeapon = uuid;
-        if(weaponUUID != null)
-        {
-            if (currentWeapon == weaponUUID)
+            if (uuid == weaponOfCharacter)
             {
                 btnUnEquip.gameObject.SetActive(true);
+
+                btnChange.gameObject.SetActive(false);
+                btnEquip.gameObject.SetActive(true);
             }
             else
             {
                 btnChange.gameObject.SetActive(true);
+
+                btnEquip.gameObject.SetActive(false);
+                btnUnEquip.gameObject.SetActive(false);
             }
+
+            
         }
+        else
+        {
+            btnEquip.gameObject.SetActive(true);
+
+            btnUnEquip.gameObject.SetActive(false);
+            btnChange.gameObject.SetActive(false);
+        }
+        currentWeaponSeleted = uuid;
         statInfo.gameObject.SetActive(true);
         weaponEmpty.gameObject.SetActive(false);
-        WeaponSaveData data = save.Player.Inventory.GetWeapon(uuid);
+        WeaponSaveData data = inventoryManager.GetWeapon(uuid);
         ItemConfig config = gameDataBase.GetItemConfig(data.TemplateID);
 
 
@@ -162,6 +180,6 @@ public class CharacterCardRelic : CharacterCard
     {
         UpdateCharacterCardWeapon(currentCharacter);
         btnChange.gameObject.SetActive(true);
-        currentWeapon = weaponUUID;
+        currentWeaponSeleted = weaponOfCharacter;
     }
 }

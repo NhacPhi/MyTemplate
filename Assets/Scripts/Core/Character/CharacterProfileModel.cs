@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 using System;
+using System.Linq;
 
 public class CharacterProfileModel : IStatProvider
 {
@@ -74,6 +75,74 @@ public class CharacterProfileModel : IStatProvider
     public void EquipItemFromInventory(string itemUUID)
     {
 
+    }
+
+    public bool EquipWeapon(string itemUUID)
+    {
+        var weaponSave = _inventory.GetWeapon(itemUUID);
+
+        if(weaponSave == null) return false;
+
+        var weaponConfig = _gameDataBaae.GetItemConfig(weaponSave.TemplateID);
+        var runtimeWeapon = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig);
+
+        Equipment.Equip(runtimeWeapon);
+
+        SaveData.Weapon = itemUUID;
+
+        weaponSave.Equip = SaveData.ID;
+
+        // Handle event
+        OnEquipmentChanged?.Invoke();
+        OnStatsChanged?.Invoke();
+        
+        return true;
+    }
+
+    public void UnEquipWeapon(string itemUUID)
+    {
+        var weaponSave = _inventory.GetWeapon(itemUUID);
+
+        if (string.IsNullOrEmpty(SaveData.Weapon)) return;
+
+        Equipment.Unequip(EquipSlot.Weapon);
+
+        SaveData.Weapon = "";
+        weaponSave.Equip = "";
+
+        // Handle event
+        OnEquipmentChanged?.Invoke();
+        OnStatsChanged?.Invoke();
+    }
+
+    public bool EquipArmor(string itemUUID)
+    {
+        var armorSave = _inventory.GetArmor(itemUUID);
+        if(armorSave == null) return false;
+
+        var armorConfig = _gameDataBaae.GetItemConfig(armorSave.TemplateID);
+        var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+
+        Equipment.Equip(runtimeArmor);
+
+        PartSaveData part = new PartSaveData
+        {
+            ID = itemUUID,
+            Type = armorConfig.Armor.Part,
+        };
+
+        if(SaveData.Armors.Contains(part))
+        {
+            SaveData.Armors.Add(part);
+        }
+
+        armorSave.Equip = SaveData.ID;
+
+        // Handle event
+        OnEquipmentChanged?.Invoke();
+        OnStatsChanged?.Invoke();
+
+        return true;
     }
 
     public bool UpgradeSkill(string skillID)

@@ -12,12 +12,13 @@ public class CharacterScene : WindowController
     [SerializeField] private CharacterUI characterUI;
     [Inject] private UIManager ui;
     [Inject] private SaveSystem save;
-    [Inject] private GameDataBase gameDataBase;
+
     private void Start()
     {
         btnExit.onClick.AddListener(() =>
         {
             ui.CloseWindowScene();
+            save.SaveDataToDisk(GameSaveType.PlayerInfo);
         });
 
         characterUI = GetComponent<CharacterUI>();

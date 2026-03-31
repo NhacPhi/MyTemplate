@@ -21,6 +21,8 @@ public static class UIEvent
     public static Action<string> OnSelectCharacterChangeWeapon;
     public static Action<string> OnSelectCharacterChangeArmor;
 
+    public static Action<string> OnUpdateSingleWeaponCard;
+
     //weapon
     public static Action<bool> OnCloseCharacterWeapon;
     public static Action<string> OnSelectWeaponCard;

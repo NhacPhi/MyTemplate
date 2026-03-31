@@ -3,7 +3,8 @@ using System;
 public enum GameSaveType
 {
     GameSetting,
-    PlayerInfo
+    PlayerInfo,
+    All
 }
 
 public class SaveSystem
@@ -37,6 +38,10 @@ public class SaveSystem
                 FileManager.WriteToFile(saveSettingsFileName, settings);
                 break;
             case GameSaveType.PlayerInfo:
+                FileManager.WriteToFile(savePlayerFileName, player);
+                break;
+            default:
+                FileManager.WriteToFile(saveSettingsFileName, settings);
                 FileManager.WriteToFile(savePlayerFileName, player);
                 break;
         }
