@@ -193,7 +193,7 @@
         "template_id": "Triple_Edged_Blade",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": "ErlangShen"
+        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
@@ -207,7 +207,7 @@
         "template_id": "Ninefold_Staff",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": "TangSanZang"
+        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
@@ -217,11 +217,11 @@
         "equip": "ZhuBaJie"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777748f",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
         "template_id": "Nimbus_Cloud",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "TangSanZang"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
@@ -427,7 +427,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "1f8fad5b-d9cb-469f-a165-75867728950e",
@@ -442,7 +442,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -457,7 +457,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
@@ -472,7 +472,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
@@ -487,7 +487,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
@@ -502,7 +502,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "None"
+        "equip": "TangSanZang"
       }
     ]
   },
@@ -515,14 +515,6 @@
         "boot_stat": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "armors": [
-          {
-            "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Helmet"
-          },
-          {
-            "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Chestplate"
-          },
           {
             "id": "2f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Gloves"
@@ -538,6 +530,14 @@
           {
             "id": "5f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Ring"
+          },
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Chestplate"
           }
         ]
       },
@@ -546,15 +546,40 @@
         "level": 1,
         "exp": 0,
         "boot_stat": 1,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
-        "armors": []
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
+        "armors": [
+          {
+            "id": "2f8fad5b-d9cb-469f-a165-74867728950e",
+            "type": "Gloves"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+            "type": "Belt"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+            "type": "Ring"
+          },
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "1f8fad5b-d9cb-469f-a165-75867728950e",
+            "type": "Chestplate"
+          }
+        ]
       },
       {
         "id": "ZhuBaJie",
         "level": 1,
         "exp": 0,
         "boot_stat": 1,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777748f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "armors": []
       },
       {

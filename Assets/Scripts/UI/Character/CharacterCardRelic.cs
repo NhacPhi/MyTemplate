@@ -67,6 +67,8 @@ public class CharacterCardRelic : CharacterCard
             UIEvent.OnUpdateSingleWeaponCard(currentWeaponSeleted);
             weaponOfCharacter = currentWeaponSeleted;
             UpdateWeaponInfo(currentWeaponSeleted);
+
+            UIEvent.OnSelectCharacterAvatar(currentCharacter);
         });
 
         btnUnEquip.onClick.AddListener(() =>
@@ -76,6 +78,20 @@ public class CharacterCardRelic : CharacterCard
             UIEvent.OnUpdateSingleWeaponCard(currentWeaponSeleted);
             weaponOfCharacter = "";
             UpdateWeaponInfo(currentWeaponSeleted);
+
+            UIEvent.OnSelectCharacterAvatar(currentCharacter);
+        });
+
+        btnChange.onClick.AddListener(() =>
+        {
+            var character = playerCharacterManager.GetCharacter(currentCharacter);
+            character.ChangeWeapon(currentWeaponSeleted);
+            UIEvent.OnUpdateSingleWeaponCard(currentWeaponSeleted);
+            UIEvent.OnUpdateSingleWeaponCard(weaponOfCharacter);
+            weaponOfCharacter = currentWeaponSeleted;
+            UpdateWeaponInfo(currentWeaponSeleted);
+
+            UIEvent.OnSelectCharacterAvatar(currentCharacter);
         });
 
         UpdateCharacterCardWeapon(playerCharacterManager.GetFirstCharacter().SaveData.ID);

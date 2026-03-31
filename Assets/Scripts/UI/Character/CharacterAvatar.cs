@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Cysharp.Threading.Tasks;
 
 public class CharacterAvatar : MonoBehaviour, IPointerClickHandler
 {
@@ -10,18 +11,19 @@ public class CharacterAvatar : MonoBehaviour, IPointerClickHandler
     private string id;
     private string weaponID;
     public string WeaponID { get { return weaponID; }  set { weaponID = value; } } 
-
+    private AudioManager audioManager;
     public string ID => id;
 
     private bool isShowWeaponCategory = false;
 
     public bool IsShowWeaponCategory { get { return isShowWeaponCategory; } set { isShowWeaponCategory = value; } }
 
-    public void Init(string id,string weapon,Sprite icon)
+    public void Init(string id,string weapon,Sprite icon, AudioManager audio)
     {
         this.id = id;
         this.icon.sprite = icon;
         this.weaponID = weapon;
+        audioManager = audio;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -31,6 +33,7 @@ public class CharacterAvatar : MonoBehaviour, IPointerClickHandler
         {
             HandleOnClickEvent();
         }
+        audioManager.PlaySFXAsync(id, true).Forget();
     }
 
     public void SwitchStatus(bool value)

@@ -26,8 +26,8 @@ public class CharacterCardArmor : CharacterCard
     List<ArmorSaveData> ArmorSaveDatas = new();
     private string currentCharacterID = "";
 
-    private string originArmorID = "";
-    private string currentArmorID = "";
+    private string armorPartOfCharacter = "";
+    private string currentArmorPartSelected = "";
     private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardArmor;
@@ -82,6 +82,11 @@ public class CharacterCardArmor : CharacterCard
 
                     armor.UpdateArmorUI(armorData.UUID, armorData.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armorData.Rare), armorData.Level);
                 }
+                else
+                {
+                    armor.ResetUI();
+                    armor.SwitchStatusArmorUI(true);
+                }
             }
 
             var characterProfile =  playerCharacterManager.GetCharacter(id);
@@ -126,7 +131,8 @@ public class CharacterCardArmor : CharacterCard
 
     private void SelectCharacterArmorUI(string id)
     {
-        originArmorID = id;
+        armorPartOfCharacter = id;
+        
         if (id != "")
         {
             PartSaveData part = playerCharacterManager.GetCharacter(currentCharacterID).SaveData.Armors.Find(part => part.ID == id);

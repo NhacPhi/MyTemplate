@@ -94,7 +94,7 @@ public static class EquipmentFactory
         return runtimeArmor;
     }
 
-    private static EquipSlot ConvertPartToSlot(ArmorPart part)
+    public static EquipSlot ConvertPartToSlot(ArmorPart part)
     {
         return (EquipSlot)Enum.Parse(typeof(EquipSlot), part.ToString());
     }

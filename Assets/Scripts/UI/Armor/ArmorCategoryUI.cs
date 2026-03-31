@@ -10,6 +10,7 @@ public class ArmorCategoryUI : GameItemUI, IPointerClickHandler
 
     private ArmorPart part;
     public ArmorPart Part => part;
+
     public void Init(string id, Rare rare, Sprite icon, Sprite background, Sprite avatar, int level,ArmorPart part)
     {
         base.Setup(id, rare, icon, background);

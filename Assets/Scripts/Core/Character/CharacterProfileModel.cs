@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -131,7 +131,7 @@ public class CharacterProfileModel : IStatProvider
             Type = armorConfig.Armor.Part,
         };
 
-        if(SaveData.Armors.Contains(part))
+        if(!SaveData.Armors.Contains(part))
         {
             SaveData.Armors.Add(part);
         }
@@ -145,6 +145,84 @@ public class CharacterProfileModel : IStatProvider
         return true;
     }
 
+    public bool UnequipArmor(string itemUUID)
+    {
+        PartSaveData equippedPart = SaveData.Armors.Find(part => part.ID == itemUUID);
+
+        if(equippedPart == null) return false;
+
+        var armorSave = _inventory.GetArmor(itemUUID);
+        if(armorSave != null)
+        {
+            armorSave.Equip = "";
+        }
+
+        var slotType = EquipmentFactory.ConvertPartToSlot(equippedPart.Type);
+
+        Equipment.Unequip(slotType);
+
+        SaveData.Armors.Remove(equippedPart);
+
+        //Handle event
+        OnEquipmentChanged?.Invoke();
+        OnStatsChanged?.Invoke();
+
+        return true;
+    }
+
+    public bool ChangeArmor(string newArmorUUID)
+    { 
+        var newArmorSave = _inventory.GetArmor(newArmorUUID);
+
+        if(newArmorSave == null) return false;
+
+        if (SaveData.Armors.Exists(p => p.ID == newArmorUUID)) return true;
+
+        var armorConfig = _gameDataBaae.GetItemConfig(newArmorSave.TemplateID);
+        var targetPart = armorConfig.Armor.Part;
+
+        //Tìm xem trên người mình có đang mặc món nào cùng bộ phận đó không
+        PartSaveData myOldPart = SaveData.Armors.Find(p => p.Type == targetPart);
+        string myOldArmorUUID = myOldPart != null ? myOldPart.ID : "";
+
+        string previousOwnerID = newArmorSave.Equip;
+
+        // háo món đồ cũ của mình ra trước
+        if (!string.IsNullOrEmpty(myOldArmorUUID))
+        {
+            UnequipArmor(myOldArmorUUID);
+        }
+
+        // 5. XỬ LÝ HOÁN ĐỔI ("Cướp" đồ của đồng đội)
+        if (!string.IsNullOrEmpty(previousOwnerID) && previousOwnerID != SaveData.ID)
+        {
+            // Bắn Event hô to: "Ê hệ thống, lột cái {targetPart} của thằng kia ra, và bắt nó mặc cái {myOldArmorUUID} này vào!"
+            UIEvent.OnRequestSwapArmor?.Invoke(previousOwnerID, newArmorUUID, myOldArmorUUID);
+        }
+
+        return EquipArmor(newArmorUUID);
+    }
+
+    public bool ChangeWeapon(string newWeaponUUID)
+    {
+        if(SaveData.Weapon == newWeaponUUID) return false;
+        
+        var newWeaponSave = _inventory.GetWeapon(newWeaponUUID);
+        if(newWeaponSave == null) return false;
+
+        string myOldWeaponUUID = SaveData.Weapon;
+        string previousOwnerID = newWeaponSave.Equip;
+
+        UnEquipWeapon(myOldWeaponUUID);
+
+
+        if(!string.IsNullOrEmpty(previousOwnerID) && previousOwnerID != SaveData.ID)
+        {
+            UIEvent.OnRequestSwapWeapon?.Invoke(previousOwnerID, myOldWeaponUUID);
+        }
+
+        return EquipWeapon(newWeaponUUID);
+    }
     public bool UpgradeSkill(string skillID)
     {
         return false;

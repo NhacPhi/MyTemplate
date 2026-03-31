@@ -22,6 +22,7 @@ public class CharacterUI : MonoBehaviour
     [Inject] private SaveSystem save;
     [Inject] private CurrencyManager currencyMM;
     [Inject] private AudioManager audioManager;
+    [Inject] private PlayerCharacterManager playerCharacterManager;
 
     [SerializeField] private Image characterImage;
     [SerializeField] private CharacterWeaponUI waeponUI;
@@ -33,7 +34,7 @@ public class CharacterUI : MonoBehaviour
 
     [SerializeField] private List<CharacterToggle> taps;
 
-    [SerializeReference] private GameObject currentArmorUI;
+    [SerializeField] private ArmorTooltipUI currentArmorUI;
     [SerializeField] private GameObject bgDetectTrigger;
 
     private string currentCharacter = "";
@@ -89,7 +90,7 @@ public class CharacterUI : MonoBehaviour
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);
             string weaponID = save.Player.Roster.GetCharacter(character.ID).Weapon;
             CharacterConfig config = gameDataBase.GetCharacterConfig(character.ID);
-            obj.GetComponent<CharacterAvatar>().Init(character.ID, weaponID, config.Icon);
+            obj.GetComponent<CharacterAvatar>().Init(character.ID, weaponID, config.Icon, audioManager);
             avatars.Add(obj);
         }
 
@@ -118,7 +119,7 @@ public class CharacterUI : MonoBehaviour
     public void SelectCharacterAvatar(string id)
     {
         currentCharacter = id;
-        audioManager.PlaySFXAsync(currentCharacter);
+        //audioManager.PlaySFXAsync(currentCharacter);
         characterImage.sprite = gameDataBase.GetCharacterConfig(id).BigIcon;
         string weaponID = save.Player.Roster.GetCharacter(currentCharacter).Weapon;
 
@@ -147,7 +148,8 @@ public class CharacterUI : MonoBehaviour
                 }
             }
         }
-        //txtPower.text = characterStatMM.GetCharacterPower(id).ToString();
+
+        txtPower.text = playerCharacterManager.GetCharacterPower(id).ToString();
 
         foreach (var obj in avatars)
         {
@@ -232,6 +234,7 @@ public class CharacterUI : MonoBehaviour
     public void ShowArmorStatTooltipUI(string id)
     {
         currentArmorUI.gameObject.SetActive(true);
+        currentArmorUI.CurrentCharacterID = currentCharacter;
     }
 
     public void ShowBackgroundDetectTrigger(bool value)

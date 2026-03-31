@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
+using static UnityEditor.Progress;
 
 
 public class CharacterArmorCategoryUI : MonoBehaviour
 {
     [SerializeField] private Button btnClose;
 
-    [SerializeField] private GameObject prefabsUI;
+    [SerializeField] private ArmorCategoryUI prefabsUI;
     [SerializeField] private GameObject content;
 
     [SerializeField] private List<ArmorPartToggle> toggles;
@@ -16,7 +17,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     [Inject] private GameDataBase gameDataBase;
     [Inject] private InventoryManager inventory;
 
-    private List<GameObject> armors = new();
+    private List<ArmorCategoryUI> armors = new();
 
     private void Awake()
     {
@@ -34,12 +35,14 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     private void OnEnable()
     {
         UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
+        UIEvent.OnUpdateSingleArmorPart += UpdateSingleUI;
     }
 
 
     private void OnDisable()
     {
-        UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
+        UIEvent.OnClickArmorIconCatergory -= UpdateCategoryArmor;
+        UIEvent.OnUpdateSingleArmorPart -= UpdateSingleUI;
     }
     private void OnDestroy()
     {
@@ -52,10 +55,70 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         {
             var obj = Instantiate(prefabsUI, content.transform);
             var armorConfig = gameDataBase.GetItemConfig(armor.TemplateID);
-            Sprite avatar = armor.Equip != "None" ? gameDataBase.GetCharacterConfig(armor.Equip).Icon : null;
-            obj.GetComponent<ArmorCategoryUI>().Init(armor.UUID, armor.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armor.Rare), avatar, armor.Level, armorConfig.Armor.Part);
-            obj.SetActive(false);
+            Sprite avatar = armor.Equip != "" ? gameDataBase.GetCharacterConfig(armor.Equip).Icon : null;
+            obj.Init(armor.UUID, armor.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(armor.Rare), avatar, armor.Level, armorConfig.Armor.Part);
+            obj.gameObject.SetActive(false);
             armors.Add(obj);
+        }
+    }
+
+    private void RefreshUI()
+    {
+        var inventoryArmors = inventory.Armors;
+
+        for(int i = 0; i < inventoryArmors.Count; i++)
+        {
+            var item = inventoryArmors[i];
+
+            ArmorCategoryUI armorUI;
+
+            if(i < armors.Count)
+            {
+                armorUI = armors[i];
+                armorUI.gameObject.SetActive(false);
+            } 
+            else
+            {
+                var obj = Instantiate(prefabsUI, content.transform);
+                armorUI = obj.GetComponent<ArmorCategoryUI>();
+                armorUI.gameObject.SetActive(false);
+                armors.Add(obj);
+            }
+
+            // Init data
+            var armorConfig = gameDataBase.GetItemConfig(item.TemplateID);
+            Sprite avatar = item.Equip != "" ? gameDataBase.GetCharacterConfig(item.Equip).Icon : null;
+            armorUI.Init(item.UUID, item.Rare, armorConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), avatar, item.Level, armorConfig.Armor.Part);
+        }
+
+        for (int i = inventoryArmors.Count; i < armors.Count; i++)
+        {
+            armors[i].gameObject.SetActive(false);
+        }
+
+    }
+
+    public void UpdateSingleUI(string itemUUID)
+    {
+        var targetUI = armors.Find(ui => ui.ID == itemUUID);
+
+        if(targetUI != null)
+        {
+            var itemData = inventory.GetArmor(itemUUID);
+
+            if (itemData == null) return;
+
+            var armorConfig = gameDataBase.GetItemConfig(itemData.TemplateID);
+            Sprite avatar = itemData.Equip != "" ? gameDataBase.GetCharacterConfig(itemData.Equip).Icon : null;
+            targetUI.Init(
+                itemData.UUID,
+                itemData.Rare,
+                armorConfig.Icon,
+                gameDataBase.GetBGItemByRare(itemData.Rare),
+                avatar,
+                itemData.Level,
+                armorConfig.Armor.Part
+            );
         }
     }
     
@@ -90,14 +153,18 @@ public class CharacterArmorCategoryUI : MonoBehaviour
 
     private void GetArmorByPart(ArmorPart part)
     {
-        foreach(var armor in armors)
+        for(int i = 0; i < armors.Count; i++)
         {
-            ArmorCategoryUI armorUI = armor.GetComponent<ArmorCategoryUI>();
-            if(armorUI.Part == part)
+            if (i >= inventory.Armors.Count) continue;
+
+            ArmorCategoryUI armorUI = armors[i];
+
+            if (armorUI.Part == part)
             {
-                armor.gameObject.SetActive(true);
+                armorUI.gameObject.SetActive(true);
             }
-        }
+
+        }    
     }
 
     private void DeActiveAllObjectInContent()
