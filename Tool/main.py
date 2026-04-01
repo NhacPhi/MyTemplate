@@ -1,5 +1,6 @@
 from src import Generate_Hash_String
 from src.build_configs import ItemConfigBuilder, CharacterConfigBuilder
+from src.build_character_config import CharacterUpdateLeveConfig
 from src.build_narrative import ActorConfigBuilder, DialogueConfigBuilder, QuestLineConfigBuilder
 import config
 import os
@@ -14,6 +15,8 @@ def main():
     config_path = os.path.join(config.INPUT_FOLDER, config.GAME_CONFIG_FILE)
     item_config = ItemConfigBuilder(config_path)
     item_config.run()
+    level_config = CharacterUpdateLeveConfig(config_path)
+    level_config.run()
 
     character_config = CharacterConfigBuilder(config_path)
     character_config.run()

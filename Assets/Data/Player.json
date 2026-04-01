@@ -207,7 +207,7 @@
         "template_id": "Ninefold_Staff",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "TangSanZang"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
@@ -221,7 +221,7 @@
         "template_id": "Nimbus_Cloud",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": "TangSanZang"
+        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
@@ -511,8 +511,9 @@
       {
         "id": "SunWukong",
         "level": 1,
-        "exp": 900,
-        "boot_stat": 1,
+        "exp": 10,
+        "ascension_tier": 0,
+        "boot_stat": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "armors": [
           {
@@ -545,8 +546,9 @@
         "id": "TangSanZang",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
         "armors": [
           {
             "id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -565,12 +567,12 @@
             "type": "Ring"
           },
           {
-            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
-            "type": "Helmet"
-          },
-          {
             "id": "1f8fad5b-d9cb-469f-a165-75867728950e",
             "type": "Chestplate"
+          },
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
           }
         ]
       },
@@ -578,6 +580,7 @@
         "id": "ZhuBaJie",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "armors": []
@@ -586,6 +589,7 @@
         "id": "ShaWujing",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
         "armors": []
@@ -594,6 +598,7 @@
         "id": "ThirdPrinceNezha",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "armors": []
@@ -602,6 +607,7 @@
         "id": "LittleWhiteDragon",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
         "weapon": "",
         "armors": []
@@ -610,6 +616,7 @@
         "id": "BullDemonKing",
         "level": 1,
         "exp": 0,
+        "ascension_tier": 0,
         "boot_stat": 1,
         "weapon": "",
         "armors": []

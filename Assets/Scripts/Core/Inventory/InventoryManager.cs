@@ -62,6 +62,11 @@ public class InventoryManager
         return true;
     }
 
+    public ItemSaveData GetItem(string id)
+    {
+        return _save.Player.Inventory.GetItem(id);
+    }
+
     public int GetItemQuantity(string itemID)
     {
         var existingItem = _save.Player.Inventory.Items.Find(item => item.ID == itemID);

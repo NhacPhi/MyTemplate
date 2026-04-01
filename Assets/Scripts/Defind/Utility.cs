@@ -56,6 +56,17 @@ public static class Utility
         return 1800 + 1000 * (level - 1) + 600 * (level - 1) * (level - 1);
     }
 
+    public static string GetExpConfigByCharacterRare(CharacterRare rare)
+    {
+        switch(rare)
+        {
+            case CharacterRare.R: return "Curve_R";
+            case CharacterRare.SR: return "Curve_SR";
+            case CharacterRare.SSR: return "Curve_SSR";
+            case CharacterRare.UR: return "Curve_UR";
+        }
+        return "";
+    }
     //Exp to upgrade
     //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
     public static int GetStatGrowthLevel(int level, float growth)

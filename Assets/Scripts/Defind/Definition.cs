@@ -16,7 +16,7 @@ public static class Definition
     public readonly static Color32 UncommonColor = new Color32(31, 194, 245, 255);
     public readonly static Color32 CommonColor = new Color32(162, 209, 233, 255);
 
-    public static int CharacterMaxLevel = 10;
+    public static int CharacterMaxLevel = 100;
 }
  
 public enum Rare

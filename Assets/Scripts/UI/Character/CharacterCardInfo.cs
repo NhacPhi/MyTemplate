@@ -4,6 +4,7 @@ using TMPro;
 using VContainer;
 using System.Collections.Generic;
 using Tech.Logger;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class CharacterCardInfo : CharacterCard
 {
@@ -55,8 +56,9 @@ public class CharacterCardInfo : CharacterCard
 
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
-        txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString() ;
-        //iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
+        txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
+
+        iconRare.sprite = gameDataBase.GetCharacterRareIcon(characterConfig.Rare);
 
         txtHP.text = characterProfile.GetTotalStat(StatType.HP).ToString();
         txtATK.text = characterProfile.GetTotalStat(StatType.ATK).ToString();

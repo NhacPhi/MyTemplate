@@ -66,6 +66,17 @@ public class CharacterConfig
         LogCommon.LogWarning($"{type} not Found");
         return default;
     }
+
+    public int GetUpdateStat(StatType type)
+    {
+        if (Upgrades.TryGetValue(type, out int value))
+        {
+            return value;
+        }
+
+        LogCommon.LogWarning($"{type} not Found");
+        return default;
+    }
 }
 [Serializable]
 public class AttributeComponent

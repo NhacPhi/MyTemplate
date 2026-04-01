@@ -15,6 +15,8 @@ public class GameDataBase
     private Dictionary<string, CharacterConfig> CharacterConfigs = new Dictionary<string, CharacterConfig>();
     private Dictionary<string, BattleConfig> BattleConfigs = new Dictionary<string, BattleConfig>();
     private Dictionary<string, EffectConfig> EffectConfigs = new Dictionary<string, EffectConfig>();
+    private Dictionary<string, AscensionConfig> AscensionConfigs  = new Dictionary<string, AscensionConfig>();
+    private Dictionary<string, ExpConfig> ExpConfigs = new Dictionary<string, ExpConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -23,6 +25,10 @@ public class GameDataBase
     private const string BattleConfigAddress = "BattleConfig";
 
     private const string EffectConfigAddress = "EffectConfig";
+
+    private const string AscensionAddress = "AscensionConfig";
+
+    private const string ExpConfigAddress = "ExpConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
@@ -32,15 +38,27 @@ public class GameDataBase
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(BattleConfigAddress, token: cancellationToken),
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(EffectConfigAddress, token: cancellationToken)
         );
+
+        var (expText, ascensionText) = await UniTask.WhenAll(
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ExpConfigAddress, token: cancellationToken),
+             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(AscensionAddress, token: cancellationToken)
+        );
+
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
         CharacterConfigs = Json.DeserializeObject<Dictionary<string, CharacterConfig>>(characterText.text);
         BattleConfigs = Json.DeserializeObject<Dictionary<string, BattleConfig>>(battleText.text);
         EffectConfigs =  Json.DeserializeObject<Dictionary<string,EffectConfig>>(effectText.text);
 
+        ExpConfigs = Json.DeserializeObject<Dictionary<string, ExpConfig>>(expText.text);
+        AscensionConfigs = Json.DeserializeObject<Dictionary<string, AscensionConfig>>(ascensionText.text);
+
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(BattleConfigAddress);
         AddressablesManager.Instance.RemoveAsset(EffectConfigAddress);
+
+        AddressablesManager.Instance.RemoveAsset(ExpConfigAddress);
+        AddressablesManager.Instance.RemoveAsset(AscensionAddress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
         var atlasAddresses = new HashSet<string>();
@@ -55,6 +73,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_big_icon_character");
         atlasAddresses.Add("Atlas_image_character");
         atlasAddresses.Add("Atlas_skill_ui");
+        atlasAddresses.Add("Atlas_icon_character_rare");
 
 
         //foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
@@ -127,6 +146,23 @@ public class GameDataBase
         return string.Empty;
     }
 
+    public string GetCharacterRareID(CharacterRare rare)
+    {
+        switch (rare)
+        {
+            case CharacterRare.R:
+                return "R_Icon";
+            case CharacterRare.SR:
+                return "SR_Icon";
+            case CharacterRare.SSR:
+                return "SSR_Icon";
+            case CharacterRare.UR:
+                return "UR_Icon";
+        }
+
+        return string.Empty;
+    }
+
     public ItemConfig GetItemConfig(string key)
     {
         ItemConfigs.TryGetValue(key, out ItemConfig item);
@@ -150,11 +186,29 @@ public class GameDataBase
 
         return atlasProvider.GetSprite("Atlas_icon_game", spriteID);
     }
+    public Sprite GetCharacterRareIcon(CharacterRare rare)
+    {
+        string spriteID = GetCharacterRareID(rare);
+
+        return atlasProvider.GetSprite("Atlas_icon_character_rare", spriteID);
+    }
 
     public EffectConfig GetEffectConfig(string key)
     {
         EffectConfigs.TryGetValue(key, out EffectConfig effectConfig);
         return effectConfig;
+    }
+
+    public ExpConfig GetExpConfig(string key)
+    {
+        ExpConfigs.TryGetValue(key, out ExpConfig expConfig);
+        return expConfig;
+    }
+
+    public AscensionConfig GetAscensionConfig(string key)
+    {
+        AscensionConfigs.TryGetValue(key, out AscensionConfig ascensionConfig);
+        return ascensionConfig;
     }
 }
 

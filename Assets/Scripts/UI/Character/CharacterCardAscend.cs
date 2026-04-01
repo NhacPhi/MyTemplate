@@ -13,7 +13,8 @@ public class CharacterCardAscend : CharacterCard
     [SerializeField] private TextMeshProUGUI txtNumberShard;
     [SerializeField] private TextMeshProUGUI txtCoin;
 
-    [Inject] private SaveSystem save;
+    [Inject] private PlayerCharacterManager playerCharacterManager;
+    [Inject] private InventoryManager inventoryManager;
     [Inject] private GameDataBase gameDataBase;
 
     private void Awake()
@@ -29,20 +30,22 @@ public class CharacterCardAscend : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCharacterCardAscend(save.Player.Roster.GetIDOfFirstCharacter().ID);
+        UpdateCharacterCardAscend(playerCharacterManager.GetFirstCharacter().SaveData.ID);
     }
 
     public void UpdateCharacterCardAscend(string id)
     {
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = save.Player.Roster.GetCharacter(id);
+        CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
-        //iconRare.sprite = gameDataBase.GetCharacterConfig(id)(config.Rare).Icon;
 
-        //iconShard.sprite = gameDataBase.GetItemSOByID<ShardSO>(ItemType.Shard, shardID).Icon;
-        //txtNumberShard.text = inventoryManager.Player.GetItem(shardID).Quantity.ToString() + "/" + Utility.GetShardNeedToUpgradeAscend(data.BoostStat + 1);
+        iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
+
+        iconShard.sprite = config.Icon;
+        txtNumberShard.text = inventoryManager.GetItem(id).Quantity.ToString() + "/" + Utility.GetShardNeedToUpgradeAscend(data.BoostStat + 1);
+
         txtCoin.text = Utility.GetCoinNeedToAscendCharacter(data.BoostStat + 1).ToString();
     }
 }

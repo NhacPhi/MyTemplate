@@ -25,8 +25,11 @@ public class CharacterCardCultivate : CharacterCard
     [SerializeField] private TextMeshProUGUI txtCoin;
     [SerializeField] private TextMeshProUGUI txtCoinUpdateLv10;
 
-    [Inject] private SaveSystem save;
+    [Inject] private InventoryManager inventory;
     [Inject] private GameDataBase gameDataBase;
+    [Inject] private PlayerCharacterManager playerCharacterManager;
+
+    private readonly string[] EXP_ITEM_IDS = { "common_exp", "fine_exp", "rare_exp", "supreme_exp" };
 
     private void Awake()
     {
@@ -35,16 +38,9 @@ public class CharacterCardCultivate : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < exps.Count; i++)
-        {
-            //ExpConfig expConfig = gameDataBase.ExpConfig[i];
-            //ItemBaseSO expSO = gameDataBase.GetItemSOByID<ItemBaseSO>(ItemType.Exp, expConfig.UUID);
-            //ItemSaveData ItemSaveData = inventoryManager.Player.GetItem(expConfig.UUID);
-            //exps[i].Init(expConfig.UUID, expConfig.Rare, expSO.Icon, gameDataBase.GetRareBG(expConfig.Rare), ItemSaveData.Quantity);
-            //exps[i].CanClick = false;
-        }
+        RefrestUI();
 
-        UpdateCharacterCardCultivate(save.Player.Roster.GetIDOfFirstCharacter().ID);
+        UpdateCharacterCardCultivate(playerCharacterManager.GetFirstCharacter().SaveData.ID);
     }
 
 
@@ -53,47 +49,68 @@ public class CharacterCardCultivate : CharacterCard
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardCultivate;
     }
 
+    public void RefrestUI()
+    {
+
+        for (int i = 0; i < EXP_ITEM_IDS.Length; i++)
+        {
+            string expItemID = EXP_ITEM_IDS[i];
+
+            ItemUI slotUI;
+            var expConfig = gameDataBase.GetItemConfig(expItemID);
+            var expSave = inventory.GetItem(expItemID);
+            var quantity = inventory.GetItemQuantity(expItemID);
+
+            exps[i].Init(expSave.ID, expConfig.Rarity, expConfig.Icon, gameDataBase.GetBGItemByRare(expConfig.Rarity), quantity);
+            exps[i].CanClick = false;
+        }
+    }
+
     public void UpdateCharacterCardCultivate(string id)
     {
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = save.Player.Roster.GetCharacter(id);
+        CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
+
         //CharacterUpgradeConfig upgrade = gameDataBase.GetCharacterUpgradeConfig(id);
         //CharacterStatConfig stat = gameDataBase.GetCharacterStatConfig(id);
+        // Base info
+        txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
 
-        //txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
-        //txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
-        //iconRare.sprite = gameDataBase.GetCharacterRareSO(config.Rare).Icon;
+        txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
 
-        //int ExpConfig = Utility.GetCharacterExpByLevel(data.Level);
-        //txtCurrentExp.text = data.Exp.ToString() + "/" + ExpConfig.ToString();
+        iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
+        var expTier = Utility.GetExpConfigByCharacterRare(config.Rare);
 
-        //sliderExp.maxValue = ExpConfig;
-        //sliderExp.value = data.Exp;
+        int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
+        txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
+
+        sliderExp.maxValue = expNeedToUpdate;
+        sliderExp.value = data.Exp;
 
 
-        //float currentHP = stat.HP + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthHP);
-        //float nextHP = stat.HP + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthHP);
+        int currentHP = config.GetStat(StatType.HP) + Utility.GetStatGrowthLevel(data.Level, config.GetUpdateStat(StatType.HP));
+        float nextHP = config.GetStat(StatType.HP) + Utility.GetStatGrowthLevel(data.Level + 1, config.GetUpdateStat(StatType.HP));
 
-        //float currentATK = stat.ATK + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthATK);
-        //float nextATK = stat.ATK + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthATK);
+        float currentATK = config.GetStat(StatType.ATK) + Utility.GetStatGrowthLevel(data.Level, config.GetUpdateStat(StatType.ATK));
+        float nextATK = config.GetStat(StatType.ATK) + Utility.GetStatGrowthLevel(data.Level + 1, config.GetUpdateStat(StatType.ATK));
 
-        //float currentDEF = stat.DEF + Utility.GetStatGrowthLevel(data.Level, upgrade.GrowthDEF);
-        //float nextDEF = stat.DEF + Utility.GetStatGrowthLevel(data.Level + 1, upgrade.GrowthDEF);
+        float currentDEF = config.GetStat(StatType.DEF) + Utility.GetStatGrowthLevel(data.Level, config.GetUpdateStat(StatType.DEF));
+        float nextDEF = config.GetStat(StatType.DEF) + Utility.GetStatGrowthLevel(data.Level + 1, config.GetUpdateStat(StatType.DEF));
 
-        //txtCurrentHP.text = currentHP.ToString();
-        //txtCurrentATK.text = currentATK.ToString();
-        //txtCurrentDEF.text = currentDEF.ToString();
+        txtCurrentHP.text = currentHP.ToString();
+        txtCurrentATK.text = currentATK.ToString();
+        txtCurrentDEF.text = currentDEF.ToString();
 
-        //if (data.Level < 10)
-        //{
-        //    txtNextHP.text = nextHP.ToString();
-        //    txtNextATK.text = nextATK.ToString();
-        //    txtNextDEF.text = nextDEF.ToString();
-        //}
-        //else
-        //{
-        //    txtNextHP.text = txtNextATK.text = txtNextDEF.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
-        //}
+        if (data.Level < 100)
+        {
+            txtNextHP.text = nextHP.ToString();
+            txtNextATK.text = nextATK.ToString();
+            txtNextDEF.text = nextDEF.ToString();
+        }
+        else
+        {
+            txtNextHP.text = txtNextATK.text = txtNextDEF.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
+        }
 
         txtCoin.text = Utility.GetCoinNeedToUpgradeCacultivate(data.Level + 1).ToString();
         txtCoinUpdateLv10.text = (Utility.GetCoinNeedToUpgradeCacultivate(10) - Utility.GetCoinNeedToUpgradeCacultivate(data.Level)).ToString();
