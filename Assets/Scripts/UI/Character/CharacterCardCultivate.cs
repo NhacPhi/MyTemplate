@@ -3,12 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 using System.Collections.Generic;
+using static SixLabors.ImageSharp.Metadata.Profiles.Exif.EncodedString;
 
 public class CharacterCardCultivate : CharacterCard
 {
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private Image iconRare;
+    [SerializeField] private UpgradeUI[] upgrades;
 
     [SerializeField] private TextMeshProUGUI txtCurrentExp;
     [SerializeField] private Slider sliderExp;
@@ -21,24 +23,23 @@ public class CharacterCardCultivate : CharacterCard
     [SerializeField] private TextMeshProUGUI txtNextATK;
     [SerializeField] private TextMeshProUGUI txtNextDEF;
 
-    [SerializeField] private List<ItemUI> exps;
-    [SerializeField] private TextMeshProUGUI txtCoin;
-    [SerializeField] private TextMeshProUGUI txtCoinUpdateLv10;
+    [SerializeField] private CharacterUpdateLevel UpdateLevelHub;
+    [SerializeField] private CharacterAscentionUpgrade AscentionHub;
 
     [Inject] private InventoryManager inventory;
     [Inject] private GameDataBase gameDataBase;
     [Inject] private PlayerCharacterManager playerCharacterManager;
 
-    private readonly string[] EXP_ITEM_IDS = { "common_exp", "fine_exp", "rare_exp", "supreme_exp" };
+    private string currentCharacter = string.Empty;
 
     private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardCultivate;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        RefrestUI();
+        UpdateLevelHub.RefreshUI();
 
         UpdateCharacterCardCultivate(playerCharacterManager.GetFirstCharacter().SaveData.ID);
     }
@@ -49,37 +50,32 @@ public class CharacterCardCultivate : CharacterCard
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardCultivate;
     }
 
-    public void RefrestUI()
-    {
-
-        for (int i = 0; i < EXP_ITEM_IDS.Length; i++)
-        {
-            string expItemID = EXP_ITEM_IDS[i];
-
-            ItemUI slotUI;
-            var expConfig = gameDataBase.GetItemConfig(expItemID);
-            var expSave = inventory.GetItem(expItemID);
-            var quantity = inventory.GetItemQuantity(expItemID);
-
-            exps[i].Init(expSave.ID, expConfig.Rarity, expConfig.Icon, gameDataBase.GetBGItemByRare(expConfig.Rarity), quantity);
-            exps[i].CanClick = false;
-        }
-    }
 
     public void UpdateCharacterCardCultivate(string id)
     {
+        currentCharacter = id;
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
         CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
 
-        //CharacterUpgradeConfig upgrade = gameDataBase.GetCharacterUpgradeConfig(id);
-        //CharacterStatConfig stat = gameDataBase.GetCharacterStatConfig(id);
         // Base info
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
 
         txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
-        var expTier = Utility.GetExpConfigByCharacterRare(config.Rare);
+        var expTier = Utility.GetExpConfigIDByCharacterRare(config.Rare);
+
+        for (int i = 0; i < upgrades.Length; i++)
+        {
+            if (i < data.StarUp)
+            {
+                upgrades[i].ActiveLayer(1);
+            }
+            else
+            {
+                upgrades[i].ActiveLayer(0);
+            }
+        }
 
         int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
         txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
@@ -112,8 +108,21 @@ public class CharacterCardCultivate : CharacterCard
             txtNextHP.text = txtNextATK.text = txtNextDEF.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
         }
 
-        txtCoin.text = Utility.GetCoinNeedToUpgradeCacultivate(data.Level + 1).ToString();
-        txtCoinUpdateLv10.text = (Utility.GetCoinNeedToUpgradeCacultivate(10) - Utility.GetCoinNeedToUpgradeCacultivate(data.Level)).ToString();
+        if (AscentionHub.IsShowCharactterAscentionUpgrade(id))
+        {
+            UpdateLevelHub.gameObject.SetActive(false);
+            AscentionHub.gameObject.SetActive(true);
+
+            AscentionHub.CharacterAscentionUpdate(id);
+        }
+        else
+        {
+            UpdateLevelHub.gameObject.SetActive(true);
+            AscentionHub.gameObject.SetActive(false);
+
+            UpdateLevelHub.UpdateCharacterUpdateLevel(id);
+        }
+
     }
 
 }

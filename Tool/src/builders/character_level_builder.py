@@ -31,9 +31,9 @@ class CharacterUpdateLevelBuilder(BaseBuilder):
 
                 cost_list = []
 
-                gold_cost = int(row['Cost_Gold'])
-                if gold_cost > 0:
-                    cost_list.append(CostItem(id="gold", quantity=gold_cost))
+                coin_cost = int(row['Cost_Coin'])
+                if coin_cost > 0:
+                    cost_list.append(CostItem(id="Coin", quantity=coin_cost))
 
                 if pd.notna(row['ItemID_01']):
                     item_id = str(row['ItemID_01']).strip()

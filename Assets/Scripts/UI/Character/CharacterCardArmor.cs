@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using VContainer;
+using UnityEngine.UI;
 
 public class CharacterCardArmor : CharacterCard
 {
@@ -19,6 +20,11 @@ public class CharacterCardArmor : CharacterCard
 
     [SerializeField] private List<CharacterArmorUI> armors;
 
+    [SerializeField] private Button btnQuickUnequip;
+    [SerializeField] private Button btnQuickEquip;
+
+    [SerializeField] private List<SetBonusUI> setBonusUIs; 
+
     [Inject] private PlayerCharacterManager playerCharacterManager;
     [Inject] private InventoryManager inventory;
     [Inject] private GameDataBase gameDataBase;
@@ -32,6 +38,16 @@ public class CharacterCardArmor : CharacterCard
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardArmor;
         UIEvent.OnSelectCharacterArmorUI += SelectCharacterArmorUI;
+
+        if (btnQuickUnequip != null)
+        {
+            btnQuickUnequip.onClick.AddListener(OnBtnQuickUnequipClicked);
+        }
+
+        if(btnQuickEquip != null)
+        {
+            btnQuickEquip.onClick.AddListener(OnBtnQuickEquipClicked);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -48,6 +64,9 @@ public class CharacterCardArmor : CharacterCard
     {
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardArmor;
         UIEvent.OnSelectCharacterArmorUI -= SelectCharacterArmorUI;
+
+        btnQuickEquip.onClick.RemoveAllListeners();
+        btnQuickUnequip.onClick.RemoveAllListeners();
     }
 
     public void UpdateCharacterCardArmor(string id)
@@ -56,7 +75,8 @@ public class CharacterCardArmor : CharacterCard
         float hp, atk, def, spd, defShred, critRate, critDMG, penetration, critDMGRes;
         hp = atk = def = spd = defShred = critRate = critDMG = penetration = critDMGRes = 0;
 
-        var characterSaveData = playerCharacterManager.GetCharacter(id).SaveData;
+        var characterProfile = playerCharacterManager.GetCharacter(id);
+        var characterSaveData = characterProfile.SaveData;
 
         ArmorSaveDatas.Clear();
         if (characterSaveData.Armors.Count > 0)
@@ -89,8 +109,6 @@ public class CharacterCardArmor : CharacterCard
                 }
             }
 
-            var characterProfile =  playerCharacterManager.GetCharacter(id);
-
             txtHP.text = characterProfile.GetTotalArmorConstantStat(StatType.HP).ToString();
             txtATK.text = characterProfile.GetTotalArmorConstantStat(StatType.ATK).ToString();
             txtDEF.text = characterProfile.GetTotalArmorConstantStat(StatType.DEF).ToString();
@@ -120,7 +138,23 @@ public class CharacterCardArmor : CharacterCard
             txtCritDGMRes.text = critDMGRes.ToString();
         }
 
+        foreach(var ui in setBonusUIs)
+        {
+            ui.gameObject.SetActive(false);
+        }
+        var setBonusConfigs = characterProfile.GetSetBonusActive();
+        if(setBonusConfigs!= null )
+        {
+            for(int i = 0; i < setBonusConfigs.Count; i++)
+            {
+                var name = LocalizationManager.Instance.GetLocalizedValue(setBonusConfigs[i].Name);
+                var content = string.Format(LocalizationManager.Instance.GetLocalizedValue("UI_SET_BONUS_CONTENT"),
+                    Utility.GetContextByStatType(setBonusConfigs[i].Stat), Utility.GetConvertStatValueToString(setBonusConfigs[i].Value, setBonusConfigs[i].Modifier));
+                setBonusUIs[i].UpdateSetBonusUI(name, content);
 
+                setBonusUIs[i].gameObject.SetActive(true);
+            }
+        }
     }
 
 
@@ -156,6 +190,32 @@ public class CharacterCardArmor : CharacterCard
         foreach(var armorUI in armors)
         {
             armorUI.OnSwitchStatusBoder(false);
+        }
+    }
+
+    private void OnBtnQuickUnequipClicked()
+    {
+        if (string.IsNullOrEmpty(currentCharacterID)) return;
+
+        var character = playerCharacterManager.GetCharacter(currentCharacterID);
+        if (character != null)
+        {
+            character.UnequipAllArmors();
+            UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacterID);
+            ResetUI();
+        }
+    }
+
+    private void OnBtnQuickEquipClicked()
+    {
+        if (string.IsNullOrEmpty(currentCharacterID)) return;
+
+        var character = playerCharacterManager.GetCharacter(currentCharacterID);
+        if (character != null)
+        {
+            character.QuickEquipArmor();
+            UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacterID);
+            ResetUI();
         }
     }
 }

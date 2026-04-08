@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 
 
@@ -21,9 +22,11 @@ public class InventoryUI : MonoBehaviour
 
     private List<GameObject> weapons = new();
     private List<GameObject> items = new();
-    private List<GameObject> matterials = new();
+    //private List<GameObject> matterials = new();
     private List<GameObject> armors = new();
     private List<GameObject> shards = new();
+
+    private Dictionary<ItemType, List<GameObject>> materials_dic = new();
 
     private Dictionary<ItemType, List<GameObject>> dictionaryObject = new();
 
@@ -44,19 +47,20 @@ public class InventoryUI : MonoBehaviour
     {
         UIEvent.OnSelectToggleInventoryTap += OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem += OnClickItemUI;
+        //_inventoryManager.OnInventoryChanged += RefreshData;
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectToggleInventoryTap -= OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem -= OnClickItemUI;
+        //_inventoryManager.OnInventoryChanged -= RefreshData;
     }
     public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase)
     {
         _inventoryManager = inventoryManager;
-        _gameDataBase = gameDataBase;
 
-        _inventoryManager.OnInventoryChanged += RefreshData;
+        _gameDataBase = gameDataBase;
 
         RefreshData(); // Gọi lần đầu để vẽ UI
 
@@ -92,12 +96,21 @@ public class InventoryUI : MonoBehaviour
                 obj.SetActive(false);
 
                 if (item.Type == ItemType.Food) items.Add(obj);
-                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp) matterials.Add(obj);
+                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp)
+                {
+                    if (!materials_dic.ContainsKey(item.Type))
+                    {
+                        materials_dic[item.Type] = new List<GameObject>();
+                    }
+                    materials_dic[item.Type].Add(obj);
+
+                    //matterials.Add(obj);
+                }
                 else if (item.Type == ItemType.Shard) shards.Add(obj);
             }
         }
         dictionaryObject[ItemType.Item] = items;
-        dictionaryObject[ItemType.Material] = matterials;
+        dictionaryObject[ItemType.Material] = materials_dic.Values.SelectMany(list => list).ToList();
         dictionaryObject[ItemType.Shard] = shards;
 
         // 4. VẼ ARMORS
@@ -138,9 +151,15 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        foreach (var item in listItems)
+        for (int i = 0; i < listItems.Count; i++)
         {
-            item.SetActive(true);
+            var item = listItems[i];
+            if (item != null)
+            {
+                item.SetActive(true);
+                // Ép vị trí của object trên Hierarchy giống hệt vị trí của nó trong List
+                item.transform.SetSiblingIndex(i);
+            }
         }
 
         weaponCardInfo.SetActive(type == ItemType.Weapon);
@@ -162,6 +181,7 @@ public class InventoryUI : MonoBehaviour
         if (listItem == null) return;
         foreach (var item in listItem)
         {
+            if (item == null) continue; 
             var obj = item.GetComponent<InventoryItemUI>();
             obj.OnSwitchStatusBoder(false);
             if (obj.ID == id)

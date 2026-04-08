@@ -36,7 +36,7 @@ public class CurrencyManager
         Save();
         currencies[type] -= amount;
 
-        UIEvent.OnCurrencyChanged(type, amount); 
+        UIEvent.OnCurrencyChanged(type, currencies[type]); 
         return true;
     }
 

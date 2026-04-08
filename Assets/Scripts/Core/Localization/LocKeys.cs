@@ -149,6 +149,12 @@ public static class LocKeys
 
     public const long UI_SAVE = 2171549745;
 
+    public const long STR_SET_BONUS = 840391099;
+
+    public const long UI_SET_BONUS_CONTENT = 2455673587;
+
+    public const long UI_SET_BONUS = 1536794836;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

@@ -19,6 +19,8 @@ public class CharacterArmorCategoryUI : MonoBehaviour
 
     private List<ArmorCategoryUI> armors = new();
 
+    private ArmorPart currentPart = ArmorPart.Helmet;
+
     private void Awake()
     {
         UIEvent.OnUpdateCharacterCategoryArmor += UpdateCategoryArmorAndToggles;
@@ -36,6 +38,8 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     {
         UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
         UIEvent.OnUpdateSingleArmorPart += UpdateSingleUI;
+        UIEvent.OnSelectCharacterAvatar += UpdateCurrentArmorPart;
+        RefreshUI();
     }
 
 
@@ -43,6 +47,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     {
         UIEvent.OnClickArmorIconCatergory -= UpdateCategoryArmor;
         UIEvent.OnUpdateSingleArmorPart -= UpdateSingleUI;
+        UIEvent.OnSelectCharacterAvatar -= UpdateCurrentArmorPart;
     }
     private void OnDestroy()
     {
@@ -130,6 +135,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
 
     private void UpdateCategoryArmor(ArmorPart part)
     {
+        currentPart = part;
         DeActiveAllObjectInContent();
         GetArmorByPart(part);
         // Force rebuild UI layout
@@ -174,5 +180,11 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         {
             obj.gameObject.SetActive(false);
         }
+    }
+
+    private void UpdateCurrentArmorPart(string id)
+    {
+        RefreshUI();
+        UpdateCategoryArmor(currentPart);
     }
 }

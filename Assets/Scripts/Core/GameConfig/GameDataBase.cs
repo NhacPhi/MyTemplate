@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Tech.Json;
 using Cysharp.Threading.Tasks;
@@ -17,6 +17,8 @@ public class GameDataBase
     private Dictionary<string, EffectConfig> EffectConfigs = new Dictionary<string, EffectConfig>();
     private Dictionary<string, AscensionConfig> AscensionConfigs  = new Dictionary<string, AscensionConfig>();
     private Dictionary<string, ExpConfig> ExpConfigs = new Dictionary<string, ExpConfig>();
+    private Dictionary<string, StarUpConfig> StarUpConfigs = new Dictionary<string, StarUpConfig>();
+    private Dictionary<string, SetBonusConfig> SetBonusConfigs = new Dictionary<string, SetBonusConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -29,6 +31,10 @@ public class GameDataBase
     private const string AscensionAddress = "AscensionConfig";
 
     private const string ExpConfigAddress = "ExpConfig";
+
+    private const string StarUpConfigAddress = "StarUpConfig";
+
+    private const string SetBousConfigAdress = "SetBonusConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
@@ -39,9 +45,11 @@ public class GameDataBase
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(EffectConfigAddress, token: cancellationToken)
         );
 
-        var (expText, ascensionText) = await UniTask.WhenAll(
+        var (expText, ascensionText, starUpText, setBonusText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ExpConfigAddress, token: cancellationToken),
-             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(AscensionAddress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(AscensionAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(StarUpConfigAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SetBousConfigAdress, token: cancellationToken)
         );
 
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
@@ -51,6 +59,8 @@ public class GameDataBase
 
         ExpConfigs = Json.DeserializeObject<Dictionary<string, ExpConfig>>(expText.text);
         AscensionConfigs = Json.DeserializeObject<Dictionary<string, AscensionConfig>>(ascensionText.text);
+        StarUpConfigs = Json.DeserializeObject<Dictionary<string, StarUpConfig>>(starUpText.text);
+        SetBonusConfigs = Json.DeserializeObject<Dictionary<string, SetBonusConfig>>(setBonusText.text);
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
@@ -59,6 +69,8 @@ public class GameDataBase
 
         AddressablesManager.Instance.RemoveAsset(ExpConfigAddress);
         AddressablesManager.Instance.RemoveAsset(AscensionAddress);
+        AddressablesManager.Instance.RemoveAsset(StarUpConfigAddress);
+        AddressablesManager.Instance.RemoveAsset(SetBousConfigAdress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
         var atlasAddresses = new HashSet<string>();
@@ -210,6 +222,20 @@ public class GameDataBase
         AscensionConfigs.TryGetValue(key, out AscensionConfig ascensionConfig);
         return ascensionConfig;
     }
+
+    public StarUpConfig GetStarUpConfig(string key)
+    {
+        StarUpConfigs.TryGetValue(key, out StarUpConfig starUpConfig);
+        return starUpConfig;
+    }
+
+    public SetBonusConfig GetSetBonusConfig(string key)
+    {
+        SetBonusConfigs.TryGetValue(key, out SetBonusConfig setBonusConfig);
+
+        return setBonusConfig;
+    }
+
 }
 
 

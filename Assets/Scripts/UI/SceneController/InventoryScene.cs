@@ -12,16 +12,20 @@ public class InventoryScene : WindowController
     [Inject] private CurrencyManager currencyMM;
     [Inject] private InventoryManager inventoryManager;
     [Inject] private GameDataBase gameDataBase;
+
+    [Inject] private SaveSystem save;
     private void Start()
     {
         btnExit.onClick.AddListener(OnClose);
         currencyMM.UpdateCurrency();
+        inventoryManager.SortAllByRare();
         inventory.Init(inventoryManager, gameDataBase);
     }
 
    public void OnClose()
     {
         uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
+        save.SaveDataToDisk(GameSaveType.All);
     }
 
     public void OnLoadInventory(ItemType type)

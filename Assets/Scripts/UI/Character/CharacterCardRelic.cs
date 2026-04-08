@@ -9,6 +9,7 @@ public class CharacterCardRelic : CharacterCard
 {
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
+    [SerializeField] private UpgradeUI[] upgrades;
 
     [SerializeField] private TextMeshProUGUI txtHP;
     [SerializeField] private TextMeshProUGUI txtATK;
@@ -132,6 +133,18 @@ public class CharacterCardRelic : CharacterCard
                 txtLevel.text = data.CurrentLevel.ToString();
                 txtHP.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
                 txtATK.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
+
+                for (int i = 0; i < upgrades.Length; i++)
+                {
+                    if (i < data.CurrentUpgrade)
+                    {
+                        upgrades[i].ActiveLayer(1);
+                    }
+                    else
+                    {
+                        upgrades[i].ActiveLayer(0);
+                    }
+                }
 
                 txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name) + " (Lv." + data.CurrentUpgrade + ")";
                 txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.UseDescription);

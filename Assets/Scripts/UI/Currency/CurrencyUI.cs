@@ -21,11 +21,11 @@ public class CurrencyUI : MonoBehaviour
     {
         switch(type)
         {
-            case CurrencyType.Energy: txtEnergy.text = amount.ToString();
+            case CurrencyType.Energy: txtEnergy.text = Utility.FormatCurrency(amount);
                 break;
-            case CurrencyType.Jade: txtJade.text = amount.ToString();
+            case CurrencyType.Jade: txtJade.text = Utility.FormatCurrency(amount);
                 break;
-            case CurrencyType.Coin: txtCoin.text = amount.ToString();
+            case CurrencyType.Coin: txtCoin.text = Utility.FormatCurrency(amount);
                 break;
             default: break;
         }

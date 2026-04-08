@@ -1,9 +1,18 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+
 public class EquipmentManager 
 {
     private Dictionary<EquipSlot, EquipmentData> _equippedItems = new Dictionary<EquipSlot, EquipmentData>();
 
     public IReadOnlyDictionary<EquipSlot, EquipmentData> EquippedItems => _equippedItems;
+
+    private SetBonusEvaluator _setBonusEvaluator;
+
+    public void Init(SetBonusEvaluator evaluator)
+    {
+        _setBonusEvaluator = evaluator;
+    }
 
     public EquipmentData Equip(EquipmentData newItem)
     {
@@ -47,10 +56,17 @@ public class EquipmentManager
             }
         }
 
+        var activeBonuses = _setBonusEvaluator.GetActiveSetBonuses(this);
+        if(activeBonuses != null)
+        {
+            total += activeBonuses.Where(b => b.Stat == statType && b.Modifier == ModifyType.Constant)
+                      .Sum(b => b.Value);
+        }
+
         return total;
     }
 
-    public float GetTotalPercenBonus(StatType statType)
+    public float GetTotalPercentBonus(StatType statType)
     {
         float total = 0f;
 
@@ -65,6 +81,22 @@ public class EquipmentManager
             }
         }
 
+        var activeBonuses = _setBonusEvaluator.GetActiveSetBonuses(this);
+
+        if(activeBonuses != null)
+        {
+            total += activeBonuses.Where(b => b.Stat == statType && b.Modifier == ModifyType.Percent)
+                      .Sum(b => b.Value);
+        }
+
         return total;
+    }
+
+    public List<SetBonusConfig> GetActiveSetBonuses()
+    {
+        if (_setBonusEvaluator == null) return new List<SetBonusConfig>();
+
+        // Gọi Evaluator để quét đồ đang mặc và trả về list config
+        return _setBonusEvaluator.GetActiveSetBonuses(this);
     }
 }

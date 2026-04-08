@@ -129,8 +129,12 @@ public class ArmorTooltipUI : MonoBehaviour
         mainstatUI.gameObject.transform.SetAsFirstSibling();
         mainstatUI.UpdateStat((int)mainstat.Value, armorSaveData.Level);
 
-        txtTitleSet.text = "ATK Set(0/6)";
-        txtDescriptionSet.text = "Increasece ATK by 20%";
+        var setBonusConfig = gameDataBase.GetSetBonusConfig(armorConfig.Armor.ArmorSet);
+
+        txtTitleSet.text = string.Format(LocalizationManager.Instance.GetLocalizedValue("STR_SET_BONUS"), setBonusConfig.Pieces);
+
+        txtDescriptionSet.text = string.Format(LocalizationManager.Instance.GetLocalizedValue("UI_SET_BONUS_CONTENT"), 
+            Utility.GetContextByStatType(setBonusConfig.Stat), Utility.GetConvertStatValueToString(setBonusConfig.Value, setBonusConfig.Modifier));
 
         UpdateButtonStates(armorSaveData, armorConfig.Armor.Part, CurrentCharacterID);
 

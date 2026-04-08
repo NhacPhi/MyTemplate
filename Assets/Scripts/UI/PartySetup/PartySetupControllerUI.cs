@@ -74,7 +74,7 @@ public class PartySetupControllerUI : MonoBehaviour
             var characterConfig = _gameData.GetItemConfig(character.ID);
 
             characterUIConfig.Init(character.ID, characterConfig.Rarity, characterConfig.Icon,
-                _gameData.GetBGItemByRare(characterConfig.Rarity), character.Level, character.BoostStat, this);
+                _gameData.GetBGItemByRare(characterConfig.Rarity), character.Level, character.StarUp, this);
 
             if(_activeUISlots.Values.FirstOrDefault(ui => ui.CharacterID == character.ID))
             {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using DG.Tweening;
@@ -56,7 +56,7 @@ public static class Utility
         return 1800 + 1000 * (level - 1) + 600 * (level - 1) * (level - 1);
     }
 
-    public static string GetExpConfigByCharacterRare(CharacterRare rare)
+    public static string GetExpConfigIDByCharacterRare(CharacterRare rare)
     {
         switch(rare)
         {
@@ -64,6 +64,59 @@ public static class Utility
             case CharacterRare.SR: return "Curve_SR";
             case CharacterRare.SSR: return "Curve_SSR";
             case CharacterRare.UR: return "Curve_UR";
+        }
+        return "";
+    }
+
+    public static string GetStarUpConfigIDByCharacterRare(CharacterRare rare)
+    {
+        switch(rare)
+        {
+            case CharacterRare.R: return "starup_r";
+            case CharacterRare.SR: return "starup_sr";
+            case CharacterRare.SSR: return "starup_ssr";
+            case CharacterRare.UR: return "starup_ur";
+        }
+        return "";
+    }
+
+    public static string GetContextByStatType(StatType type)
+    {
+        string locailzationID = "";
+
+        switch(type)
+        {
+            case StatType.ATK: locailzationID = "UI_ATK"; break;
+            case StatType.HP: locailzationID = "UI_HP"; break;
+            case StatType.DEF: locailzationID = "UI_DEF"; break;
+            case StatType.SPEED: locailzationID = "UI_SPD"; break;
+            case StatType.CRIT_RATE: locailzationID = "UI_CRIT_RATE"; break;
+            case StatType.CRIT_DMG: locailzationID = "UI_CRIT_DMG"; break;
+        }
+
+        return LocalizationManager.Instance.GetLocalizedValue(locailzationID);
+    }
+
+    public static string GetConvertStatValueToString(float value, ModifyType type)
+    {
+        if (type == ModifyType.Percent)
+        {
+            return value.ToString() + "%";
+        }
+        else
+        {
+            return value+ "%";
+        }
+    }
+
+    public static string GetAscentionConfigIDByCharacterRare(CharacterRare rare)
+    {
+        switch (rare)
+        {
+            case CharacterRare.R: return "ascension_r";
+            case CharacterRare.SR: return "ascension_sr";
+            case CharacterRare.SSR: return "ascension_ssr";
+            case CharacterRare.UR: return "ascension_ur";
         }
         return "";
     }
@@ -104,5 +157,15 @@ public static class Utility
     public static int GetCoinNeedToAsscendWeapon(int level)
     {
         return 12000 + 6000 * (level - 1) * (level - 1);
+    }
+
+    public static string FormatCurrency(int amount)
+    {
+        if (amount >= 1000000000)
+            return (amount / 1000000000f).ToString("0.##") + "B";
+        if (amount >= 1000000)
+            return (amount / 1000000f).ToString("0.##") + "M";
+        
+        return amount.ToString();
     }
 }

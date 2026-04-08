@@ -1,0 +1,230 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2026-04-07T16:14:00+07:00",
+    "generatedBy": "context-discovery-agent",
+    "projectRoot": "d:/UnityUdeme/MyTemplate/MyTemplate",
+    "scannedFiles": [
+      "ProjectSettings/ProjectVersion.txt",
+      "ProjectSettings/GraphicsSettings.asset",
+      "ProjectSettings/ProjectSettings.asset",
+      "ProjectSettings/QualitySettings.asset",
+      "Packages/manifest.json"
+    ]
+  },
+  "unityEnvironment": {
+    "editorVersion": "2022.3.14f1",
+    "editorVersionWithRevision": "2022.3.14f1 (eff2de9070d8)",
+    "ltsRelease": true
+  },
+  "projectInfo": {
+    "productName": "MyTemplate",
+    "companyName": "DefaultCompany",
+    "bundleVersion": "0.1",
+    "productGUID": "e5f0f6668d833da479b547bdce932347",
+    "templatePackageId": "com.unity.template.3d@8.1.1",
+    "clonedFromGUID": "c0afd0d1d80e3634a9dac47e8a0426ea",
+    "applicationIdentifiers": {
+      "Android": "com.DefaultCompany.MyTemplate",
+      "Standalone": "com.DefaultCompany.MyTemplate"
+    }
+  },
+  "renderingSettings": {
+    "renderPipeline": "URP (Universal Render Pipeline)",
+    "urpVersion": "14.0.9",
+    "colorSpace": "Gamma",
+    "defaultRenderingPath": "Forward",
+    "customRenderPipelineGUID": "1a62048b8eb14f249b08821ef4c4030b",
+    "srpDefaultSettingsGUID": "5eec20b61bb636c4c94e095acfc58cf7",
+    "transparencySortMode": "Default",
+    "lightsUseLinearIntensity": false,
+    "lightsUseColorTemperature": true
+  },
+  "graphicsSettings": {
+    "videoShadersIncludeMode": 2,
+    "alwaysIncludedShaderCount": 6,
+    "preloadedShaders": [],
+    "lightmapStripping": false,
+    "fogStripping": false,
+    "instancingStripping": false,
+    "lightmapKeepPlain": true,
+    "lightmapKeepDirCombined": true,
+    "lightmapKeepDynamicPlain": true,
+    "lightmapKeepDynamicDirCombined": true,
+    "lightmapKeepShadowMask": true,
+    "lightmapKeepSubtractive": true,
+    "fogKeepLinear": true,
+    "fogKeepExp": true,
+    "fogKeepExp2": true,
+    "logWhenShaderIsCompiled": false
+  },
+  "qualitySettings": {
+    "currentQualityLevel": 5,
+    "currentQualityName": "Ultra",
+    "qualityLevels": [
+      {
+        "index": 0,
+        "name": "Very Low",
+        "pixelLightCount": 0,
+        "shadows": "Disabled",
+        "antiAliasing": 0,
+        "vSyncCount": 0,
+        "lodBias": 0.3
+      },
+      {
+        "index": 1,
+        "name": "Low",
+        "pixelLightCount": 0,
+        "shadows": "Disabled",
+        "antiAliasing": 0,
+        "vSyncCount": 0,
+        "lodBias": 0.4
+      },
+      {
+        "index": 2,
+        "name": "Medium",
+        "pixelLightCount": 1,
+        "shadows": "HardOnly",
+        "antiAliasing": 0,
+        "vSyncCount": 1,
+        "lodBias": 0.7
+      },
+      {
+        "index": 3,
+        "name": "High",
+        "pixelLightCount": 2,
+        "shadows": "All",
+        "antiAliasing": 0,
+        "vSyncCount": 1,
+        "lodBias": 1.0
+      },
+      {
+        "index": 4,
+        "name": "Very High",
+        "pixelLightCount": 3,
+        "shadows": "All",
+        "antiAliasing": 2,
+        "vSyncCount": 1,
+        "lodBias": 1.5
+      },
+      {
+        "index": 5,
+        "name": "Ultra",
+        "pixelLightCount": 4,
+        "shadows": "All",
+        "shadowCascades": 4,
+        "shadowDistance": 150,
+        "antiAliasing": 0,
+        "vSyncCount": 1,
+        "lodBias": 2.0
+      }
+    ],
+    "perPlatformDefaultQuality": {
+      "Standalone": 5,
+      "Android": 2,
+      "WebGL": 3,
+      "iPhone": 2,
+      "tvOS": 2
+    }
+  },
+  "buildSettings": {
+    "defaultScreenResolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "targetPlatforms": {
+      "primary": "Standalone (Windows)",
+      "android": {
+        "minSdkVersion": 34,
+        "targetSdkVersion": 34,
+        "targetArchitectures": "ARM64 + ARMv7",
+        "scriptingBackend": "IL2CPP",
+        "bundleVersionCode": 1
+      }
+    },
+    "scriptingDefineSymbols": ["DOTWEEN"],
+    "allowUnsafeCode": false,
+    "gpuSkinning": true,
+    "multithreadedRendering": true,
+    "gcIncremental": true,
+    "stripEngineCode": true
+  },
+  "packages": {
+    "thirdParty": [
+      {
+        "id": "com.cysharp.unitask",
+        "name": "UniTask",
+        "source": "git",
+        "url": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+      },
+      {
+        "id": "com.github-glitchenzo.nugetforunity",
+        "name": "NuGetForUnity",
+        "source": "git",
+        "url": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity"
+      },
+      {
+        "id": "jp.hadashikick.vcontainer",
+        "name": "VContainer",
+        "source": "git",
+        "url": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
+        "version": "1.16.8"
+      }
+    ],
+    "unityPackages": [
+      { "id": "com.unity.2d.sprite", "version": "1.0.0" },
+      { "id": "com.unity.2d.tilemap", "version": "1.0.0" },
+      { "id": "com.unity.2d.tilemap.extras", "version": "3.1.3" },
+      { "id": "com.unity.addressables", "version": "1.21.21" },
+      { "id": "com.unity.collab-proxy", "version": "2.2.0" },
+      { "id": "com.unity.feature.development", "version": "1.0.1" },
+      { "id": "com.unity.nuget.newtonsoft-json", "version": "3.2.1" },
+      { "id": "com.unity.render-pipelines.universal", "version": "14.0.9" },
+      { "id": "com.unity.textmeshpro", "version": "3.0.6" },
+      { "id": "com.unity.timeline", "version": "1.7.6" },
+      { "id": "com.unity.ugui", "version": "1.0.0" },
+      { "id": "com.unity.visualscripting", "version": "1.9.1" }
+    ],
+    "builtinModules": [
+      "com.unity.modules.ai",
+      "com.unity.modules.androidjni",
+      "com.unity.modules.animation",
+      "com.unity.modules.assetbundle",
+      "com.unity.modules.audio",
+      "com.unity.modules.cloth",
+      "com.unity.modules.director",
+      "com.unity.modules.imageconversion",
+      "com.unity.modules.imgui",
+      "com.unity.modules.jsonserialize",
+      "com.unity.modules.particlesystem",
+      "com.unity.modules.physics",
+      "com.unity.modules.physics2d",
+      "com.unity.modules.screencapture",
+      "com.unity.modules.terrain",
+      "com.unity.modules.terrainphysics",
+      "com.unity.modules.tilemap",
+      "com.unity.modules.ui",
+      "com.unity.modules.uielements",
+      "com.unity.modules.umbra",
+      "com.unity.modules.unityanalytics",
+      "com.unity.modules.unitywebrequest",
+      "com.unity.modules.unitywebrequestassetbundle",
+      "com.unity.modules.unitywebrequestaudio",
+      "com.unity.modules.unitywebrequesttexture",
+      "com.unity.modules.unitywebrequestwww",
+      "com.unity.modules.vehicles",
+      "com.unity.modules.video",
+      "com.unity.modules.vr",
+      "com.unity.modules.wind",
+      "com.unity.modules.xr"
+    ]
+  },
+  "architectureNotes": {
+    "diFramework": "VContainer 1.16.8",
+    "asyncLibrary": "UniTask (Cysharp)",
+    "tweenLibrary": "DOTween (via scripting define symbol)",
+    "serializationLibrary": "Newtonsoft JSON 3.2.1",
+    "packageManager": "NuGetForUnity",
+    "addressablesVersion": "1.21.21",
+    "renderingStack": "URP 14.0.9 (Unity 2022 LTS compatible)"
+  }
+}

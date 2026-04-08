@@ -11,6 +11,7 @@ public class CharacterCardInfo : CharacterCard
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private Image iconRare;
+    [SerializeField]private UpgradeUI[] upgrades;
 
     [SerializeField] private TextMeshProUGUI txtHP;
     [SerializeField] private TextMeshProUGUI txtATK;
@@ -54,6 +55,17 @@ public class CharacterCardInfo : CharacterCard
             return;
         }
 
+        for (int i = 0; i < upgrades.Length; i++)
+        {
+            if (i < characterProfile.SaveData.StarUp)
+            {
+                upgrades[i].ActiveLayer(1);
+            }
+            else
+            {
+                upgrades[i].ActiveLayer(0);
+            }
+        }
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
         txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();

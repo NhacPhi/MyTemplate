@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using VContainer;
 using System;
+using NPOI.SS.Formula.Functions;
+
 public class InventoryManager 
 {
     [Inject] GameDataBase _gameDataBase;
@@ -11,9 +13,9 @@ public class InventoryManager
 
     private InventorySaveData _saveData => _save.Player.Inventory;
 
-    public IReadOnlyList<WeaponSaveData> Weapons => _saveData.Weapons;
-    public IReadOnlyList<ArmorSaveData> Armors => _saveData.Armors;
-    public IReadOnlyList<ItemSaveData> Items => _saveData.Items;
+    public List<WeaponSaveData> Weapons => _saveData.Weapons;
+    public List<ArmorSaveData> Armors => _saveData.Armors;
+    public List<ItemSaveData> Items => _saveData.Items;
 
     public void AddStackableItem(string itemID, ItemType type, int amount)
     {
@@ -118,4 +120,112 @@ public class InventoryManager
     {
         return _save.Player.Inventory.GetArmor(uuid);
     }
+
+    public void SortAllByRare()
+    {
+        SortWeapons();
+        SortArmors();
+        SortItems();
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    private void SortWeapons()
+    {
+        if (Weapons == null) return;
+
+        Weapons.Sort((a, b) =>
+        {
+            var cfgA = _gameDataBase.GetItemConfig(a.TemplateID);
+            var cfgB = _gameDataBase.GetItemConfig(b.TemplateID);
+
+            // 1. Ưu tiên sắp xếp theo Rarity trước (Giảm dần: B so với A)
+            int rarityComparison = cfgB.Rarity.CompareTo(cfgA.Rarity);
+
+            // Nếu Rarity khác nhau thì trả về luôn
+            if (rarityComparison != 0)
+            {
+                return rarityComparison;
+            }
+
+            // 2. Nếu Rarity giống hệt nhau, tiếp tục sắp xếp theo Level (Giảm dần)
+            return b.CurrentLevel.CompareTo(a.CurrentLevel);
+        });
+    }
+
+    private void SortArmors()
+    {
+        if (Armors == null) return;
+
+        Armors.Sort((a, b) =>
+        {
+            var cfgA = _gameDataBase.GetItemConfig(a.TemplateID);
+            var cfgB = _gameDataBase.GetItemConfig(b.TemplateID);
+
+            // 1. Ưu tiên sắp xếp theo Rarity trước (Giảm dần)
+            int rarityComparison = cfgB.Rarity.CompareTo(cfgA.Rarity);
+
+            if (rarityComparison != 0)
+            {
+                return rarityComparison;
+            }
+
+            // 2. Nếu Rarity giống nhau, sắp xếp theo Level (Giảm dần)
+            // (Dựa theo code trước đó của bạn, Armor dùng .Level thay vì .CurrentLevel)
+            return b.Level.CompareTo(a.Level);
+        });
+    }
+
+    private void SortItems()
+    {
+        if (Items == null) return;
+
+        Items.Sort((a, b) =>
+        {
+            var cfgA = _gameDataBase.GetItemConfig(a.ID);
+            var cfgB = _gameDataBase.GetItemConfig(b.ID); ;
+
+            return cfgB.Rarity.CompareTo(cfgA.Rarity);
+        });
+    }
+
+    public List<ArmorSaveData> GetBestArmorsToEquip()
+    {
+        // 1. Chắc chắn danh sách đã xếp đồ xịn lên đầu
+        SortArmors();
+
+        List<ArmorSaveData> bestArmors = new List<ArmorSaveData>();
+
+        // SỬ DỤNG TRỰC TIẾP ENUM ArmorPart ĐỂ ĐÁNH DẤU
+        HashSet<ArmorPart> filledSlots = new HashSet<ArmorPart>();
+
+        foreach (var armor in Armors)
+        {
+            if (!string.IsNullOrEmpty(armor.Equip))
+            {
+                continue;
+            }
+
+            var config = _gameDataBase.GetItemConfig(armor.TemplateID);
+
+            // Lấy loại giáp từ config (Giả sử thuộc tính trong config tên là ArmorPart)
+            ArmorPart currentArmorType = config.Armor.Part;
+
+            // Nếu loại giáp này chưa có trong danh sách đồ xịn nhất
+            if (!filledSlots.Contains(currentArmorType))
+            {
+                bestArmors.Add(armor);
+                filledSlots.Add(currentArmorType);
+
+                // Khi gom đủ 6 loại (Helmet, Chestplate, Gloves, Boots, Belt, Ring) thì dừng
+                if (filledSlots.Count == 6)
+                {
+                    break;
+                }
+            }
+        }
+
+        return bestArmors;
+    }
+
 }

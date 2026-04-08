@@ -17,8 +17,8 @@ public class CharacterSaveData
     [JsonProperty("ascension_tier")]
     public int AscensionTier;
 
-    [JsonProperty("boot_stat")]
-    public int BoostStat; //Get shard to upgrade
+    [JsonProperty("star_up")]
+    public int StarUp; //Get shard to upgrade
 
     [JsonProperty("weapon")]
     public string Weapon;

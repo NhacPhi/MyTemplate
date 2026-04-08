@@ -14,6 +14,13 @@ public class ItemUI : InventoryItemUI
         txtNumber.text = number.ToString();
     }
 
+    public void InitRequirement(string id, Rare rare, Sprite icon, Sprite background, int ownAmount, int requireAmount)
+    {
+        base.Setup(id, rare, icon, background);
+        txtNumber.text = $"{requireAmount}/{ownAmount}";
+        txtNumber.color = ownAmount >= requireAmount ? Color.white : Color.red;
+    }
+
     public void ActiveFragIcon(bool shard)
     {
         fragIcon.SetActive(shard);

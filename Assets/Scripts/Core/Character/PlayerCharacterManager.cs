@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using VContainer;
@@ -11,6 +11,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     [Inject] SaveSystem _saveGame;
     [Inject] GameDataBase _gameDataBase;
     [Inject] InventoryManager _inventory;
+    [Inject] CurrencyManager _currency;
 
     private Dictionary<string, CharacterProfileModel> _unlockedCharacters = new Dictionary<string, CharacterProfileModel>();
 
@@ -35,7 +36,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
             foreach(var charSave in _saveGame.Player.Roster.Characters)
             {
                 var profile = new CharacterProfileModel();
-                profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory);
+                profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory, _currency);
                 _unlockedCharacters.Add(charSave.ID, profile);  
             }
         }
@@ -97,10 +98,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
                 victim.EquipArmor(armorToGiveThem);
             }
         }
-        else
-        {
-
-        }    
+  
     }
 
     public CharacterProfileModel GetCharacter(string characterID)
