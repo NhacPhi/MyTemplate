@@ -4,12 +4,12 @@ using UnityEngine;
 using VContainer;
 using Tech.Composite;
 using System;
+using UnityEditor.VersionControl;
 
 public class StatsController : CoreComponent, IEffectable 
 {
-    //protected StatsDataHolder statsHolder;
-    protected CharacterConfig configHolder;
-    [Inject] GameDataBase DataBase;
+    //protected CharacterProfileModel statsHolder;
+    protected IStatProvider _statProvider;
 
     [field: SerializeField] public string EntityID { get; protected set; }
 
@@ -52,6 +52,12 @@ public class StatsController : CoreComponent, IEffectable
     public override void LoadComponent()
     {
         base.LoadComponent();
+        //InitAttribute();
+    }
+
+    public void Setup(IStatProvider provider)
+    {
+        _statProvider = provider;
         InitAttribute();
     }
 
@@ -64,17 +70,13 @@ public class StatsController : CoreComponent, IEffectable
 
         attributes = new Dictionary<AttributeType, Attribute>();
 
-        if(configHolder == null)
-        {
-            configHolder = DataBase.GetCharacterConfig(EntityID);
-        }
 
         InitStats();
 
-        foreach(AttributeType key in configHolder.Attributes.Keys)
+        foreach (AttributeType key in _statProvider.BaseConfig.Attributes.Keys)
         {
             Stat maxStat = null;
-            AttributeComponent attributeConponent = configHolder.Attributes[key];
+            AttributeComponent attributeConponent = _statProvider.BaseConfig.Attributes[key];
             if(attributeConponent.StatMaxStatType != StatType.None)
             {
                 maxStat = stats[attributeConponent.StatMaxStatType];
@@ -94,18 +96,12 @@ public class StatsController : CoreComponent, IEffectable
     {
         if (stats != null) return;
 
-        if (configHolder == null)
-        {
-            Debug.Log("Object: " + gameObject.name);
-            configHolder = DataBase.GetCharacterConfig(EntityID);
-        }
-
-
         this.stats = new Dictionary<StatType, Stat>();
 
-        foreach (var key in configHolder.Stats.Keys)
+
+        foreach (var key in _statProvider.BaseConfig.Stats.Keys)
         {
-            Stat stat = new(configHolder.Stats[key]);
+            Stat stat = new(_statProvider.GetTotalStat(key));
 #if UNITY_EDITOR
             stat.OnValueChange += HandleNotifyEditor;
 #endif

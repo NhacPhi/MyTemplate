@@ -75,12 +75,12 @@
         "quantity": 10
       },
       {
-        "id": "Yellow_Jade_Chunk",
+        "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "Jade_Chunk",
+        "id": "Garnet_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -90,7 +90,7 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Chunk",
+        "id": "Yellow_Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -105,13 +105,13 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
+        "id": "ShaWujing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -125,8 +125,8 @@
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
-        "type": "Shard",
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
@@ -422,7 +422,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "1f8fad5b-d9cb-469f-a165-75867728950e",
@@ -437,7 +437,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -452,7 +452,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
@@ -467,7 +467,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
@@ -482,7 +482,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       },
       {
         "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
@@ -497,7 +497,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": "ZhuBaJie"
+        "equip": "TangSanZang"
       }
     ]
   },
@@ -544,15 +544,6 @@
         "ascension_tier": 0,
         "star_up": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
-        "armors": []
-      },
-      {
-        "id": "ZhuBaJie",
-        "level": 1,
-        "exp": 0,
-        "ascension_tier": 0,
-        "star_up": 1,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "armors": [
           {
             "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
@@ -579,6 +570,15 @@
             "type": "Ring"
           }
         ]
+      },
+      {
+        "id": "ZhuBaJie",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 1,
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
+        "armors": []
       },
       {
         "id": "ShaWujing",
@@ -620,11 +620,11 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "ShaWujing"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 2,
-        "character_id": "BullDemonKing"
+        "character_id": "SunWukong"
       },
       {
         "position": 3,
@@ -632,7 +632,7 @@
       },
       {
         "position": 4,
-        "character_id": "SunWukong"
+        "character_id": "ShaWujing"
       },
       {
         "position": 5,

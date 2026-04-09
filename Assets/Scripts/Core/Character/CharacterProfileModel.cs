@@ -11,6 +11,7 @@ public class CharacterProfileModel : IStatProvider
 
     public CharacterSaveData SaveData => _saveData;
     private CharacterConfig _baseConfig;
+    public CharacterConfig BaseConfig => _baseConfig;
 
     private GameDataBase _gameDataBaae;
     private InventoryManager _inventory;

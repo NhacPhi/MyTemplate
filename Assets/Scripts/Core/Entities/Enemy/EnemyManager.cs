@@ -8,6 +8,7 @@ using System;
 using System.Threading;
 using Tech.Logger;
 using Tech.Pool;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class EnemyManager
 {
@@ -57,6 +58,17 @@ public class EnemyManager
                 var enemyInstance = _objectResolver.Instantiate(prefab,
                        prefab.transform.position, Quaternion.identity);
 
+                var enemycf = _gameDataBase.GetCharacterConfig(config.EnemyID);
+
+                IStatProvider enemyProfile = new EnemyProfileModel(enemycf, config.EnemyLevel);
+
+                var statsController = enemyInstance.GetComponent<StatsController>();
+
+                if (statsController != null)
+                {
+                    statsController.Setup(enemyProfile);
+                }
+
                 var enemyUI = _objectResolver.Instantiate(enemyUIPrefab,
                     enemyUIPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
 
@@ -74,6 +86,7 @@ public class EnemyManager
 
                     rect.localPosition = new Vector3(0f, 2.75f, 0f);
                 }
+
                 spawnedEnemies.Add(enemyInstance);
             }
         }

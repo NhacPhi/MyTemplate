@@ -14,6 +14,7 @@ public class CharacterManager
 
     [Inject] private SaveSystem _saveSystem;
     [Inject] private IObjectResolver _objectResolver;
+    [Inject] private PlayerCharacterManager __playerCharacterManager;
 
     private Dictionary<string, Entity> _characterPrefabsCache = new Dictionary<string, Entity>();
     public async UniTask<Dictionary<string, Entity>> LoadAndSpawnCharactersAsync(CancellationToken cancellation = default)
@@ -46,6 +47,17 @@ public class CharacterManager
             var prefabEntity = kvp.Value;
 
             var characterInstance = _objectResolver.Instantiate(prefabEntity, prefabEntity.transform.position, Quaternion.identity);
+
+            // Setup character profile
+
+            var characterProfile = __playerCharacterManager.GetCharacter(kvp.Key);
+
+            var statsController = characterInstance.GetComponent<StatsController>();
+
+            if (statsController != null && characterProfile != null)
+            {
+                statsController.Setup(characterProfile);
+            }
 
             var characterUI = _objectResolver.Instantiate(characterUIPrefab, prefabEntity.transform.position, Quaternion.identity, characterInstance.transform);
 
