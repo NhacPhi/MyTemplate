@@ -39,7 +39,8 @@ public class CharacterUpdateLevel : MonoBehaviour
         if (string.IsNullOrEmpty(currentCharacter)) return;
 
         var character = playerCharacterManager.GetCharacter(currentCharacter);
-        character.AutoLevelUp(character.SaveData.Level + 1);
+        var upgrader  = playerCharacterManager.GetUpgradeManager(currentCharacter);
+        upgrader.AutoLevelUp(character.SaveData.Level + 1);
         
         RefreshUI();
         UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
@@ -50,11 +51,12 @@ public class CharacterUpdateLevel : MonoBehaviour
         if (string.IsNullOrEmpty(currentCharacter)) return;
 
         var character = playerCharacterManager.GetCharacter(currentCharacter);
-        int maxLevel = character.GetMaxReachableLevelWithCurrentExpItems();
+        var upgrader  = playerCharacterManager.GetUpgradeManager(currentCharacter);
+        int maxLevel  = upgrader.GetMaxReachableLevelWithCurrentExpItems();
         
         if (maxLevel > character.SaveData.Level)
         {
-            character.AutoLevelUp(maxLevel);
+            upgrader.AutoLevelUp(maxLevel);
         }
         
         RefreshUI();
@@ -65,13 +67,14 @@ public class CharacterUpdateLevel : MonoBehaviour
     {
         currentCharacter = id;
         var character = playerCharacterManager.GetCharacter(id);
+        var upgrader  = playerCharacterManager.GetUpgradeManager(id);
         var data = character.SaveData;
 
         int currentCoinData = Utility.GetCoinNeedToUpgradeCacultivate(data.Level);
-        int nextCoinData = Utility.GetCoinNeedToUpgradeCacultivate(data.Level + 1);
+        int nextCoinData    = Utility.GetCoinNeedToUpgradeCacultivate(data.Level + 1);
         txtCoin.text = Utility.FormatCurrency(nextCoinData - currentCoinData);
 
-        int maxLevel = character.GetMaxReachableLevelWithCurrentExpItems();
+        int maxLevel = upgrader.GetMaxReachableLevelWithCurrentExpItems();
         txtUpdateLv.text = $"{LocalizationManager.Instance.GetLocalizedValue("UI_UPGRADE_MAX_LEVEL")} {maxLevel}";
 
         int maxCoinData = Utility.GetCoinNeedToUpgradeCacultivate(maxLevel);

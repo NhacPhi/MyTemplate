@@ -8,7 +8,7 @@ public class CharacterCardAscend : CharacterCard
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private Image iconRare;
-    [SerializeField] private UpgradeUI[] upgrades;
+    [SerializeField] private UpgradesUI upgrades;
 
     [SerializeField] private ItemUI itemUI;
     [SerializeField] private TextMeshProUGUI txtNumberShard;
@@ -47,10 +47,10 @@ public class CharacterCardAscend : CharacterCard
     {
         if (string.IsNullOrEmpty(currentCharacter)) return;
 
-        var profile = playerCharacterManager.GetCharacter(currentCharacter);
-        if (profile != null)
+        var upgrader = playerCharacterManager.GetUpgradeManager(currentCharacter);
+        if (upgrader != null)
         {
-            bool success = profile.StarUp();
+            bool success = upgrader.StarUp();
             if (success)
             {
                 UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
@@ -75,17 +75,7 @@ public class CharacterCardAscend : CharacterCard
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
 
-        for (int i = 0; i < upgrades.Length; i++)
-        {
-            if (i < data.StarUp)
-            {
-                upgrades[i].ActiveLayer(1);
-            }
-            else
-            {
-                upgrades[i].ActiveLayer(0);
-            }
-        }
+        upgrades.UpdateUI(data.StarUp);
 
         // Config item
         ItemConfig itemConfig = gameDataBase.GetItemConfig(id);
@@ -97,8 +87,8 @@ public class CharacterCardAscend : CharacterCard
             itemUI.ActiveFragIcon(true); 
         }
 
-        var profile = playerCharacterManager.GetCharacter(id);
-        profile.GetNextStarUpRequirements(out int nextTier, out int requiredCoin, out int requiredQuantity);
+        var upgrader = playerCharacterManager.GetUpgradeManager(id);
+        upgrader.GetNextStarUpRequirements(out int nextTier, out int requiredCoin, out int requiredQuantity);
 
         txtNumberShard.text = inventoryManager.GetItemQuantity(id).ToString() + "/" + requiredQuantity;
         txtCoin.text = Utility.FormatCurrency(requiredCoin);

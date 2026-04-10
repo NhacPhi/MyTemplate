@@ -8,8 +8,8 @@
     "currencies": {
       "Energy": 10,
       "Jade": 1200,
-      "Coin": 618000,
-      "RelicEssence": 1000,
+      "Coin": 532000,
+      "RelicEssence": 10000,
       "ArmorPrimorite": 1000,
       "Ticket": 0
     },
@@ -27,7 +27,7 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 15
+        "quantity": 14
       },
       {
         "id": "ThirdPrinceNezha",
@@ -70,6 +70,21 @@
         "quantity": 1
       },
       {
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 1
+      },
+      {
+        "id": "Garnet_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "Lamian_Noodies",
         "type": "Food",
         "quantity": 10
@@ -80,17 +95,27 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Chunk",
-        "type": "Gemstone",
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
         "quantity": 1
       },
       {
-        "id": "ZhuBaJie",
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 28
+      },
+      {
+        "id": "ShaWujing",
         "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Chunk",
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -100,32 +125,7 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "ShaWujing",
-        "type": "Shard",
-        "quantity": 1
-      },
-      {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 30
-      },
-      {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 1
-      },
-      {
-        "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -137,7 +137,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 105
+        "quantity": 102
       },
       {
         "id": "Jade_Sliver",
@@ -160,13 +160,13 @@
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
         "quantity": 1
       },
       {
@@ -195,7 +195,7 @@
         "template_id": "Vanguard_Of_Volition",
         "current_level": 2,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "BullDemonKing"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
@@ -505,8 +505,8 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 22,
-        "exp": 56,
+        "level": 23,
+        "exp": 41,
         "ascension_tier": 1,
         "star_up": 3,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
@@ -528,12 +528,12 @@
             "type": "Chestplate"
           },
           {
-            "id": "5f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Ring"
-          },
-          {
             "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Helmet"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Ring"
           }
         ]
       },
@@ -613,7 +613,7 @@
         "exp": 0,
         "ascension_tier": 0,
         "star_up": 1,
-        "weapon": "",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
         "armors": []
       }
     ],

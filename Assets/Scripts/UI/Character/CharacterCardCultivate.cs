@@ -10,7 +10,7 @@ public class CharacterCardCultivate : CharacterCard
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private Image iconRare;
-    [SerializeField] private UpgradeUI[] upgrades;
+    [SerializeField] private UpgradesUI upgrades;
 
     [SerializeField] private TextMeshProUGUI txtCurrentExp;
     [SerializeField] private Slider sliderExp;
@@ -65,17 +65,7 @@ public class CharacterCardCultivate : CharacterCard
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
         var expTier = Utility.GetExpConfigIDByCharacterRare(config.Rare);
 
-        for (int i = 0; i < upgrades.Length; i++)
-        {
-            if (i < data.StarUp)
-            {
-                upgrades[i].ActiveLayer(1);
-            }
-            else
-            {
-                upgrades[i].ActiveLayer(0);
-            }
-        }
+        upgrades.UpdateUI(data.StarUp);
 
         int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
         txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();

@@ -13,7 +13,8 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     [Inject] InventoryManager _inventory;
     [Inject] CurrencyManager _currency;
 
-    private Dictionary<string, CharacterProfileModel> _unlockedCharacters = new Dictionary<string, CharacterProfileModel>();
+    private Dictionary<string, CharacterProfileModel>    _unlockedCharacters = new Dictionary<string, CharacterProfileModel>();
+    private Dictionary<string, CharacterUpgradeManager> _upgradeManagers    = new Dictionary<string, CharacterUpgradeManager>();
 
     public List<string> ActivePartyIDs { get; private set; } = new List<string>();
 
@@ -30,6 +31,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     public void Init()
     {
         _unlockedCharacters.Clear();
+        _upgradeManagers.Clear();
 
         if(_saveGame.Player.Roster.Characters != null)
         {
@@ -37,7 +39,10 @@ public class PlayerCharacterManager : IInitializable, IDisposable
             {
                 var profile = new CharacterProfileModel();
                 profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory, _currency);
-                _unlockedCharacters.Add(charSave.ID, profile);  
+                _unlockedCharacters.Add(charSave.ID, profile);
+
+                var upgradeManager = new CharacterUpgradeManager(profile, _gameDataBase, _inventory, _currency);
+                _upgradeManagers.Add(charSave.ID, upgradeManager);
             }
         }
 
@@ -105,6 +110,13 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     {
         _unlockedCharacters.TryGetValue(characterID, out var profile);
         return profile;
+    }
+
+    /// <summary>Lấy UpgradeManager của nhân vật để thực hiện AddExp / AutoLevelUp / Ascend / StarUp.</summary>
+    public CharacterUpgradeManager GetUpgradeManager(string characterID)
+    {
+        _upgradeManagers.TryGetValue(characterID, out var manager);
+        return manager;
     }
 
     public CharacterProfileModel GetFirstCharacter()

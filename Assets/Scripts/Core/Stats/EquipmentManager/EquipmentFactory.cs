@@ -66,7 +66,7 @@ public static class EquipmentFactory
 
         if(mainStat != null)
         {
-            float upgradeBonus = (mainStat.Value * 0.1f) * saveData.Level;
+            float upgradeBonus = 0;
 
             runtimeArmor.Modifiers.Add(new EquipModifier()
             {

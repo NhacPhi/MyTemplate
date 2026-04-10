@@ -8,6 +8,7 @@ public class WeaponAscendCard : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
+    [SerializeField] private UpgradesUI upgradeUI;
 
     [SerializeField] private TextMeshProUGUI txtCurentHP;
     [SerializeField] private TextMeshProUGUI txtCurentATK;
@@ -39,7 +40,9 @@ public class WeaponAscendCard : MonoBehaviour
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;
-            txtLevel.text = level.ToString() + "/10";
+            txtLevel.text = level.ToString() + "/100";
+
+            upgradeUI.UpdateUI(data.CurrentUpgrade);
 
             int currentHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP) 
                 + Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));

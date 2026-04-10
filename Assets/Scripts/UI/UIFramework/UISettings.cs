@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -25,8 +25,14 @@ namespace UIFramework
         [Inject] private IObjectResolver _objectResolver;
 
 
-
-
+        public GameObject GetPrefabByScreenId(string screenId) {
+            foreach (var screen in screensToRegister) {
+                if (screen != null && screen.name == screenId) {
+                    return screen;
+                }
+            }
+            return null;
+        }
 
         public UIFrame CreateUIInstance(bool instanceAndRegisterScreens = true) {
             var newUI = Instantiate(templateUIPrefab);

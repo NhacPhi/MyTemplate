@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using DG.Tweening;
+using UnityEngine;
 
 public static class Utility 
 {
@@ -146,12 +147,24 @@ public static class Utility
 
     public static int GetEssenceNeedToUpgradeWeapon(int level)
     {
-        return 4200 + 3200 * (level - 1) * (level - 1);
+        return 4200 + 320 * (level - 1) * (level - 1);
+    }
+
+    public static int GetMaxLevelWithEssence(int availableEssence)
+    {
+        if (availableEssence < 4200)
+        {
+            return 0;
+        }
+
+        float calculatedLevel = 1f + Mathf.Sqrt((availableEssence - 4200f) / 320f);
+
+        return Mathf.FloorToInt(calculatedLevel);
     }
 
     public static int GetCoinNeedToUpgradeWeapon(int level)
     {
-        return 5000 + 4800 * (level - 1) * (level - 1);
+        return 5000 + 480 * (level - 1) * (level - 1);
     }
 
     public static int GetCoinNeedToAsscendWeapon(int level)

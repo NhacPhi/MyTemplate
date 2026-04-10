@@ -4,6 +4,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using System;
+using VContainer;
+using VContainer.Unity;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class UIManager : MonoBehaviour
@@ -11,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UISettings _defaultUISettings = null;
 
     private UIFrame _uiFrame;
+    [Inject] private IObjectResolver _objectResolver;
 
     private string currentWindow;
     private string currentPanel;
@@ -34,11 +37,41 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
-        _uiFrame = _defaultUISettings.CreateUIInstance();
+        _uiFrame = _defaultUISettings.CreateUIInstance(false);
+    }
+
+    private void EnsureScreenLoaded(string id)
+    {
+        if (_uiFrame != null && !_uiFrame.IsScreenRegistered(id))
+        {
+            var prefab = _defaultUISettings.GetPrefabByScreenId(id);
+            if (prefab != null)
+            {
+                var screenInstance = _objectResolver.Instantiate(prefab);
+                var screenController = screenInstance.GetComponent<IUIScreenController>();
+                if (screenController != null)
+                {
+                    _uiFrame.RegisterScreen(id, screenController, screenInstance.transform);
+                    if (screenInstance.activeSelf)
+                    {
+                        screenInstance.SetActive(false);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"[UIManager] Prefab {id} missing IUIScreenController.");
+                }
+            }
+            else
+            {
+                Debug.LogError($"[UIManager] Could not find Screen Prefab for id: {id}");
+            }
+        }
     }
 
     public void OpenWindowScene(string id)
     {
+        EnsureScreenLoaded(id);
         currentWindow = id;
         _uiFrame.OpenWindow(currentWindow);
     }
@@ -55,6 +88,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowPanel(string id)
     {
+        EnsureScreenLoaded(id);
         currentPanel = id;
         _uiFrame.ShowPanel(id);
     }
@@ -75,21 +109,25 @@ public class UIManager : MonoBehaviour
         switch(id)
         {
             case ScreenIds.GameInfoScene:
+                EnsureScreenLoaded(id);
                 _uiFrame.OpenWindow(id);
                 break;
             case ScreenIds.GameSettingsScene:
+                EnsureScreenLoaded(id);
                 _uiFrame.OpenWindow(id);
                 break;
             case ScreenIds.PopupConfirm:
-                Action cancle = () => { _uiFrame.ShowPanel(ScreenIds.PanelStartGame); };
+                Action cancle = () => { EnsureScreenLoaded(ScreenIds.PanelStartGame); _uiFrame.ShowPanel(ScreenIds.PanelStartGame); };
                 Action confirm = () => {
                     Application.Quit();
                 };
                 string message = LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION");
                 ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties("Remind", message, "Confirm", "Cancel", confirm, cancle);
+                EnsureScreenLoaded(id);
                 _uiFrame.OpenWindow(id, popupProps);
                 break;
             default:
+                EnsureScreenLoaded(id);
                 _uiFrame.OpenWindow(id);
                 break;
         }
@@ -97,6 +135,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowPopupConfirmSettings(PopupSettingProperties popup)
     {
+        EnsureScreenLoaded(ScreenIds.PopupConfirmSettings);
         _uiFrame.OpenWindow(ScreenIds.PopupConfirmSettings, popup);
     }
 

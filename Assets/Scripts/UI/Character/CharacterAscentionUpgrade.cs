@@ -38,10 +38,10 @@ public class CharacterAscentionUpgrade : MonoBehaviour
     {
         if (string.IsNullOrEmpty(currentCharacter)) return;
 
-        var profile = playerCharacterManager.GetCharacter(currentCharacter);
-        if (profile != null)
+        var upgrader = playerCharacterManager.GetUpgradeManager(currentCharacter);
+        if (upgrader != null)
         {
-            bool success = profile.Ascend();
+            bool success = upgrader.Ascend();
             if (success)
             {
                 // Cập nhật lại UI thông qua event sau khi đột phá thành công
@@ -55,9 +55,6 @@ public class CharacterAscentionUpgrade : MonoBehaviour
         currentCharacter = id;
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
         CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
-
-        var characterProfileModel = playerCharacterManager.GetCharacter(id);
-
 
         txtCoinNeededToUpgrade.text = Utility.FormatCurrency(requiredCoin);
 
@@ -73,13 +70,11 @@ public class CharacterAscentionUpgrade : MonoBehaviour
             int ownQuantity = inventory.GetItemQuantity(cost.ID);
             itemUI.InitRequirement(cost.ID, itemConfig.Rarity, itemConfig.Icon, gameDataBase.GetBGItemByRare(itemConfig.Rarity), ownQuantity, cost.Quantity);
         }
-
     }
 
     public bool IsShowCharactterAscentionUpgrade(string id)
     {
-        var characterProfileModel = playerCharacterManager.GetCharacter(id);
-
-        return characterProfileModel.GetNextAscensionRequirements(out nextTier, out requiredLevel, out requiredItem, out requiredCoin);
+        var upgrader = playerCharacterManager.GetUpgradeManager(id);
+        return upgrader.GetNextAscensionRequirements(out nextTier, out requiredLevel, out requiredItem, out requiredCoin);
     }
 }

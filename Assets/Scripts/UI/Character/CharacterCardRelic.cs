@@ -4,12 +4,13 @@ using UnityEngine;
 using VContainer;
 using TMPro;
 using UnityEngine.UI;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 public class CharacterCardRelic : CharacterCard
 {
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
-    [SerializeField] private UpgradeUI[] upgrades;
+    [SerializeField] private UpgradesUI upgrades;
 
     [SerializeField] private TextMeshProUGUI txtHP;
     [SerializeField] private TextMeshProUGUI txtATK;
@@ -131,21 +132,13 @@ public class CharacterCardRelic : CharacterCard
 
                 txtName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
                 txtLevel.text = data.CurrentLevel.ToString();
-                txtHP.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
-                txtATK.text = weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
+                weaponConfig.Weapon.Upgrades.TryGetValue(StatType.HP, out int hpUpgradePerLevel);
+                txtHP.text = (weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.HP) + hpUpgradePerLevel * data.CurrentLevel).ToString();
+                weaponConfig.Weapon.Upgrades.TryGetValue(StatType.ATK, out int atkUpgradePerLevel);
+                txtATK.text = (weaponConfig.Weapon.Stats.GetValueOrDefault(StatType.ATK) + atkUpgradePerLevel * data.CurrentLevel).ToString();
 
-                for (int i = 0; i < upgrades.Length; i++)
-                {
-                    if (i < data.CurrentUpgrade)
-                    {
-                        upgrades[i].ActiveLayer(1);
-                    }
-                    else
-                    {
-                        upgrades[i].ActiveLayer(0);
-                    }
-                }
-
+                upgrades.UpdateUI(data.CurrentUpgrade);
+                
                 txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name) + " (Lv." + data.CurrentUpgrade + ")";
                 txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.UseDescription);
             }
@@ -198,8 +191,11 @@ public class CharacterCardRelic : CharacterCard
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.CurrentLevel.ToString();
-        txtHP.text = config.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
-        txtATK.text = config.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
+
+        config.Weapon.Upgrades.TryGetValue(StatType.HP, out int hpUpgradePerLevel);
+        txtHP.text = (config.Weapon.Stats.GetValueOrDefault(StatType.HP) + hpUpgradePerLevel * data.CurrentLevel).ToString();
+        config.Weapon.Upgrades.TryGetValue(StatType.ATK, out int atkUpgradePerLevel);
+        txtATK.text = (config.Weapon.Stats.GetValueOrDefault(StatType.ATK) + atkUpgradePerLevel * data.CurrentLevel).ToString();
 
         txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(config.Name) + " (Lv." + data.CurrentUpgrade + ")";
         txtSkill.text = LocalizationManager.Instance.GetLocalizedValue(config.UseDescription);

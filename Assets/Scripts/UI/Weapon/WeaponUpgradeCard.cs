@@ -9,6 +9,7 @@ public class WeaponUpgradeCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private TextMeshProUGUI txtNextLevel;
+    [SerializeField] private UpgradesUI uiUpgrade;
 
     [SerializeField] private TextMeshProUGUI txtCurentHP;
     [SerializeField] private TextMeshProUGUI txtNextHP;
@@ -19,6 +20,8 @@ public class WeaponUpgradeCard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtRelicEsscence;
     [SerializeField] private TextMeshProUGUI txtCoin;
     [SerializeField] private TextMeshProUGUI txtCoinMaxLevel;
+
+    [SerializeField] private TextMeshProUGUI txtBtnUpgradeTo;
 
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventory;
@@ -42,8 +45,8 @@ public class WeaponUpgradeCard : MonoBehaviour
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = weaponSave.CurrentLevel;
-            txtLevel.text = level.ToString() + "/10";
-            txtNextLevel.text = level < 10 ? ((level + 1).ToString() + "/10") :
+            txtLevel.text = level.ToString();
+            txtNextLevel.text = level < 100 ? (level + 1).ToString() :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
 
             int currentHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP) +
@@ -62,9 +65,22 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtNextHP.text = nextHP.ToString();
             txtNextATK.text = nextATK.ToString();
 
-            txtRelicEsscence.text = currencyMM.GetQuantityCurrecy(CurrencyType.RelicEssence).ToString() + "/" + Utility.GetEssenceNeedToUpgradeWeapon(level).ToString();
-            txtCoin.text = Utility.GetCoinNeedToUpgradeWeapon(level).ToString();
-            txtCoinMaxLevel.text = (Utility.GetCoinNeedToUpgradeWeapon(10) - Utility.GetCoinNeedToUpgradeWeapon(level)).ToString();
+            uiUpgrade.UpdateUI(weaponSave.CurrentUpgrade);
+
+            var currentEssence = currencyMM.GetQuantityCurrecy(CurrencyType.RelicEssence);
+
+            var levelUp = Utility.GetMaxLevelWithEssence(currentEssence);
+
+            txtRelicEsscence.text = Utility.FormatCurrency(Utility.GetEssenceNeedToUpgradeWeapon(level + 1) - 
+                Utility.GetEssenceNeedToUpgradeWeapon(level)) + " / " + currentEssence.ToString();
+
+            var levelUpTo = level + levelUp;
+
+            txtBtnUpgradeTo.text = LocalizationManager.Instance.GetLocalizedValue("UI_UPGRADE_MAX_LEVEL") + " " + levelUpTo.ToString();
+
+            txtCoin.text = Utility.FormatCurrency(Utility.GetCoinNeedToUpgradeWeapon(level + 1) - Utility.GetCoinNeedToUpgradeWeapon(level));
+
+            txtCoinMaxLevel.text = levelUpTo > level ? Utility.FormatCurrency(Utility.GetCoinNeedToUpgradeWeapon(levelUpTo) - Utility.GetCoinNeedToUpgradeWeapon(level)) : txtCoin.text;
         }
     }
 }
