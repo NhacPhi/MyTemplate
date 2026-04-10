@@ -14,10 +14,9 @@ using Core.Scope;
         //builder.Register<GameStateManager>(Lifetime.Scoped);
         builder.Register<QuestManager>(Lifetime.Singleton);
 
-
         //Hireachy
         //builder.RegisterComponentInHierarchy<GameManager>().AsSelf();
-        //builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
+        builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 
         //Entry point
         builder.RegisterEntryPoint<GameplayPreload>(Lifetime.Singleton).As<IPreload>();

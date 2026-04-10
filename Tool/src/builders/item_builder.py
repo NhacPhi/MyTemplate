@@ -35,6 +35,7 @@ class ItemConfigBuilder(BaseBuilder):
                 if w_id in master_data and master_data[w_id].item_type == "Weapon":
                     master_data[w_id].weapon_data = WeaponComponent(
                         weapon_type= str(row['Type']) if pd.notna(row['Type']) else "None",
+                        passive_id= str(row['PassiveID']) if pd.notna(row['PassiveID']) else "",
                         stats={
                             "hp": int(row['HP']) if pd.notna(row['HP']) else 0,
                             "atk": int(row['ATK']) if pd.notna(row['ATK']) else 0,

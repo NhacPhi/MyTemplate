@@ -14,7 +14,6 @@ namespace Core.Scope
         [Inject] private SaveSystem saveSystem;
         [Inject] private UIManager uiManager;
         [Inject] private CurrencyManager currencyMM;
-        [Inject] private GameNarrativeData gameNarrative;
         [Inject] private GameDataBase gameDataBase;
         [Inject] private PlayerCharacterManager playerCharacterManager;
         //[Inject] private IObjectResolver _objectResolver;
@@ -41,7 +40,6 @@ namespace Core.Scope
 
             await UniTask.WhenAll(tasks);
             await gameDataBase.Init(cancellation);
-            await gameNarrative.LoadGameNarrativeConfig(cancellation);
 
 
             playerCharacterManager.Init();

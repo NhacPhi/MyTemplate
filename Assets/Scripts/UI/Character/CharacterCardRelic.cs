@@ -103,12 +103,14 @@ public class CharacterCardRelic : CharacterCard
     {
         UIEvent.OnSelectWeaponCard += UpdateWeaponInfo;
         UIEvent.OnCloseCharacterWeapon += UpdateCharacterCardWeapon;
+        UIEvent.OnCloseUpgradeRelicPanel += UpdateCurrentRelicInfo;
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectWeaponCard -= UpdateWeaponInfo;
         UIEvent.OnCloseCharacterWeapon -= UpdateCharacterCardWeapon;
+        UIEvent.OnCloseUpgradeRelicPanel -= UpdateCurrentRelicInfo;
     }
 
     private void OnDestroy()
@@ -206,5 +208,13 @@ public class CharacterCardRelic : CharacterCard
         UpdateCharacterCardWeapon(currentCharacter);
         btnChange.gameObject.SetActive(true);
         currentWeaponSeleted = weaponOfCharacter;
+    }
+
+    private void UpdateCurrentRelicInfo()
+    {
+        if (!string.IsNullOrEmpty(currentWeaponSeleted))
+        {
+            UpdateWeaponInfo(currentWeaponSeleted);
+        }
     }
 }

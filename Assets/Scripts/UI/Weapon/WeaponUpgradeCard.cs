@@ -23,12 +23,40 @@ public class WeaponUpgradeCard : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI txtBtnUpgradeTo;
 
+    [SerializeField] private Button btnUpdateLevel;
+    [SerializeField] private Button UpdateToLevel;
+
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventory;
     [Inject] CurrencyManager currencyMM;
+    [Inject] ForgeManager forgeManager;
+
+    private string currentWeaponUUID;
+
     private void Awake()
     {
         UIEvent.OnSlelectWeaponEnchance += UpdatedWeaponUpgradeCard;
+
+        if (btnUpdateLevel != null)
+            btnUpdateLevel.onClick.AddListener(OnBtnUpdateLevelClicked);
+        if (UpdateToLevel != null)
+            UpdateToLevel.onClick.AddListener(OnBtnUpdateLevelToClicked);
+    }
+
+    private void OnBtnUpdateLevelClicked()
+    {
+        if (!string.IsNullOrEmpty(currentWeaponUUID))
+        {
+            forgeManager.UpgradeWeapon(currentWeaponUUID);
+        }
+    }
+
+    private void OnBtnUpdateLevelToClicked()
+    {
+        if (!string.IsNullOrEmpty(currentWeaponUUID))
+        {
+            forgeManager.UpgradeWeaponMax(currentWeaponUUID);
+        }
     }
 
 
@@ -40,6 +68,7 @@ public class WeaponUpgradeCard : MonoBehaviour
     {
         if(weaponUUID != "")
         {
+            currentWeaponUUID = weaponUUID;
             var weaponSave = inventory.GetWeapon(weaponUUID);
             var config = gameDataBase.GetItemConfig(weaponSave.TemplateID);
 
@@ -69,18 +98,25 @@ public class WeaponUpgradeCard : MonoBehaviour
 
             var currentEssence = currencyMM.GetQuantityCurrecy(CurrencyType.RelicEssence);
 
-            var levelUp = Utility.GetMaxLevelWithEssence(currentEssence);
+            var singleReq = forgeManager.GetUpgradeRequirementsFormatted(weaponUUID);
+            txtRelicEsscence.text = singleReq.essenceStr + " / " + Utility.FormatCurrency(currentEssence);
 
-            txtRelicEsscence.text = Utility.FormatCurrency(Utility.GetEssenceNeedToUpgradeWeapon(level + 1) - 
-                Utility.GetEssenceNeedToUpgradeWeapon(level)) + " / " + currentEssence.ToString();
+            var maxReq = forgeManager.GetMaxUpgradeRequirementsFormatted(weaponUUID);
+            
+            // Sửa logic: Nếu không đủ tiền/tài nguyên để lên dù chỉ 1 cấp, fallback mục tiêu Max level trên nút là cấp tiếp theo (chứ không phải cấp hiện tại)
+            var levelUpTo = level + (maxReq.levelsUp > 0 ? maxReq.levelsUp : 1);
 
-            var levelUpTo = level + levelUp;
+            if (level >= 100) 
+            {
+                txtBtnUpgradeTo.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
+            }
+            else
+            {
+                txtBtnUpgradeTo.text = LocalizationManager.Instance.GetLocalizedValue("UI_UPGRADE_MAX_LEVEL") + " " + levelUpTo.ToString();
+            }
 
-            txtBtnUpgradeTo.text = LocalizationManager.Instance.GetLocalizedValue("UI_UPGRADE_MAX_LEVEL") + " " + levelUpTo.ToString();
-
-            txtCoin.text = Utility.FormatCurrency(Utility.GetCoinNeedToUpgradeWeapon(level + 1) - Utility.GetCoinNeedToUpgradeWeapon(level));
-
-            txtCoinMaxLevel.text = levelUpTo > level ? Utility.FormatCurrency(Utility.GetCoinNeedToUpgradeWeapon(levelUpTo) - Utility.GetCoinNeedToUpgradeWeapon(level)) : txtCoin.text;
+            txtCoin.text = singleReq.coinStr;
+            txtCoinMaxLevel.text = maxReq.levelsUp > 0 ? maxReq.coinStr : txtCoin.text;
         }
     }
 }

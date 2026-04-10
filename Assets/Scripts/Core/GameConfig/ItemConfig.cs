@@ -94,6 +94,9 @@ public class WeaponComponent
     [JsonProperty("weapon_type")]
     public WeaponType Type;
 
+    [JsonProperty("passive_id")]
+    public string PassiveID;
+
     [JsonProperty("stats")]
     public Dictionary<StatType, int> Stats;
 

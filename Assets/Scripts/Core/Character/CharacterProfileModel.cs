@@ -54,6 +54,13 @@ public class CharacterProfileModel : IStatProvider
         Equipment.Init(_setBonusEvaluator);
 
         LoadEquipmentsFromSave();
+
+        UIEvent.OnEquipmentUpgraded += RefreshEquippedItem;
+    }
+
+    public void Dispose()
+    {
+        UIEvent.OnEquipmentUpgraded -= RefreshEquippedItem;
     }
 
     private void LoadEquipmentsFromSave()
@@ -356,5 +363,38 @@ public class CharacterProfileModel : IStatProvider
     public List<SetBonusConfig> GetSetBonusActive()
     {
         return Equipment.GetActiveSetBonuses();
+    }
+
+    public void RefreshEquippedItem(string itemUUID)
+    {
+        if (SaveData.Weapon == itemUUID)
+        {
+            var weaponSave = _inventory.GetWeapon(itemUUID);
+            if (weaponSave != null)
+            {
+                var weaponConfig = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+
+                var runtimeWeapon = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig);
+
+                Equipment.Equip(runtimeWeapon);
+
+                OnStatsChanged?.Invoke();
+            }
+        }
+
+        // (Tùy chọn) Thêm logic tương tự cho Armors nếu game bạn có tính năng nâng cấp Giáp
+        /*
+        else if (SaveData.Armors.Exists(p => p.ID == itemUUID))
+        {
+            var armorSave = _inventory.GetArmor(itemUUID);
+            if (armorSave != null)
+            {
+                var armorConfig = _gameDataBase.GetItemConfig(armorSave.TemplateID);
+                var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+                Equipment.Equip(runtimeArmor);
+                OnStatsChanged?.Invoke();
+            }
+        }
+        */
     }
 }

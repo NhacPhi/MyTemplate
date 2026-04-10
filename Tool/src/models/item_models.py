@@ -4,6 +4,7 @@ from typing import List, Optional, Dict
 @dataclass
 class WeaponComponent:
     weapon_type: str
+    passive_id: str
     stats: Dict[str, int] = field(default_factory=dict)
     upgrades: Dict[str, int] = field(default_factory=dict)
 

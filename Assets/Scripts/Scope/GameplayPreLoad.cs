@@ -8,9 +8,12 @@ using System;
 public class GameplayPreload : IAsyncStartable, IPreload
 {
     [Inject] QuestManager questManager;
+    [Inject] GameNarrativeData gameNarrative;
+
     public bool IsDone;
     public async UniTask StartAsync(CancellationToken cancellation = default)
     {
+        await gameNarrative.LoadGameNarrativeConfig(cancellation);
         questManager.StartGame();
     }
 

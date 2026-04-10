@@ -6,6 +6,7 @@ from src.builders.battle_builder import EffectConfigBuilder, BattleConfigBuilder
 from src.builders.narrative_builder import ActorConfigBuilder, DialogueConfigBuilder, QuestLineConfigBuilder
 from src.builders.set_bonus_builder import SetBonusBuilder
 from src.builders.starup_builder import StarUpBuilder
+from src.builders.passive_skill_builder import PassiveSkillBuilder
 import config
 import os
 
@@ -18,6 +19,9 @@ def main():
     
     item_config = ItemConfigBuilder(config_path)
     item_config.run()
+
+    passive_config = PassiveSkillBuilder(config_path)
+    passive_config.run()
     
     set_bonus_config  = SetBonusBuilder(config_path)
     set_bonus_config.run()

@@ -19,6 +19,7 @@ public class GameDataBase
     private Dictionary<string, ExpConfig> ExpConfigs = new Dictionary<string, ExpConfig>();
     private Dictionary<string, StarUpConfig> StarUpConfigs = new Dictionary<string, StarUpConfig>();
     private Dictionary<string, SetBonusConfig> SetBonusConfigs = new Dictionary<string, SetBonusConfig>();
+    private Dictionary<string, PassiveConfig> PassiveConfigs = new Dictionary<string, PassiveConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -35,6 +36,8 @@ public class GameDataBase
     private const string StarUpConfigAddress = "StarUpConfig";
 
     private const string SetBousConfigAdress = "SetBonusConfig";
+
+    private const string PassiveConfigAddresss = "PassiveConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
@@ -45,10 +48,14 @@ public class GameDataBase
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(EffectConfigAddress, token: cancellationToken)
         );
 
-        var (expText, ascensionText, starUpText, setBonusText) = await UniTask.WhenAll(
+        var (expText, ascensionText, starUpText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ExpConfigAddress, token: cancellationToken),
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(AscensionAddress, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(StarUpConfigAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(StarUpConfigAddress, token: cancellationToken)
+        );
+
+        var (passiveText, setBonusText) = await UniTask.WhenAll(
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(PassiveConfigAddresss, token: cancellationToken),
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SetBousConfigAdress, token: cancellationToken)
         );
 
@@ -60,6 +67,8 @@ public class GameDataBase
         ExpConfigs = Json.DeserializeObject<Dictionary<string, ExpConfig>>(expText.text);
         AscensionConfigs = Json.DeserializeObject<Dictionary<string, AscensionConfig>>(ascensionText.text);
         StarUpConfigs = Json.DeserializeObject<Dictionary<string, StarUpConfig>>(starUpText.text);
+
+        PassiveConfigs = Json.DeserializeObject<Dictionary<string, PassiveConfig>>(passiveText.text);
         SetBonusConfigs = Json.DeserializeObject<Dictionary<string, SetBonusConfig>>(setBonusText.text);
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
@@ -70,6 +79,8 @@ public class GameDataBase
         AddressablesManager.Instance.RemoveAsset(ExpConfigAddress);
         AddressablesManager.Instance.RemoveAsset(AscensionAddress);
         AddressablesManager.Instance.RemoveAsset(StarUpConfigAddress);
+
+        AddressablesManager.Instance.RemoveAsset(PassiveConfigAddresss);
         AddressablesManager.Instance.RemoveAsset(SetBousConfigAdress);
 
         // 2. Gom danh sách các Atlas cần dùng (để nạp 1 lần duy nhất)
@@ -234,6 +245,13 @@ public class GameDataBase
         SetBonusConfigs.TryGetValue(key, out SetBonusConfig setBonusConfig);
 
         return setBonusConfig;
+    }
+
+    public PassiveConfig GetPassiveConfig(string key)
+    {
+        PassiveConfigs.TryGetValue(key, out PassiveConfig passiveConfig);
+
+        return passiveConfig;
     }
 
 }

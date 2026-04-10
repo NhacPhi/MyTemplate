@@ -44,6 +44,80 @@ public class ForgeManager
         // Thông báo UI cập nhật (nếu cần thiết)
         UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
 
+        UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Thực hiện nâng cấp vũ khí tối đa cấp độ dựa trên số Coin và Essence đang có
+    /// </summary>
+    public int UpgradeWeaponMax(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return 0;
+
+        int currentLevel = weaponSave.CurrentLevel;
+        int maxLevel = Definition.CharacterMaxLevel;
+
+        int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
+        int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);
+
+        int upgradesDone = 0;
+        int totalCoinSpent = 0;
+        int totalEssenceSpent = 0;
+
+        while (currentLevel < maxLevel)
+        {
+            int coinNeeded = Utility.GetCoinNeedToUpgradeWeapon(currentLevel + 1) - Utility.GetCoinNeedToUpgradeWeapon(currentLevel);
+            int essenceNeeded = Utility.GetEssenceNeedToUpgradeWeapon(currentLevel + 1) - Utility.GetEssenceNeedToUpgradeWeapon(currentLevel);
+
+            if (availableCoin >= coinNeeded && availableEssence >= essenceNeeded)
+            {
+                availableCoin -= coinNeeded;
+                availableEssence -= essenceNeeded;
+
+                totalCoinSpent += coinNeeded;
+                totalEssenceSpent += essenceNeeded;
+
+                currentLevel++;
+                upgradesDone++;
+            }
+            else
+            {
+                break; // Không đủ tài nguyên để nâng thêm
+            }
+        }
+
+        if (upgradesDone > 0)
+        {
+            _currencyManager.Spend(CurrencyType.Coin, totalCoinSpent);
+            _currencyManager.Spend(CurrencyType.RelicEssence, totalEssenceSpent);
+            weaponSave.CurrentLevel = currentLevel;
+
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
+        }
+
+        return upgradesDone; // Trả về số cấp đã nâng
+    }
+
+    /// <summary>
+    /// Đột phá (Ascend/Upgrade) vũ khí lên 1 sao/cấp độ đột phá
+    /// </summary>
+    public bool AscendWeapon(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return false;
+
+        int targetUpgrade = weaponSave.CurrentUpgrade + 1;
+        int coinNeeded = Utility.GetCoinNeedToAsscendWeapon(targetUpgrade);
+
+        if (_currencyManager.GetQuantityCurrecy(CurrencyType.Coin) < coinNeeded) return false;
+
+        _currencyManager.Spend(CurrencyType.Coin, coinNeeded);
+        weaponSave.CurrentUpgrade++;
+
+        UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
         return true;
     }
 
@@ -63,5 +137,63 @@ public class ForgeManager
         string essenceFormatted = Utility.FormatCurrency(Utility.GetEssenceNeedToUpgradeWeapon(level + 1) - Utility.GetEssenceNeedToUpgradeWeapon(level));
 
         return (coinFormatted, essenceFormatted);
+    }
+
+    /// <summary>
+    /// Trả về chuỗi định dạng số Coin và Essence cần thiết để nâng cấp MAX (dành cho UI hiển thị).
+    /// </summary>
+    public (int levelsUp, string coinStr, string essenceStr) GetMaxUpgradeRequirementsFormatted(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return (0, "0", "0");
+
+        int currentLevel = weaponSave.CurrentLevel;
+        int maxLevel = Definition.CharacterMaxLevel;
+
+        int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
+        int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);
+
+        int upgradesDone = 0;
+        int totalCoinSpent = 0;
+        int totalEssenceSpent = 0;
+
+        while (currentLevel < maxLevel)
+        {
+            int coinNeeded = Utility.GetCoinNeedToUpgradeWeapon(currentLevel + 1) - Utility.GetCoinNeedToUpgradeWeapon(currentLevel);
+            int essenceNeeded = Utility.GetEssenceNeedToUpgradeWeapon(currentLevel + 1) - Utility.GetEssenceNeedToUpgradeWeapon(currentLevel);
+
+            if (availableCoin >= coinNeeded && availableEssence >= essenceNeeded)
+            {
+                availableCoin -= coinNeeded;
+                availableEssence -= essenceNeeded;
+                totalCoinSpent += coinNeeded;
+                totalEssenceSpent += essenceNeeded;
+                currentLevel++;
+                upgradesDone++;
+            }
+            else
+            {
+                break;
+            }
+        }
+        weaponSave.CurrentLevel++;
+        string coinFormatted = Utility.FormatCurrency(totalCoinSpent);
+        string essenceFormatted = Utility.FormatCurrency(totalEssenceSpent);
+
+        return (upgradesDone, coinFormatted, essenceFormatted);
+    }
+
+    /// <summary>
+    /// Trả về số tiền cần để đột phá (Ascend)
+    /// </summary>
+    public string GetAscendRequirementsFormatted(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return "0";
+
+        int targetUpgrade = weaponSave.CurrentUpgrade + 1;
+        int coinNeeded = Utility.GetCoinNeedToAsscendWeapon(targetUpgrade);
+
+        return Utility.FormatCurrency(coinNeeded);
     }
 }

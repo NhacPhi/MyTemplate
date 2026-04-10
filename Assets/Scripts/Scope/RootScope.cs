@@ -27,9 +27,11 @@ public class RootScope : LifetimeScope
         builder.Register<AtlasProvider>(Lifetime.Singleton);
         builder.Register<GameDataBase>(Lifetime.Singleton);
         builder.Register<BattleSessionContext>(Lifetime.Singleton);
-
+        
         builder.Register<InventoryManager>(Lifetime.Singleton);
+        builder.Register<ForgeManager>(Lifetime.Singleton);
         builder.Register<PlayerCharacterManager>(Lifetime.Singleton);
+
         builder.RegisterComponent(_audioManager).AsImplementedInterfaces().AsSelf();
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);
 
@@ -40,7 +42,6 @@ public class RootScope : LifetimeScope
         builder.RegisterComponentInHierarchy<SceneLoader>().AsSelf();
         builder.RegisterComponentInHierarchy<PoolManager>().AsSelf();
         builder.RegisterComponentInHierarchy<AutoSaveManager>().AsSelf();
-        builder.RegisterComponentInHierarchy<GameNarrativeData>().AsSelf();
 
         //Entry point
         builder.RegisterEntryPoint<RootPreLoad>(Lifetime.Singleton).As<IPreload>();

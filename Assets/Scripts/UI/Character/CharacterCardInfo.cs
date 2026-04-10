@@ -30,9 +30,12 @@ public class CharacterCardInfo : CharacterCard
     [Inject] PlayerCharacterManager characterManager;
     [Inject] private GameDataBase gameDataBase;
 
+    private string currentCharracter = "";
+
     private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardInfo;
+        UIEvent.OnCloseUpgradeRelicPanel += UpdateCardInfoWithCurrentCharacter;
     }
 
     // Start is called before the first frame update
@@ -44,9 +47,11 @@ public class CharacterCardInfo : CharacterCard
     private void OnDestroy()
     {
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardInfo;
+        UIEvent.OnCloseUpgradeRelicPanel -= UpdateCardInfoWithCurrentCharacter;
     }
     public void UpdateCharacterCardInfo(string id)
     {
+        currentCharracter = id;
         var characterProfile = characterManager.GetCharacter(id);
         CharacterConfig characterConfig = gameDataBase.GetCharacterConfig(id);
         if (characterManager == null)
@@ -75,5 +80,10 @@ public class CharacterCardInfo : CharacterCard
         imgAttack.sprite = characterConfig.BaseSkillIcon;
         imgMajorSkill.sprite = characterConfig.MajorSkillIcon;
         imgUltimateSkill.sprite = characterConfig.UltimateSkillIcon;
+    }
+
+    public void UpdateCardInfoWithCurrentCharacter()
+    {
+        UpdateCharacterCardInfo(currentCharracter);
     }
 }

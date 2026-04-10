@@ -15,6 +15,7 @@ public class UpgradeRelicPanel : PanelController
     {
         btnExit.onClick.AddListener(() =>
         {
+            UIEvent.OnCloseUpgradeRelicPanel?.Invoke();
             uiManager.HidePanel();
         });
         currencyMM.UpdateCurrency();
