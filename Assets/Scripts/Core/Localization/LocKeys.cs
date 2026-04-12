@@ -155,6 +155,10 @@ public static class LocKeys
 
     public const long UI_SET_BONUS = 1536794836;
 
+    public const long UI_MAX_ASCEND_LEVEL = 38250195;
+
+    public const long UI_MAX_LEVEL = 1269438938;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

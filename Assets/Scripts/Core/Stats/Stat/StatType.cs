@@ -12,5 +12,7 @@ public enum StatType
     PEN,
     CRIT_DMG_RES,
     SHIELD,
+    EHR, //Effect Hit Rate
+    RES,
     None
 }

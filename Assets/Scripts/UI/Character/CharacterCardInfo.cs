@@ -35,7 +35,7 @@ public class CharacterCardInfo : CharacterCard
     private void Awake()
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardInfo;
-        UIEvent.OnCloseUpgradeRelicPanel += UpdateCardInfoWithCurrentCharacter;
+        UIEvent.OnCloseUpgradeRelicScene += UpdateCardInfoWithCurrentCharacter;
     }
 
     // Start is called before the first frame update
@@ -47,7 +47,7 @@ public class CharacterCardInfo : CharacterCard
     private void OnDestroy()
     {
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardInfo;
-        UIEvent.OnCloseUpgradeRelicPanel -= UpdateCardInfoWithCurrentCharacter;
+        UIEvent.OnCloseUpgradeRelicScene -= UpdateCardInfoWithCurrentCharacter;
     }
     public void UpdateCharacterCardInfo(string id)
     {
@@ -72,8 +72,8 @@ public class CharacterCardInfo : CharacterCard
         txtDEF.text = characterProfile.GetTotalStat(StatType.DEF).ToString(); // stat.DEF.ToString();
         txtSPD.text = characterProfile.GetTotalStat(StatType.SPEED).ToString();
         txtDEFShred.text = "0"; // stat.DEFShred.ToString();
-        txtCritRate.text = "0"; // stat.CRITRate.ToString();
-        txtCriteDMG.text = "0"; // stat.CRITDMG.ToString();
+        txtCritRate.text = characterProfile.GetTotalStat(StatType.CRIT_RATE).ToString();
+        txtCriteDMG.text = characterProfile.GetTotalStat(StatType.CRIT_DMG).ToString();
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 

@@ -105,6 +105,11 @@ public class WeaponComponent
 
     [JsonIgnore]
     public Sprite BigIcon { get; set; }
+
+    public int GetStatByLevel(StatType type, int level)
+    {
+        return Stats[type] + Utility.GetStatGrowthLevel(level, Upgrades[type]);
+    }
 }
 
 [Serializable]

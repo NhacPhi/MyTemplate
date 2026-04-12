@@ -33,6 +33,14 @@ public enum Skill
     DivineWind
 }
 
+public enum SkillType
+{
+    BasicAttack, // Đánh thường
+    ActiveSkill, // Kĩ năng chủ động
+    NonAttackSkill, // Kĩ năng buff hồi máu
+    None
+}
+
 public enum SkillTargetType
 {
     // Single Target

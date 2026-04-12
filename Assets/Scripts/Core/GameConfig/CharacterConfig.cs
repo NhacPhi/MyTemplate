@@ -77,6 +77,11 @@ public class CharacterConfig
         LogCommon.LogWarning($"{type} not Found");
         return default;
     }
+
+    public int GetStatByLevel(StatType type, int level)
+    {
+        return Stats[type] + Utility.GetStatGrowthLevel(level, GetUpdateStat(type));
+    }
 }
 [Serializable]
 public class AttributeComponent
@@ -102,6 +107,9 @@ public class SkillComponent
 
     [JsonProperty("skill")]
     public Skill Skill { get; set; }
+
+    [JsonProperty("skill_type")]
+    public SkillType Type { get; set; }
 
     [JsonProperty("target_type")]
     public SkillTargetType TargetType { get; set;}

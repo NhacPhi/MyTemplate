@@ -36,17 +36,18 @@ public class WeaponCardInfoUI : MonoBehaviour
     {
         WeaponSaveData weapon = save.Player.Inventory.GetWeapon(uuid);
         var weaponConfig = gameDataBase.GetItemConfig(weapon.TemplateID);
+        var passiveConfig = gameDataBase.GetPassiveConfig(weaponConfig.Weapon.PassiveID);
         
         if (weaponConfig != null)
         {
             txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
             txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  " + weapon.CurrentLevel.ToString();
-            weaponConfig.Weapon.Stats.TryGetValue(StatType.HP, out var hp);
-            txtHPNumber.text = hp.ToString();
-            weaponConfig.Weapon.Stats.TryGetValue(StatType.HP, out var atk);
-            txtATKNumber.text = atk.ToString();
+
+            txtHPNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.HP, weapon.CurrentLevel).ToString();
+            txtATKNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.ATK, weapon.CurrentLevel).ToString();
+
             txtDes.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Description);
-            txtSkillDes.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.UseDescription);
+            txtSkillDes.text = passiveConfig.GetDescription(weapon.CurrentUpgrade);
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(txtDes.rectTransform);
             LayoutRebuilder.ForceRebuildLayoutImmediate(txtSkillDes.rectTransform);

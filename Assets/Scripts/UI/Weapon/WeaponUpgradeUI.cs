@@ -6,6 +6,7 @@ public class WeaponUpgradeUI : MonoBehaviour
 {
     [SerializeField] private GameObject waeponUpgradeCard;
     [SerializeField] private GameObject weaponAscendCard;
+    [SerializeField] private AscendMaterialCategoryUI categoryUI;
 
     private void OnEnable()
     {
@@ -25,12 +26,14 @@ public class WeaponUpgradeUI : MonoBehaviour
                 {
                     waeponUpgradeCard.gameObject.SetActive(true);
                     weaponAscendCard.gameObject.SetActive(false);
+                    categoryUI.gameObject.SetActive(false);
                 }
                 break;
             case WeaponTap.Ascend:
                 {
                     waeponUpgradeCard.gameObject.SetActive(false);
                     weaponAscendCard.gameObject.SetActive(true);
+                    categoryUI.gameObject.SetActive(true);
                 }
                 break;
         }

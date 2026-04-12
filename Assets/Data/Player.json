@@ -8,8 +8,8 @@
     "currencies": {
       "Energy": 10,
       "Jade": 1200,
-      "Coin": 10012840,
-      "RelicEssence": 11820520,
+      "Coin": 4619080,
+      "RelicEssence": 8558760,
       "ArmorPrimorite": 1000,
       "Ticket": 0
     },
@@ -70,21 +70,6 @@
         "quantity": 1
       },
       {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 1
-      },
-      {
-        "id": "Jade_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Garnet_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "Lamian_Noodies",
         "type": "Food",
         "quantity": 10
@@ -95,27 +80,17 @@
         "quantity": 1
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 1
-      },
-      {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 28
-      },
-      {
-        "id": "Yellow_Jade_Fragment",
+        "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
+        "id": "ZhuBaJie",
         "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
+        "id": "Garnet_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -125,8 +100,33 @@
         "quantity": 1
       },
       {
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "Garnet_Fragment",
         "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 28
+      },
+      {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 1
+      },
+      {
+        "id": "ShaWujing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -160,13 +160,13 @@
         "quantity": 1
       },
       {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -179,8 +179,8 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "template_id": "Nimbus_Cudgel",
-        "current_level": 34,
-        "current_updgrade": 1,
+        "current_level": 100,
+        "current_updgrade": 3,
         "equip": "SunWukong"
       },
       {
@@ -198,8 +198,8 @@
         "equip": "BullDemonKing"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
-        "template_id": "Triple_Edged_Blade",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
+        "template_id": "Moonlit_Firelfy",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -212,13 +212,6 @@
         "equip": ""
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
-        "template_id": "Moonlit_Firelfy",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "template_id": "FireLance_Ring_Damasl",
         "current_level": 1,
@@ -226,11 +219,32 @@
         "equip": "ThirdPrinceNezha"
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
+        "template_id": "Triple_Edged_Blade",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
         "template_id": "Reincarnation",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777755f",
@@ -604,7 +618,7 @@
         "exp": 0,
         "ascension_tier": 0,
         "star_up": 1,
-        "weapon": "",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
         "armors": []
       },
       {
@@ -620,11 +634,11 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "BullDemonKing"
+        "character_id": "SunWukong"
       },
       {
         "position": 2,
-        "character_id": "SunWukong"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 3,

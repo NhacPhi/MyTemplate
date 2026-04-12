@@ -5,30 +5,15 @@ using UnityEngine.EventSystems;
 public class WeaponCategoryUI : GameItemUI,IPointerClickHandler
 {
     [SerializeField] private TextMeshProUGUI txtLevel;
-    [SerializeField] private GameObject parent;
-    private UpgradeUI[] upgrades;
+    [SerializeField] private UpgradesUI upgrades;
     [SerializeField] private Image avatarIcon;
-
-    private void Awake()
-    {
-        upgrades = parent.GetComponentsInChildren<UpgradeUI>();
-    }
 
     public void Init(string id, Rare rare, Sprite icon, Sprite background, Sprite avatar, int level, int upgradeNumber)
     {
         base.Setup(id, rare, icon, background);
         txtLevel.text = level.ToString();
-        for (int i = 0; i < upgrades.Length; i++)
-        {
-            if (i < upgradeNumber)
-            {
-                upgrades[i].ActiveLayer(1);
-            }
-            else
-            {
-                upgrades[i].ActiveLayer(0);
-            }
-        }
+        upgrades.UpdateUI(upgradeNumber);
+        
 
         if(avatar == null)
         {

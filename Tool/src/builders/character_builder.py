@@ -24,6 +24,7 @@ class CharacterConfigBuilder(BaseBuilder):
                     name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else 0,
                     des_hash=self.get_hash((row['Des']).strip()) if not pd.isna(row['Des']) else 0,
                     skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
+                    skill_type=str(row['SkillType']).strip() if not pd.isna(row['SkillType']) else "None",
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
                     damage_multiplier=float(row['DamageMultiplier']) if not pd.isna(row['DamageMultiplier']) else 0.0,
                     max_cooldown=int(row['MaxCooldown']) if not pd.isna(row['MaxCooldown']) else 0,

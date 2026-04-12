@@ -72,7 +72,12 @@ public class CharacterProfileModel : IStatProvider
             if (weaponSave != null)
             {
                 var weaponConfig = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
-                var weaponData   = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig);
+
+                string passiveID = weaponConfig.Weapon.PassiveID;
+
+                PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(passiveID);
+
+                var weaponData   = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
                 Equipment.Equip(weaponData);
             }
         }
@@ -86,7 +91,9 @@ public class CharacterProfileModel : IStatProvider
                 if (armorSave != null)
                 {
                     var armorConfig = _gameDataBase.GetItemConfig(armorSave.TemplateID);
+
                     var armorData   = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+
                     Equipment.Equip(armorData);
                 }
             }
@@ -109,7 +116,11 @@ public class CharacterProfileModel : IStatProvider
         }
 
         var weaponConfig   = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
-        var runtimeWeapon  = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig);
+
+        string passiveID = weaponConfig.Weapon.PassiveID;
+        PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(passiveID);
+
+        var runtimeWeapon  = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
 
         Equipment.Equip(runtimeWeapon);
         SaveData.Weapon  = itemUUID;
@@ -314,15 +325,16 @@ public class CharacterProfileModel : IStatProvider
 
     public float GetBaseStat(StatType type)
     {
-        float baseValue = 0f;
+        float stat = 0f;
 
         if (_baseConfig.Stats != null)
         {
-            baseValue = _baseConfig.GetStat(type);
+            stat = _baseConfig.GetStat(type);
         }
 
         float growth = Utility.GetStatGrowthLevel(SaveData.Level, _baseConfig.GetUpdateStat(type));
-        return baseValue + growth;
+
+        return stat + growth;
     }
 
     public int GetTotalStat(StatType type)
@@ -374,10 +386,15 @@ public class CharacterProfileModel : IStatProvider
             {
                 var weaponConfig = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
 
-                var runtimeWeapon = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig);
+                string passiveID = weaponConfig.Weapon.PassiveID;
+                PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(passiveID);
 
+                var runtimeWeapon = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
+
+                Equipment.Unequip(EquipSlot.Weapon);
                 Equipment.Equip(runtimeWeapon);
 
+                OnEquipmentChanged?.Invoke();
                 OnStatsChanged?.Invoke();
             }
         }

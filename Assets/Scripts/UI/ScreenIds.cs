@@ -17,7 +17,7 @@ public class ScreenIds
     // Panel
     public const string PanelStartGame = "PanelStartGame";
     public const string GamePlayPanel = "GamePlayPanel";
-    public const string UpgradeRelicPanel = "UpgradeRelicPanel";
+    public const string UpgradeRelicScene = "UpgradeRelicScene";
 
     // Popup
     public const string PopupConfirm = "PopupConfirm";

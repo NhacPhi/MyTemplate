@@ -26,10 +26,16 @@ public class WeaponUpgradeCard : MonoBehaviour
     [SerializeField] private Button btnUpdateLevel;
     [SerializeField] private Button UpdateToLevel;
 
+    [SerializeField] private GameObject upgradeOb;
+    [SerializeField] private GameObject readedOb;
+
+    private const int MAX_LEVEL_UPGRADE = 100;
+
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventory;
     [Inject] CurrencyManager currencyMM;
     [Inject] ForgeManager forgeManager;
+    [Inject] PlayerCharacterManager playerCharacterManager;
 
     private string currentWeaponUUID;
 
@@ -66,11 +72,22 @@ public class WeaponUpgradeCard : MonoBehaviour
     }
     public void UpdatedWeaponUpgradeCard(string weaponUUID)
     {
-        if(weaponUUID != "")
+        if (weaponUUID != "")
         {
             currentWeaponUUID = weaponUUID;
             var weaponSave = inventory.GetWeapon(weaponUUID);
             var config = gameDataBase.GetItemConfig(weaponSave.TemplateID);
+
+            if (weaponSave.CurrentLevel >= MAX_LEVEL_UPGRADE)
+            {
+                readedOb.gameObject.SetActive(true);
+                upgradeOb.gameObject.SetActive(false);
+            }
+            else
+            {
+                upgradeOb.gameObject.SetActive(true);
+                readedOb.gameObject.SetActive(false);
+            }
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = weaponSave.CurrentLevel;
@@ -78,21 +95,17 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtNextLevel.text = level < 100 ? (level + 1).ToString() :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
 
-            int currentHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP) +
-                Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));
-            int nextHP = config.Weapon.Stats.GetValueOrDefault(StatType.HP)
-                + Utility.GetStatGrowthLevel(level + 1, config.Weapon.Upgrades.GetValueOrDefault(StatType.HP));
+            int currentHP = config.Weapon.GetStatByLevel(StatType.HP, level);
+            int nextHP = config.Weapon.GetStatByLevel(StatType.HP, level + 1);
 
-            int currentATK = config.Weapon.Stats.GetValueOrDefault(StatType.ATK) +
-                Utility.GetStatGrowthLevel(level, config.Weapon.Upgrades.GetValueOrDefault(StatType.ATK));
-            int nextATK = config.Weapon.Stats.GetValueOrDefault(StatType.ATK)
-                + Utility.GetStatGrowthLevel(level + 1, config.Weapon.Upgrades.GetValueOrDefault(StatType.ATK));
+            int currentATK = config.Weapon.GetStatByLevel(StatType.ATK, level);
+            int nextATK = config.Weapon.GetStatByLevel(StatType.ATK, level + 1);
 
             txtCurentHP.text = currentHP.ToString();
             txtCurrentATK.text = currentATK.ToString();
 
-            txtNextHP.text = nextHP.ToString();
-            txtNextATK.text = nextATK.ToString();
+            txtNextHP.text = weaponSave.CurrentLevel < MAX_LEVEL_UPGRADE ? nextHP.ToString() : currentHP.ToString();
+            txtNextATK.text = weaponSave.CurrentLevel < MAX_LEVEL_UPGRADE ?  nextATK.ToString() : currentATK.ToString();
 
             uiUpgrade.UpdateUI(weaponSave.CurrentUpgrade);
 

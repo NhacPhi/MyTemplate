@@ -33,7 +33,9 @@ public static class UIEvent
     public static Action<bool> OnSlectectRelicTap;
     public static Action<WeaponTap> OnSelectToggleWeaponTap;
     public static Action<string> OnSlelectWeaponEnchance;
-    public static Action OnCloseUpgradeRelicPanel;
+    public static Action<string> OnSelectWeaponEnchanceFromCharacter;
+
+    public static Action OnCloseUpgradeRelicScene;
 
     public static Action<string> OnEquipmentUpgraded;
 

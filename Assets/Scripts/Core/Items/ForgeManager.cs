@@ -96,28 +96,69 @@ public class ForgeManager
             weaponSave.CurrentLevel = currentLevel;
 
             UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
+            UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
         }
 
         return upgradesDone; // Trả về số cấp đã nâng
     }
 
     /// <summary>
-    /// Đột phá (Ascend/Upgrade) vũ khí lên 1 sao/cấp độ đột phá
+    /// Lấy danh sách các vũ khí giống với vũ khí hiện tại (trùng TemplateID), dùng để hiển thị và làm nguyên liệu đột phá.
+    /// </summary>
+    public List<WeaponSaveData> GetDuplicateWeapons(string weaponUUID)
+    {
+        var duplicates = new List<WeaponSaveData>();
+        var targetWeapon = _inventoryManager.GetWeapon(weaponUUID);
+
+        if (targetWeapon == null) return duplicates;
+
+        foreach (var weapon in _inventoryManager.Weapons)
+        {
+            // Không lấy chính nó và chỉ lấy những vũ khí cùng TemplateID, chưa được trang bị
+            if (weapon.UUID != targetWeapon.UUID && weapon.TemplateID == targetWeapon.TemplateID && string.IsNullOrEmpty(weapon.Equip))
+            {
+                duplicates.Add(weapon);
+            }
+        }
+
+        return duplicates;
+    }
+
+    /// <summary>
+    /// Đột phá (Ascend/Upgrade) vũ khí lên 1 sao/cấp độ đột phá (Tự động chọn phôi đầu tiên)
     /// </summary>
     public bool AscendWeapon(string weaponUUID)
     {
+        var duplicates = GetDuplicateWeapons(weaponUUID);
+        if (duplicates.Count == 0) return false;
+
+        return AscendWeapon(weaponUUID, duplicates[0].UUID);
+    }
+
+    /// <summary>
+    /// Đột phá (Ascend/Upgrade) vũ khí lên 1 sao bằng cách tiêu thụ 1 vũ khí phôi chỉ định
+    /// </summary>
+    public bool AscendWeapon(string weaponUUID, string consumeWeaponUUID)
+    {
         var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
-        if (weaponSave == null) return false;
+        var consumeWeapon = _inventoryManager.GetWeapon(consumeWeaponUUID);
+
+        if (weaponSave == null || consumeWeapon == null) return false;
+        if (weaponSave.TemplateID != consumeWeapon.TemplateID) return false;
 
         int targetUpgrade = weaponSave.CurrentUpgrade + 1;
         int coinNeeded = Utility.GetCoinNeedToAsscendWeapon(targetUpgrade);
 
         if (_currencyManager.GetQuantityCurrecy(CurrencyType.Coin) < coinNeeded) return false;
 
+        // Trừ tiền và vũ khí nguyên liệu
         _currencyManager.Spend(CurrencyType.Coin, coinNeeded);
+        _inventoryManager.RemoveWeapon(consumeWeaponUUID);
+        
         weaponSave.CurrentUpgrade++;
 
         UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
+        UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
         return true;
     }
 
@@ -176,7 +217,7 @@ public class ForgeManager
                 break;
             }
         }
-        weaponSave.CurrentLevel++;
+
         string coinFormatted = Utility.FormatCurrency(totalCoinSpent);
         string essenceFormatted = Utility.FormatCurrency(totalEssenceSpent);
 

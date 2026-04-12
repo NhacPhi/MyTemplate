@@ -17,7 +17,7 @@ public class CharacterScene : WindowController
     {
         btnExit.onClick.AddListener(() =>
         {
-            ui.CloseWindowScene();
+            ui.CloseWindowScene(ScreenIds.CharacterScene);
             save.SaveDataToDisk(GameSaveType.PlayerInfo);
         });
 
