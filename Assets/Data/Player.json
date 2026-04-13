@@ -10,7 +10,7 @@
       "Jade": 1200,
       "Coin": 4619080,
       "RelicEssence": 8558760,
-      "ArmorPrimorite": 1000,
+      "ArmorPrimorite": 1000000,
       "Ticket": 0
     },
     "items": [
@@ -70,9 +70,9 @@
         "quantity": 1
       },
       {
-        "id": "Lamian_Noodies",
-        "type": "Food",
-        "quantity": 10
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 1
       },
       {
         "id": "Yellow_Jade_Chunk",
@@ -85,9 +85,9 @@
         "quantity": 1
       },
       {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 1
+        "id": "Lamian_Noodies",
+        "type": "Food",
+        "quantity": 10
       },
       {
         "id": "Garnet_Chunk",
@@ -95,14 +95,14 @@
         "quantity": 1
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 28
       },
       {
         "id": "Garnet_Fragment",
@@ -115,13 +115,13 @@
         "quantity": 1
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 28
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
+        "id": "DragonKing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -160,13 +160,13 @@
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
         "quantity": 1
       },
       {
@@ -198,8 +198,22 @@
         "equip": "BullDemonKing"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
-        "template_id": "Moonlit_Firelfy",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
+        "template_id": "Triple_Edged_Blade",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -212,32 +226,18 @@
         "equip": ""
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
+        "template_id": "Moonlit_Firelfy",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "template_id": "FireLance_Ring_Damasl",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": "ThirdPrinceNezha"
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
-        "template_id": "Triple_Edged_Blade",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
@@ -646,11 +646,11 @@
       },
       {
         "position": 4,
-        "character_id": "ShaWujing"
+        "character_id": "TangSanZang"
       },
       {
         "position": 5,
-        "character_id": "TangSanZang"
+        "character_id": "ShaWujing"
       },
       {
         "position": 6,

@@ -19,10 +19,12 @@ public class ArmorTooltipUI : MonoBehaviour
     [SerializeField] private Button btnEquip;
     [SerializeField] private Button btnUnequip;
     [SerializeField] private Button btnChange;
+    [SerializeField] private Button btnUpgrade;
 
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventoryManager;
     [Inject] PlayerCharacterManager playerCharacterManager;
+    [Inject] UIManager uiManager;
 
     public string CurrentCharacterID = "";
     private string currentArmorPart;
@@ -76,6 +78,11 @@ public class ArmorTooltipUI : MonoBehaviour
                 UIEvent.OnSelectCharacterAvatar(CurrentCharacterID);
             }
         });
+
+        btnUpgrade.onClick.AddListener(() =>
+        {
+            uiManager.OpenWindowScene(ScreenIds.UpgradeArmorScene);
+        });
     }
 
     private void OnDisable()
@@ -84,6 +91,7 @@ public class ArmorTooltipUI : MonoBehaviour
         btnEquip.onClick.RemoveAllListeners();
         btnUnequip.onClick.RemoveAllListeners();
         btnChange.onClick.RemoveAllListeners();
+        btnUpgrade.onClick.RemoveAllListeners();
     }
 
     private void OnDestroy()

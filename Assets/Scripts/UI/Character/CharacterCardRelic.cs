@@ -157,9 +157,6 @@ public class CharacterCardRelic : CharacterCard
                 weaponEmpty.gameObject.SetActive(true);
             }
 
-            //btnChange.gameObject.SetActive(false);
-            //btnEquip.gameObject.SetActive(false);
-            //btnUnEquip.gameObject.SetActive(false);
         }
     }
 
