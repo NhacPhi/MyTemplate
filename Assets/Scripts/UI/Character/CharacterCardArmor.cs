@@ -148,8 +148,7 @@ public class CharacterCardArmor : CharacterCard
             for(int i = 0; i < setBonusConfigs.Count; i++)
             {
                 var name = LocalizationManager.Instance.GetLocalizedValue(setBonusConfigs[i].Name);
-                var content = string.Format(LocalizationManager.Instance.GetLocalizedValue("UI_SET_BONUS_CONTENT"),
-                    Utility.GetContextByStatType(setBonusConfigs[i].Stat), Utility.GetConvertStatValueToString(setBonusConfigs[i].Value, setBonusConfigs[i].Modifier));
+                var content = setBonusConfigs[i].GetConentBonus();
                 setBonusUIs[i].UpdateSetBonusUI(name, content);
 
                 setBonusUIs[i].gameObject.SetActive(true);

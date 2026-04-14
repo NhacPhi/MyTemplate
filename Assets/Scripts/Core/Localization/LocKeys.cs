@@ -105,7 +105,7 @@ public static class LocKeys
 
     public const long UI_PENETRATION = 1924176688;
 
-    public const long UI_CRITDMG_RES = 1731264808;
+    public const long UI_CRIT_DMG_RES = 297061211;
 
     public const long UI_UPGRADE_LEVEL = 3963368898;
 

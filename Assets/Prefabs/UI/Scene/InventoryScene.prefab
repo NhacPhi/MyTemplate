@@ -664,9 +664,9 @@ RectTransform:
   - {fileID: 7868026774702972908}
   m_Father: {fileID: 4444346038163673847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418910553069479898
@@ -4231,9 +4231,9 @@ RectTransform:
   - {fileID: 6930102291292725780}
   m_Father: {fileID: 4444346038163673847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1073587402396176317
@@ -4933,7 +4933,7 @@ GameObject:
   - component: {fileID: 2704280324608374034}
   - component: {fileID: 279558681809783186}
   m_Layer: 5
-  m_Name: UI_CRIT_RARE
+  m_Name: UI_CRIT_RATE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6552,7 +6552,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -194.5}
-  m_SizeDelta: {x: 525, y: 140}
+  m_SizeDelta: {x: 525, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4737909875067404898
 MonoBehaviour:
@@ -6684,9 +6684,9 @@ RectTransform:
   - {fileID: 2614896748973822947}
   m_Father: {fileID: 4444346038163673847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8340752975377102817
@@ -9093,7 +9093,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 37.0896, y: -491}
-  m_SizeDelta: {x: 440, y: 55.46}
+  m_SizeDelta: {x: 440, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3438189698473603345
 CanvasRenderer:
@@ -9223,7 +9223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7503365709449532795
 RectTransform:
   m_ObjectHideFlags: 0

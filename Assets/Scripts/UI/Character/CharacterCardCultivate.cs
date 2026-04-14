@@ -60,7 +60,7 @@ public class CharacterCardCultivate : CharacterCard
         // Base info
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
 
-        txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
+        txtLevel.text = data.Level.ToString() + "/" + Definition.MAX_CHARACTER_LEVEL.ToString();
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
         var expTier = Utility.GetExpConfigIDByCharacterRare(config.Rare);
@@ -87,7 +87,7 @@ public class CharacterCardCultivate : CharacterCard
         txtCurrentATK.text = currentATK.ToString();
         txtCurrentDEF.text = currentDEF.ToString();
 
-        if (data.Level < 100)
+        if (data.Level < Definition.MAX_CHARACTER_LEVEL)
         {
             txtNextHP.text = nextHP.ToString();
             txtNextATK.text = nextATK.ToString();

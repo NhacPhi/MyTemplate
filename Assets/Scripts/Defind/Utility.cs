@@ -181,4 +181,81 @@ public static class Utility
         
         return amount.ToString();
     }
+
+    // ═══════════════════════════════════════
+    // Armor Upgrade Formulas
+    // ═══════════════════════════════════════
+
+    /// <summary>
+    /// Tính coin cần để nâng cấp armor lên level chỉ định.
+    /// Cost(level) = 2000 + 800 × (level - 1)²
+    /// </summary>
+    public static int GetCoinNeedToUpgradeArmor(int level)
+    {
+        return 2000 + 800 * (level - 1) * (level - 1);
+    }
+
+    /// <summary>
+    /// Tính ArmorPrimorite cần để nâng cấp armor lên level chỉ định.
+    /// Cost(level) = 500 + 200 × (level - 1)²
+    /// </summary>
+    public static int GetPrimoriteNeedToUpgradeArmor(int level)
+    {
+        return 500 + 200 * (level - 1) * (level - 1);
+    }
+
+    /// <summary>
+    /// Tính tổng coin cần để nâng từ fromLevel lên toLevel.
+    /// </summary>
+    public static int GetTotalCoinForArmorUpgrade(int fromLevel, int toLevel)
+    {
+        int total = 0;
+        for (int lv = fromLevel + 1; lv <= toLevel; lv++)
+        {
+            total += GetCoinNeedToUpgradeArmor(lv) - GetCoinNeedToUpgradeArmor(lv - 1);
+        }
+        return total;
+    }
+
+    /// <summary>
+    /// Tính tổng ArmorPrimorite cần để nâng từ fromLevel lên toLevel.
+    /// </summary>
+    public static int GetTotalPrimoriteForArmorUpgrade(int fromLevel, int toLevel)
+    {
+        int total = 0;
+        for (int lv = fromLevel + 1; lv <= toLevel; lv++)
+        {
+            total += GetPrimoriteNeedToUpgradeArmor(lv) - GetPrimoriteNeedToUpgradeArmor(lv - 1);
+        }
+        return total;
+    }
+
+    /// <summary>
+    /// Tính ArmorPrimorite nhận được khi quy đổi (salvage) armor.
+    /// BaseValue × RarityMultiplier + 50 × Level
+    /// </summary>
+    public static int GetArmorPrimoriteFromSalvage(Rare rare, int level)
+    {
+        int baseValue;
+        switch (rare)
+        {
+            case Rare.Common:    baseValue = 100; break;
+            case Rare.Uncommon:  baseValue = 200; break;
+            case Rare.Rare:      baseValue = 400; break;
+            case Rare.Epic:      baseValue = 800; break;
+            case Rare.Legendary: baseValue = 1600; break;
+            default:             baseValue = 100; break;
+        }
+        return baseValue + 50 * level;
+    }
+
+    /// <summary>
+    /// Tính main stat của armor theo level.
+    /// MainStat(level) = baseValue + baseValue × 0.12 × level
+    /// </summary>
+    public static int GetArmorMainStatByLevel(float baseValue, int level)
+    {
+        return Convert.ToInt32(baseValue + baseValue * 0.12f * level);
+    }
 }
+

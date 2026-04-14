@@ -20,6 +20,7 @@ public class GameDataBase
     private Dictionary<string, StarUpConfig> StarUpConfigs = new Dictionary<string, StarUpConfig>();
     private Dictionary<string, SetBonusConfig> SetBonusConfigs = new Dictionary<string, SetBonusConfig>();
     private Dictionary<string, PassiveConfig> PassiveConfigs = new Dictionary<string, PassiveConfig>();
+    private Dictionary<string, SubstatPoolConfig> SubstatPoolConfigs = new Dictionary<string, SubstatPoolConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -38,6 +39,8 @@ public class GameDataBase
     private const string SetBousConfigAdress = "SetBonusConfig";
 
     private const string PassiveConfigAddresss = "PassiveConfig";
+
+    private const string SubstatPoolConfigAddress = "SubstatPoolConfig";
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
@@ -54,9 +57,10 @@ public class GameDataBase
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(StarUpConfigAddress, token: cancellationToken)
         );
 
-        var (passiveText, setBonusText) = await UniTask.WhenAll(
+        var (passiveText, setBonusText, substatPoolText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(PassiveConfigAddresss, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SetBousConfigAdress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SetBousConfigAdress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SubstatPoolConfigAddress, token: cancellationToken)
         );
 
         ItemConfigs = Json.DeserializeObject<Dictionary<string, ItemConfig>>(itemText.text);
@@ -70,6 +74,7 @@ public class GameDataBase
 
         PassiveConfigs = Json.DeserializeObject<Dictionary<string, PassiveConfig>>(passiveText.text);
         SetBonusConfigs = Json.DeserializeObject<Dictionary<string, SetBonusConfig>>(setBonusText.text);
+        SubstatPoolConfigs = Json.DeserializeObject<Dictionary<string, SubstatPoolConfig>>(substatPoolText.text);
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
@@ -254,6 +259,12 @@ public class GameDataBase
         return passiveConfig;
     }
 
+    public SubstatPoolConfig GetSubstatPoolConfig(string key)
+    {
+        SubstatPoolConfigs.TryGetValue(key, out SubstatPoolConfig substatConfig);
+
+        return substatConfig;
+    }
 }
 
 

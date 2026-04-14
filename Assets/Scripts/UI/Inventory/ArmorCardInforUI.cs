@@ -55,8 +55,9 @@ public class ArmorCardInforUI : MonoBehaviour
             mainstatUI.gameObject.transform.SetAsFirstSibling();
             mainstatUI.UpdateStat((int)mainstat.Value, item.Level);
 
-            txtTitleSet.text = "ATK Set(0/6)";
-            txtDescriptionSet.text = "Increasece ATK by 20%";
+            var setbonus = gameDataBase.GetSetBonusConfig(itemConfig.Armor.ArmorSet);
+            txtTitleSet.text = setbonus.GetTitleSetBonus();
+            txtDescriptionSet.text = setbonus.GetConentBonus();
         }
 
 

@@ -16,7 +16,15 @@ public static class Definition
     public readonly static Color32 UncommonColor = new Color32(31, 194, 245, 255);
     public readonly static Color32 CommonColor = new Color32(162, 209, 233, 255);
 
-    public static int CharacterMaxLevel = 100;
+    //
+    public static int MAX_ARMOR_LEVEL = 15;
+    public static int MAX_ARMOR_SUBSTATS = 4;
+    public static int ARMOR_SUBSTAT_INTERVAL = 3;
+    public static int MAX_WEAPON_LEVEL = 100;
+    public static int MAX_WEAPON_ASCEND = 6;
+
+    public static int MAX_CHARACTER_LEVEL = 100;
+    public static int MAX_SLOT_CHARACTER = 6;
 }
  
 public enum Rare

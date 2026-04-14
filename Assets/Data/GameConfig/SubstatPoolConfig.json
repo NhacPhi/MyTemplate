@@ -1,0 +1,54 @@
+{
+    "Warrior_Pool": {
+        "Pools": [
+            {
+                "stat_type": "HP",
+                "min": 100.0,
+                "max": 2000.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "ATK",
+                "min": 100.0,
+                "max": 1000.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "DEF",
+                "min": 100.0,
+                "max": 300.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "SPEED",
+                "min": 2.0,
+                "max": 5.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "CRIT_RATE",
+                "min": 3.0,
+                "max": 6.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "CRIT_DMG",
+                "min": 10.0,
+                "max": 20.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "PEN",
+                "min": 10.0,
+                "max": 20.0,
+                "modifier_type": "Constant"
+            },
+            {
+                "stat_type": "CRIT_DMG_RES",
+                "min": 10.0,
+                "max": 20.0,
+                "modifier_type": "Constant"
+            }
+        ]
+    }
+}

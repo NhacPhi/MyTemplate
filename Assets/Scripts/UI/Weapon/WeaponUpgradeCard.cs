@@ -28,9 +28,6 @@ public class WeaponUpgradeCard : MonoBehaviour
 
     [SerializeField] private GameObject upgradeOb;
     [SerializeField] private GameObject readedOb;
-
-    private const int MAX_LEVEL_UPGRADE = 100;
-
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventory;
     [Inject] CurrencyManager currencyMM;
@@ -78,7 +75,7 @@ public class WeaponUpgradeCard : MonoBehaviour
             var weaponSave = inventory.GetWeapon(weaponUUID);
             var config = gameDataBase.GetItemConfig(weaponSave.TemplateID);
 
-            if (weaponSave.CurrentLevel >= MAX_LEVEL_UPGRADE)
+            if (weaponSave.CurrentLevel >= Definition.MAX_WEAPON_LEVEL)
             {
                 readedOb.gameObject.SetActive(true);
                 upgradeOb.gameObject.SetActive(false);
@@ -92,7 +89,7 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = weaponSave.CurrentLevel;
             txtLevel.text = level.ToString();
-            txtNextLevel.text = level < 100 ? (level + 1).ToString() :
+            txtNextLevel.text = level < Definition.MAX_WEAPON_LEVEL ? (level + 1).ToString() :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
 
             int currentHP = config.Weapon.GetStatByLevel(StatType.HP, level);
@@ -104,8 +101,8 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtCurentHP.text = currentHP.ToString();
             txtCurrentATK.text = currentATK.ToString();
 
-            txtNextHP.text = weaponSave.CurrentLevel < MAX_LEVEL_UPGRADE ? nextHP.ToString() : currentHP.ToString();
-            txtNextATK.text = weaponSave.CurrentLevel < MAX_LEVEL_UPGRADE ?  nextATK.ToString() : currentATK.ToString();
+            txtNextHP.text = weaponSave.CurrentLevel < Definition.MAX_WEAPON_LEVEL ? nextHP.ToString() : currentHP.ToString();
+            txtNextATK.text = weaponSave.CurrentLevel < Definition.MAX_WEAPON_LEVEL ?  nextATK.ToString() : currentATK.ToString();
 
             uiUpgrade.UpdateUI(weaponSave.CurrentUpgrade);
 

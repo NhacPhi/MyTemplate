@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using VContainer;
 using UnityEngine.UI;
+
 public class WeaponAscendCard : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI txtName;
@@ -32,7 +33,6 @@ public class WeaponAscendCard : MonoBehaviour
 
     private string currentTargetWeaponID;
     //private int currentEditingSlotIndex = -1;
-    private const int MAX_LEVEL_UPGRADE = 6;
 
     public List<string> GetSelectedMaterials()
     {
@@ -229,7 +229,7 @@ public class WeaponAscendCard : MonoBehaviour
             ItemConfig config = gameDataBase.GetItemConfig(data.TemplateID);
             var passiveConfig = gameDataBase.GetPassiveConfig(config.Weapon.PassiveID);
 
-            if(data.CurrentUpgrade >= MAX_LEVEL_UPGRADE)
+            if(data.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND)
             {
                 reachedOb.gameObject.SetActive(true);
                 ascendOb.gameObject.SetActive(false);
@@ -242,7 +242,7 @@ public class WeaponAscendCard : MonoBehaviour
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;
-            txtLevel.text = level.ToString() + "/100";
+            txtLevel.text = level.ToString() + "/" + Definition.MAX_WEAPON_LEVEL.ToString();
 
             upgradeUI.UpdateUI(data.CurrentUpgrade);
 

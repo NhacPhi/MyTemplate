@@ -7,6 +7,7 @@ from src.builders.narrative_builder import ActorConfigBuilder, DialogueConfigBui
 from src.builders.set_bonus_builder import SetBonusBuilder
 from src.builders.starup_builder import StarUpBuilder
 from src.builders.passive_skill_builder import PassiveSkillBuilder
+from src.builders.substat_builder import SubstatPoolBuilder
 import config
 import os
 
@@ -40,6 +41,9 @@ def main():
 
     starup_config = StarUpBuilder(config_path)
     starup_config.run()
+
+    substat_config = SubstatPoolBuilder(config_path)
+    substat_config.run()
 
     narrative_path = os.path.join(config.INPUT_FOLDER, config.GAME_NARRATIVE_CONFIG_FILE)
     ator_config = ActorConfigBuilder(narrative_path)

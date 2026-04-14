@@ -52,7 +52,7 @@ public class CharacterUpgradeManager
     public int GetExpNeededForTargetLevel(int targetLevel)
     {
         var saveData = _profile.SaveData;
-        if (targetLevel <= saveData.Level || targetLevel > Definition.CharacterMaxLevel)
+        if (targetLevel <= saveData.Level || targetLevel > Definition.MAX_CHARACTER_LEVEL)
             return 0;
 
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
@@ -76,7 +76,7 @@ public class CharacterUpgradeManager
     public void AddExp(int amount)
     {
         var saveData = _profile.SaveData;
-        if (amount < 0 || saveData.Level >= Definition.CharacterMaxLevel) return;
+        if (amount < 0 || saveData.Level >= Definition.MAX_CHARACTER_LEVEL) return;
 
         saveData.Exp += amount;
         bool levelChanged = false;
@@ -85,13 +85,13 @@ public class CharacterUpgradeManager
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
         var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
-        while (saveData.Level < Definition.CharacterMaxLevel)
+        while (saveData.Level < Definition.MAX_CHARACTER_LEVEL)
         {
             var nextLevelStr = (saveData.Level + 1).ToString();
 
             if (!expConfig.UpExp.TryGetValue(nextLevelStr, out int expNeedToUpdateLevel))
             {
-                saveData.Level = Definition.CharacterMaxLevel;
+                saveData.Level = Definition.MAX_CHARACTER_LEVEL;
                 saveData.Exp   = 0;
                 levelChanged   = true;
                 break;
@@ -120,7 +120,7 @@ public class CharacterUpgradeManager
             }
         }
 
-        if (saveData.Level >= Definition.CharacterMaxLevel)
+        if (saveData.Level >= Definition.MAX_CHARACTER_LEVEL)
             saveData.Exp = 0;
 
         //if (levelChanged)
@@ -136,7 +136,7 @@ public class CharacterUpgradeManager
     public bool UseExpItem(string itemID, int quantity)
     {
         var saveData = _profile.SaveData;
-        if (quantity <= 0 || saveData.Level >= Definition.CharacterMaxLevel) return false;
+        if (quantity <= 0 || saveData.Level >= Definition.MAX_CHARACTER_LEVEL) return false;
 
         var itemConfig = _gameDataBase.GetItemConfig(itemID);
         if (itemConfig == null || itemConfig.Type != ItemType.Exp || itemConfig.Exp == null) return false;
@@ -176,7 +176,7 @@ public class CharacterUpgradeManager
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
         var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
-        while (level < Definition.CharacterMaxLevel)
+        while (level < Definition.MAX_CHARACTER_LEVEL)
         {
             string nextLevelStr = (level + 1).ToString();
             if (!expConfig.UpExp.TryGetValue(nextLevelStr, out int reqExp)) break;

@@ -203,7 +203,7 @@ public class PartySetupControllerUI : MonoBehaviour
     private void ReorderHierarchy()
     {
         // Duyệt qua từ vị trí 1 đến 6 (hoặc số lượng slot bạn có)
-        for (int i = 6; i >=1 ; i--)
+        for (int i = Definition.MAX_SLOT_CHARACTER; i >=1 ; i--)
         {
             // Lấy transform của Slot tương ứng (Index trong List là i-1)
             Transform slotTransform = _slotPositions[i - 1].transform;
@@ -228,7 +228,7 @@ public class PartySetupControllerUI : MonoBehaviour
         {
             // TRƯỜNG HỢP: CHƯA CÓ -> TÌM CHỖ TRỐNG ĐỂ THÊM
             int emptyPos = -1;
-            for (int i = 1; i <= 6; i++)
+            for (int i = 1; i <= Definition.MAX_SLOT_CHARACTER; i++)
             {
                 if (!_activeUISlots.ContainsKey(i) || _activeUISlots[i] == null)
                 {

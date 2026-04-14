@@ -22,7 +22,7 @@ public class ForgeManager
         if (weaponSave == null) return false;
 
         int level = weaponSave.CurrentLevel;
-        if (level >= Definition.CharacterMaxLevel) return false; // Thường giới hạn cấp vũ khí bằng cấp nhân vật hoặc 100
+        if (level >= Definition.MAX_CHARACTER_LEVEL) return false; // Thường giới hạn cấp vũ khí bằng cấp nhân vật hoặc 100
 
         int coinNeeded = Utility.GetCoinNeedToUpgradeWeapon(level + 1) - Utility.GetCoinNeedToUpgradeWeapon(level);
         
@@ -58,7 +58,7 @@ public class ForgeManager
         if (weaponSave == null) return 0;
 
         int currentLevel = weaponSave.CurrentLevel;
-        int maxLevel = Definition.CharacterMaxLevel;
+        int maxLevel = Definition.MAX_CHARACTER_LEVEL;
 
         int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
         int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);
@@ -189,7 +189,7 @@ public class ForgeManager
         if (weaponSave == null) return (0, "0", "0");
 
         int currentLevel = weaponSave.CurrentLevel;
-        int maxLevel = Definition.CharacterMaxLevel;
+        int maxLevel = Definition.MAX_CHARACTER_LEVEL;
 
         int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
         int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);
@@ -237,4 +237,213 @@ public class ForgeManager
 
         return Utility.FormatCurrency(coinNeeded);
     }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ARMOR UPGRADE SYSTEM
+    // ═══════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Nâng cấp armor từ level hiện tại lên targetLevel.
+    /// Tự động xử lý substat mở khóa/nâng cấp tại các milestone (3, 6, 9, 12, 15).
+    /// </summary>
+    public bool UpgradeArmor(string armorUUID, int targetLevel, GameDataBase gameDataBase)
+    {
+        var armorSave = _inventoryManager.GetArmor(armorUUID);
+        if (armorSave == null) return false;
+
+        int currentLevel = armorSave.Level;
+        if (targetLevel <= currentLevel || targetLevel > Definition.MAX_ARMOR_LEVEL) return false;
+
+        int coinNeeded = Utility.GetTotalCoinForArmorUpgrade(currentLevel, targetLevel);
+        int primoriteNeeded = Utility.GetTotalPrimoriteForArmorUpgrade(currentLevel, targetLevel);
+
+        if (_currencyManager.GetQuantityCurrecy(CurrencyType.Coin) < coinNeeded) return false;
+        if (_currencyManager.GetQuantityCurrecy(CurrencyType.ArmorPrimorite) < primoriteNeeded) return false;
+
+        // Trừ nguyên liệu
+        _currencyManager.Spend(CurrencyType.Coin, coinNeeded);
+        _currencyManager.Spend(CurrencyType.ArmorPrimorite, primoriteNeeded);
+
+        // Xử lý substat tại các milestone
+        var config = gameDataBase.GetItemConfig(armorSave.TemplateID);
+
+        if (config != null && config.Armor != null)
+        {
+            var poolConfig = gameDataBase.GetSubstatPoolConfig(config.Armor.SubstatPoolID);
+            ProcessSubStats(armorSave, poolConfig, currentLevel, targetLevel);
+        }
+
+        // Cập nhật level
+        armorSave.Level = targetLevel;
+
+        // Thông báo UI
+        UIEvent.OnArmorUpgraded?.Invoke(armorUUID);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Xử lý mở khóa/nâng cấp substat khi level vượt qua các milestone (mỗi 3 level).
+    /// </summary>
+    private void ProcessSubStats(ArmorSaveData armorSave, SubstatPoolConfig poolConfig, int fromLevel, int toLevel)
+    {
+        if (armorSave.Substats == null)
+            armorSave.Substats = new List<RolledSubStat>();
+
+        for (int lv = fromLevel + 1; lv <= toLevel; lv++)
+        {
+            // Kiểm tra milestone: level chia hết cho ARMOR_SUBSTAT_INTERVAL (3, 6, 9, 12, 15)
+            if (lv % Definition.ARMOR_SUBSTAT_INTERVAL == 0)
+            {
+                if (armorSave.Substats.Count < Definition.MAX_ARMOR_SUBSTATS)
+                {
+                    // Mở khóa substat mới
+                    RollNewSubStat(armorSave, poolConfig);
+                }
+                else
+                {
+                    // Nâng cấp 1 substat ngẫu nhiên
+                    UpgradeRandomSubStat(armorSave, poolConfig);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Random 1 substat mới từ pool, không trùng substat đã có.
+    /// </summary>
+    private void RollNewSubStat(ArmorSaveData armorSave, SubstatPoolConfig poolConfig)
+    {
+
+        if (poolConfig == null || poolConfig.Pools.Count == 0) return;
+
+        // Lọc pool: bỏ các stat đã có
+        var existingTypes = new HashSet<StatType>();
+        foreach (var sub in armorSave.Substats)
+        {
+            existingTypes.Add(sub.Type);
+        }
+
+        // bỏ cả main task
+        //existingTypes.Add(armorConfig.MainStat.Type);
+
+        var availablePool = new List<SubstatCompoment>();
+        foreach (var pool in poolConfig.Pools)
+        {
+            if (!existingTypes.Contains(pool.Type))
+            {
+                availablePool.Add(pool);
+            }
+        }
+
+        if (availablePool.Count == 0) return;
+
+        // Random chọn 1 stat từ pool
+        int randomIndex = Random.Range(0, availablePool.Count);
+        var chosen = availablePool[randomIndex];
+
+        // Random giá trị trong [Min, Max]
+        int rolledValue = UnityEngine.Mathf.RoundToInt(
+            UnityEngine.Random.Range(chosen.Min, chosen.Max)
+        );
+
+        var newSub = new RolledSubStat(chosen.Type, rolledValue, chosen.ModifierType);
+        armorSave.Substats.Add(newSub);
+    }
+
+    /// <summary>
+    /// Nâng cấp 1 substat ngẫu nhiên trong danh sách hiện có.
+    /// </summary>
+    private void UpgradeRandomSubStat(ArmorSaveData armorSave, SubstatPoolConfig poolConfig)
+    {
+        if (armorSave.Substats.Count == 0) return;
+
+        // Chọn ngẫu nhiên 1 substat
+        int randomIndex = Random.Range(0, armorSave.Substats.Count);
+        var subToUpgrade = armorSave.Substats[randomIndex];
+
+        // Tìm pool config tương ứng để lấy range bonus
+        SubstatCompoment matchingPool = null;
+        if (poolConfig.Pools != null)
+        {
+            foreach (var pool in poolConfig.Pools)
+            {
+                if (pool.Type == subToUpgrade.Type)
+                {
+                    matchingPool = pool;
+                    break;
+                }
+            }
+        }
+
+        // Tính bonus: random 70%-100% của min value
+        int bonusValue;
+        if (matchingPool != null)
+        {
+            bonusValue = Mathf.RoundToInt(
+                Random.Range(matchingPool.Min * 0.7f, matchingPool.Min)
+            );
+        }
+        else
+        {
+            bonusValue = 1; // Fallback
+        }
+
+        if (bonusValue < 1) bonusValue = 1;
+        subToUpgrade.Upgrade(bonusValue);
+    }
+
+    /// <summary>
+    /// Tính chi phí nâng cấp armor từ fromLevel lên toLevel.
+    /// </summary>
+    public (int coin, int primorite) GetUpgradeArmorCost(int fromLevel, int toLevel)
+    {
+        int coin = Utility.GetTotalCoinForArmorUpgrade(fromLevel, toLevel);
+        int primorite = Utility.GetTotalPrimoriteForArmorUpgrade(fromLevel, toLevel);
+        return (coin, primorite);
+    }
+
+    /// <summary>
+    /// Trả về lượng ArmorPrimorite nhận được khi quy đổi armor.
+    /// </summary>
+    public int GetSalvagePrimoriteValue(string armorUUID)
+    {
+        var armorSave = _inventoryManager.GetArmor(armorUUID);
+        if (armorSave == null) return 0;
+        return Utility.GetArmorPrimoriteFromSalvage(armorSave.Rare, armorSave.Level);
+    }
+
+    /// <summary>
+    /// Quy đổi 1 armor thành ArmorPrimorite. Armor đang equipped sẽ bị từ chối.
+    /// </summary>
+    public bool SalvageArmor(string armorUUID)
+    {
+        var armorSave = _inventoryManager.GetArmor(armorUUID);
+        if (armorSave == null) return false;
+        if (!string.IsNullOrEmpty(armorSave.Equip)) return false; // Đang mặc, không được quy đổi
+
+        int primorite = Utility.GetArmorPrimoriteFromSalvage(armorSave.Rare, armorSave.Level);
+
+        _inventoryManager.RemoveArmor(armorUUID);
+        _currencyManager.Add(CurrencyType.ArmorPrimorite, primorite);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Quy đổi nhiều armor cùng lúc thành ArmorPrimorite.
+    /// </summary>
+    public int SalvageArmors(System.Collections.Generic.List<string> armorUUIDs)
+    {
+        int totalSalvaged = 0;
+        foreach (var uuid in armorUUIDs)
+        {
+            if (SalvageArmor(uuid))
+            {
+                totalSalvaged++;
+            }
+        }
+        return totalSalvaged;
+    }
 }
+

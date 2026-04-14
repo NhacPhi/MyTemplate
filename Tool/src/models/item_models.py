@@ -13,13 +13,6 @@ class ExpComponent:
     value: int
 
 @dataclass
-class SubStatPoolData:
-    type: str
-    min: float
-    max: float
-    mod_type: str
-
-@dataclass
 class MainStatData:
     type: str
     value: float
@@ -29,8 +22,9 @@ class MainStatData:
 class ArmorComponent:
     part: str
     armor_set: str
+    substat_pool_id: str
     main_stat: Optional[MainStatData] = None
-    random_substat_pool: List[SubStatPoolData] = field(default_factory=list)
+
 
 @dataclass
 class ItemModel:

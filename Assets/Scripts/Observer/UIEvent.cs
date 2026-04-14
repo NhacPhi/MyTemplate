@@ -48,6 +48,10 @@ public static class UIEvent
 
     public static Action<string> OnUpdateArmorTooltipUI;
 
+    // Armor Upgrade
+    public static Action<string> OnSelectArmorUpgrade;
+    public static Action<string> OnArmorUpgraded;
+
     //Tooltop
     public static Action<bool> OnShowTooltipUI;
     public static Action OnHideAllToolTipUI;

@@ -131,14 +131,14 @@ public class ArmorComponent
     [JsonProperty("main_stat")]
     public MainStatConfig MainStat;
 
-    [JsonProperty("random_substat_pool")]
-    public List<SubStatPoolConfig> RandomSubstatPool;
+    [JsonProperty("substat_pool_id")]
+    public string SubstatPoolID; //List<SubstatCompoment>
 }
 
 [Serializable]
-public class SubStatPoolConfig
+public class SubstatCompoment
 {
-    [JsonProperty("type")]
+    [JsonProperty("stat_type")]
     public StatType Type;
 
     [JsonProperty("min")]
@@ -147,7 +147,7 @@ public class SubStatPoolConfig
     [JsonProperty("max")]
     public float Max;
 
-    [JsonProperty("mod_type")] 
+    [JsonProperty("modifier_type")] 
     public ModifyType ModifierType;
 }
 

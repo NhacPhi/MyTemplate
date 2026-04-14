@@ -71,7 +71,7 @@ public class CharacterCardAscend : CharacterCard
         CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
-        txtLevel.text = data.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
+        txtLevel.text = data.Level.ToString() + "/" + Definition.MAX_CHARACTER_LEVEL.ToString();
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(config.Rare);
 

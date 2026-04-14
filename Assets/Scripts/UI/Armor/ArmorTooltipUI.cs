@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -82,6 +82,7 @@ public class ArmorTooltipUI : MonoBehaviour
         btnUpgrade.onClick.AddListener(() =>
         {
             uiManager.OpenWindowScene(ScreenIds.UpgradeArmorScene);
+            UIEvent.OnSelectArmorUpgrade?.Invoke(currentArmorPart);
         });
     }
 
@@ -139,10 +140,9 @@ public class ArmorTooltipUI : MonoBehaviour
 
         var setBonusConfig = gameDataBase.GetSetBonusConfig(armorConfig.Armor.ArmorSet);
 
-        txtTitleSet.text = string.Format(LocalizationManager.Instance.GetLocalizedValue("STR_SET_BONUS"), setBonusConfig.Pieces);
+        txtTitleSet.text = setBonusConfig.GetTitleSetBonus();
 
-        txtDescriptionSet.text = string.Format(LocalizationManager.Instance.GetLocalizedValue("UI_SET_BONUS_CONTENT"), 
-            Utility.GetContextByStatType(setBonusConfig.Stat), Utility.GetConvertStatValueToString(setBonusConfig.Value, setBonusConfig.Modifier));
+        txtDescriptionSet.text = setBonusConfig.GetConentBonus();
 
         UpdateButtonStates(armorSaveData, armorConfig.Armor.Part, CurrentCharacterID);
 

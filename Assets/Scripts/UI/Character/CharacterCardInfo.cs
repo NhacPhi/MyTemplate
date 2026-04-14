@@ -63,7 +63,7 @@ public class CharacterCardInfo : CharacterCard
         upgrades.UpdateUI(characterProfile.SaveData.StarUp);
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
-        txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.CharacterMaxLevel.ToString();
+        txtLevel.text = characterProfile.SaveData.Level.ToString() + "/" + Definition.MAX_CHARACTER_LEVEL.ToString();
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(characterConfig.Rare);
 

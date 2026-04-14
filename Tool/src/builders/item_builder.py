@@ -1,7 +1,7 @@
 import pandas as pd
 import config
 from src.builders.base_builder import BaseBuilder
-from src.models.item_models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, SubStatPoolData, MainStatData
+from src.models.item_models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, MainStatData
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -57,27 +57,12 @@ class ItemConfigBuilder(BaseBuilder):
                     m_modifier = str(row['modifier_type']) if pd.notna(row['modifier_type']) else ""
 
                     main_stat_obj = MainStatData(type=m_type, value=m_value, mod_type=m_modifier) if m_type else None
-                    
-                    parsed_substats = []
-                    raw_pool = row['random_substat_pool']
-                    
-                    if pd.notna(raw_pool) and str(raw_pool).strip() != "":
-                        pool_items = str(raw_pool).split('|')
-                        for item in pool_items:
-                            parts = item.split(',')
-                            if len(parts) >= 3:
-                                parsed_substats.append(SubStatPoolData(
-                                    type=parts[0].strip(),
-                                    min=float(parts[1].strip()),
-                                    max=float(parts[2].strip()),
-                                    mod_type=str(parts[3].strip())
-                                ))
-                                
+          
                     master_data[w_id].armor_data = ArmorComponent(
                         part=str(row['Part']).strip() if pd.notna(row['Part']) else "",
                         armor_set=str(row['SetArmor']).strip() if pd.notna(row['SetArmor']) else "",
                         main_stat=main_stat_obj,
-                        random_substat_pool=parsed_substats
+                        substat_pool_id=str(row['substat_pool_id']) if pd.notna(row['substat_pool_id']) else ""
                     )                
 
         if "Item_Detail" in all_sheets:

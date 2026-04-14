@@ -25,7 +25,7 @@ public class UpgradeArmorCurrencyUI : MonoBehaviour
             case CurrencyType.Coin:
                 txtCoin.text = Utility.FormatCurrency(amount);
                 break;
-            case CurrencyType.RelicEssence:
+            case CurrencyType.ArmorPrimorite:
                 txtNumberArmorPrimorite.text = Utility.FormatCurrency(amount);
                 break;
             default: break;

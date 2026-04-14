@@ -10,7 +10,7 @@ public class UpgradeArmorScene : WindowController
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
 
-    private void Awake()
+    private void Start()
     {
         btnExit.onClick.AddListener(() =>
         {
