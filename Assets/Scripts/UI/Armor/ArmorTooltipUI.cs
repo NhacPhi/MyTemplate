@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -11,6 +12,11 @@ public class ArmorTooltipUI : MonoBehaviour
     [SerializeField] private ArmorItemUI armor;
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtScore;
+
+    [Header("MainStat")]
+    [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI txtStatType;
+    [SerializeField] private TextMeshProUGUI txtStatValue;
 
     [SerializeReference] private List<ArmorStatsUI> armorStats;
     [SerializeField] private TextMeshProUGUI txtTitleSet;
@@ -38,6 +44,7 @@ public class ArmorTooltipUI : MonoBehaviour
     private void OnEnable()
     {
         UIEvent.OnHideAllToolTipUI += Hide;
+        UIEvent.OnCloseUpgradeArmorScene += RefreshCurrentArmor;
 
         btnChange.onClick.AddListener(() =>
         {
@@ -89,6 +96,7 @@ public class ArmorTooltipUI : MonoBehaviour
     private void OnDisable()
     {
         UIEvent.OnHideAllToolTipUI -= Hide;
+        UIEvent.OnCloseUpgradeArmorScene -= RefreshCurrentArmor;
         btnEquip.onClick.RemoveAllListeners();
         btnUnequip.onClick.RemoveAllListeners();
         btnChange.onClick.RemoveAllListeners();
@@ -123,6 +131,12 @@ public class ArmorTooltipUI : MonoBehaviour
 
         ResetArmorStatsUI();
 
+        // Main Stat 
+        var mainStat = armorConfig.Armor.MainStat;
+        icon.sprite = gameDataBase.GetStatIcon(mainStat.Type);
+        txtStatType.text = Utility.GetContextByStatType(mainStat.Type);
+        txtStatValue.text = Utility.GetArmorMainStatByLevel(mainStat.Value, armorSaveData.Level).ToString();
+
         if (armorSaveData.Substats.Count > 0)
         {
             foreach (var obj in armorSaveData.Substats)
@@ -130,13 +144,6 @@ public class ArmorTooltipUI : MonoBehaviour
                 UpdateArmorSubstatsUI(obj);
             }
         }
-
-        var mainstat = gameDataBase.GetItemConfig(armorSaveData.TemplateID).Armor.MainStat;
-
-        var mainstatUI = armorStats.FirstOrDefault(u => u.Type == mainstat.Type);
-        mainstatUI.gameObject.SetActive(true);
-        mainstatUI.gameObject.transform.SetAsFirstSibling();
-        mainstatUI.UpdateStat((int)mainstat.Value, armorSaveData.Level);
 
         var setBonusConfig = gameDataBase.GetSetBonusConfig(armorConfig.Armor.ArmorSet);
 
@@ -211,6 +218,14 @@ public class ArmorTooltipUI : MonoBehaviour
                 armor.gameObject.SetActive(true);
                 armor.UpdateStat(stats.Value, stats.Level);
             }
+        }
+    }
+
+    private void RefreshCurrentArmor()
+    {
+        if (!string.IsNullOrEmpty(currentArmorPart))
+        {
+            UpdateArmorUI(currentArmorPart);
         }
     }
 

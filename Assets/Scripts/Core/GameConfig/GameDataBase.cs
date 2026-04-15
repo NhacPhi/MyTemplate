@@ -102,6 +102,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_image_character");
         atlasAddresses.Add("Atlas_skill_ui");
         atlasAddresses.Add("Atlas_icon_character_rare");
+        atlasAddresses.Add("Atlas_stat_icon");
 
 
         //foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
@@ -172,6 +173,12 @@ public class GameDataBase
         }
 
         return string.Empty;
+    }
+
+    public Sprite GetStatIcon(StatType type)
+    {
+        var key = type.ToString().ToLower() + "_icon";
+        return atlasProvider.GetSprite("Atlas_stat_icon", key);
     }
 
     public string GetCharacterRareID(CharacterRare rare)

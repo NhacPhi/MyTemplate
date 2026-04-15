@@ -255,7 +255,7 @@ public class ForgeManager
         if (targetLevel <= currentLevel || targetLevel > Definition.MAX_ARMOR_LEVEL) return false;
 
         int coinNeeded = Utility.GetTotalCoinForArmorUpgrade(currentLevel, targetLevel);
-        int primoriteNeeded = Utility.GetTotalPrimoriteForArmorUpgrade(currentLevel, targetLevel);
+        int primoriteNeeded = Utility.GetTotalPrimoriteForArmorUpgrade(currentLevel, targetLevel, armorSave.Rare);
 
         if (_currencyManager.GetQuantityCurrecy(CurrencyType.Coin) < coinNeeded) return false;
         if (_currencyManager.GetQuantityCurrecy(CurrencyType.ArmorPrimorite) < primoriteNeeded) return false;
@@ -396,10 +396,10 @@ public class ForgeManager
     /// <summary>
     /// Tính chi phí nâng cấp armor từ fromLevel lên toLevel.
     /// </summary>
-    public (int coin, int primorite) GetUpgradeArmorCost(int fromLevel, int toLevel)
+    public (int coin, int primorite) GetUpgradeArmorCost(int fromLevel, int toLevel, Rare rare)
     {
         int coin = Utility.GetTotalCoinForArmorUpgrade(fromLevel, toLevel);
-        int primorite = Utility.GetTotalPrimoriteForArmorUpgrade(fromLevel, toLevel);
+        int primorite = Utility.GetTotalPrimoriteForArmorUpgrade(fromLevel, toLevel, rare);
         return (coin, primorite);
     }
 

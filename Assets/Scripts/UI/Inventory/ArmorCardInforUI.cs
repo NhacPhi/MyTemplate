@@ -3,11 +3,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using VContainer;
 using System.Linq;
+using UnityEngine.UI;
 
 public class ArmorCardInforUI : MonoBehaviour
 {
     [SerializeField] private ArmorItemUI armor;
     [SerializeField] private TextMeshProUGUI txtNameItem;
+
+    [Header("MainStat")]
+    [SerializeField] private Image iconMainStat;
+    [SerializeField] private TextMeshProUGUI txtStatType;
+    [SerializeField] private TextMeshProUGUI txtStatValue;
 
     [SerializeField] private List<ArmorStatsUI> armorStats;
     [SerializeField] private TextMeshProUGUI txtTitleSet;
@@ -39,6 +45,12 @@ public class ArmorCardInforUI : MonoBehaviour
 
             ResetArmorStatsUI();
 
+            // Main Stat 
+            var mainStat = itemConfig.Armor.MainStat;
+            iconMainStat.sprite = gameDataBase.GetStatIcon(mainStat.Type);
+            txtStatType.text = Utility.GetContextByStatType(mainStat.Type);
+            txtStatValue.text = Utility.GetArmorMainStatByLevel(mainStat.Value, item.Level).ToString();
+
             armor.Init(item.UUID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;
             if (item.Substats.Count > 0)
@@ -48,12 +60,6 @@ public class ArmorCardInforUI : MonoBehaviour
                     UpdateArmorStatsUI(obj);
                 }
             }
-
-            var mainstat = gameDataBase.GetItemConfig(item.TemplateID).Armor.MainStat;
-            var mainstatUI = armorStats.FirstOrDefault(u => u.Type == mainstat.Type);
-            mainstatUI.gameObject.SetActive(true);
-            mainstatUI.gameObject.transform.SetAsFirstSibling();
-            mainstatUI.UpdateStat((int)mainstat.Value, item.Level);
 
             var setbonus = gameDataBase.GetSetBonusConfig(itemConfig.Armor.ArmorSet);
             txtTitleSet.text = setbonus.GetTitleSetBonus();

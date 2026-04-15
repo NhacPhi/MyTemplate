@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,6 +59,7 @@ public class ArmorUpgradeCard : MonoBehaviour
 
     private string currentArmorUUID;
     private int targetLevel;
+    private Tween _progressTween;
 
     private void Awake()
     {
@@ -90,6 +92,7 @@ public class ArmorUpgradeCard : MonoBehaviour
         // Reset target level = current + 1
         targetLevel = Mathf.Min(armorSave.Level + 1, Definition.MAX_ARMOR_LEVEL);
         txtLevelTarget.text = targetLevel.ToString();
+        ResetProgress(armorSave.Level);
         UpdateUI();
     }
 
@@ -106,6 +109,8 @@ public class ArmorUpgradeCard : MonoBehaviour
                 targetLevel = Mathf.Min(armorSave.Level + 1, Definition.MAX_ARMOR_LEVEL);
             }
             UpdateUI();
+            // Reset progress về 0 sau khi upgrade xong, sẵn sàng cho lần nâng cấp tiếp
+            if (armorSave != null) ResetProgress(armorSave.Level);
         }
     }
 
@@ -126,6 +131,7 @@ public class ArmorUpgradeCard : MonoBehaviour
 
         UpdateCostPreview(armorSave.Level);
         UpdateStatPreview(armorSave.Level);
+        ResetProgress(armorSave.Level);
     }
 
     /// <summary>
@@ -140,7 +146,11 @@ public class ArmorUpgradeCard : MonoBehaviour
         if (armorSave == null) return;
         if (armorSave.Level >= Definition.MAX_ARMOR_LEVEL) return;
 
-        forgeManager.UpgradeArmor(currentArmorUUID, targetLevel, gameDataBase);
+        // Animate progress bar lên đầy trước, sau đó thực hiện upgrade
+        AnimateProgress(armorSave.Level, () =>
+        {
+            forgeManager.UpgradeArmor(currentArmorUUID, targetLevel, gameDataBase);
+        });
     }
 
     /// <summary>
@@ -229,7 +239,9 @@ public class ArmorUpgradeCard : MonoBehaviour
             return;
         }
 
-        var cost = forgeManager.GetUpgradeArmorCost(currentLevel, targetLevel);
+        var armorSave = inventoryManager.GetArmor(currentArmorUUID);
+
+        var cost = forgeManager.GetUpgradeArmorCost(currentLevel, targetLevel, armorSave.Rare);
 
         if (txtCoinCost != null) txtCoinCost.text = Utility.FormatCurrency(cost.coin);
         if (txtPrimoriteCost != null) txtPrimoriteCost.text = Utility.FormatCurrency(cost.primorite);
@@ -263,6 +275,8 @@ public class ArmorUpgradeCard : MonoBehaviour
             var mainStat = config.Armor.MainStat;
             txtMainStatName.text = Utility.GetContextByStatType(mainStat.Type);
 
+            iconMainStat.sprite = gameDataBase.GetStatIcon(mainStat.Type);
+
             int currentMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, armorSave.Level);
 
             int nextMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, targetLevel);
@@ -270,5 +284,48 @@ public class ArmorUpgradeCard : MonoBehaviour
             txtCurrentMainStat.text = currentMainStatValue.ToString();
             txtNextMainStat.text = nextMainStatValue.ToString();
         }
+    }
+
+    /// <summary>
+    /// Reset progress bar về 0 và cập nhật text "Lv.current / Lv.target".
+    /// Gọi khi chọn armor, thay đổi target level, hoặc sau khi upgrade xong.
+    /// </summary>
+    private void ResetProgress(int currentLevel)
+    {
+        _progressTween?.Kill();
+
+        if (progressbar != null) progressbar.value = 0f;
+
+        if (txtProgress != null)
+        {
+            if (currentLevel >= Definition.MAX_ARMOR_LEVEL)
+                txtProgress.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
+            else
+                txtProgress.text = $"Lv.{currentLevel} / Lv.{targetLevel}";
+        }
+    }
+
+    /// <summary>
+    /// Animate progress bar từ 0 lên 1 (đầy) khi bấm nút Upgrade.
+    /// Sau khi animation xong sẽ gọi onComplete callback.
+    /// </summary>
+    private void AnimateProgress(int currentLevel, System.Action onComplete = null)
+    {
+        _progressTween?.Kill();
+
+        if (progressbar != null)
+        {
+            progressbar.value = 0f;
+            _progressTween = progressbar.DOValue(1f, 0.5f)
+                .SetEase(Ease.OutCubic)
+                .OnComplete(() => onComplete?.Invoke());
+        }
+        else
+        {
+            onComplete?.Invoke();
+        }
+
+        if (txtProgress != null)
+            txtProgress.text = $"Lv.{currentLevel} → Lv.{targetLevel}";
     }
 }

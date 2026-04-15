@@ -51,6 +51,7 @@ public static class UIEvent
     // Armor Upgrade
     public static Action<string> OnSelectArmorUpgrade;
     public static Action<string> OnArmorUpgraded;
+    public static Action OnCloseUpgradeArmorScene;
 
     //Tooltop
     public static Action<bool> OnShowTooltipUI;

@@ -93,6 +93,8 @@ public static class Utility
             case StatType.SPEED: locailzationID = "UI_SPD"; break;
             case StatType.CRIT_RATE: locailzationID = "UI_CRIT_RATE"; break;
             case StatType.CRIT_DMG: locailzationID = "UI_CRIT_DMG"; break;
+            case StatType.PEN: locailzationID = "UI_PENETRATION"; break;
+            case StatType.CRIT_DMG_RES: locailzationID = "UI_CRIT_DMG_RES"; break;
         }
 
         return LocalizationManager.Instance.GetLocalizedValue(locailzationID);
@@ -199,9 +201,27 @@ public static class Utility
     /// Tính ArmorPrimorite cần để nâng cấp armor lên level chỉ định.
     /// Cost(level) = 500 + 200 × (level - 1)²
     /// </summary>
-    public static int GetPrimoriteNeedToUpgradeArmor(int level)
+    public static int GetPrimoriteNeedToUpgradeArmor(Rare rare, int level)
     {
-        return 500 + 200 * (level - 1) * (level - 1);
+        // Level 1 là mặc định khi nhận đồ, không tốn phí nâng cấp
+        if (level <= 1) return 0;
+
+        // 1. Hệ số nhân dựa trên độ hiếm (Đồ càng hiếm nâng càng đắt)
+        float rareMultiplier = rare switch
+        {
+            Rare.Common => 1.0f,
+            Rare.Uncommon => 1.5f,
+            Rare.Rare => 2.0f,
+            Rare.Epic => 3.0f,
+            Rare.Legendary => 5.0f,
+            _ => 1.0f
+        };
+
+        // 2. Công thức gốc: Level càng cao tốn càng nhiều (Mốc đầu 500, mỗi cấp tăng 200)
+        int baseCost = 500 + 200 * (level - 1) * (level - 1);
+
+        // 3. Nhân hệ số và làm tròn
+        return Mathf.RoundToInt(baseCost * rareMultiplier);
     }
 
     /// <summary>
@@ -220,12 +240,12 @@ public static class Utility
     /// <summary>
     /// Tính tổng ArmorPrimorite cần để nâng từ fromLevel lên toLevel.
     /// </summary>
-    public static int GetTotalPrimoriteForArmorUpgrade(int fromLevel, int toLevel)
+    public static int GetTotalPrimoriteForArmorUpgrade(int fromLevel, int toLevel, Rare rare)
     {
         int total = 0;
         for (int lv = fromLevel + 1; lv <= toLevel; lv++)
         {
-            total += GetPrimoriteNeedToUpgradeArmor(lv) - GetPrimoriteNeedToUpgradeArmor(lv - 1);
+            total += GetPrimoriteNeedToUpgradeArmor(rare, lv) - GetPrimoriteNeedToUpgradeArmor(rare, lv - 1);
         }
         return total;
     }
@@ -236,17 +256,25 @@ public static class Utility
     /// </summary>
     public static int GetArmorPrimoriteFromSalvage(Rare rare, int level)
     {
-        int baseValue;
-        switch (rare)
+        // 1. Giá trị gốc của phôi (Tùy theo độ hiếm)
+        int baseValue = rare switch
         {
-            case Rare.Common:    baseValue = 100; break;
-            case Rare.Uncommon:  baseValue = 200; break;
-            case Rare.Rare:      baseValue = 400; break;
-            case Rare.Epic:      baseValue = 800; break;
-            case Rare.Legendary: baseValue = 1600; break;
-            default:             baseValue = 100; break;
-        }
-        return baseValue + 50 * level;
+            Rare.Common => 100,
+            Rare.Uncommon => 200,
+            Rare.Rare => 400,
+            Rare.Epic => 800,
+            Rare.Legendary => 1600,
+            _ => 100
+        };
+
+        // Nếu đồ chưa nâng cấp gì (Level 1), chỉ trả lại giá trị gốc
+        if (level <= 1) return baseValue;
+
+        // 2. Tính tổng tài nguyên đã tiêu tốn từ Level 1 đến Level hiện tại
+        int totalInvested = GetPrimoriteNeedToUpgradeArmor(rare, level);
+
+        // 3. Hoàn trả 80% số nguyên liệu đã nâng cấp + Giá trị gốc
+        return baseValue + Mathf.RoundToInt(totalInvested * 0.8f);
     }
 
     /// <summary>

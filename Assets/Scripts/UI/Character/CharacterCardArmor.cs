@@ -57,7 +57,13 @@ public class CharacterCardArmor : CharacterCard
 
     private void OnEnable()
     {
+        UIEvent.OnCloseUpgradeArmorScene += OnArmorSceneClosed;
         ResetUI();
+    }
+
+    private void OnDisable()
+    {
+        UIEvent.OnCloseUpgradeArmorScene -= OnArmorSceneClosed;
     }
 
     private void OnDestroy()
@@ -215,6 +221,14 @@ public class CharacterCardArmor : CharacterCard
             character.QuickEquipArmor();
             UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacterID);
             ResetUI();
+        }
+    }
+
+    private void OnArmorSceneClosed()
+    {
+        if (!string.IsNullOrEmpty(currentCharacterID))
+        {
+            UpdateCharacterCardArmor(currentCharacterID);
         }
     }
 }

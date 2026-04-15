@@ -14,10 +14,7 @@ public class UpgradeArmorScene : WindowController
     {
         btnExit.onClick.AddListener(() =>
         {
-            //if (currentCharacter != "")
-            //{
-            //    UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
-            //}
+            UIEvent.OnCloseUpgradeArmorScene?.Invoke();
             uiManager.CloseWindowScene();
         });
         currencyMM.UpdateCurrency();

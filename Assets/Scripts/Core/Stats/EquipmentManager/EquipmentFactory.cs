@@ -102,7 +102,7 @@ public static class EquipmentFactory
             {
                 Type = mainStat.Type,
                 ModifierType = mainStat.ModifierType,
-                BaseValue = mainStat.Value,
+                BaseValue = Utility.GetArmorMainStatByLevel(mainStat.Value, saveData.Level),
                 UpgradeBonus = upgradeBonus
             });
         }

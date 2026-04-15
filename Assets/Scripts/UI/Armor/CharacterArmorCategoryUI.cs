@@ -39,6 +39,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         UIEvent.OnClickArmorIconCatergory += UpdateCategoryArmor;
         UIEvent.OnUpdateSingleArmorPart += UpdateSingleUI;
         UIEvent.OnSelectCharacterAvatar += UpdateCurrentArmorPart;
+        UIEvent.OnCloseUpgradeArmorScene += OnArmorSceneClosed;
         RefreshUI();
     }
 
@@ -48,6 +49,7 @@ public class CharacterArmorCategoryUI : MonoBehaviour
         UIEvent.OnClickArmorIconCatergory -= UpdateCategoryArmor;
         UIEvent.OnUpdateSingleArmorPart -= UpdateSingleUI;
         UIEvent.OnSelectCharacterAvatar -= UpdateCurrentArmorPart;
+        UIEvent.OnCloseUpgradeArmorScene -= OnArmorSceneClosed;
     }
     private void OnDestroy()
     {
@@ -183,6 +185,12 @@ public class CharacterArmorCategoryUI : MonoBehaviour
     }
 
     private void UpdateCurrentArmorPart(string id)
+    {
+        RefreshUI();
+        UpdateCategoryArmor(currentPart);
+    }
+
+    private void OnArmorSceneClosed()
     {
         RefreshUI();
         UpdateCategoryArmor(currentPart);

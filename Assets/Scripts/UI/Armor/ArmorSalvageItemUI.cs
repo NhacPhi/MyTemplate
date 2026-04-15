@@ -28,6 +28,7 @@ public class ArmorSalvageItemUI : GameItemUI, IPointerClickHandler
     public void Init(string id, Rare rare, Sprite icon, Sprite background, int level)
     {
         base.Setup(id, rare, icon, background);
+        armorUUID = id;
         txtLevel.text = "+" + level.ToString();
     }
 

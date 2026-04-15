@@ -8,9 +8,9 @@
     "currencies": {
       "Energy": 10,
       "Jade": 1200,
-      "Coin": 3719080,
+      "Coin": 3619880,
       "RelicEssence": 8558760,
-      "ArmorPrimorite": 822800,
+      "ArmorPrimorite": 743000,
       "Ticket": 0
     },
     "items": [
@@ -75,12 +75,12 @@
         "quantity": 10
       },
       {
-        "id": "Jade_Chunk",
+        "id": "Yellow_Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "Garnet_Chunk",
+        "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -90,7 +90,7 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Chunk",
+        "id": "Garnet_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -105,13 +105,13 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
+        "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
-        "type": "Shard",
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
@@ -125,8 +125,8 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Fragment",
-        "type": "Gemstone",
+        "id": "ShaWujing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -472,6 +472,39 @@
         "equip": ""
       },
       {
+        "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
+        "template_id": "Armor01_Chestplate",
+        "level": 10,
+        "rare": "Legendary",
+        "substats": [
+          {
+            "type": "HP",
+            "value": 100,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "ATK",
+            "value": 50,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "CRIT_RATE",
+            "value": 9,
+            "level": 2,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "CRIT_DMG",
+            "value": 16,
+            "level": 1,
+            "modifier_type": "Constant"
+          }
+        ],
+        "equip": "SunWukong"
+      },
+      {
         "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
         "template_id": "Armor05_Ring",
         "level": 3,
@@ -486,42 +519,6 @@
           {
             "type": "CRIT_DMG_RES",
             "value": 19,
-            "level": 1,
-            "modifier_type": "Constant"
-          }
-        ],
-        "equip": ""
-      },
-      {
-        "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
-        "template_id": "Armor01_Chestplate",
-        "level": 2,
-        "rare": "Legendary",
-        "substats": [
-          {
-            "type": "HP",
-            "value": 100,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "ATK",
-            "value": 50,
-            "level": 1,
-            "modifier_type": "Constant"
-          }
-        ],
-        "equip": "SunWukong"
-      },
-      {
-        "instance_id": "1f8fad5b-d9cb-469f-a165-75867728950e",
-        "template_id": "Armor05_Chestplate",
-        "level": 1,
-        "rare": "Uncommon",
-        "substats": [
-          {
-            "type": "DEF",
-            "value": 100,
             "level": 1,
             "modifier_type": "Constant"
           }
@@ -598,16 +595,16 @@
             "type": "Gloves"
           },
           {
-            "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Chestplate"
-          },
-          {
             "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Helmet"
           },
           {
             "id": "5f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Ring"
+          },
+          {
+            "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Chestplate"
           }
         ]
       },
