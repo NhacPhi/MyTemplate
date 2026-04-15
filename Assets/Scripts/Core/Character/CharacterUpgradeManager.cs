@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 /// <summary>
 /// Chịu trách nhiệm duy nhất: xử lý toàn bộ nghiệp vụ NÂNG CẤP nhân vật.
@@ -71,12 +70,24 @@ public class CharacterUpgradeManager
     }
 
     /// <summary>
+    /// Trả về giới hạn level hiện tại (ví dụ 20, 40... nếu chưa đột phá, hoặc 100 nếu đã hết mốc).
+    /// </summary>
+    private int GetMaxLevelCap()
+    {
+        GetNextAscensionRequirements(out _, out int reqLevel, out _, out _);
+
+        return reqLevel;
+    }
+
+    /// <summary>
     /// Thêm EXP cho nhân vật. Tự động xử lý lên cấp liên tiếp và trừ Coin.
     /// </summary>
     public void AddExp(int amount)
     {
         var saveData = _profile.SaveData;
-        if (amount < 0 || saveData.Level >= Definition.MAX_CHARACTER_LEVEL) return;
+
+        int levelCap = GetMaxLevelCap();
+        if (amount < 0 || saveData.Level >= levelCap) return;
 
         saveData.Exp += amount;
         bool levelChanged = false;
@@ -85,7 +96,7 @@ public class CharacterUpgradeManager
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
         var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
-        while (saveData.Level < Definition.MAX_CHARACTER_LEVEL)
+        while (saveData.Level < levelCap)
         {
             var nextLevelStr = (saveData.Level + 1).ToString();
 
@@ -122,12 +133,6 @@ public class CharacterUpgradeManager
 
         if (saveData.Level >= Definition.MAX_CHARACTER_LEVEL)
             saveData.Exp = 0;
-
-        //if (levelChanged)
-        //{
-        //    _profile.OnLevelChanged?.Invoke();
-        //    _profile.OnStatsChanged?.Invoke();
-        //}
     }
 
     /// <summary>
@@ -136,7 +141,7 @@ public class CharacterUpgradeManager
     public bool UseExpItem(string itemID, int quantity)
     {
         var saveData = _profile.SaveData;
-        if (quantity <= 0 || saveData.Level >= Definition.MAX_CHARACTER_LEVEL) return false;
+        if (quantity <= 0 || saveData.Level >= GetMaxLevelCap()) return false;
 
         var itemConfig = _gameDataBase.GetItemConfig(itemID);
         if (itemConfig == null || itemConfig.Type != ItemType.Exp || itemConfig.Exp == null) return false;
@@ -166,24 +171,31 @@ public class CharacterUpgradeManager
     /// <summary>
     /// Tính cấp độ tối đa có thể đạt được với lượng EXP item hiện có trong inventory.
     /// </summary>
-    public int GetMaxReachableLevelWithCurrentExpItems()
+    public int GetMaxReachableLevelWithCurrentExpItemsAndCoin()
     {
         var saveData = _profile.SaveData;
         int totalExpAvailable = GetTotalExpInInventory() + saveData.Exp;
+        int currentCoin = _currency.GetQuantityCurrecy(CurrencyType.Coin);
         int level = saveData.Level;
+
+        int levelCap = GetMaxLevelCap();
 
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
         var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
-        while (level < Definition.MAX_CHARACTER_LEVEL)
+        while (level < levelCap)
         {
             string nextLevelStr = (level + 1).ToString();
             if (!expConfig.UpExp.TryGetValue(nextLevelStr, out int reqExp)) break;
 
-            if (totalExpAvailable >= reqExp)
+            int coinNeeded = Utility.GetCoinNeedToUpgradeCacultivate(level + 1)
+                           - Utility.GetCoinNeedToUpgradeCacultivate(level);
+
+            if (totalExpAvailable >= reqExp && currentCoin >= coinNeeded)
             {
                 totalExpAvailable -= reqExp;
+                currentCoin -= coinNeeded;
                 level++;
             }
             else break;

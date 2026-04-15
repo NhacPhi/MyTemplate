@@ -31,25 +31,25 @@ public class GamePlayScene : WindowController
 
         btnInventory.onClick.AddListener(() =>
         {
-            uiManager.HidePanel();
+            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.InventoryScene);
         });
 
         btnMap.onClick.AddListener(() =>
         {
-            uiManager.HidePanel();
+            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.MapScene);
         });
 
         btnCharacter.onClick.AddListener(() =>
         {
-            uiManager.HidePanel();
+            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.CharacterScene);
         });
 
         btnPartySetup.onClick.AddListener(() =>
         {
-            uiManager.HidePanel();
+            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.PartySetupScene);
             UIEvent.OnPrepareBattleData?.Invoke();
         });

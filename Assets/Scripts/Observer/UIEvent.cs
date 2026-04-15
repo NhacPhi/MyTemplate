@@ -32,11 +32,14 @@ public static class UIEvent
 
     public static Action<bool> OnSlectectRelicTap;
     public static Action<WeaponTap> OnSelectToggleWeaponTap;
+    // weapon Upgrade
     public static Action<string> OnSlelectWeaponEnchance;
     public static Action<string> OnSelectWeaponEnchanceFromCharacter;
-
     public static Action OnCloseUpgradeRelicScene;
 
+    public static Action<string> OnWeaponUpgraded;
+
+    //Foregment
     public static Action<string> OnEquipmentUpgraded;
 
     // Armor
@@ -52,6 +55,9 @@ public static class UIEvent
     public static Action<string> OnSelectArmorUpgrade;
     public static Action<string> OnArmorUpgraded;
     public static Action OnCloseUpgradeArmorScene;
+
+    // Item
+    public static Action<string> OnItemChanged;
 
     //Tooltop
     public static Action<bool> OnShowTooltipUI;

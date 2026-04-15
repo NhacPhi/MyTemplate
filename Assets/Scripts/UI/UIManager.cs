@@ -15,9 +15,6 @@ public class UIManager : MonoBehaviour
     private UIFrame _uiFrame;
     [Inject] private IObjectResolver _objectResolver;
 
-    private string currentWindow;
-    private string currentPanel;
-
     private void OnEnable()
     {
         UIEvent.OnClickNavigationButton += OnNavigatePanelStartGame;
@@ -72,13 +69,7 @@ public class UIManager : MonoBehaviour
     public void OpenWindowScene(string id)
     {
         EnsureScreenLoaded(id);
-        currentWindow = id;
-        _uiFrame.OpenWindow(currentWindow);
-    }
-
-    public void CloseWindowScene()
-    {
-        _uiFrame.CloseWindow(currentWindow);
+        _uiFrame.OpenWindow(id);
     }
 
     public void CloseWindowScene(string id)
@@ -89,12 +80,11 @@ public class UIManager : MonoBehaviour
     public void ShowPanel(string id)
     {
         EnsureScreenLoaded(id);
-        currentPanel = id;
         _uiFrame.ShowPanel(id);
     }
-    public void HidePanel()
+    public void HidePanel(string id)
     {
-        _uiFrame.HidePanel(currentPanel);
+        _uiFrame.HidePanel(id);
     }
 
     public void CloseAllWindows()

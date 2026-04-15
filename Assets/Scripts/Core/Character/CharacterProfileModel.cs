@@ -399,19 +399,22 @@ public class CharacterProfileModel : IStatProvider
             }
         }
 
-        // (Tùy chọn) Thêm logic tương tự cho Armors nếu game bạn có tính năng nâng cấp Giáp
-        /*
         else if (SaveData.Armors.Exists(p => p.ID == itemUUID))
         {
             var armorSave = _inventory.GetArmor(itemUUID);
             if (armorSave != null)
             {
                 var armorConfig = _gameDataBase.GetItemConfig(armorSave.TemplateID);
+                var slotType = EquipmentFactory.ConvertPartToSlot(armorConfig.Armor.Part);
+
+                Equipment.Unequip(slotType);
+
                 var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
                 Equipment.Equip(runtimeArmor);
+
+                OnEquipmentChanged?.Invoke();
                 OnStatsChanged?.Invoke();
             }
         }
-        */
     }
 }

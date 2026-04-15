@@ -19,22 +19,36 @@ public class ArmorCardInforUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtTitleSet;
     [SerializeField] private TextMeshProUGUI txtDescriptionSet;
 
-    [Inject] private GameDataBase gameDataBase;
-    [Inject] private SaveSystem save;
+    [SerializeField] private Button btnUpgrade;
 
+    [Inject] private GameDataBase gameDataBase;
+    [Inject] private InventoryManager inventory;
+    [Inject] private UIManager uiManager;
+    private string currentArmorPart = "";
     private void OnEnable()
     {
         UIEvent.OnSelectInventoryItem += UpdateArmorItemCardInfor;
+
+        btnUpgrade.onClick.AddListener(() =>
+        {
+            uiManager.OpenWindowScene(ScreenIds.UpgradeArmorScene);
+
+            UIEvent.OnSelectArmorUpgrade?.Invoke(currentArmorPart);
+        });
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectInventoryItem -= UpdateArmorItemCardInfor;
+
+        btnUpgrade.onClick.RemoveAllListeners();
     }
 
     public void UpdateArmorItemCardInfor(string id)
     {
-        ArmorSaveData item = save.Player.Inventory.GetArmor(id);
+        currentArmorPart = id;
+
+        ArmorSaveData item = inventory.GetArmor(id);
 
         var itemConfig = gameDataBase.GetItemConfig(item.TemplateID);
 

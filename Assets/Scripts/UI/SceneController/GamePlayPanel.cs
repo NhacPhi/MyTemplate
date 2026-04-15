@@ -21,7 +21,7 @@ public class GamePlayPanel : PanelController
         btnClosePanel.onClick.AddListener(() =>
         {
             uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
-            uiManager.HidePanel();
+            uiManager.HidePanel(ScreenIds.GamePlayPanel);
             save.SaveDataToDisk(GameSaveType.PlayerInfo);
         });
 

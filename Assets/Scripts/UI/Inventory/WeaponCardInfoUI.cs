@@ -18,22 +18,34 @@ public class WeaponCardInfoUI : MonoBehaviour
 
     [SerializeField] private GameObject content;
 
+    [SerializeField] private Button btnUpgrade;
+
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
+    [Inject] private UIManager uiManager;
 
+    private string currentWeapon = "";
 
     private void OnEnable()
     {
         UIEvent.OnSelectInventoryItem += UpdateWeaponCardInfor;
+
+        btnUpgrade.onClick.AddListener(() =>
+        {
+            uiManager.OpenWindowScene(ScreenIds.UpgradeRelicScene);
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(currentWeapon);
+        });
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectInventoryItem -= UpdateWeaponCardInfor;
+        btnUpgrade.onClick.RemoveAllListeners();
     }
 
     public void UpdateWeaponCardInfor(string uuid)
     {
+        currentWeapon = uuid;   
         WeaponSaveData weapon = save.Player.Inventory.GetWeapon(uuid);
         var weaponConfig = gameDataBase.GetItemConfig(weapon.TemplateID);
         var passiveConfig = gameDataBase.GetPassiveConfig(weaponConfig.Weapon.PassiveID);

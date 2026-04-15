@@ -47,6 +47,11 @@ public class InventoryUI : MonoBehaviour
     {
         UIEvent.OnSelectToggleInventoryTap += OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem += OnClickItemUI;
+
+        UIEvent.OnWeaponUpgraded += HandleWeaponChange;
+        UIEvent.OnArmorUpgraded += HandleArmorChange;
+        UIEvent.OnItemChanged += HandleItemChanged;
+        
         //_inventoryManager.OnInventoryChanged += RefreshData;
     }
 
@@ -54,6 +59,10 @@ public class InventoryUI : MonoBehaviour
     {
         UIEvent.OnSelectToggleInventoryTap -= OnShowAllItemInInventory;
         UIEvent.OnSelectInventoryItem -= OnClickItemUI;
+
+        UIEvent.OnWeaponUpgraded -= HandleWeaponChange;
+        UIEvent.OnArmorUpgraded -= HandleArmorChange;
+        UIEvent.OnItemChanged -= HandleItemChanged;
         //_inventoryManager.OnInventoryChanged -= RefreshData;
     }
     public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase)
@@ -210,6 +219,111 @@ public class InventoryUI : MonoBehaviour
             list.Clear();
         }
         dictionaryObject.Clear();
+    }
+
+    /// <summary>
+    /// Xử lý khi sử dụng/bán/nhận thêm Item (Food, Gem, Material...) làm thay đổi số lượng
+    /// </summary>
+    private void HandleItemChanged(string id)
+    {
+        // Kiểm tra xem item này còn tồn tại trong kho không, hay đã dùng hết (số lượng = 0)
+        var itemSave = _inventoryManager.Items.FirstOrDefault(i => i.ID == id);
+
+        if (itemSave == null || itemSave.Quantity <= 0)
+        {
+            // Nếu dùng hết sạch => Item đó biến mất khỏi kho => Bắt buộc phải vẽ lại toàn bộ UI
+            RefreshData();
+            return;
+        }
+
+        // Nếu vẫn còn, chỉ cần update lại con số số lượng trên UI
+        List<GameObject> currentList = dictionaryObject.GetValueOrDefault(currentItemType);
+        if (currentList != null)
+        {
+            foreach (var go in currentList)
+            {
+                var uiComp = go.GetComponent<InventoryItemUI>();
+                if (uiComp != null && uiComp.ID == id)
+                {
+                    var config = _gameDataBase.GetItemConfig(id);
+                    // Gọi lại hàm Init để nó cập nhật Text số lượng
+                    go.GetComponent<ItemUI>().Init(id, config.Rarity, config.Icon, config.IconBG, itemSave.Quantity);
+                    break;
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Xử lý khi Giáp thay đổi trạng thái (Equip, Unequip, Roll Substat, Bị xóa)
+    /// </summary>
+    /// 
+    private void HandleArmorChange(string id)
+    {
+        // 1. Kiểm tra xem giáp còn trong kho không
+        var armorSave = _inventoryManager.Armors.FirstOrDefault(a => a.UUID == id);
+
+        if (armorSave == null)
+        {
+            RefreshData(); // Đã bị bán/phân rã
+            return;
+        }
+
+        // 2. Cập nhật lại UI ô icon
+        if (currentItemType == ItemType.Armor)
+        {
+            List<GameObject> currentList = dictionaryObject.GetValueOrDefault(ItemType.Armor);
+            if (currentList != null)
+            {
+                foreach (var go in currentList)
+                {
+                    var uiComp = go.GetComponent<InventoryItemUI>();
+                    if (uiComp != null && uiComp.ID == id)
+                    {
+                        var config = _gameDataBase.GetItemConfig(armorSave.TemplateID);
+                        // Gọi Init để reset lại hình ảnh/level
+                        go.GetComponent<ArmorItemUI>().Init(id, armorSave.Rare, config.Icon, _gameDataBase.GetBGItemByRare(armorSave.Rare), armorSave.Level);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Xử lý khi Vũ khí thay đổi trạng thái (Equip, Unequip, Bị xóa do Salvage/Làm phôi)
+    /// </summary>
+    private void HandleWeaponChange(string id)
+    {
+        // 1. Kiểm tra xem vũ khí còn trong kho không
+        var weaponSave = _inventoryManager.Weapons.FirstOrDefault(w => w.UUID == id);
+
+        if (weaponSave == null)
+        {
+            // Nếu bị null -> Vũ khí đã bị xóa (phân rã hoặc đập làm nguyên liệu)
+            // Bắt buộc phải RefreshData để xóa ô UI đó đi
+            RefreshData();
+            return;
+        }
+
+        // 2. Nếu vẫn còn, cập nhật lại UI của chính ô đó (VD: Hiện icon chữ "E" đang mặc)
+        if (currentItemType == ItemType.Weapon)
+        {
+            List<GameObject> currentList = dictionaryObject.GetValueOrDefault(ItemType.Weapon);
+            if (currentList != null)
+            {
+                foreach (var go in currentList)
+                {
+                    var uiComp = go.GetComponent<InventoryItemUI>();
+                    if (uiComp != null && uiComp.ID == id)
+                    {
+                        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+                        // Gọi Init để reset lại các thông số UI
+                        go.GetComponent<WeaponUI>().Init(id, config.Rarity, config.Icon, config.IconBG, weaponSave.CurrentLevel, weaponSave.CurrentUpgrade);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
  

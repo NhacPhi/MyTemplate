@@ -36,6 +36,7 @@ public class CharacterCardInfo : CharacterCard
     {
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardInfo;
         UIEvent.OnCloseUpgradeRelicScene += UpdateCardInfoWithCurrentCharacter;
+        UIEvent.OnCloseUpgradeArmorScene += UpdateCardInfoWithCurrentCharacter;
     }
 
     // Start is called before the first frame update
@@ -48,6 +49,7 @@ public class CharacterCardInfo : CharacterCard
     {
         UIEvent.OnSelectCharacterAvatar -= UpdateCharacterCardInfo;
         UIEvent.OnCloseUpgradeRelicScene -= UpdateCardInfoWithCurrentCharacter;
+        UIEvent.OnCloseUpgradeArmorScene -= UpdateCardInfoWithCurrentCharacter;
     }
     public void UpdateCharacterCardInfo(string id)
     {

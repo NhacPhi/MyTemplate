@@ -1,6 +1,6 @@
 {
     "ascension_r": {
-        "max_tier": 4,
+        "max_tier": 5,
         "tier": {
             "1": {
                 "unlock_max_level": 40,
@@ -50,6 +50,21 @@
             "4": {
                 "unlock_max_level": 100,
                 "level_req": 80,
+                "max": 1,
+                "cost": [
+                    {
+                        "id": "Coin",
+                        "quantity": 500000
+                    },
+                    {
+                        "id": "Garnet_Gemstone",
+                        "quantity": 20
+                    }
+                ]
+            },
+            "5": {
+                "unlock_max_level": 100,
+                "level_req": 100,
                 "max": 1,
                 "cost": [
                     {
@@ -65,7 +80,7 @@
         }
     },
     "ascension_sr": {
-        "max_tier": 4,
+        "max_tier": 5,
         "tier": {
             "1": {
                 "unlock_max_level": 40,
@@ -115,6 +130,21 @@
             "4": {
                 "unlock_max_level": 100,
                 "level_req": 80,
+                "max": 1,
+                "cost": [
+                    {
+                        "id": "Coin",
+                        "quantity": 500000
+                    },
+                    {
+                        "id": "Garnet_Gemstone",
+                        "quantity": 20
+                    }
+                ]
+            },
+            "5": {
+                "unlock_max_level": 100,
+                "level_req": 100,
                 "max": 1,
                 "cost": [
                     {
@@ -130,7 +160,7 @@
         }
     },
     "ascension_ssr": {
-        "max_tier": 4,
+        "max_tier": 5,
         "tier": {
             "1": {
                 "unlock_max_level": 40,
@@ -191,11 +221,26 @@
                         "quantity": 20
                     }
                 ]
+            },
+            "5": {
+                "unlock_max_level": 100,
+                "level_req": 100,
+                "max": 1,
+                "cost": [
+                    {
+                        "id": "Coin",
+                        "quantity": 500000
+                    },
+                    {
+                        "id": "Garnet_Gemstone",
+                        "quantity": 20
+                    }
+                ]
             }
         }
     },
     "ascension_ur": {
-        "max_tier": 4,
+        "max_tier": 5,
         "tier": {
             "1": {
                 "unlock_max_level": 40,
@@ -245,6 +290,21 @@
             "4": {
                 "unlock_max_level": 100,
                 "level_req": 80,
+                "max": 1,
+                "cost": [
+                    {
+                        "id": "Coin",
+                        "quantity": 500000
+                    },
+                    {
+                        "id": "Garnet_Gemstone",
+                        "quantity": 20
+                    }
+                ]
+            },
+            "5": {
+                "unlock_max_level": 100,
+                "level_req": 100,
                 "max": 1,
                 "cost": [
                     {

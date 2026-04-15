@@ -53,7 +53,7 @@ public class DialogueUIManager : MonoBehaviour
 
     void CloseUIDialogue(DialogueType type)
     {
-        uiManager.CloseWindowScene();
+        uiManager.CloseWindowScene(ScreenIds.DialogueScene);
     }
 
     public void SetDialogue(string str, ActorConfig actor)

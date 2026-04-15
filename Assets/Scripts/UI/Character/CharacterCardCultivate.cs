@@ -2,8 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using System.Collections.Generic;
-using static SixLabors.ImageSharp.Metadata.Profiles.Exif.EncodedString;
+
+
 
 public class CharacterCardCultivate : CharacterCard
 {
@@ -67,11 +67,27 @@ public class CharacterCardCultivate : CharacterCard
 
         upgrades.UpdateUI(data.StarUp);
 
-        int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
-        txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
+        bool isMaxLevel = data.Level >= Definition.MAX_CHARACTER_LEVEL;
+        if (!isMaxLevel)
+        {
+            if (gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((data.Level + 1).ToString(), out int needed))
+            {
+                txtCurrentExp.text = data.Exp.ToString() + "/" + needed.ToString();
+                sliderExp.maxValue = 1;
+                sliderExp.value = (float)data.Exp / needed;
+            }
+            else
+            {
+                isMaxLevel = true;
+            }
+        }
 
-        sliderExp.maxValue = expNeedToUpdate;
-        sliderExp.value = data.Exp;
+        if (isMaxLevel)
+        {
+            txtCurrentExp.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
+            sliderExp.maxValue = 1;
+            sliderExp.value = 1f;
+        }
 
 
         int currentHP = config.GetStatByLevel(StatType.HP, data.Level);
@@ -114,5 +130,4 @@ public class CharacterCardCultivate : CharacterCard
         }
 
     }
-
 }
