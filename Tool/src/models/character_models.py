@@ -41,11 +41,12 @@ class SkillComponent:
     skill: str
     skill_type: str
     target_type: str
-    damage_multiplier: float
-    max_cooldown: int
+    damage_multiplier: List[float]
+    max_cooldown: List[int]
     flat_damage: float
     effect_id: str
-    sound: str
+    sound: str = ""
+    passive_id: str = ""
 
 @dataclass
 class CharacterModel:

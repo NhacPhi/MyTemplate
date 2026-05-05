@@ -11,11 +11,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "SunWukong_Attack"
+                "sound": "SunWukong_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "SunWukong_M",
@@ -24,11 +31,17 @@
                 "skill": "Summon",
                 "skill_type": "ActiveSkill",
                 "target_type": "AllEnemies",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "Wind_Blow"
+                "sound": "Wind_Blow",
+                "passive_id": "psv_sunwukong_main"
             },
             "Ultimate": {
                 "id": "SunWukong_U",
@@ -37,11 +50,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "SunWukong_Main"
+                "sound": "SunWukong_Main",
+                "passive_id": "psv_sunwukong_ultiamte"
             }
         },
         "stats": {
@@ -78,11 +97,18 @@
                 "skill": "Range",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "TangSanZang_Attack"
+                "sound": "TangSanZang_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "TangSanZang_M",
@@ -91,11 +117,17 @@
                 "skill": "BuffShield",
                 "skill_type": "NonAttackSkill",
                 "target_type": "Self",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 0.0,
                 "effect_id": "None",
-                "sound": "TangSanZang_Major"
+                "sound": "TangSanZang_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "TangSanZang_U",
@@ -104,11 +136,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "EFF_Stun_def",
-                "sound": "TangSanZang_Main"
+                "sound": "TangSanZang_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -145,11 +183,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ZhuBaJie_Attack"
+                "sound": "ZhuBaJie_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "ZhuBaJie_M",
@@ -158,11 +203,17 @@
                 "skill": "BuffShield",
                 "skill_type": "NonAttackSkill",
                 "target_type": "Self",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ZhuBaJie_Major"
+                "sound": "ZhuBaJie_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "ZhuBaJie_U",
@@ -171,11 +222,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ZhuBaJie_Main"
+                "sound": "ZhuBaJie_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -212,11 +269,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ShaWujing_Attack"
+                "sound": "ShaWujing_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "ShaWujing_M",
@@ -225,11 +289,17 @@
                 "skill": "Healing",
                 "skill_type": "NonAttackSkill",
                 "target_type": "Self",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 0.0,
                 "effect_id": "EFF_BufDEF_def",
-                "sound": "ShaWujing_Major"
+                "sound": "ShaWujing_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "ShaWujing_U",
@@ -238,11 +308,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ShaWujing_Main"
+                "sound": "ShaWujing_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -279,11 +355,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Major": {
                 "id": "DragonKing_M",
@@ -292,11 +375,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "DragonKing_U",
@@ -305,11 +394,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -346,11 +441,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ThirdPrinceNezha_Attack"
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "ThirdPrinceNezha_M",
@@ -359,11 +461,17 @@
                 "skill": "FireRing",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ThirdPrinceNezha_Major"
+                "sound": "ThirdPrinceNezha_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "ThirdPrinceNezha_U",
@@ -372,11 +480,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "ThirdPrinceNezha_Main"
+                "sound": "ThirdPrinceNezha_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -413,11 +527,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "LittleWhiteDragon_Attack"
+                "sound": "LittleWhiteDragon_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "LittleWhiteDragon_M",
@@ -426,11 +547,17 @@
                 "skill": "ThunderBall",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "LittleWhiteDragon_Major"
+                "sound": "LittleWhiteDragon_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "LittleWhiteDragon_U",
@@ -439,11 +566,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "LittleWhiteDragon_Main"
+                "sound": "LittleWhiteDragon_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -480,11 +613,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "VanguardTiger_Attack"
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "BullDemonKing_M",
@@ -493,11 +633,17 @@
                 "skill": "StatModifier",
                 "skill_type": "ActiveSkill",
                 "target_type": "Self",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 0.0,
                 "effect_id": "EFF_BufATK_def",
-                "sound": "BullDemonKing_Major"
+                "sound": "BullDemonKing_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "BullDemonKing_U",
@@ -506,11 +652,17 @@
                 "skill": "PoisonBall",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "EFF_Posion_def",
-                "sound": "BullDemonKing_Main"
+                "sound": "BullDemonKing_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -547,11 +699,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Major": {
                 "id": "ErlangShen_M",
@@ -560,11 +719,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "ErlangShen_U",
@@ -573,11 +738,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -614,11 +785,18 @@
                 "skill": "Range",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Major": {
                 "id": "GuanyinBodhisattva_M",
@@ -627,11 +805,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "GuanyinBodhisattva_U",
@@ -640,11 +824,17 @@
                 "skill": "None",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -681,11 +871,17 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "VanguardTiger_Attack"
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "None_Skill",
@@ -694,11 +890,18 @@
                 "skill": "None",
                 "skill_type": "NonAttackSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 0.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "None_Skill",
@@ -707,11 +910,18 @@
                 "skill": "None",
                 "skill_type": "NonAttackSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 0.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": ""
+                "sound": "",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -744,11 +954,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "TheBoySage_Attack"
+                "sound": "TheBoySage_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "TheBoySage_M",
@@ -757,11 +974,17 @@
                 "skill": "FireBall",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "TheBoySage_Major"
+                "sound": "TheBoySage_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "TheBoySage_U",
@@ -770,11 +993,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "TheBoySage_Main"
+                "sound": "TheBoySage_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -811,11 +1040,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldHornKing_Attack"
+                "sound": "GoldHornKing_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "GoldHornKing_M",
@@ -824,11 +1060,17 @@
                 "skill": "MajorAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldHornKing_Major"
+                "sound": "GoldHornKing_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "GoldHornKing_U",
@@ -837,11 +1079,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldHornKing_Main"
+                "sound": "GoldHornKing_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -878,11 +1126,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "SilverHornKing_Attack"
+                "sound": "SilverHornKing_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "SilverHornKing_M",
@@ -891,11 +1146,17 @@
                 "skill": "Torando",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "SilverHornKing_Major"
+                "sound": "SilverHornKing_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "SilverHornKing_U",
@@ -904,11 +1165,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldHornKing_Main"
+                "sound": "GoldHornKing_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -945,11 +1212,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "YellowWindMonster_Attack"
+                "sound": "YellowWindMonster_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "YellowWindMonster_M",
@@ -958,11 +1232,17 @@
                 "skill": "Suriken",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 1000.0,
                 "effect_id": "None",
-                "sound": "YellowWindMonster_Major"
+                "sound": "YellowWindMonster_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "YellowWindMonster_U",
@@ -971,11 +1251,17 @@
                 "skill": "DivineWind",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "YellowWindMonster_Main"
+                "sound": "YellowWindMonster_Main",
+                "passive_id": ""
             }
         },
         "stats": {
@@ -1012,11 +1298,18 @@
                 "skill": "Melee",
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.0,
-                "max_cooldown": 0,
+                "damage_multiplier": [
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldfishDemon_Attack"
+                "sound": "GoldfishDemon_Attack",
+                "passive_id": ""
             },
             "Major": {
                 "id": "GoldfishDemon_M",
@@ -1025,11 +1318,17 @@
                 "skill": "MajorAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.5,
-                "max_cooldown": 3,
+                "damage_multiplier": [
+                    1.0,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "None",
-                "sound": "GoldfishDemon_Major"
+                "sound": "GoldfishDemon_Major",
+                "passive_id": ""
             },
             "Ultimate": {
                 "id": "GoldfishDemon_U",
@@ -1038,11 +1337,17 @@
                 "skill": "EmpowerAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
-                "damage_multiplier": 1.8,
-                "max_cooldown": 4,
+                "damage_multiplier": [
+                    1.5,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5
+                ],
                 "flat_damage": 100.0,
                 "effect_id": "EFF_Stun_def",
-                "sound": "GoldfishDemon_Main"
+                "sound": "GoldfishDemon_Main",
+                "passive_id": ""
             }
         },
         "stats": {

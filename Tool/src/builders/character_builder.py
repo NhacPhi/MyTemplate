@@ -6,6 +6,15 @@ from src.models.character_models import CharacterModel, SkillComponent, Attribut
 class CharacterConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
         self.file_path = file_path
+
+    @staticmethod
+    def _parse_array(value, cast_func):
+        """Parse a comma-separated string like '1, 1.2' into a list, e.g. [1.0, 1.2]."""
+        raw = str(value).strip()
+        # Remove surrounding parentheses/brackets if present
+        raw = raw.strip('()[]')
+        return [cast_func(v.strip()) for v in raw.split(',') if v.strip()]
+
     def run(self):
         print(f"Processing character config: {self.file_path}")
         
@@ -26,10 +35,11 @@ class CharacterConfigBuilder(BaseBuilder):
                     skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
                     skill_type=str(row['SkillType']).strip() if not pd.isna(row['SkillType']) else "None",
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
-                    damage_multiplier=float(row['DamageMultiplier']) if not pd.isna(row['DamageMultiplier']) else 0.0,
-                    max_cooldown=int(row['MaxCooldown']) if not pd.isna(row['MaxCooldown']) else 0,
+                    damage_multiplier=self._parse_array(row['DamageMultiplier'], float) if not pd.isna(row['DamageMultiplier']) else [0.0],
+                    max_cooldown=self._parse_array(row['MaxCooldown'], lambda v: int(float(v))) if not pd.isna(row['MaxCooldown']) else [0],
                     flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0,
                     effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None",
+                    passive_id=str(row['PassiveID']).strip() if 'PassiveID' in df_skills.columns and not pd.isna(row['PassiveID']) else "",
                     sound=str(row['Sound']).strip() if not pd.isna(row['Sound']) else ""
                 )
 

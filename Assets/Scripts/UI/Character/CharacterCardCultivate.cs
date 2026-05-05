@@ -67,27 +67,11 @@ public class CharacterCardCultivate : CharacterCard
 
         upgrades.UpdateUI(data.StarUp);
 
-        bool isMaxLevel = data.Level >= Definition.MAX_CHARACTER_LEVEL;
-        if (!isMaxLevel)
-        {
-            if (gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((data.Level + 1).ToString(), out int needed))
-            {
-                txtCurrentExp.text = data.Exp.ToString() + "/" + needed.ToString();
-                sliderExp.maxValue = 1;
-                sliderExp.value = (float)data.Exp / needed;
-            }
-            else
-            {
-                isMaxLevel = true;
-            }
-        }
+        int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
+        txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
 
-        if (isMaxLevel)
-        {
-            txtCurrentExp.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
             sliderExp.maxValue = 1;
-            sliderExp.value = 1f;
-        }
+        sliderExp.value = data.Exp / expNeedToUpdate;
 
 
         int currentHP = config.GetStatByLevel(StatType.HP, data.Level);

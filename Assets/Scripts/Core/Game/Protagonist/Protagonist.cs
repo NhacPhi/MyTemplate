@@ -29,6 +29,8 @@ public class Protagonist : MonoBehaviour
 
     public LayerMask groundLayer;
 
+    private Vector2 movement;
+
     private void OnEnable()
     {
         GameEvent.OnPlayerMove += PlayerMovement;
@@ -55,6 +57,17 @@ public class Protagonist : MonoBehaviour
                 weapon.TakeOffWeapon();
             }
         }
+
+#if UNITY_EDITOR
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        if(movement.magnitude > 0)
+        {
+            PlayerMovement(movement);
+        }
+
+#endif
     }
 
     private void PlayerMovement(Vector2 input)

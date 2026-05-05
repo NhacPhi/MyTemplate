@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using Tech.Composite;
@@ -79,11 +79,18 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         await Skills.GetValueOrDefault(type).ExecuteAsync(core as Entity, currentTurnID);
     }
 
+    [Inject] PlayerCharacterManager _playerCharacterManager;
+
     public async UniTask InitializeAsync(CancellationToken token)
     {
         entityStats = gameObject.GetComponent<EntityStats>();
 
         var characterConfig = _gameDataBase.GetCharacterConfig(entityStats.EntityID);
+
+        // Lấy StarUp từ save data của nhân vật
+        var characterProfile = _playerCharacterManager.GetCharacter(entityStats.EntityID);
+        int starUp = characterProfile != null ? characterProfile.SaveData.StarUp : 0;
+
         foreach(var kvp in characterConfig.Skills)
         {
             SkillCharacter skillType = kvp.Key;
@@ -97,9 +104,11 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
                 skillData.TargetType = skillConfig.TargetType;
 
-                skillData.DamageMultiplier = skillConfig.DamageMultiplier;
+                // Chuyển đổi StarUp sang enhancement level của từng skill (0-2)
+                int enhancementLevel = Utility.GetSkillEnhancementLevel(skillType, starUp);
+                skillData.DamageMultiplier = skillConfig.GetDamageMultiplier(enhancementLevel);
 
-                skillData.MaxCoolDown = skillConfig.MaxCooldown;
+                skillData.MaxCoolDown = skillConfig.GetMaxCooldown(enhancementLevel);
 
                 skillData.FlatDamage = skillConfig.FlatDamage;
 

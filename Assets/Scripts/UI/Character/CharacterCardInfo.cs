@@ -23,9 +23,9 @@ public class CharacterCardInfo : CharacterCard
     [SerializeField] private TextMeshProUGUI txtPenetration;
     [SerializeField] private TextMeshProUGUI txtCritDGMRes;
 
-    [SerializeField] private Image imgAttack;
-    [SerializeField] private Image imgMajorSkill;
-    [SerializeField] private Image imgUltimateSkill;
+    [SerializeField] private SkillCharacterUI baseSkill;
+    [SerializeField] private SkillCharacterUI mainSkill;
+    [SerializeField] private SkillCharacterUI ultimateSkill;
 
     [Inject] PlayerCharacterManager characterManager;
     [Inject] private GameDataBase gameDataBase;
@@ -79,9 +79,13 @@ public class CharacterCardInfo : CharacterCard
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 
-        imgAttack.sprite = characterConfig.BaseSkillIcon;
-        imgMajorSkill.sprite = characterConfig.MajorSkillIcon;
-        imgUltimateSkill.sprite = characterConfig.UltimateSkillIcon;
+        int starUp = characterProfile.SaveData.StarUp;
+        baseSkill.SetSkillUI(characterConfig.BaseSkillIcon, 
+            Utility.GetSkillEnhancementLevel(SkillCharacter.Base, starUp));
+        mainSkill.SetSkillUI(characterConfig.MajorSkillIcon, 
+            Utility.GetSkillEnhancementLevel(SkillCharacter.Major, starUp));
+        ultimateSkill.SetSkillUI(characterConfig.UltimateSkillIcon, 
+            Utility.GetSkillEnhancementLevel(SkillCharacter.Ultimate, starUp));
     }
 
     public void UpdateCardInfoWithCurrentCharacter()

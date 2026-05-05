@@ -15,6 +15,10 @@ public class CharacterCardAscend : CharacterCard
     [SerializeField] private TextMeshProUGUI txtCoin;
     [SerializeField] private Button btnAscend;
 
+    [Header("Skill Enhancement Preview")]
+    [SerializeField] private SkillCharacterUI currentSkillUI;
+    [SerializeField] private SkillCharacterUI nextSkillUI;
+
     [Inject] private PlayerCharacterManager playerCharacterManager;
     [Inject] private InventoryManager inventoryManager;
     [Inject] private GameDataBase gameDataBase;
@@ -92,5 +96,63 @@ public class CharacterCardAscend : CharacterCard
 
         txtNumberShard.text = inventoryManager.GetItemQuantity(id).ToString() + "/" + requiredQuantity;
         txtCoin.text = Utility.FormatCurrency(requiredCoin);
+
+        // Update skill enhancement preview
+        UpdateSkillEnhancementPreview(config, data.StarUp);
+    }
+
+    /// <summary>
+    /// Hiển thị skill sẽ được cường hóa khi star_up tiếp theo.
+    /// currentSkillUI: hiển thị trạng thái hiện tại của skill sắp được nâng.
+    /// nextSkillUI: hiển thị trạng thái sau khi nâng cấp.
+    /// </summary>
+    private void UpdateSkillEnhancementPreview(CharacterConfig config, int starUp)
+    {
+        int nextStarUp = Mathf.Min(starUp + 1, 6);
+
+        // Tìm skill nào sẽ được cường hóa ở lần star_up tiếp theo
+        SkillCharacter targetSkill = GetNextEnhancedSkill(starUp);
+
+        // Lấy icon tương ứng
+        Sprite skillIcon = targetSkill switch
+        {
+            SkillCharacter.Base     => config.BaseSkillIcon,
+            SkillCharacter.Major    => config.MajorSkillIcon,
+            SkillCharacter.Ultimate => config.UltimateSkillIcon,
+            _ => config.BaseSkillIcon
+        };
+
+        int currentLevel = Utility.GetSkillEnhancementLevel(targetSkill, starUp);
+        int nextLevel    = Utility.GetSkillEnhancementLevel(targetSkill, nextStarUp);
+
+        // Current: trạng thái hiện tại của skill
+        if (currentSkillUI != null)
+        {
+            currentSkillUI.SetSkillUI(skillIcon, currentLevel);
+        }
+
+        // Next: trạng thái sau khi nâng cấp
+        if (nextSkillUI != null)
+        {
+            nextSkillUI.SetSkillUI(skillIcon, nextLevel);
+        }
+    }
+
+    /// <summary>
+    /// Xác định skill nào sẽ được cường hóa ở star_up tiếp theo.
+    /// Thứ tự: Base → Major → Ultimate → Base → Major → Ultimate
+    /// </summary>
+    private SkillCharacter GetNextEnhancedSkill(int currentStarUp)
+    {
+        // star_up 0→1: Base, 1→2: Major, 2→3: Ultimate
+        // star_up 3→4: Base, 4→5: Major, 5→6: Ultimate
+        int nextIndex = currentStarUp % 3;
+        return nextIndex switch
+        {
+            0 => SkillCharacter.Base,
+            1 => SkillCharacter.Major,
+            2 => SkillCharacter.Ultimate,
+            _ => SkillCharacter.Base
+        };
     }
 }

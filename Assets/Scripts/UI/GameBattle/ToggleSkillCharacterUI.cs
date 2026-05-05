@@ -44,7 +44,8 @@ public class ToggleSkillCharacterUI : ToggleBase
             if (_imgCooldown != null)
             {
 
-                float maxCD = skillData.MaxCooldown > 0 ? skillData.MaxCooldown : 1f;
+                int maxCooldown = skillData.GetMaxCooldown(0);
+                float maxCD = maxCooldown > 0 ? maxCooldown : 1f;
 
 
                 _imgCooldown.fillAmount = (float)currentCooldown / maxCD;

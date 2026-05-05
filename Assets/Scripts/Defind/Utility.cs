@@ -285,5 +285,35 @@ public static class Utility
     {
         return Convert.ToInt32(baseValue + baseValue * 0.12f * level);
     }
+
+    /// <summary>
+    /// Tính enhancement level của từng skill dựa trên star_up (0-6).
+    /// Thứ tự cường hóa: Base → Major → Ultimate, mỗi skill tối đa 2 lần.
+    /// star_up 0: (0, 0, 0)
+    /// star_up 1: (1, 0, 0)
+    /// star_up 2: (1, 1, 0)
+    /// star_up 3: (1, 1, 1)
+    /// star_up 4: (2, 1, 1)
+    /// star_up 5: (2, 2, 1)
+    /// star_up 6: (2, 2, 2)
+    /// </summary>
+    public static int GetSkillEnhancementLevel(SkillCharacter skillType, int starUp)
+    {
+        int skillIndex = skillType switch
+        {
+            SkillCharacter.Base     => 0,
+            SkillCharacter.Major    => 1,
+            SkillCharacter.Ultimate => 2,
+            _ => 0
+        };
+
+        int level = 0;
+        // Vòng 1 (star_up 1-3): mỗi skill +1
+        if (starUp >= skillIndex + 1) level++;
+        // Vòng 2 (star_up 4-6): mỗi skill +1
+        if (starUp >= skillIndex + 4) level++;
+
+        return level;
+    }
 }
 

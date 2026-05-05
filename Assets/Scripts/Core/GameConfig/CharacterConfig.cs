@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -115,10 +115,10 @@ public class SkillComponent
     public SkillTargetType TargetType { get; set;}
 
     [JsonProperty("damage_multiplier")]
-    public float DamageMultiplier { get; set; }
+    public float[] DamageMultiplier { get; set; }
 
     [JsonProperty("max_cooldown")]
-    public int MaxCooldown { get; set; }
+    public int[] MaxCooldown { get; set; }
 
     [JsonProperty("flat_damage")]
     public float FlatDamage { get; set; }
@@ -126,6 +126,31 @@ public class SkillComponent
     [JsonProperty("effect_id")]
     public string EffectID { get; set; }
 
+    [JsonProperty("passive_id")]
+    public string PassiveID;
+
     [JsonProperty("sound")]
     public string Sound { get; set; }
+
+    /// <summary>
+    /// Lấy DamageMultiplier dựa trên StarUp (0-5). 
+    /// Nếu index vượt quá array, trả về giá trị cuối cùng.
+    /// </summary>
+    public float GetDamageMultiplier(int starUp)
+    {
+        if (DamageMultiplier == null || DamageMultiplier.Length == 0) return 0f;
+        int index = Mathf.Clamp(starUp, 0, DamageMultiplier.Length - 1);
+        return DamageMultiplier[index];
+    }
+
+    /// <summary>
+    /// Lấy MaxCooldown dựa trên StarUp (0-5).
+    /// Nếu index vượt quá array, trả về giá trị cuối cùng.
+    /// </summary>
+    public int GetMaxCooldown(int starUp)
+    {
+        if (MaxCooldown == null || MaxCooldown.Length == 0) return 0;
+        int index = Mathf.Clamp(starUp, 0, MaxCooldown.Length - 1);
+        return MaxCooldown[index];
+    }
 }

@@ -2,14 +2,14 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 1,
-    "avatar_icon": "Wukong03_avatar"
+    "avatar_icon": "Wukong01_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 10,
       "Jade": 1200,
-      "Coin": 8694200,
-      "RelicEssence": 8539560,
+      "Coin": 8378040,
+      "RelicEssence": 8534120,
       "ArmorPrimorite": 650150,
       "Ticket": 0
     },
@@ -22,7 +22,7 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 64
+        "quantity": 63
       },
       {
         "id": "Yellow_Jade_Gemstone",
@@ -65,7 +65,17 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Chunk",
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 300
+      },
+      {
+        "id": "Garnet_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -75,37 +85,22 @@
         "quantity": 10
       },
       {
+        "id": "Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "rare_exp",
         "type": "Exp",
-        "quantity": 56
+        "quantity": 51
       },
       {
-        "id": "Garnet_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 30
       },
       {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 1
-      },
-      {
-        "id": "Yellow_Jade_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 1
-      },
-      {
-        "id": "ShaWujing",
-        "type": "Shard",
-        "quantity": 1
-      },
-      {
-        "id": "Jade_Fragment",
+        "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -115,17 +110,22 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 32
+        "id": "ShaWujing",
+        "type": "Shard",
+        "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 1
+      },
+      {
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -137,7 +137,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 158
+        "quantity": 150
       },
       {
         "id": "Tofu_Soup",
@@ -160,13 +160,13 @@
         "quantity": 1
       },
       {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -186,7 +186,7 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "template_id": "Nine_ToolThed_Rake",
-        "current_level": 9,
+        "current_level": 10,
         "current_updgrade": 1,
         "equip": "ZhuBaJie"
       },
@@ -198,22 +198,8 @@
         "equip": "BullDemonKing"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
-        "template_id": "Triple_Edged_Blade",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
+        "template_id": "Moonlit_Firelfy",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -226,18 +212,32 @@
         "equip": ""
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
-        "template_id": "Moonlit_Firelfy",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "template_id": "FireLance_Ring_Damasl",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": "ThirdPrinceNezha"
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
+        "template_id": "Triple_Edged_Blade",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
@@ -588,24 +588,12 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 35,
-        "exp": 49,
+        "level": 36,
+        "exp": 48,
         "ascension_tier": 1,
         "star_up": 3,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "armors": [
-          {
-            "id": "4f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Belt"
-          },
-          {
-            "id": "3f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Boots"
-          },
-          {
-            "id": "2f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Gloves"
-          },
           {
             "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Helmet"
@@ -615,8 +603,20 @@
             "type": "Ring"
           },
           {
+            "id": "4f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Belt"
+          },
+          {
             "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Chestplate"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "2f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Gloves"
           }
         ]
       },
@@ -645,8 +645,8 @@
       },
       {
         "id": "ShaWujing",
-        "level": 21,
-        "exp": 75,
+        "level": 23,
+        "exp": 78,
         "ascension_tier": 1,
         "star_up": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
@@ -672,7 +672,7 @@
       },
       {
         "id": "BullDemonKing",
-        "level": 1,
+        "level": 2,
         "exp": 0,
         "ascension_tier": 0,
         "star_up": 1,
@@ -683,23 +683,23 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "SunWukong"
-      },
-      {
-        "position": 2,
         "character_id": "BullDemonKing"
       },
       {
+        "position": 2,
+        "character_id": "SunWukong"
+      },
+      {
         "position": 3,
-        "character_id": "ZhuBaJie"
+        "character_id": "ShaWujing"
       },
       {
         "position": 4,
-        "character_id": "TangSanZang"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 5,
-        "character_id": "ShaWujing"
+        "character_id": "TangSanZang"
       },
       {
         "position": 6,
