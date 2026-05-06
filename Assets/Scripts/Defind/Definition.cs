@@ -25,6 +25,18 @@ public static class Definition
 
     public static int MAX_CHARACTER_LEVEL = 100;
     public static int MAX_SLOT_CHARACTER = 6;
+    public static int MAX_STAR_UP = 6;
+
+    // Tooltip Settings
+    public const float TOOLTIP_HOVER_DELAY = 0.3f;            // Delay trước khi hiện tooltip (Windows)
+    public const float TOOLTIP_LONG_PRESS_THRESHOLD = 0.5f;   // Thời gian giữ để hiện tooltip (Android)
+
+    // Tooltip Localization Keys
+    public const string TOOLTIP_SKILL_TYPE_BASE = "STR_SKILL_BASE";
+    public const string TOOLTIP_SKILL_TYPE_MAJOR = "STR_SKILL_MAJOR";
+    public const string TOOLTIP_SKILL_TYPE_ULTIMATE = "STR_SKILL_ULTIMATE";
+    public const string TOOLTIP_DAMAGE_LABEL = "STR_DAMAGE_MULTIPLIER";
+    public const string TOOLTIP_COOLDOWN_LABEL = "STR_COOLDOWN";
 }
  
 public enum Rare

@@ -63,6 +63,10 @@ public static class UIEvent
     public static Action<bool> OnShowTooltipUI;
     public static Action OnHideAllToolTipUI;
 
+    // Skill Tooltip
+    public static Action<SkillTooltipData, Vector2> OnShowSkillTooltip;
+    public static Action OnHideSkillTooltip;
+
     // GamePlay
     public static Action<bool, InteractionType> OnInterationUI;
 

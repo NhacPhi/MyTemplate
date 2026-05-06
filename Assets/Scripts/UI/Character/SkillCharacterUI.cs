@@ -54,4 +54,16 @@ public class SkillCharacterUI : MonoBehaviour
         SetIcon(icon);
         UpdateEnhancement(enhancementLevel);
     }
+
+    /// <summary>
+    /// Thiết lập character context cho tooltip handler (nếu có gắn).
+    /// </summary>
+    public void SetCharacterID(string characterID)
+    {
+        var handler = GetComponent<SkillTooltipHandler>();
+        if (handler != null)
+        {
+            handler.SetCharacterID(characterID);
+        }
+    }
 }

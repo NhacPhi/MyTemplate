@@ -30,7 +30,7 @@
         "combat_events": [
             {
                 "event_type": "OnAfterAttack",
-                "effect_id": "Action_Point_Boost",
+                "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     10.0,
                     15.0,
@@ -64,7 +64,7 @@
         "combat_events": [
             {
                 "event_type": "OnAfterAttack",
-                "effect_id": "Reduce_Cooldown",
+                "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -98,7 +98,7 @@
         "combat_events": [
             {
                 "event_type": "OnAfterAttack",
-                "effect_id": "FollowUp_BasicAttack",
+                "effect_id": "Eff_FollowUp_BasicAttack",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -132,7 +132,7 @@
         "combat_events": [
             {
                 "event_type": "OnTurnStart",
-                "effect_id": "Dispel_Debuff",
+                "effect_id": "Eff_Dispel_Debuff",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -178,7 +178,7 @@
         "combat_events": [
             {
                 "event_type": "OnTakeDamage",
-                "effect_id": "Stackable_DEF_Buff",
+                "effect_id": "Eff_Stackable_DEF_Buff",
                 "modify_by_upgrade": [
                     4.0,
                     5.0,
@@ -199,7 +199,7 @@
         "combat_events": [
             {
                 "event_type": "OnTakeDamage",
-                "effect_id": "Action_Point_Boost",
+                "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     10.0,
                     15.0,
@@ -220,7 +220,7 @@
         "combat_events": [
             {
                 "event_type": "OnBeforeAttack",
-                "effect_id": "Damage_Multiplier_Boost",
+                "effect_id": "Eff_Damage_Multiplier_Boost",
                 "modify_by_upgrade": [
                     10.0,
                     15.0,
@@ -254,7 +254,7 @@
         "combat_events": [
             {
                 "event_type": "OnHit",
-                "effect_id": "Lacerate_Debuff",
+                "effect_id": "Eff_Lacerate_Debuff",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -354,7 +354,7 @@
         "combat_events": [
             {
                 "event_type": "OnSkillCast",
-                "effect_id": "Reduce_Cooldown",
+                "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -388,7 +388,7 @@
         "combat_events": [
             {
                 "event_type": "OnHit",
-                "effect_id": "Apply_Mark_Debuff",
+                "effect_id": "Eff_Apply_Mark_Debuff",
                 "modify_by_upgrade": [
                     40.0,
                     50.0,
@@ -422,7 +422,7 @@
         "combat_events": [
             {
                 "event_type": "OnTakeDamage",
-                "effect_id": "Dispel_Self_Debuff",
+                "effect_id": "Eff_Dispel_Self_Debuff",
                 "modify_by_upgrade": [
                     40.0,
                     50.0,
@@ -431,7 +431,7 @@
                     80.0,
                     90.0
                 ],
-                "condition_filter": "80.0IsSkill, HasDebuff",
+                "condition_filter": "HasDebuff",
                 "effect_param": 2.0,
                 "internal_cooldown": 2
             }
@@ -440,11 +440,35 @@
     "psv_sunwukong_main": {
         "desc_template_hash": 3419521401,
         "static_modifiers": [],
-        "combat_events": []
+        "combat_events": [
+            {
+                "event_type": "OnAfterAttack",
+                "effect_id": "Eff_Heal_By_Attack",
+                "modify_by_upgrade": [
+                    20.0,
+                    30.0
+                ],
+                "condition_filter": "AoEAttack",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
     },
     "psv_sunwukong_ultiamte": {
         "desc_template_hash": 22218017,
         "static_modifiers": [],
-        "combat_events": []
+        "combat_events": [
+            {
+                "event_type": "OnAfterAttack",
+                "effect_id": "Eff_Reduce_Def",
+                "modify_by_upgrade": [
+                    20.0,
+                    30.0
+                ],
+                "condition_filter": "SingleTarget",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
     }
 }

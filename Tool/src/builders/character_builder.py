@@ -28,6 +28,13 @@ class CharacterConfigBuilder(BaseBuilder):
             
                 skill_id = str(row['ID']).strip()
                 
+                dm = self._parse_array(row['DamageMultiplier'], float) if not pd.isna(row['DamageMultiplier']) else [0.0]
+                mc = [int(x) for x in self._parse_array(row['MaxCooldown'], float)] if not pd.isna(row['MaxCooldown']) else [0]
+
+                # Tự động copy giá trị cuối cùng nếu mảng ngắn hơn DamageMultiplier
+                if len(mc) < len(dm):
+                    mc.extend([mc[-1]] * (len(dm) - len(mc)))
+
                 skill_lookup[skill_id] = SkillComponent(
                     id=skill_id,
                     name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else 0,
@@ -35,8 +42,8 @@ class CharacterConfigBuilder(BaseBuilder):
                     skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
                     skill_type=str(row['SkillType']).strip() if not pd.isna(row['SkillType']) else "None",
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
-                    damage_multiplier=self._parse_array(row['DamageMultiplier'], float) if not pd.isna(row['DamageMultiplier']) else [0.0],
-                    max_cooldown=self._parse_array(row['MaxCooldown'], lambda v: int(float(v))) if not pd.isna(row['MaxCooldown']) else [0],
+                    damage_multiplier=dm,
+                    max_cooldown=mc,
                     flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0,
                     effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None",
                     passive_id=str(row['PassiveID']).strip() if 'PassiveID' in df_skills.columns and not pd.isna(row['PassiveID']) else "",

@@ -167,6 +167,8 @@ public static class LocKeys
 
     public const long UI_RECALL = 1739255848;
 
+    public const long UI_COOLDOWN = 1154529490;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
