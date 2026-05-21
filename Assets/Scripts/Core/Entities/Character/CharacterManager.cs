@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -75,6 +75,12 @@ public class CharacterManager
             }
 
             await characterInstance.gameObject.GetComponent<EntitySkill>().InitializeAsync(token: cancellation);
+            
+            var entityPassive = characterInstance.gameObject.GetComponent<EntityPassive>();
+            if (entityPassive != null)
+            {
+                await entityPassive.InitializeAsync(token: cancellation);
+            }
 
             _objectResolver.Instantiate(targetHitboxPrefab,
                     targetHitboxPrefab.transform.position, Quaternion.identity, characterInstance.transform);

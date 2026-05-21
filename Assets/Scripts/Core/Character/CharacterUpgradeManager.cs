@@ -462,7 +462,8 @@ public class CharacterUpgradeManager
 
         _profile.SaveData.StarUp = nextTier;
 
-        //_profile.OnStatsChanged?.Invoke();
+        // Cập nhật lại Passive của kỹ năng vì level của kỹ năng có thể đã tăng
+        _profile.RefreshSkillPassives();
 
         return true;
     }

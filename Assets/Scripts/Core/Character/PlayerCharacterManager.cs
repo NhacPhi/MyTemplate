@@ -31,6 +31,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     public void Init()
     {
         _unlockedCharacters.Clear();
+
         _upgradeManagers.Clear();
 
         if(_saveGame.Player.Roster.Characters != null)
@@ -48,7 +49,9 @@ public class PlayerCharacterManager : IInitializable, IDisposable
 
         if(_saveGame.Player.Roster.ActiveSlots != null)
         {
+
             ActivePartyIDs.Clear();
+
             foreach (var charSlot in _saveGame.Player.Roster.ActiveSlots)
             {
                 ActivePartyIDs.Add(charSlot.CharacterID);
@@ -56,6 +59,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
         }
 
         UIEvent.OnRequestSwapWeapon += HandleSwapWeapon;
+
         UIEvent.OnRequestSwapArmor += HandleSwapArmor;
     }
 

@@ -19,6 +19,8 @@ public class CloneController : MonoBehaviour
         caster.GetComponent<Entity>().PlaySFX("SunWukong_Attack");
         await UniTask.Delay(600);
 
+        if (damageBonus.Tags == null) damageBonus.Tags = new System.Collections.Generic.HashSet<string>();
+        damageBonus.Tags.Add("MajorSkill");
         DamageFormular.DealDamage(damageBonus, caster, target);
 
         await UniTask.Delay(600);

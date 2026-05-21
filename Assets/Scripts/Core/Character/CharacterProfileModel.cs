@@ -26,6 +26,7 @@ public class CharacterProfileModel : IStatProvider
     private InventoryManager _inventory;
 
     public EquipmentManager Equipment { get; private set; } = new EquipmentManager();
+    public CharacterPassiveManager PassivesManager { get; private set; } = new CharacterPassiveManager();
 
     public event Action OnLevelChanged;
     public event Action OnEquipmentChanged;
@@ -52,8 +53,10 @@ public class CharacterProfileModel : IStatProvider
 
         _setBonusEvaluator = new SetBonusEvaluator(_gameDataBase);
         Equipment.Init(_setBonusEvaluator);
+        PassivesManager.Init(this);
 
         LoadEquipmentsFromSave();
+        LoadSkillPassives();
 
         UIEvent.OnEquipmentUpgraded += RefreshEquippedItem;
     }
@@ -79,6 +82,7 @@ public class CharacterProfileModel : IStatProvider
 
                 var weaponData   = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
                 Equipment.Equip(weaponData);
+                PassivesManager.AddPassive(passiveCfg, weaponSave.CurrentUpgrade);
             }
         }
 
@@ -98,6 +102,50 @@ public class CharacterProfileModel : IStatProvider
                 }
             }
         }
+    }
+
+    private void LoadSkillPassives()
+    {
+        if (_baseConfig.Skills == null) return;
+
+        foreach (var kvp in _baseConfig.Skills)
+        {
+            SkillCharacter skillType = kvp.Key;
+            SkillComponent skillComp = kvp.Value;
+
+            if (!string.IsNullOrEmpty(skillComp.PassiveID))
+            {
+                PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(skillComp.PassiveID);
+                
+                // Mức độ cường hóa kỹ năng (0, 1, 2)
+                int skillEnhanceLvl = Utility.GetSkillEnhancementLevel(skillType, SaveData.StarUp);
+                
+                // Do hàm PassiveInstance tính index = Max(0, level - 1), 
+                // ta cộng thêm 1 để level bắt đầu từ 1 (khớp với index 0 của mảng giá trị)
+                PassivesManager.AddPassive(passiveCfg, skillEnhanceLvl + 1);
+            }
+        }
+    }
+
+    public void RefreshSkillPassives()
+    {
+        if (_baseConfig.Skills == null) return;
+
+        foreach (var kvp in _baseConfig.Skills)
+        {
+            if (!string.IsNullOrEmpty(kvp.Value.PassiveID))
+            {
+                PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(kvp.Value.PassiveID);
+                
+                // Gỡ nội tại cũ
+                PassivesManager.RemovePassive(passiveCfg);
+
+                // Lắp lại nội tại với level mới (nếu StarUp có thay đổi)
+                int skillEnhanceLvl = Utility.GetSkillEnhancementLevel(kvp.Key, SaveData.StarUp);
+                PassivesManager.AddPassive(passiveCfg, skillEnhanceLvl + 1);
+            }
+        }
+        OnStatsChanged?.Invoke();
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -123,6 +171,7 @@ public class CharacterProfileModel : IStatProvider
         var runtimeWeapon  = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
 
         Equipment.Equip(runtimeWeapon);
+        PassivesManager.AddPassive(passiveCfg, weaponSave.CurrentUpgrade);
         SaveData.Weapon  = itemUUID;
         weaponSave.Equip = SaveData.ID;
 
@@ -136,7 +185,11 @@ public class CharacterProfileModel : IStatProvider
         var weaponSave = _inventory.GetWeapon(itemUUID);
         if (string.IsNullOrEmpty(SaveData.Weapon)) return;
 
+        var weaponConfig = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        PassiveConfig passiveCfg = _gameDataBase.GetPassiveConfig(weaponConfig.Weapon.PassiveID);
+
         Equipment.Unequip(EquipSlot.Weapon);
+        PassivesManager.RemovePassive(passiveCfg);
         SaveData.Weapon  = "";
         weaponSave.Equip = "";
 
@@ -340,8 +393,8 @@ public class CharacterProfileModel : IStatProvider
     public int GetTotalStat(StatType type)
     {
         float baseStat     = GetBaseStat(type);
-        float flatBonus    = Equipment.GetTotalConstantBonus(type);
-        float percentBonus = Equipment.GetTotalPercentBonus(type) / 100f;
+        float flatBonus    = Equipment.GetTotalConstantBonus(type) + PassivesManager.GetTotalConstantBonus(type);
+        float percentBonus = (Equipment.GetTotalPercentBonus(type) + PassivesManager.GetTotalPercentBonus(type)) / 100f;
 
         return Mathf.RoundToInt((baseStat + flatBonus) * (1 + percentBonus));
     }
@@ -392,7 +445,10 @@ public class CharacterProfileModel : IStatProvider
                 var runtimeWeapon = EquipmentFactory.CreateWeaponData(weaponSave, weaponConfig, passiveCfg);
 
                 Equipment.Unequip(EquipSlot.Weapon);
+                PassivesManager.RemovePassive(passiveCfg);
+
                 Equipment.Equip(runtimeWeapon);
+                PassivesManager.AddPassive(passiveCfg, weaponSave.CurrentUpgrade);
 
                 OnEquipmentChanged?.Invoke();
                 OnStatsChanged?.Invoke();

@@ -8,9 +8,9 @@
     "currencies": {
       "Energy": 10,
       "Jade": 1200,
-      "Coin": 7296600,
+      "Coin": 7294200,
       "RelicEssence": 8533160,
-      "ArmorPrimorite": 650150,
+      "ArmorPrimorite": 649250,
       "Ticket": 0
     },
     "items": [
@@ -105,13 +105,13 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
-        "type": "Gemstone",
+        "id": "DragonKing",
+        "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
@@ -125,7 +125,7 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -540,12 +540,18 @@
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
         "template_id": "Armor05_Gloves",
-        "level": 2,
+        "level": 3,
         "rare": "Uncommon",
         "substats": [
           {
             "type": "DEF",
             "value": 100,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "value": 15,
             "level": 1,
             "modifier_type": "Constant"
           }
@@ -588,10 +594,10 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 36,
+        "level": 10,
         "exp": 48,
         "ascension_tier": 1,
-        "star_up": 6,
+        "star_up": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "armors": [
           {
@@ -683,7 +689,7 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "BullDemonKing"
+        "character_id": ""
       },
       {
         "position": 2,
@@ -691,19 +697,19 @@
       },
       {
         "position": 3,
-        "character_id": "ShaWujing"
+        "character_id": ""
       },
       {
         "position": 4,
-        "character_id": "ZhuBaJie"
+        "character_id": ""
       },
       {
         "position": 5,
-        "character_id": "TangSanZang"
+        "character_id": ""
       },
       {
         "position": 6,
-        "character_id": "LittleWhiteDragon"
+        "character_id": ""
       }
     ]
   }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tech.Composite;
@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 using Cysharp.Threading.Tasks;
 using VContainer.Unity;
 using VContainer;
+
+using System;
 
 public enum BattleRow { Front, Back }
 public enum BattleColumn { Left, Center, Right }
@@ -22,6 +24,36 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     public int RenderOrder = 0;
 
     public TeamSide Team;
+
+    // --- BATTLE EVENTS ---
+    public Action<Entity> OnTurnStart;
+    public Action<Entity> OnTurnEnd;
+    public Action<Entity, Entity, float, HashSet<string>> OnBeforeDealDamage;
+    public Action<Entity, Entity, float, HashSet<string>> OnAfterDealDamage;
+    public Action<Entity> OnAfterSkillExecute;
+
+    // Turn Lifecycle
+    // OnTurnStart buff/debuff
+    // OnTurnEnd 
+
+    // Skill/Action event
+    // OnBeforeSkillExecute (Kiểm tra điều khiện kích hoạt pass ví dụ đơn mục tiêu hay diện rộng
+    // OnAfterSkillExecute (Sau khi thi triển kĩ năng nhân vật có ....ap dụng các hiệu ứng nên bản thân)
+
+    // Damage & Combat Event
+    // OnBeforeDealDamage (Đòn tấn công có cơ hội giảm phòng thủ đối phương, tăng tỉ lệ chí mạng)
+    // OnAfterDealDamage (Hồi máu cho nhân vật dựa vào lượng sát thương gây ra hiệu ứng hút máu)
+    // OnBeforeTakeDamge (Kích hoạt khiên giảm sát thương nhận vào)
+    // OnAfterTakeDamage (Kích hoạt phản sát thương)
+
+    // Kill & Death Envent
+    // OnKillTarget Mục tiêu bị hạ gục
+    // OnBeforeDaeth Các passive hồi sinh (hồi sinh với 20%HP, hoặc nổ gây sát thương ra xung quanh)
+
+    // Buff/Debuff Event Addvance
+    // OnBuffApplied / OnDebuffApplied
+    // OnBuffRemoved / OnDebuffRemoved
+
 
     [Header("Position info")]
     public BattleRow Row;
@@ -87,6 +119,9 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     {
         IsEndTurn = false;
         entityStateData.CurrentTarget = target;
+        
+        OnTurnStart?.Invoke(this);
+        
         entityStateData.HandleTurn();
     }
 
@@ -105,6 +140,9 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     public virtual async UniTask ExecuteSkillAsync(SkillCharacter type, int currentTurnID)
     {
         await gameObject.GetComponent<EntitySkill>().ExecuteSkillAsync(type, currentTurnID);
+        
+        // Báo cho hệ thống biết kĩ năng đã thi triển xong (Để kích hoạt các Passive)
+        OnAfterSkillExecute?.Invoke(this);
     }
 
     public string GetEntityID()

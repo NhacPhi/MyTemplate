@@ -67,6 +67,7 @@ class PassiveSkillBuilder(BaseBuilder):
                     "event_type": str(row['event_type']).strip() if pd.notna(row.get('event_type')) else "",
                     "effect_id": str(row['effect_id']).strip() if pd.notna(row.get('effect_id')) else "",
                     "modify_by_upgrade": row.get('modify_by_upgrade', ""),
+                    "target": str(row['target']).strip() if pd.notna(row.get('target')) else "",
                     "condition_filter": str(row['condition_filter']).strip() if pd.notna(row.get('condition_filter')) else "",
                     "effect_param": float(row['effect_param']) if pd.notna(row.get('effect_param')) else 0.0,
                     "internal_cooldown": int(row['internal_cooldown']) if pd.notna(row.get('internal_cooldown')) else 0

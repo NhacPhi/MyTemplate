@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using VContainer;
 using System;
@@ -7,7 +7,7 @@ public class EntityStats : StatsController, IDamagable
 {
     public bool IsDead { get; protected set; }
     public Action OnDeath { get; set; }
-    public Action<float, Transform> OnHit { get; set; }
+    public Action<float, Transform, System.Collections.Generic.HashSet<string>> OnHit { get; set; }
     public EntitySkill Skill { get; protected set; }
 
     protected virtual void Start()
@@ -21,9 +21,9 @@ public class EntityStats : StatsController, IDamagable
         //CallEvent();
     }
 
-    public virtual void TakeDamage(float damage, Transform attacker)
+    public virtual void TakeDamage(float damage, Transform attacker, System.Collections.Generic.HashSet<string> tags = null)
     {
-        OnHit?.Invoke(damage, attacker);
+        OnHit?.Invoke(damage, attacker, tags);
 
         var hp = GetAttribute(AttributeType.Hp);
         var shield = GetAttribute(AttributeType.Shield);
@@ -68,6 +68,18 @@ public class EntityStats : StatsController, IDamagable
                 Value = hp.Value,
                 MaxValue = hp.MaxValue,
             });
+        }
+
+        // --- GỌI EVENT CHO KẺ TẤN CÔNG (Báo hiệu sát thương đã được gây ra) ---
+        if (attacker != null)
+        {
+            var attackerEntity = attacker.GetComponent<Entity>();
+            var targetEntity = this.core as Entity;
+            
+            if (attackerEntity != null && targetEntity != null)
+            {
+                attackerEntity.OnAfterDealDamage?.Invoke(attackerEntity, targetEntity, damage, tags);
+            }
         }
 
         // --- BƯỚC 3: KIỂM TRA ĐIỀU KIỆN CHẾT ---

@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 2913178327910769972}
   - component: {fileID: 8393971912570073465}
   - component: {fileID: 344798449703776220}
+  - component: {fileID: 2972660436545785630}
   m_Layer: 0
   m_Name: BullDemonKing
   m_TagString: Untagged
@@ -301,8 +302,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4997db1c2952b3a41a811f23755ff1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
   RenderOrder: 0
+  Team: 0
+  Row: 0
+  Column: 0
 --- !u!114 &6044296753504176612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +377,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 3, z: 0.4}
   m_Center: {x: 0, y: -0.2477076, z: 0}
+--- !u!114 &2972660436545785630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2456069910155421974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c626c082a2e42d4c9153420cc77d017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2649586760728683393
 GameObject:
   m_ObjectHideFlags: 0

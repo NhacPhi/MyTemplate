@@ -29,6 +29,7 @@ class CombatEventModel:
     event_type: str
     effect_id: str
     modify_by_upgrade: Union[List[float], str]
+    target: str = ""
     condition_filter: str = ""
     effect_param: float = 0.0
     internal_cooldown: int = 0
@@ -36,6 +37,8 @@ class CombatEventModel:
     def __post_init__(self):
         self.modify_by_upgrade = parse_float_list(self.modify_by_upgrade)
         
+        if not isinstance(self.target, str) or str(self.target).lower() == 'nan':
+            self.target = ""
         if not isinstance(self.condition_filter, str) or str(self.condition_filter).lower() == 'nan':
             self.condition_filter = ""
         if self.effect_param is None or str(self.effect_param).lower() == 'nan':

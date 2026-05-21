@@ -29,7 +29,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterAttack",
+                "event_type": "OnAfterSkillExcute",
                 "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     10.0,
@@ -39,6 +39,7 @@
                     30.0,
                     40.0
                 ],
+                "target": "self",
                 "condition_filter": "SingleTarget, TargetDead",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
@@ -63,7 +64,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterAttack",
+                "event_type": "OnAfterSkillExcute",
                 "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
                     30.0,
@@ -73,6 +74,7 @@
                     70.0,
                     80.0
                 ],
+                "target": "self",
                 "condition_filter": "IsSkill, SingleTarget, TargetDead",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
@@ -97,7 +99,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterAttack",
+                "event_type": "OnAfterSkillExcute",
                 "effect_id": "Eff_FollowUp_BasicAttack",
                 "modify_by_upgrade": [
                     30.0,
@@ -107,6 +109,7 @@
                     70.0,
                     80.0
                 ],
+                "target": "self",
                 "condition_filter": "SingleTarget, TargetAlive",
                 "effect_param": 0.0,
                 "internal_cooldown": 1
@@ -131,8 +134,8 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnTurnStart",
-                "effect_id": "Eff_Dispel_Debuff",
+                "event_type": "OnSkillStart",
+                "effect_id": "Eff_Cleanse",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -141,6 +144,7 @@
                     70.0,
                     80.0
                 ],
+                "target": "self",
                 "condition_filter": "HasDebuff",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
@@ -187,6 +191,7 @@
                     8.0,
                     10.0
                 ],
+                "target": "self",
                 "condition_filter": "SingleTarget",
                 "effect_param": 6.0,
                 "internal_cooldown": 0
@@ -198,7 +203,7 @@
         "static_modifiers": [],
         "combat_events": [
             {
-                "event_type": "OnTakeDamage",
+                "event_type": "OnAfterTakeDamage",
                 "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     10.0,
@@ -208,6 +213,7 @@
                     30.0,
                     40.0
                 ],
+                "target": "self",
                 "condition_filter": "AoEAttack",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
@@ -219,8 +225,8 @@
         "static_modifiers": [],
         "combat_events": [
             {
-                "event_type": "OnBeforeAttack",
-                "effect_id": "Eff_Damage_Multiplier_Boost",
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_IncreaseAttack",
                 "modify_by_upgrade": [
                     10.0,
                     15.0,
@@ -229,6 +235,7 @@
                     30.0,
                     40.0
                 ],
+                "target": "self",
                 "condition_filter": "SingleTarget",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
@@ -253,7 +260,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnHit",
+                "event_type": "OnAfterTakeDamage",
                 "effect_id": "Eff_Lacerate_Debuff",
                 "modify_by_upgrade": [
                     30.0,
@@ -263,6 +270,7 @@
                     70.0,
                     80.0
                 ],
+                "target": "enemy",
                 "condition_filter": "SingleTarget",
                 "effect_param": 2.0,
                 "internal_cooldown": 0
@@ -353,7 +361,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnSkillCast",
+                "event_type": "OnAfterSkillExecute",
                 "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
                     30.0,
@@ -363,6 +371,7 @@
                     70.0,
                     80.0
                 ],
+                "target": "self",
                 "condition_filter": "NonAttackSkill",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
@@ -387,7 +396,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnHit",
+                "event_type": "OnAfterSkillExecute",
                 "effect_id": "Eff_Apply_Mark_Debuff",
                 "modify_by_upgrade": [
                     40.0,
@@ -397,6 +406,7 @@
                     80.0,
                     90.0
                 ],
+                "target": "enemy",
                 "condition_filter": "SingleTarget",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
@@ -421,7 +431,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnTakeDamage",
+                "event_type": "OnAfterSkillExcute",
                 "effect_id": "Eff_Dispel_Self_Debuff",
                 "modify_by_upgrade": [
                     40.0,
@@ -431,24 +441,26 @@
                     80.0,
                     90.0
                 ],
+                "target": "self",
                 "condition_filter": "HasDebuff",
                 "effect_param": 2.0,
                 "internal_cooldown": 2
             }
         ]
     },
-    "psv_sunwukong_main": {
+    "psv_sunwukong_major": {
         "desc_template_hash": 3419521401,
         "static_modifiers": [],
         "combat_events": [
             {
-                "event_type": "OnAfterAttack",
-                "effect_id": "Eff_Heal_By_Attack",
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_Lifesteal",
                 "modify_by_upgrade": [
                     20.0,
                     30.0
                 ],
-                "condition_filter": "AoEAttack",
+                "target": "self",
+                "condition_filter": "MajorSkill",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
             }
@@ -459,13 +471,14 @@
         "static_modifiers": [],
         "combat_events": [
             {
-                "event_type": "OnAfterAttack",
-                "effect_id": "Eff_Reduce_Def",
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_ReduceDefense",
                 "modify_by_upgrade": [
                     20.0,
                     30.0
                 ],
-                "condition_filter": "SingleTarget",
+                "target": "enemy",
+                "condition_filter": "UltimateSkill",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
             }

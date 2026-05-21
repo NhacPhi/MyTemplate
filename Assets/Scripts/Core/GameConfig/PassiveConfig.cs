@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -30,8 +30,39 @@ public class CombatEventConfig
     [JsonProperty("modify_by_upgrade")]
     public List<float> ModifyByUpgrade;
 
+    [JsonProperty("target")]
+    public string Target;
+
     [JsonProperty("condition_filter")]
     public string ConditionFilter;
+
+    [JsonIgnore]
+    private HashSet<string> _conditionTags;
+
+    [JsonIgnore]
+    public HashSet<string> ConditionTags
+    {
+        get
+        {
+            if (_conditionTags == null)
+            {
+                _conditionTags = new HashSet<string>();
+                if (!string.IsNullOrEmpty(ConditionFilter))
+                {
+                    string[] tags = ConditionFilter.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        string t = tag.Trim();
+                        if (!string.IsNullOrEmpty(t))
+                        {
+                            _conditionTags.Add(t);
+                        }
+                    }
+                }
+            }
+            return _conditionTags;
+        }
+    }
 
     [JsonProperty("effect_param")]
     public float EffectParam;

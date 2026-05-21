@@ -35,7 +35,7 @@ public static class DamageFormular
         }
 
         damageResult = Mathf.RoundToInt(damageResult * (100f / (100 + targetDef.Value)));
-        targetStats.TakeDamage(damageResult, source.transform);
+        targetStats.TakeDamage(damageResult, source.transform, damageBonus.Tags);
         UIEvent.DamagePopup(damageResult, target.transform.position, false);
     }
 

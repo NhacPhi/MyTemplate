@@ -26,7 +26,7 @@ public class EntityTakeHit : EntityStateBase
     protected async UniTaskVoid WaitInit()
     {
         await UniTask.Yield();
-        data.Entity.GetComponent<EntityStats>().OnHit += (_, _) =>
+        data.Entity.GetComponent<EntityStats>().OnHit += (_, _, _) =>
         {
             data.StateManager.ChangeState(EntityState.HIT);
         };
