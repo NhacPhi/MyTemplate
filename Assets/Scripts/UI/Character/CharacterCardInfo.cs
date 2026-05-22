@@ -29,6 +29,7 @@ public class CharacterCardInfo : CharacterCard
 
     [Inject] PlayerCharacterManager characterManager;
     [Inject] private GameDataBase gameDataBase;
+    [Inject] private SaveSystem saveSystem;
 
     private string currentCharracter = "";
 
@@ -69,13 +70,13 @@ public class CharacterCardInfo : CharacterCard
 
         iconRare.sprite = gameDataBase.GetCharacterRareIcon(characterConfig.Rare);
 
-        txtHP.text = characterProfile.GetTotalStat(StatType.HP).ToString();
-        txtATK.text = characterProfile.GetTotalStat(StatType.ATK).ToString();
-        txtDEF.text = characterProfile.GetTotalStat(StatType.DEF).ToString(); // stat.DEF.ToString();
-        txtSPD.text = characterProfile.GetTotalStat(StatType.SPEED).ToString();
+        txtHP.text = GetStatText(StatType.HP, characterProfile);
+        txtATK.text = GetStatText(StatType.ATK, characterProfile);
+        txtDEF.text = GetStatText(StatType.DEF, characterProfile);
+        txtSPD.text = GetStatText(StatType.SPEED, characterProfile);
         txtDEFShred.text = "0"; // stat.DEFShred.ToString();
-        txtCritRate.text = characterProfile.GetTotalStat(StatType.CRIT_RATE).ToString();
-        txtCriteDMG.text = characterProfile.GetTotalStat(StatType.CRIT_DMG).ToString();
+        txtCritRate.text = GetStatText(StatType.CRIT_RATE, characterProfile);
+        txtCriteDMG.text = GetStatText(StatType.CRIT_DMG, characterProfile);
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 
@@ -96,5 +97,46 @@ public class CharacterCardInfo : CharacterCard
     public void UpdateCardInfoWithCurrentCharacter()
     {
         UpdateCharacterCardInfo(currentCharracter);
+    }
+
+    private string GetStatText(StatType type, CharacterProfileModel profile)
+    {
+        int profileTotal = profile.GetTotalStat(type);
+        float globalFlat = 0f;
+        float globalPercent = 0f;
+
+        if (saveSystem == null)
+        {
+            Debug.LogWarning("[CharacterCardInfo] SaveSystem is null! Injection failed or hot-reload issue.");
+        }
+        else if (saveSystem.Player?.Roster?.ActiveGlobalBuffs != null)
+        {
+            foreach (var buff in saveSystem.Player.Roster.ActiveGlobalBuffs)
+            {
+                if (buff.IsActive && buff.StatType == type)
+                {
+                    if (buff.ModifierType == ModifyType.Constant) globalFlat += buff.Value;
+                    else if (buff.ModifierType == ModifyType.Percent) globalPercent += buff.Value;
+                }
+            }
+        }
+
+        if (globalFlat == 0f && globalPercent == 0f)
+        {
+            return profileTotal.ToString();
+        }
+
+        int foodBonus = Mathf.RoundToInt(globalFlat + (profileTotal * (globalPercent / 100f)));
+        Debug.Log($"[CharacterCardInfo] Stat: {type}, ProfileTotal: {profileTotal}, FoodBonus: {foodBonus} (Flat: {globalFlat}, Percent: {globalPercent})");
+
+        if (foodBonus > 0)
+        {
+            return $"{profileTotal} <color=#00FF00>+{foodBonus}</color>";
+        }
+        else if (foodBonus < 0)
+        {
+            return $"{profileTotal} <color=#FF0000>{foodBonus}</color>";
+        }
+        return profileTotal.ToString();
     }
 }

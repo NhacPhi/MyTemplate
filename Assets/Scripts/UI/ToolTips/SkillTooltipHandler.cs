@@ -44,13 +44,29 @@ public class SkillTooltipHandler : MonoBehaviour
 
     private void HandleShow()
     {
+        Debug.Log($"[SkillTooltipHandler] HandleShow called. CharacterID: {_characterID}, SkillType: {_skillType}");
         if (string.IsNullOrEmpty(_characterID)) return;
 
         var config = _gameDataBase.GetCharacterConfig(_characterID);
-        if (config == null || !config.Skills.ContainsKey(_skillType)) return;
+        if (config == null) 
+        {
+            Debug.LogWarning("[SkillTooltipHandler] CharacterConfig is null!");
+            return;
+        }
+        if (!config.Skills.ContainsKey(_skillType))
+        {
+            Debug.LogWarning($"[SkillTooltipHandler] CharacterConfig does not contain skill type: {_skillType}");
+            return;
+        }
 
         var profile = _playerCharacterManager.GetCharacter(_characterID);
-        int starUp = profile != null ? profile.SaveData.StarUp : 0;
+        if (profile == null)
+        {
+            Debug.LogWarning("[SkillTooltipHandler] Character profile is null!");
+            return;
+        }
+        
+        int starUp = profile.SaveData.StarUp;
         int enhancementLevel = Utility.GetSkillEnhancementLevel(_skillType, starUp);
 
         SkillComponent skillComp = config.Skills[_skillType];
@@ -136,6 +152,11 @@ public class SkillTooltipHandler : MonoBehaviour
 
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, transform.position);
 
+        Debug.Log($"[SkillTooltipHandler] Invoking OnShowSkillTooltip for {_skillType} at {screenPos}");
+        if (UIEvent.OnShowSkillTooltip == null)
+        {
+            Debug.LogError("[SkillTooltipHandler] UIEvent.OnShowSkillTooltip is NULL! No one is listening. (Check if SkillTooltipUI is active in the scene!)");
+        }
         UIEvent.OnShowSkillTooltip?.Invoke(data, screenPos);
     }
 

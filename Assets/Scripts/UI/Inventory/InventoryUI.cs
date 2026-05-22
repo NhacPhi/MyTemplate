@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -206,7 +206,10 @@ public class InventoryUI : MonoBehaviour
         {
             foreach (var obj in list)
             {
-                obj.SetActive(false);
+                if (obj != null)
+                {
+                    obj.SetActive(false);
+                }
             }
         }
     }
@@ -215,10 +218,17 @@ public class InventoryUI : MonoBehaviour
     {
         foreach (var list in dictionaryObject.Values)
         {
-            foreach (var obj in list) Destroy(obj);
-            list.Clear();
+            foreach (var obj in list) 
+            {
+                if (obj != null) Destroy(obj);
+            }
         }
         dictionaryObject.Clear();
+        weapons.Clear();
+        items.Clear();
+        armors.Clear();
+        shards.Clear();
+        materials_dic.Clear();
     }
 
     /// <summary>

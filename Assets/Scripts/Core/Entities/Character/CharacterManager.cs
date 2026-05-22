@@ -57,6 +57,20 @@ public class CharacterManager
             if (statsController != null && characterProfile != null)
             {
                 statsController.Setup(characterProfile);
+
+                if (_saveSystem.Player.Roster.ActiveGlobalBuffs != null)
+                {
+                    foreach (var buff in _saveSystem.Player.Roster.ActiveGlobalBuffs)
+                    {
+                        if (buff.IsActive)
+                        {
+                            float actualValue = buff.ModifierType == ModifyType.Percent ? buff.Value / 100f : buff.Value;
+                            var modifier = new Modifier(actualValue, buff.ModifierType);
+                            statsController.AddModifierWithoutNotify(buff.StatType, modifier);
+                        }
+                    }
+                    statsController.CalculateStatsValue();
+                }
             }
 
             var characterUI = _objectResolver.Instantiate(characterUIPrefab, prefabEntity.transform.position, Quaternion.identity, characterInstance.transform);

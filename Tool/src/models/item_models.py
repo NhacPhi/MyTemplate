@@ -25,6 +25,17 @@ class ArmorComponent:
     substat_pool_id: str
     main_stat: Optional[MainStatData] = None
 
+@dataclass
+class FoodEffect:
+    effect_type: str
+    value: float
+    stat_type: Optional[str] = None
+    mod_type: Optional[str] = None
+    duration_minutes: Optional[float] = None
+
+@dataclass
+class FoodComponent:
+    effects: List[FoodEffect] = field(default_factory=list)
 
 @dataclass
 class ItemModel:
@@ -37,6 +48,7 @@ class ItemModel:
     weapon_data: Optional[WeaponComponent] = None
     exp_data: Optional[ExpComponent] = None
     armor_data: Optional[ArmorComponent] = None
+    food_data: Optional[FoodComponent] = None
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}

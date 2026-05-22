@@ -86,6 +86,10 @@ public class ItemConfig
     // Armor
     [JsonProperty("armor_data")]
     public ArmorComponent Armor;
+
+    // Food
+    [JsonProperty("food_data")]
+    public FoodComponent Food;
 }
 
 [Serializable]
@@ -159,4 +163,26 @@ public class MainStatConfig
     [JsonProperty("mod_type")] public ModifyType ModifierType;
 }
 
+public enum FoodEffectType
+{
+    RestoreEnergy,
+    GlobalStatBuff
+}
+
+[Serializable]
+public class FoodEffectData
+{
+    [JsonProperty("effect_type")] public FoodEffectType EffectType;
+    [JsonProperty("value")] public float Value;
+    [JsonProperty("duration_minutes")] public float DurationMinutes;
+    [JsonProperty("stat_type")] public StatType StatType; 
+    [JsonProperty("mod_type")] public ModifyType ModifierType;
+}
+
+[Serializable]
+public class FoodComponent
+{
+    [JsonProperty("effects")]
+    public List<FoodEffectData> Effects;
+}
 

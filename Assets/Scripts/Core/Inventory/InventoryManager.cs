@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using VContainer;
 using System;
@@ -8,6 +8,7 @@ public class InventoryManager
 {
     [Inject] GameDataBase _gameDataBase;
     [Inject] SaveSystem _save;
+    [Inject] CurrencyManager _currencyManager;
 
     public event Action OnInventoryChanged;
 
@@ -62,6 +63,45 @@ public class InventoryManager
         OnInventoryChanged?.Invoke();
 
         return true;
+    }
+
+    public bool UseItem(string itemID)
+    {
+        var item = GetItem(itemID);
+        if (item == null || item.Quantity <= 0) return false;
+
+        var config = _gameDataBase.GetItemConfig(itemID);
+        if (config != null && config.Type == ItemType.Food && config.Food != null && config.Food.Effects != null)
+        {
+            foreach (var effect in config.Food.Effects)
+            {
+                if (effect.EffectType == FoodEffectType.RestoreEnergy)
+                {
+                    _currencyManager.Add(CurrencyType.Energy, (int)effect.Value);
+                }
+                else if (effect.EffectType == FoodEffectType.GlobalStatBuff)
+                {
+                    // Clear previous buffs (no stacking)
+                    _save.Player.Roster.ActiveGlobalBuffs.Clear();
+
+                    // Add new buff
+                    var expirationTicks = System.DateTime.UtcNow.AddMinutes(effect.DurationMinutes).Ticks;
+                    _save.Player.Roster.ActiveGlobalBuffs.Add(new ActiveGlobalBuff
+                    {
+                        StatType = effect.StatType,
+                        ModifierType = effect.ModifierType,
+                        Value = effect.Value,
+                        ExpirationTimeTicks = expirationTicks
+                    });
+                    
+                    _save.SaveDataToDisk(GameSaveType.PlayerInfo);
+                }
+            }
+            ConsumeStackableItem(itemID, 1);
+            return true;
+        }
+
+        return false;
     }
 
     public ItemSaveData GetItem(string id)

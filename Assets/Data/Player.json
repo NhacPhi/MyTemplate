@@ -6,7 +6,7 @@
   },
   "inventory": {
     "currencies": {
-      "Energy": 10,
+      "Energy": 310,
       "Jade": 1200,
       "Coin": 7294200,
       "RelicEssence": 8533160,
@@ -32,7 +32,7 @@
       {
         "id": "Dragon_Bread_Noodies",
         "type": "Food",
-        "quantity": 1
+        "quantity": 44
       },
       {
         "id": "Jade_Gemstone",
@@ -62,7 +62,7 @@
       {
         "id": "Jade_Parcels",
         "type": "Food",
-        "quantity": 1
+        "quantity": 85
       },
       {
         "id": "ZhuBaJie",
@@ -122,7 +122,7 @@
       {
         "id": "Shirmp_Dumplings",
         "type": "Food",
-        "quantity": 1
+        "quantity": 10
       },
       {
         "id": "Jade_Fragment",
@@ -142,7 +142,7 @@
       {
         "id": "Tofu_Soup",
         "type": "Food",
-        "quantity": 1
+        "quantity": 77
       },
       {
         "id": "TangSanZang",
@@ -162,7 +162,7 @@
       {
         "id": "Fried_Radish_Balls",
         "type": "Food",
-        "quantity": 1
+        "quantity": 65
       },
       {
         "id": "LittleWhiteDragon",
@@ -172,7 +172,7 @@
       {
         "id": "Murshroom_Steamed_Buns",
         "type": "Food",
-        "quantity": 1
+        "quantity": 55
       }
     ],
     "weapons": [
@@ -594,8 +594,8 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 10,
-        "exp": 48,
+        "level": 1,
+        "exp": 0,
         "ascension_tier": 1,
         "star_up": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
@@ -710,6 +710,14 @@
       {
         "position": 6,
         "character_id": ""
+      }
+    ],
+    "active_global_buffs": [
+      {
+        "stat_type": "DEF",
+        "mod_type": "Constant",
+        "value": 100.0,
+        "expiration_time_ticks": 639150461942358828
       }
     ]
   }

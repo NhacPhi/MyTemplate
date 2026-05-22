@@ -67,13 +67,24 @@ public class CharacterCardCultivate : CharacterCard
 
         upgrades.UpdateUI(data.StarUp);
 
-        int expNeedToUpdate = gameDataBase.GetExpConfig(expTier).UpExp[(data.Level + 1).ToString()];
-        txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
+        int expNeedToUpdate = 0;
+        if (data.Level < Definition.MAX_CHARACTER_LEVEL)
+        {
+            gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((data.Level + 1).ToString(), out expNeedToUpdate);
+        }
 
-            sliderExp.maxValue = 1;
-        sliderExp.value = data.Exp / expNeedToUpdate;
-
-
+        if (expNeedToUpdate > 0)
+        {
+            txtCurrentExp.text = data.Exp.ToString() + "/" + expNeedToUpdate.ToString();
+            sliderExp.maxValue = 1f;
+            sliderExp.value = (float)data.Exp / expNeedToUpdate;
+        }
+        else
+        {
+            txtCurrentExp.text = "MAX";
+            sliderExp.maxValue = 1f;
+            sliderExp.value = 1f;
+        }
         int currentHP = config.GetStatByLevel(StatType.HP, data.Level);
         float nextHP = config.GetStatByLevel(StatType.HP, data.Level + 1);
 

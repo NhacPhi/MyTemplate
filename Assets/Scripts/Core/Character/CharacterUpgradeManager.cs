@@ -39,10 +39,13 @@ public class CharacterUpgradeManager
     public int GetExpRequiredForNextLevel()
     {
         var saveData = _profile.SaveData;
+        if (saveData.Level >= Definition.MAX_CHARACTER_LEVEL) return 0;
+        
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
-        var expNeedToUpdateLevel = _gameDataBase.GetExpConfig(expTier).UpExp[(saveData.Level + 1).ToString()];
-        return expNeedToUpdateLevel - saveData.Exp;
+        int expNeedToUpdateLevel = 0;
+        _gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((saveData.Level + 1).ToString(), out expNeedToUpdateLevel);
+        return Math.Max(0, expNeedToUpdateLevel - saveData.Exp);
     }
 
     /// <summary>

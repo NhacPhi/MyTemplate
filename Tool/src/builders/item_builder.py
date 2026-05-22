@@ -1,7 +1,7 @@
 import pandas as pd
 import config
 from src.builders.base_builder import BaseBuilder
-from src.models.item_models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, MainStatData
+from src.models.item_models import ItemModel, WeaponComponent, ExpComponent, ArmorComponent, MainStatData, FoodComponent, FoodEffect
 
 class ItemConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -69,10 +69,27 @@ class ItemConfigBuilder(BaseBuilder):
             df_item_detail = all_sheets["Item_Detail"]
             for _, row in df_item_detail.iterrows():
                 w_id = str(row['ID']).strip()
-                if w_id in master_data and master_data[w_id].item_type == "Exp":
-                    master_data[w_id].exp_data = ExpComponent(
-                        value=int(row['Pram01']) if pd.notna(row['Pram01']) else 0
-                    )
+                if w_id in master_data:
+                    if master_data[w_id].item_type == "Exp":
+                        master_data[w_id].exp_data = ExpComponent(
+                            value=int(row['Pram01']) if pd.notna(row['Pram01']) else 0
+                        )
+                    elif master_data[w_id].item_type == "Food":
+                        effect = FoodEffect(
+                            effect_type=str(row['Pram01']) if pd.notna(row['Pram01']) else "",
+                            value=float(row['Pram02']) if pd.notna(row['Pram02']) else 0.0
+                        )
+                        if 'Pram03' in row and pd.notna(row['Pram03']) and str(row['Pram03']).strip():
+                            effect.stat_type = str(row['Pram03'])
+                        if 'Pram04' in row and pd.notna(row['Pram04']) and str(row['Pram04']).strip():
+                            effect.mod_type = str(row['Pram04'])
+                        if 'Pram05' in row and pd.notna(row['Pram05']):
+                            effect.duration_minutes = float(row['Pram05'])
+                        
+                        if master_data[w_id].food_data is None:
+                            master_data[w_id].food_data = FoodComponent(effects=[])
+                        master_data[w_id].food_data.effects.append(effect)
+
 
         final_data = {item_id: item.to_dict() for item_id, item in master_data.items()}
         self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, final_data, "ItemConfig")
