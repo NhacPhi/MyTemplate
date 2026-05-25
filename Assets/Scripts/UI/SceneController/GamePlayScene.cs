@@ -16,6 +16,8 @@ public class GamePlayScene : WindowController
     [SerializeField] private Button btnAttack;
     [SerializeField] private Button btnCatchSkill;
 
+    [SerializeField] private Button btnShop;
+
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
 
@@ -51,6 +53,13 @@ public class GamePlayScene : WindowController
         {
             //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.PartySetupScene);
+            UIEvent.OnPrepareBattleData?.Invoke();
+        });
+
+        btnShop.onClick.AddListener(() =>
+        {
+            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
+            uiManager.OpenWindowScene(ScreenIds.ShopScene);
             UIEvent.OnPrepareBattleData?.Invoke();
         });
 

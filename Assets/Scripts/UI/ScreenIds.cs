@@ -15,6 +15,7 @@ public class ScreenIds
     public const string BattleUIScene = "BattleUIScene";
     public const string UpgradeRelicScene = "UpgradeRelicScene";
     public const string UpgradeArmorScene = "UpgradeArmorScene";
+    public const string ShopScene = "ShopScene";
 
     // Panel
     public const string PanelStartGame = "PanelStartGame";
