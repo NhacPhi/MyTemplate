@@ -169,6 +169,18 @@ public static class LocKeys
 
     public const long UI_COOLDOWN = 1154529490;
 
+    public const long UI_COIN = 2037018864;
+
+    public const long UI_JADE = 1804262028;
+
+    public const long UI_DAILY = 4060440975;
+
+    public const long UI_RARE = 1529463103;
+
+    public const long UI_PROMOTION = 2687464667;
+
+    public const long UI_BUNDLE = 3186903286;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -624,6 +636,8 @@ public static class LocKeys
     public const long STR_BATTLE_TUTORIAL = 441973586;
 
     public const long STR_VANGUARD_TIGER = 2865654881;
+
+    public const long STR_NUMBER_OF_PURCHASE = 825901979;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

@@ -47,7 +47,7 @@
       {
         "id": "SunWukong",
         "type": "Shard",
-        "quantity": 18740
+        "quantity": 12
       },
       {
         "id": "ThirdPrinceNezha",
@@ -105,13 +105,13 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
@@ -125,8 +125,8 @@
         "quantity": 10
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
+        "id": "DragonKing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -688,24 +688,28 @@
     ],
     "active_slots": [
       {
+        "position": 1,
+        "character_id": "ThirdPrinceNezha"
+      },
+      {
         "position": 2,
-        "character_id": "SunWukong"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 3,
-        "character_id": ""
+        "character_id": "SunWukong"
       },
       {
         "position": 4,
-        "character_id": ""
+        "character_id": "ShaWujing"
       },
       {
         "position": 5,
-        "character_id": ""
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 6,
-        "character_id": ""
+        "character_id": "TangSanZang"
       }
     ],
     "active_global_buffs": [
@@ -716,5 +720,8 @@
         "expiration_time_ticks": 639150461942358828
       }
     ]
+  },
+  "shop": {
+    "purchase_history": {}
   }
 }

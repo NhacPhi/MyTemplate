@@ -15,4 +15,7 @@ public class PlayerSave
 
     [JsonProperty("roster")]
     public RosterSaveData Roster { get; private set; }
+
+    [JsonProperty("shop")]
+    public ShopSaveData Shop { get; private set; } = new ShopSaveData();
 }

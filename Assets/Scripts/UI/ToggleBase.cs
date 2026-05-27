@@ -25,6 +25,7 @@ public class ToggleBase : MonoBehaviour
 
     public void ActiveToggle(bool value)
     {
-        toggle.isOn = value;
+        if (toggle == null) toggle = GetComponent<Toggle>();
+        if (toggle != null) toggle.isOn = value;
     }
 }

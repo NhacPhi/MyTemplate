@@ -11,6 +11,7 @@ OUTPUT_GAME_NARRATIVE_FOLDER = ROOT_DIR /"../Assets/Data/Narrative/"
 LOCALIZATION_FILE = "Localizations.xlsx"
 GAME_CONFIG_FILE = "GameConfig.xlsx"
 GAME_NARRATIVE_CONFIG_FILE = "GameNarrative.xlsx"
+SHOP_CONFIG_FILE = "Shop.xlsx"
 
 LOCALIZATION = ROOT_DIR/"../Assets/Scripts/Core/Localization"
 OUTPUT_GAME_CONFIG_FOLDER.mkdir(parents=True, exist_ok=True)

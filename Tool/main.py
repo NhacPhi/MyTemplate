@@ -8,6 +8,7 @@ from src.builders.set_bonus_builder import SetBonusBuilder
 from src.builders.starup_builder import StarUpBuilder
 from src.builders.passive_skill_builder import PassiveSkillBuilder
 from src.builders.substat_builder import SubstatPoolBuilder
+from src.builders.shop_builder import ShopConfigBuilder
 import config
 import os
 
@@ -44,6 +45,10 @@ def main():
 
     substat_config = SubstatPoolBuilder(config_path)
     substat_config.run()
+
+    shop_path = os.path.join(config.INPUT_FOLDER, config.SHOP_CONFIG_FILE)
+    shop_config = ShopConfigBuilder(shop_path)
+    shop_config.run()
 
     narrative_path = os.path.join(config.INPUT_FOLDER, config.GAME_NARRATIVE_CONFIG_FILE)
     ator_config = ActorConfigBuilder(narrative_path)
