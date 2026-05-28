@@ -9,7 +9,7 @@ public class ShopCategoryUIConfig
 {
     public string categoryId; 
     public ShopCategoryToggle toggle; // Kéo thả Tab tương ứng có sẵn trên Scene vào đây
-    public ShopCategoryPanelBase subPanel; 
+    public ShopPanelBase subPanel; 
 }
 
 public class ShopPanel : MonoBehaviour
@@ -20,7 +20,7 @@ public class ShopPanel : MonoBehaviour
     [SerializeField] private List<ShopCategoryUIConfig> categoryUIConfigs = new List<ShopCategoryUIConfig>();
 
     private string currentCategory;
-    private HashSet<ShopCategoryPanelBase> initializedPanels = new HashSet<ShopCategoryPanelBase>();
+    private HashSet<ShopPanelBase> initializedPanels = new HashSet<ShopPanelBase>();
 
     public void Init()
     {
@@ -39,9 +39,17 @@ public class ShopPanel : MonoBehaviour
             }
         }
 
-        // Tự động chọn Tab đầu tiên
+        // Tự động chọn Tab đầu tiên và tắt các tab khác
         if (categoryUIConfigs.Count > 0 && categoryUIConfigs[0].toggle != null)
         {
+            for (int i = 1; i < categoryUIConfigs.Count; i++)
+            {
+                if (categoryUIConfigs[i].toggle != null)
+                {
+                    categoryUIConfigs[i].toggle.ActiveToggle(false);
+                }
+            }
+            
             categoryUIConfigs[0].toggle.ActiveToggle(true);
             OnCategorySelected(categoryUIConfigs[0].categoryId);
         }

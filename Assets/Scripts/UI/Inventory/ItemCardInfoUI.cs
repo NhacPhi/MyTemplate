@@ -85,7 +85,7 @@ public class ItemCardInfoUI : MonoBehaviour
 
             txtUseful.text = str;
             icon.sprite = itemConfig.Icon;
-            txtName.text = (item != null && item.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+            txtName.text = (itemConfig.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
             txtOwned.text = item != null ? item.Quantity.ToString() : "0";
             
             if (btnUse != null)

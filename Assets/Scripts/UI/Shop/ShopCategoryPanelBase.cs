@@ -17,78 +17,14 @@ public class CurrencyIconConfig
     public Sprite icon;
 }
 
-public abstract class ShopCategoryPanelBase : MonoBehaviour
+public class ShopCategoryPanelBase : ShopPanelBase
 {
-    protected GameDataBase gameDataBase;
-    protected SaveSystem saveSystem;
-    protected string categoryId;
-    
-    [Header("UI References")]
-    [SerializeField] protected Transform productContainer;
+    [Header("Product UI (Single Items)")]
     [SerializeField] protected ShopProductUI productPrefab;
 
-    [Header("Currency Icons")]
-    [SerializeField] protected List<CurrencyIconConfig> currencyIcons = new List<CurrencyIconConfig>();
-
-    [Header("SubCategory (Optional)")]
-    [SerializeField] protected List<ShopSubCategoryUIConfig> subCategoryUIConfigs = new List<ShopSubCategoryUIConfig>();
-
     protected List<ShopProductUI> activeProducts = new List<ShopProductUI>();
-    
-    protected string currentSubCategory;
 
-    public virtual void Init(GameDataBase db, SaveSystem save, string catId)
-    {
-        gameDataBase = db;
-        saveSystem = save;
-        categoryId = catId;
-        
-        InitializeSubCategories();
-    }
-
-    public virtual void Show()
-    {
-        gameObject.SetActive(true);
-        RefreshProducts();
-    }
-
-    public virtual void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    protected virtual void InitializeSubCategories()
-    {
-        // Setup cho các Sub Tab đã có sẵn trên Scene
-        foreach (var config in subCategoryUIConfigs)
-        {
-            if (config.toggle != null && !string.IsNullOrEmpty(config.subCategoryId))
-            {
-                string subCategoryKey = $"SHOP_SUBCATEGORY_{config.subCategoryId.ToUpper()}";
-                config.toggle.Setup(config.subCategoryId, subCategoryKey, OnSubCategorySelected);
-            }
-        }
-
-        // Nếu có khai báo Sub Tab thì chọn cái đầu tiên, ngược lại bỏ qua
-        if (subCategoryUIConfigs.Count > 0 && subCategoryUIConfigs[0].toggle != null)
-        {
-            subCategoryUIConfigs[0].toggle.ActiveToggle(true);
-            OnSubCategorySelected(subCategoryUIConfigs[0].subCategoryId);
-        }
-        else
-        {
-            currentSubCategory = string.Empty;
-            RefreshProducts();
-        }
-    }
-
-    protected virtual void OnSubCategorySelected(string subCategoryId)
-    {
-        currentSubCategory = subCategoryId;
-        RefreshProducts();
-    }
-
-    public virtual void RefreshProducts()
+    public override void RefreshProducts()
     {
         foreach (var product in activeProducts)
         {
@@ -108,27 +44,24 @@ public abstract class ShopCategoryPanelBase : MonoBehaviour
 
         foreach (var config in categoryConfigs)
         {
+            if (config.SellType != ShopSellType.SingleItem) continue; // Chỉ xử lý SingleItem
+
             var productUI = Instantiate(productPrefab, productContainer);
             
             Sprite itemSprite = null;
             Sprite itemBg = null;
             Rare itemRare = Rare.Common;
             string itemName = config.ReferenceID;
+            bool isShard = false;
             
-            if (config.SellType == ShopSellType.SingleItem)
+            var itemConfig = gameDataBase.GetItemConfig(config.ReferenceID);
+            if (itemConfig != null)
             {
-                var itemConfig = gameDataBase.GetItemConfig(config.ReferenceID);
-                if (itemConfig != null)
-                {
-                    itemSprite = itemConfig.Icon;
-                    itemRare = itemConfig.Rarity;
-                    itemBg = gameDataBase.GetBGItemByRare(itemRare);
-                    itemName = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
-                }
-            }
-            else if (config.SellType == ShopSellType.Bundle)
-            {
-                itemName = LocalizationManager.Instance.GetLocalizedValue($"BUNDLE_{config.ProductID}");
+                itemSprite = itemConfig.Icon;
+                itemRare = itemConfig.Rarity;
+                itemBg = gameDataBase.GetBGItemByRare(itemRare);
+                isShard = itemConfig.Type == ItemType.Shard;
+                itemName = (isShard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
             }
             
             Sprite currencySprite = null; 
@@ -146,6 +79,7 @@ public abstract class ShopCategoryPanelBase : MonoBehaviour
 
             productUI.Setup(config, itemRare, itemSprite, itemBg, currencySprite, OnBuyProduct);
             productUI.SetName(itemName);
+            productUI.SetShardStatus(isShard);
             
             // Cập nhật số lần mua và trạng thái Sold Out
             productUI.SetPurchaseLimit(currentPurchase, config.LimitCount);
@@ -154,23 +88,6 @@ public abstract class ShopCategoryPanelBase : MonoBehaviour
             productUI.SetSoldOutStatus(isSoldOut);
 
             activeProducts.Add(productUI);
-        }
-    }
-
-    protected virtual void OnBuyProduct(ShopProductConfig config)
-    {
-        Debug.Log($"Buy Product: {config.ProductID} for {config.Price} {config.CurrencyType}");
-        
-        // TODO: Chỗ này bạn sẽ gọi trừ tiền (Jade/Coin) và add vật phẩm vào Inventory sau...
-
-        // 1. Cập nhật số lần mua vào Profile
-        if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
-        {
-            saveSystem.Player.Shop.AddPurchase(config.ProductID, 1);
-            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
-            
-            // 2. Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
-            RefreshProducts();
         }
     }
 }

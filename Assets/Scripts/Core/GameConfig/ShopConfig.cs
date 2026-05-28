@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
 public enum ShopSellType
 {
     SingleItem,

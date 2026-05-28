@@ -17,13 +17,13 @@ def main():
         ["SHOP_RARE_10", "RareLimit", "CoinShop", "SingleItem", "fine_exp", 1, "Coin", 5000, 0, 5, "Weekly", "", "", True, 4],
 
         ["SHOP_RARE_11", "RareLimit", "CoinShop", "SingleItem", "rare_exp", 1, "Coin", 1000, 12000, 5, "Daily", "", "", True, 3],
-        ["SHOP_RARE_12", "RareLimit", "CoinShop", "SingleItem", "ZhuBajie_avatar", 1, "Coin", 1200, 0, 5, "Weekly", "", "", True, 4],
+        ["SHOP_RARE_12", "RareLimit", "CoinShop", "SingleItem", "ZhuBaJie", 1, "Coin", 1200, 0, 5, "Weekly", "", "", True, 4],
         
         # TimeSale
-        ["SHOP_TIME_01", "TimeSale", "JadeShop", "SingleItem", "supreme_exp", 10, "Jade", 50, 100, -1, "None", "2026-05-01", "2026-05-30", True, 1],
-        ["SHOP_TIME_02", "TimeSale", "JadeShop", "SingleItem", "Garnet_Gemstone", 1, "Jade", 80, 120, -1, "None", "2026-05-01", "2026-05-30", True, 2],
-        ["SHOP_TIME_03", "TimeSale", "CoinShop", "SingleItem", "fine_exp", 10, "Coin", 5000, 8000, -1, "None", "2026-05-01", "2026-05-30", True, 3],
-        ["SHOP_TIME_04", "TimeSale", "CoinShop", "SingleItem", "Lamian_Noodies", 5, "Coin", 8000, 10000, -1, "None", "2026-05-01", "2026-05-30", True, 4],
+        ["SHOP_TIME_01", "TimeSale", "JadeShop", "SingleItem", "supreme_exp", 10, "Jade", 50, 100, 5, "None", "2026-05-01", "2026-05-30", True, 1],
+        ["SHOP_TIME_02", "TimeSale", "JadeShop", "SingleItem", "Garnet_Gemstone", 1, "Jade", 80, 120, 5, "None", "2026-05-01", "2026-05-30", True, 2],
+        ["SHOP_TIME_03", "TimeSale", "CoinShop", "SingleItem", "fine_exp", 10, "Coin", 5000, 8000, 5, "None", "2026-05-01", "2026-05-30", True, 3],
+        ["SHOP_TIME_04", "TimeSale", "CoinShop", "SingleItem", "Lamian_Noodies", 5, "Coin", 8000, 10000, 5, "None", "2026-05-01", "2026-05-30", True, 4],
         
         # ComboPack
         ["SHOP_COMBO_01", "ComboPack", "JadeShop", "Bundle", "BUNDLE_JADE_01", 1, "Jade", 300, 500, 1, "Weekly", "", "", True, 1],
@@ -38,15 +38,21 @@ def main():
     bundle_contents = [
         ["BUNDLE_JADE_01", "SunWukong", 5],
         ["BUNDLE_JADE_01", "supreme_exp", 10],
+        ["BUNDLE_JADE_01", "ZhuBaJie", 2],
+        ["BUNDLE_JADE_01", "Garnet_Gemstone", 2],
         
         ["BUNDLE_JADE_02", "Nimbus_Cudgel", 1],
         ["BUNDLE_JADE_02", "Garnet_Gemstone", 5],
+        ["BUNDLE_JADE_02", "common_exp", 10],
         
         ["BUNDLE_COIN_01", "TangSanZang", 5],
         ["BUNDLE_COIN_01", "fine_exp", 20],
+        ["BUNDLE_COIN_01", "Murshroom_Steamed_Buns", 5],
+        ["BUNDLE_COIN_01", "Lamian_Noodies", 2],
         
         ["BUNDLE_COIN_02", "Tofu_Soup", 10],
-        ["BUNDLE_COIN_02", "common_exp", 50]
+        ["BUNDLE_COIN_02", "common_exp", 50],
+        ["BUNDLE_COIN_02", "rare_exp", 5]
     ]
 
     cols2 = ["BundleID", "ItemID", "Amount"]

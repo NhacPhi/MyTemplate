@@ -65,6 +65,11 @@ public class ShopProductUI : MonoBehaviour
         if (txtName != null) txtName.text = name;
     }
 
+    public void SetShardStatus(bool isShard)
+    {
+        if (itemUI != null) itemUI.ActiveFragIcon(isShard);
+    }
+
     public void SetSoldOutStatus(bool isSoldOut)
     {
         if (soldOutOverlay != null)
