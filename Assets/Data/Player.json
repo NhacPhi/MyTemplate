@@ -8,9 +8,9 @@
     "currencies": {
       "Energy": 310,
       "Jade": 1200,
-      "Coin": 7202200,
+      "Coin": 7154200,
       "RelicEssence": 8533160,
-      "ArmorPrimorite": 614750,
+      "ArmorPrimorite": 596750,
       "Ticket": 0
     },
     "items": [
@@ -65,17 +65,7 @@
         "quantity": 85
       },
       {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 300
-      },
-      {
-        "id": "Garnet_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Yellow_Jade_Chunk",
+        "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -85,22 +75,37 @@
         "quantity": 10
       },
       {
-        "id": "Jade_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "rare_exp",
         "type": "Exp",
         "quantity": 51
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 30
+        "id": "Garnet_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
-        "id": "Garnet_Fragment",
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 300
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 10
+      },
+      {
+        "id": "ShaWujing",
+        "type": "Shard",
+        "quantity": 1
+      },
+      {
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -110,22 +115,17 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
+        "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
-        "type": "Shard",
-        "quantity": 1
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 30
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 10
-      },
-      {
-        "id": "Jade_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -160,14 +160,14 @@
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
-        "quantity": 65
-      },
-      {
         "id": "LittleWhiteDragon",
         "type": "Shard",
         "quantity": 1
+      },
+      {
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
+        "quantity": 65
       },
       {
         "id": "Murshroom_Steamed_Buns",
@@ -198,8 +198,22 @@
         "equip": "BullDemonKing"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
-        "template_id": "Moonlit_Firelfy",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
+        "template_id": "Triple_Edged_Blade",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -212,32 +226,18 @@
         "equip": ""
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
+        "template_id": "Moonlit_Firelfy",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "template_id": "FireLance_Ring_Damasl",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": "ThirdPrinceNezha"
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
-        "template_id": "Triple_Edged_Blade",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
@@ -391,39 +391,6 @@
         "equip": "SunWukong"
       },
       {
-        "instance_id": "0f8fad5b-d9cb-469f-a165-76867728950e",
-        "template_id": "Armor05_Helmet",
-        "level": 15,
-        "rare": "Uncommon",
-        "substats": [
-          {
-            "type": "DEF",
-            "value": 100,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "CRIT_RATE",
-            "value": 5,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "ATK",
-            "value": 997,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "CRIT_DMG_RES",
-            "value": 38,
-            "level": 3,
-            "modifier_type": "Constant"
-          }
-        ],
-        "equip": ""
-      },
-      {
         "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
         "template_id": "Armor01_Chestplate",
         "level": 13,
@@ -457,27 +424,6 @@
         "equip": "SunWukong"
       },
       {
-        "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
-        "template_id": "Armor01_Boots",
-        "level": 12,
-        "rare": "Legendary",
-        "substats": [
-          {
-            "type": "HP",
-            "value": 100,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "ATK",
-            "value": 50,
-            "level": 1,
-            "modifier_type": "Constant"
-          }
-        ],
-        "equip": "SunWukong"
-      },
-      {
         "instance_id": "2f8fad5b-d9cb-469f-a165-70867728950e",
         "template_id": "Armor01_Gloves",
         "level": 12,
@@ -498,6 +444,60 @@
           {
             "type": "DEF",
             "value": 55,
+            "level": 1,
+            "modifier_type": "Constant"
+          }
+        ],
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+        "template_id": "Armor05_Helmet",
+        "level": 15,
+        "rare": "Uncommon",
+        "substats": [
+          {
+            "type": "DEF",
+            "value": 100,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "CRIT_RATE",
+            "value": 5,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "ATK",
+            "value": 997,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "value": 38,
+            "level": 3,
+            "modifier_type": "Constant"
+          }
+        ],
+        "equip": ""
+      },
+      {
+        "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
+        "template_id": "Armor01_Boots",
+        "level": 12,
+        "rare": "Legendary",
+        "substats": [
+          {
+            "type": "HP",
+            "value": 100,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "ATK",
+            "value": 50,
             "level": 1,
             "modifier_type": "Constant"
           }
@@ -540,7 +540,7 @@
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
         "template_id": "Armor05_Gloves",
-        "level": 3,
+        "level": 9,
         "rare": "Uncommon",
         "substats": [
           {
@@ -552,6 +552,18 @@
           {
             "type": "CRIT_DMG_RES",
             "value": 15,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "SPEED",
+            "value": 2,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "HP",
+            "value": 705,
             "level": 1,
             "modifier_type": "Constant"
           }
@@ -693,23 +705,23 @@
       },
       {
         "position": 2,
-        "character_id": "BullDemonKing"
-      },
-      {
-        "position": 3,
         "character_id": "SunWukong"
       },
       {
+        "position": 3,
+        "character_id": "BullDemonKing"
+      },
+      {
         "position": 4,
-        "character_id": "ShaWujing"
+        "character_id": "TangSanZang"
       },
       {
         "position": 5,
-        "character_id": "ZhuBaJie"
+        "character_id": "ShaWujing"
       },
       {
         "position": 6,
-        "character_id": "TangSanZang"
+        "character_id": "ZhuBaJie"
       }
     ],
     "active_global_buffs": [
@@ -722,6 +734,17 @@
     ]
   },
   "shop": {
-    "purchase_history": {}
+    "purchase_history": {
+      "SHOP_RARE_08": {
+        "product_id": "SHOP_RARE_08",
+        "purchase_count": 1,
+        "last_purchase_time": 639156472735413676
+      },
+      "SHOP_RARE_03": {
+        "product_id": "SHOP_RARE_03",
+        "purchase_count": 2,
+        "last_purchase_time": 639156507406654490
+      }
+    }
   }
 }

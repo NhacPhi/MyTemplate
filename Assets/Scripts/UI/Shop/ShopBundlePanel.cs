@@ -57,13 +57,14 @@ public class ShopBundlePanel : ShopPanelBase
                     var itemConfig = gameDataBase.GetItemConfig(content.ItemID);
                     if (itemConfig != null)
                     {
+                        var contentRare = config.ItemRare ?? itemConfig.Rarity;
                         contentUIInfos.Add(new BundleContentUIInfo
                         {
                             ItemID = content.ItemID,
                             Amount = content.Amount,
-                            ItemRare = itemConfig.Rarity,
+                            ItemRare = contentRare,
                             ItemSprite = itemConfig.Icon,
-                            ItemBackground = gameDataBase.GetBGItemByRare(itemConfig.Rarity),
+                            ItemBackground = gameDataBase.GetBGItemByRare(contentRare),
                             IsShard = itemConfig.Type == ItemType.Shard
                         });
                     }

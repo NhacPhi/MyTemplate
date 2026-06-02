@@ -60,30 +60,7 @@ public class ItemCardInfoUI : MonoBehaviour
         string str = "";
         if(itemConfig != null)
         {
-            string rawUseDes = LocalizationManager.Instance.GetLocalizedValue(itemConfig.UseDescription);
-
-            if(itemConfig.Type == ItemType.Exp)
-            {
-                str = string.Format(rawUseDes, itemConfig.Exp.Value);
-            }
-            else if (itemConfig.Type == ItemType.Food && itemConfig.Food != null && itemConfig.Food.Effects != null && itemConfig.Food.Effects.Count > 0)
-            {
-                var effect = itemConfig.Food.Effects[0];
-                try
-                {
-                    str = string.Format(rawUseDes, effect.Value.ToString("F0"));
-                }
-                catch (System.FormatException)
-                {
-                    str = rawUseDes;
-                }
-            }
-            else
-            {
-                str = rawUseDes;
-            }
-
-            txtUseful.text = str;
+            txtUseful.text = itemConfig.GetFormattedUseDescription();
             icon.sprite = itemConfig.Icon;
             txtName.text = (itemConfig.Type == ItemType.Shard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
             txtOwned.text = item != null ? item.Quantity.ToString() : "0";
@@ -93,7 +70,7 @@ public class ItemCardInfoUI : MonoBehaviour
                 btnUse.gameObject.SetActive(itemConfig.Type == ItemType.Food && item != null && item.Quantity > 0);
             }
             
-            txtDes.text = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Description);
+            txtDes.text = itemConfig.GetFormattedDescription();
 
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(txtDes.rectTransform);

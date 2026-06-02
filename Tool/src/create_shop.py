@@ -4,7 +4,7 @@ def main():
     shop_products = [
         # RareLimit
         ["SHOP_RARE_01", "RareLimit", "JadeShop", "SingleItem", "SunWukong", 1, "Jade", 100, 150, 1, "Daily", "", "", True, 1],
-        ["SHOP_RARE_02", "RareLimit", "JadeShop", "SingleItem", "Nimbus_Cudgel", 1, "Jade", 500, 0, 1, "Lifetime", "", "", True, 2],
+        ["SHOP_RARE_02", "RareLimit", "JadeShop", "SingleItem", "Armor01_Belt", 1, "Jade", 500, 0, 1, "Lifetime", "", "", True, 2],
         ["SHOP_RARE_03", "RareLimit", "JadeShop", "SingleItem", "TangSanZang", 1, "Jade", 10000, 12000, 5, "Daily", "", "", True, 3],
         ["SHOP_RARE_04", "RareLimit", "JadeShop", "SingleItem", "common_exp", 1, "Jade", 5000, 0, 5, "Weekly", "", "", True, 4],
 

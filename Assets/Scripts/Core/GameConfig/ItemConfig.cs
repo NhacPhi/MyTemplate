@@ -90,6 +90,97 @@ public class ItemConfig
     // Food
     [JsonProperty("food_data")]
     public FoodComponent Food;
+
+    public string GetFormattedUseDescription()
+    {
+        string rawUseDes = LocalizationManager.Instance.GetLocalizedValue(UseDescription);
+        if (string.IsNullOrEmpty(rawUseDes)) return string.Empty;
+
+        if (Type == ItemType.Exp && Exp != null)
+        {
+            return string.Format(rawUseDes, Exp.Value);
+        }
+        else if (Type == ItemType.Food && Food != null && Food.Effects != null && Food.Effects.Count > 0)
+        {
+            var effect = Food.Effects[0];
+            try
+            {
+                return string.Format(rawUseDes, effect.Value.ToString("F0"));
+            }
+            catch (System.FormatException)
+            {
+                return rawUseDes;
+            }
+        }
+        
+        return rawUseDes;
+    }
+
+    public string GetFormattedDescription()
+    {
+        string desc = LocalizationManager.Instance.GetLocalizedValue(Description);
+        if (string.IsNullOrEmpty(desc)) 
+            return Description.ToString();
+            
+        if (Type == ItemType.Shard)
+        {
+            try
+            {
+                desc = string.Format(desc, LocalizationManager.Instance.GetLocalizedValue(Name), 60);
+            }
+            catch (FormatException) { }
+        }
+        
+        return desc;
+    }
+
+    public string GetFullFormattedDescription(GameDataBase db = null)
+    {
+        string desc = GetFormattedDescription();
+        string useDesc = GetFormattedUseDescription();
+        
+        string statDesc = "";
+        
+        if (!string.IsNullOrEmpty(useDesc))
+        {
+            statDesc += useDesc;
+        }
+        
+        if (db != null)
+        {
+            if (Type == ItemType.Weapon && Weapon != null && !string.IsNullOrEmpty(Weapon.PassiveID))
+            {
+                var passiveConfig = db.GetPassiveConfig(Weapon.PassiveID);
+                if (passiveConfig != null)
+                {
+                    string skillDesc = passiveConfig.GetDescription(1);
+                    if (!string.IsNullOrEmpty(skillDesc))
+                    {
+                        if (!string.IsNullOrEmpty(statDesc)) statDesc += "\n\n";
+                        statDesc += skillDesc;
+                    }
+                }
+            }
+            else if (Type == ItemType.Armor && Armor != null && !string.IsNullOrEmpty(Armor.ArmorSet))
+            {
+                var setBonus = db.GetSetBonusConfig(Armor.ArmorSet);
+                if (setBonus != null)
+                {
+                    string setTitle = setBonus.GetTitleSetBonus();
+                    string setContent = setBonus.GetConentBonus();
+                    if (!string.IsNullOrEmpty(statDesc)) statDesc += "\n\n";
+                    statDesc += "<color=#FFD700>" + setTitle + "</color>\n" + setContent;
+                }
+            }
+        }
+        
+        if (!string.IsNullOrEmpty(statDesc))
+        {
+            return statDesc.Trim();
+        }
+        
+        return desc;
+    }
 }
 
 [Serializable]

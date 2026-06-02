@@ -181,6 +181,8 @@ public static class LocKeys
 
     public const long UI_BUNDLE = 3186903286;
 
+    public const long UI_UNIT_PRICE = 2554687654;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -638,6 +640,12 @@ public static class LocKeys
     public const long STR_VANGUARD_TIGER = 2865654881;
 
     public const long STR_NUMBER_OF_PURCHASE = 825901979;
+
+    public const long STR_OWNED = 1357752990;
+
+    public const long STR_PURCHASE = 2143305298;
+
+    public const long STR_UNIT_PRICE = 4002818570;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

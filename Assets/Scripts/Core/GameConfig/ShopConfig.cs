@@ -76,6 +76,20 @@ public class ShopProductConfig
     [JsonProperty("sort_order")]
     public int SortOrder;
 
+    [JsonProperty("item_rare")]
+    public string RawItemRare;
+
+    [JsonIgnore]
+    public Rare? ItemRare
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(RawItemRare)) return null;
+            if (Enum.TryParse<Rare>(RawItemRare, true, out var result)) return result;
+            return null;
+        }
+    }
+
     [JsonProperty("bundle_contents")]
     public List<BundleContentConfig> BundleContents;
 }

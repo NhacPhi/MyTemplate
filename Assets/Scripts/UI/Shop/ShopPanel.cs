@@ -16,6 +16,7 @@ public class ShopPanel : MonoBehaviour
 {
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem saveSystem;
+    [Inject] private UIManager uiManager;
 
     [SerializeField] private List<ShopCategoryUIConfig> categoryUIConfigs = new List<ShopCategoryUIConfig>();
 
@@ -71,7 +72,7 @@ public class ShopPanel : MonoBehaviour
                     // Lần đầu mở thì gọi Init
                     if (!initializedPanels.Contains(uiConfig.subPanel))
                     {
-                        uiConfig.subPanel.Init(gameDataBase, saveSystem, uiConfig.categoryId);
+                        uiConfig.subPanel.Init(gameDataBase, saveSystem, uiConfig.categoryId, uiManager);
                         initializedPanels.Add(uiConfig.subPanel);
                     }
                     uiConfig.subPanel.Show();

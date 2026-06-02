@@ -45,7 +45,7 @@ public class ShopPromotionPanel : ShopPanelBase
             if (itemConfig != null)
             {
                 itemSprite = itemConfig.Icon;
-                itemRare = itemConfig.Rarity;
+                itemRare = config.ItemRare ?? itemConfig.Rarity;
                 itemBg = gameDataBase.GetBGItemByRare(itemRare);
                 isShard = itemConfig.Type == ItemType.Shard;
                 itemName = (isShard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);

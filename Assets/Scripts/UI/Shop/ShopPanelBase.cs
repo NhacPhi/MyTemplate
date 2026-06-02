@@ -7,6 +7,7 @@ public abstract class ShopPanelBase : MonoBehaviour
     protected GameDataBase gameDataBase;
     protected SaveSystem saveSystem;
     protected string categoryId;
+    protected UIManager uiManager;
     
     [Header("UI References")]
     [SerializeField] protected Transform productContainer;
@@ -19,11 +20,12 @@ public abstract class ShopPanelBase : MonoBehaviour
     
     protected string currentSubCategory;
 
-    public virtual void Init(GameDataBase db, SaveSystem save, string catId)
+    public virtual void Init(GameDataBase db, SaveSystem save, string catId, UIManager uiManager)
     {
         gameDataBase = db;
         saveSystem = save;
         categoryId = catId;
+        this.uiManager = uiManager;
         
         InitializeSubCategories();
     }
@@ -82,14 +84,113 @@ public abstract class ShopPanelBase : MonoBehaviour
 
     protected virtual void OnBuyProduct(ShopProductConfig config)
     {
-        Debug.Log($"Buy Product: {config.ProductID} for {config.Price} {config.CurrencyType}");
+        // For bundle, you can override this in ShopBundlePanel and call ExecuteBuyProduct directly
+        if (config.SellType == ShopSellType.Bundle)
+        {
+            ExecuteBuyProduct(config, 1);
+            return;
+        }
+
+        Sprite itemSprite = null;
+        Sprite itemBg = null;
+        Rare itemRare = Rare.Common;
+        string itemName = config.ReferenceID;
+        string itemDesc = "";
+        bool isShard = false;
+        
+        var itemConfig = gameDataBase.GetItemConfig(config.ReferenceID);
+        if (itemConfig != null)
+        {
+            itemSprite = itemConfig.Icon;
+            itemRare = config.ItemRare ?? itemConfig.Rarity;
+            itemBg = gameDataBase.GetBGItemByRare(itemRare);
+            isShard = itemConfig.Type == ItemType.Shard;
+            string locName = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+            if (string.IsNullOrEmpty(locName)) locName = itemConfig.Name.ToString();
+            itemName = (isShard ? (LocalizationManager.Instance.GetLocalizedValue("STR_SHARD_NAME") + " ") : "") + locName;
+            
+            itemDesc = itemConfig.GetFullFormattedDescription(gameDataBase);
+        }
+        
+        Sprite currencySprite = null; 
+        var currencyIconConfig = currencyIcons.Find(c => c.currencyType.Equals(config.CurrencyType, StringComparison.OrdinalIgnoreCase));
+        if (currencyIconConfig != null)
+        {
+            currencySprite = currencyIconConfig.icon;
+        }
+
+        int currentPurchase = 0;
+        int currentOwned = 0;
+        if (saveSystem != null && saveSystem.Player != null)
+        {
+            if (saveSystem.Player.Shop != null)
+            {
+                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID).PurchaseCount;
+            }
+            
+            if (saveSystem.Player.Inventory != null)
+            {
+                if (saveSystem.Player.Inventory.Items != null)
+                {
+                    var item = saveSystem.Player.Inventory.GetItem(config.ReferenceID);
+                    if (item != null)
+                    {
+                        currentOwned += item.Quantity;
+                    }
+                }
+                
+                if (saveSystem.Player.Inventory.Weapons != null)
+                {
+                    foreach (var w in saveSystem.Player.Inventory.Weapons)
+                    {
+                        if (w.TemplateID == config.ReferenceID) currentOwned++;
+                    }
+                }
+                
+                if (saveSystem.Player.Inventory.Armors != null)
+                {
+                    foreach (var a in saveSystem.Player.Inventory.Armors)
+                    {
+                        if (a.TemplateID == config.ReferenceID) currentOwned++;
+                    }
+                }
+            }
+        }
+
+        var properties = new ShopBuyPopupProperties(
+            config,
+            itemSprite,
+            itemBg,
+            itemRare,
+            isShard,
+            itemName,
+            itemDesc,
+            currencySprite,
+            currentPurchase,
+            currentOwned,
+            ExecuteBuyProduct
+        );
+
+        if (uiManager != null)
+        {
+            uiManager.ShowShopBuyPopup(properties);
+        }
+        else
+        {
+            Debug.LogError("UIManager is null in ShopPanelBase!");
+        }
+    }
+
+    protected virtual void ExecuteBuyProduct(ShopProductConfig config, int quantity)
+    {
+        Debug.Log($"Buy Product: {config.ProductID} for {config.Price * quantity} {config.CurrencyType} - Amount: {quantity}");
         
         // TODO: Chỗ này bạn sẽ gọi trừ tiền (Jade/Coin) và add vật phẩm vào Inventory sau...
 
         // 1. Cập nhật số lần mua vào Profile
         if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
         {
-            saveSystem.Player.Shop.AddPurchase(config.ProductID, 1);
+            saveSystem.Player.Shop.AddPurchase(config.ProductID, quantity);
             saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
             
             // 2. Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
