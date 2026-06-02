@@ -135,6 +135,12 @@ public class UIManager : MonoBehaviour
         _uiFrame.OpenWindow(ScreenIds.PopupShopBuy, popup);
     }
 
+    public void ShowReceiveItemPopup(ReceiveItemProperties popup)
+    {
+        EnsureScreenLoaded(ScreenIds.PopupReceiveItem);
+        _uiFrame.OpenWindow(ScreenIds.PopupReceiveItem, popup);
+    }
+
     public void ToggleLoadingScene(bool isOn)
     {
         if (isOn)

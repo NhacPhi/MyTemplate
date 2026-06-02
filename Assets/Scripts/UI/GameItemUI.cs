@@ -1,11 +1,13 @@
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class GameItemUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image background;
     [SerializeField] private Image boder;
+    [SerializeField] private TextMeshProUGUI amountText;
     private Rare rare;
     private Color color;
 
@@ -27,6 +29,20 @@ public class GameItemUI : MonoBehaviour
         this.rare = rare;
         SetBoderFollowRare();
         color = boder.color;
+
+        if (amountText != null)
+        {
+            amountText.gameObject.SetActive(false);
+        }
+    }
+
+    public virtual void SetAmount(int amount)
+    {
+        if (amountText != null)
+        {
+            amountText.gameObject.SetActive(amount > 0);
+            amountText.text = $"x{amount}";
+        }
     }
 
     public void OnSwitchStatusBoder(bool selected)

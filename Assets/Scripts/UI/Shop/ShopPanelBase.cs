@@ -196,5 +196,32 @@ public abstract class ShopPanelBase : MonoBehaviour
             // 2. Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
             RefreshProducts();
         }
+
+        // 3. Hiển thị Popup Nhận Thưởng
+        List<RewardItemData> rewards = new List<RewardItemData>();
+        if (config.SellType == ShopSellType.SingleItem)
+        {
+            if (!string.IsNullOrEmpty(config.ReferenceID))
+            {
+                // Nếu ItemAmount trong config chưa set thì mặc định là 1
+                int amountPerPurchase = config.ItemAmount > 0 ? config.ItemAmount : 1;
+                rewards.Add(new RewardItemData(config.ReferenceID, amountPerPurchase * quantity));
+            }
+        }
+        else if (config.SellType == ShopSellType.Bundle && config.BundleContents != null)
+        {
+            foreach (var content in config.BundleContents)
+            {
+                if (!string.IsNullOrEmpty(content.ItemID))
+                {
+                    rewards.Add(new RewardItemData(content.ItemID, content.Amount * quantity));
+                }
+            }
+        }
+
+        if (rewards.Count > 0 && uiManager != null)
+        {
+            uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+        }
     }
 }

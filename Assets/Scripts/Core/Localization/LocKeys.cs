@@ -183,6 +183,8 @@ public static class LocKeys
 
     public const long UI_UNIT_PRICE = 2554687654;
 
+    public const long UI_YOU_RECEIVED = 685490319;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

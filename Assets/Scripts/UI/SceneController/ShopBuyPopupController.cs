@@ -204,7 +204,7 @@ public class ShopBuyPopupController : WindowController<ShopBuyPopupProperties>
     
     private void OnBtnBuyClicked()
     {
+        UI_Close(); // Đóng popup ShopBuy trước để nhường vị trí Window hiện tại cho PopupReceiveItem
         Properties.ConfirmBuyAction?.Invoke(Properties.Config, currentSelectedQuantity);
-        UI_Close();
     }
 }
