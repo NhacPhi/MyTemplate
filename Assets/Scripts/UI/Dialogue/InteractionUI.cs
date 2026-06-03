@@ -6,14 +6,26 @@ public class InteractionUI : MonoBehaviour
 {
     [SerializeField] private List<InteractionOption> interactions;
 
+    private void Start()
+    {
+        UpdateInteractionUI(false, InteractionType.None);
+    }
+
     private void OnEnable()
     {
         UIEvent.OnInterationUI += UpdateInteractionUI;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         UIEvent.OnInterationUI -= UpdateInteractionUI;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        UpdateInteractionUI(false, InteractionType.None);
     }
 
     private void UpdateInteractionUI(bool value, InteractionType type)

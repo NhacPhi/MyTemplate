@@ -71,9 +71,7 @@ public class InventoryUI : MonoBehaviour
 
         _gameDataBase = gameDataBase;
 
-        RefreshData(); // Gọi lần đầu để vẽ UI
-
-        OnShowAllItemInInventory(ItemType.Item);
+        RefreshData(); // Gọi lần đầu để vẽ UI và tự động hiển thị tab hiện tại
     }
 
     private void RefreshData()
@@ -335,5 +333,6 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+
 }
  

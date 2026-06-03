@@ -22,7 +22,11 @@ public class CharacterScene : WindowController
         });
 
         characterUI = GetComponent<CharacterUI>();
-        if(characterUI != null )
+    }
+
+    private void OnEnable()
+    {
+        if (characterUI != null)
         {
             characterUI.Init();
         }

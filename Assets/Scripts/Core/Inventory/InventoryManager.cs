@@ -18,6 +18,8 @@ public class InventoryManager
     public List<ArmorSaveData> Armors => _saveData.Armors;
     public List<ItemSaveData> Items => _saveData.Items;
 
+    public bool IsDirty { get; set; } = true; // Mark true initially to force first load
+
     public void AddStackableItem(string itemID, ItemType type, int amount)
     {
         if(amount < 0) amount = 0;
@@ -37,6 +39,7 @@ public class InventoryManager
             });
         }
 
+        IsDirty = true;
         OnInventoryChanged?.Invoke();
     }
 
@@ -60,6 +63,7 @@ public class InventoryManager
             _save.Player.Inventory.Items.Remove(existingItem);
         }
 
+        IsDirty = true;
         OnInventoryChanged?.Invoke();
 
         return true;
@@ -115,10 +119,11 @@ public class InventoryManager
         return existingItem != null ? existingItem.Quantity : 0;
     }
 
-    public void AddWeapon(WeaponSaveData newWeapon)
+    public void AddWeapon(WeaponSaveData weapon)
     {
-        if(newWeapon == null) return;
-        _save.Player.Inventory.Weapons.Add(newWeapon);
+        if(weapon == null) return;
+        _saveData.Weapons.Add(weapon);
+        IsDirty = true;
         OnInventoryChanged?.Invoke();
     }
 
@@ -129,6 +134,7 @@ public class InventoryManager
         if(weaponToRemove != null )
         {
             _save.Player.Inventory.Weapons.Remove(weaponToRemove);
+            IsDirty = true;
             OnInventoryChanged?.Invoke();
         }
     }
@@ -138,10 +144,11 @@ public class InventoryManager
         return _save.Player.Inventory.GetWeapon(uuid);
     }
 
-    public void AddArmor(ArmorSaveData newArmor)
+    public void AddArmor(ArmorSaveData armor)
     {
-        if(newArmor == null) return;
-        _save.Player.Inventory.Armors.Add(newArmor);
+        if(armor == null) return;
+        _saveData.Armors.Add(armor);
+        IsDirty = true;
         OnInventoryChanged?.Invoke();
     }
 

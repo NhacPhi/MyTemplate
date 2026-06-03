@@ -17,6 +17,8 @@ public class ShopPanel : MonoBehaviour
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem saveSystem;
     [Inject] private UIManager uiManager;
+    [Inject] private CurrencyManager currencyManager;
+    [Inject] private InventoryManager inventoryManager;
 
     [SerializeField] private List<ShopCategoryUIConfig> categoryUIConfigs = new List<ShopCategoryUIConfig>();
 
@@ -26,6 +28,19 @@ public class ShopPanel : MonoBehaviour
     public void Init()
     {
         InitializeCategories();
+    }
+
+    private void OnEnable()
+    {
+        Invoke(nameof(DelayUpdateCurrency), 0.1f);
+    }
+
+    private void DelayUpdateCurrency()
+    {
+        if (currencyManager != null)
+        {
+            currencyManager.UpdateCurrency();
+        }
     }
 
     private void InitializeCategories()
@@ -72,7 +87,7 @@ public class ShopPanel : MonoBehaviour
                     // Lần đầu mở thì gọi Init
                     if (!initializedPanels.Contains(uiConfig.subPanel))
                     {
-                        uiConfig.subPanel.Init(gameDataBase, saveSystem, uiConfig.categoryId, uiManager);
+                        uiConfig.subPanel.Init(gameDataBase, saveSystem, uiConfig.categoryId, uiManager, currencyManager, inventoryManager);
                         initializedPanels.Add(uiConfig.subPanel);
                     }
                     uiConfig.subPanel.Show();

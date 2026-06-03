@@ -8,6 +8,8 @@ public abstract class ShopPanelBase : MonoBehaviour
     protected SaveSystem saveSystem;
     protected string categoryId;
     protected UIManager uiManager;
+    protected CurrencyManager currencyManager;
+    protected InventoryManager inventoryManager;
     
     [Header("UI References")]
     [SerializeField] protected Transform productContainer;
@@ -20,12 +22,14 @@ public abstract class ShopPanelBase : MonoBehaviour
     
     protected string currentSubCategory;
 
-    public virtual void Init(GameDataBase db, SaveSystem save, string catId, UIManager uiManager)
+    public virtual void Init(GameDataBase db, SaveSystem save, string catId, UIManager uiManager, CurrencyManager currMgr, InventoryManager invMgr)
     {
         gameDataBase = db;
         saveSystem = save;
         categoryId = catId;
         this.uiManager = uiManager;
+        currencyManager = currMgr;
+        inventoryManager = invMgr;
         
         InitializeSubCategories();
     }
@@ -185,27 +189,87 @@ public abstract class ShopPanelBase : MonoBehaviour
     {
         Debug.Log($"Buy Product: {config.ProductID} for {config.Price * quantity} {config.CurrencyType} - Amount: {quantity}");
         
-        // TODO: Chỗ này bạn sẽ gọi trừ tiền (Jade/Coin) và add vật phẩm vào Inventory sau...
+        // 1. Trừ tiền (Jade/Coin)
+        if (System.Enum.TryParse<CurrencyType>(config.CurrencyType, true, out var currencyType))
+        {
+            if (currencyManager != null)
+            {
+                int totalCost = Mathf.RoundToInt(config.Price * quantity);
+                bool success = currencyManager.Spend(currencyType, totalCost);
+                if (!success)
+                {
+                    Debug.LogWarning($"[Shop] Not enough {config.CurrencyType} to buy {config.ProductID}");
+                    // Optionally show a "Not enough currency" popup here
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError($"[Shop] Unknown currency type: {config.CurrencyType}");
+            return; // Can't buy if currency type is invalid
+        }
 
-        // 1. Cập nhật số lần mua vào Profile
+        // 2. Cập nhật số lần mua vào Profile
         if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
         {
             saveSystem.Player.Shop.AddPurchase(config.ProductID, quantity);
             saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
             
-            // 2. Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
+            // Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
             RefreshProducts();
         }
 
-        // 3. Hiển thị Popup Nhận Thưởng
+        // 3. Xử lý phần thưởng và add vào Inventory
         List<RewardItemData> rewards = new List<RewardItemData>();
+        
+        Action<string, int> AddRewardToInventory = (itemId, amount) => 
+        {
+            rewards.Add(new RewardItemData(itemId, amount));
+            var itemConfig = gameDataBase.GetItemConfig(itemId);
+            if (itemConfig != null && inventoryManager != null)
+            {
+                if (itemConfig.Type == ItemType.Weapon)
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        inventoryManager.AddWeapon(new WeaponSaveData
+                        {
+                            UUID = System.Guid.NewGuid().ToString(),
+                            TemplateID = itemId,
+                            CurrentLevel = 1
+                        });
+                    }
+                }
+                else if (itemConfig.Type == ItemType.Armor)
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        inventoryManager.AddArmor(new ArmorSaveData
+                        {
+                            UUID = System.Guid.NewGuid().ToString(),
+                            TemplateID = itemId,
+                            Level = 1
+                        });
+                    }
+                }
+                else if (itemConfig.Type == ItemType.Currency && System.Enum.TryParse<CurrencyType>(itemId, true, out var rCurrency))
+                {
+                    currencyManager.Add(rCurrency, amount);
+                }
+                else
+                {
+                    inventoryManager.AddStackableItem(itemId, itemConfig.Type, amount);
+                }
+            }
+        };
+
         if (config.SellType == ShopSellType.SingleItem)
         {
             if (!string.IsNullOrEmpty(config.ReferenceID))
             {
-                // Nếu ItemAmount trong config chưa set thì mặc định là 1
                 int amountPerPurchase = config.ItemAmount > 0 ? config.ItemAmount : 1;
-                rewards.Add(new RewardItemData(config.ReferenceID, amountPerPurchase * quantity));
+                AddRewardToInventory(config.ReferenceID, amountPerPurchase * quantity);
             }
         }
         else if (config.SellType == ShopSellType.Bundle && config.BundleContents != null)
@@ -214,7 +278,7 @@ public abstract class ShopPanelBase : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(content.ItemID))
                 {
-                    rewards.Add(new RewardItemData(content.ItemID, content.Amount * quantity));
+                    AddRewardToInventory(content.ItemID, content.Amount * quantity);
                 }
             }
         }

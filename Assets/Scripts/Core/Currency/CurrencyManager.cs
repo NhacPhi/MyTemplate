@@ -56,6 +56,11 @@ public class CurrencyManager
     private void Load()
     {
         currencies = save.Player.Inventory.Currencies;
+        if (currencies == null)
+        {
+            currencies = new Dictionary<CurrencyType, int>();
+            save.Player.Inventory.Currencies = currencies;
+        }
     }
     public void UpdateCurrency()
     {
@@ -67,8 +72,9 @@ public class CurrencyManager
 
     public int GetQuantityCurrecy(CurrencyType type)
     {
+        if (currencies == null) return 0;
         int result;
-        save.Player.Inventory.Currencies.TryGetValue(type, out result);
+        currencies.TryGetValue(type, out result);
         return result;
     }
 }

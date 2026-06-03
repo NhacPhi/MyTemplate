@@ -7,6 +7,7 @@ public class InventoryScene : WindowController
 {
     [SerializeField] private Button btnExit;
     [SerializeField] private InventoryUI inventory;
+    [SerializeField] private InventoryToggleTap defaultToggle;
 
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
@@ -16,14 +17,49 @@ public class InventoryScene : WindowController
     [Inject] private SaveSystem save;
     private void Start()
     {
-        currencyMM.UpdateCurrency();
-        inventoryManager.SortAllByRare();
-        inventory.Init(inventoryManager, gameDataBase);
     }
 
     private void OnEnable()
     {
         btnExit.onClick.AddListener(OnClose);
+        
+        if (inventoryManager != null && gameDataBase != null)
+        {
+            if (inventoryManager.IsDirty)
+            {
+                inventoryManager.SortAllByRare();
+                inventory.Init(inventoryManager, gameDataBase);
+                inventoryManager.IsDirty = false;
+            }
+        }
+
+        ResetToDefaultTab();
+
+        Invoke(nameof(DelayUpdateCurrency), 0.1f);
+    }
+
+    private void ResetToDefaultTab()
+    {
+        if (inventory != null)
+        {
+            inventory.OnShowAllItemInInventory(ItemType.Item);
+        }
+
+        // Thay vì bật ngay, ta chờ 0.05s để ToggleGroup kịp nhận diện hết các Toggle khi Scene mới bật lên
+        Invoke(nameof(ForceToggleOn), 0.05f);
+    }
+
+    private void ForceToggleOn()
+    {
+        if (defaultToggle != null)
+        {
+            defaultToggle.ActiveToggle(true);
+        }
+    }
+
+    private void DelayUpdateCurrency()
+    {
+        currencyMM?.UpdateCurrency();
     }
 
     private void OnDisable() 

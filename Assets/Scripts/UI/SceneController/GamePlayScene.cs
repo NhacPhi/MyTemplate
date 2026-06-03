@@ -29,8 +29,6 @@ public class GamePlayScene : WindowController
             uiManager.ShowPanel(ScreenIds.GamePlayPanel);
         });
 
-        currencyMM.UpdateCurrency();
-
         btnInventory.onClick.AddListener(() =>
         {
             //uiManager.HidePanel(ScreenIds.GamePlayPanel);
@@ -67,4 +65,13 @@ public class GamePlayScene : WindowController
         btnCatchSkill.onClick.AddListener(() => { GameEvent.OnPlayerTransform?.Invoke(); });
     }
 
+    private void OnEnable()
+    {
+        Invoke(nameof(DelayUpdateCurrency), 0.1f);
+    }
+
+    private void DelayUpdateCurrency()
+    {
+        currencyMM?.UpdateCurrency();
+    }
 }
