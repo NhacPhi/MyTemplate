@@ -5,4 +5,5 @@ using UnityEngine;
 public class BattleSessionContext
 {
     public string PendingBattleID { get; set; }
+    public GameSceneSO PreviousLocation { get; set; }
 }

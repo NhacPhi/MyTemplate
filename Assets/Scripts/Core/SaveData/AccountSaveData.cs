@@ -11,7 +11,10 @@ public class AccountSaveData
     public string PlayerName;
 
     [JsonProperty("level")]
-    public int Level;
+    public int Level = 1;
+
+    [JsonProperty("current_exp")]
+    public int CurrentExp = 0;
 
     [JsonProperty("avatar_icon")]
     public string AvatarIcon;

@@ -141,6 +141,12 @@ public class UIManager : MonoBehaviour
         _uiFrame.OpenWindow(ScreenIds.PopupReceiveItem, popup);
     }
 
+    public void ShowBattleResultPopup(BattleResultProperties popup)
+    {
+        EnsureScreenLoaded(ScreenIds.PopupBattleResult);
+        _uiFrame.OpenWindow(ScreenIds.PopupBattleResult, popup);
+    }
+
     public void ToggleLoadingScene(bool isOn)
     {
         if (isOn)

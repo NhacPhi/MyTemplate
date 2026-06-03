@@ -22,10 +22,12 @@ public class RewardItemData
 public class ReceiveItemProperties : WindowProperties
 {
     public List<RewardItemData> Rewards;
+    public System.Action OnCloseCallback;
 
-    public ReceiveItemProperties(List<RewardItemData> rewards)
+    public ReceiveItemProperties(List<RewardItemData> rewards, System.Action onCloseCallback = null)
     {
         Rewards = rewards;
+        OnCloseCallback = onCloseCallback;
     }
 }
 
@@ -143,5 +145,10 @@ public class PopupReceiveItemController : WindowController
             animationSequence.Kill();
         }
         UI_Close();
+
+        if (Properties is ReceiveItemProperties props && props.OnCloseCallback != null)
+        {
+            props.OnCloseCallback.Invoke();
+        }
     }
 }

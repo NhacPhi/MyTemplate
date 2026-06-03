@@ -1,7 +1,8 @@
 {
   "account_info": {
     "player_name": "Congyon",
-    "level": 1,
+    "level": 3,
+    "current_exp": 800,
     "avatar_icon": "Wukong01_avatar"
   },
   "inventory": {
@@ -105,13 +106,13 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
@@ -125,8 +126,8 @@
         "quantity": 30
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
+        "id": "DragonKing",
+        "type": "Shard",
         "quantity": 1
       },
       {
@@ -606,7 +607,7 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 1,
+        "level": 40,
         "exp": 0,
         "ascension_tier": 1,
         "star_up": 1,
@@ -700,28 +701,20 @@
     ],
     "active_slots": [
       {
-        "position": 1,
-        "character_id": "ThirdPrinceNezha"
-      },
-      {
         "position": 2,
-        "character_id": "SunWukong"
-      },
-      {
-        "position": 3,
-        "character_id": "BullDemonKing"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 4,
-        "character_id": "TangSanZang"
+        "character_id": ""
       },
       {
         "position": 5,
-        "character_id": "ShaWujing"
+        "character_id": "SunWukong"
       },
       {
         "position": 6,
-        "character_id": "ZhuBaJie"
+        "character_id": ""
       }
     ],
     "active_global_buffs": [

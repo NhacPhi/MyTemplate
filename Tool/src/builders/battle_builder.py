@@ -55,6 +55,7 @@ class BattleConfigBuilder(BaseBuilder):
                     name_hash=self.get_hash(row['Name']),
                     background = str(row['BackGround']).strip() if pd.notna(row['BackGround']) else "",
                     reward = str(row['Reward']).strip() if pd.notna(row['Reward']) else "",
+                    exp_reward = int(row['ExpReward']) if pd.notna(row.get('ExpReward')) else 0,
                     enemies=[] 
                 )
 

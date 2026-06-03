@@ -26,6 +26,7 @@ class BattleModel:
     name_hash: int
     background: str
     reward: str
+    exp_reward: int
     enemies: List[StageEnemiesCompoment] = field(default_factory=list)
 
     def to_dict(self):

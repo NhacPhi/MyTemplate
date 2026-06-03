@@ -22,6 +22,7 @@ public class GameDataBase
     private Dictionary<string, PassiveConfig> PassiveConfigs = new Dictionary<string, PassiveConfig>();
     private Dictionary<string, SubstatPoolConfig> SubstatPoolConfigs = new Dictionary<string, SubstatPoolConfig>();
     private Dictionary<string, ShopProductConfig> ShopConfigs = new Dictionary<string, ShopProductConfig>();
+    private Dictionary<string, RewardConfig> RewardConfigs = new Dictionary<string, RewardConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -44,6 +45,8 @@ public class GameDataBase
     private const string SubstatPoolConfigAddress = "SubstatPoolConfig";
     
     private const string ShopConfigAddress = "ShopConfig";
+    private const string RewardConfigAddress = "RewardConfig";
+
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
@@ -80,6 +83,13 @@ public class GameDataBase
         SetBonusConfigs = Json.DeserializeObject<Dictionary<string, SetBonusConfig>>(setBonusText.text);
         SubstatPoolConfigs = Json.DeserializeObject<Dictionary<string, SubstatPoolConfig>>(substatPoolText.text);
         ShopConfigs = Json.DeserializeObject<Dictionary<string, ShopProductConfig>>(shopText.text);
+
+        var rewardText = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(RewardConfigAddress, token: cancellationToken);
+        if (rewardText != null)
+        {
+            RewardConfigs = Json.DeserializeObject<Dictionary<string, RewardConfig>>(rewardText.text);
+            AddressablesManager.Instance.RemoveAsset(RewardConfigAddress);
+        }
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
         AddressablesManager.Instance.RemoveAsset(CharacterConfigsAddress);
@@ -285,6 +295,12 @@ public class GameDataBase
         ShopConfigs.TryGetValue(key, out ShopProductConfig shopConfig);
 
         return shopConfig;
+    }
+
+    public RewardConfig GetRewardConfig(string key)
+    {
+        RewardConfigs.TryGetValue(key, out RewardConfig rewardConfig);
+        return rewardConfig;
     }
 
     public Dictionary<string, ShopProductConfig> GetAllShopConfigs()

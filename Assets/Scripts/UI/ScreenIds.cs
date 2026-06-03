@@ -28,4 +28,5 @@ public class ScreenIds
     public const string PopupChangeAvatar = "PopupChangeAvatar";
     public const string PopupShopBuy = "PopupShopBuy";
     public const string PopupReceiveItem = "PopupReceiveItem";
+    public const string PopupBattleResult = "PopupBattleResult";
 }

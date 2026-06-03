@@ -15,6 +15,9 @@ public class BattleConfig
     [JsonProperty("reward")]
     public string Reward;
 
+    [JsonProperty("exp_reward")]
+    public int ExpReward;
+
     [JsonProperty("enemies")]
     public List<StageEnemyCompoment> Enemies;
 }

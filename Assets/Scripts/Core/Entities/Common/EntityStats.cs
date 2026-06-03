@@ -9,6 +9,7 @@ public class EntityStats : StatsController, IDamagable
     public Action OnDeath { get; set; }
     public Action<float, Transform, System.Collections.Generic.HashSet<string>> OnHit { get; set; }
     public EntitySkill Skill { get; protected set; }
+    public float TotalDamageDealt { get; set; }
 
     protected virtual void Start()
     {
@@ -78,6 +79,11 @@ public class EntityStats : StatsController, IDamagable
             
             if (attackerEntity != null && targetEntity != null)
             {
+                var attackerStats = attackerEntity.GetCoreComponent<EntityStats>();
+                if (attackerStats != null)
+                {
+                    attackerStats.TotalDamageDealt += damage;
+                }
                 attackerEntity.OnAfterDealDamage?.Invoke(attackerEntity, targetEntity, damage, tags);
             }
         }

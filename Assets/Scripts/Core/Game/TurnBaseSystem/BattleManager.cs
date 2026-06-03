@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +28,11 @@ public class BattleManager : MonoBehaviour
     public Dictionary<string, Entity> Characters => _characters;
     public List<Entity> Enemies => _enemies; 
 
-    [Inject] private SaveSystem _saveSystem;
-    [Inject] private BattleSessionContext _battleSession;
-    [Inject] private GameDataBase _gameDataBase;
+    [Inject] public SaveSystem SaveSystem { get; private set; }
+    [Inject] public BattleSessionContext BattleSession { get; private set; }
+    [Inject] public GameDataBase GameDataBase { get; private set; }
+    [Inject] public UIManager UIManager { get; private set; }
+    [Inject] public SceneLoader SceneLoader { get; private set; }
 
     [Inject] private EnemyManager _enemyManger;
     [Inject] private CharacterManager _characterManager;
@@ -122,7 +124,7 @@ public class BattleManager : MonoBehaviour
     public void SetupEntitiesPosition()
     {
         // Load locaiton of character 
-        var activeSlot = _saveSystem.Player.Roster.ActiveSlots;
+        var activeSlot = SaveSystem.Player.Roster.ActiveSlots;
 
         int order = 0;
 
@@ -162,7 +164,7 @@ public class BattleManager : MonoBehaviour
             }         
         }
 
-        var battleConfig = _gameDataBase.GetBattleConfig(_battleSession.PendingBattleID);
+        var battleConfig = GameDataBase.GetBattleConfig(BattleSession.PendingBattleID);
 
         order = 0;
         for(int i = 0; i < _enemies.Count; i++)
@@ -204,7 +206,7 @@ public class BattleManager : MonoBehaviour
     public void CheckBattleHasBosss()
     {
         var bossID = "";
-        var battleConfig = _gameDataBase.GetBattleConfig(_battleSession.PendingBattleID);
+        var battleConfig = GameDataBase.GetBattleConfig(BattleSession.PendingBattleID);
 
         foreach(var enemy in battleConfig.Enemies)
         {

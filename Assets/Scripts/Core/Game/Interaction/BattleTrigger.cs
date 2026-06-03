@@ -11,11 +11,13 @@ public class BattleTrigger : MonoBehaviour
 
     [Inject] BattleSessionContext _sessionContext;
     [Inject] UIManager _uiManager;
+    [Inject] SceneLoader _sceneLoader;
 
 
     public void OpenPrepareScene()
     {
         _sessionContext.PendingBattleID = _battleID;
+        _sessionContext.PreviousLocation = _sceneLoader.CurrentLoadedScene;
         _uiManager.OpenWindowScene(ScreenIds.PrepareBattleScene);
         UIEvent.OnPrepareBattleData?.Invoke();
     }

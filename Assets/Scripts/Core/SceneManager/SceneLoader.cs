@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -30,6 +30,7 @@ public class SceneLoader : MonoBehaviour
     //Parameters coming from scene loading requests
     private GameSceneSO _sceneToLoad;
     private GameSceneSO _currentlyLoadedScene;
+    public GameSceneSO CurrentLoadedScene => _currentlyLoadedScene;
     private bool _showLoadingScreen;
 
     private SceneInstance _gameplayManagerSceneInstance = new SceneInstance();
@@ -77,7 +78,7 @@ public class SceneLoader : MonoBehaviour
     /// <summary>
     /// This function loads the location scenes passed as array parameter
     /// </summary>
-    private void LoadLocation(GameSceneSO locationToLoad, bool showLoadingScreen, bool fadeScreen)
+    public void LoadLocation(GameSceneSO locationToLoad, bool showLoadingScreen, bool fadeScreen)
     {
         //Prevent a double-loading, for situations where the player falls in two Exit colliders in one frame
         if (_isLoading)
