@@ -33,6 +33,8 @@ public class BattleManager : MonoBehaviour
     [Inject] public GameDataBase GameDataBase { get; private set; }
     [Inject] public UIManager UIManager { get; private set; }
     [Inject] public SceneLoader SceneLoader { get; private set; }
+    [Inject] public InventoryManager InventoryManager { get; private set; }
+    [Inject] public CurrencyManager CurrencyManager { get; private set; }
 
     [Inject] private EnemyManager _enemyManger;
     [Inject] private CharacterManager _characterManager;

@@ -25,18 +25,25 @@ public class CurrencyManager
     }
     public void Add(CurrencyType type, int amount)
     {
+        if (currencies == null) currencies = new Dictionary<CurrencyType, int>();
+        if (!currencies.ContainsKey(type)) currencies[type] = 0;
+
         currencies[type] += amount;
         Save();
-        UIEvent.OnCurrencyChanged(type, currencies[type]);
+        UIEvent.OnCurrencyChanged?.Invoke(type, currencies[type]);
     }
 
     public bool Spend(CurrencyType type, int amount)
     {
-        if(GetValue(type) < amount) return false;
-        Save();
-        currencies[type] -= amount;
+        if (currencies == null) currencies = new Dictionary<CurrencyType, int>();
+        if (!currencies.ContainsKey(type)) currencies[type] = 0;
 
-        UIEvent.OnCurrencyChanged(type, currencies[type]); 
+        if (currencies[type] < amount) return false;
+        
+        currencies[type] -= amount;
+        Save();
+
+        UIEvent.OnCurrencyChanged?.Invoke(type, currencies[type]); 
         return true;
     }
 

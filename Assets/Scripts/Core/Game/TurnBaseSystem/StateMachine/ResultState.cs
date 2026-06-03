@@ -138,6 +138,48 @@ public class ResultState : BattleBaseState
                         foreach (var r in rewardConfig.Rewards)
                         {
                             rewardItems.Add(new RewardItemData(r.ItemID, r.Amount));
+                            
+                            var itemConfig = battleManager.GameDataBase.GetItemConfig(r.ItemID);
+                            if (itemConfig != null)
+                            {
+                                if (itemConfig.Type == ItemType.Currency)
+                                {
+                                    if (System.Enum.TryParse<CurrencyType>(r.ItemID, true, out var currencyType))
+                                    {
+                                        battleManager.CurrencyManager.Add(currencyType, r.Amount);
+                                    }
+                                }
+                                else if (itemConfig.Type == ItemType.Weapon)
+                                {
+                                    for (int i = 0; i < r.Amount; i++)
+                                    {
+                                        var newWeapon = new WeaponSaveData
+                                        {
+                                            UUID = System.Guid.NewGuid().ToString(),
+                                            TemplateID = r.ItemID,
+                                            CurrentLevel = 1
+                                        };
+                                        battleManager.InventoryManager.AddWeapon(newWeapon);
+                                    }
+                                }
+                                else if (itemConfig.Type == ItemType.Armor)
+                                {
+                                    for (int i = 0; i < r.Amount; i++)
+                                    {
+                                        var newArmor = new ArmorSaveData
+                                        {
+                                            UUID = System.Guid.NewGuid().ToString(),
+                                            TemplateID = r.ItemID,
+                                            Level = 1
+                                        };
+                                        battleManager.InventoryManager.AddArmor(newArmor);
+                                    }
+                                }
+                                else
+                                {
+                                    battleManager.InventoryManager.AddStackableItem(r.ItemID, itemConfig.Type, r.Amount);
+                                }
+                            }
                         }
 
                         var popupProps = new ReceiveItemProperties(rewardItems, () => 
