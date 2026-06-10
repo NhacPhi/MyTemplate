@@ -16,10 +16,17 @@ public class PrepareBattleScene : WindowController
         uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
     }
 
-    public void LoadBattleScene()
+    public async void LoadBattleScene()
     {
         //_sessionContext.PendingBattleID = _sessionContext.PendingBattleID;
         _loadLocation.RaiseEvent(_battleSceneSO, true);
+
+        var tcs = new Cysharp.Threading.Tasks.UniTaskCompletionSource();
+        System.Action onSceneReady = () => tcs.TrySetResult();
+        GameEvent.OnSceneReady += onSceneReady;
+        await tcs.Task;
+        GameEvent.OnSceneReady -= onSceneReady;
+
         uiManager.OpenWindowScene(ScreenIds.BattleUIScene);
     }
 }

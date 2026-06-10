@@ -1,7 +1,8 @@
 public class ScreenIds
 {
     // Scene
-    public const string LoadingScene = "LoadingScene";
+    public const string LaunchLoadingScene = "LaunchLoadingScene";
+    public const string LoadingSceneToScene = "LoadingSceneToScene";
     public const string StartGameScene = "StartGameScene";
     public const string GameInfoScene = "GameInfoScene";
     public const string GameSettingsScene = "GameSettingsScene";

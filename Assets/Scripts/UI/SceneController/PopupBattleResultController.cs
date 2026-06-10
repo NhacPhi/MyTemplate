@@ -58,10 +58,19 @@ public class PopupBattleResultController : WindowController
 
     private void SetupUI()
     {
-        // 1. Win/Lose Icon
-        if (winIcon != null) winIcon.SetActive(_properties.IsWin);
-        if (loseIcon != null) loseIcon.SetActive(!_properties.IsWin);
+        // 1. Win/Lose Icon Animation
+        if (winIcon != null) winIcon.SetActive(false);
+        if (loseIcon != null) loseIcon.SetActive(false);
 
+        GameObject activeIcon = _properties.IsWin ? winIcon : loseIcon;
+        if (activeIcon != null)
+        {
+            activeIcon.SetActive(true);
+            activeIcon.transform.localScale = Vector3.zero;
+            activeIcon.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+        }
+
+        // 2. MVP Image Animation
         if (mvpImage != null && !string.IsNullOrEmpty(_properties.MvpCharacterId))
         {
             var charConfig = _gameDataBase.GetCharacterConfig(_properties.MvpCharacterId);
@@ -69,6 +78,9 @@ public class PopupBattleResultController : WindowController
             {
                 mvpImage.sprite = charConfig.BigIcon;
                 mvpImage.gameObject.SetActive(true);
+
+                mvpImage.transform.localScale = Vector3.zero;
+                mvpImage.transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.OutBack).SetDelay(0.3f);
             }
         }
 

@@ -10,6 +10,7 @@ public static class GameEvent
     public static Action<GameSceneSO, bool, bool> OnLoadSceneLocation;
 
     public static Action OnSceneReady;
+    public static bool IsSceneReady;
     public static Action OnPlayerSpawned;
 
     //Gamestart

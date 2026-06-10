@@ -10,11 +10,18 @@ public class StartGameScene : WindowController
 
     private void Start()
     {
-        btnPlayGame.onClick.AddListener(() => { 
-            uiManager.OpenWindowScene(ScreenIds.GamePlayScene); 
+        btnPlayGame.onClick.AddListener(async () => { 
             uiManager.HidePanel(ScreenIds.PanelStartGame);
-            GameEvent.OnStartNewGame?.Invoke();}
-        );
+            GameEvent.OnStartNewGame?.Invoke();
+
+            var tcs = new Cysharp.Threading.Tasks.UniTaskCompletionSource();
+            System.Action onSceneReady = () => tcs.TrySetResult();
+            GameEvent.OnSceneReady += onSceneReady;
+            await tcs.Task;
+            GameEvent.OnSceneReady -= onSceneReady;
+
+            uiManager.OpenWindowScene(ScreenIds.GamePlayScene); 
+        });
 
     }
 }

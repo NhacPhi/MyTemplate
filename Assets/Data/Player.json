@@ -1,15 +1,15 @@
 {
   "account_info": {
     "player_name": "Congyon",
-    "level": 4,
-    "current_exp": 800,
+    "level": 5,
+    "current_exp": 3400,
     "avatar_icon": "Wukong01_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 310,
-      "Jade": 73100,
-      "Coin": 7194200,
+      "Jade": 73600,
+      "Coin": 7304200,
       "RelicEssence": 8533160,
       "ArmorPrimorite": 596750,
       "Ticket": 0
@@ -21,27 +21,17 @@
         "quantity": 1
       },
       {
-        "id": "supreme_exp",
-        "type": "Exp",
-        "quantity": 63
-      },
-      {
-        "id": "Yellow_Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Dragon_Bread_Noodies",
+        "id": "Jade_Parcels",
         "type": "Food",
-        "quantity": 45
+        "quantity": 85
       },
       {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
+        "id": "BullDemonKing",
+        "type": "Shard",
         "quantity": 1
       },
       {
-        "id": "ErlangShen",
+        "id": "ThirdPrinceNezha",
         "type": "Shard",
         "quantity": 1
       },
@@ -51,32 +41,37 @@
         "quantity": 12
       },
       {
-        "id": "ThirdPrinceNezha",
-        "type": "Shard",
-        "quantity": 1
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 5
       },
       {
-        "id": "BullDemonKing",
-        "type": "Shard",
-        "quantity": 1
-      },
-      {
-        "id": "Jade_Parcels",
-        "type": "Food",
-        "quantity": 85
-      },
-      {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 300
-      },
-      {
-        "id": "Garnet_Chunk",
+        "id": "Jade_Gemstone",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Chunk",
+        "id": "Dragon_Bread_Noodies",
+        "type": "Food",
+        "quantity": 45
+      },
+      {
+        "id": "Yellow_Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "supreme_exp",
+        "type": "Exp",
+        "quantity": 63
+      },
+      {
+        "id": "ErlangShen",
+        "type": "Shard",
+        "quantity": 1
+      },
+      {
+        "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -86,14 +81,29 @@
         "quantity": 10
       },
       {
-        "id": "Jade_Chunk",
+        "id": "rare_exp",
+        "type": "Exp",
+        "quantity": 51
+      },
+      {
+        "id": "Garnet_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "rare_exp",
-        "type": "Exp",
-        "quantity": 51
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 300
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "fine_exp",
@@ -102,11 +112,6 @@
       },
       {
         "id": "Garnet_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -121,14 +126,14 @@
         "quantity": 1
       },
       {
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "Shirmp_Dumplings",
         "type": "Food",
         "quantity": 10
-      },
-      {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
       },
       {
         "id": "Jade_Sliver",
@@ -138,7 +143,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 168
+        "quantity": 183
       },
       {
         "id": "Tofu_Soup",
@@ -161,9 +166,9 @@
         "quantity": 1
       },
       {
-        "id": "Fried_Radish_Balls",
+        "id": "Murshroom_Steamed_Buns",
         "type": "Food",
-        "quantity": 66
+        "quantity": 55
       },
       {
         "id": "LittleWhiteDragon",
@@ -171,9 +176,9 @@
         "quantity": 1
       },
       {
-        "id": "Murshroom_Steamed_Buns",
+        "id": "Fried_Radish_Balls",
         "type": "Food",
-        "quantity": 55
+        "quantity": 66
       }
     ],
     "weapons": [
@@ -241,6 +246,12 @@
         "equip": ""
       },
       {
+        "uuid": "c16cb1f7-7b80-43c8-8fb4-7f0b13f4cac2",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 0
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
         "template_id": "Reincarnation",
         "current_level": 1,
@@ -283,18 +294,18 @@
         "equip": ""
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
-        "template_id": "Sunburst_Spade",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": "ShaWujing"
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777757f",
         "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": "ShaWujing"
       }
     ],
     "armors": [
@@ -701,8 +712,16 @@
     ],
     "active_slots": [
       {
+        "position": 1,
+        "character_id": "SunWukong"
+      },
+      {
         "position": 2,
         "character_id": "ZhuBaJie"
+      },
+      {
+        "position": 3,
+        "character_id": "ThirdPrinceNezha"
       },
       {
         "position": 4,
@@ -710,7 +729,7 @@
       },
       {
         "position": 5,
-        "character_id": "SunWukong"
+        "character_id": ""
       },
       {
         "position": 6,
@@ -757,6 +776,11 @@
         "product_id": "SHOP_RARE_06",
         "purchase_count": 1,
         "last_purchase_time": 639160777753388600
+      },
+      "SHOP_COMBO_02": {
+        "product_id": "SHOP_COMBO_02",
+        "purchase_count": 1,
+        "last_purchase_time": 639161615588829937
       }
     }
   }

@@ -44,6 +44,16 @@ namespace Core.Scope
 
             playerCharacterManager.Init();
             uiManager.Init();
+
+            if (!GameEvent.IsSceneReady)
+            {
+                var tcs = new UniTaskCompletionSource();
+                Action onSceneReady = () => tcs.TrySetResult();
+                GameEvent.OnSceneReady += onSceneReady;
+                await tcs.Task;
+                GameEvent.OnSceneReady -= onSceneReady;
+            }
+
             uiManager.OpenWindowScene(ScreenIds.StartGameScene);
             uiManager.ShowPanel(ScreenIds.PanelStartGame);
 

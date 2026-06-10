@@ -39,6 +39,7 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
+        GameEvent.IsSceneReady = false;
         _loadLocation.OnLoadingRequested += LoadLocation;
         _loadMenu.OnLoadingRequested += LoadMenu;
 #if UNITY_EDITOR
@@ -172,10 +173,37 @@ public class SceneLoader : MonoBehaviour
         if (_showLoadingScreen)
         {
             UIEvent.OnToggleLoadingScene?.Invoke(true);
+            StartCoroutine(TrackLoadingProgress());
+        }
+        else
+        {
+            _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
+            _loadingOperationHandle.Completed += OnNewSceneLoaded;
+        }
+    }
+
+    private IEnumerator TrackLoadingProgress()
+    {
+        _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
+        
+        float timer = 0f;
+        float minLoadingTime = 2f;
+
+        while (!_loadingOperationHandle.IsDone || timer < minLoadingTime)
+        {
+            timer += Time.deltaTime;
+            
+            float fakeProgress = Mathf.Clamp01(timer / minLoadingTime);
+            
+            UIEvent.OnUpdateLoadingProgress?.Invoke(fakeProgress);
+            yield return null;
         }
 
-        _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
-        _loadingOperationHandle.Completed += OnNewSceneLoaded;
+        UIEvent.OnUpdateLoadingProgress?.Invoke(1f);
+        
+        yield return null;
+
+        OnNewSceneLoaded(_loadingOperationHandle);
     }
 
     private void OnNewSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
@@ -202,6 +230,7 @@ public class SceneLoader : MonoBehaviour
 
     private void StartGameplay()
     {
+        GameEvent.IsSceneReady = true;
         GameEvent.OnSceneReady?.Invoke(); //Spawn system will spawn the PigChef in a gameplay scene
     }
 

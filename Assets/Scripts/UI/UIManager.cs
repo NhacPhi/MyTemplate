@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
+        if (_uiFrame != null) return;
         _uiFrame = _defaultUISettings.CreateUIInstance(false);
     }
 
@@ -147,11 +148,26 @@ public class UIManager : MonoBehaviour
         _uiFrame.OpenWindow(ScreenIds.PopupBattleResult, popup);
     }
 
+    private bool _isFirstLoad = true;
+
     public void ToggleLoadingScene(bool isOn)
     {
+        if (_uiFrame == null) Init();
+
+        string sceneId = _isFirstLoad ? ScreenIds.LaunchLoadingScene : ScreenIds.LoadingSceneToScene;
+        
         if (isOn)
-            OpenWindowScene(ScreenIds.LoadingScene);
+        {
+            OpenWindowScene(sceneId);
+        }
         else
-            CloseWindowScene(ScreenIds.LoadingScene);
+        {
+            var currentWindow = _uiFrame.GetCurrentWindow();
+            if (currentWindow != null && currentWindow.ScreenId == sceneId)
+            {
+                CloseWindowScene(sceneId);
+            }
+            _isFirstLoad = false;
+        }
     }
 }

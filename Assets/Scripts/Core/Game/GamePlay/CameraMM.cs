@@ -29,7 +29,10 @@ public class CameraMM : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = protagonistTransformAnchor.Value.position - offset;
+        if (protagonistTransformAnchor.isSet)
+        {
+            transform.position = protagonistTransformAnchor.Value.position - offset;
+        }
     }
 
 
