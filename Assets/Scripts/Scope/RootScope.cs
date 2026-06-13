@@ -31,6 +31,8 @@ public class RootScope : LifetimeScope
         builder.Register<InventoryManager>(Lifetime.Singleton);
         builder.Register<ForgeManager>(Lifetime.Singleton);
         builder.Register<PlayerCharacterManager>(Lifetime.Singleton);
+        builder.Register<GachaRuntimeManager>(Lifetime.Singleton);
+        builder.Register<GachaManager>(Lifetime.Singleton);
 
         builder.RegisterComponent(_audioManager).AsImplementedInterfaces().AsSelf();
         //builder.Register<GameNarrativeData>(Lifetime.Singleton);

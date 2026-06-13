@@ -1,0 +1,225 @@
+{
+    "banner_char_01": {
+        "bannerId": "banner_char_01",
+        "name_hash": 801112403,
+        "type": "Character",
+        "pityLimit": 40,
+        "cost": {
+            "type": "Ticket",
+            "amount": 1
+        },
+        "allowSelection": true,
+        "rates": {
+            "5": {
+                "baseRate": 0.016,
+                "isGuarantee": true
+            },
+            "4": {
+                "baseRate": 0.134,
+                "isGuarantee": false
+            },
+            "3": {
+                "baseRate": 0.425,
+                "isGuarantee": false
+            },
+            "2": {
+                "baseRate": 0.425,
+                "isGuarantee": false
+            }
+        },
+        "pool": [
+            {
+                "itemId": "SunWukong",
+                "rarity": 5,
+                "isRateUp": true,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "TangSanZang",
+                "rarity": 3,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "ZhuBaJie",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "ShaWujing",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "DragonKing",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "ThirdPrinceNezha",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "LittleWhiteDragon",
+                "rarity": 2,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "BullDemonKing",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            }
+        ]
+    },
+    "banner_weap_01": {
+        "bannerId": "banner_weap_01",
+        "name_hash": 4182861784,
+        "type": "Weapon",
+        "pityLimit": 40,
+        "cost": {
+            "type": "Ticket",
+            "amount": 1
+        },
+        "allowSelection": true,
+        "rates": {
+            "5": {
+                "baseRate": 0.016,
+                "isGuarantee": true
+            },
+            "4": {
+                "baseRate": 0.134,
+                "isGuarantee": false
+            },
+            "3": {
+                "baseRate": 0.425,
+                "isGuarantee": false
+            },
+            "2": {
+                "baseRate": 0.425,
+                "isGuarantee": false
+            }
+        },
+        "pool": [
+            {
+                "itemId": "Nimbus_Cudgel",
+                "rarity": 5,
+                "isRateUp": true,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "Triple_Edged_Blade",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "Vanguard_Of_Volition",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "Ninefold_Staff",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Nine_ToolThed_Rake",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "Nimbus_Cloud",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Sunburst_Spade",
+                "rarity": 2,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Reincarnation",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Ennead_spear",
+                "rarity": 3,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Crescent_Axe",
+                "rarity": 2,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Bronze_Hammer",
+                "rarity": 3,
+                "isRateUp": false,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Moonlit_Firelfy",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "Plantain_Fan",
+                "rarity": 4,
+                "isRateUp": true,
+                "isSelectableTarget": false,
+                "weight": 100
+            },
+            {
+                "itemId": "Wings_of_Phoenix",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            },
+            {
+                "itemId": "FireLance_Ring_Damasl",
+                "rarity": 5,
+                "isRateUp": false,
+                "isSelectableTarget": true,
+                "weight": 100
+            }
+        ]
+    }
+}

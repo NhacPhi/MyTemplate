@@ -23,6 +23,7 @@ public class GameDataBase
     private Dictionary<string, SubstatPoolConfig> SubstatPoolConfigs = new Dictionary<string, SubstatPoolConfig>();
     private Dictionary<string, ShopProductConfig> ShopConfigs = new Dictionary<string, ShopProductConfig>();
     private Dictionary<string, RewardConfig> RewardConfigs = new Dictionary<string, RewardConfig>();
+    private Dictionary<string, GachaConfig> GachaConfigs = new Dictionary<string, GachaConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -46,6 +47,7 @@ public class GameDataBase
     
     private const string ShopConfigAddress = "ShopConfig";
     private const string RewardConfigAddress = "RewardConfig";
+    private const string GachaConfigAddress = "GachaConfig";
 
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
@@ -89,6 +91,13 @@ public class GameDataBase
         {
             RewardConfigs = Json.DeserializeObject<Dictionary<string, RewardConfig>>(rewardText.text);
             AddressablesManager.Instance.RemoveAsset(RewardConfigAddress);
+        }
+
+        var gachaText = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(GachaConfigAddress, token: cancellationToken);
+        if (gachaText != null)
+        {
+            GachaConfigs = Json.DeserializeObject<Dictionary<string, GachaConfig>>(gachaText.text);
+            AddressablesManager.Instance.RemoveAsset(GachaConfigAddress);
         }
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
@@ -306,6 +315,17 @@ public class GameDataBase
     public Dictionary<string, ShopProductConfig> GetAllShopConfigs()
     {
         return ShopConfigs;
+    }
+
+    public GachaConfig GetGachaConfig(string key)
+    {
+        GachaConfigs.TryGetValue(key, out GachaConfig config);
+        return config;
+    }
+
+    public Dictionary<string, GachaConfig> GetAllGachaConfigs()
+    {
+        return GachaConfigs;
     }
 }
 

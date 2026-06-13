@@ -185,6 +185,22 @@ public static class LocKeys
 
     public const long UI_YOU_RECEIVED = 685490319;
 
+    public const long UI_WISH = 4167087324;
+
+    public const long UI_TREASURE_SEEK = 2690205398;
+
+    public const long UI_GOD_SUMMON = 2411746967;
+
+    public const long UI_PITY_NOTE = 288085422;
+
+    public const long UI_SUMMON_5 = 3231847365;
+
+    public const long UI_SINGLE_SUMMON = 1422790221;
+
+    public const long UI_SUMMON_10 = 1926080671;
+
+    public const long UI_SKIP = 1123326191;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -648,6 +664,10 @@ public static class LocKeys
     public const long STR_PURCHASE = 2143305298;
 
     public const long STR_UNIT_PRICE = 4002818570;
+
+    public const long STR_WEAPON_BANNER_TITLE = 4182861784;
+
+    public const long STR_CHARACTER_BANNER_TITLE = 801112403;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

@@ -73,6 +73,12 @@ public class UIManager : MonoBehaviour
         _uiFrame.OpenWindow(id);
     }
 
+    public void OpenWindowScene(string id, WindowProperties properties)
+    {
+        EnsureScreenLoaded(id);
+        _uiFrame.OpenWindow(id, properties);
+    }
+
     public void CloseWindowScene(string id)
     {
         _uiFrame.CloseWindow(id);

@@ -85,6 +85,12 @@ public class CharacterUI : MonoBehaviour
     }
     public void Init()
     {
+        foreach (var obj in avatars)
+        {
+            Destroy(obj);
+        }
+        avatars.Clear();
+
         foreach (var character in save.Player.Roster.Characters)
         {
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);

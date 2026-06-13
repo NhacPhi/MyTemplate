@@ -17,6 +17,9 @@ public class ScreenIds
     public const string UpgradeRelicScene = "UpgradeRelicScene";
     public const string UpgradeArmorScene = "UpgradeArmorScene";
     public const string ShopScene = "ShopScene";
+    public const string GachaMainScene = "GachaMainScene";
+    public const string GachaCutsceneScene = "GachaCutsceneUI";
+    public const string GachaResultScene = "GachaResultScene";
 
     // Panel
     public const string PanelStartGame = "PanelStartGame";
@@ -30,4 +33,5 @@ public class ScreenIds
     public const string PopupShopBuy = "PopupShopBuy";
     public const string PopupReceiveItem = "PopupReceiveItem";
     public const string PopupBattleResult = "PopupBattleResult";
+    public const string PopupGachaSelectTarget = "PopupGachaSelectTarget";
 }

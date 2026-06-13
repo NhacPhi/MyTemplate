@@ -10,6 +10,7 @@ from src.builders.passive_skill_builder import PassiveSkillBuilder
 from src.builders.substat_builder import SubstatPoolBuilder
 from src.builders.shop_builder import ShopConfigBuilder
 from src.builders.reward_builder import RewardConfigBuilder
+from src.builders.gacha_builder import GachaConfigBuilder
 import config
 import os
 
@@ -53,6 +54,10 @@ def main():
     shop_path = os.path.join(config.INPUT_FOLDER, config.SHOP_CONFIG_FILE)
     shop_config = ShopConfigBuilder(shop_path)
     shop_config.run()
+
+    gacha_path = os.path.join(config.INPUT_FOLDER, config.GACHA_CONFIG_FILE)
+    gacha_config = GachaConfigBuilder(gacha_path)
+    gacha_config.run()
 
     narrative_path = os.path.join(config.INPUT_FOLDER, config.GAME_NARRATIVE_CONFIG_FILE)
     ator_config = ActorConfigBuilder(narrative_path)

@@ -12,7 +12,7 @@
       "Coin": 7304200,
       "RelicEssence": 8533160,
       "ArmorPrimorite": 596750,
-      "Ticket": 0
+      "Ticket": 10
     },
     "items": [
       {
@@ -71,7 +71,17 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Chunk",
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 300
+      },
+      {
+        "id": "Garnet_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -81,34 +91,24 @@
         "quantity": 10
       },
       {
+        "id": "Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "rare_exp",
         "type": "Exp",
         "quantity": 51
       },
       {
-        "id": "Garnet_Chunk",
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "ZhuBaJie",
+        "id": "ShaWujing",
         "type": "Shard",
-        "quantity": 300
-      },
-      {
-        "id": "Yellow_Jade_Chunk",
-        "type": "Gemstone",
         "quantity": 1
-      },
-      {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 30
       },
       {
         "id": "Garnet_Fragment",
@@ -121,12 +121,12 @@
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
-        "type": "Shard",
-        "quantity": 1
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 30
       },
       {
-        "id": "Jade_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -166,14 +166,14 @@
         "quantity": 1
       },
       {
-        "id": "Murshroom_Steamed_Buns",
-        "type": "Food",
-        "quantity": 55
-      },
-      {
         "id": "LittleWhiteDragon",
         "type": "Shard",
         "quantity": 1
+      },
+      {
+        "id": "Murshroom_Steamed_Buns",
+        "type": "Food",
+        "quantity": 55
       },
       {
         "id": "Fried_Radish_Balls",
@@ -204,11 +204,31 @@
         "equip": "BullDemonKing"
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
         "template_id": "Moonlit_Firelfy",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
+      },
+      {
+        "uuid": "c16cb1f7-7b80-43c8-8fb4-7f0b13f4cac2",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 1,
+        "current_updgrade": 0
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777754f",
@@ -225,31 +245,11 @@
         "equip": "ThirdPrinceNezha"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
         "template_id": "Triple_Edged_Blade",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
-      },
-      {
-        "uuid": "c16cb1f7-7b80-43c8-8fb4-7f0b13f4cac2",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 0
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
@@ -781,6 +781,24 @@
         "product_id": "SHOP_COMBO_02",
         "purchase_count": 1,
         "last_purchase_time": 639161615588829937
+      }
+    }
+  },
+  "gacha": {
+    "banner_data_map": {
+      "banner_weap_01": {
+        "banner_id": "banner_weap_01",
+        "pity_count": 4,
+        "selected_target_id": "Nimbus_Cudgel",
+        "is_next_ssr_guaranteed": true,
+        "total_summon_count": 164
+      },
+      "banner_char_01": {
+        "banner_id": "banner_char_01",
+        "pity_count": 31,
+        "selected_target_id": "SunWukong",
+        "is_next_ssr_guaranteed": false,
+        "total_summon_count": 131
       }
     }
   }
