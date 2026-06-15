@@ -118,8 +118,14 @@ public class UIManager : MonoBehaviour
                 Action confirm = () => {
                     Application.Quit();
                 };
-                string message = LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION");
-                ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties("Remind", message, "Confirm", "Cancel", confirm, cancle);
+                ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties(
+                    LocalizationManager.Instance.GetLocalizedValue("UI_REMIND"), 
+                    LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION"), 
+                    LocalizationManager.Instance.GetLocalizedValue("UI_CONFIRM"), 
+                    LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"), 
+                    confirm, 
+                    cancle
+                );
                 EnsureScreenLoaded(id);
                 _uiFrame.OpenWindow(id, popupProps);
                 break;

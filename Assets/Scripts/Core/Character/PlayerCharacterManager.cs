@@ -18,6 +18,8 @@ public class PlayerCharacterManager : IInitializable, IDisposable
 
     public List<string> ActivePartyIDs { get; private set; } = new List<string>();
 
+    public string CurrentSelectedCharacterID { get; set; } = string.Empty;
+
     public void Initialize()
     {
         
@@ -27,6 +29,7 @@ public class PlayerCharacterManager : IInitializable, IDisposable
     {
         UIEvent.OnRequestSwapWeapon -= HandleSwapWeapon;
         UIEvent.OnRequestSwapArmor -= HandleSwapArmor;
+        UIEvent.OnCharacterAdded -= HandleCharacterAdded;
     }
     public void Init()
     {
@@ -61,6 +64,33 @@ public class PlayerCharacterManager : IInitializable, IDisposable
         UIEvent.OnRequestSwapWeapon += HandleSwapWeapon;
 
         UIEvent.OnRequestSwapArmor += HandleSwapArmor;
+        
+        UIEvent.OnCharacterAdded += HandleCharacterAdded;
+
+        UIEvent.OnSelectCharacterAvatar += (id) => CurrentSelectedCharacterID = id;
+
+        // Khởi tạo CurrentSelectedCharacterID mặc định
+        var firstChar = GetFirstCharacter();
+        if (firstChar != null)
+        {
+            CurrentSelectedCharacterID = firstChar.SaveData.ID;
+        }
+    }
+
+    private void HandleCharacterAdded(string characterID)
+    {
+        if (_unlockedCharacters.ContainsKey(characterID)) return;
+
+        var charSave = _saveGame.Player.Roster.GetCharacter(characterID);
+        if (charSave != null)
+        {
+            var profile = new CharacterProfileModel();
+            profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory, _currency);
+            _unlockedCharacters.Add(charSave.ID, profile);
+
+            var upgradeManager = new CharacterUpgradeManager(profile, _gameDataBase, _inventory, _currency);
+            _upgradeManagers.Add(charSave.ID, upgradeManager);
+        }
     }
 
     private void HandleSwapWeapon(string victimID, string weaponToGiveThem)

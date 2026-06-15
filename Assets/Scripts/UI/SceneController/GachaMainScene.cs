@@ -212,12 +212,34 @@ public class GachaMainScene : WindowController
 
     private void HandleRollRequest(string bannerId, int count)
     {
+        // 1. Kiểm tra tài nguyên trước khi quay
+        if (db != null && currencyManager != null)
+        {
+            var config = db.GetGachaConfig(bannerId);
+            if (config != null)
+            {
+                int totalCost = count; // Mặc định mỗi roll tốn 1 vé/nguyên liệu
+                
+                if (System.Enum.TryParse<CurrencyType>(config.Cost.Type, true, out var currencyType))
+                {
+                    if (currencyManager.GetQuantityCurrecy(currencyType) < totalCost)
+                    {
+                        ShowInsufficientCurrencyPopup();
+                        return; // Dừng lại, không cho roll
+                    }
+                    
+                    // 2. Trừ tiền
+                    currencyManager.Spend(currencyType, totalCost);
+                }
+            }
+        }
+
         Debug.Log($"[GachaMainScene] Requested Roll {count}x on {bannerId} banner.");
         
         GachaRollState.LastBannerType = bannerId;
         GachaRollState.LastRollCount = count;
 
-        // Gọi GachaManager xử lý random và lấy kết quả
+        // 3. Gọi GachaManager xử lý random và lấy kết quả
         if (gachaManager != null)
         {
             var results = gachaManager.RollGacha(bannerId, count);
@@ -245,15 +267,15 @@ public class GachaMainScene : WindowController
             };
 
             var popupProps = new ConfirmationPopupProperties(
-                "Remind", 
-                "Insufficient tickets or jades to roll. Go to Shop?", 
-                "Go to Shop", 
-                "Cancel", 
+                LocalizationManager.Instance.GetLocalizedValue("UI_REMIND"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_NOT_ENOUGH_RESOURCE"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_GO_TO_SHOP"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"), 
                 confirmAction, 
                 cancelAction
             );
 
-            uiManager.OpenWindowScene(ScreenIds.PopupConfirm);
+            uiManager.OpenWindowScene(ScreenIds.PopupConfirm, popupProps);
         }
     }
 
@@ -269,6 +291,8 @@ public class GachaItemResult
     public string itemName;
     public Rare rarity; // Sử dụng chung enum Rare của game thay vì GachaRarity
     public bool isCharacter;
+    public bool isConverted;
+    public int convertedShardAmount;
 }
 
 public static class GachaRollState

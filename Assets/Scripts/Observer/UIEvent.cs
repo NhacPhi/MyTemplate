@@ -16,6 +16,7 @@ public static class UIEvent
 
     //Character
     public static Action<string> OnSelectCharacterAvatar;
+    public static Action<string> OnCharacterAdded; // Triggered when a new character is obtained
     public static Action<CharacterTap> OnSelectToggleCharacterTap;
     public static Action<string> OnSelectCharacterArmorUI;
     public static Action<string> OnSelectCharacterChangeWeapon;

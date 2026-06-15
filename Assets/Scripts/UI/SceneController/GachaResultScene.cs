@@ -98,6 +98,23 @@ public class GachaResultScene : WindowController
                         displayIcon = itemConfig.Weapon.BigIcon;
                     }
 
+                    if (item.isConverted)
+                    {
+                        if (card is GachaResultCharacterCardUI charCard)
+                        {
+                            charCard.SetShardConversion(true, item.convertedShardAmount);
+                        }
+                        else
+                        {
+                            // Fallback if the user hasn't updated the prefab script yet
+                            localizedName += $"\n<size=80%>(+{item.convertedShardAmount} mảnh)</size>";
+                        }
+                    }
+                    else if (card is GachaResultCharacterCardUI charCardNormal)
+                    {
+                        charCardNormal.SetShardConversion(false, 0);
+                    }
+                    
                     card.Setup(localizedName, displayIcon, item.rarity);
                 }
             }
@@ -192,8 +209,12 @@ public class GachaResultScene : WindowController
                         Action cancelAction = () => { /* Đóng popup */ };
 
                         var popupProps = new ConfirmationPopupProperties(
-                            "Remind", "Không đủ tài nguyên để tiếp tục quay. Đến Cửa Hàng?", 
-                            "Go to Shop", "Cancel", confirmAction, cancelAction
+                            LocalizationManager.Instance.GetLocalizedValue("UI_REMIND"), 
+                            LocalizationManager.Instance.GetLocalizedValue("UI_NOT_ENOUGH_RESOURCE"), 
+                            LocalizationManager.Instance.GetLocalizedValue("UI_GO_TO_SHOP"), 
+                            LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"), 
+                            confirmAction, 
+                            cancelAction
                         );
                         uiManager.OpenWindowScene(ScreenIds.PopupConfirm, popupProps);
                         return;

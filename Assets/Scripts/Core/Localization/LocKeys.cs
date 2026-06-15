@@ -201,6 +201,10 @@ public static class LocKeys
 
     public const long UI_SKIP = 1123326191;
 
+    public const long UI_NOT_ENOUGH_RESOURCE = 1141508596;
+
+    public const long UI_GO_TO_SHOP = 2019819151;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

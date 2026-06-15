@@ -39,18 +39,32 @@ public class ConfirmPopupController : WindowController<ConfirmationPopupProperti
 
     private void Start()
     {
-        btnConfirm.onClick.AddListener(() => UI_Confirm());
-        btnCancel.onClick.AddListener(() => UI_Cancel());
+        if (btnConfirm != null) btnConfirm.onClick.AddListener(() => UI_Confirm());
+        if (btnCancel != null) btnCancel.onClick.AddListener(() => UI_Cancel());
+        
+        // Delay 1 frame để chắc chắn đè lên các component Localization tự động (nếu có)
+        RefreshUI();
+    }
+
+    private void OnEnable()
+    {
+        RefreshUI();
     }
 
     protected override void OnPropertiesSet()
     {
         base.OnPropertiesSet();
+        RefreshUI();
+    }
 
-        titleLable.text = Properties.title;
-        txtMessage.text = Properties.txtMessage;
-        txtCancelButton.text = Properties.txtButtonCancel;
-        txtConfirmButton.text = Properties.txtButtonConfirm;
+    private void RefreshUI()
+    {
+        if (Properties == null) return;
+
+        if (titleLable != null) titleLable.text = Properties.title;
+        if (txtMessage != null) txtMessage.text = Properties.txtMessage;
+        if (txtCancelButton != null) txtCancelButton.text = Properties.txtButtonCancel;
+        if (txtConfirmButton != null) txtConfirmButton.text = Properties.txtButtonConfirm;
     }
 
     public void UI_Confirm()

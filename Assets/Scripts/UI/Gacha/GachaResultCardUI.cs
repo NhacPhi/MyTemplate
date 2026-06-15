@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class GachaResultCardUI : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class GachaResultCardUI : MonoBehaviour
     [Header("Background Config by Rarity")]
     [Tooltip("Index 0 = Normal, 1 = Rare, 2 = Epic, 3 = Legendary (SSR)")]
     [SerializeField] private Sprite[] rarityBackgrounds = new Sprite[4];
+
+    [Header("Special Effects (Mức 4 & 5)")]
+    [SerializeField] private GameObject fxSparkle;
+
+    [Header("Highlight Shader Materials")]
+    [SerializeField] private Material matHighlight;
 
     public RectTransform RectTransform => (RectTransform)transform;
 
@@ -27,6 +34,31 @@ public class GachaResultCardUI : MonoBehaviour
             {
                 imgBackground.sprite = rarityBackgrounds[index];
             }
+        }
+
+        PlaySpecialEffects(rarity);
+    }
+
+    private void PlaySpecialEffects(Rare rarity)
+    {
+        int val = (int)rarity;
+
+        // Reset trạng thái: Tắt hết các effect đi
+        if (fxSparkle != null) fxSparkle.SetActive(false);
+        
+        // Trả lại material mặc định (không có viền) cho thẻ thường
+        if (imgBackground != null)
+        {
+            imgBackground.material = null;
+        }
+
+        // Bật effect lên nếu đúng độ hiếm (Cả 4 và 5 dùng chung)
+        if (val == 4 || val == 5)
+        {
+            if (fxSparkle != null) fxSparkle.SetActive(true);
+            
+            if (imgBackground != null && matHighlight != null) 
+                imgBackground.material = matHighlight; // Bật sáng viền
         }
     }
 

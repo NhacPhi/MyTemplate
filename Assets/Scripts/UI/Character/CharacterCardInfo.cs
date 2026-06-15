@@ -43,7 +43,9 @@ public class CharacterCardInfo : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCharacterCardInfo(characterManager.GetFirstCharacter().SaveData.ID);
+        string id = characterManager.CurrentSelectedCharacterID;
+        if (string.IsNullOrEmpty(id)) id = characterManager.GetFirstCharacter().SaveData.ID;
+        UpdateCharacterCardInfo(id);
     }
 
     private void OnDestroy()

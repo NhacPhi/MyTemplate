@@ -65,7 +65,9 @@ public class CharacterCardAscend : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCharacterCardAscend(playerCharacterManager.GetFirstCharacter().SaveData.ID);
+        string id = playerCharacterManager.CurrentSelectedCharacterID;
+        if (string.IsNullOrEmpty(id)) id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
+        UpdateCharacterCardAscend(id);
     }
 
     public void UpdateCharacterCardAscend(string id)

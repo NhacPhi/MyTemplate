@@ -186,6 +186,10 @@ public class InventoryManager
             var cfgA = _gameDataBase.GetItemConfig(a.TemplateID);
             var cfgB = _gameDataBase.GetItemConfig(b.TemplateID);
 
+            if (cfgA == null && cfgB == null) return b.CurrentLevel.CompareTo(a.CurrentLevel);
+            if (cfgA == null) return 1;
+            if (cfgB == null) return -1;
+
             // 1. Ưu tiên sắp xếp theo Rarity trước (Giảm dần: B so với A)
             int rarityComparison = cfgB.Rarity.CompareTo(cfgA.Rarity);
 
@@ -209,6 +213,10 @@ public class InventoryManager
             var cfgA = _gameDataBase.GetItemConfig(a.TemplateID);
             var cfgB = _gameDataBase.GetItemConfig(b.TemplateID);
 
+            if (cfgA == null && cfgB == null) return b.Level.CompareTo(a.Level);
+            if (cfgA == null) return 1;
+            if (cfgB == null) return -1;
+
             // 1. Ưu tiên sắp xếp theo Rarity trước (Giảm dần)
             int rarityComparison = cfgB.Rarity.CompareTo(cfgA.Rarity);
 
@@ -230,7 +238,11 @@ public class InventoryManager
         Items.Sort((a, b) =>
         {
             var cfgA = _gameDataBase.GetItemConfig(a.ID);
-            var cfgB = _gameDataBase.GetItemConfig(b.ID); ;
+            var cfgB = _gameDataBase.GetItemConfig(b.ID);
+
+            if (cfgA == null && cfgB == null) return 0;
+            if (cfgA == null) return 1;
+            if (cfgB == null) return -1;
 
             return cfgB.Rarity.CompareTo(cfgA.Rarity);
         });
@@ -254,6 +266,7 @@ public class InventoryManager
             }
 
             var config = _gameDataBase.GetItemConfig(armor.TemplateID);
+            if (config == null || config.Armor == null) continue;
 
             // Lấy loại giáp từ config (Giả sử thuộc tính trong config tên là ArmorPart)
             ArmorPart currentArmorType = config.Armor.Part;

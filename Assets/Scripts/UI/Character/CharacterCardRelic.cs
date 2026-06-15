@@ -101,7 +101,9 @@ public class CharacterCardRelic : CharacterCard
             UIEvent.OnSelectCharacterAvatar(currentCharacter);
         });
 
-        UpdateCharacterCardWeapon(playerCharacterManager.GetFirstCharacter().SaveData.ID);
+        string id = playerCharacterManager.CurrentSelectedCharacterID;
+        if (string.IsNullOrEmpty(id)) id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
+        UpdateCharacterCardWeapon(id);
     }
 
     private void OnEnable()

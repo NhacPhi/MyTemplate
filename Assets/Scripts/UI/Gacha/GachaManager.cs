@@ -7,12 +7,16 @@ public class GachaManager
 {
     private readonly GameDataBase _db;
     private readonly GachaRuntimeManager _runtimeManager;
+    private readonly InventoryManager _inventoryManager;
+    private readonly SaveSystem _saveSystem;
 
     [Inject]
-    public GachaManager(GameDataBase db, GachaRuntimeManager runtimeManager)
+    public GachaManager(GameDataBase db, GachaRuntimeManager runtimeManager, InventoryManager inventoryManager, SaveSystem saveSystem)
     {
         _db = db;
         _runtimeManager = runtimeManager;
+        _inventoryManager = inventoryManager;
+        _saveSystem = saveSystem;
     }
 
     public List<GachaItemResult> RollGacha(string bannerId, int count)
@@ -164,6 +168,74 @@ public class GachaManager
             isCharacter = isChar
         };
 
+        ProcessGachaItemToInventory(result);
+
         return result;
+    }
+
+    private void ProcessGachaItemToInventory(GachaItemResult item)
+    {
+        if (item.isCharacter)
+        {
+            var existingChar = _saveSystem.Player.Roster.GetCharacter(item.itemId);
+            if (existingChar != null)
+            {
+                // Đã sở hữu -> Quy đổi thành mảnh
+                string shardId = item.itemId; // Sử dụng chung ID tướng làm ID mảnh
+                int shardAmount = 0;
+                switch (item.rarity)
+                {
+                    case Rare.Uncommon: shardAmount = 10; break; // Rarity 2
+                    case Rare.Rare: shardAmount = 20; break;     // Rarity 3
+                    case Rare.Epic: shardAmount = 30; break;     // Rarity 4
+                    case Rare.Legendary: shardAmount = 60; break;// Rarity 5
+                    default: shardAmount = 10; break;
+                }
+
+                _inventoryManager.AddStackableItem(shardId, ItemType.Shard, shardAmount);
+                item.isConverted = true;
+                item.convertedShardAmount = shardAmount;
+            }
+            else
+            {
+                // Chưa sở hữu -> Thêm vào Roster
+                var newChar = new CharacterSaveData
+                {
+                    ID = item.itemId,
+                    Level = 1,
+                    Exp = 0,
+                    AscensionTier = 0,
+                    StarUp = 0,
+                    Weapon = "",
+                    Armors = new List<PartSaveData>()
+                };
+                _saveSystem.Player.Roster.Characters.Add(newChar);
+
+                // Kích hoạt event cập nhật UI
+                UIEvent.OnCharacterAdded?.Invoke(item.itemId);
+            }
+        }
+        else
+        {
+            // Xử lý vũ khí
+            var itemConfig = _db.GetItemConfig(item.itemId);
+            if (itemConfig != null && itemConfig.Type == ItemType.Weapon)
+            {
+                var newWeapon = new WeaponSaveData
+                {
+                    UUID = System.Guid.NewGuid().ToString(),
+                    TemplateID = item.itemId,
+                    CurrentLevel = 1,
+                    CurrentUpgrade = 0,
+                    Equip = ""
+                };
+                _inventoryManager.AddWeapon(newWeapon);
+            }
+            else
+            {
+                // Các item khác (nếu có)
+                _inventoryManager.AddStackableItem(item.itemId, itemConfig != null ? itemConfig.Type : ItemType.Item, 1);
+            }
+        }
     }
 }

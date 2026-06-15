@@ -52,7 +52,9 @@ public class CharacterCardArmor : CharacterCard
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCharacterCardArmor(playerCharacterManager.GetFirstCharacter().SaveData.ID);
+        string id = playerCharacterManager.CurrentSelectedCharacterID;
+        if (string.IsNullOrEmpty(id)) id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
+        UpdateCharacterCardArmor(id);
     }
 
     private void OnEnable()

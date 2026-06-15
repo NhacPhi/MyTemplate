@@ -41,7 +41,9 @@ public class CharacterCardCultivate : CharacterCard
     {
         UpdateLevelHub.RefreshUI();
 
-        UpdateCharacterCardCultivate(playerCharacterManager.GetFirstCharacter().SaveData.ID);
+        string id = playerCharacterManager.CurrentSelectedCharacterID;
+        if (string.IsNullOrEmpty(id)) id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
+        UpdateCharacterCardCultivate(id);
     }
 
 
