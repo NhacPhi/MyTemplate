@@ -15,11 +15,12 @@ public class ItemCardInfoUI : MonoBehaviour
     [SerializeField] private GameObject content;
 
     [SerializeField] private Button btnUse;
-    [SerializeField] private Button btnResource;
+    [SerializeField] private Button btnObtain;
 
     [Inject] private GameDataBase gameDataBase;
     [Inject] private SaveSystem save;
     [Inject] private InventoryManager inventoryManager;
+    [Inject] private UIManager uiManager;
 
     private string _currentItemID;
 
@@ -28,6 +29,28 @@ public class ItemCardInfoUI : MonoBehaviour
         if (btnUse != null)
         {
             btnUse.onClick.AddListener(OnBtnUseClicked);
+        }
+        if (btnObtain != null)
+        {
+            btnObtain.onClick.AddListener(OnBtnObtain);
+        }
+    }
+
+    private void OnBtnObtain()
+    {
+        if (string.IsNullOrEmpty(_currentItemID)) return;
+        
+        var itemConfig = gameDataBase.GetItemConfig(_currentItemID);
+        if (itemConfig != null)
+        {
+            if (itemConfig.Type == ItemType.Shard)
+            {
+                uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
+            }
+            else
+            {
+                uiManager.OpenWindowScene(ScreenIds.ShopScene);
+            }
         }
     }
 
@@ -68,6 +91,11 @@ public class ItemCardInfoUI : MonoBehaviour
             if (btnUse != null)
             {
                 btnUse.gameObject.SetActive(itemConfig.Type == ItemType.Food && item != null && item.Quantity > 0);
+            }
+            
+            if (btnObtain != null)
+            {
+                btnObtain.gameObject.SetActive(true);
             }
             
             txtDes.text = itemConfig.GetFormattedDescription();

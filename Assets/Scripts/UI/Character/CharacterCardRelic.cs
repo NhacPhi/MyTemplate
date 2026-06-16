@@ -63,7 +63,8 @@ public class CharacterCardRelic : CharacterCard
         btnUpgrade.onClick.AddListener(() =>
         {
             uiManager.OpenWindowScene(ScreenIds.UpgradeRelicScene);
-            UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponOfCharacter);
+            string targetWeapon = string.IsNullOrEmpty(currentWeaponSeleted) ? weaponOfCharacter : currentWeaponSeleted;
+            UIEvent.OnSlelectWeaponEnchance?.Invoke(targetWeapon);
             UIEvent.OnSelectWeaponEnchanceFromCharacter.Invoke(currentCharacter);
         });
 

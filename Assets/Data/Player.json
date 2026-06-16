@@ -12,7 +12,7 @@
       "Coin": 5085080,
       "RelicEssence": 7343080,
       "ArmorPrimorite": 596750,
-      "Ticket": 30
+      "Ticket": 29
     },
     "items": [
       {
@@ -28,7 +28,7 @@
       {
         "id": "BullDemonKing",
         "type": "Shard",
-        "quantity": 61
+        "quantity": 121
       },
       {
         "id": "ThirdPrinceNezha",
@@ -111,14 +111,14 @@
         "quantity": 30
       },
       {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
+      },
+      {
         "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
-      },
-      {
-        "id": "DragonKing",
-        "type": "Shard",
-        "quantity": 31
       },
       {
         "id": "ShaWujing",
@@ -131,9 +131,9 @@
         "quantity": 1
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
+        "id": "DragonKing",
+        "type": "Shard",
+        "quantity": 31
       },
       {
         "id": "Jade_Sliver",
@@ -190,18 +190,18 @@
         "equip": "SunWukong"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
-        "template_id": "Vanguard_Of_Volition",
-        "current_level": 21,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "template_id": "Nine_ToolThed_Rake",
         "current_level": 41,
         "current_updgrade": 1,
         "equip": "ZhuBaJie"
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
+        "template_id": "Vanguard_Of_Volition",
+        "current_level": 21,
+        "current_updgrade": 1,
+        "equip": ""
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777754f",
@@ -796,10 +796,10 @@
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",
-        "pity_count": 5,
+        "pity_count": 0,
         "selected_target_id": "ThirdPrinceNezha",
-        "is_next_ssr_guaranteed": false,
-        "total_summon_count": 227
+        "is_next_ssr_guaranteed": true,
+        "total_summon_count": 228
       }
     }
   }
