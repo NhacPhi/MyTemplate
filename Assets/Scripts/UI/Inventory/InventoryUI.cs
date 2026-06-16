@@ -52,7 +52,7 @@ public class InventoryUI : MonoBehaviour
         UIEvent.OnArmorUpgraded += HandleArmorChange;
         UIEvent.OnItemChanged += HandleItemChanged;
         
-        //_inventoryManager.OnInventoryChanged += RefreshData;
+        UIEvent.OnInventoryChanged += RefreshData;
     }
 
     private void OnDisable()
@@ -63,7 +63,8 @@ public class InventoryUI : MonoBehaviour
         UIEvent.OnWeaponUpgraded -= HandleWeaponChange;
         UIEvent.OnArmorUpgraded -= HandleArmorChange;
         UIEvent.OnItemChanged -= HandleItemChanged;
-        //_inventoryManager.OnInventoryChanged -= RefreshData;
+        
+        UIEvent.OnInventoryChanged -= RefreshData;
     }
     public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase)
     {

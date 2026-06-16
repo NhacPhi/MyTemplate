@@ -1,7 +1,7 @@
 from src.builders.localization_builder import LocalizationBuilder
 from src.builders.item_builder import ItemConfigBuilder
 from src.builders.character_builder import CharacterConfigBuilder
-from src.builders.character_level_builder import CharacterUpdateLevelBuilder
+from src.builders.level_and_ascension_builder import LevelAndAscensionBuilder
 from src.builders.battle_builder import EffectConfigBuilder, BattleConfigBuilder
 from src.builders.narrative_builder import ActorConfigBuilder, DialogueConfigBuilder, QuestLineConfigBuilder
 from src.builders.set_bonus_builder import SetBonusBuilder
@@ -30,7 +30,7 @@ def main():
     set_bonus_config  = SetBonusBuilder(config_path)
     set_bonus_config.run()
 
-    level_config = CharacterUpdateLevelBuilder(config_path)
+    level_config = LevelAndAscensionBuilder(config_path)
     level_config.run()
 
     character_config = CharacterConfigBuilder(config_path)

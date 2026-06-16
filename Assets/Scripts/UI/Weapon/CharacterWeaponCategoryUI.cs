@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
@@ -28,12 +28,14 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     {
         UIEvent.OnSelectWeaponCard += SelectedWeaponCard;
         UIEvent.OnUpdateSingleWeaponCard += UpdateSingleUI;
+        UIEvent.OnInventoryChanged += RefreshUI;
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectWeaponCard -= SelectedWeaponCard;
         UIEvent.OnUpdateSingleWeaponCard -= UpdateSingleUI;
+        UIEvent.OnInventoryChanged -= RefreshUI;
     }
 
     private void OnDestroy()

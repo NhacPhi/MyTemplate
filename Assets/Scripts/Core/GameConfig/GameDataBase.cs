@@ -272,6 +272,22 @@ public class GameDataBase
         return ascensionConfig;
     }
 
+    public int GetWeaponMaxLevel(string ascensionID, int currentLevel)
+    {
+        var config = GetAscensionConfig(ascensionID);
+        if (config == null || config.TierConfigs == null) return Definition.MAX_WEAPON_LEVEL;
+
+        int maxLevel = Definition.MAX_WEAPON_LEVEL;
+        foreach (var tier in config.TierConfigs.Values)
+        {
+            if (tier.LevelRequire >= currentLevel)
+            {
+                if (tier.LevelRequire < maxLevel) maxLevel = tier.LevelRequire;
+            }
+        }
+        return maxLevel;
+    }
+
     public StarUpConfig GetStarUpConfig(string key)
     {
         StarUpConfigs.TryGetValue(key, out StarUpConfig starUpConfig);

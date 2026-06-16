@@ -13,6 +13,7 @@ public static class UIEvent
     //Inventory
     public static Action<ItemType> OnSelectToggleInventoryTap;
     public static Action<string> OnSelectInventoryItem;
+    public static Action OnInventoryChanged;
 
     //Character
     public static Action<string> OnSelectCharacterAvatar;

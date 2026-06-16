@@ -91,7 +91,24 @@ public class CharacterUI : MonoBehaviour
         }
         avatars.Clear();
 
-        foreach (var character in save.Player.Roster.Characters)
+        // 1. Copy và sắp xếp danh sách nhân vật
+        var sortedCharacters = new List<CharacterSaveData>(save.Player.Roster.Characters);
+        sortedCharacters.Sort((a, b) =>
+        {
+            var configA = gameDataBase.GetCharacterConfig(a.ID);
+            var configB = gameDataBase.GetCharacterConfig(b.ID);
+            
+            if (configA == null || configB == null) return 0;
+
+            // Ưu tiên Rarity (Giảm dần: B so với A)
+            int rarityComparison = configB.Rare.CompareTo(configA.Rare);
+            if (rarityComparison != 0) return rarityComparison;
+
+            // Nếu cùng độ hiếm thì xét theo Level (Giảm dần)
+            return b.Level.CompareTo(a.Level);
+        });
+
+        foreach (var character in sortedCharacters)
         {
             GameObject obj = Instantiate(prefabAvatar, contentAvatar.transform);
             string weaponID = save.Player.Roster.GetCharacter(character.ID).Weapon;
@@ -102,15 +119,17 @@ public class CharacterUI : MonoBehaviour
 
         currencyMM.UpdateCurrency();
         ResetUI();
-        //ShowCharacterCard(CharacterTap.Info);
     }
 
     private void ResetUI()
     {
-        currentCharacter = save.Player.Roster.Characters[0].ID;
-        avatars[0].gameObject.GetComponent<CharacterAvatar>().SwitchStatus(true);
+        if (avatars.Count == 0) return;
+
+        var firstAvatar = avatars[0].GetComponent<CharacterAvatar>();
+        currentCharacter = firstAvatar.ID;
+        firstAvatar.SwitchStatus(true);
         ClickOnFristIconAvatar();
-        characterImage.sprite = gameDataBase.GetCharacterConfig(save.Player.Roster.Characters[0].ID).BigIcon;
+        characterImage.sprite = gameDataBase.GetCharacterConfig(currentCharacter).BigIcon;
         currentTap = CharacterTap.None;
         UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
     }

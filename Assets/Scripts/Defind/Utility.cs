@@ -123,6 +123,19 @@ public static class Utility
         }
         return "";
     }
+
+    public static string GetAscentionConfigIDByWeaponRare(Rare rare)
+    {
+        switch (rare)
+        {
+            case Rare.Common: return "ascension_common";
+            case Rare.Uncommon: return "ascension_uncommon";
+            case Rare.Rare: return "ascension_rare";
+            case Rare.Epic: return "ascension_epic";
+            case Rare.Legendary: return "ascension_legend";
+        }
+        return "ascension_common";
+    }
     //Exp to upgrade
     //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
     public static int GetStatGrowthLevel(int level, float growth)
@@ -173,6 +186,8 @@ public static class Utility
     {
         return 12000 + 6000 * (level - 1) * (level - 1);
     }
+
+
 
     public static string FormatCurrency(int amount)
     {

@@ -152,12 +152,17 @@ public class GachaManager
         }
 
         string finalItemId = selectedItem != null ? selectedItem.ItemId : "unknown";
-        bool isChar = config.Type == GachaBannerType.Character; // Hoặc tra cứu từ db.GetItemConfig(finalItemId)
 
+        bool isChar = false;
         var itemConfig = _db.GetItemConfig(finalItemId);
         if (itemConfig != null)
         {
             isChar = itemConfig.Type == ItemType.Avatar || itemConfig.Type == ItemType.Shard;
+        }
+        else
+        {
+            var charConfig = _db.GetCharacterConfig(finalItemId);
+            isChar = charConfig != null;
         }
 
         // Tạo kết quả

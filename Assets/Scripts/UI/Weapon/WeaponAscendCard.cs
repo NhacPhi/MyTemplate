@@ -242,7 +242,9 @@ public class WeaponAscendCard : MonoBehaviour
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = data.CurrentLevel;
-            txtLevel.text = level.ToString() + "/" + Definition.MAX_WEAPON_LEVEL.ToString();
+            string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+            int maxLevel = gameDataBase.GetWeaponMaxLevel(ascensionID, level);
+            txtLevel.text = level.ToString() + "/" + maxLevel.ToString();
 
             upgradeUI.UpdateUI(data.CurrentUpgrade);
 

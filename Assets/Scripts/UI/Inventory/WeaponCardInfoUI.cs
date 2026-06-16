@@ -47,6 +47,7 @@ public class WeaponCardInfoUI : MonoBehaviour
     {
         currentWeapon = uuid;   
         WeaponSaveData weapon = save.Player.Inventory.GetWeapon(uuid);
+        if (weapon == null) return;
         var weaponConfig = gameDataBase.GetItemConfig(weapon.TemplateID);
         var passiveConfig = gameDataBase.GetPassiveConfig(weaponConfig.Weapon.PassiveID);
         

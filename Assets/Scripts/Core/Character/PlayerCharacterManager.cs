@@ -41,8 +41,15 @@ public class PlayerCharacterManager : IInitializable, IDisposable
         {
             foreach(var charSave in _saveGame.Player.Roster.Characters)
             {
+                var config = _gameDataBase.GetCharacterConfig(charSave.ID);
+                if (config == null)
+                {
+                    Debug.LogWarning($"[PlayerCharacterManager] Skipping invalid character in save: {charSave.ID}");
+                    continue;
+                }
+
                 var profile = new CharacterProfileModel();
-                profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory, _currency);
+                profile.Init(charSave, config, _gameDataBase, _inventory, _currency);
                 _unlockedCharacters.Add(charSave.ID, profile);
 
                 var upgradeManager = new CharacterUpgradeManager(profile, _gameDataBase, _inventory, _currency);
@@ -84,8 +91,15 @@ public class PlayerCharacterManager : IInitializable, IDisposable
         var charSave = _saveGame.Player.Roster.GetCharacter(characterID);
         if (charSave != null)
         {
+            var config = _gameDataBase.GetCharacterConfig(charSave.ID);
+            if (config == null)
+            {
+                Debug.LogError($"[PlayerCharacterManager] Invalid Character ID in Gacha: {charSave.ID}. Config not found!");
+                return;
+            }
+
             var profile = new CharacterProfileModel();
-            profile.Init(charSave, _gameDataBase.GetCharacterConfig(charSave.ID), _gameDataBase, _inventory, _currency);
+            profile.Init(charSave, config, _gameDataBase, _inventory, _currency);
             _unlockedCharacters.Add(charSave.ID, profile);
 
             var upgradeManager = new CharacterUpgradeManager(profile, _gameDataBase, _inventory, _currency);

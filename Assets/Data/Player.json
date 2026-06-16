@@ -9,10 +9,10 @@
     "currencies": {
       "Energy": 370,
       "Jade": 73600,
-      "Coin": 7304200,
-      "RelicEssence": 8533160,
+      "Coin": 5085080,
+      "RelicEssence": 7343080,
       "ArmorPrimorite": 596750,
-      "Ticket": 29
+      "Ticket": 30
     },
     "items": [
       {
@@ -28,7 +28,7 @@
       {
         "id": "BullDemonKing",
         "type": "Shard",
-        "quantity": 1
+        "quantity": 61
       },
       {
         "id": "ThirdPrinceNezha",
@@ -39,11 +39,6 @@
         "id": "SunWukong",
         "type": "Shard",
         "quantity": 72
-      },
-      {
-        "id": "Garnet_Gemstone",
-        "type": "Gemstone",
-        "quantity": 5
       },
       {
         "id": "Jade_Gemstone",
@@ -71,6 +66,11 @@
         "quantity": 1
       },
       {
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 85
+      },
+      {
         "id": "Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
@@ -93,7 +93,7 @@
       {
         "id": "ZhuBaJie",
         "type": "Shard",
-        "quantity": 300
+        "quantity": 390
       },
       {
         "id": "Yellow_Jade_Chunk",
@@ -111,19 +111,19 @@
         "quantity": 30
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
+        "id": "DragonKing",
+        "type": "Shard",
+        "quantity": 31
       },
       {
         "id": "ShaWujing",
         "type": "Shard",
-        "quantity": 1
+        "quantity": 181
       },
       {
         "id": "Jade_Fragment",
@@ -131,9 +131,9 @@
         "quantity": 1
       },
       {
-        "id": "Garnet_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
       },
       {
         "id": "Jade_Sliver",
@@ -153,7 +153,7 @@
       {
         "id": "TangSanZang",
         "type": "Shard",
-        "quantity": 26
+        "quantity": 366
       },
       {
         "id": "Garnet_Sliver",
@@ -173,7 +173,7 @@
       {
         "id": "LittleWhiteDragon",
         "type": "Shard",
-        "quantity": 71
+        "quantity": 811
       },
       {
         "id": "Fried_Radish_Balls",
@@ -186,29 +186,22 @@
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "template_id": "Nimbus_Cudgel",
         "current_level": 100,
-        "current_updgrade": 3,
+        "current_updgrade": 6,
         "equip": "SunWukong"
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
-        "template_id": "Nine_ToolThed_Rake",
-        "current_level": 10,
-        "current_updgrade": 1,
-        "equip": "ZhuBaJie"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
         "template_id": "Vanguard_Of_Volition",
-        "current_level": 3,
+        "current_level": 21,
         "current_updgrade": 1,
         "equip": ""
       },
       {
-        "uuid": "c16cb1f7-7b80-43c8-8fb4-7f0b13f4cac2",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
+        "template_id": "Nine_ToolThed_Rake",
+        "current_level": 41,
+        "current_updgrade": 1,
+        "equip": "ZhuBaJie"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777754f",
@@ -225,29 +218,15 @@
         "equip": ""
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
-        "template_id": "Moonlit_Firelfy",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42844777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
         "template_id": "FireLance_Ring_Damasl",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "ThirdPrinceNezha"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884377744f",
-        "template_id": "Nimbus_Cudgel",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
+        "template_id": "Moonlit_Firelfy",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -297,8 +276,8 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
         "template_id": "Sunburst_Spade",
-        "current_level": 1,
-        "current_updgrade": 1,
+        "current_level": 20,
+        "current_updgrade": 2,
         "equip": ""
       },
       {
@@ -306,13 +285,6 @@
         "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "8f226617-0048-4c22-8144-18cd24c2c910",
-        "template_id": "Sunburst_Spade",
-        "current_level": 1,
-        "current_updgrade": 0,
         "equip": ""
       }
     ],
@@ -501,7 +473,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "ThirdPrinceNezha"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
@@ -555,7 +527,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "ThirdPrinceNezha"
       },
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -603,7 +575,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "ThirdPrinceNezha"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
@@ -618,7 +590,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "ThirdPrinceNezha"
       }
     ]
   },
@@ -693,32 +665,76 @@
         "star_up": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
         "armors": []
+      },
+      {
+        "id": "ShaWujing",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "",
+        "armors": []
+      },
+      {
+        "id": "DragonKing",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "",
+        "armors": []
+      },
+      {
+        "id": "ThirdPrinceNezha",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
+        "armors": [
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+            "type": "Ring"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+            "type": "Belt"
+          }
+        ]
       }
     ],
     "active_slots": [
       {
         "position": 1,
-        "character_id": "SunWukong"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 2,
-        "character_id": ""
+        "character_id": "SunWukong"
       },
       {
         "position": 3,
-        "character_id": ""
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 4,
-        "character_id": ""
+        "character_id": "ShaWujing"
       },
       {
         "position": 5,
-        "character_id": ""
+        "character_id": "LittleWhiteDragon"
       },
       {
         "position": 6,
-        "character_id": ""
+        "character_id": "TangSanZang"
       }
     ],
     "active_global_buffs": [
@@ -781,9 +797,9 @@
       "banner_char_01": {
         "banner_id": "banner_char_01",
         "pity_count": 5,
-        "selected_target_id": "SunWukong",
+        "selected_target_id": "ThirdPrinceNezha",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 147
+        "total_summon_count": 227
       }
     }
   }

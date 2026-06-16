@@ -28,6 +28,11 @@ public class WeaponUpgradeCard : MonoBehaviour
 
     [SerializeField] private GameObject upgradeOb;
     [SerializeField] private GameObject readedOb;
+    [SerializeField] private GameObject limitBreakOb;
+    [SerializeField] private ItemUI limitBreakItemUI;
+    [SerializeField] private TextMeshProUGUI txtLimitBreakCoin;
+    [SerializeField] private Button btnLimitBreak;
+
     [Inject] GameDataBase gameDataBase;
     [Inject] InventoryManager inventory;
     [Inject] CurrencyManager currencyMM;
@@ -44,6 +49,8 @@ public class WeaponUpgradeCard : MonoBehaviour
             btnUpdateLevel.onClick.AddListener(OnBtnUpdateLevelClicked);
         if (UpdateToLevel != null)
             UpdateToLevel.onClick.AddListener(OnBtnUpdateLevelToClicked);
+        if (btnLimitBreak != null)
+            btnLimitBreak.onClick.AddListener(OnBtnLimitBreakClicked);
     }
 
     private void OnBtnUpdateLevelClicked()
@@ -62,6 +69,13 @@ public class WeaponUpgradeCard : MonoBehaviour
         }
     }
 
+    private void OnBtnLimitBreakClicked()
+    {
+        if (!string.IsNullOrEmpty(currentWeaponUUID))
+        {
+            forgeManager.LimitBreakWeapon(currentWeaponUUID);
+        }
+    }
 
     private void OnDestroy()
     {
@@ -75,21 +89,80 @@ public class WeaponUpgradeCard : MonoBehaviour
             var weaponSave = inventory.GetWeapon(weaponUUID);
             var config = gameDataBase.GetItemConfig(weaponSave.TemplateID);
 
-            if (weaponSave.CurrentLevel >= Definition.MAX_WEAPON_LEVEL)
-            {
-                readedOb.gameObject.SetActive(true);
-                upgradeOb.gameObject.SetActive(false);
-            }
-            else
+            string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+            int maxLevel = gameDataBase.GetWeaponMaxLevel(ascensionID, weaponSave.CurrentLevel);
+
+            bool canLimitBreak = false;
+
+            if (weaponSave.CurrentLevel < maxLevel)
             {
                 upgradeOb.gameObject.SetActive(true);
                 readedOb.gameObject.SetActive(false);
+                if (limitBreakOb != null) limitBreakOb.SetActive(false);
+            }
+            else
+            {
+                var ascensionConfig = gameDataBase.GetAscensionConfig(ascensionID);
+                TierConfig currentTier = null;
+                if (ascensionConfig != null && ascensionConfig.TierConfigs != null)
+                {
+                    foreach (var tier in ascensionConfig.TierConfigs.Values)
+                    {
+                        if (tier.LevelRequire == weaponSave.CurrentLevel)
+                        {
+                            currentTier = tier;
+                            break;
+                        }
+                    }
+                }
+
+                if (currentTier != null)
+                {
+                    canLimitBreak = true;
+                    upgradeOb.gameObject.SetActive(false);
+                    readedOb.gameObject.SetActive(false);
+                    if (limitBreakOb != null) limitBreakOb.SetActive(true);
+
+                    // Show cost
+                    if (currentTier.costs != null)
+                    {
+                        foreach(var cost in currentTier.costs)
+                        {
+                            if (cost.ID == "Coin")
+                            {
+                                if (txtLimitBreakCoin != null) txtLimitBreakCoin.text = Utility.FormatCurrency(cost.Quantity);
+                            }
+                            else
+                            {
+                                if (limitBreakItemUI != null)
+                                {
+                                    var itemConfig = gameDataBase.GetItemConfig(cost.ID);
+                                    if (itemConfig != null)
+                                    {
+                                        var ownAmount = inventory.GetItemQuantity(cost.ID);
+                                        limitBreakItemUI.InitRequirement(cost.ID, itemConfig.Rarity, itemConfig.Icon, gameDataBase.GetBGItemByRare(itemConfig.Rarity), ownAmount, cost.Quantity);
+                                        limitBreakItemUI.ActiveFragIcon(itemConfig.Type == ItemType.Shard);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    upgradeOb.gameObject.SetActive(false);
+                    readedOb.gameObject.SetActive(true);
+                    if (limitBreakOb != null) limitBreakOb.SetActive(false);
+                }
             }
 
             txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
             int level = weaponSave.CurrentLevel;
             txtLevel.text = level.ToString();
-            txtNextLevel.text = level < Definition.MAX_WEAPON_LEVEL ? (level + 1).ToString() :
+
+            bool showNext = (level < maxLevel) || canLimitBreak;
+
+            txtNextLevel.text = showNext ? (level + 1).ToString() :
                 LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
 
             int currentHP = config.Weapon.GetStatByLevel(StatType.HP, level);
@@ -101,8 +174,8 @@ public class WeaponUpgradeCard : MonoBehaviour
             txtCurentHP.text = currentHP.ToString();
             txtCurrentATK.text = currentATK.ToString();
 
-            txtNextHP.text = weaponSave.CurrentLevel < Definition.MAX_WEAPON_LEVEL ? nextHP.ToString() : currentHP.ToString();
-            txtNextATK.text = weaponSave.CurrentLevel < Definition.MAX_WEAPON_LEVEL ?  nextATK.ToString() : currentATK.ToString();
+            txtNextHP.text = showNext ? nextHP.ToString() : currentHP.ToString();
+            txtNextATK.text = showNext ?  nextATK.ToString() : currentATK.ToString();
 
             uiUpgrade.UpdateUI(weaponSave.CurrentUpgrade);
 
@@ -116,7 +189,7 @@ public class WeaponUpgradeCard : MonoBehaviour
             // Sửa logic: Nếu không đủ tiền/tài nguyên để lên dù chỉ 1 cấp, fallback mục tiêu Max level trên nút là cấp tiếp theo (chứ không phải cấp hiện tại)
             var levelUpTo = level + (maxReq.levelsUp > 0 ? maxReq.levelsUp : 1);
 
-            if (level >= 100) 
+            if (level >= maxLevel) 
             {
                 txtBtnUpgradeTo.text = LocalizationManager.Instance.GetLocalizedValue("STR_MAX_LEVEL");
             }

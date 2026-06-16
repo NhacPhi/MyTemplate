@@ -6,11 +6,13 @@ public class ForgeManager
 {
     private CurrencyManager _currencyManager;
     private InventoryManager _inventoryManager;
+    private GameDataBase _gameDataBase;
 
-    public ForgeManager(CurrencyManager currencyManager, InventoryManager inventoryManager)
+    public ForgeManager(CurrencyManager currencyManager, InventoryManager inventoryManager, GameDataBase gameDataBase)
     {
         _currencyManager = currencyManager;
         _inventoryManager = inventoryManager;
+        _gameDataBase = gameDataBase;
     }
 
     /// <summary>
@@ -22,7 +24,10 @@ public class ForgeManager
         if (weaponSave == null) return false;
 
         int level = weaponSave.CurrentLevel;
-        if (level >= Definition.MAX_CHARACTER_LEVEL) return false; // Thường giới hạn cấp vũ khí bằng cấp nhân vật hoặc 100
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+        int maxLevel = _gameDataBase.GetWeaponMaxLevel(ascensionID, level);
+        if (level >= maxLevel) return false; 
 
         int coinNeeded = Utility.GetCoinNeedToUpgradeWeapon(level + 1) - Utility.GetCoinNeedToUpgradeWeapon(level);
         
@@ -58,7 +63,9 @@ public class ForgeManager
         if (weaponSave == null) return 0;
 
         int currentLevel = weaponSave.CurrentLevel;
-        int maxLevel = Definition.MAX_CHARACTER_LEVEL;
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+        int maxLevel = _gameDataBase.GetWeaponMaxLevel(ascensionID, currentLevel);
 
         int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
         int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);
@@ -163,6 +170,81 @@ public class ForgeManager
     }
 
     /// <summary>
+    /// Mở khóa giới hạn cấp độ (Limit Break) cho vũ khí.
+    /// </summary>
+    public bool LimitBreakWeapon(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return false;
+
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        if (config == null) return false;
+
+        string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+        var ascensionConfig = _gameDataBase.GetAscensionConfig(ascensionID);
+        if (ascensionConfig == null || ascensionConfig.TierConfigs == null) return false;
+
+        TierConfig currentTier = null;
+        foreach (var tier in ascensionConfig.TierConfigs.Values)
+        {
+            if (tier.LevelRequire == weaponSave.CurrentLevel)
+            {
+                currentTier = tier;
+                break;
+            }
+        }
+
+        if (currentTier == null) return false; // Không ở đúng cấp giới hạn
+
+        int requiredCoin = 0;
+        List<CostIteam> requiredItems = new List<CostIteam>();
+
+        if (currentTier.costs != null)
+        {
+            foreach (var cost in currentTier.costs)
+            {
+                if (cost.ID == "Coin")
+                {
+                    requiredCoin += cost.Quantity;
+                }
+                else
+                {
+                    requiredItems.Add(cost);
+                }
+            }
+        }
+
+        // Kiểm tra Coin
+        if (_currencyManager.GetQuantityCurrecy(CurrencyType.Coin) < requiredCoin) return false;
+
+        // Kiểm tra Item
+        foreach (var item in requiredItems)
+        {
+            int currentQty = _inventoryManager.GetItemQuantity(item.ID);
+            if (currentQty < item.Quantity) return false;
+        }
+
+        // Đủ điều kiện -> Trừ Coin và Item
+        if (requiredCoin > 0)
+        {
+            _currencyManager.Spend(CurrencyType.Coin, requiredCoin);
+        }
+
+        foreach (var item in requiredItems)
+        {
+            _inventoryManager.ConsumeStackableItem(item.ID, item.Quantity);
+        }
+
+        // Tăng cấp độ (Lưu trạng thái đã Limit Break)
+        weaponSave.CurrentLevel++;
+
+        UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
+        UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
+
+        return true;
+    }
+
+    /// <summary>
     /// Trả về chuỗi định dạng số Coin và Essence cần thiết để nâng cấp (dành cho UI hiển thị).
     /// </summary>
     public (string coinStr, string essenceStr) GetUpgradeRequirementsFormatted(string weaponUUID)
@@ -189,7 +271,9 @@ public class ForgeManager
         if (weaponSave == null) return (0, "0", "0");
 
         int currentLevel = weaponSave.CurrentLevel;
-        int maxLevel = Definition.MAX_CHARACTER_LEVEL;
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        string ascensionID = Utility.GetAscentionConfigIDByWeaponRare(config.Rarity);
+        int maxLevel = _gameDataBase.GetWeaponMaxLevel(ascensionID, currentLevel);
 
         int availableCoin = _currencyManager.GetQuantityCurrecy(CurrencyType.Coin);
         int availableEssence = _currencyManager.GetQuantityCurrecy(CurrencyType.RelicEssence);

@@ -3,7 +3,7 @@ import config
 from src.builders.base_builder import BaseBuilder
 from src.models.character_models import CostItem, TierData, AscensionTemplate, ExpCurveConfig
 
-class CharacterUpdateLevelBuilder(BaseBuilder):
+class LevelAndAscensionBuilder(BaseBuilder):
     def __init__(self, file_path):
         self.file_path = file_path
 
@@ -31,19 +31,20 @@ class CharacterUpdateLevelBuilder(BaseBuilder):
 
                 cost_list = []
 
-                coin_cost = int(row['Cost_Coin'])
-                if coin_cost > 0:
-                    cost_list.append(CostItem(id="Coin", quantity=coin_cost))
+                if pd.notna(row.get('Cost_Coin')):
+                    coin_cost = int(row['Cost_Coin'])
+                    if coin_cost > 0:
+                        cost_list.append(CostItem(id="Coin", quantity=coin_cost))
 
-                if pd.notna(row['ItemID_01']):
+                if 'ItemID_01' in row and pd.notna(row['ItemID_01']):
                     item_id = str(row['ItemID_01']).strip()
-                    item_qty = int(row['Item_01_Qty'])
+                    item_qty = int(row['Item_01_Qty']) if pd.notna(row.get('Item_01_Qty')) else 0
                     if item_id != "" and item_qty > 0:
                         cost_list.append(CostItem(id=item_id, quantity=item_qty))
                 
                 tier_data = TierData(
-                    unlock_max_level=int(row['Unlock_Max_Level']),
-                    level_req=int(row['Required_Level']),
+                    unlock_max_level=int(row['Unlock_Max_Level']) if pd.notna(row.get('Unlock_Max_Level')) else 0,
+                    level_req=int(row['Required_Level']) if pd.notna(row.get('Required_Level')) else 0,
                     max=1, 
                     cost=cost_list
                 )

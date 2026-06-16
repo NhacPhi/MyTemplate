@@ -10,7 +10,6 @@ public class InventoryManager
     [Inject] SaveSystem _save;
     [Inject] CurrencyManager _currencyManager;
 
-    public event Action OnInventoryChanged;
 
     private InventorySaveData _saveData => _save.Player.Inventory;
 
@@ -40,7 +39,7 @@ public class InventoryManager
         }
 
         IsDirty = true;
-        OnInventoryChanged?.Invoke();
+        UIEvent.OnInventoryChanged?.Invoke();
     }
 
 
@@ -64,7 +63,7 @@ public class InventoryManager
         }
 
         IsDirty = true;
-        OnInventoryChanged?.Invoke();
+        UIEvent.OnInventoryChanged?.Invoke();
 
         return true;
     }
@@ -124,7 +123,7 @@ public class InventoryManager
         if(weapon == null) return;
         _saveData.Weapons.Add(weapon);
         IsDirty = true;
-        OnInventoryChanged?.Invoke();
+        UIEvent.OnInventoryChanged?.Invoke();
     }
 
     public void RemoveWeapon(string uuid)
@@ -135,7 +134,7 @@ public class InventoryManager
         {
             _save.Player.Inventory.Weapons.Remove(weaponToRemove);
             IsDirty = true;
-            OnInventoryChanged?.Invoke();
+            UIEvent.OnInventoryChanged?.Invoke();
         }
     }
 
@@ -149,7 +148,7 @@ public class InventoryManager
         if(armor == null) return;
         _saveData.Armors.Add(armor);
         IsDirty = true;
-        OnInventoryChanged?.Invoke();
+        UIEvent.OnInventoryChanged?.Invoke();
     }
 
     public void RemoveArmor(string uuid)
@@ -159,7 +158,7 @@ public class InventoryManager
         if(armorToRemove != null)
         {
             _save.Player.Inventory.Armors.Remove(armorToRemove);
-            OnInventoryChanged?.Invoke();
+            UIEvent.OnInventoryChanged?.Invoke();
         }
     }
 
@@ -174,7 +173,7 @@ public class InventoryManager
         SortArmors();
         SortItems();
 
-        OnInventoryChanged?.Invoke();
+        UIEvent.OnInventoryChanged?.Invoke();
     }
 
     private void SortWeapons()
