@@ -205,6 +205,14 @@ public static class LocKeys
 
     public const long UI_GO_TO_SHOP = 2019819151;
 
+    public const long UI_MAIN_QUEST = 3511829401;
+
+    public const long UI_SIDE_QUEST = 3518051805;
+
+    public const long UI_DAILY_QUEST = 3442574560;
+
+    public const long UI_QUEST = 3143259482;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

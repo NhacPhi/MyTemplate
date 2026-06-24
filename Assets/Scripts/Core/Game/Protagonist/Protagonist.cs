@@ -1,10 +1,18 @@
-﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Protagonist : MonoBehaviour
+using Gameplay.Common;
+
+public class Protagonist : MonoBehaviour, IDamageable
 {
+    [Header("Player Stats")]
+    public int Level = 1;
+    public int MaxHP;
+    public int CurrentHP { get; private set; }
+    public int AttackDamage;
+
     [SerializeField] private TransformAnchor gameplayCameraTransform = default;
     [SerializeField] private TransformAnchor playerTranform = default;
 
@@ -48,6 +56,8 @@ public class Protagonist : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
+        if (CurrentHP <= 0) return; // Nếu đã chết thì không làm gì
+
         if (equipWeapon && countDown > 0)
         {
             countDown -= Time.deltaTime;
@@ -123,5 +133,36 @@ public class Protagonist : MonoBehaviour
         clone.gameObject.SetActive(!isClone);
         isClone = !isClone;
     }
+
+    public void UpdateStats()
+    {
+        MaxHP = 100 + (Level * 20);
+        AttackDamage = 10 + (Level * 5);
+        CurrentHP = MaxHP;
+    }
+
+    private void Start()
+    {
+        UpdateStats();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHP -= damage;
+        Debug.Log($"Protagonist HP: {CurrentHP}/{MaxHP}");
+
+        if (CurrentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Protagonist Died!");
+        // Gọi màn hình Game Over hoặc vô hiệu hóa nhân vật
+        this.enabled = false;
+    }
+
 
 }

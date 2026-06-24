@@ -18,6 +18,7 @@ public class GamePlayScene : WindowController
 
     [SerializeField] private Button btnShop;
     [SerializeField] private Button btnGacha;
+    [SerializeField] private Button btnQuest;
 
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
@@ -66,6 +67,11 @@ public class GamePlayScene : WindowController
             //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
 
+        });
+
+        btnQuest.onClick.AddListener(() =>
+        {
+            uiManager.OpenWindowScene(ScreenIds.QuestScene);
         });
 
         btnAttack.onClick.AddListener(() => { GameEvent.OnPlayerAttack?.Invoke(); });

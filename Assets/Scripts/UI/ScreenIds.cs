@@ -20,6 +20,7 @@ public class ScreenIds
     public const string GachaMainScene = "GachaMainScene";
     public const string GachaCutsceneScene = "GachaCutsceneUI";
     public const string GachaResultScene = "GachaResultScene";
+    public const string QuestScene = "QuestScene";
 
     // Panel
     public const string PanelStartGame = "PanelStartGame";

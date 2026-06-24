@@ -12,7 +12,7 @@
       "Coin": 5085080,
       "RelicEssence": 7343080,
       "ArmorPrimorite": 596750,
-      "Ticket": 29
+      "Ticket": 15
     },
     "items": [
       {
@@ -71,7 +71,17 @@
         "quantity": 85
       },
       {
-        "id": "Jade_Chunk",
+        "id": "ZhuBaJie",
+        "type": "Shard",
+        "quantity": 390
+      },
+      {
+        "id": "Garnet_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Chunk",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -81,42 +91,17 @@
         "quantity": 10
       },
       {
+        "id": "Jade_Chunk",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "rare_exp",
         "type": "Exp",
         "quantity": 51
       },
       {
-        "id": "Garnet_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "ZhuBaJie",
-        "type": "Shard",
-        "quantity": 390
-      },
-      {
-        "id": "Yellow_Jade_Chunk",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 30
-      },
-      {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
-      },
-      {
-        "id": "Garnet_Fragment",
+        "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
@@ -126,14 +111,29 @@
         "quantity": 181
       },
       {
-        "id": "Jade_Fragment",
+        "id": "DragonKing",
+        "type": "Shard",
+        "quantity": 31
+      },
+      {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 30
+      },
+      {
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "DragonKing",
-        "type": "Shard",
-        "quantity": 31
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Jade_Sliver",
@@ -166,14 +166,14 @@
         "quantity": 1
       },
       {
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
+        "quantity": 851
+      },
+      {
         "id": "Murshroom_Steamed_Buns",
         "type": "Food",
         "quantity": 55
-      },
-      {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
-        "quantity": 811
       },
       {
         "id": "Fried_Radish_Balls",
@@ -229,7 +229,7 @@
         "template_id": "Moonlit_Firelfy",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "BullDemonKing"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777759f",
@@ -260,6 +260,34 @@
         "equip": ""
       },
       {
+        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "527eb727-8e8d-459c-90f1-3c7aba1e0c53",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "fc59af2c-90f4-4ba6-86a0-4fac55ecd977",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
         "template_id": "Ennead_spear",
         "current_level": 1,
@@ -267,10 +295,38 @@
         "equip": ""
       },
       {
+        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
         "equip": ""
       },
       {
@@ -285,6 +341,34 @@
         "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "f7e42ccd-d586-4e34-b2a1-c17c49baee0d",
+        "template_id": "Crescent_Axe",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "8a01d6b2-2358-43ae-bcd0-a73dd1d8c255",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "2c9afe3d-9321-46c1-8507-d986bc7dde18",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "fb966bf3-bafe-4461-ab59-bcab9ea3bb95",
+        "template_id": "Ninefold_Staff",
+        "current_level": 1,
+        "current_updgrade": 0,
         "equip": ""
       }
     ],
@@ -654,7 +738,7 @@
         "exp": 0,
         "ascension_tier": 0,
         "star_up": 0,
-        "weapon": "",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
         "armors": []
       },
       {
@@ -789,17 +873,17 @@
     "banner_data_map": {
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 5,
+        "pity_count": 17,
         "selected_target_id": "Nimbus_Cudgel",
         "is_next_ssr_guaranteed": true,
-        "total_summon_count": 165
+        "total_summon_count": 177
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",
-        "pity_count": 0,
+        "pity_count": 2,
         "selected_target_id": "ThirdPrinceNezha",
         "is_next_ssr_guaranteed": true,
-        "total_summon_count": 228
+        "total_summon_count": 230
       }
     }
   }

@@ -53,10 +53,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: -0.3}
 --- !u!54 &5382567025907800202
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -506,6 +506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315eced8dda1f6142b114084f899da6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: 1
+  MaxHP: 0
+  AttackDamage: 0
   gameplayCameraTransform: {fileID: 11400000, guid: 4e7669fdb52283e45a358fdca1d85d2c, type: 2}
   playerTranform: {fileID: 11400000, guid: f3a9ece2f9df77540a3b1d7bed1a0bbe, type: 2}
   objPlayer: {fileID: 7191235090700336246}
