@@ -72,11 +72,31 @@ public class Protagonist : MonoBehaviour, IDamageable
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        // Hỗ trợ phím cứng WASD phòng khi Input Manager chưa setup
+        if (movement.sqrMagnitude == 0)
+        {
+            if (Input.GetKey(KeyCode.A)) movement.x = -1;
+            if (Input.GetKey(KeyCode.D)) movement.x = 1;
+            if (Input.GetKey(KeyCode.W)) movement.y = 1;
+            if (Input.GetKey(KeyCode.S)) movement.y = -1;
+        }
+
         if(movement.magnitude > 0)
         {
             PlayerMovement(movement);
         }
 
+        // Thêm phím test tấn công (Space / J)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J))
+        {
+            PlayerAttack();
+        }
+
+        // Thêm phím test biến hình (F)
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Transformation();
+        }
 #endif
     }
 
@@ -93,10 +113,11 @@ public class Protagonist : MonoBehaviour, IDamageable
 
             Vector3 nextPosition = transform.position + moveDir * velocity * Time.deltaTime;
 
-            if (Physics.Raycast(nextPosition - Vector3.forward, Vector3.down, 5f, groundLayer))
+            // Dùng SphereCast (bắn tia hình cầu có độ dày 0.4f) thay cho Raycast (tia siêu mỏng)
+            // Việc này giúp nhân vật không bị lọt tia check xuống khe nứt và đi lướt qua rãnh nhỏ
+            Vector3 origin = nextPosition - Vector3.forward + Vector3.up * 0.5f; 
+            if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 5f, groundLayer))
             {
-                Debug.DrawRay(nextPosition, Vector3.down * 5, UnityEngine.Color.red);
-
                 transform.position = nextPosition;
             }
         }

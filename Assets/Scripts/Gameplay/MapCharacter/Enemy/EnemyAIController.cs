@@ -5,6 +5,12 @@ using Gameplay.MapCharacter.Enemy.States;
 
 namespace Gameplay.MapCharacter.Enemy
 {
+    public enum EnemyAIType
+    {
+        Aggressive, // Quái vật: Tấn công
+        Coward      // Động vật: Bỏ chạy
+    }
+
     public class EnemyAIController : MonoBehaviour, IDamageable
     {
         [Header("Stats")]
@@ -12,8 +18,12 @@ namespace Gameplay.MapCharacter.Enemy
         public int CurrentHP { get; private set; }
         public int AttackDamage = 10;
         public float MoveSpeed = 2f;
+        public float RunSpeed = 4f; // Tốc độ bỏ chạy
         public float AttackRange = 1.5f;
         public float AttackCooldown = 2f; // Thời gian đếm ngược giữa các đòn đánh
+        
+        [Header("AI Type")]
+        public EnemyAIType AIType = EnemyAIType.Aggressive;
 
         [Header("Movement Logic")]
         public LayerMask groundLayer;
@@ -29,6 +39,7 @@ namespace Gameplay.MapCharacter.Enemy
         public EnemyIdleState IdleState;
         public EnemyWalkState WalkState;
         public EnemyAttackState AttackState;
+        public EnemyFleeState FleeState;
         public EnemyHurtState HurtState;
         public EnemyDieState DieState;
 
@@ -40,6 +51,7 @@ namespace Gameplay.MapCharacter.Enemy
             IdleState = new EnemyIdleState(this);
             WalkState = new EnemyWalkState(this);
             AttackState = new EnemyAttackState(this);
+            FleeState = new EnemyFleeState(this);
             HurtState = new EnemyHurtState(this);
             DieState = new EnemyDieState(this);
 
@@ -79,7 +91,15 @@ namespace Gameplay.MapCharacter.Enemy
         {
             if (currentState == DieState) return;
             Target = playerTransform;
-            ChangeState(AttackState); // Phát hiện người chơi -> chuyển sang trạng thái tấn công/đuổi theo
+            
+            if (AIType == EnemyAIType.Aggressive)
+            {
+                ChangeState(AttackState); // Phát hiện người chơi -> chuyển sang trạng thái tấn công/đuổi theo
+            }
+            else if (AIType == EnemyAIType.Coward)
+            {
+                ChangeState(FleeState); // Quái nhút nhát -> bỏ chạy
+            }
         }
 
         private void HandlePlayerExit(Transform playerTransform)
@@ -110,14 +130,15 @@ namespace Gameplay.MapCharacter.Enemy
         }
         
         // Helper function di chuyển có check chạm đất (giống Protagonist)
-        public void MoveTowards(Vector3 destination)
+        public void MoveTowards(Vector3 destination, float customSpeed = -1f)
         {
-            Vector3 nextPosition = Vector3.MoveTowards(transform.position, destination, MoveSpeed * Time.deltaTime);
+            float speedToUse = customSpeed > 0f ? customSpeed : MoveSpeed;
+            Vector3 nextPosition = Vector3.MoveTowards(transform.position, destination, speedToUse * Time.deltaTime);
 
-            // Bắn tia Raycast xuống đất để kiểm tra xem vị trí tiếp theo có nằm trên map không
-            if (Physics.Raycast(nextPosition - Vector3.forward, Vector3.down, 5f, groundLayer))
+            // Dùng SphereCast thay cho Raycast để Enemy cũng có thể lướt qua khe nứt
+            Vector3 origin = nextPosition - Vector3.forward + Vector3.up * 0.5f;
+            if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 5f, groundLayer))
             {
-                Debug.DrawRay(nextPosition - Vector3.forward, Vector3.down * 5, Color.red);
                 transform.position = nextPosition;
             }
         }
