@@ -29,7 +29,14 @@ namespace Gameplay.MapCharacter.Enemy.States
                 // Sau khi hết choáng, quay lại đánh nếu có mục tiêu, không thì về Idle
                 if (controller.Target != null)
                 {
-                    controller.ChangeState(controller.AttackState);
+                    if (controller.AIType == EnemyAIType.Coward)
+                    {
+                        controller.ChangeState(controller.FleeState);
+                    }
+                    else
+                    {
+                        controller.ChangeState(controller.AttackState);
+                    }
                 }
                 else
                 {

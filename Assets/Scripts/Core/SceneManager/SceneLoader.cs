@@ -37,6 +37,13 @@ public class SceneLoader : MonoBehaviour
     private float _fadeDuration = .1f;
     private bool _isLoading = false; //To prevent a new loading request while already loading a new scene
 
+    public static SceneLoader Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void OnEnable()
     {
         GameEvent.IsSceneReady = false;
@@ -45,6 +52,14 @@ public class SceneLoader : MonoBehaviour
 #if UNITY_EDITOR
         _coldStartupLocation.OnLoadingRequested += LocationColdStartup;
 #endif
+    }
+
+    public void RestartCurrentScene()
+    {
+        if (_currentlyLoadedScene != null)
+        {
+            LoadLocation(_currentlyLoadedScene, true, false);
+        }
     }
 
     private void OnDisable()

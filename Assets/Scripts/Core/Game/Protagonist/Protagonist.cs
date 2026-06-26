@@ -181,8 +181,9 @@ public class Protagonist : MonoBehaviour, IDamageable
     public void UpdateStats()
     {
         MaxHP = 100 + (Level * 20);
-        AttackDamage = 10 + (Level * 5);
+        AttackDamage = 40 + (Level * 5);
         CurrentHP = MaxHP;
+        UIEvent.OnUpdatePlayerHP?.Invoke(CurrentHP, MaxHP);
     }
 
     private void Start()
@@ -198,6 +199,7 @@ public class Protagonist : MonoBehaviour, IDamageable
     {
         CurrentHP -= damage;
         Debug.Log($"Protagonist HP: {CurrentHP}/{MaxHP}");
+        UIEvent.OnUpdatePlayerHP?.Invoke(CurrentHP, MaxHP);
 
         if (CurrentHP <= 0)
         {
@@ -208,8 +210,11 @@ public class Protagonist : MonoBehaviour, IDamageable
     private void Die()
     {
         Debug.Log("Protagonist Died!");
-        // Gọi màn hình Game Over hoặc vô hiệu hóa nhân vật
-        this.enabled = false;
+        // Sử dụng hệ thống load scene của game thay vì SceneManager mặc định
+        if (SceneLoader.Instance != null)
+        {
+            SceneLoader.Instance.RestartCurrentScene();
+        }
     }
 
 

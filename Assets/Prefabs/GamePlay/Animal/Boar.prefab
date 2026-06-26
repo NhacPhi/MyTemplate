@@ -170,8 +170,13 @@ MonoBehaviour:
   MaxHP: 100
   AttackDamage: 10
   MoveSpeed: 2
+  RunSpeed: 4
   AttackRange: 1.2
   AttackCooldown: 2
+  AIType: 0
+  DropItemPrefab: {fileID: 6285792478396091483, guid: d9520a78b531c4f4a80c10045f095774, type: 3}
+  DropAmount: 2
+  DropRate: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

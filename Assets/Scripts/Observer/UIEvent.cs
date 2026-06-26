@@ -71,6 +71,7 @@ public static class UIEvent
 
     // GamePlay
     public static Action<List<Interaction>> OnUpdateInteractionsUI;
+    public static Action<int, int> OnUpdatePlayerHP;
 
     // Map
     public static Action<LocationID> OnOpenMapUIWithCurrentLocation;

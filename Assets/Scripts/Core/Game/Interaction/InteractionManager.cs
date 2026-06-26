@@ -13,12 +13,14 @@ public class InteractionManager : MonoBehaviour
     {
         GameEvent.OnInteraction += OnInteractionButtonPress;
         GameEvent.OnExecuteSpecificInteraction += ExecuteInteraction;
+        GameEvent.OnPlayerTransform += ClearAllInteractions;
     }
 
     private void OnDisable()
     {
         GameEvent.OnInteraction -= OnInteractionButtonPress;
         GameEvent.OnExecuteSpecificInteraction -= ExecuteInteraction;
+        GameEvent.OnPlayerTransform -= ClearAllInteractions;
     }
     // Start is called before the first frame update
     void Start()
@@ -76,6 +78,12 @@ public class InteractionManager : MonoBehaviour
         // Loại bỏ các object đã bị Destroy (== null theo Unity operator)
         potentialInteractions.RemoveAll(i => i.interactableObject == null);
         UIEvent.OnUpdateInteractionsUI?.Invoke(potentialInteractions);
+    }
+
+    private void ClearAllInteractions()
+    {
+        potentialInteractions.Clear();
+        RequestUpdateUI();
     }
 
     public void ExecuteInteraction(Interaction interaction)

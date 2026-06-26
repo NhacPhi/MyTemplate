@@ -75,8 +75,8 @@ namespace Gameplay.MapCharacter.Enemy.States
                 controller.Anim.SetFloat("MoveY", Mathf.Round(-dir.z));
             }
 
-            // Gây sát thương lên Target
-            IDamageable damageable = controller.Target.GetComponent<IDamageable>();
+            // Gây sát thương lên Target (Dùng GetComponentInParent vì Target có thể là cục Interaction con của Player)
+            IDamageable damageable = controller.Target.GetComponentInParent<IDamageable>();
             if (damageable != null)
             {
                 damageable.TakeDamage(controller.AttackDamage);

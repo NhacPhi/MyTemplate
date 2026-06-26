@@ -25,7 +25,8 @@ namespace Gameplay.MapCharacter.Enemy
         public EnemyAIType AIType = EnemyAIType.Aggressive;
 
         [Header("Drop Settings")]
-        public GameObject[] DropItemPrefabs; // Danh sách các vật phẩm có thể rớt ra
+        public GameObject DropItemPrefab; // Kéo thả Prefab của vật phẩm vào đây
+        public int DropAmount = 1; // Số lượng rớt ra
         [Range(0f, 1f)] public float DropRate = 0.5f; // Tỉ lệ rớt (0 = không bao giờ rớt, 1 = 100% rớt)
 
         [Header("Movement Logic")]
@@ -188,20 +189,20 @@ namespace Gameplay.MapCharacter.Enemy
         // Logic rớt vật phẩm
         private void DropItem()
         {
-            if (DropItemPrefabs != null && DropItemPrefabs.Length > 0)
+            if (DropItemPrefab == null) return;
+
+            if (Random.value <= DropRate)
             {
-                // Kiểm tra xem có trúng tỉ lệ rớt đồ không
-                if (Random.value <= DropRate)
+                // Sinh ra Item tại vị trí của con quái với offset
+                Vector3 dropPos = transform.position + new Vector3(0, -0.3f, 0);
+                
+                GameObject droppedItem = Instantiate(DropItemPrefab, dropPos, DropItemPrefab.transform.rotation);
+
+                // Lấy Component ItemPickup ra và gán số lượng
+                ItemPickup pickupComp = droppedItem.GetComponent<ItemPickup>();
+                if (pickupComp != null)
                 {
-                    int randomIndex = Random.Range(0, DropItemPrefabs.Length);
-                    GameObject itemPrefab = DropItemPrefabs[randomIndex];
-                    
-                    if (itemPrefab != null)
-                    {
-                        // Sinh ra Item tại vị trí của con quái (tôn lên một chút để không lún đất)
-                        Vector3 dropPos = transform.position + Vector3.up * 0.5f;
-                        Instantiate(itemPrefab, dropPos, Quaternion.identity);
-                    }
+                    pickupComp.amount = DropAmount;
                 }
             }
         }
