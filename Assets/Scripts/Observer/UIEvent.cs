@@ -70,7 +70,7 @@ public static class UIEvent
     public static Action OnHideSkillTooltip;
 
     // GamePlay
-    public static Action<bool, InteractionType> OnInterationUI;
+    public static Action<List<Interaction>> OnUpdateInteractionsUI;
 
     // Map
     public static Action<LocationID> OnOpenMapUIWithCurrentLocation;

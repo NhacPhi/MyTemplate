@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -12,11 +12,13 @@ public class InteractionManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvent.OnInteraction += OnInteractionButtonPress;
+        GameEvent.OnExecuteSpecificInteraction += ExecuteInteraction;
     }
 
     private void OnDisable()
     {
         GameEvent.OnInteraction -= OnInteractionButtonPress;
+        GameEvent.OnExecuteSpecificInteraction -= ExecuteInteraction;
     }
     // Start is called before the first frame update
     void Start()
@@ -56,18 +58,52 @@ public class InteractionManager : MonoBehaviour
 
         potentialInteractions.Add(newPotentialInteraction);
 
-        RequestUpdateUI(true, newPotentialInteraction.type);
+        RequestUpdateUI();
     }
 
     private void RemovePotentialInteraction(GameObject obj)
     {
         Interaction interaction = potentialInteractions.Find(o => o.interactableObject == obj);
-        RequestUpdateUI(false, interaction.type);
+        if (interaction != null)
+        {
+            potentialInteractions.Remove(interaction);
+            RequestUpdateUI();
+        }
     }
 
-    private void RequestUpdateUI(bool visible, InteractionType type)
+    private void RequestUpdateUI()
     {
-         UIEvent.OnInterationUI?.Invoke(visible, type);
+        // Loại bỏ các object đã bị Destroy (== null theo Unity operator)
+        potentialInteractions.RemoveAll(i => i.interactableObject == null);
+        UIEvent.OnUpdateInteractionsUI?.Invoke(potentialInteractions);
+    }
+
+    public void ExecuteInteraction(Interaction interaction)
+    {
+        if (interaction == null || interaction.interactableObject == null) return;
+
+        switch (interaction.type)
+        {
+            case InteractionType.Talk:
+                interaction.interactableObject.GetComponent<StepController>().InteractWithCharacter();
+                break;
+            case InteractionType.Fighting:
+                interaction.interactableObject.GetComponent<BattleTrigger>().OpenPrepareScene();
+                break;
+            case InteractionType.PickUp:
+                ItemPickup item = interaction.interactableObject.GetComponent<ItemPickup>();
+                if (item != null)
+                {
+                    item.PickUp();
+                    potentialInteractions.Remove(interaction);
+                    RequestUpdateUI();
+                }
+                else
+                {
+                    Debug.LogWarning("[InteractionManager] Đối tượng có tag Pickable nhưng không có script ItemPickup!");
+                }
+                break;
+        }
     }
 
     private void OnInteractionButtonPress()
@@ -75,14 +111,6 @@ public class InteractionManager : MonoBehaviour
         if (potentialInteractions.Count == 0)
             return;
 
-        switch (potentialInteractions[0].type)
-        {
-            case InteractionType.Talk:
-                potentialInteractions[0].interactableObject.GetComponent<StepController>().InteractWithCharacter();
-                break;
-            case InteractionType.Fighting:
-                potentialInteractions[0].interactableObject.GetComponent<BattleTrigger>().OpenPrepareScene();
-                break;
-        }
+        ExecuteInteraction(potentialInteractions[0]);
     }
 }

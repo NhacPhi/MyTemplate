@@ -681,6 +681,30 @@ public static class LocKeys
 
     public const long STR_CHARACTER_BANNER_TITLE = 801112403;
 
+    public const long STR_MEAT_NAME = 391267168;
+
+    public const long STR_MEAT_DES = 2612874566;
+
+    public const long STR_MEAT_USEFUL = 3999571632;
+
+    public const long STR_SLIME_NAME = 664629049;
+
+    public const long STR_SLIME_DES = 1518700550;
+
+    public const long STR_SLIME_USEFUL = 3749257607;
+
+    public const long STR_LOTUS_NAME = 3496503863;
+
+    public const long STR_LOTUS_DES = 3839558439;
+
+    public const long STR_LOTUS_USEFUL = 79280935;
+
+    public const long STR_PEACH_NAME = 1371505049;
+
+    public const long STR_PEACH_DES = 712344324;
+
+    public const long STR_PEACH_USEFUL = 3568455205;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;

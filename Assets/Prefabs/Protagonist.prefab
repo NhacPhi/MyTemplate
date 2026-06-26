@@ -54,9 +54,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 3
+  m_Height: 4
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0.25}
+  m_Center: {x: 0, y: 1, z: 0.25}
 --- !u!54 &5382567025907800202
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 1056255114731940921}
   - component: {fileID: 838055762811162036}
   - component: {fileID: 7360502138755076587}
+  - component: {fileID: 2363750518637357}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -339,7 +340,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5b6899e3a8eca4992fa09d07e759b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 838055762811162036}
+  weaponCollider: {fileID: 0}
+  protagonist: {fileID: 3654770768601440465}
+--- !u!65 &2363750518637357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6003694083596349739}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.68, y: 4.7199993, z: 0.20000012}
+  m_Center: {x: 0, y: -0.00000023841858, z: 0}
 --- !u!1 &7191235090700336246
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +541,8 @@ MonoBehaviour:
   smoke: {fileID: 9051067062576370264}
   velocity: 4
   timeToGetWeapon: 5
+  playerCollider: {fileID: 130585983577624954}
+  cloneSpeedMultiplier: 1.2
   weapon: {fileID: 7360502138755076587}
   groundLayer:
     serializedVersion: 2

@@ -4,11 +4,62 @@ using VContainer;
 using System;
 using NPOI.SS.Formula.Functions;
 
-public class InventoryManager 
+public class InventoryManager : IDisposable
 {
     [Inject] GameDataBase _gameDataBase;
     [Inject] SaveSystem _save;
     [Inject] CurrencyManager _currencyManager;
+
+    [Inject]
+    private void Init()
+    {
+        GameEvent.OnRequestPickupItem += HandlePickupItem;
+    }
+
+    public void Dispose()
+    {
+        GameEvent.OnRequestPickupItem -= HandlePickupItem;
+    }
+
+    private void HandlePickupItem(string itemID, int amount)
+    {
+        var config = _gameDataBase.GetItemConfig(itemID);
+        if (config != null)
+        {
+            if (config.Type == ItemType.Weapon)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    AddWeapon(new WeaponSaveData
+                    {
+                        UUID = System.Guid.NewGuid().ToString(),
+                        TemplateID = itemID,
+                        CurrentLevel = 1
+                    });
+                }
+            }
+            else if (config.Type == ItemType.Armor)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    AddArmor(new ArmorSaveData
+                    {
+                        UUID = System.Guid.NewGuid().ToString(),
+                        TemplateID = itemID,
+                        Level = 1
+                    });
+                }
+            }
+            else if (config.Type == ItemType.Currency && System.Enum.TryParse<CurrencyType>(itemID, true, out var rCurrency))
+            {
+                _currencyManager.Add(rCurrency, amount);
+            }
+            else
+            {
+                AddStackableItem(itemID, config.Type, amount);
+            }
+        }
+    }
 
 
     private InventorySaveData _saveData => _save.Player.Inventory;

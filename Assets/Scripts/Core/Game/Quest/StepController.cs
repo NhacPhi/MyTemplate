@@ -6,6 +6,7 @@ using VContainer;
 public class StepController : MonoBehaviour
 {
     [SerializeField] private ActorSO actor = default;
+    public ActorSO Actor => actor;
 
     // Default Dialogue
     // Quest Data

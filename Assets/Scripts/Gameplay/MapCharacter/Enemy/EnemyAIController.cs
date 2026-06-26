@@ -21,9 +21,12 @@ namespace Gameplay.MapCharacter.Enemy
         public float RunSpeed = 4f; // Tốc độ bỏ chạy
         public float AttackRange = 1.5f;
         public float AttackCooldown = 2f; // Thời gian đếm ngược giữa các đòn đánh
-        
         [Header("AI Type")]
         public EnemyAIType AIType = EnemyAIType.Aggressive;
+
+        [Header("Drop Settings")]
+        public GameObject[] DropItemPrefabs; // Danh sách các vật phẩm có thể rớt ra
+        [Range(0f, 1f)] public float DropRate = 0.5f; // Tỉ lệ rớt (0 = không bao giờ rớt, 1 = 100% rớt)
 
         [Header("Movement Logic")]
         public LayerMask groundLayer;
@@ -150,6 +153,79 @@ namespace Gameplay.MapCharacter.Enemy
                 Sensor.OnPlayerEnter -= HandlePlayerEnter;
                 Sensor.OnPlayerExit -= HandlePlayerExit;
             }
+        }
+
+        // --- HÀM DÀNH CHO ANIMATION EVENT VÀ DIE STATE ---
+        public void StartBlinkAndDeactivate()
+        {
+            StartCoroutine(BlinkRoutine());
+        }
+
+        private System.Collections.IEnumerator BlinkRoutine()
+        {
+            SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+            
+            // Nhấp nháy 3 lần (tắt/bật SpriteRenderer)
+            for (int i = 0; i < 3; i++)
+            {
+                foreach (var sr in sprites) { if (sr != null) sr.enabled = false; }
+                yield return new WaitForSeconds(0.15f); // Tắt trong 0.15s
+                
+                foreach (var sr in sprites) { if (sr != null) sr.enabled = true; }
+                yield return new WaitForSeconds(0.15f); // Bật trong 0.15s
+            }
+
+            // Gọi hàm Deactivate cũ sau khi nháy xong
+            DeactivateEnemy();
+        }
+
+        public void DeactivateEnemy()
+        {
+            DropItem(); // Gọi hàm rớt đồ trước khi biến mất
+            gameObject.SetActive(false);
+        }
+
+        // Logic rớt vật phẩm
+        private void DropItem()
+        {
+            if (DropItemPrefabs != null && DropItemPrefabs.Length > 0)
+            {
+                // Kiểm tra xem có trúng tỉ lệ rớt đồ không
+                if (Random.value <= DropRate)
+                {
+                    int randomIndex = Random.Range(0, DropItemPrefabs.Length);
+                    GameObject itemPrefab = DropItemPrefabs[randomIndex];
+                    
+                    if (itemPrefab != null)
+                    {
+                        // Sinh ra Item tại vị trí của con quái (tôn lên một chút để không lún đất)
+                        Vector3 dropPos = transform.position + Vector3.up * 0.5f;
+                        Instantiate(itemPrefab, dropPos, Quaternion.identity);
+                    }
+                }
+            }
+        }
+
+        // Gọi hàm này từ một script quản lý Spawner nào đó khi bạn muốn hồi sinh Enemy
+        public void Respawn(Vector3 spawnPosition)
+        {
+            transform.position = spawnPosition;
+            CurrentHP = MaxHP;
+            
+            Collider col = GetComponent<Collider>();
+            if (col != null) col.enabled = true;
+
+            if (Sensor != null) Sensor.gameObject.SetActive(true);
+
+            gameObject.SetActive(true);
+            
+            // Reset Animator
+            if (Anim != null)
+            {
+                Anim.Play("IdleTree"); // Hoặc tên state mặc định
+            }
+
+            ChangeState(IdleState);
         }
     }
 }

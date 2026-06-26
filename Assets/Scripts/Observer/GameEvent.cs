@@ -40,4 +40,6 @@ public static class GameEvent
 
 
     public static Action OnInteraction;
+    public static Action<Interaction> OnExecuteSpecificInteraction;
+    public static Action<string, int> OnRequestPickupItem;
 }

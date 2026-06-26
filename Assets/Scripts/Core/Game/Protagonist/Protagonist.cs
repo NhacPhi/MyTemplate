@@ -26,6 +26,11 @@ public class Protagonist : MonoBehaviour, IDamageable
     [SerializeField] private float velocity = 0;
     [SerializeField] private float timeToGetWeapon;
 
+    [Header("Transformation Settings")]
+    [SerializeField] private Collider playerCollider; // Collider cần bật/tắt
+    [SerializeField] private float cloneSpeedMultiplier = 1.5f; // Hệ số buff tốc độ
+    private float baseVelocity;
+
     float countDown = 0;
 
     [SerializeField] private WeaponController weapon;
@@ -150,9 +155,27 @@ public class Protagonist : MonoBehaviour, IDamageable
         }
 
         smoke.SetTrigger("Start");
-        character.gameObject.SetActive(isClone);
-        clone.gameObject.SetActive(!isClone);
-        isClone = !isClone;
+        
+        isClone = !isClone; // Đảo trạng thái trước
+        
+        character.gameObject.SetActive(!isClone);
+        clone.gameObject.SetActive(isClone);
+        
+        // Bật/Tắt va chạm (deactivate collision)
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = !isClone;
+        }
+
+        // Buff thêm tốc độ di chuyển
+        if (isClone)
+        {
+            velocity = baseVelocity * cloneSpeedMultiplier;
+        }
+        else
+        {
+            velocity = baseVelocity;
+        }
     }
 
     public void UpdateStats()
@@ -165,6 +188,10 @@ public class Protagonist : MonoBehaviour, IDamageable
     private void Start()
     {
         UpdateStats();
+        baseVelocity = velocity; // Lưu tốc độ cơ bản
+
+        // Tự động tìm Collider nếu bạn quên chưa kéo vào Inspector
+        if (playerCollider == null) playerCollider = GetComponent<Collider>();
     }
 
     public void TakeDamage(int damage)

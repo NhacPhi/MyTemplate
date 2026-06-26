@@ -4,17 +4,21 @@ namespace Gameplay.MapCharacter.Enemy.States
 {
     public class EnemyDieState : EnemyState
     {
+        private bool isDead = false;
+        private float failSafeTimer = 0f;
+
         public EnemyDieState(EnemyAIController controller) : base(controller) { }
 
         public override void Enter()
         {
+            isDead = false;
+            failSafeTimer = 0f;
+
             if (controller.Anim != null)
             {
                 controller.Anim.SetBool("IsMove", false);
                 controller.Anim.SetTrigger("Die");
             }
-            
-            Debug.Log("Enemy Died!");
 
             // Vô hiệu hóa Collider để không bị đánh tiếp hoặc cản đường
             Collider col = controller.GetComponent<Collider>();
@@ -22,14 +26,35 @@ namespace Gameplay.MapCharacter.Enemy.States
 
             // Vô hiệu hóa vùng phát hiện
             if (controller.Sensor != null) controller.Sensor.gameObject.SetActive(false);
-
-            // Có thể tự hủy game object sau vài giây (nếu muốn)
-            // GameObject.Destroy(controller.gameObject, 2f);
         }
 
         public override void Update()
         {
-            // Không làm gì cả khi đã chết
+            if (isDead) return;
+
+            if (controller.Anim != null)
+            {
+                AnimatorStateInfo stateInfo = controller.Anim.GetCurrentAnimatorStateInfo(0);
+                
+                // Kiểm tra xem Animator đã chuyển sang State có tên "DeathTree" chưa
+                if (stateInfo.IsName("DeathTree"))
+                {
+                    // normalizedTime >= 1.0f nghĩa là vòng đời animation đã chạy xong 100%
+                    if (stateInfo.normalizedTime >= 1.0f)
+                    {
+                        isDead = true;
+                        controller.StartBlinkAndDeactivate();
+                    }
+                }
+            }
+
+            // Đề phòng trường hợp Animator bị lag không nhận Trigger, sau 3 giây cứ ép nó biến mất
+            failSafeTimer += Time.deltaTime;
+            if (failSafeTimer >= 3f)
+            {
+                isDead = true;
+                controller.StartBlinkAndDeactivate();
+            }
         }
     }
 }

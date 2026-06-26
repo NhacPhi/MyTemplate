@@ -104,7 +104,7 @@ public class InventoryUI : MonoBehaviour
                 obj.SetActive(false);
 
                 if (item.Type == ItemType.Food) items.Add(obj);
-                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp)
+                else if (item.Type == ItemType.Gemstone || item.Type == ItemType.Exp || item.Type == ItemType.Material)
                 {
                     if (!materials_dic.ContainsKey(item.Type))
                     {

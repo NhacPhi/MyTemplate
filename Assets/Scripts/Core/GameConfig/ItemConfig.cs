@@ -65,6 +65,7 @@ public class ItemConfig
                 ItemType.Weapon => "Atlas_icon_weapon",
                 ItemType.Armor => "Atlas_icon_armor",
                 ItemType.Gemstone => "Atlas_icon_gemstone",
+                ItemType.Material => "Atlas_icon_material",
                 ItemType.Shard=> "Atlas_icon_character",
                 ItemType.Food or ItemType.Currency or ItemType.Exp => "Atlas_consumables",
                 ItemType.Avatar => "Atlas_icon_game",
@@ -96,7 +97,7 @@ public class ItemConfig
         string rawUseDes = LocalizationManager.Instance.GetLocalizedValue(UseDescription);
         if (string.IsNullOrEmpty(rawUseDes)) return string.Empty;
 
-        if (Type == ItemType.Exp && Exp != null)
+        if ((Type == ItemType.Exp || Type == ItemType.Material) && Exp != null)
         {
             return string.Format(rawUseDes, Exp.Value);
         }

@@ -22,7 +22,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -31,7 +31,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.36666667
+        time: 0.38333333
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: BlueSlime_Eff
+    path: SharkSlime_Eff
     classID: 1
     script: {fileID: 0}
     flags: 16
@@ -78,13 +78,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0.15
-      value: {fileID: -1725505591, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
-    - time: 0.21666667
-      value: {fileID: -116731063, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
+      value: {fileID: 652238925, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
+    - time: 0.23333333
+      value: {fileID: -149338041, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
     - time: 0.3
-      value: {fileID: 1217495906, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
+      value: {fileID: 1205954754, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
     attribute: m_Sprite
-    path: BlueSlime_Eff
+    path: SharkSlime_Eff
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -96,7 +96,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 33689397
+      path: 2816202555
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -114,7 +114,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 33689397
+      path: 2816202555
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -133,9 +133,9 @@ AnimationClip:
     - {fileID: 2026365146, guid: 18496aeb22eb0b9448ac78d2f6ffb608, type: 3}
     - {fileID: 2143062040, guid: 18496aeb22eb0b9448ac78d2f6ffb608, type: 3}
     - {fileID: 1227668735, guid: 18496aeb22eb0b9448ac78d2f6ffb608, type: 3}
-    - {fileID: -1725505591, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
-    - {fileID: -116731063, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
-    - {fileID: 1217495906, guid: 5aad0613d3667184f9282500ed9094e8, type: 3}
+    - {fileID: 652238925, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
+    - {fileID: -149338041, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
+    - {fileID: 1205954754, guid: 064ee71def797714f8a63e7ce4446eb6, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -146,7 +146,7 @@ AnimationClip:
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -162,7 +162,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
+        time: 0.15
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -171,7 +171,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.36666667
+        time: 0.38333333
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -183,7 +183,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: BlueSlime_Eff
+    path: SharkSlime_Eff
     classID: 1
     script: {fileID: 0}
     flags: 16

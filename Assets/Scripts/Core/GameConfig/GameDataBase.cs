@@ -121,6 +121,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_icon_gemstone");
         atlasAddresses.Add("Atlas_icon_weapon");
         atlasAddresses.Add("Atlas_big_icon_weapon");
+        atlasAddresses.Add("Atlas_icon_material");
 
         atlasAddresses.Add("Atlas_icon_game");
         atlasAddresses.Add("Atlas_icon_character");
