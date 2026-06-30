@@ -6,76 +6,55 @@ using VContainer;
 
 public class GamePlayScene : WindowController
 {
-    [SerializeField] private Button btnPlayerInfo;
-
-    [SerializeField] private Button btnInventory;
-    [SerializeField] private Button btnCharacter;
-    [SerializeField] private Button btnMap;
-    [SerializeField] private Button btnPartySetup;
+    [SerializeField] private Button btnGamePanel;
 
     [SerializeField] private Button btnAttack;
     [SerializeField] private Button btnCatchSkill;
-
-    [SerializeField] private Button btnShop;
-    [SerializeField] private Button btnGacha;
+    [SerializeField] private Button btnMap;
     [SerializeField] private Button btnQuest;
+
 
     [Inject] private UIManager uiManager;
     [Inject] private CurrencyManager currencyMM;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        UIEvent.OnToggleGamePlayScene += ToggleScene;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        UIEvent.OnToggleGamePlayScene -= ToggleScene;
+    }
+
+    private void ToggleScene(bool show)
+    {
+        gameObject.SetActive(show);
+    }
+
     private void Start()
     {
-        btnPlayerInfo.onClick.AddListener(() =>
+        btnGamePanel.onClick.AddListener(() =>
         {
             uiManager.CloseAllWindows();
             uiManager.ShowPanel(ScreenIds.GamePlayPanel);
         });
 
-        btnInventory.onClick.AddListener(() =>
-        {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
-            uiManager.OpenWindowScene(ScreenIds.InventoryScene);
-        });
 
+        btnAttack.onClick.AddListener(() => { GameEvent.OnPlayerAttack?.Invoke(); });
+        btnCatchSkill.onClick.AddListener(() => { GameEvent.OnPlayerTransform?.Invoke(); });
+        
         btnMap.onClick.AddListener(() =>
         {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.MapScene);
         });
-
-        btnCharacter.onClick.AddListener(() =>
-        {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
-            uiManager.OpenWindowScene(ScreenIds.CharacterScene);
-        });
-
-        btnPartySetup.onClick.AddListener(() =>
-        {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
-            uiManager.OpenWindowScene(ScreenIds.PartySetupScene);
-            UIEvent.OnPrepareBattleData?.Invoke();
-        });
-
-        btnShop.onClick.AddListener(() =>
-        {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
-            uiManager.OpenWindowScene(ScreenIds.ShopScene);
-        });
-
-        btnGacha.onClick.AddListener(() =>
-        {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
-            uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
-
-        });
-
+        
         btnQuest.onClick.AddListener(() =>
         {
             uiManager.OpenWindowScene(ScreenIds.QuestScene);
         });
-
-        btnAttack.onClick.AddListener(() => { GameEvent.OnPlayerAttack?.Invoke(); });
-        btnCatchSkill.onClick.AddListener(() => { GameEvent.OnPlayerTransform?.Invoke(); });
     }
 
     private void OnEnable()

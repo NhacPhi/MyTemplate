@@ -85,9 +85,9 @@ public class CardMirrorEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         glareImage.color = new Color(1f, 1f, 1f, 0.5f);
 
         // Chạy qua phải
-        glareRect.DOAnchorPosX(1000f, glareDuration).SetEase(Ease.InOutSine).SetLink(glareRect.gameObject);
+        glareRect.DOAnchorPosX(1000f, glareDuration).SetEase(Ease.InOutSine).SetUpdate(true).SetLink(glareRect.gameObject);
         // Fade mờ dần ở cuối
-        glareImage.DOFade(0f, glareDuration).SetEase(Ease.InExpo).SetLink(glareImage.gameObject);
+        glareImage.DOFade(0f, glareDuration).SetEase(Ease.InExpo).SetUpdate(true).SetLink(glareImage.gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -101,7 +101,7 @@ public class CardMirrorEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         isHovering = false;
         // Trả về thẳng đứng mượt mà
-        rectTransform.DORotate(startRotation, tiltSpeed).SetEase(Ease.OutBack).SetLink(rectTransform.gameObject);
+        rectTransform.DORotate(startRotation, tiltSpeed).SetEase(Ease.OutBack).SetUpdate(true).SetLink(rectTransform.gameObject);
     }
 
     public void OnPointerMove(PointerEventData eventData)
@@ -126,6 +126,6 @@ public class CardMirrorEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         float rotateY = normalizedPos.x * tiltAmount;
 
         rectTransform.DOKill();
-        rectTransform.DOLocalRotate(new Vector3(rotateX, rotateY, 0), tiltSpeed).SetLink(rectTransform.gameObject);
+        rectTransform.DOLocalRotate(new Vector3(rotateX, rotateY, 0), tiltSpeed).SetUpdate(true).SetLink(rectTransform.gameObject);
     }
 }

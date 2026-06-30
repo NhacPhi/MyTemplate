@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -35,7 +35,7 @@ namespace UIFramework.Examples
             }
 
             targetAnimation.Play(PlayMode.StopAll);
-            yield return new WaitForSeconds(targetAnimation.clip.length);
+            yield return new WaitForSecondsRealtime(targetAnimation.clip.length);
             FinishPrevious();
         }
         

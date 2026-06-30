@@ -18,23 +18,25 @@ public class MapScene : WindowController
     {
         btnGo.onClick.AddListener(()=>
         {
+            UI_Close();
             _loadLocation.RaiseEvent(currentScene, true);
-            uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
         });
     }
 
     private void OnEnable()
     {
         UIEvent.OnSelectToggleMap += UpdateMapScene;
+        Time.timeScale = 0f;
     }
 
     private void OnDisable()
     {
         UIEvent.OnSelectToggleMap -= UpdateMapScene;
+        Time.timeScale = 1f;
     }
     public void OnClose()
     {
-        uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
+        UI_Close();
     }
 
     public void UpdateMapScene(GameSceneSO location, Sprite sprite)

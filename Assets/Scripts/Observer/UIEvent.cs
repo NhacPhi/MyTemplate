@@ -70,6 +70,7 @@ public static class UIEvent
     public static Action OnHideSkillTooltip;
 
     // GamePlay
+    public static Action<bool> OnToggleGamePlayScene;
     public static Action<List<Interaction>> OnUpdateInteractionsUI;
     public static Action<int, int> OnUpdatePlayerHP;
 

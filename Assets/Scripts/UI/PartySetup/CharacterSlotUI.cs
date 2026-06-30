@@ -1,4 +1,4 @@
-﻿using UnityEngine.UI;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
@@ -64,7 +64,7 @@ public class CharacterSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
 
         // Nếu thả ra ngoài hoặc trùng vị trí cũ, quay về chỗ cũ
-        transform.DOMove(_startPosition, 0.2f);
+        transform.DOMove(_startPosition, 0.2f).SetUpdate(true);
     }
 
     public void SetupCharacterSlotUI(Sprite sprite, string name)

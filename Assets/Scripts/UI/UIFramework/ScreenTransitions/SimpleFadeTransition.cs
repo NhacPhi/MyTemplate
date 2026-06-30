@@ -51,7 +51,7 @@ namespace UIFramework
             }
 
             if (timer > 0f) {
-                timer -= Time.deltaTime;
+                timer -= Time.unscaledDeltaTime;
                 canvasGroup.alpha = Mathf.Lerp(endValue, startValue, timer / fadeDuration);
             }
             else {

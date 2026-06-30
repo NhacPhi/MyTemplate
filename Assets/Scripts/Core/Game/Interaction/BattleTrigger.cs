@@ -18,6 +18,17 @@ public class BattleTrigger : MonoBehaviour
     {
         _sessionContext.PendingBattleID = _battleID;
         _sessionContext.PreviousLocation = _sceneLoader.CurrentLoadedScene;
+        
+        var playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            _sessionContext.ReturnPosition = playerObj.transform.position;
+            if (Camera.main != null)
+            {
+                _sessionContext.ReturnCameraPosition = Camera.main.transform.position;
+            }
+        }
+
         _uiManager.OpenWindowScene(ScreenIds.PrepareBattleScene);
         UIEvent.OnPrepareBattleData?.Invoke();
     }

@@ -140,8 +140,8 @@ public class GachaResultScene : WindowController
             float yPos = 0f; // Nằm thẳng hàng ngang
             float delay = i * 0.1f; // Tăng tốc độ xuất hiện một chút
 
-            rect.DOScale(Vector3.one, 0.4f).SetDelay(delay).SetEase(Ease.OutBack).SetLink(rect.gameObject);
-            rect.DOAnchorPos(new Vector2(xPos, yPos), 0.5f).SetDelay(delay).SetEase(Ease.OutCubic).SetLink(rect.gameObject);
+            rect.DOScale(Vector3.one, 0.4f).SetDelay(delay).SetEase(Ease.OutBack).SetUpdate(true).SetLink(rect.gameObject);
+            rect.DOAnchorPos(new Vector2(xPos, yPos), 0.5f).SetDelay(delay).SetEase(Ease.OutCubic).SetUpdate(true).SetLink(rect.gameObject);
 
             // Gắn hiệu ứng 3D Mirror Parallax
             var mirrorEffect = card.gameObject.GetComponent<CardMirrorEffect>();
@@ -150,7 +150,7 @@ public class GachaResultScene : WindowController
             // Bắn vệt sáng lấp lánh khi lá bài đã xuất hiện xong
             DG.Tweening.DOVirtual.DelayedCall(delay + 0.3f, () => {
                 if (mirrorEffect != null) mirrorEffect.PlayGlareSweep();
-            }).SetLink(rect.gameObject);
+            }, ignoreTimeScale: true).SetLink(rect.gameObject);
         }
     }
 

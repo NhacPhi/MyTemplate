@@ -213,6 +213,8 @@ public static class LocKeys
 
     public const long UI_QUEST = 3143259482;
 
+    public const long UI_GACHA = 3050390188;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

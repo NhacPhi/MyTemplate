@@ -151,8 +151,12 @@ public class SceneLoader : MonoBehaviour
     private IEnumerator UnloadPreviousScene()
     {
         _isLoading = true; // Khóa loading lại
-        //_inputReader.DisableAllInput();
-        //_fadeRequestChannel.FadeOut(_fadeDuration);
+        
+        // 1. Bật Loading UI NGAY LẬP TỨC trước khi Unload scene cũ
+        if (_showLoadingScreen)
+        {
+            UIEvent.OnToggleLoadingScene?.Invoke(true);
+        }
 
         yield return new WaitForSeconds(_fadeDuration);
 
@@ -187,7 +191,6 @@ public class SceneLoader : MonoBehaviour
     {
         if (_showLoadingScreen)
         {
-            UIEvent.OnToggleLoadingScene?.Invoke(true);
             StartCoroutine(TrackLoadingProgress());
         }
         else

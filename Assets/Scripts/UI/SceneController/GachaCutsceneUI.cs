@@ -60,6 +60,7 @@ public class GachaCutsceneUI : WindowController
 
         if (director != null)
         {
+            director.timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
             director.stopped += OnTimelineStopped;
         }
 

@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -170,14 +170,14 @@ public class PartySetupControllerUI : MonoBehaviour
         {
             uiA.CurrentPosition = posB;
             uiA.transform.SetParent(slotBTrans, true);
-            uiA.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad);
+            uiA.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad).SetUpdate(true);
         }
 
         if (uiB != null)
         {
             uiB.CurrentPosition = posA;
             uiB.transform.SetParent(slotATrans, true);
-            uiB.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad);
+            uiB.transform.DOLocalMove(new Vector3(0, Offset, 0), 0.3f).SetEase(Ease.OutQuad).SetUpdate(true);
         }
 
         // --- CẬP NHẬT DICTIONARY UI ---
@@ -281,7 +281,7 @@ public class PartySetupControllerUI : MonoBehaviour
 
         // Hiệu ứng xuất hiện cho "xịn" (Scale từ 0 lên 1)
         character.transform.localScale = Vector3.zero;
-        character.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+        character.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
 
         // Lưu vào Dictionary quản lý
         _activeUISlots[position] = characterSlotUI;
@@ -313,7 +313,7 @@ public class PartySetupControllerUI : MonoBehaviour
         UpdateIconSelectedState(characterID, false);
 
 
-        characterUI.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+        characterUI.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() =>
         {
             Destroy(characterUI.gameObject);
         });
@@ -347,7 +347,7 @@ public class PartySetupControllerUI : MonoBehaviour
 
         foreach (var uiSlot in _activeUISlots.Values)
         {
-            uiSlot.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
+            uiSlot.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() =>
             {
                 Destroy(uiSlot.gameObject);
             });

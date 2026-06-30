@@ -13,7 +13,17 @@ public class PrepareBattleScene : WindowController
 
     public void OnClose()
     {
-        uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
+        UI_Close();
+    }
+
+    private void OnEnable()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
     }
 
     public async void LoadBattleScene()

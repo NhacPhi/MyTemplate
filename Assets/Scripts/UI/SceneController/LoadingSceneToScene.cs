@@ -20,6 +20,7 @@ public class LoadingSceneToScene : WindowController
     private void OnEnable()
     {
         UIEvent.OnUpdateLoadingProgress += UpdateProgress;
+        UpdateProgress(0f);
 
         // Đổi background ngẫu nhiên mỗi lần bật Loading Screen
         if (_backgroundImage != null && _backgroundSprites != null && _backgroundSprites.Length > 0)

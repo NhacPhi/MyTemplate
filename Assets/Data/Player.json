@@ -1,18 +1,18 @@
 {
   "account_info": {
     "player_name": "Congyon",
-    "level": 5,
-    "current_exp": 3400,
-    "avatar_icon": "Wukong01_avatar"
+    "level": 6,
+    "current_exp": 1400,
+    "avatar_icon": "Wukong02_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 370,
-      "Jade": 73600,
-      "Coin": 5085080,
+      "Jade": 74100,
+      "Coin": 5135080,
       "RelicEssence": 7343080,
       "ArmorPrimorite": 596750,
-      "Ticket": 14
+      "Ticket": 9
     },
     "items": [
       {
@@ -21,9 +21,9 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "Jade_Parcels",
+        "type": "Food",
+        "quantity": 85
       },
       {
         "id": "BullDemonKing",
@@ -41,9 +41,9 @@
         "quantity": 72
       },
       {
-        "id": "Jade_Parcels",
-        "type": "Food",
-        "quantity": 85
+        "id": "Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Dragon_Bread_Noodies",
@@ -61,14 +61,14 @@
         "quantity": 63
       },
       {
-        "id": "Garnet_Gemstone",
-        "type": "Gemstone",
-        "quantity": 85
-      },
-      {
         "id": "ErlangShen",
         "type": "Shard",
         "quantity": 1
+      },
+      {
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 85
       },
       {
         "id": "rare_exp",
@@ -143,7 +143,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 183
+        "quantity": 198
       },
       {
         "id": "Tofu_Soup",
@@ -173,7 +173,7 @@
       {
         "id": "Slime",
         "type": "Material",
-        "quantity": 21
+        "quantity": 26
       },
       {
         "id": "Peach",
@@ -188,7 +188,7 @@
       {
         "id": "Meat",
         "type": "Food",
-        "quantity": 20
+        "quantity": 23
       },
       {
         "id": "Lotus",
@@ -287,14 +287,7 @@
         "equip": "TangSanZang"
       },
       {
-        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "527eb727-8e8d-459c-90f1-3c7aba1e0c53",
+        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
         "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
@@ -308,14 +301,28 @@
         "equip": ""
       },
       {
-        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
-        "template_id": "Ennead_spear",
+        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
+        "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
       },
       {
-        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "7841a747-f41b-4563-b843-9645745ca5f5",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "527eb727-8e8d-459c-90f1-3c7aba1e0c53",
         "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
@@ -343,14 +350,21 @@
         "equip": ""
       },
       {
-        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
-        "template_id": "Bronze_Hammer",
+        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
       },
       {
         "uuid": "fc59af2c-90f4-4ba6-86a0-4fac55ecd977",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
@@ -371,6 +385,27 @@
         "equip": ""
       },
       {
+        "uuid": "e8efda31-9a75-403e-9957-743f2dd99895",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "7353b782-0b2d-425d-bebc-df1a135825af",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "8a01d6b2-2358-43ae-bcd0-a73dd1d8c255",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "2c9afe3d-9321-46c1-8507-d986bc7dde18",
         "template_id": "Sunburst_Spade",
         "current_level": 1,
@@ -385,7 +420,7 @@
         "equip": ""
       },
       {
-        "uuid": "8a01d6b2-2358-43ae-bcd0-a73dd1d8c255",
+        "uuid": "e1bf3036-1afa-42f2-ba9f-04c5fbfe83e7",
         "template_id": "Sunburst_Spade",
         "current_level": 1,
         "current_updgrade": 0,
@@ -818,7 +853,7 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "BullDemonKing"
+        "character_id": "LittleWhiteDragon"
       },
       {
         "position": 2,
@@ -826,7 +861,7 @@
       },
       {
         "position": 3,
-        "character_id": "ZhuBaJie"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 4,
@@ -834,7 +869,7 @@
       },
       {
         "position": 5,
-        "character_id": "LittleWhiteDragon"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 6,
@@ -893,10 +928,10 @@
     "banner_data_map": {
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 17,
+        "pity_count": 22,
         "selected_target_id": "Nimbus_Cudgel",
         "is_next_ssr_guaranteed": true,
-        "total_summon_count": 177
+        "total_summon_count": 182
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",

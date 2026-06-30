@@ -282,6 +282,10 @@ public class GachaMainScene : WindowController
     private void OnCloseClicked()
     {
         UI_Close();
+        if (uiManager != null)
+        {
+            uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+        }
     }
 }
 
