@@ -60,6 +60,47 @@ public class BattleManager : MonoBehaviour
         set { _resultBattle = value; }
     }
 
+    public async UniTask<EnemyDecision> GeneratePlayerAutoDecisionAsync()
+    {
+        await UniTask.Delay(500); // 0.5s thinking
+
+        var skillManager = CurrentCaster.GetCoreComponent<EntitySkill>();
+        SkillCharacter chosenSkill = SkillCharacter.Base;
+
+        if (skillManager != null)
+        {
+            if (skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0)
+                chosenSkill = SkillCharacter.Ultimate;
+            else if (skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0)
+                chosenSkill = SkillCharacter.Major;
+        }
+
+        var skillRuntime = skillManager.Skills[chosenSkill];
+        
+        var validTargets = TargetSystem.GetValidTargetsForSkill(
+            skillRuntime, 
+            CurrentCaster, 
+            Characters.Values.ToList(), 
+            Enemies);
+
+        Entity chosenTarget = null;
+        if (validTargets.Count > 0)
+        {
+            chosenTarget = validTargets
+                .Where(e => !e.GetCoreComponent<EntityStats>().IsDead)
+                .OrderBy(e => e.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value)
+                .FirstOrDefault();
+
+            if (chosenTarget == null) chosenTarget = validTargets[0];
+        }
+
+        return new EnemyDecision
+        {
+            SkillType = chosenSkill,
+            Target = chosenTarget
+        };
+    }
+
     // Current pram
     public Entity CurrentCaster 
     { 
@@ -279,6 +320,12 @@ public class BattleManager : MonoBehaviour
     public void Dispose()
     {
         // Remove Register event
+    }
+
+    private void OnDestroy()
+    {
+        Time.timeScale = 1f;
+        BattleUIScene.CurrentSpeed = 1f;
     }
 
     public void Update()

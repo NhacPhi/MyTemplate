@@ -215,6 +215,12 @@ public static class LocKeys
 
     public const long UI_GACHA = 3050390188;
 
+    public const long UI_QUIT = 782237574;
+
+    public const long UI_RETURN = 453642014;
+
+    public const long UI_RESTART = 4196073692;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -706,6 +712,8 @@ public static class LocKeys
     public const long STR_PEACH_DES = 712344324;
 
     public const long STR_PEACH_USEFUL = 3568455205;
+
+    public const long STR_ARE_YOU_QUIT_BATTLE = 979666793;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

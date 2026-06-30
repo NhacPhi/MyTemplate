@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Tech.StateMachine;
@@ -50,33 +50,26 @@ public class BeginTurnBase : BattleBaseState
 
         UIEvent.OnUpdateEntityPrediction?.Invoke(battleManager.TurnSystem.PredictTurnOrder());
 
-        if (enemyBrain != null )
+        if (enemyBrain != null)
         {
             //Enemy
             UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
 
             var playerTeam = battleManager.TargetSystem.GetValidEtitiesByColumnLogic(battleManager.Characters.Values.ToList());
 
-
             EnemyDecision decision = await enemyBrain.DecideAsync(playerTeam);
 
             // 3. Setup dữ liệu để chuẩn bị chém
             battleManager.CurrentSkill = decision.SkillType;
-
             battleManager.SetCurrentTarget(decision.Target);
-
             battleManager.StateMachine.ChangeState(BattleState.ExecutionState);
         }
         else
         {
             //player
-
             UIEvent.OnSwithActiveSkilCharacter?.Invoke(true);
-
             UIEvent.OnUpdateSkillCharacterUI?.Invoke(battleManager.CurrentCaster);
-
             battleManager.SetupCurrentSkillCaster(SkillCharacter.Base);
-
             battleManager.StateMachine.ChangeState(BattleState.ActionState);
         }
     }

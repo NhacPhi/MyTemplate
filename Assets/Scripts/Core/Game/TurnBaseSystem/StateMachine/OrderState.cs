@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Tech.StateMachine;
 using UnityEngine;
@@ -24,7 +24,7 @@ public class OrderState : BattleBaseState
         battleManager.SeletionCircle.transform.position = pos;
 
         if (battleManager.Boss)
-            UIEvent.OnUpdateBossUI(battleManager.Boss);
+            UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
 
         battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
 
