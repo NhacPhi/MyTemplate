@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpactSkill
 {
-    private PoíonBallData skillData;
+    private PoisonBallData skillData;
     private GameObject firreBallPrefab;
     private Entity _caster;
 
     private UniTaskCompletionSource _skillEnd;
-    public PoisonBallSkill(EntityStats owner, PoíonBallData skillData) : base(owner)
+    public PoisonBallSkill(EntityStats owner, PoisonBallData skillData) : base(owner)
     {
         this.skillData = skillData;
     }
@@ -31,7 +31,7 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
         caster.PlaySFX(skillData.Sound);
-        await UniTask.Delay(1500);
+        await UniTask.Delay(1500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);
@@ -92,7 +92,7 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     }
 }
 
-public class PoíonBallData : SkillData
+public class PoisonBallData : SkillData
 {
     public Vector3 Offset = new Vector3(6.29f, -0.67f, 0);
 

@@ -32,7 +32,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
         caster.PlaySFX(skillData.Sound);
-        await UniTask.Delay(600);
+        await UniTask.Delay(600, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
 
@@ -63,7 +63,7 @@ public class SurikenSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
             ApplyEffectsToTarget(caster, currentTurnID);
         }
 
-        await UniTask.Delay(600);
+        await UniTask.Delay(600, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         PutOnCooldown();
     }

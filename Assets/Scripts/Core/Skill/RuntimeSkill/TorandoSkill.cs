@@ -33,7 +33,7 @@ public class TorandoSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImpa
 
         caster.StateManager.ChangeState(EntityState.MAJOR_SKILL);
         caster.PlaySFX(skillData.Sound);
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
 

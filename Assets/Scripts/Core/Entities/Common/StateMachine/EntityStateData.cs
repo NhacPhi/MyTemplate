@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Tech.Composite;
 using Tech.StateMachine;
@@ -98,6 +98,13 @@ public class EntityStateData : CoreComponent
     {
         _moveEndTcs?.TrySetResult();
         _moveEndTcs = null;
+    }
+
+    private void OnDestroy()
+    {
+        _hitFrameTcs?.TrySetCanceled();
+        _animEndTcs?.TrySetCanceled();
+        _moveEndTcs?.TrySetCanceled();
     }
     // ==========================================
     public CancellationToken Token => Entity.transform.GetCancellationTokenOnDestroy();

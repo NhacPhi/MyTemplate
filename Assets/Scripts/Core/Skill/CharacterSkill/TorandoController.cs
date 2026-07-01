@@ -22,14 +22,14 @@ public class TorandoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_hasHit) return;
+        if (_caster == null || _hasHit) return;
 
         transform.Translate(_flyDirection * _speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(_hasHit) return;
+        if(_caster == null || _hasHit) return;
 
         if (other.gameObject == _caster.gameObject) return;
         if (other.gameObject == _caster.Target)

@@ -396,7 +396,14 @@ public class CharacterProfileModel : IStatProvider
         float flatBonus    = Equipment.GetTotalConstantBonus(type) + PassivesManager.GetTotalConstantBonus(type);
         float percentBonus = (Equipment.GetTotalPercentBonus(type) + PassivesManager.GetTotalPercentBonus(type)) / 100f;
 
-        return Mathf.RoundToInt((baseStat + flatBonus) * (1 + percentBonus));
+        int totalStat = Mathf.RoundToInt((baseStat + flatBonus) * (1 + percentBonus));
+
+        if (type == StatType.CRIT_RATE && totalStat > 100)
+        {
+            totalStat = 100;
+        }
+
+        return totalStat;
     }
 
     public float GetTotalArmorConstantStat(StatType type)

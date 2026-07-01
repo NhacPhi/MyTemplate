@@ -37,8 +37,6 @@ public class BattleUIScene : WindowController
 
     private void OnEnable()
     {
-        CurrentSpeed = 1f;
-        IsAutoBattle = false;
         Time.timeScale = CurrentSpeed;
         UpdateFastForwardText();
         UpdateAutoUI();

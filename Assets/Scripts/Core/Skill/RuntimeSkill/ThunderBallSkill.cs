@@ -32,7 +32,7 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         caster.PlaySFX(skillData.Sound);
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);
@@ -58,7 +58,7 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         await _skillEnd.Task;
 
-        await UniTask.Delay(500);
+        await UniTask.Delay(500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         PutOnCooldown();
     }

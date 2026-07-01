@@ -88,6 +88,12 @@ class CharacterConfigBuilder(BaseBuilder):
                     for col in stat_columns:
                         if col in df.columns:
                             char_stats[col] = int(row[col]) if pd.notna(row[col]) else 0
+                            
+                    if 'crit_rare' in df.columns:
+                        char_stats['CRIT_RATE'] = int(row['crit_rare']) if pd.notna(row['crit_rare']) else 0
+                    if 'crit_dmg' in df.columns:
+                        char_stats['CRIT_DMG'] = int(row['crit_dmg']) if pd.notna(row['crit_dmg']) else 0
+                        
                     character_data[char_id].stats = char_stats
 
         if "CharacterAttribute" in all_sheets:

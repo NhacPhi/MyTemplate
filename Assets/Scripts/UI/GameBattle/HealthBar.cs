@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,6 +52,9 @@ public class HealthBar : BaseAttributeUI
         // Trong LoL, nếu Shield > 0, thanh slider sẽ hiển thị dựa trên tổng (MaxHP + Shield vượt trội)
         // Tuy nhiên đơn giản nhất là giữ Slider Max = MaxHP, và Shield layer nằm đè lên.
         float totalDisplayMax = Mathf.Max(maxHP, currentHP + currentShield);
+        
+        // Đảm bảo thanh máu luôn hiển thị tối thiểu 5% nếu nhân vật còn sống để tránh nhìn như đã chết
+        float displayHP = currentHP > 0 ? Mathf.Max(currentHP, totalDisplayMax * 0.05f) : 0f;
 
         healthSlider.maxValue = totalDisplayMax;
         shieldSlider.maxValue = totalDisplayMax;
@@ -59,30 +62,30 @@ public class HealthBar : BaseAttributeUI
 
         if (immediate)
         {
-            healthSlider.value = currentHP;
-            shieldSlider.value = currentHP + currentShield;
-            damageSlider.value = currentHP;
+            healthSlider.value = displayHP;
+            shieldSlider.value = displayHP + currentShield;
+            damageSlider.value = displayHP;
         }
         else
         {
             // Hiệu ứng thanh máu chính
-            healthSlider.value = currentHP;
+            healthSlider.value = displayHP;
 
             // Hiệu ứng thanh Giáp ảo (Shield nằm từ vị trí HP đi tới)
-            shieldSlider.value = currentHP + currentShield;
+            shieldSlider.value = displayHP + currentShield;
 
             // Hiệu ứng thanh Damage trễ (giống LoL)
             if (isDamage)
             {
                 // Đợi 0.5s rồi mới tụt thanh damageSlider
-                DOTween.To(() => damageSlider.value, x => damageSlider.value = x, currentHP, 0.5f)
+                DOTween.To(() => damageSlider.value, x => damageSlider.value = x, displayHP, 0.5f)
                     .SetDelay(0.3f)
                     .SetEase(Ease.OutQuad);
             }
             else
             {
                 // Nếu là hồi máu thì thanh damage chạy theo ngay
-                damageSlider.value = currentHP;
+                damageSlider.value = displayHP;
             }
         }
 

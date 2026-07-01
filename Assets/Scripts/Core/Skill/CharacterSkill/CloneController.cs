@@ -9,21 +9,23 @@ public class CloneController : MonoBehaviour
 
     public async UniTask ActiveClone(DamageBonus damageBonus, Tech.Composite.Core caster, Tech.Composite.Core target)
     {
+        var token = caster.gameObject.GetCancellationTokenOnDestroy();
+        
         smoke.SetTrigger("Start");
 
         caster.GetComponent<Entity>().PlaySFX("Summon_Smoke");
 
-        await UniTask.Delay(600);
+        await UniTask.Delay(600, cancellationToken: token);
 
         character.gameObject.SetActive(true);
         caster.GetComponent<Entity>().PlaySFX("SunWukong_Attack");
-        await UniTask.Delay(600);
+        await UniTask.Delay(600, cancellationToken: token);
 
         if (damageBonus.Tags == null) damageBonus.Tags = new System.Collections.Generic.HashSet<string>();
         damageBonus.Tags.Add("MajorSkill");
         DamageFormular.DealDamage(damageBonus, caster, target);
 
-        await UniTask.Delay(600);
+        await UniTask.Delay(600, cancellationToken: token);
 
         character.gameObject.SetActive(false);
     }

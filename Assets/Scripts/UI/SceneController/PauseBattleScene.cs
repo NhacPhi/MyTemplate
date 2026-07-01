@@ -14,6 +14,8 @@ public class PauseBattleScene : WindowController
     [SerializeField] private Button _btnRestart;
     [SerializeField] private Button _btnQuit;
 
+    private bool _isExiting = false;
+
     private void Awake()
     {
         if (_btnReturn != null) _btnReturn.onClick.AddListener(UI_Return);
@@ -23,12 +25,16 @@ public class PauseBattleScene : WindowController
 
     private void OnEnable()
     {
+        _isExiting = false;
         Time.timeScale = 0f;
     }
 
     private void OnDisable()
     {
-        Time.timeScale = BattleUIScene.CurrentSpeed;
+        if (!_isExiting)
+        {
+            Time.timeScale = BattleUIScene.CurrentSpeed;
+        }
     }
 
     public void UI_Return()
@@ -38,6 +44,9 @@ public class PauseBattleScene : WindowController
 
     public void UI_Restart()
     {
+        _isExiting = true;
+        BattleUIScene.CurrentSpeed = 1f;
+        BattleUIScene.IsAutoBattle = false;
         UI_Close();
         _sceneLoader.RestartCurrentScene();
     }
@@ -46,6 +55,7 @@ public class PauseBattleScene : WindowController
     {
         Action confirmAction = () =>
         {
+            _isExiting = true;
             UI_Close();
             _uiManager.OpenWindowScene(ScreenIds.GamePlayScene); // Show gameplay panel
             if (_sessionContext != null && _sessionContext.PreviousLocation != null)

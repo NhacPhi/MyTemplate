@@ -198,4 +198,15 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         }
         return EntityState.ATTACK;
     }
+
+    private void OnDestroy()
+    {
+        foreach (var runtime in Skills.Values)
+        {
+            if (runtime != null)
+            {
+                runtime.Dispose();
+            }
+        }
+    }
 }

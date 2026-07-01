@@ -37,6 +37,7 @@ public class PrepareBattleScene : WindowController
         await tcs.Task;
         GameEvent.OnSceneReady -= onSceneReady;
 
+        UIEvent.OnToggleGamePlayScene?.Invoke(false);
         uiManager.OpenWindowScene(ScreenIds.BattleUIScene);
     }
 }

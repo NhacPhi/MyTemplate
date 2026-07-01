@@ -158,7 +158,7 @@ public class SceneLoader : MonoBehaviour
             UIEvent.OnToggleLoadingScene?.Invoke(true);
         }
 
-        yield return new WaitForSeconds(_fadeDuration);
+        yield return new WaitForSecondsRealtime(_fadeDuration);
 
         // 2. UNLOAD QUYẾT LIỆT
         if (_loadingOperationHandle.IsValid())
@@ -209,7 +209,7 @@ public class SceneLoader : MonoBehaviour
 
         while (!_loadingOperationHandle.IsDone || timer < minLoadingTime)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             
             float fakeProgress = Mathf.Clamp01(timer / minLoadingTime);
             

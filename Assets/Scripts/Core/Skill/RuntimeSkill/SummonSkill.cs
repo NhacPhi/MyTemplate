@@ -38,7 +38,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
         effectPrefab.transform.localPosition = skillData.Offset;
         effectPrefab.gameObject.SetActive(true);
         caster.PlaySFX(config.Sound);
-        await UniTask.Delay(800);
+        await UniTask.Delay(800, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         effectPrefab.gameObject.SetActive(false);
 
@@ -60,7 +60,7 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             {
                 activeCloneTasks.Add(cloneController.ActiveClone(CalculateRawDamage(), caster, caster.Targets[i].GetComponent<Entity>()));
                 int randomStartDelay = UnityEngine.Random.Range(100, 300);
-                await UniTask.Delay(randomStartDelay);
+                await UniTask.Delay(randomStartDelay, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
             }
         }
 
@@ -128,6 +128,23 @@ public class SummonSkill : SkillRuntime, IAttackSkill, ISummonSkill, IAsyncIniti
             }
 
         }
+    }
+
+    public override void Dispose()
+    {
+        if (effectPrefab != null)
+        {
+            Object.Destroy(effectPrefab);
+        }
+
+        foreach (var clone in clonePrefabs)
+        {
+            if (clone != null)
+            {
+                Object.Destroy(clone);
+            }
+        }
+        clonePrefabs.Clear();
     }
 }
 

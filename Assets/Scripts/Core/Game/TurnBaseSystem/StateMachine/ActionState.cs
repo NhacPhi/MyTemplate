@@ -28,7 +28,6 @@ public class ActionState : BattleBaseState
             _isHandlingAuto = true;
             
             // Clean up UI manually since we skip manual action
-            UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
             battleManager.TargetSystem.ResetTargetVisuals(battleManager.ActiveEntities);
 
             // Execute auto logic

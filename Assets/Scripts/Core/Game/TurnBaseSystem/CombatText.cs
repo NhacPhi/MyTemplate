@@ -39,6 +39,7 @@ public class CombatText : IInitializable, IDisposable
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
         //var clone = _objectResolver.Instantiate(popupPrefab, position, Quaternion.identity);
         clone.SetValue(damage);
+        clone.SetCritical(isCris);
         if(isCris)
             clone.TMP.color = Color.yellow;
         else
@@ -51,6 +52,7 @@ public class CombatText : IInitializable, IDisposable
 
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
         clone.SetValue(heal);
+        clone.SetCritical(false);
         clone.TMP.color = Color.green;
     }
     public void Dispose()

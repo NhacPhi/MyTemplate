@@ -22,9 +22,19 @@ public class CombatTextUI : MonoBehaviour
         TMP = GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    [SerializeField] private GameObject iconCritical;
+
     public void SetValue(float damage)
     {
         string textDmg = Mathf.CeilToInt(damage).ToString(CultureInfo.InvariantCulture);
         TMP.text = textDmg;
+    }
+
+    public void SetCritical(bool isCritical)
+    {
+        if (iconCritical != null)
+        {
+            iconCritical.SetActive(isCritical);
+        }
     }
 }

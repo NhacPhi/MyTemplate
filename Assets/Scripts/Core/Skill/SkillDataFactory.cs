@@ -36,7 +36,7 @@ public static class SkillDataFactory
 
             case Skill.Suriken: return new SurikenData();
 
-            case Skill.PoisonBall: return new PoíonBallData();
+            case Skill.PoisonBall: return new PoisonBallData();
 
             case Skill.DivineWind: return new DivineWindData();
         }

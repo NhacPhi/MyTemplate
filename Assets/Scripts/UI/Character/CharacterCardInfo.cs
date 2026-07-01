@@ -77,8 +77,8 @@ public class CharacterCardInfo : CharacterCard
         txtDEF.text = GetStatText(StatType.DEF, characterProfile);
         txtSPD.text = GetStatText(StatType.SPEED, characterProfile);
         txtDEFShred.text = "0"; // stat.DEFShred.ToString();
-        txtCritRate.text = GetStatText(StatType.CRIT_RATE, characterProfile);
-        txtCriteDMG.text = GetStatText(StatType.CRIT_DMG, characterProfile);
+        txtCritRate.text = GetStatText(StatType.CRIT_RATE, characterProfile, true);
+        txtCriteDMG.text = GetStatText(StatType.CRIT_DMG, characterProfile, true, 175);
         txtPenetration.text = "0"; // stat.Penetration.ToString();
         txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
 
@@ -101,9 +101,10 @@ public class CharacterCardInfo : CharacterCard
         UpdateCharacterCardInfo(currentCharracter);
     }
 
-    private string GetStatText(StatType type, CharacterProfileModel profile)
+    private string GetStatText(StatType type, CharacterProfileModel profile, bool isPercentage = false, int baseOffset = 0)
     {
-        int profileTotal = profile.GetTotalStat(type);
+        int originalProfileTotal = profile.GetTotalStat(type);
+        int profileTotal = originalProfileTotal + baseOffset;
         float globalFlat = 0f;
         float globalPercent = 0f;
 
@@ -123,22 +124,35 @@ public class CharacterCardInfo : CharacterCard
             }
         }
 
-        if (globalFlat == 0f && globalPercent == 0f)
+        string pct = isPercentage ? "%" : "";
+
+        if (type == StatType.CRIT_RATE && profileTotal > 100)
         {
-            return profileTotal.ToString();
+            profileTotal = 100;
         }
 
-        int foodBonus = Mathf.RoundToInt(globalFlat + (profileTotal * (globalPercent / 100f)));
-        Debug.Log($"[CharacterCardInfo] Stat: {type}, ProfileTotal: {profileTotal}, FoodBonus: {foodBonus} (Flat: {globalFlat}, Percent: {globalPercent})");
+        if (globalFlat == 0f && globalPercent == 0f)
+        {
+            return $"{profileTotal}{pct}";
+        }
+
+        int foodBonus = Mathf.RoundToInt(globalFlat + (originalProfileTotal * (globalPercent / 100f)));
+
+        if (type == StatType.CRIT_RATE && profileTotal + foodBonus > 100)
+        {
+            foodBonus = 100 - profileTotal;
+        }
+
+        Debug.Log($"[CharacterCardInfo] Stat: {type}, ProfileTotal: {originalProfileTotal}, FoodBonus: {foodBonus} (Flat: {globalFlat}, Percent: {globalPercent})");
 
         if (foodBonus > 0)
         {
-            return $"{profileTotal} <color=#00FF00>+{foodBonus}</color>";
+            return $"{profileTotal}{pct} <color=#00FF00>+{foodBonus}{pct}</color>";
         }
         else if (foodBonus < 0)
         {
-            return $"{profileTotal} <color=#FF0000>{foodBonus}</color>";
+            return $"{profileTotal}{pct} <color=#FF0000>{foodBonus}{pct}</color>";
         }
-        return profileTotal.ToString();
+        return $"{profileTotal}{pct}";
     }
 }

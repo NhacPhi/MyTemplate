@@ -3,6 +3,8 @@ using UnityEngine;
 
 public static class DamageFormular 
 {
+    private static System.Collections.Generic.Dictionary<int, int> prdAttackCounts = new System.Collections.Generic.Dictionary<int, int>();
+
    public static void DealDamge(DamageBonus damageBonus, Transform source, Transform target)
     {
         if(!source.TryGetComponent(out Tech.Composite.Core sourceCore)) return;
@@ -27,6 +29,37 @@ public static class DamageFormular
             sourceSkill.ApplyAttackSkill(ref damageResult);
         }
 
+        bool isCritical = false;
+        var critRate = sourceStats.GetStat(StatType.CRIT_RATE);
+        if (critRate != null && critRate.Value > 0)
+        {
+            int sourceId = source.GetInstanceID();
+            if (!prdAttackCounts.TryGetValue(sourceId, out int attackCount))
+            {
+                attackCount = 1;
+            }
+
+            float p = critRate.Value / 100f;
+            // PRD Constant Approximation (C ≈ P * P) for smoother distribution
+            float c = (p >= 1f) ? 1f : (p * p);
+            float currentCritChance = c * attackCount * 100f;
+
+            if (currentCritChance >= 100f || UnityEngine.Random.Range(0f, 100f) < currentCritChance)
+            {
+                isCritical = true;
+                prdAttackCounts[sourceId] = 1; // Reset PRD counter
+                
+                var critDmg = sourceStats.GetStat(StatType.CRIT_DMG);
+                // LoL Base Crit Damage is 175%, plus any bonus Crit Dmg
+                float critMultiplier = (175f + (critDmg != null ? critDmg.Value : 0f)) / 100f;
+                damageResult *= critMultiplier;
+            }
+            else
+            {
+                prdAttackCounts[sourceId] = attackCount + 1; // Increment PRD counter
+            }
+        }
+
         var targetDef = targetStats.GetStat(StatType.DEF);
 
         if (targetSkill)
@@ -36,7 +69,7 @@ public static class DamageFormular
 
         damageResult = Mathf.RoundToInt(damageResult * (100f / (100 + targetDef.Value)));
         targetStats.TakeDamage(damageResult, source.transform, damageBonus.Tags);
-        UIEvent.DamagePopup(damageResult, target.transform.position, false);
+        UIEvent.DamagePopup(damageResult, target.transform.position, isCritical);
     }
 
 

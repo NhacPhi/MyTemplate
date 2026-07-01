@@ -36,7 +36,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         await state.WaitForAnimEnd();
         caster.StateManager.ChangeState(EntityState.IDLE);
 
-        //await UniTask.Delay(1000);
+        //await UniTask.Delay(1000, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
 
@@ -57,7 +57,7 @@ public class DivineWindSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
            );
 
         await _skillEnd.Task;
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
         PutOnCooldown();
     }
 

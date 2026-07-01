@@ -101,4 +101,8 @@ public abstract class SkillRuntime
 
         return targetList;
     }
+
+    public virtual void Dispose()
+    {
+    }
 }
