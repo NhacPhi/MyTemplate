@@ -42,4 +42,8 @@ public static class GameEvent
     public static Action OnInteraction;
     public static Action<Interaction> OnExecuteSpecificInteraction;
     public static Action<string, int> OnRequestPickupItem;
+
+    // Respawn System
+    public static Func<string, RespawnType, float, bool> OnCheckRespawnStatus;
+    public static Action<string> OnRecordResourceDestroyed;
 }

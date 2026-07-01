@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 4695265646494585102}
   - component: {fileID: 5669380282873311158}
   - component: {fileID: 7427295173095788438}
+  - component: {fileID: -8352727641880493665}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Enemy
@@ -337,3 +338,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-8352727641880493665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224190863576112643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07ce52651ec208429c6a312ee269df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UniqueID: 
+  RespawnRule: 0
+  CooldownMinutes: 30
+  _isConsumed: 0

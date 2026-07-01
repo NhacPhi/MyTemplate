@@ -18,7 +18,17 @@ public class ItemPickup : MonoBehaviour
         
         Debug.Log($"[ItemPickup] Đã nhặt item: {itemID} x {amount}");
 
-        // Sau khi nhặt xong, phá hủy object khỏi cảnh
-        Destroy(gameObject);
+        // Tiêu thụ tài nguyên trên bản đồ nếu có MapResource
+        MapResource mapResource = GetComponent<MapResource>();
+        if (mapResource != null)
+        {
+            mapResource.ConsumeResource();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            // Fallback nếu không có hệ thống Respawn
+            Destroy(gameObject);
+        }
     }
 }

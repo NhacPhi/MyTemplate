@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6736370628297807534}
   - component: {fileID: 5055372282997738244}
   - component: {fileID: 3568681325196117497}
+  - component: {fileID: 4199327483891046514}
   m_Layer: 0
   m_Name: Fox
   m_TagString: Enemy
@@ -186,6 +187,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4199327483891046514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5361861519264278875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07ce52651ec208429c6a312ee269df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UniqueID: 0029b927-b49a-4d36-9321-4152a846b7a3
+  RespawnRule: 3
+  CooldownMinutes: 5
+  _isConsumed: 0
 --- !u!1 &8402832420706474413
 GameObject:
   m_ObjectHideFlags: 0

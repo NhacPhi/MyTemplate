@@ -183,6 +183,14 @@ namespace Gameplay.MapCharacter.Enemy
         public void DeactivateEnemy()
         {
             DropItem(); // Gọi hàm rớt đồ trước khi biến mất
+
+            // Tiêu thụ tài nguyên trên bản đồ nếu có
+            MapResource mapResource = GetComponent<MapResource>();
+            if (mapResource != null)
+            {
+                mapResource.ConsumeResource();
+            }
+
             gameObject.SetActive(false);
         }
 

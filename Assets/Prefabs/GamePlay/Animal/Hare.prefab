@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5623122437501560174}
   - component: {fileID: 5039540216235209739}
   - component: {fileID: 5166664223867602033}
+  - component: {fileID: 7969586001607811547}
   m_Layer: 0
   m_Name: Hare
   m_TagString: Enemy
@@ -186,6 +187,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7969586001607811547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117233788213643407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07ce52651ec208429c6a312ee269df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UniqueID: 066b13bb-3c42-4d9f-b502-c24a130a8018
+  RespawnRule: 3
+  CooldownMinutes: 5
+  _isConsumed: 0
 --- !u!1 &879819797408058384
 GameObject:
   m_ObjectHideFlags: 0

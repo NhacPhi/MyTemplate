@@ -21,4 +21,7 @@ public class PlayerSave
 
     [JsonProperty("gacha")]
     public GachaSaveData Gacha { get; private set; } = new GachaSaveData();
+
+    [JsonProperty("world_state")]
+    public WorldSaveData WorldState { get; private set; } = new WorldSaveData();
 }
