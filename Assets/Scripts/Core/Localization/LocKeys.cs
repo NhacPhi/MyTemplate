@@ -221,6 +221,18 @@ public static class LocKeys
 
     public const long UI_RESTART = 4196073692;
 
+    public const long UI_MISSION_REWARD = 4097180722;
+
+    public const long UI_GO_TO_GACHA = 2957923389;
+
+    public const long UI_GO_TO_BATTLE = 2846791379;
+
+    public const long UI_GO_TO_CHARACTER = 4214057338;
+
+    public const long UI_GP_TO_UPGRADE_WEAPON = 1390475340;
+
+    public const long UI_IN_THE_WORLD = 2431996933;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -714,6 +726,66 @@ public static class LocKeys
     public const long STR_PEACH_USEFUL = 3568455205;
 
     public const long STR_ARE_YOU_QUIT_BATTLE = 979666793;
+
+    public const long STR_FOLLOW_NPC = 1065258568;
+
+    public const long STR_UNFOLLOW_NPC = 755111608;
+
+    public const long STR_TALK_TO = 1462184160;
+
+    public const long STR_GIVE_ITEM_TO = 997046023;
+
+    public const long STR_FOLLOWING = 2752667899;
+
+    public const long STR_DAILAY_PEACH = 1236606823;
+
+    public const long STR_DAILAY_PEACH_TARGET = 2581235733;
+
+    public const long STR_DAILAY_PEACH_DES = 3384075171;
+
+    public const long STR_DAILY_SLIME = 2042821135;
+
+    public const long STR_DAILY_SLIME_TARGET = 3557387244;
+
+    public const long STR_DAILY_SLIME_DES = 404163171;
+
+    public const long STR_DAILY_BATTLE = 623661612;
+
+    public const long STR_DAILY_BATTLE_TARGET = 535834569;
+
+    public const long STR_DAILY_BATTLE_DES = 1144715446;
+
+    public const long STR_DAILY_UPGADE_CHARACTER = 4136539788;
+
+    public const long STR_DAILY_UPGADE_CHARACTER_TARGET = 366226103;
+
+    public const long STR_DAILY_UPGADE_CHARACTER_DES = 4286701465;
+
+    public const long STR_DAILY_UPGADE_WEAPON = 2796236663;
+
+    public const long STR_DAILY_UPGADE_WEAPON_TARGET = 2800073634;
+
+    public const long STR_DAILY_UPGADE_WEAPON_DES = 2873284081;
+
+    public const long STR_DAILY_SHOPPING = 850793847;
+
+    public const long STR_DAILY_SHOPPING_TARGET = 1516487850;
+
+    public const long STR_DAILY_SHOPPING_DES = 1808791439;
+
+    public const long STR_GACHA_CHARACTER = 441349399;
+
+    public const long STR_GACHA_CHARACTER_TARGET = 3217122595;
+
+    public const long STR_GACHA_CHARACTER_DES = 4170488839;
+
+    public const long STR_GACHA_WEAPON = 1325777218;
+
+    public const long STR_GACHA_WEAPON_TARGET = 1602243556;
+
+    public const long STR_GACHA_WEAPON_DES = 2788875053;
+
+    public const long STR_CLAIM_REWARD = 310887858;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

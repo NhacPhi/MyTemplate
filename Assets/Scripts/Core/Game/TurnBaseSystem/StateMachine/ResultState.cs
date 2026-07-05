@@ -112,6 +112,8 @@ public class ResultState : BattleBaseState
                 account.CurrentExp -= maxExpForLevel;
             }
             
+            GameEvent.OnWinBattle?.Invoke(battleManager.BattleSession.PendingBattleID, 1);
+            
             battleManager.SaveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
         }
 

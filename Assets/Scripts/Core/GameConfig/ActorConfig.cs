@@ -10,6 +10,9 @@ public class ActorConfig
     [JsonProperty("dialogue_default")]
     public string DialogueDefault;
 
+    [JsonProperty("location_hash")]
+    public long LocationName;
+
     [JsonIgnore]
     public ActorSO ActorSo;
 }

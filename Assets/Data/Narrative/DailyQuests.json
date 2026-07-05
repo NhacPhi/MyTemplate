@@ -1,0 +1,90 @@
+{
+    "dq_kill_slime": {
+        "id": "dq_kill_slime",
+        "name_hash": 2042821135,
+        "des_hash": 404163171,
+        "target_hash": 3557387244,
+        "location_hash": 2431996933,
+        "reward_id": "Default_01",
+        "objective_type": "KillEnemy",
+        "target_id": "Slime",
+        "require_amount": 3
+    },
+    "dq_gather_peach": {
+        "id": "dq_gather_peach",
+        "name_hash": 1236606823,
+        "des_hash": 3384075171,
+        "target_hash": 2581235733,
+        "location_hash": 2431996933,
+        "reward_id": "Default_01",
+        "objective_type": "PickupItem",
+        "target_id": "Peach",
+        "require_amount": 3
+    },
+    "dq_upgrade_character": {
+        "id": "dq_upgrade_character",
+        "name_hash": 4136539788,
+        "des_hash": 4286701465,
+        "target_hash": 366226103,
+        "location_hash": 4214057338,
+        "reward_id": "Default_01",
+        "objective_type": "UpgradeCharacter",
+        "target_id": "",
+        "require_amount": 1
+    },
+    "dq_upgrade_weapon": {
+        "id": "dq_upgrade_weapon",
+        "name_hash": 2796236663,
+        "des_hash": 2873284081,
+        "target_hash": 2800073634,
+        "location_hash": 1390475340,
+        "reward_id": "Default_01",
+        "objective_type": "UpgradeWeapon",
+        "target_id": "",
+        "require_amount": 1
+    },
+    "dq_clear_battle": {
+        "id": "dq_clear_battle",
+        "name_hash": 623661612,
+        "des_hash": 1144715446,
+        "target_hash": 535834569,
+        "location_hash": 2846791379,
+        "reward_id": "Default_01",
+        "objective_type": "WinBattle",
+        "target_id": "",
+        "require_amount": 1
+    },
+    "dq_shopping": {
+        "id": "dq_shopping",
+        "name_hash": 850793847,
+        "des_hash": 1808791439,
+        "target_hash": 1516487850,
+        "location_hash": 2019819151,
+        "reward_id": "Default_01",
+        "objective_type": "Purchase",
+        "target_id": "",
+        "require_amount": 1
+    },
+    "dp_gacha_character": {
+        "id": "dp_gacha_character",
+        "name_hash": 441349399,
+        "des_hash": 4170488839,
+        "target_hash": 3217122595,
+        "location_hash": 2957923389,
+        "reward_id": "Default_01",
+        "objective_type": "Summon",
+        "target_id": "Charracter",
+        "require_amount": 1
+    },
+    "dp_gacha_weapon": {
+        "id": "dp_gacha_weapon",
+        "name_hash": 1325777218,
+        "des_hash": 2788875053,
+        "target_hash": 1602243556,
+        "location_hash": 2957923389,
+        "reward_id": "Default_01",
+        "objective_type": "Summon",
+        "target_id": "Weapon",
+        "require_amount": 1
+    }
+}

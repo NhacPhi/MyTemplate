@@ -125,6 +125,9 @@ public class EntityStats : StatsController, IDamagable
     protected virtual void HandleDeath()
     {
         IsDead = true;
+        
+        var entity = this.core as Entity;
+
         OnDeath?.Invoke();
         gameObject.SetActive(false);
     }

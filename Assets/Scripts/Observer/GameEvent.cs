@@ -37,6 +37,10 @@ public static class GameEvent
     public static Action OnMakeWinChoice;
     public static Action OnMakeLosingChoice;
     public static Action OnContinueWithStepEvent;
+    public static Action OnQuestUpdated;
+    public static Action<QuestCompoment> OnOpenQuestUI;
+    public static Action<StepController> OnNPCSpawned;
+    public static Action<StepController> OnNPCDestroyed;
 
 
     public static Action OnInteraction;
@@ -46,4 +50,14 @@ public static class GameEvent
     // Respawn System
     public static Func<string, RespawnType, float, bool> OnCheckRespawnStatus;
     public static Action<string> OnRecordResourceDestroyed;
+
+    // Daily Quest Tracking
+    public static Action<string, int> OnEnemyKilled; 
+    public static Action<string, int> OnPickupItem; 
+    public static Action<string, int> OnCharacterUpgraded; 
+    public static Action<int> OnWeaponUpgraded; 
+    public static Action<string, int> OnWinBattle; 
+    public static Action<string, int> OnShopPurchased;
+    public static Action<string, int> OnGachaSummoned;
+    public static Action OnDailyQuestUpdated;
 }

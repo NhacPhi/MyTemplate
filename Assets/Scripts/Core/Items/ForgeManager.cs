@@ -50,6 +50,7 @@ public class ForgeManager
         UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
 
         UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
+        GameEvent.OnWeaponUpgraded?.Invoke(1);
 
         return true;
     }
@@ -104,6 +105,7 @@ public class ForgeManager
 
             UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
             UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
+            GameEvent.OnWeaponUpgraded?.Invoke(upgradesDone);
         }
 
         return upgradesDone; // Trả về số cấp đã nâng

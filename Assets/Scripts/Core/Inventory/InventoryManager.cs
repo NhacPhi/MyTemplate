@@ -59,6 +59,8 @@ public class InventoryManager : IDisposable
                 AddStackableItem(itemID, config.Type, amount);
             }
         }
+        
+        GameEvent.OnPickupItem?.Invoke(itemID, amount);
     }
 
 

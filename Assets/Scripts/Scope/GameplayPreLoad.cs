@@ -8,6 +8,7 @@ using System;
 public class GameplayPreload : IAsyncStartable, IPreload
 {
     [Inject] QuestManager questManager;
+    [Inject] DailyQuestManager dailyQuestManager;
     [Inject] GameNarrativeData gameNarrative;
 
     public bool IsDone;
@@ -15,6 +16,7 @@ public class GameplayPreload : IAsyncStartable, IPreload
     {
         await gameNarrative.LoadGameNarrativeConfig(cancellation);
         questManager.StartGame();
+        dailyQuestManager.StartGame();
     }
 
     public Action OnLoadDone { get; set; }

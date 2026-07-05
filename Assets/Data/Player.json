@@ -2,17 +2,17 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 7,
-    "current_exp": 1400,
+    "current_exp": 3200,
     "avatar_icon": "Wukong02_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 370,
-      "Jade": 74900,
-      "Coin": 5215080,
-      "RelicEssence": 7343080,
+      "Jade": 75650,
+      "Coin": 5275400,
+      "RelicEssence": 7329960,
       "ArmorPrimorite": 596750,
-      "Ticket": 9
+      "Ticket": 8
     },
     "items": [
       {
@@ -21,9 +21,9 @@
         "quantity": 1
       },
       {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "Jade_Parcels",
+        "type": "Food",
+        "quantity": 85
       },
       {
         "id": "BullDemonKing",
@@ -41,9 +41,9 @@
         "quantity": 72
       },
       {
-        "id": "Jade_Parcels",
-        "type": "Food",
-        "quantity": 85
+        "id": "Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Dragon_Bread_Noodies",
@@ -58,17 +58,17 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 63
-      },
-      {
-        "id": "Garnet_Gemstone",
-        "type": "Gemstone",
-        "quantity": 85
+        "quantity": 73
       },
       {
         "id": "ErlangShen",
         "type": "Shard",
         "quantity": 1
+      },
+      {
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 85
       },
       {
         "id": "rare_exp",
@@ -143,7 +143,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 203
+        "quantity": 233
       },
       {
         "id": "Tofu_Soup",
@@ -168,12 +168,12 @@
       {
         "id": "Meat",
         "type": "Food",
-        "quantity": 27
+        "quantity": 34
       },
       {
         "id": "Lotus",
         "type": "Food",
-        "quantity": 26
+        "quantity": 27
       },
       {
         "id": "Murshroom_Steamed_Buns",
@@ -183,12 +183,12 @@
       {
         "id": "Slime",
         "type": "Material",
-        "quantity": 27
+        "quantity": 38
       },
       {
         "id": "Peach",
         "type": "Food",
-        "quantity": 19
+        "quantity": 24
       },
       {
         "id": "LittleWhiteDragon",
@@ -219,7 +219,7 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
         "template_id": "Vanguard_Of_Volition",
-        "current_level": 21,
+        "current_level": 22,
         "current_updgrade": 1,
         "equip": "SunWukong"
       },
@@ -287,8 +287,29 @@
         "equip": "TangSanZang"
       },
       {
+        "uuid": "7841a747-f41b-4563-b843-9645745ca5f5",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
         "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
+        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -308,48 +329,6 @@
         "equip": ""
       },
       {
-        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "7841a747-f41b-4563-b843-9645745ca5f5",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
         "uuid": "fc59af2c-90f4-4ba6-86a0-4fac55ecd977",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
@@ -364,10 +343,31 @@
         "equip": ""
       },
       {
-        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
+        "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
         "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
         "equip": ""
       },
       {
@@ -375,6 +375,13 @@
         "template_id": "Sunburst_Spade",
         "current_level": 20,
         "current_updgrade": 2,
+        "equip": ""
+      },
+      {
+        "uuid": "8a436448-b754-4af0-9f0b-c4e84e6e66dd",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
         "equip": ""
       }
     ],
@@ -804,7 +811,7 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "ZhuBaJie"
+        "character_id": "ShaWujing"
       },
       {
         "position": 2,
@@ -812,7 +819,7 @@
       },
       {
         "position": 3,
-        "character_id": "ShaWujing"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 4,
@@ -837,52 +844,16 @@
     ]
   },
   "shop": {
-    "purchase_history": {
-      "SHOP_COMBO_01": {
-        "product_id": "SHOP_COMBO_01",
-        "purchase_count": 1,
-        "last_purchase_time": 639159995499712504
-      },
-      "SHOP_COMBO_03": {
-        "product_id": "SHOP_COMBO_03",
-        "purchase_count": 1,
-        "last_purchase_time": 639159995566588087
-      },
-      "SHOP_RARE_04": {
-        "product_id": "SHOP_RARE_04",
-        "purchase_count": 4,
-        "last_purchase_time": 639160760368151925
-      },
-      "SHOP_RARE_03": {
-        "product_id": "SHOP_RARE_03",
-        "purchase_count": 5,
-        "last_purchase_time": 639160760067835628
-      },
-      "SHOP_RARE_05": {
-        "product_id": "SHOP_RARE_05",
-        "purchase_count": 1,
-        "last_purchase_time": 639160768154854374
-      },
-      "SHOP_RARE_06": {
-        "product_id": "SHOP_RARE_06",
-        "purchase_count": 1,
-        "last_purchase_time": 639160777753388600
-      },
-      "SHOP_COMBO_02": {
-        "product_id": "SHOP_COMBO_02",
-        "purchase_count": 1,
-        "last_purchase_time": 639161615588829937
-      }
-    }
+    "purchase_history": {}
   },
   "gacha": {
     "banner_data_map": {
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 22,
+        "pity_count": 23,
         "selected_target_id": "Nimbus_Cudgel",
         "is_next_ssr_guaranteed": true,
-        "total_summon_count": 182
+        "total_summon_count": 183
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",
@@ -895,9 +866,29 @@
   },
   "world_state": {
     "destroyed_resources": {
-      "91e7b90b-d853-4388-9c59-fe71fbcd84ba": 639186037266613581,
-      "feeeedd9-487a-43ec-930b-e9f4d5d833ef": 639186037379115055,
-      "f3ad7db9-7466-4997-9c79-ef98d0576d3d": 639185175614161776
+      "91e7b90b-d853-4388-9c59-fe71fbcd84ba": 639188358658327654,
+      "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639188367152604282,
+      "f3ad7db9-7466-4997-9c79-ef98d0576d3d": 639188367310873278,
+      "feeeedd9-487a-43ec-930b-e9f4d5d833ef": 639188367491574646,
+      "f689cde0-a2a7-4c35-9b9a-d4ee7ac3fe43": 639189234595497233,
+      "20865339-0b77-44cc-a9ea-cbfa6eb46dbd": 639189234648241210,
+      "08adbfdb-0ee7-42fe-870d-ee3b174097fb": 639189234665247550
     }
+  },
+  "quest": {
+    "CompletedQuestLineIDs": [],
+    "CompletedQuestIDs": [],
+    "ActiveQuestID": "Default_01",
+    "ActiveStepIndex": 0
+  },
+  "daily_quest": {
+    "last_reset_time_ticks": 639189072000000000,
+    "active_daily_quests": {},
+    "completed_daily_quests": [
+      "dq_gather_peach",
+      "dq_shopping",
+      "dq_upgrade_weapon"
+    ],
+    "tracked_quest_id": ""
   }
 }

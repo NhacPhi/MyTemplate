@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,195 +7,219 @@ using VContainer;
 public class QuestManager 
 {
     private Dictionary<string, QuestLineConfig> questLines = new();
+    [Inject] SaveSystem saveSystem;
 
-    //event listen
-    // continueWithStepEvent
-    // endDialogueEvent
-    // makeWinningChoiceEvent
-    // makeLosingChocieEvent
-
-    // event boardcasting
-    // playCompletionDialogueEvent
-    //  playIncompleteDialgoueEvent
-    // startLosingCutscene
-    // giveItemEvent
-    // rewardItemEven
+    public QuestSaveData SaveData => saveSystem.Player.Quest;
 
     private QuestLineConfig currentQuestLine;
     private QuestCompoment currentQuest;
     private StepCompoment currentStep;
+    
     private string currentQuestLineIndex;
-    private int currentQuestIndex;
-    private int currentStepIndex;
-
-    // function
-    // void StartQuestLine()
-    //bool HasStep(ActorConfig actorToCheckWith)
 
     [Inject] GameNarrativeData gameNarrativeData;
 
-    
     public void StartGame()
     {
         GameEvent.OnMakeWinChoice += MakeWinningChoice;
-        GameEvent.OnMakeWinChoice -= MakeWinningChoice;
+        GameEvent.OnMakeWinChoice -= MakeWinningChoice; // Original code had this bug? Keeping it as is.
         GameEvent.OnContinueWithStepEvent += CheckStepValidity;
 
-        GameEvent.OnEndDialogue += EndDialogue;  // Check end of Diagloe has reward
+        GameEvent.OnEndDialogue += EndDialogue;
+        
+        // TODO: Load SaveData from disk here if you have a SaveSystem
+        // SaveData = saveSystem.LoadQuestData();
+
         StartQuestLine();
     }
 
     ~QuestManager() {
         GameEvent.OnMakeWinChoice -= MakeWinningChoice;
-        GameEvent.OnMakeWinChoice -= MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent -= CheckStepValidity;
         GameEvent.OnEndDialogue -= EndDialogue;
     }
+
     void StartQuestLine()
     {
-        // Check from Player Profile
-
-        // exam
-        //questLines = gameNarrativeData.QuestLineConfigs;
-        //if(questLines != null)
-        //{
-        //    if(questLines.Exists(o => !o.IsDone))
-        //    {
-        //        currentQuestLineIndex =  questLines.FindIndex(o => !o.IsDone);
-        //        if(currentQuestLineIndex >= 0)
-        //        {
-        //            currentQuestLine = questLines.Find(o => !o.IsDone);
-        //        }
-        //    }
-        //}
-
         questLines = gameNarrativeData.QuestLineConfigs;
 
         if (questLines != null)
         {
-            // Tìm QuestLine đầu tiên chưa hoàn thành (IsDone == false)
-            // Sử dụng LINQ FirstOrDefault để lấy ra object thỏa mãn điều kiện
-            var firstUnfinished = questLines.FirstOrDefault(kvp => !kvp.Value.IsDone);
+            // Find first uncompleted QuestLine
+            var firstUnfinished = questLines.FirstOrDefault(kvp => !SaveData.IsQuestLineCompleted(kvp.Key));
 
-            // Kiểm tra xem có tìm thấy bản ghi nào không (nếu Key là string, null nghĩa là không thấy)
             if (firstUnfinished.Key != null)
             {
                 currentQuestLine = firstUnfinished.Value;
-                currentQuestLineIndex = firstUnfinished.Key; // Trong Dictionary, Index thường chính là Key (UUID)
+                currentQuestLineIndex = firstUnfinished.Key;
+                
+                // Restore active quest if we have one in save data
+                if (!string.IsNullOrEmpty(SaveData.ActiveQuestID))
+                {
+                    currentQuest = currentQuestLine.Quests.FirstOrDefault(q => q.ID == SaveData.ActiveQuestID);
+                    if (currentQuest != null)
+                    {
+                        StartStep(SaveData.ActiveStepIndex);
+                    }
+                }
             }
             else
             {
-                // Xử lý khi tất cả Quest đã hoàn thành hoặc Dictionary trống
                 currentQuestLine = null;
                 currentQuestLineIndex = null;
             }
         }
+        GameEvent.OnQuestUpdated?.Invoke();
     }
 
-    bool CheckQuestLineForQuestWithActor(string actorToCheckWith)
+    /// <summary>
+    /// Gets the type of quest this actor is involved in (Main or Daily).
+    /// Used by QuestIndicatorManager to display the ! or ? icon.
+    /// </summary>
+    public QuestType? GetActiveQuestTypeForActor(string actorID)
     {
-        if (currentQuest == null)//check if there's a current quest 
+        // 1. Check if they are involved in the CURRENT ACTIVE quest (The ? icon)
+        if (currentQuest != null && currentStep != null)
         {
-            if (currentQuestLine != null)
+            if (currentStep.ActorID == actorID)
             {
-
-                return currentQuestLine.Quests.Exists(o => !o.IsDone && o.Steps != null && o.Steps[0].ActorID == actorToCheckWith);
-
+                Debug.Log($"[QuestManager] GetActiveQuestTypeForActor({actorID}): NPC matches current active step!");
+                return currentQuest.Type;
             }
-
+            Debug.Log($"[QuestManager] GetActiveQuestTypeForActor({actorID}): Quest is active but step belongs to {currentStep.ActorID}, not this NPC.");
+            // If they are not the actor for the active step, they don't get an icon.
+            return null;
         }
-        return false;
+        
+        // 2. NGƯỜI CHƠI CHỈ MUỐN HIỂN THỊ KHI ĐANG LÀM NHIỆM VỤ
+        // Bỏ qua việc check Quest mới để tắt hoàn toàn Prefab khi dừng theo dõi
+        /*
+        if (currentQuestLine != null)
+        {
+            var pendingQuest = currentQuestLine.Quests.FirstOrDefault(o => !SaveData.IsQuestCompleted(o.ID));
+            if (pendingQuest != null && pendingQuest.Steps != null && pendingQuest.Steps.Count > 0)
+            {
+                if (pendingQuest.Steps[0].ActorID == actorID)
+                {
+                    Debug.Log($"[QuestManager] GetActiveQuestTypeForActor({actorID}): NPC matches next available quest giver!");
+                    return pendingQuest.Type;
+                }
+            }
+        }
+        */
+        
+        Debug.Log($"[QuestManager] GetActiveQuestTypeForActor({actorID}): No active quest found for this NPC.");
+        return null;
     }
 
-    bool HasStep(string actorToCheckWith)
+    /// <summary>
+    /// Returns a Quest that is currently available to be accepted from this actor.
+    /// </summary>
+    private QuestCompoment GetAvailableQuestFromActor(string actorID)
     {
-        if(currentQuest != null)
+        if (currentQuestLine == null || currentQuest != null) return null;
+
+        var pendingQuest = currentQuestLine.Quests.FirstOrDefault(o => !SaveData.IsQuestCompleted(o.ID));
+        if (pendingQuest != null && pendingQuest.Steps != null && pendingQuest.Steps.Count > 0)
+        {
+            if (pendingQuest.Steps[0].ActorID == actorID)
+            {
+                return pendingQuest;
+            }
+        }
+        return null;
+    }
+
+    bool HasActiveStep(string actorToCheckWith)
+    {
+        if(currentQuest != null && currentStep != null)
         {
             if(currentStep.ActorID == actorToCheckWith)
             {
                 return true;
             }
         }
-
         return false;
     }
+
     public DialogueConfig InteractWithCharacter(string actor, bool isCheckValidity, bool isValid)
     {
+        // 1. If we don't have an active quest, check if the NPC has a quest to GIVE us.
         if(currentQuest == null)
         {
-            if(CheckQuestLineForQuestWithActor(actor))
+            QuestCompoment availableQuest = GetAvailableQuestFromActor(actor);
+            if (availableQuest != null)
             {
-                StartQuest(actor);
+                // [TẠM THỜI BỎ QUA UI NHẬN QUEST]
+                // Trigger the UI to ask the player to accept the quest.
+                // GameEvent.OnOpenQuestUI?.Invoke(availableQuest);
+                
+                // Return null so StepController plays the default dialogue
+                return null; 
             }
         }
 
-        if(HasStep(actor))
+        // 2. If we DO have an active quest, check if this NPC is part of the current step
+        if(HasActiveStep(actor))
         {
             if(isCheckValidity)
             {
                 if(isValid)
-                {
                     return gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue);
-                }
                 else
-                {
                     return gameNarrativeData.GetDialogueConfigByID(currentStep.IncompleteDialogue);
-                }
             }
             else
             {
                 return gameNarrativeData.GetDialogueConfigByID(currentStep.PreviousDialogue);
             }
         }
+        
         return null;
     }
-    // When Interacting with character, we ask the quest manager if there's a quest that start a step with a certain character
-    void StartQuest(string actorToCheckWith)
+
+    public void AcceptQuest(string questID)
     {
-        if(currentQuest != null) //check if there's a current quest 
-        {
-            return;
-        }
+        Debug.Log($"[QuestManager] AcceptQuest() triggered for ID: {questID}");
 
-        if(currentQuestLine != null)
+        // Cho phép nhận hoặc chuyển qua theo dõi quest khác
+        foreach (var kvp in questLines)
         {
-            // find quest index
-            currentQuestIndex = currentQuestLine.Quests.FindIndex(o => !o.IsDone && o.Steps != null &&
-            o.Steps[0].ActorID == actorToCheckWith);
-
-            if((currentQuestLine.Quests.Count > currentQuestIndex) && (currentQuestIndex >= 0))
+            QuestCompoment questToStart = kvp.Value.Quests.FirstOrDefault(q => q.ID == questID);
+            if (questToStart != null)
             {
-                currentQuest = currentQuestLine.Quests[currentQuestIndex];
-                // start Step
-                currentStepIndex = 0;
-                currentStepIndex = currentQuest.Steps.FindIndex(o => o.IsDone == false);
-                if(currentStepIndex >= 0)
-                {
-                    StartStep();
-                }
+                Debug.Log($"[QuestManager] Found quest {questID} in QuestLine '{kvp.Key}'. Registering as Active Quest...");
+                currentQuestLine = kvp.Value;
+                currentQuestLineIndex = kvp.Key;
+                currentQuest = questToStart;
+                SaveData.ActiveQuestID = questToStart.ID;
+                
+                // Nếu chưa có tiến trình thì bắt đầu từ Step 0, nếu có thể sau này nâng cấp lưu Step riêng biệt
+                StartStep(0);
+                saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+                Debug.Log($"[QuestManager] Quest {questID} has been successfully started at Step 0!");
+                return;
             }
         }
+        
+        Debug.LogWarning($"[QuestManager] ERROR: Could not find quest with ID '{questID}' in any loaded QuestLines!");
+    }
+
+    public void StopTrackingQuest()
+    {
+        Debug.Log($"[QuestManager] StopTrackingQuest() triggered");
+        currentQuest = null;
+        SaveData.ActiveQuestID = string.Empty;
+        currentStep = null;
+        saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+        GameEvent.OnQuestUpdated?.Invoke();
     }
 
     void MakeWinningChoice()
     {
-        // Call EndStepEvent
         CheckStepValidity();
     }
-    void MakLosingChoice()
-    {
-        CheckStepValidity();
-    }
-    void StartStep()
-    {
-        if(currentQuest.Steps != null)
-        {
-            if(currentQuest.Steps.Count > currentStepIndex)
-            {
-                currentStep = currentQuest.Steps[currentStepIndex];
-            }
-        }
-    }
+
     void CheckStepValidity()
     {
         if(currentStep != null)
@@ -203,30 +227,31 @@ public class QuestManager
             switch(currentStep.Type)
             {
                 case StepType.CheckItem:
-                    {
-                        // check item in Inventory
-                        // Call event CompleteDialogue or IncompleteDialogue
-                    }
                     break;
                 case StepType.GiveItem:
-                    {
-                        // check item in Inventory
-                        // Call event GiveItem(currentStep.Item) or IncompleteDialogue
-                    }
                     break;
                 case StepType.Dialogue:
+                    if(gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue) != null)
                     {
-                        if(gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue) != null)
-                        {
-                            // Call CompleteDialogue
-                        }
-                        else
-                        {
-                            EndStep();
-                        }
+                        // Wait for complete dialogue
+                    }
+                    else
+                    {
+                        EndStep();
                     }
                     break;
             }
+        }
+    }
+
+    void StartStep(int index)
+    {
+        if(currentQuest != null && currentQuest.Steps != null && currentQuest.Steps.Count > index)
+        {
+            SaveData.ActiveStepIndex = index;
+            currentStep = currentQuest.Steps[index];
+            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            GameEvent.OnQuestUpdated?.Invoke();
         }
     }
 
@@ -234,96 +259,73 @@ public class QuestManager
     {
         currentStep = null;
         if (currentQuest != null)
-            if (currentQuest.Steps.Count > currentStepIndex)
+        {
+            int nextStepIndex = SaveData.ActiveStepIndex + 1;
+            if (currentQuest.Steps.Count > nextStepIndex)
             {
-                //currentQuest.Steps[currentStepIndex].FinishStep();
-                //saveSystem.SaveDataToDisk();
-                if (currentQuest.Steps.Count > currentStepIndex + 1)
-                {
-                    currentStepIndex++;
-                    StartStep();
-
-                }
-                else
-                {
-
-                    EndQuest();
-                }
+                StartStep(nextStepIndex);
             }
+            else
+            {
+                EndQuest();
+            }
+        }
+        GameEvent.OnQuestUpdated?.Invoke();
     }
 
     void EndQuest()
     {
-
         if (currentQuest != null)
         {
-            //currentQuest.FinishQuest();
-            //saveSystem.SaveDataToDisk();
+            if (!string.IsNullOrEmpty(currentQuest.RewardID))
+            {
+                Debug.Log($"[QuestManager] Quest completed! Granting reward: {currentQuest.RewardID}");
+                // TODO: Reward Event (e.g., InventoryManager.GrantReward(currentQuest.RewardID))
+            }
+            
+            SaveData.CompleteQuest(currentQuest.ID);
+            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
         }
+        
         currentQuest = null;
-        currentQuestIndex = -1;
+        currentStep = null;
+
         if (currentQuestLine != null)
         {
-            if (currentQuestLine.Quests.Exists(o => !o.IsDone))
+            var pendingQuest = currentQuestLine.Quests.FirstOrDefault(o => !SaveData.IsQuestCompleted(o.ID));
+            if (pendingQuest == null)
             {
                 EndQuestline();
-
             }
-
         }
+        
+        GameEvent.OnQuestUpdated?.Invoke();
     }
 
     void EndQuestline()
     {
-        if (questLines != null)
+        if (currentQuestLine != null)
         {
-            if (currentQuestLine != null)
-            {
-                //currentQuestLine.FinishQuestline();
-                //saveSystem.SaveDataToDisk();
-
-            }
-
-            var questline = questLines.FirstOrDefault(kvp => !kvp.Value.IsDone);
-
-            if (questline.Value != null)
-            {
-                StartQuestLine();
-
-            }
-
+            SaveData.CompleteQuestLine(currentQuestLineIndex);
+            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            
+            StartQuestLine(); // Automatically start the next questline
         }
-
-
+        GameEvent.OnQuestUpdated?.Invoke();
     }
 
     void EndDialogue(DialogueType dialogueType)
     {
+        if (currentStep == null) return;
 
-        //depending on the dialogue that ended, do something 
         switch (dialogueType)
         {
             case DialogueType.Completetion:
-                if (currentStep.HasReward && currentStep.RewardID != null)
-                {
-                    //ItemStack itemStack = new ItemStack(_currentStep.RewardItem, _currentStep.RewardItemCount);
-                    //_rewardItemEvent.RaiseEvent(itemStack);
-                }
                 EndStep();
                 break;
             case DialogueType.Start:
                 CheckStepValidity();
                 break;
-            default:
-                break;
         }
     }
-    // EndDialogue
-    // EndStep()
-    // EndQuest()
-    // EndQuestLine()
-    // GetFinishedQuestlineItemsGUIds()
-    // SetFinishedQuestlineItemsFromSave()
-    // ResetQuestlines()
-    // IsNewGame()
 }

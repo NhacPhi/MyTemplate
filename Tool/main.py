@@ -3,7 +3,7 @@ from src.builders.item_builder import ItemConfigBuilder
 from src.builders.character_builder import CharacterConfigBuilder
 from src.builders.level_and_ascension_builder import LevelAndAscensionBuilder
 from src.builders.battle_builder import EffectConfigBuilder, BattleConfigBuilder
-from src.builders.narrative_builder import ActorConfigBuilder, DialogueConfigBuilder, QuestLineConfigBuilder
+from src.builders.narrative_builder import ActorConfigBuilder, DialogueConfigBuilder, QuestLineConfigBuilder, DailyQuestConfigBuilder
 from src.builders.set_bonus_builder import SetBonusBuilder
 from src.builders.starup_builder import StarUpBuilder
 from src.builders.passive_skill_builder import PassiveSkillBuilder
@@ -68,6 +68,9 @@ def main():
 
     questline_config = QuestLineConfigBuilder(narrative_path)
     questline_config.run()
+
+    daily_quest_config = DailyQuestConfigBuilder(narrative_path)
+    daily_quest_config.run()
 
 if __name__  == "__main__":
     main()

@@ -75,7 +75,6 @@ public static class UIEvent
     public static Action<int, int> OnUpdatePlayerHP;
 
     // Map
-    public static Action<LocationID> OnOpenMapUIWithCurrentLocation;
     public static Action<GameSceneSO, Sprite> OnSelectToggleMap;
     public static Action<bool> OnToggleLoadingScene;
     public static Action<float> OnUpdateLoadingProgress;

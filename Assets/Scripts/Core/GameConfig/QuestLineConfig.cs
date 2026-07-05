@@ -9,9 +9,19 @@ public enum StepType
     CheckItem
 }
 
+public enum QuestType
+{
+    None = 0,
+    Main,
+    Daily
+}
+
 [Serializable]
 public class StepCompoment
 {
+    [JsonProperty("id")]
+    public string ID;
+
     [JsonProperty("actor_id")]
     public string ActorID;
 
@@ -29,20 +39,14 @@ public class StepCompoment
 
     [JsonProperty("item_id")]
     public string ItemID;
-
-    [JsonProperty("has_reward")]
-    public bool HasReward;
-
-    [JsonProperty("reward_id")]
-    public string RewardID;
-
-    [JsonIgnore]
-    public bool IsDone = false;
 }
 
 [Serializable]
 public class QuestCompoment
 {
+    [JsonProperty("id")]
+    public string ID;
+
     [JsonProperty("name_hash")]
     public long Name;
 
@@ -52,13 +56,19 @@ public class QuestCompoment
     [JsonProperty("steps")]
     public List<StepCompoment> Steps;
 
-    [JsonIgnore]
-    public bool IsDone = false;
+    [JsonProperty("quest_type")]
+    public QuestType Type;
+
+    [JsonProperty("reward_id")]
+    public string RewardID;
 }
 
 [Serializable]
 public class QuestLineConfig
 {
+    [JsonProperty("id")]
+    public string ID;
+
     [JsonProperty("name_hash")]
     public long Name;
 
@@ -67,9 +77,6 @@ public class QuestLineConfig
 
     [JsonProperty("quests")]
     public List<QuestCompoment> Quests;
-
-    [JsonIgnore]
-    public bool IsDone = false;
 }
 
 

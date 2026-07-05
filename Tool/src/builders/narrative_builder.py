@@ -1,7 +1,7 @@
 import pandas as pd
 import config
 from src.builders.base_builder import BaseBuilder
-from src.models.narrative_models import ActorMode, ChoiceModel, LineModel, DialogueModel, QuestLinesModel, StepModel, QuestModel
+from src.models.narrative_models import ActorMode, ChoiceModel, LineModel, DialogueModel, QuestLinesModel, StepModel, QuestModel, DailyQuestModel
 
 class ActorConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -22,7 +22,8 @@ class ActorConfigBuilder(BaseBuilder):
 
                 actor_data[actor_id] = ActorMode(
                     name_hash=self.get_hash(row['Name']),
-                    dialogue_default=str(row['DialogueDefault']) if pd.notna(row['DialogueDefault']) else ""                  
+                    dialogue_default=str(row['DialogueDefault']) if pd.notna(row['DialogueDefault']) else "",
+                    location_hash=self.get_hash(row['LocationName']) if 'LocationName' in row and pd.notna(row['LocationName']) else 0
                 )
             final_data = {actor_id: actor.to_dict() for actor_id, actor in actor_data.items()}
             self.export_json(config.OUTPUT_GAME_NARRATIVE_FOLDER, final_data, "Actors")
@@ -109,16 +110,16 @@ class QuestLineConfigBuilder(BaseBuilder):
                 if pd.isna(row['ID']) : continue
 
                 quest_id = str(row['QuestID']).strip()
+                step_id = str(row['ID']).strip()
 
                 new_step = StepModel(
+                    id=step_id,
                     actor_id=str(row['ActorID']) if pd.notna(row['ActorID']) else "",
                     previous_diagoue=str(row['DialogueBeforeStep']) if pd.notna(row['DialogueBeforeStep']) else "",
                     completed_dialogue=str(row['CompleteDialogue']) if pd.notna(row['CompleteDialogue']) else "",
                     incomplete_dialogue=str(row['IncompleteDialogue']) if pd.notna(row['IncompleteDialogue']) else "",
                     type=str(row['Type']) if pd.notna(row['Type']) else "",
                     item_id=str(row['ItemID']) if pd.notna(row['ItemID']) else "",
-                    has_reward=bool(row['HasReward']) if pd.notna(row['HasReward']) else "",
-                    reward_id=str(row['RewardID']) if pd.notna(row['RewardID']) else "",
                 )
 
                 if quest_id not in step_by_quest:
@@ -136,10 +137,17 @@ class QuestLineConfigBuilder(BaseBuilder):
 
                 match_steps = step_by_quest.get(quest_id, [])
 
+                quest_type_str = str(row['QuestType']).strip().lower() if 'QuestType' in row and pd.notna(row['QuestType']) else ""
+                type_map = {"main": 1, "daily": 2, "none": 0}
+                quest_type_val = type_map.get(quest_type_str, 0)
+
                 new_quest = QuestModel(
+                    id=quest_id,
                     name_hash=self.get_hash(row['Name']),
                     des_hash=self.get_hash(row['Description']),
                     steps=match_steps,
+                    quest_type=quest_type_val,
+                    reward_id=str(row['RewardID']) if 'RewardID' in row and pd.notna(row['RewardID']) else ""
                 )
                 if questline_id not in quest_by_questline:
                     quest_by_questline[questline_id] = []
@@ -156,6 +164,7 @@ class QuestLineConfigBuilder(BaseBuilder):
                 match_quest = quest_by_questline.get(questline_id, [])
 
                 questline_data[questline_id] = QuestLinesModel(
+                    id=questline_id,
                     name_hash=self.get_hash(row['Name']),
                     des_hash=self.get_hash(row['Description']),
                     quests=match_quest,
@@ -163,3 +172,36 @@ class QuestLineConfigBuilder(BaseBuilder):
 
         final_data = {questline_id: questline.to_dict() for questline_id, questline in questline_data.items()}
         self.export_json(config.OUTPUT_GAME_NARRATIVE_FOLDER, final_data, "QuestLines")
+
+class DailyQuestConfigBuilder(BaseBuilder):
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def run(self):
+        print(f"Processing DailyQuest config: {self.file_path}")
+        all_sheets = pd.read_excel(self.file_path, sheet_name=None)
+        
+        daily_quest_data = {}
+        if "DailyQuests" in all_sheets:
+            df = all_sheets["DailyQuests"]
+            for _, row in df.iterrows():
+                if pd.isna(row['ID']): continue
+                
+                quest_id = str(row['ID']).strip()
+                
+                daily_quest_data[quest_id] = DailyQuestModel(
+                    id=quest_id,
+                    name_hash=self.get_hash(row['Name']),
+                    des_hash=self.get_hash(row['Description']),
+                    target_hash=self.get_hash(row['Target']) if 'Target' in row and pd.notna(row['Target']) else 0,
+                    location_hash=self.get_hash(row['LocationName']) if 'LocationName' in row and pd.notna(row['LocationName']) else 0,
+                    reward_id=str(row['RewardID']) if 'RewardID' in row and pd.notna(row['RewardID']) else "",
+                    objective_type=str(row['ObjectiveType']).strip() if 'ObjectiveType' in row and pd.notna(row['ObjectiveType']) else "",
+                    target_id=str(row['TargetID']).strip() if 'TargetID' in row and pd.notna(row['TargetID']) else "",
+                    require_amount=int(row['RequireAmount']) if 'RequireAmount' in row and pd.notna(row['RequireAmount']) else 1
+                )
+                
+        if daily_quest_data:
+            final_data = {q_id: q.to_dict() for q_id, q in daily_quest_data.items()}
+            self.export_json(config.OUTPUT_GAME_NARRATIVE_FOLDER, final_data, "DailyQuests")
+

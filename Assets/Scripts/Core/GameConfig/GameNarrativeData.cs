@@ -14,24 +14,32 @@ public class GameNarrativeData : MonoBehaviour
     public Dictionary<string, ActorConfig> ActorConfigs = new();
     public Dictionary<string, DialogueConfig> DialogueConfigs = new();
     public Dictionary<string, QuestLineConfig> QuestLineConfigs = new();
+    public Dictionary<string, DailyQuestConfig> DailyQuestConfigs = new();
 
 
     private const string ActorAddress = "Actors";
     private const string QuestLineAddress = "QuestLines";
     private const string DialogueAddress = "Dialogues";
+    private const string DailyQuestAddress = "DailyQuests";
 
     public async UniTask LoadGameNarrativeConfig(CancellationToken cancellationToken = default)
     {
         // 1. Load JSON
-        var (actorText, dialogueText, questLineText) = await UniTask.WhenAll(
+        var (actorText, dialogueText, questLineText, dailyQuestText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ActorAddress, token: cancellationToken),
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(DialogueAddress, token: cancellationToken),
-            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(QuestLineAddress, token: cancellationToken)
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(QuestLineAddress, token: cancellationToken),
+            AddressablesManager.Instance.LoadAssetAsync<TextAsset>(DailyQuestAddress, token: cancellationToken)
         );
 
         ActorConfigs = Json.DeserializeObject<Dictionary<string, ActorConfig>>(actorText.text);
         DialogueConfigs = Json.DeserializeObject<Dictionary<string, DialogueConfig>>(dialogueText.text);
         QuestLineConfigs = Json.DeserializeObject<Dictionary<string, QuestLineConfig>>(questLineText.text);
+        if (dailyQuestText != null)
+        {
+            DailyQuestConfigs = Json.DeserializeObject<Dictionary<string, DailyQuestConfig>>(dailyQuestText.text);
+            AddressablesManager.Instance.RemoveAsset(DailyQuestAddress);
+        }
 
         AddressablesManager.Instance.RemoveAsset(ActorAddress);
         AddressablesManager.Instance.RemoveAsset(QuestLineAddress);

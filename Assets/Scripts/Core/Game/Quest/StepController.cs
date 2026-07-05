@@ -32,6 +32,12 @@ public class StepController : MonoBehaviour
     {
         //resolver.Inject(this);
         defaultDialogue = gameNarrativeData.GetDefaultDialogueConfigByActorID(actor.ID);
+        GameEvent.OnNPCSpawned?.Invoke(this);
+    }
+
+    void OnDestroy()
+    {
+        GameEvent.OnNPCDestroyed?.Invoke(this);
     }
 
     void PlayDefaultDialogue()

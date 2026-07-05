@@ -34,6 +34,8 @@ public class GachaManager
             results.Add(RollSingle(config));
         }
 
+        GameEvent.OnGachaSummoned?.Invoke(config.Type.ToString(), count);
+
         return results;
     }
 

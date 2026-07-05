@@ -11,8 +11,17 @@ namespace Gameplay.MapCharacter.Enemy
         Coward      // Động vật: Bỏ chạy
     }
 
+    public enum EnemyType
+    {
+        Slime,
+        Animal
+    }
+
     public class EnemyAIController : MonoBehaviour, IDamageable
     {
+        [Header("Enemy Identity")]
+        public EnemyType Type = EnemyType.Slime;
+
         [Header("Stats")]
         public int MaxHP = 100;
         public int CurrentHP { get; private set; }
@@ -125,6 +134,7 @@ namespace Gameplay.MapCharacter.Enemy
             if (CurrentHP <= 0)
             {
                 CurrentHP = 0;
+                GameEvent.OnEnemyKilled?.Invoke(Type.ToString(), 1);
                 ChangeState(DieState);
             }
             else
