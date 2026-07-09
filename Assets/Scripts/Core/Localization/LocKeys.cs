@@ -787,6 +787,24 @@ public static class LocKeys
 
     public const long STR_CLAIM_REWARD = 310887858;
 
+    public const long STR_HEAVENLY_SODDIERS = 2635507213;
+
+    public const long STR_YOUNG_BUFFALO = 708051223;
+
+    public const long STR_MINIONS = 848672198;
+
+    public const long STR_RAT_MONSTER = 2688236324;
+
+    public const long STR_SQUID_SOLDIER = 1053526018;
+
+    public const long STR_CRAB_SOLDIER = 2392969024;
+
+    public const long STR_BENBORBA = 1385735148;
+
+    public const long STR_BABORBEN = 1782549332;
+
+    public const long STR_LI_JING = 77400843;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;
@@ -832,18 +850,6 @@ public static class LocKeys
     public const long SHAWUJING_B_DES = 3914413104;
 
     public const long SHAWUJING_M_DES = 3778048083;
-
-    public const long DRAGONKING_B_NAME = 2087350282;
-
-    public const long DRAGONKING_M_NAME = 2457540170;
-
-    public const long DRAGONKING_U_NAME = 2442178655;
-
-    public const long DRAGONKING_B_DES = 4284271022;
-
-    public const long DRAGONKING_M_DES = 491717580;
-
-    public const long DRAGONKING_U_DES = 1983184445;
 
     public const long THIRDPRINCENEZHA_B_NAME = 3960779279;
 
@@ -892,18 +898,6 @@ public static class LocKeys
     public const long ERLANGSHEN_M_DES = 603761648;
 
     public const long ERLANGSHEN_U_DES = 4054124890;
-
-    public const long GUANYINBODHISATTVA_B_NAME = 2003724100;
-
-    public const long GUANYINBODHISATTVA_M_NAME = 1350552570;
-
-    public const long GUANYINBODHISATTVA_U_NAME = 692807574;
-
-    public const long GUANYINBODHISATTVA_B_DES = 3989031508;
-
-    public const long GUANYINBODHISATTVA_M_DES = 2542808218;
-
-    public const long GUANYINBODHISATTVA_U_DES = 3110919530;
 
     public const long VANGUARDTIGER_B_NAME = 2407734047;
 
@@ -968,6 +962,18 @@ public static class LocKeys
     public const long GOLDFISHDEMON_M_DES = 909228250;
 
     public const long GOLDFISHDEMON_U_DES = 3530900397;
+
+    public const long LIJING_B_NAME = 2799548957;
+
+    public const long LIJING_M_NAME = 892025863;
+
+    public const long LIJING_U_NAME = 415233688;
+
+    public const long LIJING_B_DES = 609586725;
+
+    public const long LIJING_M_DES = 2595721932;
+
+    public const long LIJING_U_DES = 1426498449;
 
     public const long DEBUFF_DEF_NAME = 651413426;
 

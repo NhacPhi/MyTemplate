@@ -10,6 +10,7 @@ public class ShopScene : WindowController
     [SerializeField] private Button btnClose;
 
     [Inject] private UIManager uiManager;
+    [Inject] private CurrencyManager currencyMM;
     
     [SerializeField] private ShopPanel shopPanel;
 

@@ -59,11 +59,5 @@ public class GamePlayScene : WindowController
 
     private void OnEnable()
     {
-        Invoke(nameof(DelayUpdateCurrency), 0.1f);
-    }
-
-    private void DelayUpdateCurrency()
-    {
-        currencyMM?.UpdateCurrency();
     }
 }

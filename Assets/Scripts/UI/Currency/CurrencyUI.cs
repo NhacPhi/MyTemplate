@@ -10,6 +10,7 @@ public class CurrencyUI : MonoBehaviour
     private void OnEnable()
     {
         UIEvent.OnCurrencyChanged += UpdateCurrency;
+        UIEvent.OnRequestCurrencyUpdate?.Invoke();
     }
 
     private void OnDisable()

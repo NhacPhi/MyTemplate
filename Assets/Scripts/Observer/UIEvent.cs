@@ -81,6 +81,7 @@ public static class UIEvent
     public static Action OnPrepareBattleData;
 
     public static Action<CurrencyType, int> OnCurrencyChanged;
+    public static Action OnRequestCurrencyUpdate;
 
     // TextPopup
     public static Action<float, Vector3, bool> DamagePopup;

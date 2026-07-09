@@ -23,6 +23,7 @@ public class GamePlayPanel : PanelController
     [Inject] private UIManager uiManager;
     [Inject] private SaveSystem save;
     [Inject] private GameDataBase gameDataBase;
+    [Inject] private CurrencyManager currencyMM;
 
     private void Start()
     {

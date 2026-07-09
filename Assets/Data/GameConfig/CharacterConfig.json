@@ -798,7 +798,7 @@
                 "id": "ErlangShen_M",
                 "name_hash": 3312233495,
                 "des_hash": 603761648,
-                "skill": "None",
+                "skill": "MajorAttack",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
@@ -820,7 +820,7 @@
                 "id": "ErlangShen_U",
                 "name_hash": 56125714,
                 "des_hash": 4054124890,
-                "skill": "None",
+                "skill": "MoonBlade",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
@@ -1529,6 +1529,838 @@
             "hp": 175,
             "def": 20,
             "atk": 115
+        }
+    },
+    "HeavenlySoddier": {
+        "name_hash": 2635507213,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "HeavenlySoddier_B",
+                "name_hash": 2799330964,
+                "des_hash": 3528624972,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "YoungBufflalo": {
+        "name_hash": 708051223,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "YoungBufflalo_B",
+                "name_hash": 1390968150,
+                "des_hash": 1489662636,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "Minions": {
+        "name_hash": 848672198,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "Minions_B",
+                "name_hash": 1210738038,
+                "des_hash": 3735536405,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "RatMonster": {
+        "name_hash": 2688236324,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "RatMonster_B",
+                "name_hash": 241609888,
+                "des_hash": 3655173356,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "CrabSolider": {
+        "name_hash": 2392969024,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "CrabSolider_B",
+                "name_hash": 1984758757,
+                "des_hash": 2437008570,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "SquidSolider": {
+        "name_hash": 1053526018,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "SquidSolider_B",
+                "name_hash": 584660242,
+                "des_hash": 255384784,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "Benborba": {
+        "name_hash": 1385735148,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "Benborba_B",
+                "name_hash": 3023624840,
+                "des_hash": 692867472,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "Baborben": {
+        "name_hash": 1782549332,
+        "rare": "R",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "Baborben_B",
+                "name_hash": 1447199142,
+                "des_hash": 3463256089,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "None_Skill",
+                "name_hash": 318310275,
+                "des_hash": 1671057782,
+                "skill": "None",
+                "skill_type": "NonAttackSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3500,
+            "def": 280,
+            "atk": 2650,
+            "speed": 70,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {}
+    },
+    "LiJing": {
+        "name_hash": 77400843,
+        "rare": "SSR",
+        "type": "Tanker",
+        "skills": {
+            "Base": {
+                "id": "LiJing_B",
+                "name_hash": 2799548957,
+                "des_hash": 609586725,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ShaWujing_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "LiJing_M",
+                "name_hash": 892025863,
+                "des_hash": 2595721932,
+                "skill": "BuffShield",
+                "skill_type": "NonAttackSkill",
+                "target_type": "Self",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ZhuBaJie_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "LiJing_U",
+                "name_hash": 415233688,
+                "des_hash": 1426498449,
+                "skill": "EmpowerAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ZhuBaJie_Main",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3200,
+            "def": 400,
+            "atk": 1350,
+            "speed": 85,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 350,
+            "def": 36,
+            "atk": 121
         }
     }
 }

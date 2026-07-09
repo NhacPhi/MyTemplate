@@ -12,6 +12,7 @@ public class CharacterScene : WindowController
     [SerializeField] private CharacterUI characterUI;
     [Inject] private UIManager ui;
     [Inject] private SaveSystem save;
+    [Inject] private CurrencyManager currencyMM;
 
     private void Start()
     {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -61,8 +61,9 @@ public class CharacterUpdateLevel : MonoBehaviour
             UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
 
             // Mở khóa nút lại
-            btnUpdate.interactable = true;
-            btnUpdateTo.interactable = true;
+            bool canUp = upgrader.GetMaxReachableLevelWithCurrentExpItemsAndCoin() > character.SaveData.Level;
+            btnUpdate.interactable = canUp;
+            btnUpdateTo.interactable = canUp;
         });
     }
 
@@ -89,8 +90,9 @@ public class CharacterUpdateLevel : MonoBehaviour
 
                 UIEvent.OnSelectCharacterAvatar?.Invoke(currentCharacter);
 
-                btnUpdate.interactable = true;
-                btnUpdateTo.interactable = true;
+                bool canUp = upgrader.GetMaxReachableLevelWithCurrentExpItemsAndCoin() > character.SaveData.Level;
+                btnUpdate.interactable = canUp;
+                btnUpdateTo.interactable = canUp;
             });
         }
     }
@@ -111,6 +113,10 @@ public class CharacterUpdateLevel : MonoBehaviour
 
         int maxCoinData = Utility.GetCoinNeedToUpgradeCacultivate(maxLevel);
         txtCoinUpdateLv.text = Utility.FormatCurrency(maxCoinData - currentCoinData);
+
+        bool canUpgrade = maxLevel > data.Level;
+        if (btnUpdate != null) btnUpdate.interactable = canUpgrade;
+        if (btnUpdateTo != null) btnUpdateTo.interactable = canUpgrade;
     }
 
     public void RefreshUI()
@@ -140,11 +146,29 @@ public class CharacterUpdateLevel : MonoBehaviour
             sliderExp.value = 0f;
             _progressTween = sliderExp.DOValue(1f, 0.5f)
                 .SetEase(Ease.OutCubic)
-                .OnComplete(() => onComplete?.Invoke());
+                .SetUpdate(true) // Chạy cả khi Time.timeScale = 0
+                .OnComplete(() => SafeInvoke(onComplete));
         }
         else
         {
+            SafeInvoke(onComplete);
+        }
+    }
+
+    private void SafeInvoke(System.Action onComplete)
+    {
+        try
+        {
             onComplete?.Invoke();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[CharacterUpdateLevel] Lỗi trong callback OnComplete: {e}");
+            
+            // Đảm bảo mở khóa nút nếu có lỗi xảy ra
+            if (btnUpdate != null) btnUpdate.interactable = true;
+            if (btnUpdateTo != null) btnUpdateTo.interactable = true;
         }
     }
 }
+

@@ -22,6 +22,7 @@ public class CurrencyManager
     public void Init()
     {
         Load();
+        UIEvent.OnRequestCurrencyUpdate += UpdateCurrency;
     }
     public void Add(CurrencyType type, int amount)
     {

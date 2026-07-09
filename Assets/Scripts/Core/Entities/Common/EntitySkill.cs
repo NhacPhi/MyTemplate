@@ -30,7 +30,8 @@ public enum Skill
     Torando,
     Suriken,
     PoisonBall,
-    DivineWind
+    DivineWind,
+    MoonBlade
 }
 
 public enum SkillType

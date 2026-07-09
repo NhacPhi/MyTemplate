@@ -34,8 +34,6 @@ public class InventoryScene : WindowController
         }
 
         ResetToDefaultTab();
-
-        Invoke(nameof(DelayUpdateCurrency), 0.1f);
     }
 
     private void ResetToDefaultTab()
@@ -55,11 +53,6 @@ public class InventoryScene : WindowController
         {
             defaultToggle.ActiveToggle(true);
         }
-    }
-
-    private void DelayUpdateCurrency()
-    {
-        currencyMM?.UpdateCurrency();
     }
 
     private void OnDisable() 

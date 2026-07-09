@@ -53,8 +53,9 @@ public class HealthBar : BaseAttributeUI
         // Tuy nhiên đơn giản nhất là giữ Slider Max = MaxHP, và Shield layer nằm đè lên.
         float totalDisplayMax = Mathf.Max(maxHP, currentHP + currentShield);
         
-        // Đảm bảo thanh máu luôn hiển thị tối thiểu 5% nếu nhân vật còn sống để tránh nhìn như đã chết
-        float displayHP = currentHP > 0 ? Mathf.Max(currentHP, totalDisplayMax * 0.05f) : 0f;
+        // Tăng mức tối thiểu lên 10% (0.1f). 
+        // Lý do bạn thấy "đen xì" ở 5% là vì viền (padding/border) của UI Slider trong Unity thường che mất một phần nhỏ ở đầu thanh máu. 5% là quá nhỏ nên bị viền đè mất thành ra không thấy gì.
+        float displayHP = currentHP > 0 ? Mathf.Max(currentHP, totalDisplayMax * 0.1f) : 0f;
 
         healthSlider.maxValue = totalDisplayMax;
         shieldSlider.maxValue = totalDisplayMax;

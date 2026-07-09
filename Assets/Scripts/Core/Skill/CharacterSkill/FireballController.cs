@@ -42,12 +42,12 @@ public class FireballController : MonoBehaviour
 
         if (other.gameObject == _caster.gameObject) return;
 
-        //if (other.isTrigger) return;
-        if (other.gameObject == _caster.Target)
+        Entity target = other.GetComponent<Entity>();
+
+        // Check if the collided object is an entity and belongs to the opposing team
+        if (target != null && target.Team != _caster.Team)
         {
             _hasHit = true;
-
-            Entity target = other.GetComponent<Entity>();
 
             if (_skillHandler != null)
             {
