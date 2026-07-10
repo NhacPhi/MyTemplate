@@ -1,16 +1,16 @@
 {
   "account_info": {
     "player_name": "Congyon",
-    "level": 7,
-    "current_exp": 5000,
+    "level": 9,
+    "current_exp": 2600,
     "avatar_icon": "Wukong04_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 370,
-      "Jade": 75950,
-      "Coin": 5082120,
-      "RelicEssence": 7214440,
+      "Jade": 77850,
+      "Coin": 150040,
+      "RelicEssence": 6855720,
       "ArmorPrimorite": 596750,
       "Ticket": 8
     },
@@ -23,7 +23,7 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 73
+        "quantity": 17
       },
       {
         "id": "Yellow_Jade_Gemstone",
@@ -36,14 +36,14 @@
         "quantity": 45
       },
       {
+        "id": "SunWukong",
+        "type": "Shard",
+        "quantity": 72
+      },
+      {
         "id": "Jade_Gemstone",
         "type": "Gemstone",
         "quantity": 1
-      },
-      {
-        "id": "Garnet_Gemstone",
-        "type": "Gemstone",
-        "quantity": 85
       },
       {
         "id": "ThirdPrinceNezha",
@@ -61,9 +61,9 @@
         "quantity": 85
       },
       {
-        "id": "SunWukong",
-        "type": "Shard",
-        "quantity": 72
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 75
       },
       {
         "id": "Garnet_Chunk",
@@ -88,7 +88,7 @@
       {
         "id": "rare_exp",
         "type": "Exp",
-        "quantity": 50
+        "quantity": 42
       },
       {
         "id": "Jade_Chunk",
@@ -101,19 +101,19 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "ShaWujing",
         "type": "Shard",
         "quantity": 181
       },
       {
-        "id": "Garnet_Fragment",
+        "id": "Yellow_Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 15
       },
       {
         "id": "Shirmp_Dumplings",
@@ -121,9 +121,9 @@
         "quantity": 9
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 24
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Jade_Sliver",
@@ -133,7 +133,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 224
+        "quantity": 259
       },
       {
         "id": "Tofu_Soup",
@@ -156,6 +156,16 @@
         "quantity": 1
       },
       {
+        "id": "Fried_Radish_Balls",
+        "type": "Food",
+        "quantity": 66
+      },
+      {
+        "id": "Lotus",
+        "type": "Food",
+        "quantity": 27
+      },
+      {
         "id": "Slime",
         "type": "Material",
         "quantity": 39
@@ -176,24 +186,9 @@
         "quantity": 24
       },
       {
-        "id": "Fried_Radish_Balls",
-        "type": "Food",
-        "quantity": 66
-      },
-      {
         "id": "Murshroom_Steamed_Buns",
         "type": "Food",
         "quantity": 55
-      },
-      {
-        "id": "Lotus",
-        "type": "Food",
-        "quantity": 27
-      },
-      {
-        "id": "GuanyinBodhisattva",
-        "type": "Shard",
-        "quantity": 1
       }
     ],
     "weapons": [
@@ -202,7 +197,7 @@
         "template_id": "Nimbus_Cudgel",
         "current_level": 100,
         "current_updgrade": 6,
-        "equip": "ErlangShen"
+        "equip": "LiJing"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
@@ -221,9 +216,9 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
         "template_id": "Triple_Edged_Blade",
-        "current_level": 20,
+        "current_level": 40,
         "current_updgrade": 1,
-        "equip": ""
+        "equip": "ErlangShen"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777754f",
@@ -282,8 +277,15 @@
         "equip": "TangSanZang"
       },
       {
-        "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
-        "template_id": "Bronze_Hammer",
+        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
+        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -310,22 +312,8 @@
         "equip": ""
       },
       {
-        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
-        "template_id": "Ennead_spear",
+        "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
+        "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -360,6 +348,13 @@
       },
       {
         "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
         "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
@@ -565,28 +560,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
-      },
-      {
-        "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
-        "template_id": "Armor01_Boots",
-        "level": 12,
-        "rare": "Legendary",
-        "substats": [
-          {
-            "type": "HP",
-            "value": 100,
-            "level": 1,
-            "modifier_type": "Constant"
-          },
-          {
-            "type": "ATK",
-            "value": 50,
-            "level": 1,
-            "modifier_type": "Constant"
-          }
-        ],
-        "equip": "ErlangShen"
+        "equip": "LiJing"
       },
       {
         "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
@@ -619,7 +593,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "LiJing"
       },
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -655,6 +629,27 @@
         "equip": "TangSanZang"
       },
       {
+        "instance_id": "3f8fad5b-d9cb-469f-a165-70867728950e",
+        "template_id": "Armor01_Boots",
+        "level": 5,
+        "rare": "Legendary",
+        "substats": [
+          {
+            "type": "HP",
+            "value": 100,
+            "level": 1,
+            "modifier_type": "Constant"
+          },
+          {
+            "type": "ATK",
+            "value": 50,
+            "level": 1,
+            "modifier_type": "Constant"
+          }
+        ],
+        "equip": "ErlangShen"
+      },
+      {
         "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
         "template_id": "Armor05_Boots",
         "level": 1,
@@ -667,7 +662,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "LiJing"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
@@ -682,7 +677,7 @@
             "modifier_type": "Constant"
           }
         ],
-        "equip": ""
+        "equip": "LiJing"
       }
     ]
   },
@@ -690,8 +685,8 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 6,
-        "exp": 61,
+        "level": 22,
+        "exp": 70,
         "ascension_tier": 1,
         "star_up": 1,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
@@ -708,11 +703,11 @@
       },
       {
         "id": "ErlangShen",
-        "level": 5,
-        "exp": 18,
-        "ascension_tier": 0,
+        "level": 10,
+        "exp": 89,
+        "ascension_tier": 1,
         "star_up": 0,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
         "armors": [
           {
             "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
@@ -742,12 +737,29 @@
       },
       {
         "id": "LiJing",
-        "level": 1,
-        "exp": 0,
+        "level": 5,
+        "exp": 33,
         "ascension_tier": 0,
         "star_up": 0,
-        "weapon": "",
-        "armors": []
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
+        "armors": [
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+            "type": "Ring"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+            "type": "Belt"
+          }
+        ]
       },
       {
         "id": "LittleWhiteDragon",
@@ -798,15 +810,23 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": ""
+        "character_id": "LiJing"
       },
       {
         "position": 2,
-        "character_id": "ErlangShen"
+        "character_id": ""
       },
       {
         "position": 3,
         "character_id": ""
+      },
+      {
+        "position": 4,
+        "character_id": ""
+      },
+      {
+        "position": 5,
+        "character_id": "ErlangShen"
       }
     ],
     "active_global_buffs": [
@@ -853,11 +873,11 @@
     "ActiveStepIndex": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639191664000000000,
+    "last_reset_time_ticks": 639192528000000000,
     "active_daily_quests": {
+      "dq_gather_peach": 0,
       "dp_gacha_character": 0,
-      "dq_upgrade_weapon": 1,
-      "dq_gather_peach": 0
+      "dq_upgrade_character": 1
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

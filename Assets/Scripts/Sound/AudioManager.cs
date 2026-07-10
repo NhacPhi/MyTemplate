@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -7,6 +7,7 @@ using Tech.Logger;
 public interface IAudioManager
 {
     UniTask PlaySFXAsync(string audioID, bool stopPrevious = false);
+    void ResetAudioSpeed();
 }
 
 public class AudioManager : MonoBehaviour, IAudioManager
@@ -15,6 +16,27 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     private Dictionary<string, AudioDataConfig> _masterConfigMap = new Dictionary<string, AudioDataConfig>();
     private Dictionary<string, float> _lastPlayedTimeMap = new Dictionary<string, float>();
+
+    private void Update()
+    {
+        if (_sfxSource != null)
+        {
+            // Đồng bộ tốc độ âm thanh (pitch) với tốc độ game (Time.timeScale) khi fast forward
+            // Nếu game pause (timeScale = 0), giữ pitch = 1 để âm thanh UI không bị rè hoặc tịt
+            _sfxSource.pitch = Time.timeScale > 0f ? Time.timeScale : 1f;
+        }
+    }
+
+    public void ResetAudioSpeed()
+    {
+        // Hàm hỗ trợ để đảm bảo đưa tốc độ game và âm thanh về mức bình thường (x1)
+        Time.timeScale = 1f;
+        if (_sfxSource != null)
+        {
+            _sfxSource.pitch = 1f;
+        }
+    }
+
     public void Init(List<AudioDatabase> databases)
     {
         foreach (var db in databases)

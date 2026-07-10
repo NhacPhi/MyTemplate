@@ -106,8 +106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26898587, y: 0.21244055, z: 0.2}
-  m_Center: {x: 0.16384798, y: -0.003337115, z: 0}
+  m_Size: {x: 0.19223225, y: 0.7797503, z: 0.2}
+  m_Center: {x: 0.08876294, y: 0.01334849, z: 0}
 --- !u!114 &390134183935097023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionVFX: {fileID: 5675493445105624929, guid: 6e37802269d51ef45b378d8c2c5dcb82, type: 3}
-  _speed: 50
+  _speed: 80
   _audioTrigerrDetect: {fileID: 11400000, guid: 2b1dae16641ff8b40a18e91e083b4f21, type: 2}
 --- !u!54 &447043190551370988
 Rigidbody:

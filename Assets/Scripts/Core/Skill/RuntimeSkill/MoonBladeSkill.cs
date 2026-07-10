@@ -24,7 +24,6 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
 
     public async UniTask PerformSummon(SkillData config, Entity caster, int currentTurnID)
     {
-        _skillEnd = new UniTaskCompletionSource();
         var enemy = caster.Target.gameObject.GetComponent<Entity>();
         caster.HandleTurn(enemy);
         var state = caster.GetCoreComponent<EntityStateData>();
@@ -32,21 +31,21 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
         caster.PlaySFX(skillData.Sound);
         
-        // Chờ animation chém tung ra (thời gian có thể chỉnh sửa lại cho khớp với animation của bạn)
-        await UniTask.Delay(500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
+        // Chờ animation chém tung ra
+        await UniTask.Delay(300, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
         
         int spawnCount = 3;
-        int delayBetweenSpawnsMs = 500;
+        bool allDead = false;
 
         for (int i = 0; i < spawnCount; i++)
         {
-            Entity currentTarget = caster.Target.GetComponent<Entity>();
-            EntityStats targetStats = currentTarget.GetComponent<EntityStats>();
+            Entity currentTarget = caster.Target != null ? caster.Target.GetComponent<Entity>() : null;
+            EntityStats targetStats = currentTarget != null ? currentTarget.GetComponent<EntityStats>() : null;
 
-            // Nếu mục tiêu đã chết, tìm mục tiêu mới ra hàng sau
-            if (targetStats != null && targetStats.IsDead)
+            // Kiểm tra máu thực tế của mục tiêu (không cần máu ảo nữa vì các viên đạn trước đã xử lý xong)
+            if (targetStats == null || targetStats.IsDead)
             {
                 Entity[] allEntities = Object.FindObjectsOfType<Entity>();
                 Entity nextTarget = null;
@@ -56,57 +55,71 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
                     if (e.Team != caster.Team && eStats != null && !eStats.IsDead)
                     {
                         nextTarget = e;
-                        break; // Đã tìm thấy mục tiêu mới
+                        break; 
                     }
                 }
 
                 if (nextTarget != null)
                 {
                     caster.SetTarget(nextTarget);
+                    caster.HandleTurn(nextTarget); // Xoay người sang đích mới ngay lập tức
+                    currentTarget = nextTarget;
+                    targetStats = nextTarget.GetComponent<EntityStats>();
                 }
                 else
                 {
                     // Quét sạch địch, không còn ai sống -> ngừng bắn
+                    allDead = true;
                     break;
                 }
             }
 
-            // Tạo một bản sao từ prefab gốc cho mỗi lần bắn
+            // Tạo Task mới cho mỗi viên đạn
+            _skillEnd = new UniTaskCompletionSource();
+
             var bladeInstance = Object.Instantiate(moonBladePrefab, caster.transform);
             bladeInstance.transform.localPosition = skillData.Offset;
             bladeInstance.transform.localScale = new Vector3(5f, 5f, 5f);
+            
+            // Cắt liên kết cha-con để khi nhân vật quay đầu (HandleTurn), đạn không bị bay cong theo
+            bladeInstance.transform.SetParent(null);
             bladeInstance.gameObject.SetActive(true);
 
             var controller = bladeInstance.GetComponent<FireballController>();
 
-            // Tính toán lại hướng bay theo mục tiêu (có thể đã đổi mục tiêu mới)
-            Vector3 flyDir = caster.Target.transform.position - (caster.transform.position + skillData.Offset);
+            Vector3 startPos = bladeInstance.transform.position;
+            Vector3 targetPos = currentTarget.transform.position;
+            var targetCollider = currentTarget.GetComponent<Collider>();
+            if (targetCollider != null) targetPos = targetCollider.bounds.center;
+
+            Vector3 flyDir = targetPos - startPos;
+            
+            // Quay đạn theo hướng bay
+            float angle = Mathf.Atan2(flyDir.y, flyDir.x) * Mathf.Rad2Deg;
+            bladeInstance.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             controller.Initialize(
                 caster: caster,
                 skill: this,
                 direction: flyDir
             );
-
-            // Delay trước khi bắn đợt tiếp theo
-            if (i < spawnCount - 1)
-            {
-                await UniTask.Delay(delayBetweenSpawnsMs, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
-            }
+            
+            // ĐỢI VIÊN ĐẠN NÀY CHẠM ĐÍCH HOẶC TỐI ĐA 2 GIÂY TRƯỚC KHI BẮN VIÊN TIẾP THEO!
+            await UniTask.WhenAny(_skillEnd.Task, UniTask.Delay(2000, cancellationToken: caster.transform.GetCancellationTokenOnDestroy()));
         }
-
-        await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.IDLE);
 
-        // Chờ thêm 800ms để đảm bảo viên đạn cuối cùng (hoặc các viên đạn bay chậm) đã chạm tới mục tiêu.
-        // Điều này ngăn chặn lỗi "kết thúc lượt sớm" khi viên 1 vừa chạm, lượt đã chuyển nhưng quái chưa chết,
-        // sau đó viên 2-3 đập vào làm quái chết gây kẹt game.
-        await UniTask.Delay(800, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
+        // Áp dụng các hiệu ứng (Debuff, Dot...) lên mục tiêu cuối cùng nếu nó còn sống
 
-        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
+        Entity finalTarget = caster.Target != null ? caster.Target.GetComponent<Entity>() : null;
+        if (finalTarget != null)
         {
-            ApplyEffectsToTarget(caster, currentTurnID);
+            var finalStats = finalTarget.GetCoreComponent<EntityStats>();
+            if (finalStats != null && !finalStats.IsDead)
+            {
+                ApplyEffectsToTarget(caster, currentTurnID);
+            }
         }
 
         PutOnCooldown();

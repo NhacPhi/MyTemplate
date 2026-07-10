@@ -72,6 +72,33 @@ public static class DamageFormular
         UIEvent.DamagePopup(damageResult, target.transform.position, isCritical);
     }
 
+    // Tính toán sát thương nháp (không thực sự gây sát thương) để dự đoán mục tiêu có chết không
+    public static float SimulateDamage(DamageBonus damageBonus, Tech.Composite.Core source, Tech.Composite.Core target)
+    {
+        GetStatsAndSkillSystem(source, out var sourceStats, out var sourceSkill);
+        GetStatsAndSkillSystem(target, out var targetStats, out var targetSkill);
+
+        if (sourceStats == null || targetStats == null) return 0;
+
+        var sourceAtk = sourceStats.GetStat(StatType.ATK);
+        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier + damageBonus.FlatValue;
+
+        if (sourceSkill != null)
+        {
+            sourceSkill.ApplyAttackSkill(ref damageResult);
+        }
+
+        var targetDef = targetStats.GetStat(StatType.DEF);
+        if (targetSkill != null)
+        {
+            targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
+        }
+
+        damageResult = damageResult * (100f / (100 + targetDef.Value));
+        return damageResult;
+    }
+
+
 
     private static void GetStatsAndSkillSystem(Tech.Composite.Core core,
         out IDamagable entityStats, out EntitySkill entitySkill)
