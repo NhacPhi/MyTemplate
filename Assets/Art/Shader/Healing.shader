@@ -1,4 +1,4 @@
-﻿Shader "Custom/HealingCrossParticles"
+Shader "Custom/HealingCrossParticles"
 {
     Properties
     {
@@ -12,6 +12,7 @@
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         Blend SrcAlpha One // Chế độ Additive giúp các dấu thập phát sáng
         ZWrite Off
+        Cull Off
 
         Pass
         {

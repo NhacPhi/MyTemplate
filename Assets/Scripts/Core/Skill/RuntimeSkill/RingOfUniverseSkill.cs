@@ -53,14 +53,19 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
 
         ringPrefab.transform.SetParent(caster.transform);
         ringPrefab.transform.localPosition = skillData.Offset;
-        ringPrefab.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        Vector3 scale = new Vector3(1.2f, 1.2f, 1.2f);
+        if (caster.Team == TeamSide.Enemy)
+        {
+            scale.x *= -1f;
+        }
+        ringPrefab.transform.localScale = scale;
         ringPrefab.gameObject.SetActive(true);
 
         var controller = ringPrefab.GetComponent<ProjectileController>();
 
-        Vector3 throwDir = caster.Target.transform.position - caster.transform.position;
+        Vector3 throwDir = caster.Target.transform.position - ringPrefab.transform.position;
         caster.PlaySFX(skillData.Sound);
-        float maxDis = Vector3.Distance(caster.transform.position, caster.Target.transform.position) - 1f;
+        float maxDis = Vector3.Distance(ringPrefab.transform.position, caster.Target.transform.position) + 1f;
         controller.Initialize(
             caster: caster,
             skill: this,

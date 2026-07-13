@@ -248,21 +248,15 @@ public class BattleManager : MonoBehaviour
 
     public void CheckBattleHasBosss()
     {
-        var bossID = "";
         var battleConfig = GameDataBase.GetBattleConfig(BattleSession.PendingBattleID);
 
-        foreach(var enemy in battleConfig.Enemies)
+        for (int i = 0; i < battleConfig.Enemies.Count; i++)
         {
-            if(enemy.IsBoss)
+            if (battleConfig.Enemies[i].IsBoss && i < _enemies.Count)
             {
-                bossID = enemy.EnemyID; 
+                _boss = _enemies[i];
                 break;
             }
-        }
-
-        if(bossID != "")
-        {
-            _boss = _enemies.FirstOrDefault(e => e.GetCoreComponent<EntityStats>().EntityID == bossID);
         }
     }
 

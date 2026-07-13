@@ -38,13 +38,13 @@ public class CharacterConfig
     public Sprite Image { get; set; }
 
     [JsonIgnore]
-    public Sprite BaseSkillIcon { get; set; }
+    public Sprite BaseSkillIcon => Skills != null && Skills.TryGetValue(SkillCharacter.Base, out var s) ? s.IconSprite : null;
 
     [JsonIgnore]
-    public Sprite MajorSkillIcon { get; set; }
+    public Sprite MajorSkillIcon => Skills != null && Skills.TryGetValue(SkillCharacter.Major, out var s) ? s.IconSprite : null;
 
     [JsonIgnore]
-    public Sprite UltimateSkillIcon { get; set; }
+    public Sprite UltimateSkillIcon => Skills != null && Skills.TryGetValue(SkillCharacter.Ultimate, out var s) ? s.IconSprite : null;
     public AttributeComponent GetAttribute(AttributeType type)
     {
         if (Attributes.TryGetValue(type, out AttributeComponent value))
@@ -98,6 +98,9 @@ public class SkillComponent
 {
     [JsonProperty("id")]
     public string ID { get; set; }
+
+    [JsonIgnore]
+    public Sprite IconSprite { get; set; }
 
     [JsonProperty("name_hash")]
     public long Name { get; set; }

@@ -35,13 +35,20 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         _caster = caster;
         firreBallPrefab.transform.SetParent(caster.transform);
-        firreBallPrefab.transform.localPosition = skillData.Offset;
-        firreBallPrefab.transform.localScale = new Vector3(2.5f,2.5f, 2.5f);
+        Vector3 spawnOffset = skillData.Offset;
+        Vector3 scale = new Vector3(2.5f, 2.5f, 2.5f);
+        if (caster.Team == TeamSide.Enemy)
+        {
+            spawnOffset.x *= -1f;
+            scale.y *= -1f; // Do Prefab bị xoay Z = 90 nên lật trục Y sẽ tương đương lật ngang
+        }
+        firreBallPrefab.transform.localPosition = spawnOffset;
+        firreBallPrefab.transform.localScale = scale;
         firreBallPrefab.gameObject.SetActive(true);
 
         var controller = firreBallPrefab.GetComponent<FireballController>();
 
-        Vector3 flyDir = caster.Target.transform.position +  - (caster.transform.position + skillData.Offset);
+        Vector3 flyDir = caster.Target.transform.position - firreBallPrefab.transform.position;
 
         controller.Initialize(
             caster: caster,

@@ -805,6 +805,8 @@ public static class LocKeys
 
     public const long STR_LI_JING = 77400843;
 
+    public const long STR_MARSHAL_TIANPENG = 3570677524;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;

@@ -318,6 +318,7 @@ public class ArmorUpgradeCard : MonoBehaviour
             progressbar.value = 0f;
             _progressTween = progressbar.DOValue(1f, 0.5f)
                 .SetEase(Ease.OutCubic)
+                .SetUpdate(true)
                 .OnComplete(() => onComplete?.Invoke());
         }
         else

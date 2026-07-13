@@ -2362,5 +2362,485 @@
             "def": 36,
             "atk": 121
         }
+    },
+    "MarshalTianpeng": {
+        "name_hash": 3570677524,
+        "rare": "SSR",
+        "type": "Tanker",
+        "skills": {
+            "Base": {
+                "id": "MarshalTianpeng_B",
+                "name_hash": 3761678284,
+                "des_hash": 1632229730,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ZhuBaJie_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "MarshalTianpeng_M",
+                "name_hash": 3029962183,
+                "des_hash": 2083751756,
+                "skill": "BuffShield",
+                "skill_type": "NonAttackSkill",
+                "target_type": "Self",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ZhuBaJie_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "MarshalTianpeng_U",
+                "name_hash": 2500509604,
+                "des_hash": 947535288,
+                "skill": "EmpowerAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ZhuBaJie_Main",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3200,
+            "def": 400,
+            "atk": 1350,
+            "speed": 85,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 350,
+            "def": 36,
+            "atk": 121
+        }
+    },
+    "ThirdPrinceNezha_Boss": {
+        "name_hash": 249484924,
+        "rare": "SSR",
+        "type": "Assassin",
+        "skills": {
+            "Base": {
+                "id": "ThirdPrinceNezha_B",
+                "name_hash": 3960779279,
+                "des_hash": 2059288544,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "ThirdPrinceNezha_M",
+                "name_hash": 2518536810,
+                "des_hash": 3428244814,
+                "skill": "FireRing",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "ThirdPrinceNezha_U",
+                "name_hash": 598886642,
+                "des_hash": 1060479304,
+                "skill": "EmpowerAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Main",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 2650,
+            "def": 325,
+            "atk": 2400,
+            "speed": 95,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 238,
+            "def": 29,
+            "atk": 216
+        }
+    },
+    "BullDemonKing_Boss": {
+        "name_hash": 2040095356,
+        "rare": "SSR",
+        "type": "Tanker",
+        "skills": {
+            "Base": {
+                "id": "BullDemonKing_B",
+                "name_hash": 3729828721,
+                "des_hash": 1933137142,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "VanguardTiger_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "BullDemonKing_M",
+                "name_hash": 3191543977,
+                "des_hash": 2241444781,
+                "skill": "StatModifier",
+                "skill_type": "ActiveSkill",
+                "target_type": "Self",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 0.0,
+                "effect_id": "EFF_BufATK_def",
+                "sound": "BullDemonKing_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "BullDemonKing_U",
+                "name_hash": 2707740248,
+                "des_hash": 1509573623,
+                "skill": "PoisonBall",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "EFF_Posion_def",
+                "sound": "BullDemonKing_Main",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 4250,
+            "def": 420,
+            "atk": 1500,
+            "speed": 95,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 425,
+            "def": 42,
+            "atk": 150
+        }
+    },
+    "ErlangShen_Boss": {
+        "name_hash": 279287384,
+        "rare": "UR",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "ErlangShen_B",
+                "name_hash": 1097877494,
+                "des_hash": 4280878459,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdPrinceNezha_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "ErlangShen_M",
+                "name_hash": 3312233495,
+                "des_hash": 603761648,
+                "skill": "MajorAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ErlangShen_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "ErlangShen_U",
+                "name_hash": 56125714,
+                "des_hash": 4054124890,
+                "skill": "MoonBlade",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ErlangShen_Ultimate",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3700,
+            "def": 350,
+            "atk": 2100,
+            "speed": 95,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 370,
+            "def": 35,
+            "atk": 210
+        }
+    },
+    "LiJing_Boss": {
+        "name_hash": 77400843,
+        "rare": "SSR",
+        "type": "Tanker",
+        "skills": {
+            "Base": {
+                "id": "LiJing_B",
+                "name_hash": 2799548957,
+                "des_hash": 609586725,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "LiJing_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "LiJing_M",
+                "name_hash": 892025863,
+                "des_hash": 2595721932,
+                "skill": "BuffShield",
+                "skill_type": "NonAttackSkill",
+                "target_type": "Self",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 0.0,
+                "effect_id": "None",
+                "sound": "LiJing_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "LiJing_U",
+                "name_hash": 415233688,
+                "des_hash": 1426498449,
+                "skill": "EmpowerAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "LiJing_Ultimate",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3200,
+            "def": 400,
+            "atk": 1350,
+            "speed": 85,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 0
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 350,
+            "def": 36,
+            "atk": 121
+        }
     }
 }

@@ -78,8 +78,14 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
             _skillEnd = new UniTaskCompletionSource();
 
             var bladeInstance = Object.Instantiate(moonBladePrefab, caster.transform);
-            bladeInstance.transform.localPosition = skillData.Offset;
-            bladeInstance.transform.localScale = new Vector3(5f, 5f, 5f);
+            Vector3 spawnOffset = skillData.Offset;
+            Vector3 scale = new Vector3(5f, 5f, 5f);
+            if (caster.Team == TeamSide.Enemy)
+            {
+                spawnOffset.x *= -1f;
+            }
+            bladeInstance.transform.localPosition = spawnOffset;
+            bladeInstance.transform.localScale = scale;
             
             // Cắt liên kết cha-con để khi nhân vật quay đầu (HandleTurn), đạn không bị bay cong theo
             bladeInstance.transform.SetParent(null);
