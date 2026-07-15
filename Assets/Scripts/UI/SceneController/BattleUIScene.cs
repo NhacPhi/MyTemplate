@@ -52,15 +52,15 @@ public class BattleUIScene : WindowController
     {
         if (_txtAuto != null)
         {
-            _txtAuto.text = IsAutoBattle ? "Auto" : "Off";
+            _txtAuto.text = IsAutoBattle ? "Off" : "Auto";
         }
 
         if (_btnAuto != null && _btnAuto.image != null)
         {
-            if (IsAutoBattle && _iconAutoOn != null)
-                _btnAuto.image.sprite = _iconAutoOn;
-            else if (!IsAutoBattle && _iconAutoOff != null)
+            if (IsAutoBattle && _iconAutoOff != null)
                 _btnAuto.image.sprite = _iconAutoOff;
+            else if (!IsAutoBattle && _iconAutoOn != null)
+                _btnAuto.image.sprite = _iconAutoOn;
         }
     }
 

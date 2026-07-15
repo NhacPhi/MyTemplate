@@ -24,17 +24,7 @@ public class ItemCardInfoUI : MonoBehaviour
 
     private string _currentItemID;
 
-    private void Awake()
-    {
-        if (btnUse != null)
-        {
-            btnUse.onClick.AddListener(OnBtnUseClicked);
-        }
-        if (btnObtain != null)
-        {
-            btnObtain.onClick.AddListener(OnBtnObtain);
-        }
-    }
+
 
     private void OnBtnObtain()
     {
@@ -66,12 +56,20 @@ public class ItemCardInfoUI : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Awake()
     {
+        if (btnUse != null)
+        {
+            btnUse.onClick.AddListener(OnBtnUseClicked);
+        }
+        if (btnObtain != null)
+        {
+            btnObtain.onClick.AddListener(OnBtnObtain);
+        }
         UIEvent.OnSelectInventoryItem += UpdateItemCardInfor;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         UIEvent.OnSelectInventoryItem -= UpdateItemCardInfor;
     }

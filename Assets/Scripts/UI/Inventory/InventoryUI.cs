@@ -142,6 +142,11 @@ public class InventoryUI : MonoBehaviour
         OnShowAllItemInInventory(tempType);
     }
 
+    public void ResetState()
+    {
+        currentItemType = ItemType.None;
+    }
+
     public void OnShowAllItemInInventory(ItemType type)
     {
         if (currentItemType == type) return;

@@ -233,6 +233,8 @@ public static class LocKeys
 
     public const long UI_IN_THE_WORLD = 2431996933;
 
+    public const long UI_GAO_FAMILY_VILLAGE = 2501707317;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -667,11 +669,11 @@ public static class LocKeys
 
     public const long STR_RESIST_DEFBUFF = 3991180129;
 
-    public const long STR_FIRELANCE_RING_DAMASL_NAME = 2277535047;
+    public const long STR_WINDFIRE_WHEEL = 986275316;
 
-    public const long STR_FIRELANCE_RING_DAMASL_DES = 2917497002;
+    public const long STR_WINDFIRE_WHEEL_DES = 2074387741;
 
-    public const long STR_FIRELANCE_RING_DAMASL_SKILL = 323500067;
+    public const long STR_WINDFIRE_WHEEL_SKILL = 3641345837;
 
     public const long STR_THE_BOY_SAGE = 1785742370;
 

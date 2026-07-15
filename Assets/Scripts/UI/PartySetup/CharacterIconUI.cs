@@ -52,6 +52,6 @@ public class CharacterIconUI : GameItemUI, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _controller.OnCharacterIconClicked(this.ID);
+        _controller?.OnCharacterIconClicked(this.ID);
     }
 }

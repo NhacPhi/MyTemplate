@@ -26,21 +26,24 @@ public class WeaponCardInfoUI : MonoBehaviour
 
     private string currentWeapon = "";
 
-    private void OnEnable()
+    private void Awake()
     {
         UIEvent.OnSelectInventoryItem += UpdateWeaponCardInfor;
 
-        btnUpgrade.onClick.AddListener(() =>
+        if (btnUpgrade != null)
         {
-            uiManager.OpenWindowScene(ScreenIds.UpgradeRelicScene);
-            UIEvent.OnSlelectWeaponEnchance?.Invoke(currentWeapon);
-        });
+            btnUpgrade.onClick.AddListener(() =>
+            {
+                uiManager.OpenWindowScene(ScreenIds.UpgradeRelicScene);
+                UIEvent.OnSlelectWeaponEnchance?.Invoke(currentWeapon);
+            });
+        }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         UIEvent.OnSelectInventoryItem -= UpdateWeaponCardInfor;
-        btnUpgrade.onClick.RemoveAllListeners();
+        if (btnUpgrade != null) btnUpgrade.onClick.RemoveAllListeners();
     }
 
     public void UpdateWeaponCardInfor(string uuid)

@@ -133,6 +133,7 @@ public class CharacterCardRelic : CharacterCard
             currentCharacter = characterid;
             var characterSave = playerCharacterManager.GetCharacter(characterid).SaveData;
             weaponOfCharacter = characterSave.Weapon;
+            currentWeaponSeleted = weaponOfCharacter;
             if (weaponOfCharacter != "")
             {
                 statInfo.gameObject.SetActive(true);

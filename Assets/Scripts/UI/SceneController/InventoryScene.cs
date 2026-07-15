@@ -15,6 +15,8 @@ public class InventoryScene : WindowController
     [Inject] private GameDataBase gameDataBase;
 
     [Inject] private SaveSystem save;
+    private bool _isFirstOpen = true;
+
     private void Start()
     {
     }
@@ -33,7 +35,11 @@ public class InventoryScene : WindowController
             }
         }
 
-        ResetToDefaultTab();
+        if (_isFirstOpen)
+        {
+            ResetToDefaultTab();
+            _isFirstOpen = false;
+        }
     }
 
     private void ResetToDefaultTab()
@@ -43,14 +49,16 @@ public class InventoryScene : WindowController
             inventory.OnShowAllItemInInventory(ItemType.Item);
         }
 
-        // Thay vì bật ngay, ta chờ 0.05s để ToggleGroup kịp nhận diện hết các Toggle khi Scene mới bật lên
-        Invoke(nameof(ForceToggleOn), 0.05f);
+        // Call it immediately, but use a Coroutine to wait until end of frame to ensure ToggleGroup is ready
+        StartCoroutine(ForceToggleOnCoroutine());
     }
 
-    private void ForceToggleOn()
+    private System.Collections.IEnumerator ForceToggleOnCoroutine()
     {
+        yield return new WaitForSecondsRealtime(0.05f);
         if (defaultToggle != null)
         {
+            defaultToggle.Toggle.SetIsOnWithoutNotify(false);
             defaultToggle.ActiveToggle(true);
         }
     }
@@ -62,6 +70,7 @@ public class InventoryScene : WindowController
 
     public void OnClose()
     {
+        _isFirstOpen = true;
         uiManager.CloseWindowScene(ScreenIds.InventoryScene);
 
         save.SaveDataToDisk(GameSaveType.All);

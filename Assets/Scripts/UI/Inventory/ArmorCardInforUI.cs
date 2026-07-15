@@ -29,13 +29,13 @@ public class ArmorCardInforUI : MonoBehaviour
     {
         UIEvent.OnSelectInventoryItem += UpdateArmorItemCardInfor;
 
-        btnUpgrade.onClick.AddListener(() =>
-        {
-            uiManager.OpenWindowScene(ScreenIds.UpgradeArmorScene);
+            btnUpgrade.onClick.AddListener(() =>
+            {
+                uiManager.OpenWindowScene(ScreenIds.UpgradeArmorScene);
 
-            UIEvent.OnSelectArmorUpgrade?.Invoke(currentArmorPart);
-        });
-    }
+                UIEvent.OnSelectArmorUpgrade?.Invoke(currentArmorPart);
+            });
+        }
 
     private void OnDisable()
     {

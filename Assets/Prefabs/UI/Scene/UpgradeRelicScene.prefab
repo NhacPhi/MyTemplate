@@ -3620,7 +3620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5849056, g: 0.5435208, b: 0.5435208, a: 1}
+  m_Color: {r: 0.2735849, g: 0.2516465, b: 0.2516465, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10156,7 +10156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.047169805, g: 0.045612313, b: 0.045612313, a: 0.3764706}
+  m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 0.3764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12708,6 +12708,7 @@ MonoBehaviour:
   waeponUpgradeCard: {fileID: 1827261719379939374}
   weaponAscendCard: {fileID: 3249634874210030852}
   categoryUI: {fileID: 4379063930660464330}
+  weaponIconBig: {fileID: 4031137374282136908}
 --- !u!114 &3900775041117470365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13316,7 +13317,7 @@ GameObject:
   - component: {fileID: 8797953106915431019}
   - component: {fileID: 4031137374282136908}
   m_Layer: 5
-  m_Name: Deco
+  m_Name: weapon_big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13338,8 +13339,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1167, y: -5}
-  m_SizeDelta: {x: 736, y: 736}
+  m_AnchoredPosition: {x: -1231, y: -7}
+  m_SizeDelta: {x: 850, y: 850}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8797953106915431019
 CanvasRenderer:
@@ -13369,7 +13370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 518bd0d4252dd514b9db8b388fea7fa7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d3bd1f727760584cbad0e198367f135, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

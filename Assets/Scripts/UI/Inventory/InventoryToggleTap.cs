@@ -16,6 +16,7 @@ public class InventoryToggleTap : ToggleBase
 
     public override void OnSelected(bool isOn)
     {
+        base.OnSelected(isOn);
         if (isOn)
         {
             UIEvent.OnSelectToggleInventoryTap?.Invoke(type);
