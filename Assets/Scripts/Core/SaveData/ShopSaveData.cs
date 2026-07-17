@@ -18,8 +18,19 @@ public class ShopPurchaseRecord
 [Serializable]
 public class ShopSaveData
 {
+    [JsonProperty("last_reset_time")] 
+    public long LastResetTimeTicks { get; set; } = 0;
+
+    // Lịch sử mua hàng
     [JsonProperty("purchase_history")]
     public Dictionary<string, ShopPurchaseRecord> PurchaseHistory { get; private set; }
+
+    // Reset shop purchase history for daily reset
+    public void ResetPurchaseHistory()
+    {
+        PurchaseHistory.Clear();
+        LastResetTimeTicks = DateTime.UtcNow.Ticks;
+    }
 
     public ShopSaveData()
     {

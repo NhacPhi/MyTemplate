@@ -15,11 +15,19 @@ public class GameSettingsScene : WindowController
 
     [Inject] private SaveSystem save;
     [Inject] private UIManager uiManager;
+    [Inject] private IAudioManager audioManager;
 
     [SerializeField] private Button btnClose;
     [SerializeField] private Button btnShowFPSSetting;
     [SerializeField] private Button btnShowLangSetting;
 
+    private float _openedRealTime;
+    public static System.Action OnCloseAction;
+
+    private void OnEnable()
+    {
+        _openedRealTime = Time.realtimeSinceStartup;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,10 @@ public class GameSettingsScene : WindowController
         sliderSound.onValueChanged.AddListener((v) => {
             txtNumberSound.text = v.ToString("0");
             save.Settings.MusicVolune = (int)v;
+            if (audioManager != null)
+            {
+                audioManager.UpdateVolume(v / 100f);
+            }
         });
 
         btnClose.onClick.AddListener(() => { OnCloseScene(); });
@@ -37,9 +49,26 @@ public class GameSettingsScene : WindowController
 
     public void OnCloseScene()
     {
+        // Chặn đóng cửa sổ nếu click xảy ra trong vòng 1.0s kể từ lúc mở (chống lan truyền click)
+        if (Time.realtimeSinceStartup - _openedRealTime < 0.5f)
+        {
+            Debug.Log("[GameSettingsScene] Ignored close request due to click propagation cooldown.");
+            return;
+        }
+
         base.UI_Close();
         save.SaveDataToDisk(GameSaveType.GameSetting);
-        uiManager.ShowPanel(ScreenIds.PanelStartGame);
+
+        if (OnCloseAction != null)
+        {
+            var callback = OnCloseAction;
+            OnCloseAction = null; // Reset callback
+            callback.Invoke();
+        }
+        else
+        {
+            uiManager.ShowPanel(ScreenIds.PanelStartGame);
+        }
     }
     
     private void LoadGameSettingUI()

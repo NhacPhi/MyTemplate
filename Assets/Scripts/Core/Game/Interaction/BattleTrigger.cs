@@ -16,7 +16,7 @@ public class BattleTrigger : MonoBehaviour
 
     public void OpenPrepareScene()
     {
-        _sessionContext.PendingBattleID = _battleID;
+        _sessionContext.PendingBattleID = _battleID.Trim();
         _sessionContext.PreviousLocation = _sceneLoader.CurrentLoadedScene;
         
         var playerObj = GameObject.FindWithTag("Player");

@@ -22,112 +22,350 @@
                 "enemy_id": "VanguardTiger",
                 "enemy_level": 5,
                 "boss": false
-            },
-            {
-                "slot": 4,
-                "enemy_id": "GoldHornKing",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 5,
-                "enemy_id": "YellowWindMonster",
-                "enemy_level": 5,
-                "boss": true
-            },
-            {
-                "slot": 6,
-                "enemy_id": "SilverHornKing",
-                "enemy_level": 5,
-                "boss": false
             }
         ]
     },
-    "Battle_Test": {
-        "name_hash": 441973586,
+    "Battle_ThirdDragonPrince": {
+        "name_hash": 2865475329,
         "background": "Default",
         "reward": "Default_01",
         "exp_reward": 600,
         "enemies": [
             {
                 "slot": 1,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
+                "enemy_id": "CrabSolider",
+                "enemy_level": 15,
                 "boss": false
             },
             {
                 "slot": 2,
-                "enemy_id": "TheBoySage",
-                "enemy_level": 5,
+                "enemy_id": "SquidSolider",
+                "enemy_level": 15,
                 "boss": false
             },
             {
                 "slot": 3,
-                "enemy_id": "GoldfishDemon",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 5,
-                "enemy_id": "YellowWindMonster",
-                "enemy_level": 5,
-                "boss": true
-            },
-            {
-                "slot": 4,
-                "enemy_id": "GoldHornKing",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 6,
-                "enemy_id": "SilverHornKing",
-                "enemy_level": 5,
-                "boss": false
-            }
-        ]
-    },
-    "Battle_Solo": {
-        "name_hash": 441973586,
-        "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
-        "enemies": [
-            {
-                "slot": 1,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 2,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 3,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
-                "boss": false
-            },
-            {
-                "slot": 4,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
+                "enemy_id": "CrabSolider",
+                "enemy_level": 15,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "ThirdDragonPrince",
+                "enemy_level": 20,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_GoldfishDemon": {
+        "name_hash": 2441987291,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "Benborba",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "Baborben",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "Benborba",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "GoldfishDemon",
                 "enemy_level": 10,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_TheBoySage": {
+        "name_hash": 1785742370,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "TheBoySage",
+                "enemy_level": 25,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_BullDemonKing": {
+        "name_hash": 2040095356,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "BullDemonKing",
+                "enemy_level": 30,
                 "boss": true
             },
             {
-                "slot": 6,
-                "enemy_id": "HeavenlySoddier",
-                "enemy_level": 5,
+                "slot": 4,
+                "enemy_id": "TheBoySage",
+                "enemy_level": 15,
                 "boss": false
+            }
+        ]
+    },
+    "Battle_YellowWindMonster": {
+        "name_hash": 3634311150,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "VanguardTiger",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "RatMonster",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "VanguardTiger",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "YellowWindMonster",
+                "enemy_level": 20,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_GoldHornKing": {
+        "name_hash": 364139391,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "Minions",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "Minions",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "Minions",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "GoldHornKing",
+                "enemy_level": 25,
+                "boss": true
+            },
+            {
+                "slot": 4,
+                "enemy_id": "SilverHornKing",
+                "enemy_level": 15,
+                "boss": false
+            }
+        ]
+    },
+    "Battle_MarshalTianpeng": {
+        "name_hash": 3570677524,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "MarshalTianpeng",
+                "enemy_level": 30,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_ThirdPrinceNezha": {
+        "name_hash": 249484924,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "ThirdPrinceNezha_Boss",
+                "enemy_level": 20,
+                "boss": true
+            }
+        ]
+    },
+    "Battle_LiJing_Boss": {
+        "name_hash": 77400843,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "LiJing_Boss",
+                "enemy_level": 25,
+                "boss": true
+            },
+            {
+                "slot": 4,
+                "enemy_id": "ThirdPrinceNezha_Boss",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 6,
+                "enemy_id": "MarshalTianpeng",
+                "enemy_level": 15,
+                "boss": false
+            }
+        ]
+    },
+    "Battle_ErlangShen_Boss": {
+        "name_hash": 279287384,
+        "background": "Default",
+        "reward": "Default_01",
+        "exp_reward": 600,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 2,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 3,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 15,
+                "boss": false
+            },
+            {
+                "slot": 5,
+                "enemy_id": "ErlangShen_Boss",
+                "enemy_level": 30,
+                "boss": true
             }
         ]
     }

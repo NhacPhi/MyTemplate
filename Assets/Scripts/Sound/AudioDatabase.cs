@@ -11,4 +11,11 @@ public class AudioDatabase : ScriptableObject
     {
         return SFXList.Find(x => x.AudioID == id);
     }
+
+    public AudioDataConfig GetRandomSFX()
+    {
+        if (SFXList == null || SFXList.Count == 0) return null;
+        int randomIndex = Random.Range(0, SFXList.Count);
+        return SFXList[randomIndex];
+    }
 }

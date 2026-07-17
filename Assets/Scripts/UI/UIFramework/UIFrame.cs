@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -189,16 +189,40 @@ namespace UIFramework
             return false;
         }
 
+        private float _blockTime;
+        private Coroutine _unblockCoroutine;
+
         private void OnRequestScreenBlock() {
+            if (_unblockCoroutine != null) {
+                StopCoroutine(_unblockCoroutine);
+                _unblockCoroutine = null;
+            }
             if (graphicRaycaster != null) {
                 graphicRaycaster.enabled = false;
             }
+            _blockTime = Time.realtimeSinceStartup;
         }
 
         private void OnRequestScreenUnblock() {
+            float elapsed = Time.realtimeSinceStartup - _blockTime;
+            if (elapsed >= 0.5f) {
+                if (graphicRaycaster != null) {
+                    graphicRaycaster.enabled = true;
+                }
+            } else {
+                if (_unblockCoroutine != null) {
+                    StopCoroutine(_unblockCoroutine);
+                }
+                _unblockCoroutine = StartCoroutine(DelayedUnblock(0.5f - elapsed));
+            }
+        }
+
+        private System.Collections.IEnumerator DelayedUnblock(float delay) {
+            yield return new WaitForSecondsRealtime(delay);
             if (graphicRaycaster != null) {
                 graphicRaycaster.enabled = true;
             }
+            _unblockCoroutine = null;
         }
 
         public IWindowController GetCurrentWindow()

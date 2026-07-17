@@ -7,11 +7,13 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using VContainer;
 using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
 
 //Scene Manager
 public class SceneLoader : MonoBehaviour
 {
     [Inject] private UIManager _uiManager;
+    [Inject] private IAudioManager _audioManager;
     [SerializeField] private GameSceneSO _gameplayScene = default;
 
     [Header("Listening to")]
@@ -85,6 +87,9 @@ public class SceneLoader : MonoBehaviour
             _gameplayManagerLoadingOpHandle = _gameplayScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
             _gameplayManagerLoadingOpHandle.WaitForCompletion();
             _gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
+
+            // Phát tiếng môi trường lặp lại khi vào Map di chuyển (Cold Start)
+            _audioManager.PlaySFXAsync("AudioDB_Environment", true, true).Forget();
 
             StartGameplay();
         }
@@ -205,20 +210,24 @@ public class SceneLoader : MonoBehaviour
         _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
         
         float timer = 0f;
-        float minLoadingTime = 2f;
+        float minLoadingTime = 0.5f;
 
         while (!_loadingOperationHandle.IsDone || timer < minLoadingTime)
         {
             timer += Time.unscaledDeltaTime;
             
-            float fakeProgress = Mathf.Clamp01(timer / minLoadingTime);
+            // Tính toán tiến trình dựa trên cả tiến trình thực tế của Addressables và thời gian tối thiểu
+            float realProgress = _loadingOperationHandle.PercentComplete;
+            float timeProgress = Mathf.Clamp01(timer / minLoadingTime);
+            float displayProgress = Mathf.Min(realProgress, timeProgress);
             
-            UIEvent.OnUpdateLoadingProgress?.Invoke(fakeProgress);
+            UIEvent.OnUpdateLoadingProgress?.Invoke(displayProgress);
             yield return null;
         }
 
         UIEvent.OnUpdateLoadingProgress?.Invoke(1f);
         
+        // Đợi thêm 1 frame để UI hiển thị cập nhật 100% trước khi đóng
         yield return null;
 
         OnNewSceneLoaded(_loadingOperationHandle);
@@ -228,6 +237,8 @@ public class SceneLoader : MonoBehaviour
     {
         if (obj.Status == AsyncOperationStatus.Succeeded)
         {
+            GameSceneSO previousScene = _currentlyLoadedScene;
+
             //Save loaded scenes (to be unloaded at next load request)
             _currentlyLoadedScene = _sceneToLoad;
 
@@ -241,6 +252,23 @@ public class SceneLoader : MonoBehaviour
                 UIEvent.OnToggleLoadingScene?.Invoke(false);
 
             //_fadeRequestChannel.FadeIn(_fadeDuration);
+
+            // Quản lý tiếng môi trường lặp lại (Location -> Play, Menu/Battle -> Stop)
+            if (_currentlyLoadedScene != null)
+            {
+                if (_currentlyLoadedScene.sceneType == GameSceneType.Location)
+                {
+                    // Chỉ phát nếu trước đó không phải là Location (tránh ngắt quãng/đổi bài giữa các map)
+                    if (previousScene == null || previousScene.sceneType != GameSceneType.Location)
+                    {
+                        _audioManager.PlaySFXAsync("AudioDB_Environment", true, true).Forget();
+                    }
+                }
+                else if (_currentlyLoadedScene.sceneType == GameSceneType.Battle)
+                {
+                    _audioManager.StopSFX();
+                }
+            }
 
             StartGameplay();
         }    

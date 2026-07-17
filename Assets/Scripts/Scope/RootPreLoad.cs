@@ -16,6 +16,7 @@ namespace Core.Scope
         [Inject] private CurrencyManager currencyMM;
         [Inject] private GameDataBase gameDataBase;
         [Inject] private PlayerCharacterManager playerCharacterManager;
+        [Inject] private IAudioManager audioManager;
         //[Inject] private IObjectResolver _objectResolver;
         public bool IsDone;
 
@@ -25,6 +26,9 @@ namespace Core.Scope
 
             await UniTask.WaitUntil(() => AddressablesManager.Instance && GameManager.Instance
                 && PoolManager.Instance && LocalizationManager.Instance, cancellationToken: cancellation);
+
+            // Phát nhạc nền môi trường lặp lại ngay từ lúc khởi động game
+            audioManager.PlaySFXAsync("AudioDB_Environment", true, true).Forget();
 
             //_objectResolver.Inject(PoolManager.Instance);
             saveSystem.Init();

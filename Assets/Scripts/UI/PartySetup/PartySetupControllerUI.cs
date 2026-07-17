@@ -37,6 +37,8 @@ public class PartySetupControllerUI : MonoBehaviour
     }
     public void InitData()
     {
+        // Clear previous UI elements to avoid stale character images when switching battles
+        CleanData();
         foreach(var slot in _saveSystem.Player.Roster.ActiveSlots)
         {
             if(slot.CharacterID != "")

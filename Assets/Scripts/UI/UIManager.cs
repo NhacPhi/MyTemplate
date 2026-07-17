@@ -67,13 +67,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowQuitPopup(Action confirmAction, Action cancelAction = null)
+    {
+        string title = LocalizationManager.Instance.GetLocalizedValue("UI_REMIND");
+        string content = LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION");
+        string confirmBtn = LocalizationManager.Instance.GetLocalizedValue("UI_CONFIRM");
+        string cancelBtn = LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL");
+        ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties(
+            title,
+            content,
+            confirmBtn,
+            cancelBtn,
+            confirmAction,
+            cancelAction
+        );
+        OpenWindowScene(ScreenIds.PopupConfirm, popupProps);
+    }
+
+
+    public void PreloadScreen(string id)
+    {
+        EnsureScreenLoaded(id);
+    }
+
     public void OpenWindowScene(string id)
     {
         EnsureScreenLoaded(id);
         _uiFrame.OpenWindow(id);
     }
 
-    public void OpenWindowScene(string id, WindowProperties properties)
+    public void OpenWindowScene<T>(string id, T properties) where T : WindowProperties
     {
         EnsureScreenLoaded(id);
         _uiFrame.OpenWindow(id, properties);

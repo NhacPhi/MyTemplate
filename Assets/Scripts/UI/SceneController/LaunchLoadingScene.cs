@@ -2,9 +2,13 @@ using UnityEngine.UI;
 using TMPro;
 using UIFramework;
 using UnityEngine;
+using VContainer;
+using Cysharp.Threading.Tasks;
 
 public class LaunchLoadingScene : WindowController
 {
+    [Inject] private IAudioManager _audioManager;
+
     [SerializeField] private Slider _progressBar;
     [SerializeField] private TextMeshProUGUI _loadingText;
 
@@ -16,6 +20,11 @@ public class LaunchLoadingScene : WindowController
     private void OnEnable()
     {
         UIEvent.OnUpdateLoadingProgress += UpdateProgress;
+
+        if (_audioManager != null)
+        {
+            _audioManager.PlaySFXAsync("AudioDB_Environment", true, true).Forget();
+        }
     }
 
     private void OnDisable()

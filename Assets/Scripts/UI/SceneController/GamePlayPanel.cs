@@ -16,6 +16,8 @@ public class GamePlayPanel : PanelController
     [SerializeField] private Button btnCharacter;
 
     [SerializeField] private Button btnPartySetup;
+    [SerializeField] private Button btnQuitGame;
+    [SerializeField] private Button btnSetting;
     [Header("PlayerInfo Info")]
     [SerializeField] private Image avatarIcon;
     [SerializeField] private TextMeshProUGUI txtLevel;
@@ -68,6 +70,37 @@ public class GamePlayPanel : PanelController
             uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
         });
 
+        RegisterQuitGame();
+        RegisterSetting();
+    }
+
+    private void RegisterQuitGame()
+    {
+        if (btnQuitGame != null)
+        {
+            btnQuitGame.onClick.AddListener(() =>
+            {
+                uiManager.ShowQuitPopup(
+                    () => { Application.Quit(); },
+                    null
+                );
+            });
+        }
+    }
+
+    private void RegisterSetting()
+    {
+        if (btnSetting != null)
+        {
+            btnSetting.onClick.AddListener(() =>
+            {
+                GameSettingsScene.OnCloseAction = () =>
+                {
+                    uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+                };
+                uiManager.OpenWindowScene(ScreenIds.GameSettingsScene);
+            });
+        }
     }
 
     private void OnEnable()
