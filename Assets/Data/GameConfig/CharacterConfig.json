@@ -2842,5 +2842,101 @@
             "def": 36,
             "atk": 121
         }
+    },
+    "ThirdDragonPrince": {
+        "name_hash": 2865475329,
+        "rare": "UR",
+        "type": "Fighter",
+        "skills": {
+            "Base": {
+                "id": "ThirdDragonPrince_B",
+                "name_hash": 273710416,
+                "des_hash": 3967694703,
+                "skill": "Melee",
+                "skill_type": "BasicAttack",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    0.8,
+                    1.0,
+                    1.2
+                ],
+                "max_cooldown": [
+                    0,
+                    0,
+                    0
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "GoldfishDemon_Attack",
+                "passive_id": ""
+            },
+            "Major": {
+                "id": "ThirdDragonPrince_M",
+                "name_hash": 1393091217,
+                "des_hash": 671931666,
+                "skill": "FrozenBall",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.0,
+                    1.5,
+                    1.5
+                ],
+                "max_cooldown": [
+                    4,
+                    4,
+                    3
+                ],
+                "flat_damage": 0.0,
+                "effect_id": "None",
+                "sound": "ThirdDragonPrince_Major",
+                "passive_id": ""
+            },
+            "Ultimate": {
+                "id": "ThirdDragonPrince_U",
+                "name_hash": 1184995530,
+                "des_hash": 1199868114,
+                "skill": "EmpowerAttack",
+                "skill_type": "ActiveSkill",
+                "target_type": "SingleEnemy",
+                "damage_multiplier": [
+                    1.5,
+                    1.8,
+                    1.8
+                ],
+                "max_cooldown": [
+                    5,
+                    5,
+                    4
+                ],
+                "flat_damage": 100.0,
+                "effect_id": "None",
+                "sound": "ThirdDragonPrince_Ultimate",
+                "passive_id": ""
+            }
+        },
+        "stats": {
+            "hp": 3750,
+            "def": 400,
+            "atk": 2000,
+            "speed": 111,
+            "CRIT_RATE": 50,
+            "CRIT_DMG": 50
+        },
+        "attributes": {
+            "shield": {
+                "max_stat_type": "None",
+                "start_percent": 0.0
+            },
+            "hp": {
+                "max_stat_type": "HP",
+                "start_percent": 1.0
+            }
+        },
+        "upgrades": {
+            "hp": 375,
+            "def": 40,
+            "atk": 200
+        }
     }
 }

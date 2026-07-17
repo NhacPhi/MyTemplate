@@ -31,7 +31,8 @@ public enum Skill
     Suriken,
     PoisonBall,
     DivineWind,
-    MoonBlade
+    MoonBlade,
+    FrozenBall
 }
 
 public enum SkillType

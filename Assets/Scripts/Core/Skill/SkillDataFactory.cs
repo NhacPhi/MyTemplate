@@ -41,6 +41,8 @@ public static class SkillDataFactory
             case Skill.DivineWind: return new DivineWindData();
 
             case Skill.MoonBlade: return new MoonBladeData();
+
+            case Skill.FrozenBall: return new FrozenBallData();
         }
 
         return null;

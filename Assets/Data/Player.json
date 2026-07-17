@@ -2,15 +2,15 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 9,
-    "current_exp": 4400,
+    "current_exp": 6200,
     "avatar_icon": "Wukong04_avatar"
   },
   "inventory": {
     "currencies": {
       "Energy": 370,
-      "Jade": 78150,
-      "Coin": 150760,
-      "RelicEssence": 6855400,
+      "Jade": 78450,
+      "Coin": 180280,
+      "RelicEssence": 6855080,
       "ArmorPrimorite": 590450,
       "Ticket": 35
     },
@@ -21,19 +21,19 @@
         "quantity": 61
       },
       {
-        "id": "supreme_exp",
-        "type": "Exp",
-        "quantity": 17
-      },
-      {
-        "id": "Yellow_Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Dragon_Bread_Noodies",
+        "id": "Jade_Parcels",
         "type": "Food",
-        "quantity": 45
+        "quantity": 85
+      },
+      {
+        "id": "BullDemonKing",
+        "type": "Shard",
+        "quantity": 181
+      },
+      {
+        "id": "ThirdPrinceNezha",
+        "type": "Shard",
+        "quantity": 1
       },
       {
         "id": "Jade_Gemstone",
@@ -46,19 +46,19 @@
         "quantity": 75
       },
       {
-        "id": "ThirdPrinceNezha",
-        "type": "Shard",
+        "id": "Dragon_Bread_Noodies",
+        "type": "Food",
+        "quantity": 45
+      },
+      {
+        "id": "Yellow_Jade_Gemstone",
+        "type": "Gemstone",
         "quantity": 1
       },
       {
-        "id": "BullDemonKing",
-        "type": "Shard",
-        "quantity": 181
-      },
-      {
-        "id": "Jade_Parcels",
-        "type": "Food",
-        "quantity": 85
+        "id": "supreme_exp",
+        "type": "Exp",
+        "quantity": 17
       },
       {
         "id": "SunWukong",
@@ -96,6 +96,26 @@
         "quantity": 1
       },
       {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 15
+      },
+      {
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
         "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
@@ -106,26 +126,6 @@
         "quantity": 301
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 15
-      },
-      {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
-      },
-      {
-        "id": "Garnet_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "Jade_Sliver",
         "type": "Gemstone",
         "quantity": 1
@@ -133,7 +133,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 264
+        "quantity": 274
       },
       {
         "id": "Tofu_Soup",
@@ -156,21 +156,6 @@
         "quantity": 1
       },
       {
-        "id": "Slime",
-        "type": "Material",
-        "quantity": 40
-      },
-      {
-        "id": "Meat",
-        "type": "Food",
-        "quantity": 34
-      },
-      {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
-        "quantity": 1311
-      },
-      {
         "id": "Peach",
         "type": "Food",
         "quantity": 24
@@ -184,6 +169,21 @@
         "id": "Lotus",
         "type": "Food",
         "quantity": 27
+      },
+      {
+        "id": "Slime",
+        "type": "Material",
+        "quantity": 40
+      },
+      {
+        "id": "Meat",
+        "type": "Food",
+        "quantity": 34
+      },
+      {
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
+        "quantity": 1311
       },
       {
         "id": "Murshroom_Steamed_Buns",
@@ -298,7 +298,119 @@
         "equip": "LiJing"
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "2d9f1c83-ede3-4009-8354-87cf3d2ef8c4",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "b2233dfb-32b9-486b-8ea4-2a0fe9fa19dd",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": "LittleWhiteDragon"
+      },
+      {
+        "uuid": "527eb727-8e8d-459c-90f1-3c7aba1e0c53",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "fc59af2c-90f4-4ba6-86a0-4fac55ecd977",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "9b07d24c-a478-4995-8030-ca139bebb0d9",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "7841a747-f41b-4563-b843-9645745ca5f5",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "5cdaff9a-a9a2-4fbb-a8a6-955371674a84",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "e16b2d2c-966e-42d4-8162-578ce9049caa",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
@@ -319,14 +431,7 @@
         "equip": ""
       },
       {
-        "uuid": "9b07d24c-a478-4995-8030-ca139bebb0d9",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
+        "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
@@ -340,129 +445,10 @@
         "equip": ""
       },
       {
-        "uuid": "a05c94ba-3cdd-4654-ace6-4d30a703e5ad",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "e16b2d2c-966e-42d4-8162-578ce9049caa",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "b5033a23-4b2a-4685-81c8-10643d7e8218",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "7841a747-f41b-4563-b843-9645745ca5f5",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "1deb103e-15ef-4244-8efd-2796debf1cfe",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "b2233dfb-32b9-486b-8ea4-2a0fe9fa19dd",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "1187cdc5-c752-4b7c-9615-f21775e68807",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "1d5e7eba-3b50-48ca-8ffb-3db79d6e19a5",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "2d9f1c83-ede3-4009-8354-87cf3d2ef8c4",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "527eb727-8e8d-459c-90f1-3c7aba1e0c53",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "fc59af2c-90f4-4ba6-86a0-4fac55ecd977",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "3a1871f6-354b-42e2-a32f-992386a0c06d",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": "LittleWhiteDragon"
-      },
-      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777749f",
         "template_id": "Sunburst_Spade",
         "current_level": 20,
         "current_updgrade": 2,
-        "equip": ""
-      },
-      {
-        "uuid": "aedbb547-4af3-482a-9550-9f7adf1afde8",
-        "template_id": "Sunburst_Spade",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": "ShaWujing"
-      },
-      {
-        "uuid": "ac211dc1-14c5-40eb-9526-00d7787ab5fa",
-        "template_id": "Crescent_Axe",
-        "current_level": 1,
-        "current_updgrade": 0,
         "equip": ""
       },
       {
@@ -481,6 +467,20 @@
       },
       {
         "uuid": "896ee488-aae3-4696-9c08-0c04f67e470c",
+        "template_id": "Crescent_Axe",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "aedbb547-4af3-482a-9550-9f7adf1afde8",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": "ShaWujing"
+      },
+      {
+        "uuid": "ac211dc1-14c5-40eb-9526-00d7787ab5fa",
         "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 0,
@@ -929,11 +929,11 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": ""
+        "character_id": "LiJing"
       },
       {
         "position": 2,
-        "character_id": "LiJing"
+        "character_id": ""
       },
       {
         "position": 4,
@@ -941,10 +941,6 @@
       },
       {
         "position": 5,
-        "character_id": ""
-      },
-      {
-        "position": 6,
         "character_id": "ErlangShen"
       }
     ],
@@ -991,11 +987,11 @@
     "ActiveStepIndex": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639196848000000000,
+    "last_reset_time_ticks": 639198576000000000,
     "active_daily_quests": {
+      "dq_shopping": 0,
       "dq_upgrade_character": 0,
-      "dq_gather_peach": 0,
-      "dq_shopping": 0
+      "dq_gather_peach": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""
