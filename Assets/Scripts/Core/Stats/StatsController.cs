@@ -182,6 +182,13 @@ public class StatsController : CoreComponent, IEffectable
             clone.StartEffect(currentTurnID);
 
             OnEffectAdded?.Invoke(clone);
+
+            // Hiển thị tên hiệu ứng lên UI khi nhận mới
+            if (clone.Data != null)
+            {
+                string effectName = LocalizationManager.Instance.GetLocalizedValue(clone.Data.Name);
+                UIEvent.TextPopup?.Invoke(effectName, this.transform.position);
+            }
             return;
         }
 
@@ -205,6 +212,13 @@ public class StatsController : CoreComponent, IEffectable
         {
             // Không cho cộng dồn (VD: Choáng) -> Chỉ làm mới thời gian
             existEffect.ResetDuration();
+        }
+
+        // Hiển thị tên hiệu ứng lên UI khi làm mới/tăng stack
+        if (existEffect.Data != null)
+        {
+            string effectName = LocalizationManager.Instance.GetLocalizedValue(existEffect.Data.Name);
+            UIEvent.TextPopup?.Invoke(effectName, this.transform.position);
         }
     }
     public void RemoveEffect(StatusEffect effect, bool ignoreStack)
@@ -299,10 +313,7 @@ public class StatsController : CoreComponent, IEffectable
     {
         foreach (var effect in statusEffects)
         {
-            // Tùy vào cách bạn định nghĩa Enum EffectType trong EffectConfig
-            // Ví dụ: if (effect.Data.EffectType == EffectType.Stun) return false;
-
-            if (effect.Data.Type == EffectType.Stun) return false;
+            if (effect.Data.Type == EffectType.Stun || effect.Data.Type == EffectType.Frozen) return false;
         }
         return true;
     }

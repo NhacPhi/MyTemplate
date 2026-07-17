@@ -204,6 +204,13 @@ public abstract class Entity : Tech.Composite.Core, ITurn
 
         foreach (var sr in allRenderers)
         {
+            // Bỏ qua không đổi màu cho các Object là hiệu ứng (VFX, Eff) đính kèm trên nhân vật
+            string nameLower = sr.gameObject.name.ToLower();
+            if (nameLower.Contains("eff") || nameLower.Contains("vfx"))
+            {
+                continue;
+            }
+
             sr.color = displayColor;
         }
     }

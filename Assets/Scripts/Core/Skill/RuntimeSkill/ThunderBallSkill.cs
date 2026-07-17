@@ -39,19 +39,20 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
         firreBallPrefab.transform.localPosition = skillData.Offset;
         firreBallPrefab.transform.localScale = new Vector3(2f, 2f, 2f);
         firreBallPrefab.gameObject.SetActive(true);
+        
+        Vector3 spawnPos = firreBallPrefab.transform.position;
+        
+        // Tách khỏi cha để không bị kéo theo chuyển động của Caster khi bay
+        firreBallPrefab.transform.SetParent(null);
 
         var controller = firreBallPrefab.GetComponent<ThunderBallController>();
-
-        var vec = new Vector3(caster.transform.position.x + skillData.Offset.x, caster.transform.position.y + skillData.Offset.y, caster.transform.position.z);
-
-        Vector3 flyDir = caster.Target.transform.position - vec;
+        Vector3 flyDir = caster.Target.transform.position - spawnPos;
 
         controller.Initialize(
             caster: caster,
             skill: this,
             direction: flyDir
             );
-
         await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.IDLE);

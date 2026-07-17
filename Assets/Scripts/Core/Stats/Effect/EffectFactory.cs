@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tech.Logger;
@@ -16,7 +16,9 @@ public class EffectFactory
             case EffectType.Poison:
                 return new PoisonEffect(efectfID, effectData, target);
             case EffectType.Stun:
-                return new StunEffect(efectfID, effectData, target); ;
+                return new StunEffect(efectfID, effectData, target);
+            case EffectType.Frozen:
+                return new FrozenEffect(efectfID, effectData, target);
             case EffectType.StatBuff:
             case EffectType.StatDebuff:
                 return new StatBuffEffect(efectfID, effectData, target);

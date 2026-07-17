@@ -32,7 +32,10 @@ public class EntityPassive : CoreComponent, IAsyncInitializer
         // 2. Nạp toàn bộ PassiveInstance đang được trang bị/mở khóa
         foreach (var passiveInstance in characterProfile.PassivesManager.Passives)
         {
-            UnityEngine.Debug.Log($"[EntityPassive] Đang đăng ký nội tại: {passiveInstance.Config?.CombatEvents?[0]?.EffectId}");
+            string firstEffectId = (passiveInstance.Config?.CombatEvents != null && passiveInstance.Config.CombatEvents.Count > 0) 
+                ? passiveInstance.Config.CombatEvents[0].EffectId 
+                : "None";
+            UnityEngine.Debug.Log($"[EntityPassive] Đang đăng ký nội tại: {firstEffectId}");
             ActivePassives.Add(passiveInstance);
 
             // 3. Truyền Entity vào để Passive tự động đăng ký Event

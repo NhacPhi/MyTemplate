@@ -811,6 +811,8 @@ public static class LocKeys
 
     public const long STR_THIRD_DRAGON_PRINCE = 2865475329;
 
+    public const long STR_SKIP_TURN = 1099706205;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;
@@ -1024,5 +1026,9 @@ public static class LocKeys
     public const long EFF_POSION_NAME = 2191638895;
 
     public const long EFF_POSION_DES = 2278866855;
+
+    public const long DEBUFF_FRONZEN_NAME = 4115114132;
+
+    public const long DEBUFF_FRONZEN_DES = 655552443;
 
 }

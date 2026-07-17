@@ -31,26 +31,27 @@ public class FrozenBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
         caster.PlaySFX(skillData.Sound);
 
-        await UniTask.Delay(1500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
+        await UniTask.Delay(1800, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
         frozenBallPrefab.transform.SetParent(caster.transform);
         frozenBallPrefab.transform.localPosition = skillData.Offset;
         frozenBallPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         frozenBallPrefab.gameObject.SetActive(true);
+        
+        Vector3 spawnPos = frozenBallPrefab.transform.position;
+        
+        // Tách khỏi cha để không bị kéo theo chuyển động của Caster khi bay
+        frozenBallPrefab.transform.SetParent(null);
 
         var controller = frozenBallPrefab.GetComponent<FireballController>();
-
-        var vec = new Vector3(caster.transform.position.x + skillData.Offset.x, caster.transform.position.y + skillData.Offset.y, caster.transform.position.z);
-
-        Vector3 flyDir = caster.Target.transform.position - vec;
+        Vector3 flyDir = caster.Target.transform.position - spawnPos;
 
         controller.Initialize(
             caster: caster,
             skill: this,
             direction: flyDir
             );
-
         await state.WaitForAnimEnd();
 
         caster.StateManager.ChangeState(EntityState.IDLE);

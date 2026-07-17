@@ -22,11 +22,14 @@ public class NumberJumpAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayAnimation();
+        // Không tự động chạy nữa, việc chạy sẽ do CombatText điều khiển trực tiếp
     }
 
     public void PlayAnimation()
     {
+        transform.DOKill();
+        if (canvasGroup != null) canvasGroup.DOKill();
+
         canvasGroup.alpha = 1f;
         transform.localScale = Vector3.one * StartScale;
 

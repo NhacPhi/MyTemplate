@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Tech.StateMachine;
 using UnityEngine;
@@ -35,8 +35,8 @@ public class EndTurnState : BattleBaseState
         }
 
         battleManager.TurnSystem.ResetEntityAV(battleManager.CurrentCaster);
-        battleManager.StateMachine.ChangeState(BattleState.OrderState);
         battleManager.NextCharacterTurn();
+        battleManager.StateMachine.ChangeState(BattleState.OrderState);
     }
 
     public override void Exit()

@@ -30,6 +30,10 @@ public class BeginTurnBase : BattleBaseState
             // 4. KIỂM TRA KHỐNG CHẾ (CHOÁNG, NGỦ, ĐÓNG BĂNG...)
             if (skipTurn)
             {
+                // Hiển thị chữ mất lượt địa phương hóa lên đầu nhân vật
+                string skipText = LocalizationManager.Instance.GetLocalizedValue("STR_SKIP_TURN");
+                UIEvent.TextPopup?.Invoke(skipText, battleManager.CurrentCaster.transform.position);
+
                 battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
                 return;
             }

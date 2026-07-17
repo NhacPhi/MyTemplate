@@ -6,6 +6,7 @@ public enum EffectType
 
     Poison,
     Stun,
+    Frozen,
     StatBuff,
     StatDebuff,
     ResetDebuff
