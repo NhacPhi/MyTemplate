@@ -21,7 +21,7 @@ public class InitializationLoader : MonoBehaviour
     {
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         // Config app run on 60 HZ
@@ -29,7 +29,7 @@ public class InitializationLoader : MonoBehaviour
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
 #endif
         Application.targetFrameRate = 60;
-        // Load the persistent managers scene
+
         _managersScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadEventChannel;
     }
 
@@ -41,8 +41,6 @@ public class InitializationLoader : MonoBehaviour
     private void LoadMainMenu(AsyncOperationHandle<LoadEventChannelSO> obj)
     {
         obj.Result.RaiseEvent(_menuToLoad, true);
-
-        SceneManager.UnloadSceneAsync(0); //Initialization is the only scene in BuildSettings, thus it has index 0
+        SceneManager.UnloadSceneAsync(0); //Initialization is the only scene in BuildSettings
     }
-
 }

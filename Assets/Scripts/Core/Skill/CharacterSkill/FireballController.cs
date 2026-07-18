@@ -33,12 +33,39 @@ public class FireballController : MonoBehaviour
     {
         if (_caster == null || _hasHit) return;
 
-        transform.Translate(_flyDirection * _speed * Time.deltaTime, Space.World);
+        float stepDistance = _speed * Time.deltaTime;
+        Vector3 origin = transform.position;
+
+        // Lấy bán kính thực tế từ SphereCollider để làm bán kính quét
+        float radius = 0.5f;
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        if (sphereCollider != null)
+        {
+            radius = sphereCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+        }
+
+        RaycastHit hit;
+        // Quét hình cầu dọc theo hướng bay trong frame này để chống đi xuyên qua Collider (tunneling)
+        if (Physics.SphereCast(origin, radius, _flyDirection, out hit, stepDistance))
+        {
+            Collider other = hit.collider;
+            if (other.gameObject != _caster.gameObject)
+            {
+                Entity target = other.GetComponent<Entity>();
+                if (target != null && target.Team != _caster.Team)
+                {
+                    HandleHit(target, hit.point);
+                    return;
+                }
+            }
+        }
+
+        transform.Translate(_flyDirection * stepDistance, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(_caster == null || _hasHit) return;
+        if (_caster == null || _hasHit) return;
 
         if (other.gameObject == _caster.gameObject) return;
 
@@ -47,25 +74,28 @@ public class FireballController : MonoBehaviour
         // Check if the collided object is an entity and belongs to the opposing team
         if (target != null && target.Team != _caster.Team)
         {
-            _hasHit = true;
+            HandleHit(target, transform.position);
+        }
+    }
 
-            if (_skillHandler != null)
-            {
-                if (_audioTrigerrDetect != null)
-                {
-                    _caster.PlaySFX(_audioTrigerrDetect.AudioID);
-                }
-                _skillHandler.OnProjectileImpact(target, transform.position);
-                gameObject.SetActive(false);
-            }
+    private void HandleHit(Entity target, Vector3 contactPoint)
+    {
+        _hasHit = true;
 
-            if (target != null)
+        if (_skillHandler != null)
+        {
+            if (_audioTrigerrDetect != null)
             {
-                explosionObj.transform.position = other.transform.position;
-                explosionObj.gameObject.SetActive(true);
+                _caster.PlaySFX(_audioTrigerrDetect.AudioID);
             }
+            _skillHandler.OnProjectileImpact(target, contactPoint);
+            gameObject.SetActive(false);
         }
 
-
+        if (target != null)
+        {
+            explosionObj.transform.position = target.transform.position;
+            explosionObj.gameObject.SetActive(true);
+        }
     }
 }

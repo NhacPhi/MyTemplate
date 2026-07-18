@@ -47,7 +47,29 @@ public class ProjectileController : MonoBehaviour
 
     private void HandleOutwardMovement()
     {
-        transform.Translate(_throwDirection * _moveSpeed * Time.deltaTime, Space.World);
+        float stepDistance = _moveSpeed * Time.deltaTime;
+        Vector3 origin = transform.position;
+
+        float radius = 0.5f;
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        if (sphereCollider != null)
+        {
+            radius = sphereCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+        }
+
+        RaycastHit hit;
+        if (Physics.SphereCast(origin, radius, _throwDirection, out hit, stepDistance))
+        {
+            Collider other = hit.collider;
+            if (other.gameObject == _caster.Target)
+            {
+                Entity target = other.GetComponent<Entity>();
+                HandleHit(target);
+                return;
+            }
+        }
+
+        transform.Translate(_throwDirection * stepDistance, Space.World);
 
         float distanceTravlled = Vector3.Distance(_startPosition, transform.position);
 
@@ -72,16 +94,25 @@ public class ProjectileController : MonoBehaviour
         _state = ProjectileState.Returning;
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
-        transform.localScale = theScale;    }
+        transform.localScale = theScale;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
 
-        if(other.gameObject == _caster.Target)
+        if (other.gameObject == _caster.Target)
+        {
+            HandleHit(target);
+        }
+    }
+
+    private void HandleHit(Entity target)
+    {
+        if (_audioTrigerrDetect != null && _caster != null)
         {
             _caster.PlaySFX(_audioTrigerrDetect.AudioID);
-            _skillHandler.OnProjectileHit(target, this.gameObject);
         }
+        _skillHandler.OnProjectileHit(target, this.gameObject);
     }
 }
