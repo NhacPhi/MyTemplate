@@ -38,8 +38,7 @@ public class BattleSetupState : BattleBaseState
 
         battleManager.CheckBattleHasBosss();
 
-        if (battleManager.Boss)
-            UIEvent.OnActiveBossUI?.Invoke(true);
+        UIEvent.OnActiveBossUI?.Invoke(battleManager.Boss != null);
 
         battleManager.ResultBattle = BattleResult.Flee;
 

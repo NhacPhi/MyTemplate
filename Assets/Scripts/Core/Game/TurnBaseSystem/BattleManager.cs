@@ -10,6 +10,14 @@ using VContainer;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
     public StateMachine<BattleState, BattleBaseState> StateMachine;
 
     private List<Entity> _activeEntities = new List<Entity>();
@@ -248,6 +256,7 @@ public class BattleManager : MonoBehaviour
 
     public void CheckBattleHasBosss()
     {
+        _boss = null;
         var battleConfig = GameDataBase.GetBattleConfig(BattleSession.PendingBattleID);
 
         for (int i = 0; i < battleConfig.Enemies.Count; i++)
@@ -318,6 +327,12 @@ public class BattleManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        cts.Cancel();
+        cts.Dispose();
+        if (Instance == this)
+        {
+            Instance = null;
+        }
         Time.timeScale = 1f;
         BattleUIScene.CurrentSpeed = 1f;
     }

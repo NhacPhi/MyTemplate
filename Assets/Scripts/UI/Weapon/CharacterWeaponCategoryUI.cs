@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
 using System.Linq;
-using static UnityEditor.Progress;
 
 public class CharacterWeaponCategoryUI : MonoBehaviour
 {

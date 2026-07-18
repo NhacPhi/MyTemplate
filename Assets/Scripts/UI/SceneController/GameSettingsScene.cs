@@ -29,6 +29,10 @@ public class GameSettingsScene : WindowController
         _openedRealTime = Time.realtimeSinceStartup;
     }
 
+    private void OnDisable()
+    {
+        Debug.Log("[GameSettingsScene] Ignored close request due to click propagation cooldown.");
+    }
     // Start is called before the first frame update
     void Start()
     {

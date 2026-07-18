@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using VContainer;
-using static UnityEditor.Progress;
+
 
 
 public class CharacterArmorCategoryUI : MonoBehaviour

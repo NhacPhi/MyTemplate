@@ -210,7 +210,7 @@ public class SceneLoader : MonoBehaviour
         _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
         
         float timer = 0f;
-        float minLoadingTime = 0.5f;
+        float minLoadingTime = 1.5f;
 
         while (!_loadingOperationHandle.IsDone || timer < minLoadingTime)
         {

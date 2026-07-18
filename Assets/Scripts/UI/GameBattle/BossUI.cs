@@ -21,6 +21,15 @@ public class BossUI : MonoBehaviour
 
     [Inject] private GameDataBase _gameData;
 
+    private void Start()
+    {
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.CheckBattleHasBosss();
+            gameObject.SetActive(BattleManager.Instance.Boss != null);
+        }
+    }
+
     private void OnEnable()
     {
         UIEvent.OnUpdateBossUI += UpdateSkillBossUI;

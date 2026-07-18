@@ -2186,9 +2186,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6280845127600468814}
   - component: {fileID: 523667584647440193}
-  - component: {fileID: 5448986460588007501}
-  - component: {fileID: 7589576763089118477}
   - component: {fileID: 7218893961319611181}
+  - component: {fileID: 1493190960579922074}
+  - component: {fileID: 1393959494731790727}
   m_Layer: 5
   m_Name: GameSettingsScene
   m_TagString: Untagged
@@ -2228,34 +2228,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8295968371243734608}
   m_CullTransparentMesh: 1
---- !u!114 &5448986460588007501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8295968371243734608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9739af8e894b7b8db28faf4bb2114d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeDuration: 0.4
-  fadeOut: 0
---- !u!114 &7589576763089118477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8295968371243734608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9739af8e894b7b8db28faf4bb2114d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeDuration: 0.1
-  fadeOut: 1
 --- !u!114 &7218893961319611181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2268,18 +2240,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a139345d99b26374a880f6d1cd4dcaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animIn: {fileID: 5448986460588007501}
-  animOut: {fileID: 7589576763089118477}
+  animIn: {fileID: 1393959494731790727}
+  animOut: {fileID: 1493190960579922074}
   properties:
-    hideOnForegroundLost: 0
+    hideOnForegroundLost: 1
     windowQueuePriority: 0
-    isPopup: 1
+    isPopup: 0
   sliderSound: {fileID: 1498768831097153038}
   txtNumberSound: {fileID: 5128245490997009946}
   txtFPS: {fileID: 1953882949783499177}
   btnClose: {fileID: 7324724210698882642}
   btnShowFPSSetting: {fileID: 8893597961157569718}
   btnShowLangSetting: {fileID: 2196930522269848727}
+--- !u!114 &1493190960579922074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295968371243734608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0ffd164e4450f439d7c219e6c88ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: 0
+  isOutAnimation: 1
+  duration: 0.25
+  doFade: 1
+  fadeDurationPercent: 0.25
+  ease: 1
+--- !u!114 &1393959494731790727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295968371243734608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0ffd164e4450f439d7c219e6c88ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  origin: 0
+  isOutAnimation: 0
+  duration: 0.25
+  doFade: 0
+  fadeDurationPercent: 0.25
+  ease: 1
 --- !u!1 &8710320682493932276
 GameObject:
   m_ObjectHideFlags: 0
