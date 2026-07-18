@@ -5,6 +5,7 @@ using VContainer;
 using VContainer.Unity;
 using System;
 using Tech.Pool;
+using UnityEngine;
 
 namespace Core.Scope
 {
@@ -42,6 +43,7 @@ namespace Core.Scope
                 LocalizationManager.Instance.LoadLocalizedText(saveSystem.Settings.CurrentLocalized),
             };
 
+            Debug.Log("[TransitionLog] RootPreLoad: StartAsync - Starting database and localization loading.");
             await UniTask.WhenAll(tasks);
             await gameDataBase.Init(cancellation);
 
@@ -49,8 +51,13 @@ namespace Core.Scope
             playerCharacterManager.Init();
             uiManager.Init();
 
+            // Đánh dấu dữ liệu đã preload xong (cho phép SceneLoader đóng Loading screen trên Android)
+            Debug.Log("[TransitionLog] RootPreLoad: Database and configs loaded. Setting GameEvent.IsPreloadDone = true.");
+            GameEvent.IsPreloadDone = true;
+
             if (!GameEvent.IsSceneReady)
             {
+                Debug.Log("[TransitionLog] RootPreLoad: Scene not ready yet. Awaiting GameEvent.OnSceneReady.");
                 var tcs = new UniTaskCompletionSource();
                 Action onSceneReady = () => tcs.TrySetResult();
                 GameEvent.OnSceneReady += onSceneReady;
@@ -58,9 +65,7 @@ namespace Core.Scope
                 GameEvent.OnSceneReady -= onSceneReady;
             }
 
-            uiManager.OpenWindowScene(ScreenIds.StartGameScene);
-            uiManager.ShowPanel(ScreenIds.PanelStartGame);
-
+            Debug.Log("[TransitionLog] RootPreLoad: Preload process complete!");
             IsDone = true;
         }
 

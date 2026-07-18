@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public static UIManager Instance { get; private set; }
+
     private void OnDisable()
     {
         UIEvent.OnClickNavigationButton -= OnNavigatePanelStartGame;
@@ -29,7 +31,7 @@ public class UIManager : MonoBehaviour
     }
     private void Awake()
     {
-
+        Instance = this;
     }
 
     public void Init()
@@ -92,23 +94,27 @@ public class UIManager : MonoBehaviour
 
     public void OpenWindowScene(string id)
     {
+        Debug.Log($"[TransitionLog] UIManager: OpenWindowScene requested for {id}");
         EnsureScreenLoaded(id);
         _uiFrame.OpenWindow(id);
     }
 
     public void OpenWindowScene<T>(string id, T properties) where T : WindowProperties
     {
+        Debug.Log($"[TransitionLog] UIManager: OpenWindowScene<T> requested for {id}");
         EnsureScreenLoaded(id);
         _uiFrame.OpenWindow(id, properties);
     }
 
     public void CloseWindowScene(string id)
     {
+        Debug.Log($"[TransitionLog] UIManager: CloseWindowScene requested for {id}");
         _uiFrame.CloseWindow(id);
     }
 
     public void ShowPanel(string id)
     {
+        Debug.Log($"[TransitionLog] UIManager: ShowPanel requested for {id}");
         EnsureScreenLoaded(id);
         _uiFrame.ShowPanel(id);
     }
@@ -191,16 +197,25 @@ public class UIManager : MonoBehaviour
 
         string sceneId = _isFirstLoad ? ScreenIds.LaunchLoadingScene : ScreenIds.LoadingSceneToScene;
         
+        Debug.Log($"[TransitionLog] UIManager: ToggleLoadingScene - isOn = {isOn}, sceneId = {sceneId}, isFirstLoad = {_isFirstLoad}");
+
         if (isOn)
         {
             OpenWindowScene(sceneId);
         }
         else
         {
-            var currentWindow = _uiFrame.GetCurrentWindow();
-            if (currentWindow != null && currentWindow.ScreenId == sceneId)
+            // Không tự đóng LaunchLoadingScene bằng code ở đây.
+            // Hãy để UIManager.OpenWindowScene(StartGameScene) tự động thay thế và đóng 
+            // LaunchLoadingScene theo luồng chuyển cảnh (transition) mặc định của UIFramework.
+            // Việc này giúp tránh hoàn toàn lỗi "Hide requested..." và loại bỏ frame trống (blank screen).
+            if (!_isFirstLoad)
             {
-                CloseWindowScene(sceneId);
+                var currentWindow = _uiFrame.GetCurrentWindow();
+                if (currentWindow != null && currentWindow.ScreenId == sceneId)
+                {
+                    CloseWindowScene(sceneId);
+                }
             }
             _isFirstLoad = false;
         }

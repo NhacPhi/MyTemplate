@@ -142,6 +142,8 @@ public class SceneLoader : MonoBehaviour
         _showLoadingScreen = showLoadingScreen;
         _isLoading = true;
 
+        Debug.Log($"[TransitionLog] SceneLoader: LoadMenu requested for {menuToLoad.name} (showLoadingScreen = {showLoadingScreen})");
+
         //In case we are coming from a Location back to the main menu, we need to get rid of the persistent Gameplay manager scene
         if (_gameplayManagerSceneInstance.Scene != null
             && _gameplayManagerSceneInstance.Scene.isLoaded)
@@ -207,29 +209,60 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator TrackLoadingProgress()
     {
+        Debug.Log("[TransitionLog] SceneLoader: TrackLoadingProgress - Starting Addressables scene load.");
         _loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
         
         float timer = 0f;
-        float minLoadingTime = 1.5f;
+        float minLoadingTime = 2.0f;
+        float displayProgress = 0f;
 
-        while (!_loadingOperationHandle.IsDone || timer < minLoadingTime)
+        // Xác định đây có phải là lần tải cảnh đầu tiên của trò chơi (Launch -> Menu)
+        bool isInitialLoad = _currentlyLoadedScene == null;
+
+        // Vòng lặp 1: Chạy khi chưa load xong HOẶC chưa đủ thời gian tối thiểu 2s HOẶC dữ liệu chưa preload xong (đối với lần tải đầu tiên)
+        // Giới hạn tiến trình hiển thị tối đa là 90-95% để tạo cảm giác "chờ phản hồi" từ ổ đĩa
+        while (!_loadingOperationHandle.IsDone || timer < minLoadingTime || (isInitialLoad && !GameEvent.IsPreloadDone))
         {
             timer += Time.unscaledDeltaTime;
             
-            // Tính toán tiến trình dựa trên cả tiến trình thực tế của Addressables và thời gian tối thiểu
-            float realProgress = _loadingOperationHandle.PercentComplete;
             float timeProgress = Mathf.Clamp01(timer / minLoadingTime);
-            float displayProgress = Mathf.Min(realProgress, timeProgress);
+            
+            if (isInitialLoad && !GameEvent.IsPreloadDone)
+            {
+                // Dữ liệu database/save game chưa preload xong trên Android: chạy mượt tới tối đa 90%
+                displayProgress = Mathf.Min(timeProgress, 0.9f);
+            }
+            else if (!_loadingOperationHandle.IsDone)
+            {
+                // Chưa load xong thực tế: chạy mượt tới tối đa 90% theo thời gian
+                displayProgress = timeProgress * 0.9f;
+            }
+            else
+            {
+                // Đã load xong thực tế nhưng chưa đủ 2s tối thiểu: chạy tiếp tới tối đa 95%
+                displayProgress = Mathf.Max(displayProgress, timeProgress * 0.95f);
+            }
             
             UIEvent.OnUpdateLoadingProgress?.Invoke(displayProgress);
             yield return null;
         }
 
-        UIEvent.OnUpdateLoadingProgress?.Invoke(1f);
+        Debug.Log($"[TransitionLog] SceneLoader: TrackLoadingProgress - Loop 1 finished. AddressablesIsDone={_loadingOperationHandle.IsDone}, Timer={timer}, IsPreloadDone={GameEvent.IsPreloadDone}. Animating to 100%.");
+
+        // Vòng lặp 2: Sau khi hoàn thành tất cả điều kiện, chạy nốt phần còn lại lên 100% thật mượt
+        while (displayProgress < 1f)
+        {
+            displayProgress += Time.unscaledDeltaTime * 2f; // Tăng nhanh từ 95% -> 100% (~0.025s)
+            if (displayProgress > 1f) displayProgress = 1f;
+            
+            UIEvent.OnUpdateLoadingProgress?.Invoke(displayProgress);
+            yield return null;
+        }
         
         // Đợi thêm 1 frame để UI hiển thị cập nhật 100% trước khi đóng
         yield return null;
 
+        Debug.Log("[TransitionLog] SceneLoader: TrackLoadingProgress - Completed! Calling OnNewSceneLoaded.");
         OnNewSceneLoaded(_loadingOperationHandle);
     }
 
@@ -247,6 +280,8 @@ public class SceneLoader : MonoBehaviour
             LightProbes.TetrahedralizeAsync();
 
             _isLoading = false;
+
+            Debug.Log($"[TransitionLog] SceneLoader: OnNewSceneLoaded - Scene {s.name} loaded and set active.");
 
             if (_showLoadingScreen)
                 UIEvent.OnToggleLoadingScene?.Invoke(false);
@@ -276,6 +311,7 @@ public class SceneLoader : MonoBehaviour
 
     private void StartGameplay()
     {
+        Debug.Log("[TransitionLog] SceneLoader: StartGameplay - Setting IsSceneReady = true and invoking GameEvent.OnSceneReady.");
         GameEvent.IsSceneReady = true;
         GameEvent.OnSceneReady?.Invoke(); //Spawn system will spawn the PigChef in a gameplay scene
     }

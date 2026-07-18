@@ -36,10 +36,15 @@ namespace UIFramework
 
         public UIFrame CreateUIInstance(bool instanceAndRegisterScreens = true) {
             var newUI = Instantiate(templateUIPrefab);
-#if UNITY_EDITOR
+
+            // Di chuyển UI vào scene PersistentManagement trên mọi nền tảng để tránh bị hủy khi Unload Scene 0.
+            // Bản gốc chỉ di chuyển ở Editor (#if UNITY_EDITOR), khiến UI bị hủy trên Android khi Unload Scene 0.
             Scene targetScene = SceneManager.GetSceneByName("PersistentManagement");
-            SceneManager.MoveGameObjectToScene(newUI.gameObject, targetScene);
-#endif
+            if (targetScene.IsValid() && targetScene.isLoaded) {
+                SceneManager.MoveGameObjectToScene(newUI.gameObject, targetScene);
+            } else {
+                DontDestroyOnLoad(newUI.gameObject);
+            }
             if (instanceAndRegisterScreens) {
                 foreach (var screen in screensToRegister) {
                     var screenInstance = _objectResolver.Instantiate(screen); //Instantiate(screen);

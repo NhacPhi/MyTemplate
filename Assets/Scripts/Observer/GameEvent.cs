@@ -11,6 +11,7 @@ public static class GameEvent
 
     public static Action OnSceneReady;
     public static bool IsSceneReady;
+    public static bool IsPreloadDone = false;
     public static Action OnPlayerSpawned;
 
     //Gamestart
