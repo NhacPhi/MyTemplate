@@ -12,22 +12,6 @@ public class AtlasProvider
     {
         if (loadedAtlases.TryGetValue(address, out var atlas)) return atlas;
 
-#if UNITY_EDITOR
-        // HACK: Sửa lỗi Addressables Play Mode (Use Asset Database) ném ra ngoại lệ InvalidKeyException 
-        // với SpriteAtlasV2 (bị nhận diện nhầm là DefaultAsset).
-        string[] guids = UnityEditor.AssetDatabase.FindAssets(address + " t:spriteatlas");
-        if (guids.Length > 0)
-        {
-            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-            atlas = UnityEditor.AssetDatabase.LoadAssetAtPath<SpriteAtlas>(path);
-            if (atlas != null)
-            {
-                loadedAtlases[address] = atlas;
-                return atlas;
-            }
-        }
-#endif
-
         atlas = await AddressablesManager.Instance.LoadAssetAsync<SpriteAtlas>(address);
         loadedAtlases[address] = atlas;
         return atlas;
