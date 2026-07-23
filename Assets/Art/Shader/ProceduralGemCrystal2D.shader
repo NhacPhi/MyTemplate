@@ -4,6 +4,7 @@ Shader "Custom/ProceduralGemCrystal2D"
     {
         [PerRendererData] _MainTex ("Alpha Mask (Hình dáng pha lê)", 2D) = "white" {}
         _Color ("Tint Color", Color) = (1,1,1,1)
+        _Alpha ("Alpha (Độ trong suốt)", Range(0, 1)) = 0.6
         
         [Header(Crystal Colors)]
         [HDR] _TopColor ("Top Color (Màu Đỉnh Tinh Thể)", Color) = (0.8, 1.0, 1.0, 1.0)
@@ -72,6 +73,7 @@ Shader "Custom/ProceduralGemCrystal2D"
 
             sampler2D _MainTex;
             fixed4 _Color;
+            float _Alpha;
             
             fixed4 _TopColor;
             fixed4 _BottomColor;
@@ -162,8 +164,9 @@ Shader "Custom/ProceduralGemCrystal2D"
             fixed4 frag(v2f i) : SV_Target
             {
                 // 1. Khung hình gốc (Sử dụng alpha của Sprite để cắt hình dáng)
-                fixed4 baseMask = tex2D(_MainTex, i.texcoord) * i.color;
-                clip(baseMask.a - 0.01);
+                fixed4 mainTex = tex2D(_MainTex, i.texcoord);
+                clip(mainTex.a - 0.01);
+                float finalAlpha = mainTex.a * _Alpha;
 
                 // 2. Kéo dãn tọa độ UV để tạo các mặt cắt pha lê dài (giống viên ngọc)
                 float2 crystalUV = i.texcoord * float2(_ScaleX, _ScaleY);
@@ -220,7 +223,7 @@ Shader "Custom/ProceduralGemCrystal2D"
                 
                 faceColor += _MirrorShineColor.rgb * (mirrorShine * 0.4 + coreShine * 2.0);
 
-                return fixed4(faceColor, baseMask.a);
+                return fixed4(faceColor, finalAlpha);
             }
             ENDCG
         }

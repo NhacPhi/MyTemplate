@@ -41,9 +41,74 @@ public class SceneLoader : MonoBehaviour
 
     public static SceneLoader Instance { get; private set; }
 
+    /// <summary>
+    /// Cache static của Location scene gần nhất được load thành công.
+    /// </summary>
+    public static GameSceneSO LastLoadedLocation { get; private set; }
+
+    // Registry static để giữ Strong Reference cho GameSceneSO, tránh bị Unity GC Unload trên Android/IL2CPP
+    private static readonly System.Collections.Generic.Dictionary<string, GameSceneSO> _sceneRegistry = new System.Collections.Generic.Dictionary<string, GameSceneSO>();
+
+    public static GameSceneSO GetRegisteredScene(string sceneName)
+    {
+        if (string.IsNullOrEmpty(sceneName)) return null;
+        _sceneRegistry.TryGetValue(sceneName, out var scene);
+        return scene;
+    }
+
+    public static void RegisterScene(GameSceneSO scene)
+    {
+        if (scene == null) return;
+        if (!_sceneRegistry.ContainsKey(scene.name))
+        {
+            try
+            {
+                // Tạo một bản clone độc lập của ScriptableObject trong RAM C# để tránh bị Unity C++ GC thu hồi khi unload bundle
+                GameSceneSO clone = ScriptableObject.Instantiate(scene);
+                clone.name = scene.name;
+                _sceneRegistry.Add(clone.name, clone);
+                Debug.Log($"[SceneRegistry] Đã khởi tạo bản CLONE vĩnh viễn thành công cho scene SO: {clone.name}");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[SceneRegistry] Lỗi khi tạo bản clone cho scene {scene.name}: {ex.Message}");
+            }
+        }
+    }
+
+    public static string DumpRegistryKeys()
+    {
+        if (_sceneRegistry.Count == 0) return "Registry RỖNG!";
+        return string.Join(", ", _sceneRegistry.Keys);
+    }
+
+
+
     private void Awake()
     {
         Instance = this;
+
+        // Chỉ chạy khi ở màn hình khởi động (chưa có scene nào load)
+        if (_currentlyLoadedScene == null)
+        {
+            try
+            {
+                // Tạo một scene rỗng thực tế trong bộ nhớ RAM lúc runtime
+                SceneManager.CreateScene("EmptyTransitionScene");
+                
+                // Tạo một dummy GameSceneSO để đại diện
+                GameSceneSO dummyScene = ScriptableObject.CreateInstance<GameSceneSO>();
+                dummyScene.sceneType = GameSceneType.Initialization;
+                dummyScene.name = "EmptyTransitionScene";
+                
+                _currentlyLoadedScene = dummyScene;
+                Debug.Log("[TransitionLog] SceneLoader: Đã khởi tạo ngầm EmptyTransitionScene thành công trong Awake để bypass Initial Load.");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[TransitionLog] SceneLoader: Lỗi khi tạo scene rỗng ngầm trong Awake: {ex.Message}");
+            }
+        }
     }
 
     private void OnEnable()
@@ -108,6 +173,16 @@ public class SceneLoader : MonoBehaviour
         _sceneToLoad = locationToLoad;
         _showLoadingScreen = showLoadingScreen;
         _isLoading = true;
+
+        if (locationToLoad != null)
+        {
+            RegisterScene(locationToLoad);
+            if (locationToLoad.sceneType == GameSceneType.Location)
+            {
+                LastLoadedLocation = locationToLoad;
+                Debug.Log($"[TransitionLog] SceneLoader: LoadLocation - Pre-caching LastLoadedLocation = {locationToLoad.name}");
+            }
+        }
 
         //In case we are coming from the main menu, we need to load the Gameplay manager scene first
         if (_gameplayManagerSceneInstance.Scene == null
@@ -176,13 +251,20 @@ public class SceneLoader : MonoBehaviour
             Debug.Log("Scene cũ đã được Unload hoàn toàn.");
         }
 #if UNITY_EDITOR
-        else if (_currentlyLoadedScene != null)
+        else if (_currentlyLoadedScene != null && _currentlyLoadedScene.name != "EmptyTransitionScene")
         {
             // Fix cho Cold Start trong Editor
             AsyncOperation op = SceneManager.UnloadSceneAsync(_currentlyLoadedScene.sceneReference.editorAsset.name);
             if (op != null) yield return op;
         }
 #endif
+        // Giải phóng scene rỗng ngầm (cho cả Editor và Android)
+        if (_currentlyLoadedScene != null && _currentlyLoadedScene.name == "EmptyTransitionScene")
+        {
+            AsyncOperation op = SceneManager.UnloadSceneAsync("EmptyTransitionScene");
+            if (op != null) yield return op;
+            Debug.Log("[TransitionLog] SceneLoader: Đã unload ngầm EmptyTransitionScene thành công.");
+        }
 
         // Đợi 1 frame để Unity cập nhật lại Hierarchy
         yield return null;
@@ -282,6 +364,16 @@ public class SceneLoader : MonoBehaviour
             _isLoading = false;
 
             Debug.Log($"[TransitionLog] SceneLoader: OnNewSceneLoaded - Scene {s.name} loaded and set active.");
+
+            if (_currentlyLoadedScene != null)
+            {
+                RegisterScene(_currentlyLoadedScene);
+                if (_currentlyLoadedScene.sceneType == GameSceneType.Location)
+                {
+                    LastLoadedLocation = _currentlyLoadedScene;
+                    Debug.Log($"[TransitionLog] SceneLoader: LastLoadedLocation cached => {LastLoadedLocation.name}");
+                }
+            }
 
             if (_showLoadingScreen)
                 UIEvent.OnToggleLoadingScene?.Invoke(false);

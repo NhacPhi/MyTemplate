@@ -8,4 +8,5 @@ public class BattleSessionContext
     public GameSceneSO PreviousLocation { get; set; }
     public Vector3? ReturnPosition { get; set; }
     public Vector3? ReturnCameraPosition { get; set; }
+    public string PreviousLocationName { get; set; }
 }
