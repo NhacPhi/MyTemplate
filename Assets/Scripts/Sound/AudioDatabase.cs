@@ -12,10 +12,20 @@ public class AudioDatabase : ScriptableObject
         return SFXList.Find(x => x.AudioID == id);
     }
 
-    public AudioDataConfig GetRandomSFX()
+    public AudioDataConfig GetRandomSFX(AudioDataConfig excludeConfig = null)
     {
         if (SFXList == null || SFXList.Count == 0) return null;
-        int randomIndex = Random.Range(0, SFXList.Count);
-        return SFXList[randomIndex];
+        if (SFXList.Count == 1 || excludeConfig == null)
+        {
+            int randomIndex = Random.Range(0, SFXList.Count);
+            return SFXList[randomIndex];
+        }
+
+        var candidates = SFXList.FindAll(x => x != null && x != excludeConfig);
+        if (candidates.Count == 0)
+        {
+            return SFXList[Random.Range(0, SFXList.Count)];
+        }
+        return candidates[Random.Range(0, candidates.Count)];
     }
 }

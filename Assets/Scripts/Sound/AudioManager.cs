@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Tech.Logger;
@@ -26,6 +27,10 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     private float _activeConfigVolume = 1f;
 
+    private CancellationTokenSource _bgmCts;
+    private AudioDatabase _currentBgmDatabase;
+    private AudioDataConfig _lastPlayedBgmConfig;
+
     private void Awake()
     {
         if (_musicSource == null)
@@ -33,6 +38,11 @@ public class AudioManager : MonoBehaviour, IAudioManager
             _musicSource = gameObject.AddComponent<AudioSource>();
             _musicSource.playOnAwake = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        CancelBgmLoop();
     }
 
     private void Update()
@@ -69,6 +79,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
             foreach (var config in db.SFXList)
             {
+                if (config == null) continue;
                 if (!_masterConfigMap.ContainsKey(config.AudioID))
                 {
                     _masterConfigMap.Add(config.AudioID, config);
@@ -83,75 +94,156 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     public async UniTask PlaySFXAsync(string audioID, bool stopPrevious = false, bool loop = false)
     {
-        AudioDataConfig config = null;
-
-        // Nếu ID truyền vào là tên của một Database (ví dụ: AudioDB_Environment), ta phát Random một âm thanh trong đó
+        // Nếu ID truyền vào là tên của một Database (ví dụ: AudioDB_Environment) và cần loop
         if (_databases.TryGetValue(audioID, out var db))
         {
-            config = db.GetRandomSFX();
+            if (loop)
+            {
+                // Nếu cùng 1 database BGM đang chạy và không yêu cầu stopPrevious, không ngắt bài
+                if (!stopPrevious && _currentBgmDatabase == db && _bgmCts != null && !_bgmCts.IsCancellationRequested && _musicSource != null && _musicSource.isPlaying)
+                {
+                    return;
+                }
+
+                CancelBgmLoop();
+                _currentBgmDatabase = db;
+                _bgmCts = new CancellationTokenSource();
+                PlayBgmLoopTask(db, _bgmCts.Token).Forget();
+                return;
+            }
+            else
+            {
+                AudioDataConfig randomConfig = db.GetRandomSFX();
+                if (randomConfig != null)
+                {
+                    await PlaySingleClipAsync(randomConfig, stopPrevious, false);
+                }
+                return;
+            }
         }
-        else if (!_masterConfigMap.TryGetValue(audioID, out config))
+
+        if (!_masterConfigMap.TryGetValue(audioID, out var config) || config == null)
         {
             LogCommon.LogWarning($"[Audio] Can't found config id: {audioID}");
             return;
         }
 
-        if (config == null)
+        if (loop)
         {
-            LogCommon.LogWarning($"[Audio] Config is null or empty in database for: {audioID}");
-            return;
+            CancelBgmLoop();
         }
-        
-        AudioClip clipToPlay = await AddressablesManager.Instance.LoadAssetAsync<AudioClip>(config.ClipRef);
 
-        if (clipToPlay != null)
+        await PlaySingleClipAsync(config, stopPrevious, loop);
+    }
+
+    private async UniTaskVoid PlayBgmLoopTask(AudioDatabase db, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
         {
-            // Chọn AudioSource tương ứng (loop -> _musicSource, sfx/voice -> _sfxSource)
-            AudioSource activeSource = loop ? _musicSource : _sfxSource;
+            AudioDataConfig config = db.GetRandomSFX(_lastPlayedBgmConfig);
+            if (config == null) break;
 
-            if (activeSource == null) return;
+            _lastPlayedBgmConfig = config;
 
-            // Tránh ngắt quãng nếu nhạc lặp (nhạc nền/môi trường) đang chạy
-            if (loop && activeSource.isPlaying && activeSource.loop && activeSource.clip != null)
+            AudioClip clipToPlay = await AddressablesManager.Instance.LoadAssetAsync<AudioClip>(config.ClipRef);
+            if (cancellationToken.IsCancellationRequested) break;
+
+            if (clipToPlay != null && _musicSource != null)
             {
-                return;
-            }
+                float volumeRatio = 1f;
+                if (_saveSystem != null && _saveSystem.Settings != null)
+                {
+                    volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
+                }
 
-            // Lấy tỉ lệ âm lượng từ SaveSystem (chỉ áp dụng cho nhạc lặp/môi trường)
-            float volumeRatio = 1f;
-            if (loop && _saveSystem != null && _saveSystem.Settings != null)
-            {
-                volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
-            }
-
-            if (loop)
-            {
                 _activeConfigVolume = config.Volume;
-            }
+                _musicSource.loop = false;
+                _musicSource.Stop();
+                _musicSource.clip = clipToPlay;
+                _musicSource.volume = config.Volume * volumeRatio;
+                _musicSource.Play();
 
-            activeSource.loop = loop;
-            if (stopPrevious || loop)
-            {
-                activeSource.Stop();
-                activeSource.clip = clipToPlay;
-                activeSource.volume = config.Volume * volumeRatio;
-                activeSource.Play();
+                // Chờ cho đến khi bài hát phát xong hoặc có yêu cầu hủy
+                bool canceled = await UniTask.WaitUntil(
+                    () => _musicSource == null || !_musicSource.isPlaying || _musicSource.clip != clipToPlay,
+                    PlayerLoopTiming.Update,
+                    cancellationToken
+                ).SuppressCancellationThrow();
+
+                if (canceled || cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
             }
             else
             {
-                activeSource.PlayOneShot(clipToPlay, config.Volume * volumeRatio);
+                bool canceled = await UniTask.Delay(1000, cancellationToken: cancellationToken).SuppressCancellationThrow();
+                if (canceled || cancellationToken.IsCancellationRequested) break;
             }
+        }
+    }
+
+    private async UniTask PlaySingleClipAsync(AudioDataConfig config, bool stopPrevious, bool loop)
+    {
+        AudioClip clipToPlay = await AddressablesManager.Instance.LoadAssetAsync<AudioClip>(config.ClipRef);
+        if (clipToPlay == null) return;
+
+        AudioSource activeSource = loop ? _musicSource : _sfxSource;
+        if (activeSource == null) return;
+
+        if (loop && activeSource.isPlaying && activeSource.loop && activeSource.clip != null)
+        {
+            return;
+        }
+
+        float volumeRatio = 1f;
+        if (loop && _saveSystem != null && _saveSystem.Settings != null)
+        {
+            volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
+        }
+
+        if (loop)
+        {
+            _activeConfigVolume = config.Volume;
+        }
+
+        activeSource.loop = loop;
+        if (stopPrevious || loop)
+        {
+            activeSource.Stop();
+            activeSource.clip = clipToPlay;
+            activeSource.volume = config.Volume * volumeRatio;
+            activeSource.Play();
+        }
+        else
+        {
+            activeSource.PlayOneShot(clipToPlay, config.Volume * volumeRatio);
         }
     }
 
     public void StopSFX()
     {
+        CancelBgmLoop();
         if (_musicSource != null)
         {
             _musicSource.Stop();
             _musicSource.clip = null;
             _musicSource.loop = false;
         }
+    }
+
+    private void CancelBgmLoop()
+    {
+        if (_bgmCts != null)
+        {
+            if (!_bgmCts.IsCancellationRequested)
+            {
+                _bgmCts.Cancel();
+            }
+            _bgmCts.Dispose();
+            _bgmCts = null;
+        }
+        _currentBgmDatabase = null;
     }
 
     public void UpdateVolume(float volumeRatio)
