@@ -13,32 +13,31 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
     private bool isReady = false;
     private string missingTextString = "Localized text not found";
 
-    // Cache l?i c�c Field c?a LocKeys ?? t?ng hi?u su?t Reflection
+    // Cache lại các Field của LocKeys để tăng hiệu suất Reflection
     private Dictionary<string, long> keyCache = new Dictionary<string, long>();
 
     private void Awake()
     {
         base.Awake();
     }
+
     public async UniTask LoadLocalizedText(string languageCode)
     {
         localization.Clear();
-
         isReady = false;
 
         string addressKey = $"Localization_{languageCode}";
 
         try
         {
-            //Load file text from Addressable
+            // Load file text từ AddressablesManager
             TextAsset textAsset = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(addressKey);
 
-            if(textAsset == null)
+            if (textAsset == null)
             {
                 Debug.LogError($"Don't find localization file: {addressKey}");
+                return;
             }
-
-            //string[] lines = textAsset.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
             localization = Json.DeserializeObject<Dictionary<long, string>>(textAsset.text);
 
@@ -51,13 +50,13 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
             isReady = true;
             Debug.Log($"Loaded localization: {languageCode} ({localization.Count} entries)");
 
-            // Release resource (Addressables hold reference)
-            Addressables.Release(textAsset);
+            // Giải phóng asset khỏi cache AddressablesManager an toàn
+            AddressablesManager.Instance.RemoveAsset(addressKey);
         }
-        catch (Exception e) {
-            Debug.LogError($"Faile when load localization {languageCode}: {e.Message}");
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed when load localization {languageCode}: {e.Message}");
         }
-
     }
 
     // Get content by uint id
@@ -83,7 +82,7 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
         // check in cache before Reflection 
         if (!keyCache.TryGetValue(stringID, out long hashKey))
         {
-            //uuse Reflection to get Lockeys
+            // use Reflection to get LocKeys
             FieldInfo field = typeof(LocKeys).GetField(stringID, BindingFlags.Public | BindingFlags.Static);
 
             if (field != null && field.IsLiteral) // IsLiteral make sure is constant

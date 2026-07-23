@@ -21,7 +21,14 @@ public class InteractionManager : MonoBehaviour
         GameEvent.OnInteraction -= OnInteractionButtonPress;
         GameEvent.OnExecuteSpecificInteraction -= ExecuteInteraction;
         GameEvent.OnPlayerTransform -= ClearAllInteractions;
+        ClearAllInteractions();
     }
+
+    private void OnDestroy()
+    {
+        ClearAllInteractions();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,10 +100,21 @@ public class InteractionManager : MonoBehaviour
         switch (interaction.type)
         {
             case InteractionType.Talk:
-                interaction.interactableObject.GetComponent<StepController>().InteractWithCharacter();
+                StepController stepController = interaction.interactableObject.GetComponent<StepController>();
+                if (stepController != null)
+                {
+                    stepController.InteractWithCharacter();
+                }
+                potentialInteractions.Remove(interaction);
+                RequestUpdateUI();
                 break;
             case InteractionType.Fighting:
-                interaction.interactableObject.GetComponent<BattleTrigger>().OpenPrepareScene();
+                BattleTrigger battleTrigger = interaction.interactableObject.GetComponent<BattleTrigger>();
+                if (battleTrigger != null)
+                {
+                    battleTrigger.OpenPrepareScene();
+                }
+                ClearAllInteractions();
                 break;
             case InteractionType.PickUp:
                 ItemPickup item = interaction.interactableObject.GetComponent<ItemPickup>();
@@ -110,6 +128,10 @@ public class InteractionManager : MonoBehaviour
                 {
                     Debug.LogWarning("[InteractionManager] Đối tượng có tag Pickable nhưng không có script ItemPickup!");
                 }
+                break;
+            case InteractionType.Cook:
+                potentialInteractions.Remove(interaction);
+                RequestUpdateUI();
                 break;
         }
     }

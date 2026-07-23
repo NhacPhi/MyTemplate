@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,12 +28,20 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
         // 1. KIỂM TRA CACHE TRƯỚC
         if (_dicAsset.TryGetValue(key, out var existingHandle))
         {
-            // Nếu Asset đang được tải dở bởi một chỗ khác, ta chỉ việc đứng chờ chung
-            if (!existingHandle.IsDone)
+            if (existingHandle.IsValid() && existingHandle.Result != null)
             {
-                await existingHandle.ToUniTask(cancellationToken: token);
+                // Nếu Asset đang được tải dở bởi một chỗ khác, ta chỉ việc đứng chờ chung
+                if (!existingHandle.IsDone)
+                {
+                    await existingHandle.ToUniTask(cancellationToken: token);
+                }
+                return existingHandle.Result as T;
             }
-            return existingHandle.Result as T;
+            else
+            {
+                // Handle đã bị Release hoặc không hợp lệ -> loại bỏ khỏi Cache để nạp lại
+                _dicAsset.Remove(key);
+            }
         }
 
         try
@@ -84,11 +92,18 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
         // Áp dụng logic an toàn tương tự như LoadAssetAsync
         if (_dicAsset.TryGetValue(key, out var existingHandle))
         {
-            if (!existingHandle.IsDone)
+            if (existingHandle.IsValid() && existingHandle.Result != null)
             {
-                await existingHandle.ToUniTask(cancellationToken: token);
+                if (!existingHandle.IsDone)
+                {
+                    await existingHandle.ToUniTask(cancellationToken: token);
+                }
+                return existingHandle.Result as List<T>;
             }
-            return existingHandle.Result as List<T>;
+            else
+            {
+                _dicAsset.Remove(key);
+            }
         }
 
         try
@@ -121,7 +136,10 @@ public class AddressablesManager : SingletonPersistent<AddressablesManager>
     public void RemoveAsset(object key)
     {
         if (!_dicAsset.TryGetValue(key, out var value)) return;
-        Addressables.ReleaseInstance(value);
+        if (value.IsValid())
+        {
+            Addressables.Release(value);
+        }
         _dicAsset.Remove(key);
     }
 

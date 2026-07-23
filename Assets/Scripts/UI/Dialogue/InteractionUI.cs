@@ -18,15 +18,23 @@ public class InteractionUI : MonoBehaviour
     {
         UIEvent.OnUpdateInteractionsUI += UpdateInteractionUI;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        UnityEngine.SceneManagement.SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnDisable()
     {
         UIEvent.OnUpdateInteractionsUI -= UpdateInteractionUI;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        UnityEngine.SceneManagement.SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        UpdateInteractionUI(null);
     }
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        UpdateInteractionUI(null);
+    }
+
+    private void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
     {
         UpdateInteractionUI(null);
     }

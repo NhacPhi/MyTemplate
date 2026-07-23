@@ -77,15 +77,28 @@ public class SpawnSystem : MonoBehaviour
             }
         }
 
-        // If a battle session requests a specific return position, override the above.
+        // If a battle session requests a specific return position, override the above ONLY if returning to the same scene.
         var rootScope = FindObjectOfType<RootScope>();
         if (rootScope != null)
         {
             var sessionContext = rootScope.Container.Resolve<BattleSessionContext>();
             if (sessionContext != null && sessionContext.ReturnPosition.HasValue)
             {
-                spawnPos = sessionContext.ReturnPosition.Value;
+                string currentSceneName = gameObject.scene.name;
+                bool isSameScene = (sessionContext.PreviousLocation != null && sessionContext.PreviousLocation.name == currentSceneName)
+                                || (!string.IsNullOrEmpty(sessionContext.PreviousLocationName) && sessionContext.PreviousLocationName == currentSceneName);
+
+                if (isSameScene)
+                {
+                    spawnPos = sessionContext.ReturnPosition.Value;
+                }
+                else
+                {
+                    Debug.Log($"[SpawnSystem] Chuyển sang scene mới ('{currentSceneName}'), bỏ qua ReturnPosition của scene cũ.");
+                }
+
                 sessionContext.ReturnPosition = null;
+                sessionContext.ReturnCameraPosition = null;
             }
         }
 
