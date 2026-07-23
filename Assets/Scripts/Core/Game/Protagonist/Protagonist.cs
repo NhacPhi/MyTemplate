@@ -73,32 +73,35 @@ public class Protagonist : MonoBehaviour, IDamageable
             }
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_STANDALONE_WIN
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        // Hỗ trợ phím cứng WASD phòng khi Input Manager chưa setup
+        // Hỗ trợ phím cứng WASD và Phím Mũi Tên cho bản Windows Build & Editor
         if (movement.sqrMagnitude == 0)
         {
-            if (Input.GetKey(KeyCode.A)) movement.x = -1;
-            if (Input.GetKey(KeyCode.D)) movement.x = 1;
-            if (Input.GetKey(KeyCode.W)) movement.y = 1;
-            if (Input.GetKey(KeyCode.S)) movement.y = -1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) movement.x = -1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) movement.x = 1;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) movement.y = 1;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) movement.y = -1;
         }
 
-        if(movement.magnitude > 0)
+        if (movement.magnitude > 0)
         {
             PlayerMovement(movement);
         }
 
-        // Thêm phím test tấn công (Space / J)
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J))
+        // Thêm phím tấn công (Space / J / Chuột trái)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J) || Input.GetMouseButtonDown(0))
         {
-            PlayerAttack();
+            if (UnityEngine.EventSystems.EventSystem.current == null || !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                PlayerAttack();
+            }
         }
 
-        // Thêm phím test biến hình (F)
-        if (Input.GetKeyDown(KeyCode.F))
+        // Thêm phím biến hình (F / E)
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.E))
         {
             Transformation();
         }
