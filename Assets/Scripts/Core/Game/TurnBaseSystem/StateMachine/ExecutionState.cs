@@ -28,14 +28,35 @@ public class ExecutionState : BattleBaseState
             if (battleManager == null || battleManager.CurrentCaster == null)
                 return;
 
-            Dictionary<SkillCharacter, SkillRuntime> activeSkills = battleManager.CurrentCaster.GetCoreComponent<EntitySkill>().Skills;
+            if (battleManager != null && battleManager.Boss != null)
+            {
+                UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
+            }
 
             battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
         }
+        catch (System.OperationCanceledException)
+        {
+            // Object/Scene feature was canceled or destroyed normally. Clean exit.
+            return;
+        }
+        catch (UnityEngine.MissingReferenceException)
+        {
+            // Object was destroyed mid-execution (scene unload / restart). Clean exit.
+            return;
+        }
+        catch (System.ObjectDisposedException)
+        {
+            return;
+        }
         catch (System.Exception e)
         {
-            // If the scene unloads or object is destroyed mid-execution, we safely abort the state transition.
-            return;
+            string casterName = (battleManager != null && battleManager.CurrentCaster != null) ? battleManager.CurrentCaster.name : "Unknown";
+            Debug.LogError($"[ExecutionState] Lỗi khi thực thi skill của '{casterName}': {e}");
+            if (battleManager != null && battleManager.StateMachine != null)
+            {
+                battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
+            }
         }
     }
 

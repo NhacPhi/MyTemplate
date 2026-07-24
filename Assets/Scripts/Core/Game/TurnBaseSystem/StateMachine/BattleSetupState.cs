@@ -10,10 +10,7 @@ public class BattleSetupState : BattleBaseState
 
     public override void Enter()
     {
-        // Init UI
-        // Spawn Units()
-        // Setting Turn Order
-        // Swtich State
+        UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
         _ = LoadAllResourceBeforeStartBattle();
     }
 
@@ -39,10 +36,14 @@ public class BattleSetupState : BattleBaseState
         battleManager.CheckBattleHasBosss();
 
         UIEvent.OnActiveBossUI?.Invoke(battleManager.Boss != null);
+        if (battleManager.Boss != null)
+        {
+            UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
+        }
 
         battleManager.ResultBattle = BattleResult.Flee;
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, ignoreTimeScale: true, cancellationToken: token);
 
         battleManager.StateMachine.ChangeState(BattleState.OrderState);
     }

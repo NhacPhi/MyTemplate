@@ -20,7 +20,7 @@ public class FireballSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IImp
         _caster = caster;
         fireBallPrefab.transform.SetParent(caster.transform);
         fireBallPrefab.transform.localPosition = skillData.Offset;
-        fireBallPrefab.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
+        fireBallPrefab.transform.localScale = new Vector3(1.4f, -1.4f, 1.4f);
         fireBallPrefab.gameObject.SetActive(true);
 
         var controller = fireBallPrefab.GetComponent<FireballController>();

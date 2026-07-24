@@ -22,10 +22,12 @@ public abstract class EnemyBrain : CoreComponent
 
     protected Entity GetLowestHpTarget(List<Entity> aliveTargets)
     {
-        return aliveTargets
-             .Where(p => !p.GetCoreComponent<EntityStats>().IsDead)
-             .OrderBy(p => p.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value)
-             .First();
+        if (aliveTargets == null || aliveTargets.Count == 0) return null;
+
+        var valid = aliveTargets
+             .Where(p => p != null && p.GetCoreComponent<EntityStats>() != null && !p.GetCoreComponent<EntityStats>().IsDead);
+
+        return valid.OrderBy(p => p.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value).FirstOrDefault();
     }
 
     public abstract UniTask<EnemyDecision> DecideAsync(List<Entity> playerTeam);

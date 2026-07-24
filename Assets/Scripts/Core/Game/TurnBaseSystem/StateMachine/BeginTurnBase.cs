@@ -16,6 +16,12 @@ public class BeginTurnBase : BattleBaseState
     {
         try
         {
+            var enemyBrain = battleManager.CurrentCaster.GetCoreComponent<EnemyBrain>();
+            bool isEnemy = battleManager.CurrentCaster.Team == TeamSide.Enemy || enemyBrain != null;
+
+            // Immediately show or hide Skill UI depending on whether it is Enemy or Player turn
+            UIEvent.OnSwithActiveSkilCharacter?.Invoke(!isEnemy);
+
             // Effect Xử lý sát thương / Hồi phục theo thời gian
             var stats = battleManager.CurrentCaster.GetCoreComponent<StatsController>();
             bool skipTurn = !stats.CanTakeTurn();
@@ -39,7 +45,6 @@ public class BeginTurnBase : BattleBaseState
             }
 
             // Skil 
-            var enemyBrain = battleManager.CurrentCaster.GetCoreComponent<EnemyBrain>();
             var skillManager = battleManager.CurrentCaster.GetCoreComponent<EntitySkill>();
 
             if (skillManager != null)
@@ -48,25 +53,34 @@ public class BeginTurnBase : BattleBaseState
 
                 if (battleManager != null)
                 {
-                    await UniTask.Delay(1000, cancellationToken: battleManager.DestroyCancellationToken);
+                    await UniTask.Delay(1000, ignoreTimeScale: true, cancellationToken: battleManager.DestroyCancellationToken);
                 }
             }
 
             if (battleManager == null || battleManager.CurrentCaster == null) return;
 
             if (battleManager.Boss)
-                UIEvent.OnUpdateBossUI(battleManager.Boss);
+                UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
 
             UIEvent.OnUpdateEntityPrediction?.Invoke(battleManager.TurnSystem.PredictTurnOrder());
 
-            if (enemyBrain != null)
+            if (isEnemy)
             {
                 //Enemy
-                UIEvent.OnSwithActiveSkilCharacter?.Invoke(false);
-
                 var playerTeam = battleManager.TargetSystem.GetValidEtitiesByColumnLogic(battleManager.Characters.Values.ToList());
 
-                EnemyDecision decision = await enemyBrain.DecideAsync(playerTeam);
+                EnemyDecision decision;
+                if (enemyBrain != null)
+                {
+                    decision = await enemyBrain.DecideAsync(playerTeam);
+                }
+                else
+                {
+                    Debug.LogWarning($"[BeginTurnBase] Enemy '{battleManager.CurrentCaster.name}' không có script EnemyBrain! Tự động chọn đòn đánh cơ bản.");
+                    var aliveTargets = playerTeam.Where(p => p != null && p.GetCoreComponent<EntityStats>() != null && !p.GetCoreComponent<EntityStats>().IsDead).ToList();
+                    Entity target = aliveTargets.Count > 0 ? aliveTargets[UnityEngine.Random.Range(0, aliveTargets.Count)] : null;
+                    decision = new EnemyDecision { SkillType = SkillCharacter.Base, Target = target };
+                }
 
                 if (battleManager == null || battleManager.CurrentCaster == null) return;
 
@@ -88,9 +102,22 @@ public class BeginTurnBase : BattleBaseState
         {
             return;
         }
-        catch (System.Exception)
+        catch (UnityEngine.MissingReferenceException)
         {
             return;
+        }
+        catch (System.ObjectDisposedException)
+        {
+            return;
+        }
+        catch (System.Exception ex)
+        {
+            string casterName = (battleManager != null && battleManager.CurrentCaster != null) ? battleManager.CurrentCaster.name : "Unknown";
+            Debug.LogError($"[BeginTurnBase] Lỗi khi xử lý lượt của '{casterName}': {ex}");
+            if (battleManager != null && battleManager.StateMachine != null)
+            {
+                battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
+            }
         }
     }
 

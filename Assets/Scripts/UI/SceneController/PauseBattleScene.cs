@@ -47,6 +47,7 @@ public class PauseBattleScene : WindowController
         _isExiting = true;
         BattleUIScene.CurrentSpeed = 1f;
         BattleUIScene.IsAutoBattle = false;
+        Time.timeScale = 1f;
         UI_Close();
         _sceneLoader.RestartCurrentScene();
     }

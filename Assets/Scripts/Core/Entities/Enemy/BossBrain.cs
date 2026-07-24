@@ -9,16 +9,19 @@ public class BossBrain : EnemyBrain
     public override async UniTask<EnemyDecision> DecideAsync(List<Entity> playerTeam)
     {
         Entity weakestTarget = GetLowestHpTarget(playerTeam);
+        if (weakestTarget == null)
+        {
+            return new EnemyDecision { SkillType = SkillCharacter.Base, Target = null };
+        }
 
         var stats = weakestTarget.GetCoreComponent<EntityStats>();
+        var skillManager = _entity != null ? _entity.GetCoreComponent<EntitySkill>() : null;
 
-        var skillManager = _entity.GetCoreComponent<EntitySkill>();
-
-        if (stats.GetAttribute(AttributeType.Hp).GetPercent() > 0.3f && skillManager.IsSkillReady(SkillCharacter.Ultimate))
+        if (stats != null && stats.GetAttribute(AttributeType.Hp) != null && stats.GetAttribute(AttributeType.Hp).GetPercent() > 0.3f && skillManager != null && skillManager.IsSkillReady(SkillCharacter.Ultimate))
         {
             return new EnemyDecision { SkillType = SkillCharacter.Ultimate, Target = weakestTarget };
         }
-        else if (skillManager.IsSkillReady(SkillCharacter.Major))
+        else if (skillManager != null && skillManager.IsSkillReady(SkillCharacter.Major))
         {
             return new EnemyDecision { SkillType = SkillCharacter.Major, Target = weakestTarget };
         }

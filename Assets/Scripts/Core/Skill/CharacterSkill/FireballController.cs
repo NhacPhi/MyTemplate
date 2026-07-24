@@ -52,7 +52,11 @@ public class FireballController : MonoBehaviour
             if (other.gameObject != _caster.gameObject)
             {
                 Entity target = other.GetComponent<Entity>();
-                if (target != null && target.Team != _caster.Team)
+                bool isTargetHit = (_caster.Target != null)
+                    ? (other.gameObject == _caster.Target || target == _caster.Target)
+                    : (target != null && target.Team != _caster.Team);
+
+                if (target != null && isTargetHit)
                 {
                     HandleHit(target, hit.point);
                     return;
@@ -71,8 +75,11 @@ public class FireballController : MonoBehaviour
 
         Entity target = other.GetComponent<Entity>();
 
-        // Check if the collided object is an entity and belongs to the opposing team
-        if (target != null && target.Team != _caster.Team)
+        bool isTargetHit = (_caster.Target != null)
+            ? (other.gameObject == _caster.Target || target == _caster.Target)
+            : (target != null && target.Team != _caster.Team);
+
+        if (target != null && isTargetHit)
         {
             HandleHit(target, transform.position);
         }

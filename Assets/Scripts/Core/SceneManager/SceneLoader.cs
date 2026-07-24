@@ -123,9 +123,14 @@ public class SceneLoader : MonoBehaviour
 
     public void RestartCurrentScene()
     {
-        if (_currentlyLoadedScene != null)
+        GameSceneSO sceneToRestart = _currentlyLoadedScene != null ? _currentlyLoadedScene : LastLoadedLocation;
+        if (sceneToRestart != null)
         {
-            LoadLocation(_currentlyLoadedScene, true, false);
+            LoadLocation(sceneToRestart, true, false);
+        }
+        else
+        {
+            Debug.LogError("[SceneLoader] RestartCurrentScene thất bại vì cả _currentlyLoadedScene và LastLoadedLocation đều NULL!");
         }
     }
 
