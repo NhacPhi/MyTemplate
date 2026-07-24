@@ -95,10 +95,10 @@ public class SpawnSystem : MonoBehaviour
                 else
                 {
                     Debug.Log($"[SpawnSystem] Chuyển sang scene mới ('{currentSceneName}'), bỏ qua ReturnPosition của scene cũ.");
+                    sessionContext.ReturnCameraPosition = null;
                 }
 
                 sessionContext.ReturnPosition = null;
-                sessionContext.ReturnCameraPosition = null;
             }
         }
 
@@ -108,5 +108,14 @@ public class SpawnSystem : MonoBehaviour
         _playerTransformAnchor.Provide(playerInstance.transform);
 
         GameEvent.OnPlayerSpawned?.Invoke();
+
+        if (rootScope != null)
+        {
+            var sessionContext = rootScope.Container.Resolve<BattleSessionContext>();
+            if (sessionContext != null)
+            {
+                sessionContext.ReturnCameraPosition = null;
+            }
+        }
     }
 }

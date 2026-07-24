@@ -187,9 +187,12 @@ public class ResultState : BattleBaseState
                         var popupProps = new ReceiveItemProperties(rewardItems, () => 
                         {
                             battleManager.UIManager.OpenWindowScene(ScreenIds.GamePlayScene);
-                            if (battleManager.BattleSession.PreviousLocation != null)
+                            GameSceneSO locToLoad = (battleManager.BattleSession != null && battleManager.BattleSession.PreviousLocation != null)
+                                ? battleManager.BattleSession.PreviousLocation
+                                : SceneLoader.LastLoadedLocation;
+                            if (locToLoad != null)
                             {
-                                battleManager.SceneLoader.LoadLocation(battleManager.BattleSession.PreviousLocation, true, true);
+                                battleManager.SceneLoader.LoadLocation(locToLoad, true, true);
                             }
                         });
                         battleManager.UIManager.ShowReceiveItemPopup(popupProps);
@@ -197,9 +200,12 @@ public class ResultState : BattleBaseState
                     else
                     {
                         battleManager.UIManager.OpenWindowScene(ScreenIds.GamePlayScene);
-                        if (battleManager.BattleSession.PreviousLocation != null)
+                        GameSceneSO locToLoad = (battleManager.BattleSession != null && battleManager.BattleSession.PreviousLocation != null)
+                            ? battleManager.BattleSession.PreviousLocation
+                            : SceneLoader.LastLoadedLocation;
+                        if (locToLoad != null)
                         {
-                            battleManager.SceneLoader.LoadLocation(battleManager.BattleSession.PreviousLocation, true, true);
+                            battleManager.SceneLoader.LoadLocation(locToLoad, true, true);
                         }
                     }
                 }
@@ -207,9 +213,12 @@ public class ResultState : BattleBaseState
                 {
                     // Lose -> back to previous location
                     battleManager.UIManager.OpenWindowScene(ScreenIds.GamePlayScene);
-                    if (battleManager.BattleSession.PreviousLocation != null)
+                    GameSceneSO locToLoad = (battleManager.BattleSession != null && battleManager.BattleSession.PreviousLocation != null)
+                        ? battleManager.BattleSession.PreviousLocation
+                        : SceneLoader.LastLoadedLocation;
+                    if (locToLoad != null)
                     {
-                        battleManager.SceneLoader.LoadLocation(battleManager.BattleSession.PreviousLocation, true, true);
+                        battleManager.SceneLoader.LoadLocation(locToLoad, true, true);
                     }
                 }
             }
