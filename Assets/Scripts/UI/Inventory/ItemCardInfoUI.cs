@@ -35,6 +35,7 @@ public class ItemCardInfoUI : MonoBehaviour
         {
             if (itemConfig.Type == ItemType.Shard)
             {
+                GachaMainScene.PreviousScreenId = ScreenIds.InventoryScene;
                 uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
             }
             else

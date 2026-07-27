@@ -100,9 +100,15 @@ namespace Gameplay.MapCharacter.Enemy
             currentState.Enter();
         }
 
+        public bool IsTargetable => currentState != DieState;
+
         private void HandlePlayerEnter(Transform playerTransform)
         {
             if (currentState == DieState) return;
+
+            IDamageable damageable = playerTransform.GetComponentInParent<IDamageable>();
+            if (damageable != null && !damageable.IsTargetable) return;
+
             Target = playerTransform;
             
             if (AIType == EnemyAIType.Aggressive)

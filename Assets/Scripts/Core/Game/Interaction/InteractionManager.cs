@@ -1,41 +1,40 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
+using VContainer.Unity;
 
+public enum InteractionType { None = 0, PickUp, Cook, Talk, Fighting, Flying };
 
-public enum InteractionType { None = 0, PickUp, Cook, Talk, Fighting };
-public class InteractionManager : MonoBehaviour
+public class InteractionManager : IStartable, IDisposable
 {
-    //To store the objects we the player could potentially interact with
-    private List<Interaction> potentialInteractions = new List<Interaction>();
-    private void OnEnable()
+    private readonly List<Interaction> potentialInteractions = new List<Interaction>();
+
+    public void Start()
     {
+        GameEvent.OnTriggerZoneChanged += OnTriggerChangeDetected;
         GameEvent.OnInteraction += OnInteractionButtonPress;
         GameEvent.OnExecuteSpecificInteraction += ExecuteInteraction;
         GameEvent.OnPlayerTransform += ClearAllInteractions;
+        GameEvent.OnEndDialogue += OnDialogueEnd;
+        UIEvent.OnRequestRefreshInteractionsUI += RequestUpdateUI;
     }
 
-    private void OnDisable()
+    public void Dispose()
     {
+        GameEvent.OnTriggerZoneChanged -= OnTriggerChangeDetected;
         GameEvent.OnInteraction -= OnInteractionButtonPress;
         GameEvent.OnExecuteSpecificInteraction -= ExecuteInteraction;
         GameEvent.OnPlayerTransform -= ClearAllInteractions;
+        GameEvent.OnEndDialogue -= OnDialogueEnd;
+        UIEvent.OnRequestRefreshInteractionsUI -= RequestUpdateUI;
         ClearAllInteractions();
     }
 
-    private void OnDestroy()
+    private void OnDialogueEnd(DialogueType type)
     {
-        ClearAllInteractions();
+        RequestUpdateUI();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    //Called by the Event on the trigger collider on the child GO called "InteractionDetector"
     public void OnTriggerChangeDetected(bool entered, GameObject obj)
     {
         if (entered)
@@ -46,6 +45,14 @@ public class InteractionManager : MonoBehaviour
 
     private void AddPotentialInteraction(GameObject obj)
     {
+        if (obj == null) return;
+
+        // Tránh thêm trùng lặp cùng một object vào danh sách tương tác
+        if (potentialInteractions.Exists(i => i.interactableObject == obj))
+        {
+            return;
+        }
+
         Interaction newPotentialInteraction = new Interaction(InteractionType.None, obj);
 
         if (obj.CompareTag("Pickable"))
@@ -60,22 +67,32 @@ public class InteractionManager : MonoBehaviour
         {
             newPotentialInteraction.type = InteractionType.Talk;
         }
-        else if(obj.CompareTag("Fighting"))
+        else if (obj.CompareTag("Fighting") || (obj.transform.parent != null && obj.transform.parent.CompareTag("Fighting")) || obj.GetComponent<BattleTrigger>() != null || obj.GetComponentInParent<BattleTrigger>() != null)
         {
             newPotentialInteraction.type = InteractionType.Fighting;
         }
+        else if (obj.CompareTag("Flying") || (obj.transform.parent != null && obj.transform.parent.CompareTag("Flying")) || obj.GetComponent<LightStreakTeleporter>() != null || obj.GetComponentInParent<LightStreakTeleporter>() != null)
+        {
+            newPotentialInteraction.type = InteractionType.Flying;
+            Debug.Log($"[InteractionManager] Phát hiện tương tác Flying thành công từ object: {obj.name}");
+        }
 
-        potentialInteractions.Add(newPotentialInteraction);
-
-        RequestUpdateUI();
+        if (newPotentialInteraction.type != InteractionType.None)
+        {
+            potentialInteractions.Add(newPotentialInteraction);
+            RequestUpdateUI();
+        }
+        else
+        {
+            Debug.LogWarning($"[InteractionManager] Đã chạm vào '{obj.name}' (Tag: '{obj.tag}'), nhưng không khớp loại InteractionType nào!");
+        }
     }
 
     private void RemovePotentialInteraction(GameObject obj)
     {
-        Interaction interaction = potentialInteractions.Find(o => o.interactableObject == obj);
-        if (interaction != null)
+        int count = potentialInteractions.RemoveAll(o => o.interactableObject == obj);
+        if (count > 0)
         {
-            potentialInteractions.Remove(interaction);
             RequestUpdateUI();
         }
     }
@@ -100,19 +117,24 @@ public class InteractionManager : MonoBehaviour
         switch (interaction.type)
         {
             case InteractionType.Talk:
-                StepController stepController = interaction.interactableObject.GetComponent<StepController>();
+                StepController stepController = interaction.interactableObject.GetComponent<StepController>()
+                    ?? interaction.interactableObject.GetComponentInParent<StepController>();
                 if (stepController != null)
                 {
                     stepController.InteractWithCharacter();
                 }
-                potentialInteractions.Remove(interaction);
                 RequestUpdateUI();
                 break;
             case InteractionType.Fighting:
-                BattleTrigger battleTrigger = interaction.interactableObject.GetComponent<BattleTrigger>();
+                BattleTrigger battleTrigger = interaction.interactableObject.GetComponent<BattleTrigger>() 
+                    ?? interaction.interactableObject.GetComponentInParent<BattleTrigger>();
                 if (battleTrigger != null)
                 {
                     battleTrigger.OpenPrepareScene();
+                }
+                else
+                {
+                    Debug.LogWarning($"[InteractionManager] Đối tượng '{interaction.interactableObject.name}' được nhận diện Fighting nhưng không tìm thấy component BattleTrigger!");
                 }
                 ClearAllInteractions();
                 break;
@@ -121,7 +143,7 @@ public class InteractionManager : MonoBehaviour
                 if (item != null)
                 {
                     item.PickUp();
-                    potentialInteractions.Remove(interaction);
+                    potentialInteractions.RemoveAll(i => i.interactableObject == interaction.interactableObject);
                     RequestUpdateUI();
                 }
                 else
@@ -132,6 +154,15 @@ public class InteractionManager : MonoBehaviour
             case InteractionType.Cook:
                 potentialInteractions.Remove(interaction);
                 RequestUpdateUI();
+                break;
+            case InteractionType.Flying:
+                LightStreakTeleporter teleporter = interaction.interactableObject.GetComponent<LightStreakTeleporter>() 
+                    ?? interaction.interactableObject.GetComponentInParent<LightStreakTeleporter>();
+                if (teleporter != null)
+                {
+                    teleporter.ExecuteTeleport();
+                }
+                ClearAllInteractions();
                 break;
         }
     }

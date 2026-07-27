@@ -99,6 +99,7 @@ public class GachaMainScene : WindowController
 
     private void OnEnable()
     {
+        Time.timeScale = 1f;
         UpdateCurrencyDisplay();
         UIEvent.OnCurrencyChanged += OnCurrencyChanged;
         RefreshCurrentBannerUI();
@@ -279,12 +280,25 @@ public class GachaMainScene : WindowController
         }
     }
 
+    public static string PreviousScreenId = null;
+
     private void OnCloseClicked()
     {
-        UI_Close();
+        string returnScreen = PreviousScreenId;
+        PreviousScreenId = null;
+
         if (uiManager != null)
         {
-            uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+            uiManager.CloseWindowScene(ScreenIds.GachaMainScene);
+
+            if (string.IsNullOrEmpty(returnScreen) || returnScreen != ScreenIds.InventoryScene)
+            {
+                uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+            }
+        }
+        else
+        {
+            UI_Close();
         }
     }
 }

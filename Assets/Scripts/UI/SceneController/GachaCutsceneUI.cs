@@ -51,6 +51,7 @@ public class GachaCutsceneUI : WindowController
 
     private void OnEnable()
     {
+        Time.timeScale = 1f;
         _isCompleted = false;
         
         if (btnSkip != null)
@@ -93,9 +94,18 @@ public class GachaCutsceneUI : WindowController
 
     private void Update()
     {
-        if (director != null && director.state == PlayState.Playing && director.playableGraph.IsValid())
+        if (director != null && !_isCompleted)
         {
-            director.playableGraph.GetRootPlayable(0).SetSpeed(timelineSpeed);
+            if (director.state == PlayState.Playing && director.playableGraph.IsValid())
+            {
+                director.playableGraph.GetRootPlayable(0).SetSpeed(timelineSpeed);
+            }
+
+            // Kiểm tra khi Timeline vừa chạm mốc cuối -> Chuyển sang ResultScene LẬP TỨC 0ms!
+            if (director.duration > 0 && director.time >= (director.duration - 0.05f))
+            {
+                CompleteCutscene();
+            }
         }
     }
 
@@ -191,10 +201,10 @@ public class GachaCutsceneUI : WindowController
         {
             if (closeSelfOnFinish)
             {
-                UI_Close();
+                uiManager.CloseWindowScene(ScreenIds.GachaCutsceneScene);
             }
 
-            // For UI testing: Go to GachaResultScene
+            // Go to GachaResultScene
             uiManager.OpenWindowScene(ScreenIds.GachaResultScene);
         }
         else

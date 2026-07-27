@@ -38,5 +38,9 @@ public class ShopScene : WindowController
     private void OnClose()
     {
         uiManager.CloseWindowScene(ScreenIds.ShopScene);
+        if (uiManager != null)
+        {
+            uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+        }
     }
 }

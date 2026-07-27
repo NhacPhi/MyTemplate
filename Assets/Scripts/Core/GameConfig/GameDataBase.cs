@@ -130,6 +130,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_skill_ui");
         atlasAddresses.Add("Atlas_icon_character_rare");
         atlasAddresses.Add("Atlas_stat_icon");
+        atlasAddresses.Add("Atlas_Battle_Content");
 
 
         //foreach (var item in ItemConfigs.Values) atlasAddresses.Add(item.AtlasAddress);
@@ -167,6 +168,12 @@ public class GameDataBase
                     skillComp.IconSprite = atlasProvider.GetSprite("Atlas_skill_ui", skillComp.ID);
                 }
             }
+        }
+
+        foreach (var battleItem in BattleConfigs)
+        {
+            var config = battleItem.Value;
+            config.Sprite = atlasProvider.GetSprite("Atlas_Battle_Content", battleItem.Key);
         }
     }
 
@@ -246,6 +253,16 @@ public class GameDataBase
     {
         BattleConfigs.TryGetValue(key, out BattleConfig battleConfig);
         return battleConfig;
+    }
+
+    public Sprite GetBattleSprite(string key)
+    {
+        var config = GetBattleConfig(key);
+        if (config != null && config.Sprite != null)
+        {
+            return config.Sprite;
+        }
+        return atlasProvider.GetSprite("Atlas_Battle_Content", key);
     }
 
     public Sprite GetBGItemByRare(Rare rare)

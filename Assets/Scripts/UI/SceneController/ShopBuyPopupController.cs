@@ -49,7 +49,7 @@ public class ShopBuyPopupProperties : WindowProperties
 public class ShopBuyPopupController : WindowController<ShopBuyPopupProperties>
 {
     [Header("Item Info")]
-    [SerializeField] private ItemUI itemUI;
+    [SerializeField] private GameItemUI gameItemUI;
     [SerializeField] private TextMeshProUGUI txtItemName;
     [SerializeField] private TextMeshProUGUI txtItemDesc;
     [SerializeField] private TextMeshProUGUI txtCurrentOwned;
@@ -118,10 +118,14 @@ public class ShopBuyPopupController : WindowController<ShopBuyPopupProperties>
             maxAllowedQuantity = 999;
         }
         
-        if (itemUI != null)
+        if (gameItemUI != null)
         {
-            itemUI.Init(Properties.Config.ReferenceID, Properties.ItemRare, Properties.ItemSprite, Properties.ItemBg, Properties.Config.ItemAmount);
-            itemUI.ActiveFragIcon(Properties.IsShard);
+            gameItemUI.Setup(Properties.Config.ReferenceID, Properties.ItemRare, Properties.ItemSprite, Properties.ItemBg);
+            gameItemUI.SetAmount(Properties.Config.ItemAmount);
+            if (gameItemUI is ItemUI customItemUI)
+            {
+                customItemUI.ActiveFragIcon(Properties.IsShard);
+            }
         }
         
         if (txtItemName != null) txtItemName.text = Properties.ItemName;

@@ -13,6 +13,8 @@ public class Protagonist : MonoBehaviour, IDamageable
     public int CurrentHP { get; private set; }
     public int AttackDamage;
 
+    public bool IsTargetable => playerCollider != null ? playerCollider.enabled : !isClone;
+
     [SerializeField] private TransformAnchor gameplayCameraTransform = default;
     [SerializeField] private TransformAnchor playerTranform = default;
 
@@ -91,19 +93,13 @@ public class Protagonist : MonoBehaviour, IDamageable
             PlayerMovement(movement);
         }
 
-        // Thêm phím tấn công (Space / J / Chuột trái)
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J) || Input.GetMouseButtonDown(0))
+        // Thêm phím tấn công (Space / Chuột trái)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (UnityEngine.EventSystems.EventSystem.current == null || !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 PlayerAttack();
             }
-        }
-
-        // Thêm phím biến hình (F / E)
-        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.E))
-        {
-            Transformation();
         }
 #endif
     }

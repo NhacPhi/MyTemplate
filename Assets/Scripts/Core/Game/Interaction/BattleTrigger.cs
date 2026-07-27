@@ -65,7 +65,7 @@ public class BattleTrigger : MonoBehaviour
             }
         }
 
-        _uiManager.OpenWindowScene(ScreenIds.PrepareBattleScene);
+        _uiManager.OpenWindowScene(ScreenIds.BattleViewScene);
         UIEvent.OnPrepareBattleData?.Invoke();
     }
 }

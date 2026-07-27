@@ -33,7 +33,7 @@ public class QuestScene : WindowController
 
     [Header("Right Pane - Rewards")]
     [SerializeField] private Transform rewardListContainer;
-    [SerializeField] private ItemUI rewardItemPrefab;
+    [SerializeField] private GameItemUI rewardItemPrefab;
 
     [Inject] private UIManager uiManager;
     
@@ -376,10 +376,13 @@ public class QuestScene : WindowController
                         var itemConfig = gameDataBase.GetItemConfig(reward.ItemID);
                         if (itemConfig != null)
                         {
-                            ItemUI itemUI = Instantiate(rewardItemPrefab, rewardListContainer);
-                            itemUI.Init(reward.ItemID, itemConfig.Rarity, itemConfig.Icon, itemConfig.IconBG, reward.Amount);
-                            // Tắt icon mảnh tướng nếu không cần
-                            itemUI.ActiveFragIcon(itemConfig.Type == ItemType.Shard);
+                            GameItemUI itemUI = Instantiate(rewardItemPrefab, rewardListContainer);
+                            itemUI.Setup(reward.ItemID, itemConfig.Rarity, itemConfig.Icon, itemConfig.IconBG);
+                            itemUI.SetAmount(reward.Amount);
+                            if (itemUI is ItemUI customItemUI)
+                            {
+                                customItemUI.ActiveFragIcon(itemConfig.Type == ItemType.Shard);
+                            }
                         }
                     }
                 }

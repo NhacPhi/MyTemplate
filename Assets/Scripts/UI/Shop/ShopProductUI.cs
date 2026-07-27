@@ -5,7 +5,7 @@ using System;
 
 public class ShopProductUI : MonoBehaviour
 {
-    [SerializeField] private ItemUI itemUI;
+    [SerializeField] private GameItemUI gameItemUI;
     [SerializeField] private TextMeshProUGUI txtName;
     [SerializeField] private TextMeshProUGUI txtPrice;
     [SerializeField] private Image imgCurrency;
@@ -37,9 +37,10 @@ public class ShopProductUI : MonoBehaviour
         currentConfig = config;
         onBuyClicked = onBuyCallback;
 
-        if (itemUI != null)
+        if (gameItemUI != null)
         {
-            itemUI.Init(config.ReferenceID, itemRare, itemSprite, itemBackground, config.ItemAmount);
+            gameItemUI.Setup(config.ReferenceID, itemRare, itemSprite, itemBackground);
+            gameItemUI.SetAmount(config.ItemAmount);
         }
         
         if (imgCurrency != null && currencySprite != null)
@@ -67,7 +68,7 @@ public class ShopProductUI : MonoBehaviour
 
     public void SetShardStatus(bool isShard)
     {
-        if (itemUI != null) itemUI.ActiveFragIcon(isShard);
+        if (gameItemUI is ItemUI customItemUI) customItemUI.ActiveFragIcon(isShard);
     }
 
     public void SetSoldOutStatus(bool isSoldOut)

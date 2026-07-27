@@ -24,6 +24,7 @@ class StageEnemiesCompoment:
 @dataclass
 class BattleModel:
     name_hash: int
+    des_hash: int
     background: str
     reward: str
     exp_reward: int

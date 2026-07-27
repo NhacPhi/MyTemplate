@@ -30,6 +30,7 @@ using Core.Scope;
 
         //Entry point
         builder.RegisterEntryPoint<GameplayPreload>(Lifetime.Singleton).As<IPreload>();
+        builder.RegisterEntryPoint<InteractionManager>(Lifetime.Scoped).AsSelf();
     }
 
     }

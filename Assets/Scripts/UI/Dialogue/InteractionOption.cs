@@ -68,6 +68,13 @@ public class InteractionOption : MonoBehaviour, IPointerClickHandler
                 else
                     GameEvent.OnInteraction?.Invoke();
                 break;
+
+            case InteractionType.Flying:
+                if (TargetInteraction != null)
+                    GameEvent.OnExecuteSpecificInteraction?.Invoke(TargetInteraction);
+                else
+                    GameEvent.OnInteraction?.Invoke();
+                break;
         }
     }
 }

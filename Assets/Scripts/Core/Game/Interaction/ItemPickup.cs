@@ -9,11 +9,16 @@ public class ItemPickup : MonoBehaviour
     [Tooltip("Số lượng item nhận được")]
     public int amount = 1;
 
+    private bool _isPickedUp = false;
+
     /// <summary>
     /// Hàm này được gọi bởi InteractionManager khi người chơi nhấn nút tương tác
     /// </summary>
     public void PickUp()
     {
+        if (_isPickedUp) return;
+        _isPickedUp = true;
+
         GameEvent.OnRequestPickupItem?.Invoke(itemID, amount);
         
         Debug.Log($"[ItemPickup] Đã nhặt item: {itemID} x {amount}");

@@ -72,6 +72,10 @@ public class InventoryScene : WindowController
     {
         _isFirstOpen = true;
         uiManager.CloseWindowScene(ScreenIds.InventoryScene);
+        if (uiManager != null)
+        {
+            uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+        }
 
         save.SaveDataToDisk(GameSaveType.All);
     }

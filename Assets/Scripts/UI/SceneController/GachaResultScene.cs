@@ -34,6 +34,7 @@ public class GachaResultScene : WindowController
 
     private void OnEnable()
     {
+        Time.timeScale = 1f;
         PopulateResults();
         UpdateRollAgainButtonText();
     }

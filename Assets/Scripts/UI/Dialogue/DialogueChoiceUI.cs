@@ -13,7 +13,7 @@ public class DialogueChoiceUI : MonoBehaviour
         content.text = LocalizationManager.Instance.GetLocalizedValue(choice.Text);
         button.onClick.AddListener(() =>
         {
-            GameEvent.OnMakeChocieUI(choice);
+            GameEvent.OnMakeChocieUI?.Invoke(choice);
         });
     }
 

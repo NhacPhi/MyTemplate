@@ -13,6 +13,7 @@ public class ScreenIds
     public const string MapScene = "MapScene";
     public const string PartySetupScene = "PartySetupScene";
     public const string PrepareBattleScene = "PrepareBattleScene";
+    public const string BattleViewScene = "BattleViewScene";
     public const string BattleUIScene = "BattleUIScene";
     public const string UpgradeRelicScene = "UpgradeRelicScene";
     public const string UpgradeArmorScene = "UpgradeArmorScene";

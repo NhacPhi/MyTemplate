@@ -27,6 +27,14 @@ namespace Gameplay.MapCharacter.Enemy.States
                 return;
             }
 
+            IDamageable targetDamageable = controller.Target.GetComponentInParent<IDamageable>();
+            if (targetDamageable == null || !targetDamageable.IsTargetable)
+            {
+                controller.Target = null;
+                controller.ChangeState(controller.IdleState);
+                return;
+            }
+
             // Đếm ngược thời gian hồi chiêu liên tục
             attackCooldownTimer += Time.deltaTime;
 
@@ -77,7 +85,7 @@ namespace Gameplay.MapCharacter.Enemy.States
 
             // Gây sát thương lên Target (Dùng GetComponentInParent vì Target có thể là cục Interaction con của Player)
             IDamageable damageable = controller.Target.GetComponentInParent<IDamageable>();
-            if (damageable != null)
+            if (damageable != null && damageable.IsTargetable)
             {
                 damageable.TakeDamage(controller.AttackDamage);
                 Debug.Log($"Enemy attacked Player for {controller.AttackDamage} damage!");

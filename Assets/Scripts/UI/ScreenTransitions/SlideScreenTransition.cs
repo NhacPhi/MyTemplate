@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UIFramework;
@@ -50,14 +50,18 @@ public class SlideScreenTransition : TransitionComponent
 
         rTransform.DOKill();
 
-        CanvasGroup canvasGroup = null;
-        if (doFade) {
-            canvasGroup = rTransform.GetComponent<CanvasGroup>();
-            if (canvasGroup == null) {
-                canvasGroup = rTransform.gameObject.AddComponent<CanvasGroup>();
-            }
+        CanvasGroup canvasGroup = rTransform.GetComponent<CanvasGroup>();
+        if (canvasGroup == null && doFade) {
+            canvasGroup = rTransform.gameObject.AddComponent<CanvasGroup>();
+        }
 
-            canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent);
+        if (canvasGroup != null) {
+            if (doFade) {
+                canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent);
+            }
+            else if (!isOutAnimation) {
+                canvasGroup.alpha = 1f;
+            }
         }
 
         rTransform.DOAnchorPos(isOutAnimation ? startPosition : Vector3.zero, duration, true)

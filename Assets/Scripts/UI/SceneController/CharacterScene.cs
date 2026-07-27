@@ -19,6 +19,10 @@ public class CharacterScene : WindowController
         btnExit.onClick.AddListener(() =>
         {
             ui.CloseWindowScene(ScreenIds.CharacterScene);
+            if (ui != null)
+            {
+                ui.ShowPanel(ScreenIds.GamePlayPanel);
+            }
             save.SaveDataToDisk(GameSaveType.PlayerInfo);
         });
 

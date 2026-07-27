@@ -17,7 +17,7 @@ public class BundleContentUIInfo
 public class ShopBundleUI : MonoBehaviour
 {
     [Header("Item Slots (Max 4)")]
-    [SerializeField] private ItemUI[] itemSlots;
+    [SerializeField] private GameItemUI[] itemSlots;
     
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI txtPrice;
@@ -99,8 +99,12 @@ public class ShopBundleUI : MonoBehaviour
                 if (i < contents.Count)
                 {
                     itemSlots[i].gameObject.SetActive(true);
-                    itemSlots[i].Init(contents[i].ItemID, contents[i].ItemRare, contents[i].ItemSprite, contents[i].ItemBackground, contents[i].Amount);
-                    itemSlots[i].ActiveFragIcon(contents[i].IsShard);
+                    itemSlots[i].Setup(contents[i].ItemID, contents[i].ItemRare, contents[i].ItemSprite, contents[i].ItemBackground);
+                    itemSlots[i].SetAmount(contents[i].Amount);
+                    if (itemSlots[i] is ItemUI customItemUI)
+                    {
+                        customItemUI.ActiveFragIcon(contents[i].IsShard);
+                    }
                 }
                 else
                 {

@@ -19,6 +19,7 @@ public class InteractionUI : MonoBehaviour
         UIEvent.OnUpdateInteractionsUI += UpdateInteractionUI;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         UnityEngine.SceneManagement.SceneManager.sceneUnloaded += OnSceneUnloaded;
+        UIEvent.OnRequestRefreshInteractionsUI?.Invoke();
     }
 
     private void OnDisable()
@@ -58,12 +59,13 @@ public class InteractionUI : MonoBehaviour
             
             if (optionUI == null)
             {
-                Debug.LogWarning($"[InteractionUI] Không tìm thấy nút InteractionOption nào cho type {interaction.type} hoặc đã dùng hết nút loại này!");
+                Debug.LogWarning($"[InteractionUI] Thất bại! Không tìm thấy nút InteractionOption nào trong danh sách `interactions` có DefaultType = {interaction.type}!");
                 continue;
             }
 
             optionUI.Setup(interaction);
             optionUI.gameObject.SetActive(true);
+            Debug.Log($"[InteractionUI] Đã bật nút InteractionOption thành công cho type: {interaction.type}");
 
             // Tùy chỉnh icon và text dựa vào loại tương tác (nếu cần bổ sung thêm)
             switch (interaction.type)
@@ -102,6 +104,8 @@ public class InteractionUI : MonoBehaviour
                     //optionUI.SetContentText(LocalizationManager.Instance.GetLocalizedValue("cook_action") ?? "Cook");
                     break;
                 case InteractionType.Fighting:
+                    break;
+                case InteractionType.Flying:
                     break;
             }
         }

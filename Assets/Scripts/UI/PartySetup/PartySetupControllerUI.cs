@@ -63,9 +63,23 @@ public class PartySetupControllerUI : MonoBehaviour
             }
         }
 
-        var characters = _saveSystem.Player.Roster.Characters;
+        var sortedCharacters = new List<CharacterSaveData>(_saveSystem.Player.Roster.Characters);
+        sortedCharacters.Sort((a, b) =>
+        {
+            var configA = _gameData.GetCharacterConfig(a.ID);
+            var configB = _gameData.GetCharacterConfig(b.ID);
+            
+            if (configA == null || configB == null) return 0;
 
-        foreach(var character in characters)
+            // Ưu tiên Rarity (Giảm dần: B so với A)
+            int rarityComparison = configB.Rare.CompareTo(configA.Rare);
+            if (rarityComparison != 0) return rarityComparison;
+
+            // Nếu cùng độ hiếm thì xét theo Level (Giảm dần)
+            return b.Level.CompareTo(a.Level);
+        });
+
+        foreach(var character in sortedCharacters)
         {
             GameObject characterUI = Instantiate(_chacracterIconUI, _contentCharacterUI);
 

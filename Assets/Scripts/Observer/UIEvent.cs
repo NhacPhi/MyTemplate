@@ -72,6 +72,7 @@ public static class UIEvent
     // GamePlay
     public static Action<bool> OnToggleGamePlayScene;
     public static Action<List<Interaction>> OnUpdateInteractionsUI;
+    public static Action OnRequestRefreshInteractionsUI;
     public static Action<int, int> OnUpdatePlayerHP;
 
     // Map

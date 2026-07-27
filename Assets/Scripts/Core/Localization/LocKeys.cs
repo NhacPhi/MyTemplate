@@ -235,6 +235,16 @@ public static class LocKeys
 
     public const long UI_GAO_FAMILY_VILLAGE = 2501707317;
 
+    public const long UI_CHALLENGE = 28624088;
+
+    public const long UI_STAMINA_COST = 1365044368;
+
+    public const long UI_OBTAINABLE_REWARDS = 3571412964;
+
+    public const long UI_ENEMIES = 351654348;
+
+    public const long UI_GO_AWAY = 2574217525;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

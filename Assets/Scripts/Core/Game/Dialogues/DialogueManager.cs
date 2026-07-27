@@ -11,8 +11,19 @@ public class DialogueManager : MonoBehaviour
     private int counterDialogue;
     private int counterLine;
 
-    private bool reachedEndOfDialogue { get => counterDialogue >= currentDialogue.Lines.Count; }
-    private bool reachedEndOfLine { get=> counterLine >= currentDialogue.Lines[counterDialogue].Texts.Count; }
+    private bool reachedEndOfDialogue => currentDialogue == null || currentDialogue.Lines == null || counterDialogue >= currentDialogue.Lines.Count;
+
+    private bool reachedEndOfLine
+    {
+        get
+        {
+            if (reachedEndOfDialogue) return true;
+            var line = currentDialogue.Lines[counterDialogue];
+            if (line == null || line.Texts == null) return true;
+            return counterLine >= line.Texts.Count;
+        }
+    }
+
     private DialogueConfig currentDialogue = default;
     private void Awake()
     {
@@ -37,13 +48,14 @@ public class DialogueManager : MonoBehaviour
         //{
         //    gameState.UpdateGameState(GameState.Dialogue);
         //}
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
         GameEvent.OnAdvanceDialogueEvent += OnAdvance;
 
         counterDialogue = 0;
         counterLine = 0;
         currentDialogue = dialogueData;
 
-        if(currentDialogue.Lines != null)
+        if (currentDialogue != null && currentDialogue.Lines != null && currentDialogue.Lines.Count > 0)
         {
             ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterLine].ActorID);
             DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
@@ -61,6 +73,12 @@ public class DialogueManager : MonoBehaviour
 
     private void OnAdvance()
     {
+        if (reachedEndOfDialogue)
+        {
+            DialogueEndAndCloseDialogueUI();
+            return;
+        }
+
         counterLine++;
         if (!reachedEndOfLine)
         {
@@ -68,7 +86,7 @@ public class DialogueManager : MonoBehaviour
             DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
         }
         else if (currentDialogue.Lines[counterDialogue].Chocies != null 
-            & currentDialogue.Lines[counterDialogue].Chocies.Count > 0)
+            && currentDialogue.Lines[counterDialogue].Chocies.Count > 0)
         {
             // Display Choice
             DisplayChoices(currentDialogue.Lines[counterDialogue].Chocies);
@@ -76,7 +94,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             counterDialogue++;
-            if(!reachedEndOfDialogue)
+            if (!reachedEndOfDialogue)
             {
                 counterLine = 0;
                 ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterDialogue].ActorID);
@@ -85,8 +103,8 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 // Dialogue end and close DialogueUI
-                DialogueEndAndCloseDialogueUI();
                 counterLine = 0;
+                DialogueEndAndCloseDialogueUI();
             }
         }
     }

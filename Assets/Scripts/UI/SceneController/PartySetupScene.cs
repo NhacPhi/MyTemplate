@@ -11,6 +11,14 @@ public class PartySetupScene : WindowController
 
     public void OnClose()
     {
-        UI_Close();
+        if (uiManager != null)
+        {
+            uiManager.CloseWindowScene(ScreenIds.PartySetupScene);
+            uiManager.ShowPanel(ScreenIds.GamePlayPanel);
+        }
+        else
+        {
+            UI_Close();
+        }
     }
 }

@@ -41,26 +41,26 @@ public class GamePlayPanel : PanelController
 
         btnInventory.onClick.AddListener(() =>
         {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
+            uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.InventoryScene);
         });
 
         btnCharacter.onClick.AddListener(() =>
         {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
+            uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.CharacterScene);
         });
 
         btnPartySetup.onClick.AddListener(() =>
         {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
+            uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.PartySetupScene);
             UIEvent.OnPrepareBattleData?.Invoke();
         });
 
         btnShop.onClick.AddListener(() =>
         {
-            //uiManager.HidePanel(ScreenIds.GamePlayPanel);
+            uiManager.HidePanel(ScreenIds.GamePlayPanel);
             uiManager.OpenWindowScene(ScreenIds.ShopScene);
         });
 

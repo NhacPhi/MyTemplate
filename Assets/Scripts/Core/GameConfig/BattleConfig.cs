@@ -9,6 +9,9 @@ public class BattleConfig
     [JsonProperty("name_hash")]
     public long Name;
 
+    [JsonProperty("des_hash")]
+    public long Description;
+
     [JsonProperty("background")]
     public string BackGround;
 
@@ -20,6 +23,9 @@ public class BattleConfig
 
     [JsonProperty("enemies")]
     public List<StageEnemyCompoment> Enemies;
+
+    [JsonIgnore]
+    public Sprite Sprite { get; set; }
 }
 
 [Serializable]

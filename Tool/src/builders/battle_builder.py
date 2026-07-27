@@ -53,6 +53,7 @@ class BattleConfigBuilder(BaseBuilder):
 
                 battle_data[battle_id] = BattleModel(
                     name_hash=self.get_hash(row['Name']),
+                    des_hash=self.get_hash(row['Des']) if 'Des' in row and pd.notna(row['Des']) else 0,
                     background = str(row['BackGround']).strip() if pd.notna(row['BackGround']) else "",
                     reward = str(row['Reward']).strip() if pd.notna(row['Reward']) else "",
                     exp_reward = int(row['ExpReward']) if pd.notna(row.get('ExpReward')) else 0,
