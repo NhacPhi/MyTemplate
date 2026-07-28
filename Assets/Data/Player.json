@@ -2,14 +2,14 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 10,
-    "current_exp": 5000,
+    "current_exp": 5600,
     "avatar_icon": "Wukong05_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 370,
-      "Jade": 788100,
-      "Coin": 21118000,
+      "Energy": 365,
+      "Jade": 788200,
+      "Coin": 21128000,
       "RelicEssence": 68550800,
       "ArmorPrimorite": 5904500,
       "Ticket": 315
@@ -178,7 +178,7 @@
       {
         "id": "Slime",
         "type": "Material",
-        "quantity": 42
+        "quantity": 43
       },
       {
         "id": "Meat",
@@ -1217,9 +1217,7 @@
   "world_state": {
     "destroyed_resources": {
       "91e7b90b-d853-4388-9c59-fe71fbcd84ba": 639207400822922377,
-      "f689cde0-a2a7-4c35-9b9a-d4ee7ac3fe43": 639207421961192290,
-      "20865339-0b77-44cc-a9ea-cbfa6eb46dbd": 639207422017546448,
-      "7d2f459a-c929-4169-8d13-ba7fab352a4e": 639207423761451592
+      "f3ad7db9-7466-4997-9c79-ef98d0576d3d": 639208322619594232
     }
   },
   "quest": {
@@ -1229,11 +1227,11 @@
     "ActiveStepIndex": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639207216000000000,
+    "last_reset_time_ticks": 639208080000000000,
     "active_daily_quests": {
-      "dq_clear_battle": 0,
-      "dq_shopping": 0,
-      "dq_kill_slime": 3
+      "dq_gather_peach": 0,
+      "dq_upgrade_weapon": 0,
+      "dq_kill_slime": 1
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

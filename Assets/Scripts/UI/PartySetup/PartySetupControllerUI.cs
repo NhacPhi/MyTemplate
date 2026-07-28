@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UIFramework;
 using VContainer;
-
 
 public class PartySetupControllerUI : MonoBehaviour
 {
-    [Inject] SaveSystem _saveSystem;
-    [Inject] GameDataBase _gameData;
-    
+    [Inject] private SaveSystem _saveSystem;
+    [Inject] private GameDataBase _gameData;
 
     [SerializeField] private List<GameObject> _slotPositions;
 

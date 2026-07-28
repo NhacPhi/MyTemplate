@@ -2,14 +2,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UIFramework;
 using VContainer;
+
 public class PrepareBattleScene : WindowController
 {
     [Inject] private UIManager uiManager;
-    [Inject] BattleSessionContext _sessionContext;
+    [Inject] private BattleSessionContext _sessionContext;
+    [Inject] private CurrencyManager _currencyManager;
 
+    [SerializeField] private PartySetupControllerUI _partySetupController;
     [SerializeField] private LoadEventChannelSO _loadLocation = default;
-
     [SerializeField] private GameSceneSO _battleSceneSO;
+
+    [Header("Buttons")]
+    [SerializeField] private Button _btnStartBattle;
 
     public void OnClose()
     {
@@ -26,18 +31,62 @@ public class PrepareBattleScene : WindowController
         Time.timeScale = 1f;
     }
 
-    public async void LoadBattleScene()
+    private void Start()
     {
-        //_sessionContext.PendingBattleID = _sessionContext.PendingBattleID;
-        _loadLocation.RaiseEvent(_battleSceneSO, true);
+        if (_btnStartBattle != null)
+        {
+            _btnStartBattle.onClick.AddListener(StartBattle);
+        }
+    }
 
-        var tcs = new Cysharp.Threading.Tasks.UniTaskCompletionSource();
-        System.Action onSceneReady = () => tcs.TrySetResult();
-        GameEvent.OnSceneReady += onSceneReady;
-        await tcs.Task;
-        GameEvent.OnSceneReady -= onSceneReady;
+    public void StartBattle()
+    {
+        // 1. Kiểm tra và trừ 5 Thể lực (Stamina / Energy)
+        if (_currencyManager != null)
+        {
+            if (!_currencyManager.Spend(CurrencyType.Energy, 5))
+            {
+                Debug.LogWarning("[PrepareBattleScene] Không đủ 5 Thể lực (Stamina/Energy) để bắt đầu trận đấu!");
+                return;
+            }
+        }
 
-        UIEvent.OnToggleGamePlayScene?.Invoke(false);
-        uiManager.OpenWindowScene(ScreenIds.BattleUIScene);
+        // 2. Lưu thông tin đội hình
+        if (_partySetupController != null)
+        {
+            _partySetupController.SavePartySetup();
+        }
+
+        // 3. Tải scene trận đấu
+        ExecuteLoadBattleScene();
+    }
+
+    public void LoadBattleScene()
+    {
+        StartBattle();
+    }
+
+    private async void ExecuteLoadBattleScene()
+    {
+        if (_loadLocation != null && _battleSceneSO != null)
+        {
+            _loadLocation.RaiseEvent(_battleSceneSO, true);
+
+            var tcs = new Cysharp.Threading.Tasks.UniTaskCompletionSource();
+            System.Action onSceneReady = () => tcs.TrySetResult();
+            GameEvent.OnSceneReady += onSceneReady;
+            await tcs.Task;
+            GameEvent.OnSceneReady -= onSceneReady;
+
+            UIEvent.OnToggleGamePlayScene?.Invoke(false);
+            if (uiManager != null)
+            {
+                uiManager.OpenWindowScene(ScreenIds.BattleUIScene);
+            }
+        }
+        else
+        {
+            Debug.LogError("[PrepareBattleScene] _loadLocation hoặc _battleSceneSO chưa được gán trong Inspector.");
+        }
     }
 }

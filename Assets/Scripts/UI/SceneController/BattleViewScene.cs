@@ -15,6 +15,7 @@ public class BattleViewScene : WindowController
     [SerializeField] private TextMeshProUGUI _txtBattleName;
     [SerializeField] private Image _imgBattleContent;
     [SerializeField] private TextMeshProUGUI _txtBattleDes;
+    [SerializeField] private RectTransform _desContent;
 
     [Header("Lists & Prefabs")]
     [SerializeField] private Transform _enemyContainer;
@@ -101,6 +102,24 @@ public class BattleViewScene : WindowController
             _txtBattleDes.text = LocalizationManager.Instance != null 
                 ? LocalizationManager.Instance.GetLocalizedValue(battleConfig.Description) 
                 : battleConfig.Description.ToString();
+
+            Canvas.ForceUpdateCanvases();
+
+            // Ép chiều cao RectTransform của _txtBattleDes tự mở rộng theo độ dài chữ
+            Vector2 desSize = _txtBattleDes.rectTransform.sizeDelta;
+            desSize.y = _txtBattleDes.preferredHeight;
+            _txtBattleDes.rectTransform.sizeDelta = desSize;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_txtBattleDes.rectTransform);
+
+            RectTransform contentRect = _desContent != null 
+                ? _desContent 
+                : _txtBattleDes.transform.parent as RectTransform;
+
+            if (contentRect != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(contentRect);
+            }
         }
 
         // 4. Enemy List (using EnemyIconUI, sorted by Rare and Level like CharacterScene)

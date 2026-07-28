@@ -823,6 +823,40 @@ public static class LocKeys
 
     public const long STR_SKIP_TURN = 1099706205;
 
+    public const long STR_BATTLE_TUTORIAL_DES = 4050375059;
+
+    public const long STR_BATTLE_THIRD_DRAGON_PRINCE = 754011555;
+
+    public const long STR_BATTLE_THIRD_DRAGON_PRINCE_DES = 774483833;
+
+    public const long STR_BATTLE_GOLD_FISH_DEMON = 346211959;
+
+    public const long STR_BATTLE_GOLD_FISH_DEMON_DES = 2959475336;
+
+    public const long STR_BATTLE_THE_BOY_SAGE = 2608597311;
+
+    public const long STR_BATTLE_THE_BOY_SAGE_DES = 249125669;
+
+    public const long STR_BATTLE_BULL_DEMON_KING = 3378151451;
+
+    public const long STR_BATTLE_BULL_DEMON_KING_DES = 844036956;
+
+    public const long STR_BATTLE_YELLOW_WIND_MONSTER = 2821861175;
+
+    public const long STR_BATTLE_YELLOW_WIND_MONSTER_DES = 1540643446;
+
+    public const long STR_BATTLE_GOLD_HORN_KING = 1677697152;
+
+    public const long STR_BATTLE_GOLD_HORN_KING_DES = 591810896;
+
+    public const long STR_BATTLE_LI_JING_BOSS = 1568688131;
+
+    public const long STR_BATTLE_LI_JING_BOSS_DES = 994832587;
+
+    public const long STR_BATTLE_ERLANG_SHEN_BOSS = 3300412753;
+
+    public const long STR_BATTLE_ERLANG_SHEN_BOSS_DES = 1287106680;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;
