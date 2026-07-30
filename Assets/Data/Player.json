@@ -7,7 +7,7 @@
   },
   "inventory": {
     "currencies": {
-      "Energy": 365,
+      "Energy": 340,
       "Jade": 788200,
       "Coin": 21128000,
       "RelicEssence": 68550800,
@@ -1165,16 +1165,8 @@
     ],
     "active_slots": [
       {
-        "position": 4,
-        "character_id": "ErlangShen"
-      },
-      {
         "position": 5,
         "character_id": "SunWukong"
-      },
-      {
-        "position": 6,
-        "character_id": "LiJing"
       }
     ],
     "active_global_buffs": [
@@ -1215,10 +1207,7 @@
     }
   },
   "world_state": {
-    "destroyed_resources": {
-      "91e7b90b-d853-4388-9c59-fe71fbcd84ba": 639207400822922377,
-      "f3ad7db9-7466-4997-9c79-ef98d0576d3d": 639208322619594232
-    }
+    "destroyed_resources": {}
   },
   "quest": {
     "CompletedQuestLineIDs": [],
@@ -1227,11 +1216,11 @@
     "ActiveStepIndex": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639208080000000000,
+    "last_reset_time_ticks": 639209808000000000,
     "active_daily_quests": {
-      "dq_gather_peach": 0,
-      "dq_upgrade_weapon": 0,
-      "dq_kill_slime": 1
+      "dq_upgrade_character": 0,
+      "dq_clear_battle": 0,
+      "dq_kill_slime": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""
