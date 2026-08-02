@@ -32,7 +32,7 @@ class ActorMode:
 class StepModel:
     id: str
     actor_id: str
-    previous_diagoue: str
+    previous_dialogue: str
     completed_dialogue: str
     incomplete_dialogue: str
     type: str

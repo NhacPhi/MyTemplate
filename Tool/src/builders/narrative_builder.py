@@ -115,7 +115,7 @@ class QuestLineConfigBuilder(BaseBuilder):
                 new_step = StepModel(
                     id=step_id,
                     actor_id=str(row['ActorID']) if pd.notna(row['ActorID']) else "",
-                    previous_diagoue=str(row['DialogueBeforeStep']) if pd.notna(row['DialogueBeforeStep']) else "",
+                    previous_dialogue=str(row['DialogueBeforeStep']) if pd.notna(row['DialogueBeforeStep']) else "",
                     completed_dialogue=str(row['CompleteDialogue']) if pd.notna(row['CompleteDialogue']) else "",
                     incomplete_dialogue=str(row['IncompleteDialogue']) if pd.notna(row['IncompleteDialogue']) else "",
                     type=str(row['Type']) if pd.notna(row['Type']) else "",

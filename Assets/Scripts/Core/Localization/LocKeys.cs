@@ -899,6 +899,8 @@ public static class LocKeys
 
     public const long SHAWUJING_U_NAME = 4271876280;
 
+    public const long SHAWUJING_B_DES = 3914413104;
+
     public const long SHAWUJING_M_DES = 3778048083;
 
     public const long SHAWUJING_U_DES = 1345070445;

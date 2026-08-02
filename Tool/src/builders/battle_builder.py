@@ -1,7 +1,7 @@
 import pandas as pd
 import config
 from src.builders.base_builder import BaseBuilder
-from src.models.battle_models import EffectSkillModel, BattleModel, StageEnemiesCompoment
+from src.models.battle_models import EffectSkillModel, BattleModel, StageEnemiesComponent
 
 class EffectConfigBuilder(BaseBuilder):
     def __init__(self, file_path):
@@ -67,7 +67,7 @@ class BattleConfigBuilder(BaseBuilder):
                 battle_id = str(row['BattleID']).strip()
 
                 if battle_id in battle_data:
-                    enemy_comp = StageEnemiesCompoment(
+                    enemy_comp = StageEnemiesComponent(
                         slot = int(row['Slot']) if pd.notna(row['Slot']) else 1,
                         enemy_id = str(row['Enemy_ID']).strip() if pd.notna(row['Enemy_ID']) else "",
                         enemy_level = int(row['Level']) if pd.notna(row['Level']) else 1,

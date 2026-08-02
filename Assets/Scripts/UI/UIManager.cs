@@ -220,4 +220,19 @@ public class UIManager : MonoBehaviour
             _isFirstLoad = false;
         }
     }
+
+    public IWindowController GetCurrentWindow()
+    {
+        return _uiFrame != null ? _uiFrame.GetCurrentWindow() : null;
+    }
+
+    public bool IsInMainGameplay()
+    {
+        if (_uiFrame == null) return true;
+        var currentWindow = _uiFrame.GetCurrentWindow();
+        if (currentWindow == null) return true;
+
+        string id = currentWindow.ScreenId;
+        return id == ScreenIds.GamePlayScene || id == ScreenIds.GamePlayPanel;
+    }
 }

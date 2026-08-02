@@ -14,14 +14,14 @@ public enum ChoiceActionType
 public enum DialogueType
 {
     Start,
-    Completetion,
+    Completion,
     Incompletion,
     Default,
     Normal
 }
 
 [Serializable]
-public class ChoiceCompement
+public class ChoiceComponent
 {
     [JsonProperty("text_hash")]
     public long Text;
@@ -34,7 +34,7 @@ public class ChoiceCompement
 }
 
 [Serializable]
-public class LineCompement
+public class LineComponent
 {
     [JsonProperty("text_hash")]
     public long Text;
@@ -43,7 +43,7 @@ public class LineCompement
     public string ActorID;
 
     [JsonProperty("choices")]
-    public List<ChoiceCompement> Chocies;
+    public List<ChoiceComponent> Choices;
 
     [JsonIgnore]
     public List<string> Texts;
@@ -56,7 +56,7 @@ public class DialogueConfig
     public DialogueType Type;
 
     [JsonProperty("lines")]
-    public List<LineCompement> Lines;
+    public List<LineComponent> Lines;
 }
 
 

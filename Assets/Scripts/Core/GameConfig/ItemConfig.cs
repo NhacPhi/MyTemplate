@@ -228,11 +228,11 @@ public class ArmorComponent
     public MainStatConfig MainStat;
 
     [JsonProperty("substat_pool_id")]
-    public string SubstatPoolID; //List<SubstatCompoment>
+    public string SubstatPoolID; //List<SubstatComponent>
 }
 
 [Serializable]
-public class SubstatCompoment
+public class SubstatComponent
 {
     [JsonProperty("stat_type")]
     public StatType Type;

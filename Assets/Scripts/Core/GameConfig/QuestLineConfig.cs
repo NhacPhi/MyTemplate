@@ -17,7 +17,7 @@ public enum QuestType
 }
 
 [Serializable]
-public class StepCompoment
+public class StepComponent
 {
     [JsonProperty("id")]
     public string ID;
@@ -25,13 +25,13 @@ public class StepCompoment
     [JsonProperty("actor_id")]
     public string ActorID;
 
-    [JsonProperty("previous_diagoue")]
+    [JsonProperty("previous_dialogue")]
     public string PreviousDialogue;
 
     [JsonProperty("completed_dialogue")]
     public string CompletedDialogue;
 
-    [JsonProperty("incompleted_dialogue")]
+    [JsonProperty("incomplete_dialogue")]
     public string IncompleteDialogue;
 
     [JsonProperty("type")]
@@ -42,7 +42,7 @@ public class StepCompoment
 }
 
 [Serializable]
-public class QuestCompoment
+public class QuestComponent
 {
     [JsonProperty("id")]
     public string ID;
@@ -54,7 +54,7 @@ public class QuestCompoment
     public long Description;
 
     [JsonProperty("steps")]
-    public List<StepCompoment> Steps;
+    public List<StepComponent> Steps;
 
     [JsonProperty("quest_type")]
     public QuestType Type;
@@ -76,7 +76,7 @@ public class QuestLineConfig
     public long Description;
 
     [JsonProperty("quests")]
-    public List<QuestCompoment> Quests;
+    public List<QuestComponent> Quests;
 }
 
 

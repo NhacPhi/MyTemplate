@@ -65,7 +65,7 @@ public class DialogueUIManager : MonoBehaviour
         nameActor.text = LocalizationManager.Instance.GetLocalizedValue(actor.Name);
     }
 
-    private void ShowChoices(List<ChoiceCompement> choices)
+    private void ShowChoices(List<ChoiceComponent> choices)
     {
         choicesManager.FillChoices(choices);
         choicesManager.gameObject.SetActive(true);

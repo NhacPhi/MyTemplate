@@ -2,6 +2,8 @@ using SixLabors.ImageSharp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Gameplay.Common;
 
@@ -32,6 +34,18 @@ public class Protagonist : MonoBehaviour, IDamageable
     [SerializeField] private Collider playerCollider; // Collider cần bật/tắt
     [SerializeField] private float cloneSpeedMultiplier = 1.5f; // Hệ số buff tốc độ
     private float baseVelocity;
+
+    [Header("Idle Voice Settings")]
+    [SerializeField] private bool _enableIdleVoice = true;
+    [SerializeField] private float _idleTimeThreshold = 5f;
+    [SerializeField] private AudioSource _voiceAudioSource;
+    [SerializeField] private AudioDataConfig[] _idleVoiceConfigs; // Gán 3 ScriptableObject AudioDataConfig vào đây để chỉnh âm lượng (Volume)
+    [SerializeField] private AudioDatabase _idleVoiceDatabase;   // Hoặc gán 1 ScriptableObject AudioDatabase
+    [SerializeField] private AudioClip[] _idleVoiceClips;         // Mảng AudioClip trực tiếp (dùng làm fallback)
+
+    private float _idleTimer = 0f;
+    private Vector3 _lastPosition;
+    private int _lastVoiceIndex = -1;
 
     float countDown = 0;
 
@@ -102,12 +116,235 @@ public class Protagonist : MonoBehaviour, IDamageable
             }
         }
 #endif
+
+        CheckIdleVoice();
+    }
+
+    private void CheckIdleVoice()
+    {
+        if (!_enableIdleVoice || CurrentHP <= 0)
+        {
+            _idleTimer = 0f;
+            return;
+        }
+
+        // 1. Reset timer nếu vị trí nhân vật đang thay đổi (đang di chuyển)
+        bool isMoving = (transform.position - _lastPosition).sqrMagnitude > 0.0001f;
+        _lastPosition = transform.position;
+
+        if (isMoving)
+        {
+            _idleTimer = 0f;
+            return;
+        }
+
+        // 2. Chỉ tính thời gian khi ở Màn chơi chính (Không ở trong UI full-screen hay Battle)
+        if (!IsInMainGameplay())
+        {
+            _idleTimer = 0f;
+            return;
+        }
+
+        // 3. Nếu âm thanh voice trước đó đang phát -> Giữ timer = 0, chưa đếm 5s tiếp theo
+        if (_voiceAudioSource != null && _voiceAudioSource.isPlaying)
+        {
+            _idleTimer = 0f;
+            return;
+        }
+
+        // 4. Tăng thời gian idle (chỉ đếm sau khi âm thanh trước đã phát xong hoàn toàn)
+        _idleTimer += Time.deltaTime;
+
+        if (_idleTimer >= _idleTimeThreshold)
+        {
+            PlayRandomIdleVoice();
+            _idleTimer = 0f; // Reset timer để tiếp tục đếm cho lần idle tiếp theo
+        }
+    }
+
+    private bool IsInMainGameplay()
+    {
+        // Trả về false nếu game đang Pause (TimeScale = 0)
+        if (Time.timeScale == 0f) return false;
+
+        // Trả về false nếu đang trong màn Trận đánh (Battle)
+        if (BattleManager.Instance != null && BattleManager.Instance.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        // Trả về false nếu đang mở bất kỳ UI Window nào khác ngoài GamePlay (Inventory, Shop, Quests, Settings...)
+        if (UIManager.Instance != null)
+        {
+            return UIManager.Instance.IsInMainGameplay();
+        }
+
+        return true;
+    }
+
+    private void PlayRandomIdleVoice()
+    {
+        PlayRandomIdleVoiceAsync().Forget();
+    }
+
+    private async UniTaskVoid PlayRandomIdleVoiceAsync()
+    {
+        // 1. Ưu tiên phát từ mảng ScriptableObject AudioDataConfig (_idleVoiceConfigs)
+        if (_idleVoiceConfigs != null && _idleVoiceConfigs.Length > 0)
+        {
+            List<int> validIndices = new List<int>();
+            for (int i = 0; i < _idleVoiceConfigs.Length; i++)
+            {
+                if (_idleVoiceConfigs[i] != null) validIndices.Add(i);
+            }
+
+            if (validIndices.Count > 0)
+            {
+                List<int> candidateIndices = new List<int>(validIndices);
+                if (candidateIndices.Count > 1 && _lastVoiceIndex >= 0)
+                {
+                    candidateIndices.Remove(_lastVoiceIndex);
+                }
+
+                int chosenIndex = candidateIndices[Random.Range(0, candidateIndices.Count)];
+                _lastVoiceIndex = chosenIndex;
+                AudioDataConfig config = _idleVoiceConfigs[chosenIndex];
+
+                await PlayAudioDataConfig(config);
+                return;
+            }
+        }
+
+        // 2. Sử dụng ScriptableObject AudioDatabase (_idleVoiceDatabase)
+        if (_idleVoiceDatabase != null && _idleVoiceDatabase.SFXList != null && _idleVoiceDatabase.SFXList.Count > 0)
+        {
+            List<int> validIndices = new List<int>();
+            for (int i = 0; i < _idleVoiceDatabase.SFXList.Count; i++)
+            {
+                if (_idleVoiceDatabase.SFXList[i] != null) validIndices.Add(i);
+            }
+
+            if (validIndices.Count > 0)
+            {
+                List<int> candidateIndices = new List<int>(validIndices);
+                if (candidateIndices.Count > 1 && _lastVoiceIndex >= 0)
+                {
+                    candidateIndices.Remove(_lastVoiceIndex);
+                }
+
+                int chosenIndex = candidateIndices[Random.Range(0, candidateIndices.Count)];
+                _lastVoiceIndex = chosenIndex;
+                AudioDataConfig config = _idleVoiceDatabase.SFXList[chosenIndex];
+
+                await PlayAudioDataConfig(config);
+                return;
+            }
+        }
+
+        // 3. Fallback: Phát từ mảng _idleVoiceClips (Gán trực tiếp AudioClip)
+        if (_idleVoiceClips != null && _idleVoiceClips.Length > 0)
+        {
+            List<int> validIndices = new List<int>();
+            for (int i = 0; i < _idleVoiceClips.Length; i++)
+            {
+                if (_idleVoiceClips[i] != null) validIndices.Add(i);
+            }
+
+            if (validIndices.Count > 0)
+            {
+                List<int> candidateIndices = new List<int>(validIndices);
+                if (candidateIndices.Count > 1 && _lastVoiceIndex >= 0)
+                {
+                    candidateIndices.Remove(_lastVoiceIndex);
+                }
+
+                int chosenIndex = candidateIndices[Random.Range(0, candidateIndices.Count)];
+                _lastVoiceIndex = chosenIndex;
+                AudioClip clipToPlay = _idleVoiceClips[chosenIndex];
+
+                PlayDirectClip(clipToPlay, 1f);
+                Debug.Log($"[IdleVoice] Playing non-repeating voice clip (Index {chosenIndex}): {clipToPlay.name}");
+                return;
+            }
+        }
+
+        Debug.LogWarning("[IdleVoice] Chưa gán bất kỳ ScriptableObject AudioDataConfig hay AudioClip nào vào 'Idle Voice Settings' trên Inspector!");
+    }
+
+    private async UniTask PlayAudioDataConfig(AudioDataConfig config)
+    {
+        if (config == null) return;
+
+        AudioClip clipToPlay = null;
+
+        // 1. Kiểm tra DirectClip (Nếu gán trực tiếp file .mp3/.wav vào ScriptableObject)
+        if (config.DirectClip != null)
+        {
+            clipToPlay = config.DirectClip;
+        }
+
+        // 2. Kiểm tra ClipRef (Addressable AssetReference)
+        if (clipToPlay == null && config.ClipRef != null)
+        {
+            if (config.ClipRef.RuntimeKeyIsValid())
+            {
+                clipToPlay = await AddressablesManager.Instance.LoadAssetAsync<AudioClip>(config.ClipRef);
+            }
+#if UNITY_EDITOR
+            if (clipToPlay == null && config.ClipRef.editorAsset != null)
+            {
+                clipToPlay = config.ClipRef.editorAsset as AudioClip;
+            }
+#endif
+        }
+
+        // 3. Nếu tìm thấy AudioClip -> Phát ngay lập tức với Volume của ScriptableObject
+        if (clipToPlay != null)
+        {
+            PlayDirectClip(clipToPlay, config.Volume);
+            Debug.Log($"[IdleVoice] Playing ScriptableObject '{config.name}' - Clip: {clipToPlay.name} (Volume: {config.Volume})");
+            return;
+        }
+
+        // 4. Nếu không có clip trực tiếp -> Thử phát qua AudioManager nếu ID đã đăng ký
+        var rootScope = FindObjectOfType<RootScope>();
+        if (rootScope != null && rootScope.Container != null)
+        {
+            var audioMgr = rootScope.Container.Resolve(typeof(IAudioManager)) as IAudioManager;
+            if (audioMgr != null && !string.IsNullOrEmpty(config.AudioID))
+            {
+                await audioMgr.PlaySFXAsync(config.AudioID);
+                Debug.Log($"[IdleVoice] Playing AudioDataConfig via AudioManager: {config.AudioID} (Volume: {config.Volume})");
+                return;
+            }
+        }
+
+        Debug.LogWarning($"[IdleVoice] ScriptableObject '{config.name}' chưa được gán file âm thanh (DirectClip / ClipRef)!");
+    }
+
+    private void PlayDirectClip(AudioClip clip, float volume = 1f)
+    {
+        if (clip == null) return;
+        if (_voiceAudioSource == null)
+        {
+            _voiceAudioSource = GetComponent<AudioSource>();
+            if (_voiceAudioSource == null)
+            {
+                _voiceAudioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
+        _voiceAudioSource.spatialBlend = 0f; // Cấu hình 2D Sound để phát rõ ràng
+        _voiceAudioSource.volume = volume;
+        _voiceAudioSource.PlayOneShot(clip, volume);
     }
 
     private void PlayerMovement(Vector2 input)
     {
         if(input.magnitude > 0)
         {
+            _idleTimer = 0f;
+
             if (input.x > 0) objPlayer.transform.localScale = new Vector3(-1, 1, 1);
             else if (input.x < 0) objPlayer.transform.localScale = new Vector3(1, 1, 1);
 
@@ -130,6 +367,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void PlayerAttack()
     {
+        _idleTimer = 0f;
+
         if (!equipWeapon && !isClone)
         {
             weapon.WeaponDoSomething(1);
@@ -147,6 +386,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void Transformation()
     {
+        _idleTimer = 0f;
+
         if (equipWeapon)
         {
             equipWeapon = false;
@@ -189,6 +430,7 @@ public class Protagonist : MonoBehaviour, IDamageable
     {
         UpdateStats();
         baseVelocity = velocity; // Lưu tốc độ cơ bản
+        _lastPosition = transform.position;
 
         // Tự động tìm Collider nếu bạn quên chưa kéo vào Inspector
         if (playerCollider == null) playerCollider = GetComponent<Collider>();

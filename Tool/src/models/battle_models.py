@@ -15,7 +15,7 @@ class EffectSkillModel:
         return {k: v for k, v in asdict(self).items() if v is not None}
 
 @dataclass
-class StageEnemiesCompoment:
+class StageEnemiesComponent:
     slot: int
     enemy_id: str
     enemy_level: int
@@ -28,7 +28,7 @@ class BattleModel:
     background: str
     reward: str
     exp_reward: int
-    enemies: List[StageEnemiesCompoment] = field(default_factory=list)
+    enemies: List[StageEnemiesComponent] = field(default_factory=list)
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}

@@ -6,6 +6,7 @@ using UnityEngine;
 public class AudioDataConfig : ScriptableObject
 {
     public string AudioID;
+    public AudioClip DirectClip; // Kéo thả file âm thanh .mp3/.wav trực tiếp vào đây
     public AssetReferenceT<AudioClip> ClipRef;
     [Range(0f, 1f)] public float Volume = 1;
 

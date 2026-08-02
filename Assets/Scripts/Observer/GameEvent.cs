@@ -29,8 +29,8 @@ public static class GameEvent
     public static Action<string, ActorConfig> OnOpenDialogue;
     public static Action<DialogueType> OnEndDialogue;
     public static Action OnAdvanceDialogueEvent;
-    public static Action<List<ChoiceCompement>> OnShowChoiceUI;
-    public static Action<ChoiceCompement> OnMakeChocieUI;
+    public static Action<List<ChoiceComponent>> OnShowChoiceUI;
+    public static Action<ChoiceComponent> OnMakeChoiceUI;
     public static Action OnWinDialogue;
     public static Action OnLoseDialogue;
 
@@ -39,7 +39,7 @@ public static class GameEvent
     public static Action OnMakeLosingChoice;
     public static Action OnContinueWithStepEvent;
     public static Action OnQuestUpdated;
-    public static Action<QuestCompoment> OnOpenQuestUI;
+    public static Action<QuestComponent> OnOpenQuestUI;
     public static Action<StepController> OnNPCSpawned;
     public static Action<StepController> OnNPCDestroyed;
 

@@ -51,7 +51,7 @@ namespace Tech.Pool
             var cloneComponent = objectResolver.Instantiate(component, position, rotaion);
             var returnToPool = cloneComponent.gameObject.AddComponent<ReturnToPool>();
             returnToPool.PoolObjects = this;
-            returnToPool.RootCompoment = cloneComponent;
+            returnToPool.RootComponent = cloneComponent;
             return cloneComponent;
 
         }

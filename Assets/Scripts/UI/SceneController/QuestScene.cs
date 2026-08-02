@@ -61,7 +61,7 @@ public class QuestScene : WindowController
         }
     }
 
-    private QuestCompoment currentlySelectedQuest;
+    private QuestComponent currentlySelectedQuest;
 
     private void Start()
     {
@@ -184,7 +184,7 @@ public class QuestScene : WindowController
 
     private void RenderMainQuests()
     {
-        QuestCompoment firstVisibleQuest = null;
+        QuestComponent firstVisibleQuest = null;
 
         // Render Active and Available Quests
         if (questManager != null && gameNarrativeData != null)
@@ -310,7 +310,7 @@ public class QuestScene : WindowController
         }
     }
 
-    private void OnSelectQuest(QuestCompoment quest)
+    private void OnSelectQuest(QuestComponent quest)
     {
         currentlySelectedQuest = quest;
 
@@ -324,7 +324,7 @@ public class QuestScene : WindowController
             int stepIndex = (questManager.SaveData.ActiveQuestID == quest.ID) ? questManager.SaveData.ActiveStepIndex : 0;
             if (stepIndex < quest.Steps.Count)
             {
-                StepCompoment step = quest.Steps[stepIndex];
+                StepComponent step = quest.Steps[stepIndex];
                 ActorConfig actor = gameNarrativeData.GetActorConfig(step.ActorID);
                 string actorName = step.ActorID;
                 if (actor != null)

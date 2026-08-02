@@ -85,11 +85,11 @@ public class DialogueManager : MonoBehaviour
             ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterDialogue].ActorID);
             DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
         }
-        else if (currentDialogue.Lines[counterDialogue].Chocies != null 
-            && currentDialogue.Lines[counterDialogue].Chocies.Count > 0)
+        else if (currentDialogue.Lines[counterDialogue].Choices != null 
+            && currentDialogue.Lines[counterDialogue].Choices.Count > 0)
         {
             // Display Choice
-            DisplayChoices(currentDialogue.Lines[counterDialogue].Chocies);
+            DisplayChoices(currentDialogue.Lines[counterDialogue].Choices);
         }
         else
         {
@@ -109,16 +109,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void DisplayChoices(List<ChoiceCompement> choices)
+    private void DisplayChoices(List<ChoiceComponent> choices)
     {
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
-        GameEvent.OnMakeChocieUI += MakeDialogueChoice;
+        GameEvent.OnMakeChoiceUI += MakeDialogueChoice;
         GameEvent.OnShowChoiceUI?.Invoke(choices);
     }
 
-    private void MakeDialogueChoice(ChoiceCompement choice)
+    private void MakeDialogueChoice(ChoiceComponent choice)
     {
-        GameEvent.OnMakeChocieUI -= MakeDialogueChoice;
+        GameEvent.OnMakeChoiceUI -= MakeDialogueChoice;
         switch (choice.ActionType)
         {
             case ChoiceActionType.DoNothing:

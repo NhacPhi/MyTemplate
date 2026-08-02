@@ -8,12 +8,12 @@ public class DialogueChoiceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI content;
     [SerializeField] private Button button;
 
-    public void FillChoice(ChoiceCompement choice)
+    public void FillChoice(ChoiceComponent choice)
     {
         content.text = LocalizationManager.Instance.GetLocalizedValue(choice.Text);
         button.onClick.AddListener(() =>
         {
-            GameEvent.OnMakeChocieUI?.Invoke(choice);
+            GameEvent.OnMakeChoiceUI?.Invoke(choice);
         });
     }
 

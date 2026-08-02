@@ -413,7 +413,7 @@ public class ForgeManager
         // bỏ cả main task
         //existingTypes.Add(armorConfig.MainStat.Type);
 
-        var availablePool = new List<SubstatCompoment>();
+        var availablePool = new List<SubstatComponent>();
         foreach (var pool in poolConfig.Pools)
         {
             if (!existingTypes.Contains(pool.Type))
@@ -449,7 +449,7 @@ public class ForgeManager
         var subToUpgrade = armorSave.Substats[randomIndex];
 
         // Tìm pool config tương ứng để lấy range bonus
-        SubstatCompoment matchingPool = null;
+        SubstatComponent matchingPool = null;
         if (poolConfig.Pools != null)
         {
             foreach (var pool in poolConfig.Pools)

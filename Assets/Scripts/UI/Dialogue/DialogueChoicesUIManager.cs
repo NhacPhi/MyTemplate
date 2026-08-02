@@ -6,7 +6,7 @@ public class DialogueChoicesUIManager : MonoBehaviour
 {
     [SerializeField] private DialogueChoiceUI[] choiceButtons;
     
-    public void FillChoices(List<ChoiceCompement> choices)
+    public void FillChoices(List<ChoiceComponent> choices)
     {
         if (choices != null)
         {

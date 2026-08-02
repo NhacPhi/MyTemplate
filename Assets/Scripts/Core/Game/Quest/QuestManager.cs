@@ -12,8 +12,8 @@ public class QuestManager
     public QuestSaveData SaveData => saveSystem.Player.Quest;
 
     private QuestLineConfig currentQuestLine;
-    private QuestCompoment currentQuest;
-    private StepCompoment currentStep;
+    private QuestComponent currentQuest;
+    private StepComponent currentStep;
     
     private string currentQuestLineIndex;
 
@@ -115,7 +115,7 @@ public class QuestManager
     /// <summary>
     /// Returns a Quest that is currently available to be accepted from this actor.
     /// </summary>
-    private QuestCompoment GetAvailableQuestFromActor(string actorID)
+    private QuestComponent GetAvailableQuestFromActor(string actorID)
     {
         if (currentQuestLine == null || currentQuest != null) return null;
 
@@ -147,7 +147,7 @@ public class QuestManager
         // 1. If we don't have an active quest, check if the NPC has a quest to GIVE us.
         if(currentQuest == null)
         {
-            QuestCompoment availableQuest = GetAvailableQuestFromActor(actor);
+            QuestComponent availableQuest = GetAvailableQuestFromActor(actor);
             if (availableQuest != null)
             {
                 // [TẠM THỜI BỎ QUA UI NHẬN QUEST]
@@ -185,7 +185,7 @@ public class QuestManager
         // Cho phép nhận hoặc chuyển qua theo dõi quest khác
         foreach (var kvp in questLines)
         {
-            QuestCompoment questToStart = kvp.Value.Quests.FirstOrDefault(q => q.ID == questID);
+            QuestComponent questToStart = kvp.Value.Quests.FirstOrDefault(q => q.ID == questID);
             if (questToStart != null)
             {
                 Debug.Log($"[QuestManager] Found quest {questID} in QuestLine '{kvp.Key}'. Registering as Active Quest...");
@@ -320,7 +320,7 @@ public class QuestManager
 
         switch (dialogueType)
         {
-            case DialogueType.Completetion:
+            case DialogueType.Completion:
                 EndStep();
                 break;
             case DialogueType.Start:

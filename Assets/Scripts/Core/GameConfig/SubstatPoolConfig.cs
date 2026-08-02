@@ -6,5 +6,5 @@ using System.Collections.Generic;
 public class SubstatPoolConfig
 {
     [JsonProperty("Pools")]
-    public List<SubstatCompoment> Pools;
+    public List<SubstatComponent> Pools;
 }

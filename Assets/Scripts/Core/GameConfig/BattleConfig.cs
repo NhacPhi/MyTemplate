@@ -22,14 +22,14 @@ public class BattleConfig
     public int ExpReward;
 
     [JsonProperty("enemies")]
-    public List<StageEnemyCompoment> Enemies;
+    public List<StageEnemyComponent> Enemies;
 
     [JsonIgnore]
     public Sprite Sprite { get; set; }
 }
 
 [Serializable]
-public class StageEnemyCompoment
+public class StageEnemyComponent
 {
     [JsonProperty("slot")]
     public int Slot;

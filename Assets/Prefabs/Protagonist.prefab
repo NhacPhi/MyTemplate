@@ -527,6 +527,15 @@ MonoBehaviour:
   timeToGetWeapon: 6
   playerCollider: {fileID: 130585983577624954}
   cloneSpeedMultiplier: 1.2
+  _enableIdleVoice: 1
+  _idleTimeThreshold: 15
+  _voiceAudioSource: {fileID: 0}
+  _idleVoiceConfigs:
+  - {fileID: 11400000, guid: 7e02a7a859a445344a4a9ff01fa41c99, type: 2}
+  - {fileID: 11400000, guid: ac80a6e75c6c056459722c00cdd28375, type: 2}
+  - {fileID: 11400000, guid: fb132e7fd6994474b824111e2fef9c7d, type: 2}
+  _idleVoiceDatabase: {fileID: 0}
+  _idleVoiceClips: []
   weapon: {fileID: 7360502138755076587}
   groundLayer:
     serializedVersion: 2

@@ -9,10 +9,10 @@ public class QuestItemUI : MonoBehaviour
     [SerializeField] private Button btnSelect;
     [SerializeField] private GameObject activeIcon;
 
-    private QuestCompoment currentQuest;
-    private Action<QuestCompoment> onSelectCallback;
+    private QuestComponent currentQuest;
+    private Action<QuestComponent> onSelectCallback;
 
-    public void Setup(QuestCompoment quest, string localizedName, Action<QuestCompoment> onSelect)
+    public void Setup(QuestComponent quest, string localizedName, Action<QuestComponent> onSelect)
     {
         currentQuest = quest;
         onSelectCallback = onSelect;

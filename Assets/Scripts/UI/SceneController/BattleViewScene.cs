@@ -23,6 +23,9 @@ public class BattleViewScene : WindowController
     [SerializeField] private Transform _rewardContainer;
     [SerializeField] private GameItemUI _rewardItemPrefab;
 
+    [Header("Scroll Views")]
+    [SerializeField] private ScrollRect _scrollRect;
+
     [Header("Buttons")]
     [SerializeField] private Button _btnPrepareBattle;
     [SerializeField] private Button _btnClose;
@@ -125,7 +128,7 @@ public class BattleViewScene : WindowController
         // 4. Enemy List (using EnemyIconUI, sorted by Rare and Level like CharacterScene)
         if (_enemyContainer != null && _enemyIconPrefab != null && battleConfig.Enemies != null)
         {
-            var sortedEnemies = new List<StageEnemyCompoment>(battleConfig.Enemies);
+            var sortedEnemies = new List<StageEnemyComponent>(battleConfig.Enemies);
             sortedEnemies.Sort((a, b) =>
             {
                 var configA = _gameData.GetCharacterConfig(a.EnemyID);
@@ -180,6 +183,33 @@ public class BattleViewScene : WindowController
                         }
                         _instantiatedItems.Add(itemUI.gameObject);
                     }
+                }
+            }
+        }
+
+        ResetScrollView();
+    }
+
+    private void ResetScrollView()
+    {
+        Canvas.ForceUpdateCanvases();
+
+        if (_scrollRect != null)
+        {
+            _scrollRect.velocity = Vector2.zero;
+            _scrollRect.verticalNormalizedPosition = 1f;
+            _scrollRect.horizontalNormalizedPosition = 0f;
+        }
+        else
+        {
+            var scrollRects = GetComponentsInChildren<ScrollRect>(true);
+            foreach (var sr in scrollRects)
+            {
+                if (sr != null)
+                {
+                    sr.velocity = Vector2.zero;
+                    sr.verticalNormalizedPosition = 1f;
+                    sr.horizontalNormalizedPosition = 0f;
                 }
             }
         }
