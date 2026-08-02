@@ -7,7 +7,7 @@
   },
   "inventory": {
     "currencies": {
-      "Energy": 340,
+      "Energy": 320,
       "Jade": 788200,
       "Coin": 21128000,
       "RelicEssence": 68550800,
@@ -1165,8 +1165,20 @@
     ],
     "active_slots": [
       {
-        "position": 5,
+        "position": 1,
+        "character_id": ""
+      },
+      {
+        "position": 2,
         "character_id": "SunWukong"
+      },
+      {
+        "position": 4,
+        "character_id": ""
+      },
+      {
+        "position": 5,
+        "character_id": "ThirdPrinceNezha"
       }
     ],
     "active_global_buffs": [
@@ -1207,10 +1219,7 @@
     }
   },
   "world_state": {
-    "destroyed_resources": {
-      "91e7b90b-d853-4388-9c59-fe71fbcd84ba": 639212746277862707,
-      "feeeedd9-487a-43ec-930b-e9f4d5d833ef": 639212746361835921
-    }
+    "destroyed_resources": {}
   },
   "quest": {
     "CompletedQuestLineIDs": [],

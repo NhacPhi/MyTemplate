@@ -7,8 +7,16 @@ using VContainer;
 
 using Gameplay.Common;
 
+public enum ProtagonistState
+{
+    Normal,     // Trạng thái bình thường (di chuyển, tấn công, tương tác)
+    Dialogue,   // Đang trong hội thoại (Khóa di chuyển, ngắt input, tắt collision)
+    Dead        // Nhân vật đã chết
+}
+
 public class Protagonist : MonoBehaviour, IDamageable
 {
+    public ProtagonistState CurrentState { get; private set; } = ProtagonistState.Normal;
     [Header("Player Stats")]
     public int Level = 1;
     public int MaxHP;
@@ -65,6 +73,8 @@ public class Protagonist : MonoBehaviour, IDamageable
         GameEvent.OnPlayerMove += PlayerMovement;
         GameEvent.OnPlayerAttack += PlayerAttack;
         GameEvent.OnPlayerTransform += Transformation;
+        GameEvent.OnStartDialogue += HandleStartDialogue;
+        GameEvent.OnEndDialogue += HandleEndDialogue;
         playerTranform.Provide(transform);
     }
 
@@ -73,11 +83,13 @@ public class Protagonist : MonoBehaviour, IDamageable
         GameEvent.OnPlayerMove -= PlayerMovement;
         GameEvent.OnPlayerAttack -= PlayerAttack;
         GameEvent.OnPlayerTransform -= Transformation;
+        GameEvent.OnStartDialogue -= HandleStartDialogue;
+        GameEvent.OnEndDialogue -= HandleEndDialogue;
     }
     // Start is called before the first frame update
     void Update()
     {
-        if (CurrentHP <= 0) return; // Nếu đã chết thì không làm gì
+        if (CurrentState != ProtagonistState.Normal) return; // Chỉ xử lý khi ở trạng thái Normal
 
         if (equipWeapon && countDown > 0)
         {
@@ -122,7 +134,7 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void CheckIdleVoice()
     {
-        if (!_enableIdleVoice || CurrentHP <= 0)
+        if (!_enableIdleVoice || CurrentState != ProtagonistState.Normal)
         {
             _idleTimer = 0f;
             return;
@@ -341,6 +353,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void PlayerMovement(Vector2 input)
     {
+        if (CurrentState != ProtagonistState.Normal) return;
+
         if(input.magnitude > 0)
         {
             _idleTimer = 0f;
@@ -367,6 +381,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void PlayerAttack()
     {
+        if (CurrentState != ProtagonistState.Normal) return;
+
         _idleTimer = 0f;
 
         if (!equipWeapon && !isClone)
@@ -386,6 +402,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void Transformation()
     {
+        if (CurrentState != ProtagonistState.Normal) return;
+
         _idleTimer = 0f;
 
         if (equipWeapon)
@@ -450,6 +468,7 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     private void Die()
     {
+        ChangeState(ProtagonistState.Dead);
         Debug.Log("Protagonist Died!");
         // Sử dụng hệ thống load scene của game thay vì SceneManager mặc định
         if (SceneLoader.Instance != null)
@@ -458,5 +477,68 @@ public class Protagonist : MonoBehaviour, IDamageable
         }
     }
 
+    public void ChangeState(ProtagonistState newState)
+    {
+        if (CurrentState == newState) return;
 
+        ProtagonistState previousState = CurrentState;
+        CurrentState = newState;
+
+        OnExitState(previousState);
+        OnEnterState(newState);
+    }
+
+    private void OnEnterState(ProtagonistState state)
+    {
+        switch (state)
+        {
+            case ProtagonistState.Normal:
+                SetCollisionActive(!isClone);
+                break;
+            case ProtagonistState.Dialogue:
+                _idleTimer = 0f;
+                SetCollisionActive(false);
+                break;
+            case ProtagonistState.Dead:
+                SetCollisionActive(false);
+                break;
+        }
+    }
+
+    private void OnExitState(ProtagonistState state)
+    {
+        switch (state)
+        {
+            case ProtagonistState.Dialogue:
+                SetCollisionActive(!isClone);
+                break;
+        }
+    }
+
+    private void HandleStartDialogue(DialogueConfig dialogueConfig)
+    {
+        ChangeState(ProtagonistState.Dialogue);
+    }
+
+    private void HandleEndDialogue(DialogueType type)
+    {
+        if (CurrentState == ProtagonistState.Dialogue)
+        {
+            ChangeState(ProtagonistState.Normal);
+        }
+    }
+
+    private void SetCollisionActive(bool active)
+    {
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = active;
+        }
+
+        var colliders = GetComponents<Collider>();
+        foreach (var col in colliders)
+        {
+            col.enabled = active;
+        }
+    }
 }

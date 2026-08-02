@@ -5,6 +5,7 @@ using UnityEngine;
 public enum ProjectileState
 {
     Outward,
+    PauseAtApex,
     Returning
 }
 public class ProjectileController : MonoBehaviour
@@ -14,11 +15,16 @@ public class ProjectileController : MonoBehaviour
     private IReturningProjectileSkill _skillHandler;
 
     [SerializeField] private AudioDataConfig _audioTrigerrDetect;
+    [SerializeField] private float _pauseDuration = 0.15f; // Thời gian khựng nhẹ vật lý ở điểm cực đại (giây)
 
     private Vector3 _startPosition;
     private Vector3 _throwDirection;
     public float _moveSpeed;
     private float _maxDistance;
+    private float _pauseTimer = 0f;
+
+    private bool _hasHitOutward = false;
+    private bool _hasHitReturn = false;
 
     public void Initialize(Entity caster, IReturningProjectileSkill skill, Vector3 direction, float maxDist)
     {
@@ -30,6 +36,10 @@ public class ProjectileController : MonoBehaviour
 
         _startPosition = transform.position;
         _state = ProjectileState.Outward;
+
+        _hasHitOutward = false;
+        _hasHitReturn = false;
+        _pauseTimer = 0f;
     }
 
     private void Update()
@@ -38,6 +48,9 @@ public class ProjectileController : MonoBehaviour
         {
             case ProjectileState.Outward:
                 HandleOutwardMovement();
+                break;
+            case ProjectileState.PauseAtApex:
+                HandlePauseAtApex();
                 break;
             case ProjectileState.Returning:
                 HandleReturnMovement();
@@ -50,30 +63,42 @@ public class ProjectileController : MonoBehaviour
         float stepDistance = _moveSpeed * Time.deltaTime;
         Vector3 origin = transform.position;
 
-        float radius = 0.5f;
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        if (sphereCollider != null)
+        if (!_hasHitOutward && _caster != null && _caster.Target != null)
         {
-            radius = sphereCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
-        }
-
-        RaycastHit hit;
-        if (Physics.SphereCast(origin, radius, _throwDirection, out hit, stepDistance))
-        {
-            Collider other = hit.collider;
-            if (other.gameObject == _caster.Target)
+            float radius = 0.5f;
+            SphereCollider sphereCollider = GetComponent<SphereCollider>();
+            if (sphereCollider != null)
             {
-                Entity target = other.GetComponent<Entity>();
-                HandleHit(target);
-                return;
+                radius = sphereCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+            }
+
+            if (Physics.SphereCast(origin, radius, _throwDirection, out RaycastHit hit, stepDistance))
+            {
+                Collider other = hit.collider;
+                if (other.gameObject == _caster.Target)
+                {
+                    Entity target = other.GetComponent<Entity>();
+                    _hasHitOutward = true;
+                    HandleHit(target);
+                }
             }
         }
 
         transform.Translate(_throwDirection * stepDistance, Space.World);
 
-        float distanceTravlled = Vector3.Distance(_startPosition, transform.position);
+        float distanceTravelled = Vector3.Distance(_startPosition, transform.position);
 
-        if(distanceTravlled >= _maxDistance)
+        if (distanceTravelled >= _maxDistance)
+        {
+            _state = ProjectileState.PauseAtApex;
+            _pauseTimer = 0f;
+        }
+    }
+
+    private void HandlePauseAtApex()
+    {
+        _pauseTimer += Time.deltaTime;
+        if (_pauseTimer >= _pauseDuration)
         {
             SwitchToReturnState();
         }
@@ -81,9 +106,35 @@ public class ProjectileController : MonoBehaviour
 
     private void HandleReturnMovement()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _startPosition, _moveSpeed * Time.deltaTime);
+        float stepDistance = _moveSpeed * Time.deltaTime;
 
-        if(Vector3.Distance(transform.position, _startPosition) < 0.1f)
+        if (!_hasHitReturn && _caster != null && _caster.Target != null)
+        {
+            Vector3 origin = transform.position;
+            Vector3 returnDirection = (_startPosition - transform.position).normalized;
+
+            float radius = 0.5f;
+            SphereCollider sphereCollider = GetComponent<SphereCollider>();
+            if (sphereCollider != null)
+            {
+                radius = sphereCollider.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+            }
+
+            if (Physics.SphereCast(origin, radius, returnDirection, out RaycastHit hit, stepDistance))
+            {
+                Collider other = hit.collider;
+                if (other.gameObject == _caster.Target)
+                {
+                    Entity target = other.GetComponent<Entity>();
+                    _hasHitReturn = true;
+                    HandleHit(target);
+                }
+            }
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, _startPosition, stepDistance);
+
+        if (Vector3.Distance(transform.position, _startPosition) < 0.1f)
         {
             _skillHandler.OnProjectileReturned(this.gameObject);
         }
@@ -99,10 +150,18 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_caster == null || _caster.Target == null || other.gameObject != _caster.Target) return;
+
         Entity target = other.GetComponent<Entity>();
 
-        if (other.gameObject == _caster.Target)
+        if (_state == ProjectileState.Outward && !_hasHitOutward)
         {
+            _hasHitOutward = true;
+            HandleHit(target);
+        }
+        else if (_state == ProjectileState.Returning && !_hasHitReturn)
+        {
+            _hasHitReturn = true;
             HandleHit(target);
         }
     }

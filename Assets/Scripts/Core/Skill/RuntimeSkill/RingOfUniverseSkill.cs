@@ -65,7 +65,11 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
 
         Vector3 throwDir = caster.Target.transform.position - ringPrefab.transform.position;
         caster.PlaySFX(skillData.Sound);
-        float maxDis = Vector3.Distance(ringPrefab.transform.position, caster.Target.transform.position) + 1f;
+        
+        // Tính khoảng cách tới mục tiêu + Khoảng cách bay vượt qua sau lưng mục tiêu (OvershootDistance)
+        float distanceToTarget = Vector3.Distance(ringPrefab.transform.position, caster.Target.transform.position);
+        float maxDis = distanceToTarget + skillData.OvershootDistance;
+
         controller.Initialize(
             caster: caster,
             skill: this,
@@ -99,6 +103,9 @@ public class RingOfUniverseData: SkillData
     public Vector3 Offset = new Vector3(1.68f, -1.43f, 0);
 
     public string ringObjectReference = "Ring_Of_Universe";
+
+    [Header("Distance Settings")]
+    public float OvershootDistance = 2.0f; // Khoảng cách bay vượt qua sau lưng mục tiêu (mét/đơn vị)
 
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new RingOfUniverseSkill(owner, this);
 }
