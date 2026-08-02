@@ -2,11 +2,23 @@ using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 
+public enum QuestCategory
+{
+    Main = 0,      // Nhiệm vụ chính tuyến
+    Side = 1,      // Nhiệm vụ phụ
+    Daily = 2      // Nhiệm vụ hàng ngày
+}
+
 public enum StepType
 {
     Dialogue,
     GiveItem,
-    CheckItem
+    CheckItem,
+    TalkToNPC,
+    DefeatEnemy,
+    CollectItem,
+    ReachLocation,
+    InteractObject
 }
 
 public enum QuestType
@@ -39,6 +51,12 @@ public class StepComponent
 
     [JsonProperty("item_id")]
     public string ItemID;
+
+    [JsonProperty("target_id")]
+    public string TargetID;
+
+    [JsonProperty("required_amount")]
+    public int RequiredAmount = 1;
 }
 
 [Serializable]
@@ -47,11 +65,20 @@ public class QuestComponent
     [JsonProperty("id")]
     public string ID;
 
+    [JsonProperty("chapter_id")]
+    public string ChapterID;
+
     [JsonProperty("name_hash")]
     public long Name;
 
     [JsonProperty("des_hash")]
     public long Description;
+
+    [JsonProperty("prerequisite_quest_ids")]
+    public List<string> PrerequisiteQuestIDs = new();
+
+    [JsonProperty("required_level")]
+    public int RequiredLevel = 1;
 
     [JsonProperty("steps")]
     public List<StepComponent> Steps;

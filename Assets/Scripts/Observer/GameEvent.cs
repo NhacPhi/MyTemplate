@@ -37,6 +37,8 @@ public static class GameEvent
     // Quest
     public static Action OnMakeWinChoice;
     public static Action OnMakeLosingChoice;
+    public static Action<string> OnAcceptQuest;
+    public static Action OnCompleteStep;
     public static Action OnContinueWithStepEvent;
     public static Action OnQuestUpdated;
     public static Action<QuestComponent> OnOpenQuestUI;

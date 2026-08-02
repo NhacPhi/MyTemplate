@@ -21,22 +21,25 @@ public class QuestManager
 
     public void StartGame()
     {
+        GameEvent.OnAcceptQuest += AcceptQuest;
+        GameEvent.OnCompleteStep += EndStep;
         GameEvent.OnMakeWinChoice += MakeWinningChoice;
-        GameEvent.OnMakeWinChoice -= MakeWinningChoice; // Original code had this bug? Keeping it as is.
         GameEvent.OnContinueWithStepEvent += CheckStepValidity;
-
         GameEvent.OnEndDialogue += EndDialogue;
-        
-        // TODO: Load SaveData from disk here if you have a SaveSystem
-        // SaveData = saveSystem.LoadQuestData();
+        GameEvent.OnEnemyKilled += HandleEnemyKilled;
+        GameEvent.OnPickupItem += HandlePickupItem;
 
         StartQuestLine();
     }
 
     ~QuestManager() {
+        GameEvent.OnAcceptQuest -= AcceptQuest;
+        GameEvent.OnCompleteStep -= EndStep;
         GameEvent.OnMakeWinChoice -= MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent -= CheckStepValidity;
         GameEvent.OnEndDialogue -= EndDialogue;
+        GameEvent.OnEnemyKilled -= HandleEnemyKilled;
+        GameEvent.OnPickupItem -= HandlePickupItem;
     }
 
     void StartQuestLine()
@@ -113,13 +116,46 @@ public class QuestManager
     }
 
     /// <summary>
+    /// Checks whether a Quest meets all unlock prerequisites (Prerequisite Quest IDs and Required Level).
+    /// </summary>
+    public bool IsQuestUnlocked(QuestComponent quest, int playerLevel = 1)
+    {
+        if (quest == null) return false;
+
+        // 1. Nếu đã hoàn thành quest này -> Không còn ở trạng thái "chờ nhận"
+        if (SaveData.IsQuestCompleted(quest.ID)) return false;
+
+        // 2. Kiểm tra Cấp độ nhân vật yêu cầu
+        if (playerLevel < quest.RequiredLevel) return false;
+
+        // 3. Kiểm tra các Quest tiên quyết (Prerequisites)
+        if (quest.PrerequisiteQuestIDs != null && quest.PrerequisiteQuestIDs.Count > 0)
+        {
+            foreach (var reqQuestId in quest.PrerequisiteQuestIDs)
+            {
+                if (string.IsNullOrEmpty(reqQuestId)) continue;
+                if (!SaveData.IsQuestCompleted(reqQuestId))
+                {
+                    return false; // Chưa hoàn thành Quest điều kiện
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// Returns a Quest that is currently available to be accepted from this actor.
     /// </summary>
-    private QuestComponent GetAvailableQuestFromActor(string actorID)
+    private QuestComponent GetAvailableQuestFromActor(string actorID, int playerLevel = 1)
     {
         if (currentQuestLine == null || currentQuest != null) return null;
 
-        var pendingQuest = currentQuestLine.Quests.FirstOrDefault(o => !SaveData.IsQuestCompleted(o.ID));
+        var pendingQuest = currentQuestLine.Quests.FirstOrDefault(o => 
+            !SaveData.IsQuestCompleted(o.ID) && 
+            IsQuestUnlocked(o, playerLevel)
+        );
+
         if (pendingQuest != null && pendingQuest.Steps != null && pendingQuest.Steps.Count > 0)
         {
             if (pendingQuest.Steps[0].ActorID == actorID)
@@ -222,33 +258,84 @@ public class QuestManager
 
     void CheckStepValidity()
     {
-        if(currentStep != null)
+        if (currentStep != null)
         {
-            switch(currentStep.Type)
+            switch (currentStep.Type)
             {
-                case StepType.CheckItem:
-                    break;
-                case StepType.GiveItem:
-                    break;
                 case StepType.Dialogue:
-                    if(gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue) != null)
+                case StepType.TalkToNPC:
+                    if (!string.IsNullOrEmpty(currentStep.CompletedDialogue) && gameNarrativeData.GetDialogueConfigByID(currentStep.CompletedDialogue) != null)
                     {
-                        // Wait for complete dialogue
+                        // Waiting for player to complete the CompletedDialogue
                     }
                     else
                     {
                         EndStep();
                     }
                     break;
+
+                case StepType.DefeatEnemy:
+                case StepType.CollectItem:
+                case StepType.CheckItem:
+                case StepType.GiveItem:
+                case StepType.ReachLocation:
+                case StepType.InteractObject:
+                default:
+                    // These steps require objective progress (killing enemies, collecting items, etc.), NOT finished by dialogue start!
+                    break;
+            }
+        }
+    }
+
+    private void HandleEnemyKilled(string enemyID, int amount)
+    {
+        if (currentStep == null) return;
+        if (currentStep.Type == StepType.DefeatEnemy)
+        {
+            if (string.IsNullOrEmpty(currentStep.TargetID) || currentStep.TargetID == enemyID)
+            {
+                SaveData.ActiveStepProgress += amount;
+                if (SaveData.ActiveStepProgress >= currentStep.RequiredAmount)
+                {
+                    EndStep();
+                }
+                else
+                {
+                    saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+                    GameEvent.OnQuestUpdated?.Invoke();
+                }
+            }
+        }
+    }
+
+    private void HandlePickupItem(string itemID, int amount)
+    {
+        if (currentStep == null) return;
+        if (currentStep.Type == StepType.CollectItem || currentStep.Type == StepType.CheckItem)
+        {
+            string targetItem = !string.IsNullOrEmpty(currentStep.ItemID) ? currentStep.ItemID : currentStep.TargetID;
+            if (string.IsNullOrEmpty(targetItem) || targetItem == itemID)
+            {
+                SaveData.ActiveStepProgress += amount;
+                if (SaveData.ActiveStepProgress >= currentStep.RequiredAmount)
+                {
+                    EndStep();
+                }
+                else
+                {
+                    saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+                    GameEvent.OnQuestUpdated?.Invoke();
+                }
             }
         }
     }
 
     void StartStep(int index)
     {
-        if(currentQuest != null && currentQuest.Steps != null && currentQuest.Steps.Count > index)
+        if (currentQuest != null && currentQuest.Steps != null && currentQuest.Steps.Count > index)
         {
             SaveData.ActiveStepIndex = index;
+            SaveData.ActiveStepProgress = 0;
             currentStep = currentQuest.Steps[index];
             saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
             GameEvent.OnQuestUpdated?.Invoke();
@@ -280,7 +367,6 @@ public class QuestManager
             if (!string.IsNullOrEmpty(currentQuest.RewardID))
             {
                 Debug.Log($"[QuestManager] Quest completed! Granting reward: {currentQuest.RewardID}");
-                // TODO: Reward Event (e.g., InventoryManager.GrantReward(currentQuest.RewardID))
             }
             
             SaveData.CompleteQuest(currentQuest.ID);
@@ -318,14 +404,10 @@ public class QuestManager
     {
         if (currentStep == null) return;
 
-        switch (dialogueType)
+        // Steps are ONLY completed when explicitly reading a Completion dialogue or clicking CompleteStep choice button
+        if (dialogueType == DialogueType.Completion)
         {
-            case DialogueType.Completion:
-                EndStep();
-                break;
-            case DialogueType.Start:
-                CheckStepValidity();
-                break;
+            EndStep();
         }
     }
 }

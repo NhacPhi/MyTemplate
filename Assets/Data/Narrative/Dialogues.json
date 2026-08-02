@@ -1,118 +1,104 @@
 {
-    "Default_Dragon_king": {
+    "DLG_Dragon_king_Eatern_Sea_Default": {
+        "id": "DLG_Dragon_king_Eatern_Sea_Default",
         "type": "Default",
-        "lines": [
+        "nodes": [
             {
-                "text_hash": 1704258770,
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Start",
                 "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            }
-        ]
-    },
-    "Dragon_king_Choice_01": {
-        "type": "Normal",
-        "lines": [
-            {
-                "text_hash": 3781309601,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 2023784589,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            },
-            {
-                "text_hash": 28475850,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 4185680871,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            },
-            {
-                "text_hash": 1312286639,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 863818873,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            },
-            {
-                "text_hash": 2829132552,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 3774071538,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            },
-            {
-                "text_hash": 478813756,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 1890897720,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            },
-            {
-                "text_hash": 11198412,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            },
-            {
-                "text_hash": 4071570339,
-                "actor_id": "Sun_Wukong",
-                "choices": []
-            }
-        ]
-    },
-    "Dragon_king_Choice_02": {
-        "type": "Normal",
-        "lines": [
-            {
-                "text_hash": 1544058991,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            }
-        ]
-    },
-    "Dragon_king_Choice_03": {
-        "type": "Normal",
-        "lines": [
-            {
-                "text_hash": 1644457189,
-                "actor_id": "Dragon_king_Eatern_Sea",
-                "choices": []
-            }
-        ]
-    },
-    "Start_Quest_Dragon_king": {
-        "type": "Start",
-        "lines": [
-            {
-                "text_hash": 305787861,
-                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 2021101326,
+                "next_node_id": "",
                 "choices": [
                     {
-                        "text_hash": 2339743662,
-                        "type": "DoNothing",
-                        "next_dialogue": "Dragon_king_Choice_01"
+                        "text_hash": 670528943,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask",
+                        "param": ""
                     },
                     {
-                        "text_hash": 665085368,
-                        "type": "DoNothing",
-                        "next_dialogue": "Dragon_king_Choice_03"
+                        "text_hash": 119852759,
+                        "action_type": 6,
+                        "target_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End",
+                        "param": ""
                     }
                 ]
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 706696843,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3586061701,
+                "next_node_id": "",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 3591624003,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End_Dia",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End_Dia",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3905400491,
+                "next_node_id": "node_end",
+                "choices": null
             }
         ]
+    },
+    "DLG_ChapterName_QuestName_01_Start": {
+        "id": "DLG_ChapterName_QuestName_01_Start",
+        "type": "Start",
+        "nodes": [
+            {
+                "node_id": "DLG_ChapterName_QuestName_01_Start_Node_Start",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 3958519044,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 1723456524,
+                        "action_type": 2,
+                        "target_node_id": "DLG_ChapterName_QuestName_01_Start_Node_Agree",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 965766947,
+                        "action_type": 6,
+                        "target_node_id": "DLG_ChapterName_QuestName_01_Start_Node_Refuse",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_ChapterName_QuestName_01_Start_Node_Agree",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1052000189,
+                "next_node_id": "",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ChapterName_QuestName_01_Start_Node_Refuse",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1704364207,
+                "next_node_id": "",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_ChapterName_QuestName_01_Incomplate": {
+        "id": "DLG_ChapterName_QuestName_01_Incomplate",
+        "type": "Incompletion"
+    },
+    "DLG_ChapterName_QuestName_01_Complate": {
+        "id": "DLG_ChapterName_QuestName_01_Complate",
+        "type": "Completion"
     }
 }

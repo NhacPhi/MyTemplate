@@ -47,13 +47,28 @@ public class GameNarrativeData : MonoBehaviour
 
         foreach (var dialogue in DialogueConfigs.Values)
         {
-            foreach(var line in dialogue.Lines)
+            if (dialogue.Nodes != null && dialogue.Nodes.Count > 0)
             {
-                string localizedRaw = LocalizationManager.Instance.GetLocalizedValue(line.Text);
-
-                if(!string.IsNullOrEmpty(localizedRaw))
+                foreach (var node in dialogue.Nodes)
                 {
-                    line.Texts = localizedRaw.Split('|').ToList();
+                    node.Text = LocalizationManager.Instance.GetLocalizedValue(node.TextHash);
+                    if (!string.IsNullOrEmpty(node.Text))
+                    {
+                        node.Texts = node.Text.Split('|').ToList();
+                    }
+                }
+            }
+
+            if (dialogue.Lines != null)
+            {
+                foreach (var line in dialogue.Lines)
+                {
+                    string localizedRaw = LocalizationManager.Instance.GetLocalizedValue(line.Text);
+
+                    if (!string.IsNullOrEmpty(localizedRaw))
+                    {
+                        line.Texts = localizedRaw.Split('|').ToList();
+                    }
                 }
             }
         }

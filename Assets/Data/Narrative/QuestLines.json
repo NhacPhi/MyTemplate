@@ -1,24 +1,29 @@
 {
-    "Default_01": {
-        "id": "Default_01",
-        "name_hash": 65250118,
-        "des_hash": 335209587,
+    "QL_ChapterName": {
+        "id": "QL_ChapterName",
+        "name_hash": 0,
+        "des_hash": 789003069,
         "quests": [
             {
-                "id": "Default_01",
-                "name_hash": 958540059,
-                "des_hash": 3272208194,
+                "id": "Q_ChapterName_QuestName",
+                "name_hash": 687549026,
+                "des_hash": 560399843,
                 "steps": [
                     {
-                        "id": "Default_01",
+                        "id": "S_ChapterName_QuestName_01",
                         "actor_id": "Dragon_king_Eatern_Sea",
-                        "previous_dialogue": "Start_Quest_Dragon_king",
+                        "previous_dialogue": "DLG_ChapterName_QuestName_01_Start",
                         "completed_dialogue": "",
                         "incomplete_dialogue": "",
                         "type": "Dialogue",
-                        "item_id": ""
+                        "item_id": "",
+                        "target_id": "",
+                        "required_amount": 1
                     }
                 ],
+                "chapter_id": "",
+                "prerequisite_quest_ids": [],
+                "required_level": 1,
                 "quest_type": 1,
                 "reward_id": "Default_01"
             }

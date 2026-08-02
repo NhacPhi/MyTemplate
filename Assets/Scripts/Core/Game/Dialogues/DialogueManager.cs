@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,60 +11,95 @@ public class DialogueManager : MonoBehaviour
 
     private int counterDialogue;
     private int counterLine;
+    private int currentNodeIndex;
+    private int currentNodeSubLineIndex;
+    private bool isNodeTreeMode => currentDialogue != null && currentDialogue.Nodes != null && currentDialogue.Nodes.Count > 0;
 
-    private bool reachedEndOfDialogue => currentDialogue == null || currentDialogue.Lines == null || counterDialogue >= currentDialogue.Lines.Count;
+    private bool reachedEndOfDialogue => isNodeTreeMode 
+        ? (currentDialogue == null || currentNodeIndex >= currentDialogue.Nodes.Count)
+        : (currentDialogue == null || currentDialogue.Lines == null || counterDialogue >= currentDialogue.Lines.Count);
 
     private bool reachedEndOfLine
     {
         get
         {
-            if (reachedEndOfDialogue) return true;
+            if (isNodeTreeMode) return true;
+            if (currentDialogue == null || currentDialogue.Lines == null) return true;
+            if (counterDialogue >= currentDialogue.Lines.Count) return true;
+
             var line = currentDialogue.Lines[counterDialogue];
-            if (line == null || line.Texts == null) return true;
-            return counterLine >= line.Texts.Count;
+            if (line.Texts == null) return true;
+            return counterLine >= line.Texts.Count - 1;
         }
     }
 
     private DialogueConfig currentDialogue = default;
+
     private void Awake()
     {
         GameEvent.OnStartDialogue += DisplayDialogueConfig;
-
     }
-    private void Destroy()
+
+    private void OnDestroy()
     {
         GameEvent.OnStartDialogue -= DisplayDialogueConfig;
-
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void DisplayDialogueConfig(DialogueConfig config)
     {
+        currentDialogue = config;
+        counterDialogue = 0;
+        counterLine = 0;
+        currentNodeIndex = 0;
+        currentNodeSubLineIndex = 0;
 
-    }
+        if (isNodeTreeMode)
+        {
+            DisplayCurrentNode();
+            return;
+        }
 
-    public void DisplayDialogueConfig(DialogueConfig dialogueData)
-    {
-        //if(gameState.CurrentGameState != GameState.Cutscene) // the dialgue state is implied in the cutscene state
-        //{
-        //    gameState.UpdateGameState(GameState.Dialogue);
-        //}
+        if (currentDialogue == null || currentDialogue.Lines == null || currentDialogue.Lines.Count == 0)
+        {
+            Debug.LogError("[DialogueManager] Dialogue data is invalid or empty!");
+            return;
+        }
+
+        ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[0].ActorID);
+
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
         GameEvent.OnAdvanceDialogueEvent += OnAdvance;
 
-        counterDialogue = 0;
-        counterLine = 0;
-        currentDialogue = dialogueData;
+        DisplayDialogueLine(currentDialogue.Lines[0].Texts[0], actor);
+    }
 
-        if (currentDialogue != null && currentDialogue.Lines != null && currentDialogue.Lines.Count > 0)
+    private void DisplayCurrentNode()
+    {
+        if (currentDialogue == null || currentDialogue.Nodes == null || currentNodeIndex < 0 || currentNodeIndex >= currentDialogue.Nodes.Count)
         {
-            ActorConfig actor = gameNarrativeData.GetActorConfig(currentDialogue.Lines[counterLine].ActorID);
-            DisplayDialogueLine(currentDialogue.Lines[counterDialogue].Texts[counterLine], actor);
+            DialogueEndAndCloseDialogueUI();
+            return;
+        }
+
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
+        GameEvent.OnAdvanceDialogueEvent += OnAdvance;
+
+        var currentNode = currentDialogue.Nodes[currentNodeIndex];
+        ActorConfig actor = gameNarrativeData.GetActorConfig(currentNode.ActorID);
+
+        string lineText = "";
+        if (currentNode.Texts != null && currentNode.Texts.Count > 0)
+        {
+            if (currentNodeSubLineIndex < 0) currentNodeSubLineIndex = 0;
+            if (currentNodeSubLineIndex >= currentNode.Texts.Count) currentNodeSubLineIndex = currentNode.Texts.Count - 1;
+            lineText = currentNode.Texts[currentNodeSubLineIndex];
         }
         else
         {
-            Debug.LogError("Check Dialogue");
+            lineText = !string.IsNullOrEmpty(currentNode.Text) ? currentNode.Text : LocalizationManager.Instance.GetLocalizedValue(currentNode.TextHash);
         }
+
+        DisplayDialogueLine(lineText, actor);
     }
 
     public void DisplayDialogueLine(string dialogueLine, ActorConfig actor)
@@ -73,6 +109,36 @@ public class DialogueManager : MonoBehaviour
 
     private void OnAdvance()
     {
+        if (isNodeTreeMode)
+        {
+            var currentNode = currentDialogue.Nodes[currentNodeIndex];
+
+            // 1. If this node has multiple sub-lines split by '|', advance sub-line first
+            if (currentNode.Texts != null && currentNodeSubLineIndex < currentNode.Texts.Count - 1)
+            {
+                currentNodeSubLineIndex++;
+                DisplayCurrentNode();
+                return;
+            }
+
+            // 2. If finished all sub-lines of this node, check choices or next node
+            if (currentNode.Choices != null && currentNode.Choices.Count > 0)
+            {
+                DisplayNodeChoices(currentNode.Choices);
+            }
+            else if (!string.IsNullOrEmpty(currentNode.NextNodeID))
+            {
+                JumpToNodeByID(currentNode.NextNodeID);
+            }
+            else
+            {
+                // End of this node branch -> Close Dialogue
+                DialogueEndAndCloseDialogueUI();
+            }
+            return;
+        }
+
+        // Legacy Line List execution
         if (reachedEndOfDialogue)
         {
             DialogueEndAndCloseDialogueUI();
@@ -88,7 +154,6 @@ public class DialogueManager : MonoBehaviour
         else if (currentDialogue.Lines[counterDialogue].Choices != null 
             && currentDialogue.Lines[counterDialogue].Choices.Count > 0)
         {
-            // Display Choice
             DisplayChoices(currentDialogue.Lines[counterDialogue].Choices);
         }
         else
@@ -102,7 +167,6 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                // Dialogue end and close DialogueUI
                 counterLine = 0;
                 DialogueEndAndCloseDialogueUI();
             }
@@ -116,52 +180,110 @@ public class DialogueManager : MonoBehaviour
         GameEvent.OnShowChoiceUI?.Invoke(choices);
     }
 
+    private void DisplayNodeChoices(List<DialogueChoiceConfig> choices)
+    {
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
+
+        // Map Node choices to ChoiceComponent for UI compatibility
+        List<ChoiceComponent> compatChoices = new List<ChoiceComponent>();
+        foreach (var c in choices)
+        {
+            compatChoices.Add(new ChoiceComponent
+            {
+                Text = c.TextHash,
+                ActionType = c.ActionType,
+                TargetNodeID = c.TargetNodeID,
+                NextDialogue = c.TargetNodeID,
+                Param = c.Param
+            });
+        }
+
+        GameEvent.OnMakeChoiceUI += MakeDialogueChoice;
+        GameEvent.OnShowChoiceUI?.Invoke(compatChoices);
+    }
+
     private void MakeDialogueChoice(ChoiceComponent choice)
     {
         GameEvent.OnMakeChoiceUI -= MakeDialogueChoice;
+
+        string targetNode = (!string.IsNullOrEmpty(choice.TargetNodeID) ? choice.TargetNodeID : choice.NextDialogue)?.Trim();
+
         switch (choice.ActionType)
         {
-            case ChoiceActionType.DoNothing:
-                if (choice.NextDialogue != null)
-                {
-                    DialogueConfig nextDialogue = gameNarrativeData.GetDialogueConfigByID(choice.NextDialogue);
-                    DisplayDialogueConfig(nextDialogue);
-                }
-                else
-                    DialogueEndAndCloseDialogueUI();
+            case ChoiceActionType.AcceptQuest:
+                GameEvent.OnAcceptQuest?.Invoke(choice.Param);
                 break;
-            case ChoiceActionType.ContinueWithStep:
-                {
 
-                }
-                break;
+            case ChoiceActionType.CompleteStep:
             case ChoiceActionType.WinningChoice:
-                {
-                    GameEvent.OnMakeWinChoice?.Invoke();
-                }
+                GameEvent.OnCompleteStep?.Invoke();
                 break;
-            case ChoiceActionType.LosingChoice:
-                {
-                    GameEvent.OnMakeLosingChoice?.Invoke();
-                }
-                break;
-            case ChoiceActionType.IncompleteStep:
-                {
 
-                }
+            case ChoiceActionType.ContinueWithStep:
+                GameEvent.OnMakeWinChoice?.Invoke();
                 break;
+
+            case ChoiceActionType.LosingChoice:
+                GameEvent.OnMakeLosingChoice?.Invoke();
+                break;
+
+            case ChoiceActionType.CloseDialogue:
+            case ChoiceActionType.OpenShop:
+            case ChoiceActionType.DoNothing:
+            case ChoiceActionType.NextNode:
+            case ChoiceActionType.GiveItem:
+            case ChoiceActionType.IncompleteStep:
+            default:
+                break;
+        }
+
+        if (!string.IsNullOrEmpty(targetNode))
+        {
+            JumpToNodeByID(targetNode);
+        }
+        else
+        {
+            DialogueEndAndCloseDialogueUI();
+        }
+    }
+
+    public void JumpToNodeByID(string targetNodeId)
+    {
+        if (string.IsNullOrEmpty(targetNodeId))
+        {
+            DialogueEndAndCloseDialogueUI();
+            return;
+        }
+
+        string cleanTargetId = targetNodeId.Trim();
+
+        if (isNodeTreeMode)
+        {
+            int index = currentDialogue.Nodes.FindIndex(n => n.NodeID != null && n.NodeID.Trim().Equals(cleanTargetId, StringComparison.OrdinalIgnoreCase));
+            if (index >= 0)
+            {
+                currentNodeIndex = index;
+                currentNodeSubLineIndex = 0;
+                DisplayCurrentNode();
+                return;
+            }
+        }
+
+        // If not found in current tree, check external DialogueConfig
+        DialogueConfig nextDialogue = gameNarrativeData.GetDialogueConfigByID(cleanTargetId);
+        if (nextDialogue != null)
+        {
+            DisplayDialogueConfig(nextDialogue);
+        }
+        else
+        {
+            DialogueEndAndCloseDialogueUI();
         }
     }
 
     private void DialogueEndAndCloseDialogueUI()
     {
-        // raise the special event for end of dialogue if any
-        //currentDialogue.FinishDialogue();
-        // raise end dialogue event
-
-        GameEvent.OnEndDialogue?.Invoke(currentDialogue.Type);
+        GameEvent.OnEndDialogue?.Invoke(currentDialogue != null ? currentDialogue.Type : DialogueType.Default);
         GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
-
-        // gameState reset state
     }
 }

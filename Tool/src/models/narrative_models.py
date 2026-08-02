@@ -2,6 +2,21 @@ from dataclasses import dataclass, field, asdict
 from typing import List, Optional, Dict
 
 @dataclass
+class DialogueChoiceModel:
+    text_hash: int
+    action_type: int
+    target_node_id: str = ""
+    param: str = ""
+
+@dataclass
+class DialogueNodeModel:
+    node_id: str
+    actor_id: str
+    text_hash: int
+    next_node_id: str = ""
+    choices: Optional[List[DialogueChoiceModel]] = None
+
+@dataclass
 class ChoiceModel:
     text_hash: int
     type: str
@@ -15,8 +30,10 @@ class LineModel:
 
 @dataclass
 class DialogueModel:
-    type: str
-    lines: List[LineModel]
+    id: str = ""
+    type: str = ""
+    nodes: Optional[List[DialogueNodeModel]] = None
+    lines: Optional[List[LineModel]] = None
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}
 
@@ -37,6 +54,8 @@ class StepModel:
     incomplete_dialogue: str
     type: str
     item_id: str
+    target_id: str = ""
+    required_amount: int = 1
 
 @dataclass
 class QuestModel:
@@ -44,6 +63,9 @@ class QuestModel:
     name_hash: int
     des_hash: int
     steps: List[StepModel]
+    chapter_id: str = ""
+    prerequisite_quest_ids: List[str] = field(default_factory=list)
+    required_level: int = 1
     quest_type: int = 0
     reward_id: str = ""
 

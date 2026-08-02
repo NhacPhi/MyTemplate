@@ -9,6 +9,7 @@ public class QuestSaveData
     
     public string ActiveQuestID = string.Empty;
     public int ActiveStepIndex = 0;
+    public int ActiveStepProgress = 0;
 
     public bool IsQuestCompleted(string questID)
     {
@@ -33,6 +34,7 @@ public class QuestSaveData
         {
             ActiveQuestID = string.Empty;
             ActiveStepIndex = 0;
+            ActiveStepProgress = 0;
         }
     }
 

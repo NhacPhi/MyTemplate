@@ -343,12 +343,36 @@ public class QuestScene : WindowController
                 string giveItemToStr = LocalizationManager.Instance.GetLocalizedValue("STR_GIVE_ITEM_TO");
                 string followingStr = LocalizationManager.Instance.GetLocalizedValue("STR_FOLLOWING");
 
-                if (step.Type == StepType.Dialogue)
-                    objective = $"{talkToStr} {actorName}";
-                else if (step.Type == StepType.GiveItem)
-                    objective = $"{giveItemToStr} {actorName}";
-                else
-                    objective = $"{followingStr} {actorName}";
+                switch (step.Type)
+                {
+                    case StepType.Dialogue:
+                    case StepType.TalkToNPC:
+                        objective = $"{talkToStr} {actorName}";
+                        break;
+                    case StepType.GiveItem:
+                        objective = $"{giveItemToStr} {actorName}";
+                        break;
+                    case StepType.DefeatEnemy:
+                        string targetEnemyName = !string.IsNullOrEmpty(step.TargetID) ? step.TargetID : actorName;
+                        objective = $"Tiêu diệt {targetEnemyName} ({step.RequiredAmount})";
+                        break;
+                    case StepType.CollectItem:
+                    case StepType.CheckItem:
+                        string targetItemName = !string.IsNullOrEmpty(step.ItemID) ? step.ItemID : (!string.IsNullOrEmpty(step.TargetID) ? step.TargetID : "vật phẩm");
+                        objective = $"Thu thập {targetItemName} ({step.RequiredAmount})";
+                        break;
+                    case StepType.ReachLocation:
+                        string locationTarget = !string.IsNullOrEmpty(step.TargetID) ? step.TargetID : "khu vực chỉ định";
+                        objective = $"Di chuyển đến {locationTarget}";
+                        break;
+                    case StepType.InteractObject:
+                        string objectTarget = !string.IsNullOrEmpty(step.TargetID) ? step.TargetID : "vật thể";
+                        objective = $"Kích hoạt {objectTarget}";
+                        break;
+                    default:
+                        objective = $"{followingStr} {actorName}";
+                        break;
+                }
             }
         }
 
