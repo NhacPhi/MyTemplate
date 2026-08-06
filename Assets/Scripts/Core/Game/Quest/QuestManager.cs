@@ -186,12 +186,7 @@ public class QuestManager
             QuestComponent availableQuest = GetAvailableQuestFromActor(actor);
             if (availableQuest != null)
             {
-                // [TẠM THỜI BỎ QUA UI NHẬN QUEST]
-                // Trigger the UI to ask the player to accept the quest.
-                // GameEvent.OnOpenQuestUI?.Invoke(availableQuest);
-                
-                // Return null so StepController plays the default dialogue
-                return null; 
+                AcceptQuest(availableQuest.ID);
             }
         }
 
@@ -404,8 +399,8 @@ public class QuestManager
     {
         if (currentStep == null) return;
 
-        // Steps are ONLY completed when explicitly reading a Completion dialogue or clicking CompleteStep choice button
-        if (dialogueType == DialogueType.Completion)
+        // Steps are completed when reading a Completion dialogue, OR when completing a Dialogue/TalkToNPC step dialogue.
+        if (dialogueType == DialogueType.Completion || currentStep.Type == StepType.Dialogue || currentStep.Type == StepType.TalkToNPC)
         {
             EndStep();
         }

@@ -6,8 +6,11 @@ using VContainer;
 public class InteractionUI : MonoBehaviour
 {
     [Inject] private GameDataBase gameDataBase;
+    private GameNarrativeData gameNarrativeData;
 
     [SerializeField] private List<InteractionOption> interactions;
+
+    private bool isDialogueActive = false;
 
     private void Start()
     {
@@ -16,7 +19,11 @@ public class InteractionUI : MonoBehaviour
 
     private void OnEnable()
     {
+        isDialogueActive = false;
         UIEvent.OnUpdateInteractionsUI += UpdateInteractionUI;
+        GameEvent.OnStartDialogue += HandleStartDialogue;
+        GameEvent.OnOpenDialogue += HandleOpenDialogue;
+        GameEvent.OnEndDialogue += HandleEndDialogue;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         UnityEngine.SceneManagement.SceneManager.sceneUnloaded += OnSceneUnloaded;
         UIEvent.OnRequestRefreshInteractionsUI?.Invoke();
@@ -25,9 +32,30 @@ public class InteractionUI : MonoBehaviour
     private void OnDisable()
     {
         UIEvent.OnUpdateInteractionsUI -= UpdateInteractionUI;
+        GameEvent.OnStartDialogue -= HandleStartDialogue;
+        GameEvent.OnOpenDialogue -= HandleOpenDialogue;
+        GameEvent.OnEndDialogue -= HandleEndDialogue;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         UnityEngine.SceneManagement.SceneManager.sceneUnloaded -= OnSceneUnloaded;
         UpdateInteractionUI(null);
+    }
+
+    private void HandleStartDialogue(DialogueConfig config)
+    {
+        isDialogueActive = true;
+        UpdateInteractionUI(null);
+    }
+
+    private void HandleOpenDialogue(string dialogueLine, ActorConfig actor)
+    {
+        isDialogueActive = true;
+        UpdateInteractionUI(null);
+    }
+
+    private void HandleEndDialogue(DialogueType type)
+    {
+        isDialogueActive = false;
+        UIEvent.OnRequestRefreshInteractionsUI?.Invoke();
     }
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
@@ -40,6 +68,21 @@ public class InteractionUI : MonoBehaviour
         UpdateInteractionUI(null);
     }
 
+    private GameNarrativeData GetGameNarrativeData()
+    {
+        if (gameNarrativeData != null) return gameNarrativeData;
+
+        if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            gameNarrativeData = GameplayScope.Instance.Container.Resolve<GameNarrativeData>();
+        }
+        else
+        {
+            gameNarrativeData = FindObjectOfType<GameNarrativeData>();
+        }
+        return gameNarrativeData;
+    }
+
     private void UpdateInteractionUI(List<Interaction> activeInteractions)
     {
         // Tắt hết các nút hiện tại
@@ -47,6 +90,8 @@ public class InteractionUI : MonoBehaviour
         {
             o.gameObject.SetActive(false);
         }
+
+        if (isDialogueActive) return;
 
         if (activeInteractions == null || activeInteractions.Count == 0) return;
 
@@ -72,12 +117,24 @@ public class InteractionUI : MonoBehaviour
             {
                 case InteractionType.Talk:
                     string talkText = "";
-                    StepController stepController = interaction.interactableObject.GetComponent<StepController>();
+                    StepController stepController = interaction.interactableObject.GetComponent<StepController>()
+                        ?? interaction.interactableObject.GetComponentInParent<StepController>();
                     if (stepController != null && stepController.Actor != null)
                     {
-                        string locKey = "STR_" + stepController.Actor.ID.ToUpper();
-                        talkText = LocalizationManager.Instance.GetLocalizedValue(locKey);
-                        if (string.IsNullOrEmpty(talkText)) 
+                        var narrativeData = GetGameNarrativeData();
+                        ActorConfig actorConfig = narrativeData != null ? narrativeData.GetActorConfig(stepController.Actor.ID) : null;
+                        if (actorConfig != null && actorConfig.Name != 0)
+                        {
+                            talkText = LocalizationManager.Instance.GetLocalizedValue(actorConfig.Name);
+                        }
+
+                        if (string.IsNullOrEmpty(talkText) || talkText == "Localized text not found") 
+                        {
+                            string locKey = "STR_" + stepController.Actor.ID.ToUpper();
+                            talkText = LocalizationManager.Instance.GetLocalizedValue(locKey);
+                        }
+
+                        if (string.IsNullOrEmpty(talkText) || talkText == "Localized text not found") 
                         {
                             talkText = stepController.Actor.ID; // Fallback nếu không tìm thấy key
                         }

@@ -126,9 +126,15 @@ public class DialogueManager : MonoBehaviour
             {
                 DisplayNodeChoices(currentNode.Choices);
             }
-            else if (!string.IsNullOrEmpty(currentNode.NextNodeID))
+            else if (!string.IsNullOrWhiteSpace(currentNode.NextNodeID))
             {
                 JumpToNodeByID(currentNode.NextNodeID);
+            }
+            else if (currentNodeIndex + 1 < currentDialogue.Nodes.Count)
+            {
+                currentNodeIndex++;
+                currentNodeSubLineIndex = 0;
+                DisplayCurrentNode();
             }
             else
             {

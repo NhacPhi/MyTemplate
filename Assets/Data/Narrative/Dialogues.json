@@ -16,6 +16,12 @@
                         "param": ""
                     },
                     {
+                        "text_hash": 2555411528,
+                        "action_type": 6,
+                        "target_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather",
+                        "param": ""
+                    },
+                    {
                         "text_hash": 119852759,
                         "action_type": 6,
                         "target_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End",
@@ -34,7 +40,7 @@
                 "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End",
                 "actor_id": "Sun_Wukong",
                 "text_hash": 3586061701,
-                "next_node_id": "",
+                "next_node_id": "node_end",
                 "choices": null
             },
             {
@@ -48,6 +54,41 @@
                 "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_End_Dia",
                 "actor_id": "Sun_Wukong",
                 "text_hash": 3905400491,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2303054011,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer_Weather",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer_Weather",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 1383800618,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2750284737,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer_Weather_ 01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Answer_Weather_ 01",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 295269568,
+                "next_node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Dragon_king_Eatern_Sea_Default_Node_Ask_Weather_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2386453109,
                 "next_node_id": "node_end",
                 "choices": null
             }
@@ -100,5 +141,1472 @@
     "DLG_ChapterName_QuestName_01_Complate": {
         "id": "DLG_ChapterName_QuestName_01_Complate",
         "type": "Completion"
+    },
+    "DLG_Marshal_Tianpeng_Default": {
+        "id": "DLG_Marshal_Tianpeng_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Start",
+                "actor_id": "Marshal_Tianpeng",
+                "text_hash": 701128372,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 3929142638,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 2923109214,
+                        "action_type": 6,
+                        "target_node_id": "DLG_Marshal_Tianpeng_Default_Node_End",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_End",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2120630638,
+                "next_node_id": "",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 548639262,
+                "next_node_id": "DLG_Marshal_Tianpeng_Default_Node_Answer",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Answer",
+                "actor_id": "Marshal_Tianpeng",
+                "text_hash": 1313271827,
+                "next_node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2538068340,
+                "next_node_id": "DLG_Marshal_Tianpeng_Default_Node_Answer_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Answer_01",
+                "actor_id": "Marshal_Tianpeng",
+                "text_hash": 315199856,
+                "next_node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Marshal_Tianpeng_Default_Node_Ask_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1672254099,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Zhu_Baije_Default": {
+        "id": "DLG_Zhu_Baije_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Start",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 275395459,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 4248316987,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 1367545688,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 3558734708,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_00",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 516323634,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_01",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 844248106,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_02",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 1523278823,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_03",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 2143242503,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_04",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 2188557220,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2728575729,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_03_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_03_06",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 2466006697,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_00",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 1694846205,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_01",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 1173493482,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 804250427,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_03",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 810844127,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1038739085,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_05",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 2049850014,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_01_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_01_06",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1538842733,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 47274858,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_01",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 1231174901,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_02",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3581125917,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_03",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 3520684625,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_04",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 1607832219,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2024414983,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_06",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 2029088243,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_07",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3616597869,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_08",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3943687900,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_09",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_09",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 732901484,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_10",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_10",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 353962792,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_11",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_11",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 2009623553,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_12",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_12",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 1902864067,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_13",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_13",
+                "actor_id": "Tang_SanZanng",
+                "text_hash": 2242248953,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_14",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_14",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2528941374,
+                "next_node_id": "DLG_Zhu_Baije_Default_Node_Request_02_15",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Zhu_Baije_Default_Node_Request_02_15",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3718901820,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Third_Prince_Nezha_Default": {
+        "id": "DLG_Third_Prince_Nezha_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Start",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 3199634316,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 2379020194,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 4178364215,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 431021380,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_00",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3459732842,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_01",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 3626960458,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 334724915,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_03",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 993547206,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_01_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 720423645,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_00",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 3959087241,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1535845672,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_02",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 2276309489,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_02_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2364477501,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2532629238,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_01",
+                "actor_id": "Third_Prince_Nezha",
+                "text_hash": 1491897310,
+                "next_node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Third_Prince_Nezha_Default_Node_Request_03_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3434223587,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_ErlangShen_Default": {
+        "id": "DLG_ErlangShen_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Start",
+                "actor_id": "ErlangShen",
+                "text_hash": 3220576741,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 2887578153,
+                        "action_type": 1,
+                        "target_node_id": "DLG_ErlangShen_Default_Node_Request_01_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 556072587,
+                        "action_type": 1,
+                        "target_node_id": "DLG_ErlangShen_Default_Node_Request_02_00",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1656800838,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_01",
+                "actor_id": "ErlangShen",
+                "text_hash": 262797464,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2432294105,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_03",
+                "actor_id": "ErlangShen",
+                "text_hash": 494674434,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 4280916950,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_05",
+                "actor_id": "ErlangShen",
+                "text_hash": 2747075295,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_06",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 558256138,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_01_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_01_07",
+                "actor_id": "ErlangShen",
+                "text_hash": 91429646,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_00",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1974357030,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_01",
+                "actor_id": "ErlangShen",
+                "text_hash": 388087736,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1498039687,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_03",
+                "actor_id": "ErlangShen",
+                "text_hash": 1853164512,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3205412432,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_05",
+                "actor_id": "ErlangShen",
+                "text_hash": 3865002723,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_06",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1830107919,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_07",
+                "actor_id": "ErlangShen",
+                "text_hash": 4276838476,
+                "next_node_id": "DLG_ErlangShen_Default_Node_Request_02_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ErlangShen_Default_Node_Request_02_08",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2242737513,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Local_Spirit_Default": {
+        "id": "DLG_Local_Spirit_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Start",
+                "actor_id": "Local_Spirit",
+                "text_hash": 1606805613,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 3047370429,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Local_Spirit_Default_Node_Ask",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Ask",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1002132379,
+                "next_node_id": "DLG_Local_Spirit_Default_Node_Answer",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Answer",
+                "actor_id": "Local_Spirit",
+                "text_hash": 480223553,
+                "next_node_id": "DLG_Local_Spirit_Default_Node_Answer_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Answer_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1709060665,
+                "next_node_id": "DLG_Local_Spirit_Default_Node_Answer_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Answer_02",
+                "actor_id": "Local_Spirit",
+                "text_hash": 28079817,
+                "next_node_id": "DLG_Local_Spirit_Default_Node_Answer_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Answer_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2430292095,
+                "next_node_id": "DLG_Local_Spirit_Default_Node_Answer_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Local_Spirit_Default_Node_Answer_04",
+                "actor_id": "Local_Spirit",
+                "text_hash": 2756573630,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_TheBoySage_Default": {
+        "id": "DLG_TheBoySage_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_TheBoySage_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2188358651,
+                "next_node_id": "",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_TheBoySage_Default_Node_Start_01",
+                "actor_id": "TheBoySage",
+                "text_hash": 3868897527,
+                "next_node_id": "DLG_TheBoySage_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_TheBoySage_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2435586637,
+                "next_node_id": "DLG_TheBoySage_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_TheBoySage_Default_Node_Start_03",
+                "actor_id": "TheBoySage",
+                "text_hash": 980166194,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Bull_Demon_ King_Default": {
+        "id": "DLG_Bull_Demon_ King_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1481678466,
+                "next_node_id": "",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_01",
+                "actor_id": "Bull_Demon_ King",
+                "text_hash": 1214812240,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2294564804,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_03",
+                "actor_id": "Bull_Demon_ King",
+                "text_hash": 1692791483,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3345603707,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_05",
+                "actor_id": "Bull_Demon_ King",
+                "text_hash": 3448376637,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_06",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 842408334,
+                "next_node_id": "DLG_Bull_Demon_ King_Default_Node_Start_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bull_Demon_ King_Default_Node_Start_07",
+                "actor_id": "Bull_Demon_ King",
+                "text_hash": 2727617943,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_SilverHornKing_Default": {
+        "id": "DLG_SilverHornKing_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Start",
+                "actor_id": "SilverHornKing",
+                "text_hash": 976741959,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 4122532418,
+                        "action_type": 1,
+                        "target_node_id": "DLG_SilverHornKing_Default_Node_Request_01_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 2018356420,
+                        "action_type": 1,
+                        "target_node_id": "DLG_SilverHornKing_Default_Node_Request_02_00",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_00",
+                "actor_id": "SilverHornKing",
+                "text_hash": 4282774490,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_00",
+                "actor_id": "SilverHornKing",
+                "text_hash": 2567467898,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 657476492,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_02",
+                "actor_id": "SilverHornKing",
+                "text_hash": 3904625879,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 899607376,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_04",
+                "actor_id": "SilverHornKing",
+                "text_hash": 3648395927,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3812429186,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_06",
+                "actor_id": "SilverHornKing",
+                "text_hash": 224152336,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_07",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3171412895,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_08",
+                "actor_id": "SilverHornKing",
+                "text_hash": 2906820732,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_09",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_09",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2355361480,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_10",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_10",
+                "actor_id": "SilverHornKing",
+                "text_hash": 3807022374,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_11",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_11",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1478886375,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_12",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_12",
+                "actor_id": "SilverHornKing",
+                "text_hash": 2745823148,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_13",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_13",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2902152545,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_01_14",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_01_14",
+                "actor_id": "SilverHornKing",
+                "text_hash": 294371911,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_01",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3811105608,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_02",
+                "actor_id": "GoldHornKing",
+                "text_hash": 2580092048,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_03",
+                "actor_id": "SilverHornKing",
+                "text_hash": 3129488698,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_04",
+                "actor_id": "GoldHornKing",
+                "text_hash": 1770494398,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_05",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3805813246,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_06",
+                "actor_id": "GoldHornKing",
+                "text_hash": 1233524830,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_07",
+                "actor_id": "SilverHornKing",
+                "text_hash": 3859039365,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_08",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 3352194519,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_09",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_09",
+                "actor_id": "SilverHornKing",
+                "text_hash": 1359198058,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_10",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_10",
+                "actor_id": "Zhu_Baije",
+                "text_hash": 2020823825,
+                "next_node_id": "DLG_SilverHornKing_Default_Node_Request_02_11",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_SilverHornKing_Default_Node_Request_02_11",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2440939670,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_YellowWindMonster_Default": {
+        "id": "DLG_YellowWindMonster_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start",
+                "actor_id": "YellowWindMonster",
+                "text_hash": 578911747,
+                "next_node_id": "DLG_YellowWindMonster_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1230299893,
+                "next_node_id": "DLG_YellowWindMonster_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start_02",
+                "actor_id": "YellowWindMonster",
+                "text_hash": 605385303,
+                "next_node_id": "DLG_YellowWindMonster_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2328561680,
+                "next_node_id": "DLG_YellowWindMonster_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start_04",
+                "actor_id": "YellowWindMonster",
+                "text_hash": 884163669,
+                "next_node_id": "DLG_YellowWindMonster_Default_Node_Start_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_YellowWindMonster_Default_Node_Start_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2346049728,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_ThirdDragonPrince_Default": {
+        "id": "DLG_ThirdDragonPrince_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1821186007,
+                "next_node_id": "DLG_ThirdDragonPrince_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start_01",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 2266351335,
+                "next_node_id": "DLG_ThirdDragonPrince_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 275365569,
+                "next_node_id": "DLG_ThirdDragonPrince_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start_03",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 2188192283,
+                "next_node_id": "DLG_ThirdDragonPrince_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start_04",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 1542049144,
+                "next_node_id": "DLG_ThirdDragonPrince_Default_Node_Start_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_ThirdDragonPrince_Default_Node_Start_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2216842799,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_GoldfishDemon_Default": {
+        "id": "DLG_GoldfishDemon_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start",
+                "actor_id": "GoldfishDemon",
+                "text_hash": 2692775641,
+                "next_node_id": "DLG_GoldfishDemon_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3593680463,
+                "next_node_id": "DLG_GoldfishDemon_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start_02",
+                "actor_id": "GoldfishDemon",
+                "text_hash": 382775417,
+                "next_node_id": "DLG_GoldfishDemon_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3016916331,
+                "next_node_id": "DLG_GoldfishDemon_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start_04",
+                "actor_id": "GoldfishDemon",
+                "text_hash": 2295726154,
+                "next_node_id": "DLG_GoldfishDemon_Default_Node_Start_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_GoldfishDemon_Default_Node_Start_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 502166754,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Guanyin_Bodhisattva_Default": {
+        "id": "DLG_Guanyin_Bodhisattva_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2024933428,
+                "next_node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_01",
+                "actor_id": "Guanyin_Bodhisattva",
+                "text_hash": 2831534605,
+                "next_node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2100009000,
+                "next_node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_03",
+                "actor_id": "Guanyin_Bodhisattva",
+                "text_hash": 96141893,
+                "next_node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Guanyin_Bodhisattva_Default_Node_Start_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 489188734,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Bodhi_Patriarch_Default": {
+        "id": "DLG_Bodhi_Patriarch_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1953797397,
+                "next_node_id": "",
+                "choices": [
+                    {
+                        "text_hash": 2573436764,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 1148350093,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_00",
+                        "param": ""
+                    },
+                    {
+                        "text_hash": 2558309262,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_00",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_00",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 1495755987,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_00",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 3469129630,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_00",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 1747655777,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2487360553,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_02",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 3823351752,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2702293876,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_04",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 622978108,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_01_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2438386813,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 4237318391,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_02",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 1424108120,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2071139318,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_04",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2794026651,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2756366481,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_06",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2350501086,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_07",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3320670618,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_08",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2654612391,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_09",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_09",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1031514981,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_10",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_10",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2125636464,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_11",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_11",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3035989153,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_12",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_12",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 1767129774,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_13",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_13",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3656677847,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_14",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_02_14",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2753300189,
+                "next_node_id": "node_end",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1570820114,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_02",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 900835108,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3717793806,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_04",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 1460205767,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_05",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3792862861,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_06",
+                "actor_id": "Bodhi_Patriarch",
+                "text_hash": 2659072557,
+                "next_node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Bodhi_Patriarch_Default_Node_Request_03_07",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2403229690,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Taishang_Laojun_Default": {
+        "id": "DLG_Taishang_Laojun_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Taishang_Laojun_Default_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1547888640,
+                "next_node_id": "DLG_Taishang_Laojun_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Taishang_Laojun_Default_Node_Start_01",
+                "actor_id": "Taishang_Laojun",
+                "text_hash": 1154818543,
+                "next_node_id": "DLG_Taishang_Laojun_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Taishang_Laojun_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3899899614,
+                "next_node_id": "DLG_Taishang_Laojun_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Taishang_Laojun_Default_Node_Start_03",
+                "actor_id": "Taishang_Laojun",
+                "text_hash": 2406675846,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Jade_Emperor_Default": {
+        "id": "DLG_Jade_Emperor_Default",
+        "type": "Default",
+        "nodes": [
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start",
+                "actor_id": "Taibai_Jinxing",
+                "text_hash": 2981526052,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_01",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_01",
+                "actor_id": "Jade_Emperor",
+                "text_hash": 1817724167,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_02",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2333863964,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_03",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_03",
+                "actor_id": "Jade_Emperor",
+                "text_hash": 2478656515,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_04",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3840159597,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_05",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_05",
+                "actor_id": "Taibai_Jinxing",
+                "text_hash": 1527309669,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_06",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_06",
+                "actor_id": "Jade_Emperor",
+                "text_hash": 4075195067,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_07",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_07",
+                "actor_id": "Taibai_Jinxing",
+                "text_hash": 3031515069,
+                "next_node_id": "DLG_Jade_Emperor_Default_Node_Start_08",
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Jade_Emperor_Default_Node_Start_08",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2652419011,
+                "next_node_id": "node_end",
+                "choices": null
+            }
+        ]
     }
 }
