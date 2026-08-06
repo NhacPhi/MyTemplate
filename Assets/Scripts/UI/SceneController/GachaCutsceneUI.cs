@@ -213,52 +213,47 @@ public class GachaCutsceneUI : WindowController
         }
     }
 
+    private static readonly int WormholeColourId = Shader.PropertyToID("_Wormhole_colour");
+    private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+    private static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
+    private static readonly int TintColorId = Shader.PropertyToID("_TintColor");
+    private static readonly int ColorId = Shader.PropertyToID("_Color");
+
+    private MaterialPropertyBlock _propBlock;
+    private MaterialPropertyBlock PropBlock
+    {
+        get
+        {
+            if (_propBlock == null) _propBlock = new MaterialPropertyBlock();
+            return _propBlock;
+        }
+    }
+
     private void ApplyColor(Color color)
     {
-        // 0. Apply to Wormhole (Mới thêm)
-        if (wormholeRenderer != null && wormholeRenderer.material != null)
+        // 0. Apply to Wormhole bằng MaterialPropertyBlock (Không tạo Instance Material, không gây lag/rác RAM)
+        if (wormholeRenderer != null)
         {
-            Material mat = wormholeRenderer.material;
-            mat.color = color; // Gắn _Color mặc định
-            
-            // Ép màu bằng tên biến lấy từ Inspector
-            if (!string.IsNullOrEmpty(colorPropertyName) && mat.HasProperty(colorPropertyName))
+            wormholeRenderer.GetPropertyBlock(PropBlock);
+            PropBlock.SetColor(WormholeColourId, color);
+            PropBlock.SetColor(ColorId, color);
+            if (!string.IsNullOrEmpty(colorPropertyName))
             {
-                mat.SetColor(colorPropertyName, color);
+                PropBlock.SetColor(Shader.PropertyToID(colorPropertyName), color);
             }
-            
-            // Quét dự phòng các tên biến phổ biến khác của Shader Graph
-            if (mat.HasProperty("Wormhole colour")) mat.SetColor("Wormhole colour", color);
-            if (mat.HasProperty("_Wormhole_colour")) mat.SetColor("_Wormhole_colour", color);
-            if (mat.HasProperty("_WormholeColour")) mat.SetColor("_WormholeColour", color);
-            if (mat.HasProperty("_Wormholecolour")) mat.SetColor("_Wormholecolour", color);
-            if (mat.HasProperty("_BaseColor")) mat.SetColor("_BaseColor", color);
-            if (mat.HasProperty("_EmissionColor")) mat.SetColor("_EmissionColor", color);
-            if (mat.HasProperty("_TintColor")) mat.SetColor("_TintColor", color);
-            if (mat.HasProperty("Color")) mat.SetColor("Color", color);
-            
-            DynamicGI.SetEmissive(wormholeRenderer, color);
+            wormholeRenderer.SetPropertyBlock(PropBlock);
         }
 
-        // 1. Apply to Renderers
+        // 1. Apply to Renderers bằng MaterialPropertyBlock
         foreach (var r in targetRenderers)
         {
             if (r != null)
             {
-                // Assign new instances or edit materials
-                if (r.material != null)
-                {
-                    r.material.color = color;
-                    if (r.material.HasProperty("_EmissionColor"))
-                    {
-                        r.material.SetColor("_EmissionColor", color);
-                        DynamicGI.SetEmissive(r, color);
-                    }
-                    if (r.material.HasProperty("_BaseColor"))
-                    {
-                        r.material.SetColor("_BaseColor", color);
-                    }
-                }
+                r.GetPropertyBlock(PropBlock);
+                PropBlock.SetColor(ColorId, color);
+                PropBlock.SetColor(BaseColorId, color);
+                PropBlock.SetColor(EmissionColorId, color);
+                r.SetPropertyBlock(PropBlock);
             }
         }
 
