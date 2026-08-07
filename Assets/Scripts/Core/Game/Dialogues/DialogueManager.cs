@@ -38,11 +38,19 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         GameEvent.OnStartDialogue += DisplayDialogueConfig;
+        GameEvent.OnEndDialogue += HandleEndDialogue;
     }
 
     private void OnDestroy()
     {
         GameEvent.OnStartDialogue -= DisplayDialogueConfig;
+        GameEvent.OnEndDialogue -= HandleEndDialogue;
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
+    }
+
+    private void HandleEndDialogue(DialogueType type)
+    {
+        GameEvent.OnAdvanceDialogueEvent -= OnAdvance;
     }
 
     public void DisplayDialogueConfig(DialogueConfig config)

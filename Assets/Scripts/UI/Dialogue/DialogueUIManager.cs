@@ -10,6 +10,7 @@ public class DialogueUIManager : MonoBehaviour
     [SerializeField] private Image avatarActor;
     [SerializeField] private TextMeshProUGUI nameActor;
     [SerializeField] private Button btnAdvance;
+    [SerializeField] private Button btnSkip;
 
     [SerializeField] private DialogueChoicesUIManager choicesManager;
 
@@ -33,17 +34,30 @@ public class DialogueUIManager : MonoBehaviour
     }
     void Start()
     {
-        btnAdvance.onClick.AddListener(() =>
+        if (btnAdvance != null)
         {
-            if(typeWriteEffect.IsCompleted)
+            btnAdvance.onClick.AddListener(() =>
             {
-                GameEvent.OnAdvanceDialogueEvent?.Invoke();
-            }
-            else
-            {
-                typeWriteEffect.Skip();
-            }
-        });
+                if(typeWriteEffect.IsCompleted)
+                {
+                    GameEvent.OnAdvanceDialogueEvent?.Invoke();
+                }
+                else
+                {
+                    typeWriteEffect.Skip();
+                }
+            });
+        }
+
+        if (btnSkip != null)
+        {
+            btnSkip.onClick.AddListener(SkipDialogue);
+        }
+    }
+
+    private void SkipDialogue()
+    {
+        GameEvent.OnEndDialogue?.Invoke(DialogueType.Default);
     }
 
     private void OpenUIDialogue(string str, ActorConfig actor)

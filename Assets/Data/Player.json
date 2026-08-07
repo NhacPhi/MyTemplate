@@ -21,9 +21,9 @@
         "quantity": 121
       },
       {
-        "id": "LiJing",
-        "type": "Shard",
-        "quantity": 30
+        "id": "Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "supreme_exp",
@@ -41,9 +41,9 @@
         "quantity": 45
       },
       {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "LiJing",
+        "type": "Shard",
+        "quantity": 30
       },
       {
         "id": "Garnet_Gemstone",
@@ -61,14 +61,14 @@
         "quantity": 181
       },
       {
-        "id": "SunWukong",
-        "type": "Shard",
-        "quantity": 192
-      },
-      {
         "id": "Jade_Parcels",
         "type": "Food",
         "quantity": 85
+      },
+      {
+        "id": "SunWukong",
+        "type": "Shard",
+        "quantity": 192
       },
       {
         "id": "Garnet_Chunk",
@@ -101,11 +101,6 @@
         "quantity": 1
       },
       {
-        "id": "Yellow_Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
         "id": "ShaWujing",
         "type": "Shard",
         "quantity": 301
@@ -116,9 +111,9 @@
         "quantity": 1
       },
       {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
+        "id": "Yellow_Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "fine_exp",
@@ -131,6 +126,11 @@
         "quantity": 1
       },
       {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
+      },
+      {
         "id": "Jade_Sliver",
         "type": "Gemstone",
         "quantity": 1
@@ -138,7 +138,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 309
+        "quantity": 314
       },
       {
         "id": "Tofu_Soup",
@@ -161,6 +161,16 @@
         "quantity": 1
       },
       {
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
+        "quantity": 1651
+      },
+      {
+        "id": "Peach",
+        "type": "Food",
+        "quantity": 29
+      },
+      {
         "id": "Murshroom_Steamed_Buns",
         "type": "Food",
         "quantity": 55
@@ -179,16 +189,6 @@
         "id": "Meat",
         "type": "Food",
         "quantity": 36
-      },
-      {
-        "id": "LittleWhiteDragon",
-        "type": "Shard",
-        "quantity": 1651
-      },
-      {
-        "id": "Peach",
-        "type": "Food",
-        "quantity": 29
       },
       {
         "id": "Fried_Radish_Balls",
@@ -261,6 +261,13 @@
         "equip": ""
       },
       {
+        "uuid": "edf4b58c-8c11-44f4-841e-a8262c0c161a",
+        "template_id": "Plantain_Fan",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "2be9137b-1598-4756-918e-5358ac56a2ad",
         "template_id": "Plantain_Fan",
         "current_level": 1,
@@ -268,8 +275,15 @@
         "equip": ""
       },
       {
-        "uuid": "edf4b58c-8c11-44f4-841e-a8262c0c161a",
-        "template_id": "Plantain_Fan",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
+        "template_id": "Nimbus_Cloud",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": "LiJing"
+      },
+      {
+        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
+        "template_id": "Nimbus_Cloud",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -289,17 +303,10 @@
         "equip": "TangSanZang"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
-        "template_id": "Nimbus_Cloud",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
+        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": "LiJing"
-      },
-      {
-        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
         "equip": ""
       },
       {
@@ -324,24 +331,17 @@
         "equip": ""
       },
       {
+        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
-        "uuid": "487af9cd-fa04-40c2-b30e-5dd5beb584ab",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
         "equip": ""
       },
       {
@@ -373,15 +373,8 @@
         "equip": ""
       },
       {
-        "uuid": "fc4942d0-94e0-467c-bcc3-6670c7b41d21",
-        "template_id": "Sunburst_Spade",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "6ef77ac3-5a49-4a54-853f-6455364f5490",
-        "template_id": "Crescent_Axe",
+        "uuid": "487af9cd-fa04-40c2-b30e-5dd5beb584ab",
+        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -394,8 +387,15 @@
         "equip": ""
       },
       {
-        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
-        "template_id": "Nimbus_Cloud",
+        "uuid": "fc4942d0-94e0-467c-bcc3-6670c7b41d21",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "6ef77ac3-5a49-4a54-853f-6455364f5490",
+        "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -1267,9 +1267,13 @@
     }
   },
   "quest": {
-    "CompletedQuestLineIDs": [],
-    "CompletedQuestIDs": [],
-    "ActiveQuestID": "Q_ChapterName_QuestName",
+    "CompletedQuestLineIDs": [
+      "QL_ChapterName"
+    ],
+    "CompletedQuestIDs": [
+      "Q_ChapterName_QuestName"
+    ],
+    "ActiveQuestID": "",
     "ActiveStepIndex": 0,
     "ActiveStepProgress": 0
   },

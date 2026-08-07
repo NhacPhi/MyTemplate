@@ -94,6 +94,7 @@ public class ArmorSalvagePanel : MonoBehaviour
         // Ẩn các item UI thừa
         for (int i = salvageableArmors.Count; i < itemUIs.Count; i++)
         {
+            itemUIs[i].SetSelected(false);
             itemUIs[i].gameObject.SetActive(false);
         }
 

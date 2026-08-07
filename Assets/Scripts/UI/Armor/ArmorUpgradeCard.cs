@@ -79,6 +79,46 @@ public class ArmorUpgradeCard : MonoBehaviour
         UIEvent.OnArmorUpgraded -= OnArmorUpgraded;
     }
 
+    private void OnEnable()
+    {
+        _progressTween?.Kill();
+        if (progressbar != null) progressbar.value = 0f;
+
+        if (!string.IsNullOrEmpty(currentArmorUUID))
+        {
+            OnSelectArmor(currentArmorUUID);
+        }
+        else
+        {
+            ResetAllUI();
+        }
+    }
+
+    private void OnDisable()
+    {
+        _progressTween?.Kill();
+        if (progressbar != null) progressbar.value = 0f;
+    }
+
+    private void ResetAllUI()
+    {
+        _progressTween?.Kill();
+        if (progressbar != null) progressbar.value = 0f;
+        if (subStatSlots != null)
+        {
+            foreach (var slot in subStatSlots)
+            {
+                if (slot != null) slot.gameObject.SetActive(false);
+            }
+        }
+        if (txtCurrentLevel != null) txtCurrentLevel.text = "0";
+        if (txtNextLevel != null) txtNextLevel.text = "0";
+        if (txtCurrentMainStat != null) txtCurrentMainStat.text = "0";
+        if (txtNextMainStat != null) txtNextMainStat.text = "0";
+        if (txtCoinCost != null) txtCoinCost.text = "0";
+        if (txtPrimoriteCost != null) txtPrimoriteCost.text = "0";
+    }
+
     /// <summary>
     /// Khi chọn 1 armor để nâng cấp
     /// </summary>
@@ -87,7 +127,11 @@ public class ArmorUpgradeCard : MonoBehaviour
         currentArmorUUID = armorUUID;
 
         var armorSave = inventoryManager.GetArmor(armorUUID);
-        if (armorSave == null) return;
+        if (armorSave == null)
+        {
+            ResetAllUI();
+            return;
+        }
 
         // Reset target level = current + 1
         targetLevel = Mathf.Min(armorSave.Level + 1, Definition.MAX_ARMOR_LEVEL);

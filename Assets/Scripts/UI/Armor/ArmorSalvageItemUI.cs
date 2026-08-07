@@ -30,6 +30,7 @@ public class ArmorSalvageItemUI : GameItemUI, IPointerClickHandler
         base.Setup(id, rare, icon, background);
         armorUUID = id;
         txtLevel.text = "+" + level.ToString();
+        SetSelected(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
