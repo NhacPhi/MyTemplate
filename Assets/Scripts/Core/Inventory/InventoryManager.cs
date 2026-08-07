@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using VContainer;
 using System;
 using NPOI.SS.Formula.Functions;
+using deVoid.Utils;
 
 public class InventoryManager : IDisposable
 {
@@ -60,7 +61,7 @@ public class InventoryManager : IDisposable
             }
         }
         
-        GameEvent.OnPickupItem?.Invoke(itemID, amount);
+        Signals.Get<PickupItemSignal>().Dispatch(itemID, amount);
     }
 
 

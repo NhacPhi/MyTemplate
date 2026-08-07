@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
+using deVoid.Utils;
 
 public class GachaManager
 {
@@ -34,7 +35,7 @@ public class GachaManager
             results.Add(RollSingle(config));
         }
 
-        GameEvent.OnGachaSummoned?.Invoke(config.Type.ToString(), count);
+        Signals.Get<GachaSummonedSignal>().Dispatch(config.Type.ToString(), count);
 
         return results;
     }

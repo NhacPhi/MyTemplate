@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
+using deVoid.Utils;
 
 public class QuestManager 
 {
@@ -26,8 +27,8 @@ public class QuestManager
         GameEvent.OnMakeWinChoice += MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent += CheckStepValidity;
         GameEvent.OnEndDialogue += EndDialogue;
-        GameEvent.OnEnemyKilled += HandleEnemyKilled;
-        GameEvent.OnPickupItem += HandlePickupItem;
+        Signals.Get<EnemyKilledSignal>().AddListener(HandleEnemyKilled);
+        Signals.Get<PickupItemSignal>().AddListener(HandlePickupItem);
 
         StartQuestLine();
     }
@@ -38,8 +39,8 @@ public class QuestManager
         GameEvent.OnMakeWinChoice -= MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent -= CheckStepValidity;
         GameEvent.OnEndDialogue -= EndDialogue;
-        GameEvent.OnEnemyKilled -= HandleEnemyKilled;
-        GameEvent.OnPickupItem -= HandlePickupItem;
+        Signals.Get<EnemyKilledSignal>().RemoveListener(HandleEnemyKilled);
+        Signals.Get<PickupItemSignal>().RemoveListener(HandlePickupItem);
     }
 
     void StartQuestLine()

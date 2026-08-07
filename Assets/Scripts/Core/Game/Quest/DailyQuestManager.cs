@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
+using deVoid.Utils;
 
 public class DailyQuestManager
 {
@@ -70,20 +71,27 @@ public class DailyQuestManager
 
     private void RegisterEvents()
     {
-        GameEvent.OnEnemyKilled += (enemyId, amount) => UpdateProgress(ObjectiveType.KillEnemy, enemyId, amount);
-        GameEvent.OnPickupItem += (itemId, amount) => UpdateProgress(ObjectiveType.PickupItem, itemId, amount);
-        GameEvent.OnCharacterUpgraded += (charId, amount) => UpdateProgress(ObjectiveType.UpgradeCharacter, charId, amount);
-        GameEvent.OnWeaponUpgraded += (amount) => UpdateProgress(ObjectiveType.UpgradeWeapon, string.Empty, amount);
-        GameEvent.OnWinBattle += (stageId, amount) => UpdateProgress(ObjectiveType.WinBattle, stageId, amount);
-        GameEvent.OnShopPurchased += (itemId, amount) => UpdateProgress(ObjectiveType.Purchase, itemId, amount);
-        GameEvent.OnGachaSummoned += (type, amount) => UpdateProgress(ObjectiveType.Summon, type, amount);
-        
-        // Custom hook for talking to NPC
-        GameEvent.OnOpenDialogue += (dialogueId, actorConfig) => 
-        {
-            if (actorConfig != null)
-                UpdateProgress(ObjectiveType.TalkToNPC, actorConfig.ActorSo.ID, 1);
-        };
+        Signals.Get<EnemyKilledSignal>().AddListener(OnEnemyKilled);
+        Signals.Get<PickupItemSignal>().AddListener(OnPickupItem);
+        Signals.Get<CharacterUpgradedSignal>().AddListener(OnCharacterUpgraded);
+        Signals.Get<WeaponUpgradedSignal>().AddListener(OnWeaponUpgraded);
+        Signals.Get<WinBattleSignal>().AddListener(OnWinBattle);
+        Signals.Get<ShopPurchasedSignal>().AddListener(OnShopPurchased);
+        Signals.Get<GachaSummonedSignal>().AddListener(OnGachaSummoned);
+        Signals.Get<OpenDialogueSignal>().AddListener(OnOpenDialogue);
+    }
+
+    private void OnEnemyKilled(string enemyId, int amount) => UpdateProgress(ObjectiveType.KillEnemy, enemyId, amount);
+    private void OnPickupItem(string itemId, int amount) => UpdateProgress(ObjectiveType.PickupItem, itemId, amount);
+    private void OnCharacterUpgraded(string charId, int amount) => UpdateProgress(ObjectiveType.UpgradeCharacter, charId, amount);
+    private void OnWeaponUpgraded(int amount) => UpdateProgress(ObjectiveType.UpgradeWeapon, string.Empty, amount);
+    private void OnWinBattle(string stageId, int amount) => UpdateProgress(ObjectiveType.WinBattle, stageId, amount);
+    private void OnShopPurchased(string itemId, int amount) => UpdateProgress(ObjectiveType.Purchase, itemId, amount);
+    private void OnGachaSummoned(string type, int amount) => UpdateProgress(ObjectiveType.Summon, type, amount);
+    private void OnOpenDialogue(string dialogueId, ActorConfig actorConfig)
+    {
+        if (actorConfig != null)
+            UpdateProgress(ObjectiveType.TalkToNPC, actorConfig.ActorSo.ID, 1);
     }
 
     private void UpdateProgress(ObjectiveType type, string targetId, int amount)
@@ -115,6 +123,7 @@ public class DailyQuestManager
         if (updated)
         {
             saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            Signals.Get<DailyQuestUpdatedSignal>().Dispatch();
             GameEvent.OnDailyQuestUpdated?.Invoke();
         }
     }
@@ -123,6 +132,7 @@ public class DailyQuestManager
     {
         SaveData.TrackedQuestID = questId;
         saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+        Signals.Get<DailyQuestUpdatedSignal>().Dispatch();
         GameEvent.OnDailyQuestUpdated?.Invoke();
         GameEvent.OnQuestUpdated?.Invoke(); // Also trigger main quest update to refresh indicators
     }
@@ -131,6 +141,7 @@ public class DailyQuestManager
     {
         SaveData.TrackedQuestID = string.Empty;
         saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+        Signals.Get<DailyQuestUpdatedSignal>().Dispatch();
         GameEvent.OnDailyQuestUpdated?.Invoke();
         GameEvent.OnQuestUpdated?.Invoke(); // Also trigger main quest update to refresh indicators
     }
@@ -159,6 +170,7 @@ public class DailyQuestManager
                     }
 
                     saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+                    Signals.Get<DailyQuestUpdatedSignal>().Dispatch();
                     GameEvent.OnDailyQuestUpdated?.Invoke();
                     return true;
                 }

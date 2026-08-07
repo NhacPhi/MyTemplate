@@ -7,6 +7,7 @@ public class QuestLineUIGroup : MonoBehaviour
 {
     [SerializeField] private Button btnToggle;
     [SerializeField] private TextMeshProUGUI txtQuestLineName;
+    [SerializeField] private TextMeshProUGUI txtQuestLineDes;
     [SerializeField] private Transform questItemsContainer;
     
     private bool isOpen = true;
@@ -16,9 +17,14 @@ public class QuestLineUIGroup : MonoBehaviour
         if (btnToggle != null) btnToggle.onClick.AddListener(ToggleGroup);
     }
 
-    public void Setup(string localizedGroupName)
+    public void Setup(string localizedGroupName, string localizedGroupDes = "")
     {
         if (txtQuestLineName != null) txtQuestLineName.text = localizedGroupName;
+        if (txtQuestLineDes != null)
+        {
+            txtQuestLineDes.text = localizedGroupDes;
+            txtQuestLineDes.gameObject.SetActive(!string.IsNullOrEmpty(localizedGroupDes));
+        }
         if (questItemsContainer != null) questItemsContainer.gameObject.SetActive(true);
         isOpen = true;
     }

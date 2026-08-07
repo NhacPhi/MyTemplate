@@ -68,16 +68,17 @@ public class InitializationLoader : MonoBehaviour
         Debug.Log("[TransitionLog] InitializationLoader: DelayUnloadScene0 - Synchronously closing loading UI and opening menu UI.");
         
         // Đóng loading và mở StartGameScene trong cùng 1 frame để tránh lệch nhịp render của GPU
-        if (UIManager.Instance != null)
+        var uiManager = FindObjectOfType<UIManager>();
+        if (uiManager != null)
         {
-            Debug.Log("[TransitionLog] InitializationLoader: UIManager.Instance is valid. Triggering CloseWindowScene, OpenWindowScene and ShowPanel.");
-            UIManager.Instance.CloseWindowScene(ScreenIds.LaunchLoadingScene);
-            UIManager.Instance.OpenWindowScene(ScreenIds.StartGameScene);
-            UIManager.Instance.ShowPanel(ScreenIds.PanelStartGame);
+            Debug.Log("[TransitionLog] InitializationLoader: UIManager is valid. Triggering CloseWindowScene, OpenWindowScene and ShowPanel.");
+            uiManager.CloseWindowScene(ScreenIds.LaunchLoadingScene);
+            uiManager.OpenWindowScene(ScreenIds.StartGameScene);
+            uiManager.ShowPanel(ScreenIds.PanelStartGame);
         }
         else
         {
-            Debug.LogError("[TransitionLog] InitializationLoader: UIManager.Instance is null!");
+            Debug.LogError("[TransitionLog] InitializationLoader: UIManager component is null!");
         }
         
         SceneManager.UnloadSceneAsync(0);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using deVoid.Utils;
 
 public abstract class ShopPanelBase : MonoBehaviour
 {
@@ -216,7 +217,7 @@ public abstract class ShopPanelBase : MonoBehaviour
             saveSystem.Player.Shop.AddPurchase(config.ProductID, quantity);
             saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
             
-            GameEvent.OnShopPurchased?.Invoke(config.ProductID, quantity);
+            Signals.Get<ShopPurchasedSignal>().Dispatch(config.ProductID, quantity);
             
             // Refresh lại toàn bộ sản phẩm đang hiển thị để cập nhật text & trạng thái Sold Out
             RefreshProducts();

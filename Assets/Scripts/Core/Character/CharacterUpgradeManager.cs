@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using deVoid.Utils;
 
 /// <summary>
 /// Chịu trách nhiệm duy nhất: xử lý toàn bộ nghiệp vụ NÂNG CẤP nhân vật.
@@ -136,7 +137,7 @@ public class CharacterUpgradeManager
 
         if (levelChanged)
         {
-            GameEvent.OnCharacterUpgraded?.Invoke(saveData.ID, 1);
+            Signals.Get<CharacterUpgradedSignal>().Dispatch(saveData.ID, 1);
         }
 
         if (saveData.Level >= Definition.MAX_CHARACTER_LEVEL)
@@ -404,7 +405,7 @@ public class CharacterUpgradeManager
 
         //_profile.OnLevelChanged?.Invoke();
         //_profile.OnStatsChanged?.Invoke();
-        GameEvent.OnCharacterUpgraded?.Invoke(_profile.SaveData.ID, 1);
+        Signals.Get<CharacterUpgradedSignal>().Dispatch(_profile.SaveData.ID, 1);
 
         return true;
     }
@@ -473,7 +474,7 @@ public class CharacterUpgradeManager
 
         // Cập nhật lại Passive của kỹ năng vì level của kỹ năng có thể đã tăng
         _profile.RefreshSkillPassives();
-        GameEvent.OnCharacterUpgraded?.Invoke(_profile.SaveData.ID, 1);
+        Signals.Get<CharacterUpgradedSignal>().Dispatch(_profile.SaveData.ID, 1);
 
         return true;
     }

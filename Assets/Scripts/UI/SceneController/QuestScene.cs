@@ -36,13 +36,13 @@ public class QuestScene : WindowController
     [SerializeField] private GameItemUI rewardItemPrefab;
 
     [Inject] private UIManager uiManager;
-    
+    [Inject] private GameDataBase gameDataBase;
+    [Inject] private InventoryManager inventoryManager;
+    [Inject] private CurrencyManager currencyManager;
+
     private QuestManager questManager;
     private DailyQuestManager dailyQuestManager;
     private GameNarrativeData gameNarrativeData;
-    private GameDataBase gameDataBase;
-    private InventoryManager inventoryManager;
-    private CurrencyManager currencyManager;
 
     private bool isDailyTab = false;
     private string currentlySelectedDailyQuestId;
@@ -50,14 +50,11 @@ public class QuestScene : WindowController
 
     private void EnsureDependencies()
     {
-        if (questManager == null && GameplayScope.Instance != null)
+        if (questManager == null && GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
         {
             questManager = GameplayScope.Instance.Container.Resolve<QuestManager>();
             dailyQuestManager = GameplayScope.Instance.Container.Resolve<DailyQuestManager>();
             gameNarrativeData = GameplayScope.Instance.Container.Resolve<GameNarrativeData>();
-            gameDataBase = GameplayScope.Instance.Container.Resolve<GameDataBase>();
-            inventoryManager = GameplayScope.Instance.Container.Resolve<InventoryManager>();
-            currencyManager = GameplayScope.Instance.Container.Resolve<CurrencyManager>();
         }
     }
 
@@ -211,7 +208,11 @@ public class QuestScene : WindowController
                             // Tạo Header của QuestLine
                             group = Instantiate(questLineGroupPrefab, questListContainer);
                             string groupName = LocalizationManager.Instance.GetLocalizedValue(questLine.Name);
-                            group.Setup(string.IsNullOrEmpty(groupName) ? questLine.ID : groupName);
+                            string groupDes = LocalizationManager.Instance.GetLocalizedValue(questLine.Description);
+                            group.Setup(
+                                string.IsNullOrEmpty(groupName) ? questLine.ID : groupName,
+                                string.IsNullOrEmpty(groupDes) ? "" : groupDes
+                            );
                             hasVisibleQuests = true;
                         }
 

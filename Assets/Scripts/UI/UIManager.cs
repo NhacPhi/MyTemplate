@@ -17,21 +17,12 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        UIEvent.OnClickNavigationButton += OnNavigatePanelStartGame;
         UIEvent.OnToggleLoadingScene += ToggleLoadingScene;
-
     }
-
-    public static UIManager Instance { get; private set; }
 
     private void OnDisable()
     {
-        UIEvent.OnClickNavigationButton -= OnNavigatePanelStartGame;
         UIEvent.OnToggleLoadingScene -= ToggleLoadingScene;
-    }
-    private void Awake()
-    {
-        Instance = this;
     }
 
     public void Init()
@@ -126,43 +117,6 @@ public class UIManager : MonoBehaviour
     public void CloseAllWindows()
     {
         _uiFrame.CloseAllWindows();
-    }
-
-    private void OnNavigatePanelStartGame(string id)
-    {
-        _uiFrame.HidePanel(ScreenIds.PanelStartGame);
-
-        switch(id)
-        {
-            case ScreenIds.GameInfoScene:
-                EnsureScreenLoaded(id);
-                _uiFrame.OpenWindow(id);
-                break;
-            case ScreenIds.GameSettingsScene:
-                EnsureScreenLoaded(id);
-                _uiFrame.OpenWindow(id);
-                break;
-            case ScreenIds.PopupConfirm:
-                Action cancle = () => { EnsureScreenLoaded(ScreenIds.PanelStartGame); _uiFrame.ShowPanel(ScreenIds.PanelStartGame); };
-                Action confirm = () => {
-                    Application.Quit();
-                };
-                ConfirmationPopupProperties popupProps = new ConfirmationPopupProperties(
-                    LocalizationManager.Instance.GetLocalizedValue("UI_REMIND"), 
-                    LocalizationManager.Instance.GetLocalizedValue("UI_QUIT_QUESTION"), 
-                    LocalizationManager.Instance.GetLocalizedValue("UI_CONFIRM"), 
-                    LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"), 
-                    confirm, 
-                    cancle
-                );
-                EnsureScreenLoaded(id);
-                _uiFrame.OpenWindow(id, popupProps);
-                break;
-            default:
-                EnsureScreenLoaded(id);
-                _uiFrame.OpenWindow(id);
-                break;
-        }
     }
 
     public void ShowPopupConfirmSettings(PopupSettingProperties popup)

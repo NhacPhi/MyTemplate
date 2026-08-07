@@ -174,6 +174,28 @@ public class Protagonist : MonoBehaviour, IDamageable
         }
     }
 
+    [Inject] private UIManager _uiManager;
+
+    private bool CanAcceptInput()
+    {
+        if (CurrentState != ProtagonistState.Normal) return false;
+        if (Time.timeScale == 0f) return false;
+
+        // Trả về false nếu đang trong màn Trận đánh (Battle)
+        if (BattleManager.Instance != null && BattleManager.Instance.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        // Trả về false nếu đang mở bất kỳ UI Window nào khác ngoài GamePlay (Inventory, Shop, Quests, Settings...)
+        if (_uiManager != null)
+        {
+            return _uiManager.IsInMainGameplay();
+        }
+
+        return true;
+    }
+
     private bool IsInMainGameplay()
     {
         // Trả về false nếu game đang Pause (TimeScale = 0)
@@ -186,9 +208,9 @@ public class Protagonist : MonoBehaviour, IDamageable
         }
 
         // Trả về false nếu đang mở bất kỳ UI Window nào khác ngoài GamePlay (Inventory, Shop, Quests, Settings...)
-        if (UIManager.Instance != null)
+        if (_uiManager != null)
         {
-            return UIManager.Instance.IsInMainGameplay();
+            return _uiManager.IsInMainGameplay();
         }
 
         return true;

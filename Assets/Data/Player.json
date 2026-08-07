@@ -2,17 +2,17 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 10,
-    "current_exp": 6200,
+    "current_exp": 7400,
     "avatar_icon": "Wukong05_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 315,
-      "Jade": 788300,
-      "Coin": 21138000,
+      "Energy": 305,
+      "Jade": 788500,
+      "Coin": 21158000,
       "RelicEssence": 68550800,
       "ArmorPrimorite": 5904500,
-      "Ticket": 303
+      "Ticket": 301
     },
     "items": [
       {
@@ -183,7 +183,7 @@
       {
         "id": "LittleWhiteDragon",
         "type": "Shard",
-        "quantity": 1631
+        "quantity": 1651
       },
       {
         "id": "Peach",
@@ -396,6 +396,13 @@
       {
         "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
         "template_id": "Nimbus_Cloud",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "31175114-9ce5-4b81-9b7f-6210472aca78",
+        "template_id": "Sunburst_Spade",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -1194,19 +1201,27 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "ErlangShen"
+        "character_id": ""
       },
       {
         "position": 2,
-        "character_id": "SunWukong"
+        "character_id": ""
       },
       {
         "position": 3,
-        "character_id": "LiJing"
+        "character_id": ""
       },
       {
         "position": 4,
-        "character_id": ""
+        "character_id": "ErlangShen"
+      },
+      {
+        "position": 5,
+        "character_id": "SunWukong"
+      },
+      {
+        "position": 6,
+        "character_id": "LiJing"
       }
     ],
     "active_global_buffs": [
@@ -1232,17 +1247,17 @@
     "banner_data_map": {
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 9,
+        "pity_count": 10,
         "selected_target_id": "Nimbus_Cudgel",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 209
+        "total_summon_count": 210
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",
-        "pity_count": 25,
+        "pity_count": 26,
         "selected_target_id": "SunWukong",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 322
+        "total_summon_count": 323
       }
     }
   },
@@ -1259,11 +1274,11 @@
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639215856000000000,
+    "last_reset_time_ticks": 639216720000000000,
     "active_daily_quests": {
-      "dp_gacha_character": 0,
-      "dq_kill_slime": 3,
-      "dq_clear_battle": 1
+      "dp_gacha_weapon": 1,
+      "dq_upgrade_character": 0,
+      "dq_kill_slime": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

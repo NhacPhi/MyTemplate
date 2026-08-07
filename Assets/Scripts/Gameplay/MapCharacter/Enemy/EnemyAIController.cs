@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Gameplay.Common;
 using Gameplay.MapCharacter.Enemy.States;
+using deVoid.Utils;
 
 namespace Gameplay.MapCharacter.Enemy
 {
@@ -140,7 +141,7 @@ namespace Gameplay.MapCharacter.Enemy
             if (CurrentHP <= 0)
             {
                 CurrentHP = 0;
-                GameEvent.OnEnemyKilled?.Invoke(Type.ToString(), 1);
+                Signals.Get<EnemyKilledSignal>().Dispatch(Type.ToString(), 1);
                 ChangeState(DieState);
             }
             else

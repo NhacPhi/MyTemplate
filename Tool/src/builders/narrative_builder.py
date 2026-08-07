@@ -233,16 +233,19 @@ class QuestLineConfigBuilder(BaseBuilder):
                 prereq_str = str(row['PrerequisiteQuestIDs']).strip() if 'PrerequisiteQuestIDs' in row and pd.notna(row['PrerequisiteQuestIDs']) else ""
                 prereq_list = [p.strip() for p in prereq_str.split('|') if p.strip()] if prereq_str else []
 
+                name_val = get_row_val(row, 'Name', 'NameID', 'QuestName', 'Title')
+                des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
+
                 new_quest = QuestModel(
                     id=quest_id,
-                    chapter_id=str(row['ChapterID']) if 'ChapterID' in row and pd.notna(row['ChapterID']) else "",
-                    name_hash=self.get_hash(row['Name']) if ('Name' in row and pd.notna(row['Name'])) else 0,
-                    des_hash=self.get_hash(row['Description']) if ('Description' in row and pd.notna(row['Description'])) else 0,
+                    chapter_id=get_row_val(row, 'ChapterID'),
+                    name_hash=self.get_hash(name_val) if name_val else 0,
+                    des_hash=self.get_hash(des_val) if des_val else 0,
                     prerequisite_quest_ids=prereq_list,
                     required_level=int(row['RequiredLevel']) if 'RequiredLevel' in row and pd.notna(row['RequiredLevel']) else 1,
                     steps=match_steps,
                     quest_type=quest_type_val,
-                    reward_id=str(row['RewardID']) if 'RewardID' in row and pd.notna(row['RewardID']) else ""
+                    reward_id=get_row_val(row, 'RewardID')
                 )
                 if questline_id not in quest_by_questline:
                     quest_by_questline[questline_id] = []
@@ -255,13 +258,15 @@ class QuestLineConfigBuilder(BaseBuilder):
                 if not is_valid_row(row, 'ID', 'QuestLineID'): continue
                 
                 questline_id = get_row_val(row, 'ID', 'QuestLineID')
-
                 match_quest = quest_by_questline.get(questline_id, [])
+
+                name_val = get_row_val(row, 'Name', 'NameID', 'QuestLineName', 'Title')
+                des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
 
                 questline_data[questline_id] = QuestLinesModel(
                     id=questline_id,
-                    name_hash=self.get_hash(row['Name']) if ('Name' in row and pd.notna(row['Name'])) else 0,
-                    des_hash=self.get_hash(row['Description']) if ('Description' in row and pd.notna(row['Description'])) else 0,
+                    name_hash=self.get_hash(name_val) if name_val else 0,
+                    des_hash=self.get_hash(des_val) if des_val else 0,
                     quests=match_quest,
                 )
 
@@ -284,15 +289,20 @@ class DailyQuestConfigBuilder(BaseBuilder):
                 
                 quest_id = get_row_val(row, 'ID', 'QuestID')
                 
+                name_val = get_row_val(row, 'Name', 'NameID', 'QuestName', 'Title')
+                des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
+                target_val = get_row_val(row, 'Target', 'TargetID', 'TargetName')
+                loc_val = get_row_val(row, 'LocationName', 'Location', 'LocationID')
+
                 daily_quest_data[quest_id] = DailyQuestModel(
                     id=quest_id,
-                    name_hash=self.get_hash(row['Name']) if ('Name' in row and pd.notna(row['Name'])) else 0,
-                    des_hash=self.get_hash(row['Description']) if ('Description' in row and pd.notna(row['Description'])) else 0,
-                    target_hash=self.get_hash(row['Target']) if 'Target' in row and pd.notna(row['Target']) else 0,
-                    location_hash=self.get_hash(row['LocationName']) if 'LocationName' in row and pd.notna(row['LocationName']) else 0,
-                    reward_id=str(row['RewardID']) if 'RewardID' in row and pd.notna(row['RewardID']) else "",
-                    objective_type=str(row['ObjectiveType']).strip() if 'ObjectiveType' in row and pd.notna(row['ObjectiveType']) else "",
-                    target_id=str(row['TargetID']).strip() if 'TargetID' in row and pd.notna(row['TargetID']) else "",
+                    name_hash=self.get_hash(name_val) if name_val else 0,
+                    des_hash=self.get_hash(des_val) if des_val else 0,
+                    target_hash=self.get_hash(target_val) if target_val else 0,
+                    location_hash=self.get_hash(loc_val) if loc_val else 0,
+                    reward_id=get_row_val(row, 'RewardID'),
+                    objective_type=get_row_val(row, 'ObjectiveType'),
+                    target_id=get_row_val(row, 'TargetID'),
                     require_amount=int(row['RequireAmount']) if 'RequireAmount' in row and pd.notna(row['RequireAmount']) else 1
                 )
                 

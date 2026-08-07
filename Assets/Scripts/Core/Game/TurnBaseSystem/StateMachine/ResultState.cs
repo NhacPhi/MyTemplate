@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Tech.StateMachine;
 using UnityEngine;
 using System.Linq;
+using deVoid.Utils;
 
 public enum BattleResult
 {
@@ -112,7 +113,7 @@ public class ResultState : BattleBaseState
                 account.CurrentExp -= maxExpForLevel;
             }
             
-            GameEvent.OnWinBattle?.Invoke(battleManager.BattleSession.PendingBattleID, 1);
+            Signals.Get<WinBattleSignal>().Dispatch(battleManager.BattleSession.PendingBattleID, 1);
             
             battleManager.SaveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
         }

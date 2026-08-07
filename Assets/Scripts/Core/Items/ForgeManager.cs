@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using deVoid.Utils;
 
 public class ForgeManager
 {
@@ -50,7 +51,7 @@ public class ForgeManager
         UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
 
         UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
-        GameEvent.OnWeaponUpgraded?.Invoke(1);
+        Signals.Get<WeaponUpgradedSignal>().Dispatch(1);
 
         return true;
     }
@@ -105,7 +106,7 @@ public class ForgeManager
 
             UIEvent.OnSlelectWeaponEnchance?.Invoke(weaponUUID);
             UIEvent.OnEquipmentUpgraded?.Invoke(weaponUUID);
-            GameEvent.OnWeaponUpgraded?.Invoke(upgradesDone);
+            Signals.Get<WeaponUpgradedSignal>().Dispatch(upgradesDone);
         }
 
         return upgradesDone; // Trả về số cấp đã nâng
