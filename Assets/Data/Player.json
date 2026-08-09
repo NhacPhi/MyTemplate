@@ -2,14 +2,14 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 10,
-    "current_exp": 7400,
+    "current_exp": 9800,
     "avatar_icon": "Wukong05_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 305,
-      "Jade": 788500,
-      "Coin": 21158000,
+      "Energy": 275,
+      "Jade": 789000,
+      "Coin": 21208000,
       "RelicEssence": 68550800,
       "ArmorPrimorite": 5904500,
       "Ticket": 301
@@ -21,9 +21,9 @@
         "quantity": 121
       },
       {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "LiJing",
+        "type": "Shard",
+        "quantity": 30
       },
       {
         "id": "supreme_exp",
@@ -41,9 +41,9 @@
         "quantity": 45
       },
       {
-        "id": "LiJing",
-        "type": "Shard",
-        "quantity": 30
+        "id": "Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Garnet_Gemstone",
@@ -61,14 +61,14 @@
         "quantity": 181
       },
       {
-        "id": "Jade_Parcels",
-        "type": "Food",
-        "quantity": 85
-      },
-      {
         "id": "SunWukong",
         "type": "Shard",
         "quantity": 192
+      },
+      {
+        "id": "Jade_Parcels",
+        "type": "Food",
+        "quantity": 85
       },
       {
         "id": "Garnet_Chunk",
@@ -101,11 +101,6 @@
         "quantity": 1
       },
       {
-        "id": "ShaWujing",
-        "type": "Shard",
-        "quantity": 301
-      },
-      {
         "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
@@ -116,9 +111,9 @@
         "quantity": 1
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 15
+        "id": "ShaWujing",
+        "type": "Shard",
+        "quantity": 301
       },
       {
         "id": "Garnet_Fragment",
@@ -131,6 +126,11 @@
         "quantity": 9
       },
       {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 15
+      },
+      {
         "id": "Jade_Sliver",
         "type": "Gemstone",
         "quantity": 1
@@ -138,7 +138,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 314
+        "quantity": 339
       },
       {
         "id": "Tofu_Soup",
@@ -161,6 +161,16 @@
         "quantity": 1
       },
       {
+        "id": "Slime",
+        "type": "Material",
+        "quantity": 54
+      },
+      {
+        "id": "Meat",
+        "type": "Food",
+        "quantity": 36
+      },
+      {
         "id": "LittleWhiteDragon",
         "type": "Shard",
         "quantity": 1651
@@ -179,16 +189,6 @@
         "id": "Lotus",
         "type": "Food",
         "quantity": 27
-      },
-      {
-        "id": "Slime",
-        "type": "Material",
-        "quantity": 52
-      },
-      {
-        "id": "Meat",
-        "type": "Food",
-        "quantity": 36
       },
       {
         "id": "Fried_Radish_Balls",
@@ -303,6 +303,13 @@
         "equip": "TangSanZang"
       },
       {
+        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
         "template_id": "Ennead_spear",
         "current_level": 1,
@@ -324,29 +331,15 @@
         "equip": ""
       },
       {
-        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": ""
-      },
-      {
         "uuid": "74402e0a-eb93-4a65-b9d7-300f2e719d4c",
         "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
+        "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -380,10 +373,10 @@
         "equip": ""
       },
       {
-        "uuid": "fa24cbe1-fbd8-4207-a453-5e52599f9a00",
-        "template_id": "Sunburst_Spade",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
+        "template_id": "Bronze_Hammer",
         "current_level": 1,
-        "current_updgrade": 0,
+        "current_updgrade": 1,
         "equip": ""
       },
       {
@@ -396,6 +389,13 @@
       {
         "uuid": "6ef77ac3-5a49-4a54-853f-6455364f5490",
         "template_id": "Crescent_Axe",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "fa24cbe1-fbd8-4207-a453-5e52599f9a00",
+        "template_id": "Sunburst_Spade",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -1201,27 +1201,23 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": ""
+        "character_id": "LiJing"
       },
       {
         "position": 2,
-        "character_id": ""
-      },
-      {
-        "position": 3,
-        "character_id": ""
-      },
-      {
-        "position": 4,
         "character_id": "ErlangShen"
       },
       {
-        "position": 5,
+        "position": 3,
         "character_id": "SunWukong"
       },
       {
+        "position": 4,
+        "character_id": ""
+      },
+      {
         "position": 6,
-        "character_id": "LiJing"
+        "character_id": "ThirdPrinceNezha"
       }
     ],
     "active_global_buffs": [
@@ -1262,27 +1258,28 @@
     }
   },
   "world_state": {
+    "last_scene_name": "Ocean",
     "destroyed_resources": {
-      "f689cde0-a2a7-4c35-9b9a-d4ee7ac3fe43": 639216212001476048
+      "f689cde0-a2a7-4c35-9b9a-d4ee7ac3fe43": 639216212001476048,
+      "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639219011415650138
     }
   },
   "quest": {
-    "CompletedQuestLineIDs": [
-      "QL_ChapterName"
-    ],
+    "CompletedQuestLineIDs": [],
     "CompletedQuestIDs": [
-      "Q_ChapterName_QuestName"
+      "Q_Chapter_01_Act_01"
     ],
-    "ActiveQuestID": "",
+    "ClaimableQuestIDs": [],
+    "ActiveQuestID": "Q_Chapter_01_Act_02",
     "ActiveStepIndex": 0,
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639216720000000000,
+    "last_reset_time_ticks": 639218448000000000,
     "active_daily_quests": {
-      "dp_gacha_weapon": 1,
+      "dp_gacha_character": 0,
       "dq_upgrade_character": 0,
-      "dq_kill_slime": 0
+      "dq_gather_peach": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

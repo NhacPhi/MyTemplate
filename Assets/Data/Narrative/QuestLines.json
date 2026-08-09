@@ -1,28 +1,90 @@
 {
-    "QL_ChapterName": {
-        "id": "QL_ChapterName",
-        "name_hash": 690875430,
-        "des_hash": 789003069,
+    "QL_Chapter_01": {
+        "id": "QL_Chapter_01",
+        "name_hash": 2084674828,
         "quests": [
             {
-                "id": "Q_ChapterName_QuestName",
-                "name_hash": 687549026,
-                "des_hash": 560399843,
+                "id": "Q_Chapter_01_Act_01",
+                "name_hash": 2128229598,
+                "des_hash": 4102665410,
                 "steps": [
                     {
-                        "id": "S_ChapterName_QuestName_01",
+                        "id": "S_Chapter_01_Act_01_01",
                         "actor_id": "Dragon_king_Eatern_Sea",
-                        "previous_dialogue": "DLG_ChapterName_QuestName_01_Start",
+                        "previous_dialogue": "DLG_Chapter01_Act01_Step01",
                         "completed_dialogue": "",
                         "incomplete_dialogue": "",
-                        "type": "Dialogue",
+                        "type": "TalkToNPC",
                         "item_id": "",
+                        "des_hash": 3126005022,
+                        "target_id": "",
+                        "required_amount": 1
+                    },
+                    {
+                        "id": "S_Chapter_01_Act_01_02",
+                        "actor_id": "GoldfishDemon",
+                        "previous_dialogue": "DLG_Chapter01_Act01_Step02_Start",
+                        "completed_dialogue": "DLG_Chapter01_Act01_Step02_Complate",
+                        "incomplete_dialogue": "",
+                        "type": "DefeatEnemy",
+                        "item_id": "",
+                        "des_hash": 1739786272,
+                        "target_id": "Battle_GoldfishDemon",
+                        "required_amount": 1
+                    },
+                    {
+                        "id": "S_Chapter_01_Act_01_03",
+                        "actor_id": "Dragon_king_Eatern_Sea",
+                        "previous_dialogue": "DLG_Chapter01_Act01_Step03",
+                        "completed_dialogue": "",
+                        "incomplete_dialogue": "",
+                        "type": "TalkToNPC",
+                        "item_id": "",
+                        "des_hash": 1877895859,
                         "target_id": "",
                         "required_amount": 1
                     }
                 ],
                 "chapter_id": "",
                 "prerequisite_quest_ids": [],
+                "required_level": 1,
+                "quest_type": 1,
+                "reward_id": "Default_01"
+            },
+            {
+                "id": "Q_Chapter_01_Act_02",
+                "name_hash": 1097478133,
+                "des_hash": 1872798683,
+                "steps": [
+                    {
+                        "id": "S_Chapter_01_Act_02_01",
+                        "actor_id": "Dragon_king_Eatern_Sea",
+                        "previous_dialogue": "",
+                        "completed_dialogue": "",
+                        "incomplete_dialogue": "",
+                        "type": "Dialogue",
+                        "item_id": "",
+                        "des_hash": 3942746971,
+                        "target_id": "",
+                        "required_amount": 1
+                    },
+                    {
+                        "id": "S_Chapter_01_Act_02_02",
+                        "actor_id": "Dragon_king_Eatern_Sea",
+                        "previous_dialogue": "",
+                        "completed_dialogue": "",
+                        "incomplete_dialogue": "",
+                        "type": "Dialogue",
+                        "item_id": "",
+                        "des_hash": 2234314925,
+                        "target_id": "",
+                        "required_amount": 1
+                    }
+                ],
+                "chapter_id": "",
+                "prerequisite_quest_ids": [
+                    "Q_Chapter_01_Act_01"
+                ],
                 "required_level": 1,
                 "quest_type": 1,
                 "reward_id": "Default_01"

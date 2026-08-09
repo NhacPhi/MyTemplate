@@ -37,6 +37,9 @@ public class StepComponent
     [JsonProperty("actor_id")]
     public string ActorID;
 
+    [JsonProperty("des_hash")]
+    public long Description;
+
     [JsonProperty("previous_dialogue")]
     public string PreviousDialogue;
 
@@ -98,9 +101,6 @@ public class QuestLineConfig
 
     [JsonProperty("name_hash")]
     public long Name;
-
-    [JsonProperty("des_hash")]
-    public long Description;
 
     [JsonProperty("quests")]
     public List<QuestComponent> Quests;

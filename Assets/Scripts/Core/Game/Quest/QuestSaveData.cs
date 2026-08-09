@@ -6,6 +6,7 @@ public class QuestSaveData
 {
     public List<string> CompletedQuestLineIDs = new List<string>();
     public List<string> CompletedQuestIDs = new List<string>();
+    public List<string> ClaimableQuestIDs = new List<string>();
     
     public string ActiveQuestID = string.Empty;
     public int ActiveStepIndex = 0;
@@ -17,6 +18,12 @@ public class QuestSaveData
         return CompletedQuestIDs.Contains(questID);
     }
 
+    public bool IsQuestClaimable(string questID)
+    {
+        if (string.IsNullOrEmpty(questID)) return false;
+        return ClaimableQuestIDs.Contains(questID);
+    }
+
     public bool IsQuestLineCompleted(string questLineID)
     {
         if (string.IsNullOrEmpty(questLineID)) return false;
@@ -25,9 +32,13 @@ public class QuestSaveData
 
     public void CompleteQuest(string questID)
     {
-        if (!string.IsNullOrEmpty(questID) && !CompletedQuestIDs.Contains(questID))
+        if (!string.IsNullOrEmpty(questID))
         {
-            CompletedQuestIDs.Add(questID);
+            if (!CompletedQuestIDs.Contains(questID))
+            {
+                CompletedQuestIDs.Add(questID);
+            }
+            ClaimableQuestIDs.Remove(questID);
         }
         
         if (ActiveQuestID == questID)

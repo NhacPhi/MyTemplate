@@ -57,6 +57,12 @@ public class DialogueNodeConfig
     [JsonProperty("next_node_id")]
     public string NextNodeID;
 
+    [JsonProperty("step_end")]
+    public bool StepEnd;
+
+    [JsonProperty("is_step_end")]
+    public bool IsStepEnd;
+
     [JsonProperty("choices")]
     public List<DialogueChoiceConfig> Choices = new();
 

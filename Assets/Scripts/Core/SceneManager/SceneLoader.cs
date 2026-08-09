@@ -14,7 +14,11 @@ public class SceneLoader : MonoBehaviour
 {
     [Inject] private UIManager _uiManager;
     [Inject] private IAudioManager _audioManager;
+    [Inject] private SaveSystem _saveSystem;
     [SerializeField] private GameSceneSO _gameplayScene = default;
+
+    [Header("Registered Location Scenes")]
+    [SerializeField] private List<GameSceneSO> _registeredLocationScenes = new List<GameSceneSO>();
 
     [Header("Listening to")]
     [SerializeField] private LoadEventChannelSO _loadLocation = default;
@@ -52,8 +56,24 @@ public class SceneLoader : MonoBehaviour
     public static GameSceneSO GetRegisteredScene(string sceneName)
     {
         if (string.IsNullOrEmpty(sceneName)) return null;
-        _sceneRegistry.TryGetValue(sceneName, out var scene);
-        return scene;
+        if (_sceneRegistry.TryGetValue(sceneName, out var scene))
+        {
+            return scene;
+        }
+
+        if (Instance != null && Instance._registeredLocationScenes != null)
+        {
+            foreach (var loc in Instance._registeredLocationScenes)
+            {
+                if (loc != null && loc.name == sceneName)
+                {
+                    RegisterScene(loc);
+                    return _sceneRegistry[sceneName];
+                }
+            }
+        }
+
+        return null;
     }
 
     public static void RegisterScene(GameSceneSO scene)
@@ -87,6 +107,14 @@ public class SceneLoader : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        if (_registeredLocationScenes != null)
+        {
+            foreach (var loc in _registeredLocationScenes)
+            {
+                RegisterScene(loc);
+            }
+        }
 
         // Chỉ chạy khi ở màn hình khởi động (chưa có scene nào load)
         if (_currentlyLoadedScene == null)
@@ -186,6 +214,13 @@ public class SceneLoader : MonoBehaviour
             {
                 LastLoadedLocation = locationToLoad;
                 Debug.Log($"[TransitionLog] SceneLoader: LoadLocation - Pre-caching LastLoadedLocation = {locationToLoad.name}");
+
+                SaveSystem saveSys = _saveSystem ?? SaveSystem.Instance;
+                if (saveSys != null && saveSys.Player != null && saveSys.Player.WorldState != null)
+                {
+                    saveSys.Player.WorldState.LastSceneName = locationToLoad.name;
+                    saveSys.SaveDataToDisk(GameSaveType.PlayerInfo);
+                }
             }
         }
 

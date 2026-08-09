@@ -13,6 +13,9 @@ public enum RespawnType
 [Serializable]
 public class WorldSaveData
 {
+    [JsonProperty("last_scene_name")]
+    public string LastSceneName { get; set; }
+
     // Dictionary lưu ID của Resource và mốc thời gian (Ticks của UTC Time) mà nó bị tiêu diệt
     [JsonProperty("destroyed_resources")]
     public Dictionary<string, long> DestroyedResources { get; private set; } = new Dictionary<string, long>();

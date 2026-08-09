@@ -15,6 +15,26 @@ public class DialogueUIManager : MonoBehaviour
     [SerializeField] private DialogueChoicesUIManager choicesManager;
 
     [Inject] UIManager uiManager;
+
+    private void UpdateSkipButtonState()
+    {
+        if (btnSkip == null) return;
+
+        QuestManager qMgr = null;
+        if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            try
+            {
+                qMgr = GameplayScope.Instance.Container.Resolve<QuestManager>();
+            }
+            catch { }
+        }
+
+        bool isMainQuest = qMgr != null && qMgr.IsMainQuestActive;
+        btnSkip.gameObject.SetActive(!isMainQuest);
+        btnSkip.interactable = !isMainQuest;
+    }
+
     // Event show Choices
     // Start is called before the first frame update
     private void Awake()
@@ -32,6 +52,7 @@ public class DialogueUIManager : MonoBehaviour
 
         GameEvent.OnShowChoiceUI -= ShowChoices;
     }
+
     void Start()
     {
         if (btnAdvance != null)
@@ -68,10 +89,12 @@ public class DialogueUIManager : MonoBehaviour
     void CloseUIDialogue(DialogueType type)
     {
         uiManager.CloseWindowScene(ScreenIds.DialogueScene);
+        uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
     }
 
     public void SetDialogue(string str, ActorConfig actor)
     {
+        UpdateSkipButtonState();
         choicesManager.DisableAllCHoiceUI();
         choicesManager.gameObject.SetActive(false);
         typeWriteEffect.Play(str);

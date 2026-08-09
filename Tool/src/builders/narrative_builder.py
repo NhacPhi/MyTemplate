@@ -126,12 +126,15 @@ class DialogueConfigBuilder(BaseBuilder):
                 dialogue_id = get_row_val(row, 'DialogueID')
 
                 matched_choices = choices_by_node.get(node_id, [])
+                step_end_val = get_row_val(row, 'StepEnd', 'IsStepEnd', 'step_end')
+                is_step_end = str(step_end_val).lower() in ['true', '1', 'yes'] if step_end_val else False
 
                 node_new = DialogueNodeModel(
                     node_id=node_id,
                     actor_id=get_row_val(row, 'ActorID'),
                     text_hash=self.get_hash(row['Text']) if ('Text' in row and pd.notna(row['Text'])) else 0,
                     next_node_id=get_row_val(row, 'NextNodeID', 'TargetNodeID', 'NextDialogueID'),
+                    step_end=is_step_end,
                     choices=matched_choices if matched_choices else None
                 )
 
@@ -149,12 +152,15 @@ class DialogueConfigBuilder(BaseBuilder):
                 dialogue_id = get_row_val(row, 'DialogueID')
 
                 matched_choices = choices_by_node.get(node_id, [])
+                step_end_val = get_row_val(row, 'StepEnd', 'IsStepEnd', 'step_end')
+                is_step_end = str(step_end_val).lower() in ['true', '1', 'yes'] if step_end_val else False
 
                 node_new = DialogueNodeModel(
                     node_id=node_id,
                     actor_id=get_row_val(row, 'ActorID'),
                     text_hash=self.get_hash(row['Text']) if ('Text' in row and pd.notna(row['Text'])) else 0,
                     next_node_id=get_row_val(row, 'NextNodeID', 'TargetNodeID', 'NextDialogueID'),
+                    step_end=is_step_end,
                     choices=matched_choices if matched_choices else None
                 )
 
@@ -194,21 +200,24 @@ class QuestLineConfigBuilder(BaseBuilder):
         if "Steps" in all_sheets:
             df_steps  = all_sheets["Steps"]
             for _, row in df_steps.iterrows():
-                if pd.isna(row['ID']) : continue
+                if not is_valid_row(row, 'ID', 'StepID'): continue
 
-                quest_id = str(row['QuestID']).strip()
-                step_id = str(row['ID']).strip()
+                quest_id = get_row_val(row, 'QuestID')
+                step_id = get_row_val(row, 'ID', 'StepID')
+                des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
+                req_amt_str = get_row_val(row, 'RequiredAmount', 'RequireAmount', 'Amount')
 
                 new_step = StepModel(
                     id=step_id,
-                    actor_id=str(row['ActorID']) if pd.notna(row['ActorID']) else "",
-                    previous_dialogue=str(row['DialogueBeforeStep']) if pd.notna(row['DialogueBeforeStep']) else "",
-                    completed_dialogue=str(row['CompleteDialogue']) if pd.notna(row['CompleteDialogue']) else "",
-                    incomplete_dialogue=str(row['IncompleteDialogue']) if pd.notna(row['IncompleteDialogue']) else "",
-                    type=str(row['Type']) if pd.notna(row['Type']) else "",
-                    item_id=str(row['ItemID']) if pd.notna(row['ItemID']) else "",
-                    target_id=str(row['TargetID']) if ('TargetID' in row and pd.notna(row['TargetID'])) else "",
-                    required_amount=int(row['RequiredAmount']) if ('RequiredAmount' in row and pd.notna(row['RequiredAmount'])) else 1,
+                    actor_id=get_row_val(row, 'ActorID'),
+                    previous_dialogue=get_row_val(row, 'DialogueBeforeStep', 'PreviousDialogue'),
+                    completed_dialogue=get_row_val(row, 'CompleteDialogue', 'CompletedDialogue'),
+                    incomplete_dialogue=get_row_val(row, 'IncompleteDialogue'),
+                    type=get_row_val(row, 'Type'),
+                    item_id=get_row_val(row, 'ItemID'),
+                    des_hash=self.get_hash(des_val) if des_val else 0,
+                    target_id=get_row_val(row, 'TargetID'),
+                    required_amount=int(req_amt_str) if req_amt_str and req_amt_str.isdigit() else 1,
                 )
 
                 if quest_id not in step_by_quest:
@@ -219,30 +228,33 @@ class QuestLineConfigBuilder(BaseBuilder):
         if "Quests" in all_sheets:
             df_quest = all_sheets["Quests"]
             for _, row in df_quest.iterrows():
-                if pd.isna(row['ID']) : continue
+                if not is_valid_row(row, 'ID', 'QuestID'): continue
                 
-                quest_id = str(row['ID']).strip()
-                questline_id = str(row['QuestLineID']).strip()
+                quest_id = get_row_val(row, 'ID', 'QuestID')
+                questline_id = get_row_val(row, 'QuestLineID')
 
                 match_steps = step_by_quest.get(quest_id, [])
 
-                quest_type_str = str(row['QuestType']).strip().lower() if 'QuestType' in row and pd.notna(row['QuestType']) else ""
+                quest_type_str = get_row_val(row, 'QuestType', 'Type').lower()
                 type_map = {"main": 1, "daily": 2, "none": 0}
                 quest_type_val = type_map.get(quest_type_str, 0)
 
-                prereq_str = str(row['PrerequisiteQuestIDs']).strip() if 'PrerequisiteQuestIDs' in row and pd.notna(row['PrerequisiteQuestIDs']) else ""
-                prereq_list = [p.strip() for p in prereq_str.split('|') if p.strip()] if prereq_str else []
+                prereq_str = get_row_val(row, 'PrerequisiteQuestIDs', 'PrerequisiteQuestID', 'PrerequisiteQuests', 'Prerequisites', 'PrereqQuestIDs', 'PrereqIDs')
+                import re
+                prereq_list = [p.strip() for p in re.split(r'[|,;]', prereq_str) if p.strip()] if prereq_str else []
 
                 name_val = get_row_val(row, 'Name', 'NameID', 'QuestName', 'Title')
                 des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
+                req_level_str = get_row_val(row, 'RequiredLevel', 'RequireLevel', 'Level')
+                req_level_val = int(req_level_str) if req_level_str and req_level_str.isdigit() else 1
 
                 new_quest = QuestModel(
                     id=quest_id,
-                    chapter_id=get_row_val(row, 'ChapterID'),
+                    chapter_id=get_row_val(row, 'ChapterID', 'Chapter', 'Chapter_ID', 'Chapter ID'),
                     name_hash=self.get_hash(name_val) if name_val else 0,
                     des_hash=self.get_hash(des_val) if des_val else 0,
                     prerequisite_quest_ids=prereq_list,
-                    required_level=int(row['RequiredLevel']) if 'RequiredLevel' in row and pd.notna(row['RequiredLevel']) else 1,
+                    required_level=req_level_val,
                     steps=match_steps,
                     quest_type=quest_type_val,
                     reward_id=get_row_val(row, 'RewardID')
@@ -261,12 +273,10 @@ class QuestLineConfigBuilder(BaseBuilder):
                 match_quest = quest_by_questline.get(questline_id, [])
 
                 name_val = get_row_val(row, 'Name', 'NameID', 'QuestLineName', 'Title')
-                des_val = get_row_val(row, 'Description', 'Des', 'DescriptionID', 'DesID')
 
                 questline_data[questline_id] = QuestLinesModel(
                     id=questline_id,
                     name_hash=self.get_hash(name_val) if name_val else 0,
-                    des_hash=self.get_hash(des_val) if des_val else 0,
                     quests=match_quest,
                 )
 

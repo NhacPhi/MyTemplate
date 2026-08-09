@@ -9,6 +9,8 @@ public enum GameSaveType
 
 public class SaveSystem
 {
+    public static SaveSystem Instance { get; private set; }
+
     private string saveSettingsFileName = "settings.json";
     private string savePlayerFileName = "Player.json";
 
@@ -20,6 +22,7 @@ public class SaveSystem
 
     public void Init()
     {
+        Instance = this;
         settings = new SettingSave();
         player = new PlayerSave();
     }

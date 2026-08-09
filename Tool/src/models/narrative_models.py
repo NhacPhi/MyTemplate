@@ -14,6 +14,7 @@ class DialogueNodeModel:
     actor_id: str
     text_hash: int
     next_node_id: str = ""
+    step_end: bool = False
     choices: Optional[List[DialogueChoiceModel]] = None
 
 @dataclass
@@ -54,6 +55,7 @@ class StepModel:
     incomplete_dialogue: str
     type: str
     item_id: str
+    des_hash: int = 0
     target_id: str = ""
     required_amount: int = 1
 
@@ -73,7 +75,6 @@ class QuestModel:
 class QuestLinesModel:
     id: str
     name_hash: int
-    des_hash: int
     quests: List[QuestModel]
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}

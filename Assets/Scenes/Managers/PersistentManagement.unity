@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sfxSource: {fileID: 1036735791}
+  _musicSource: {fileID: 0}
 --- !u!1 &1076275669
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +448,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _audioManager: {fileID: 1036735792}
-  _autoSave: {fileID: 0}
+  _autoSave: {fileID: 1657839167}
   _activeAudioDatabases:
   - {fileID: 11400000, guid: 58a7d1442c15fce45bcbd71714f77d7d, type: 2}
   - {fileID: 11400000, guid: e4bbe40356d1c6547bbd73242b2c623e, type: 2}
@@ -543,6 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayScene: {fileID: 11400000, guid: 98ce98b2afe6d6643a0c7f3b887d7e67, type: 2}
+  _registeredLocationScenes: []
   _loadLocation: {fileID: 11400000, guid: 8dc720cd5af33694d9ed842c3fcad908, type: 2}
   _loadMenu: {fileID: 11400000, guid: 5974300ab117c1241b4791ff72cc208b, type: 2}
   _coldStartupLocation: {fileID: 11400000, guid: e55fafd33084d17459e9a2ae686056e8, type: 2}

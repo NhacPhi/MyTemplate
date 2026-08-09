@@ -17,7 +17,7 @@ public class QuestLineUIGroup : MonoBehaviour
         if (btnToggle != null) btnToggle.onClick.AddListener(ToggleGroup);
     }
 
-    public void Setup(string localizedGroupName, string localizedGroupDes = "")
+    public void Setup(string localizedGroupName, string localizedGroupDes = "", bool startOpen = true)
     {
         if (txtQuestLineName != null) txtQuestLineName.text = localizedGroupName;
         if (txtQuestLineDes != null)
@@ -25,8 +25,21 @@ public class QuestLineUIGroup : MonoBehaviour
             txtQuestLineDes.text = localizedGroupDes;
             txtQuestLineDes.gameObject.SetActive(!string.IsNullOrEmpty(localizedGroupDes));
         }
-        if (questItemsContainer != null) questItemsContainer.gameObject.SetActive(true);
-        isOpen = true;
+        SetOpenState(startOpen);
+    }
+
+    public void SetOpenState(bool open)
+    {
+        isOpen = open;
+        if (questItemsContainer != null)
+        {
+            questItemsContainer.gameObject.SetActive(open);
+        }
+
+        if (transform.parent != null)
+        {
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent.GetComponent<RectTransform>());
+        }
     }
 
     public void ToggleGroup()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,6 +98,32 @@ public class GameNarrativeData : MonoBehaviour
 
     public DialogueConfig GetDialogueConfigByID(string dialogueID)
     {
-        return DialogueConfigs.GetValueOrDefault(dialogueID);
+        if (string.IsNullOrEmpty(dialogueID)) return null;
+
+        string cleanID = dialogueID.Trim();
+        if (DialogueConfigs.TryGetValue(cleanID, out var config))
+        {
+            return config;
+        }
+
+        var match = DialogueConfigs.FirstOrDefault(x => string.Equals(x.Key.Trim(), cleanID, StringComparison.OrdinalIgnoreCase));
+        if (match.Value != null)
+        {
+            return match.Value;
+        }
+
+        // Fallback: Check if cleanID is a NodeID inside any DialogueConfig's Nodes list
+        foreach (var dlg in DialogueConfigs.Values)
+        {
+            if (dlg != null && dlg.Nodes != null)
+            {
+                if (dlg.Nodes.Any(n => n.NodeID != null && string.Equals(n.NodeID.Trim(), cleanID, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return dlg;
+                }
+            }
+        }
+
+        return null;
     }
 }

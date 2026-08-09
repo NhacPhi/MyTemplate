@@ -6,11 +6,4 @@ using TMPro;
 
 public class DialogueScene : WindowController
 {
-        // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
 }

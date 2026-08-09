@@ -478,6 +478,8 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        if (CurrentState == ProtagonistState.Dialogue || CurrentState == ProtagonistState.Dead) return;
+
         CurrentHP -= damage;
         Debug.Log($"Protagonist HP: {CurrentHP}/{MaxHP}");
         UIEvent.OnUpdatePlayerHP?.Invoke(CurrentHP, MaxHP);
@@ -519,6 +521,11 @@ public class Protagonist : MonoBehaviour, IDamageable
                 break;
             case ProtagonistState.Dialogue:
                 _idleTimer = 0f;
+                movement = Vector2.zero;
+                var rb = GetComponent<Rigidbody>();
+                if (rb != null) rb.velocity = Vector3.zero;
+                var rb2d = GetComponent<Rigidbody2D>();
+                if (rb2d != null) rb2d.velocity = Vector2.zero;
                 SetCollisionActive(false);
                 break;
             case ProtagonistState.Dead:

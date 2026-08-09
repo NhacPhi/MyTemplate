@@ -126,13 +126,13 @@ Cấu trúc: **`node_[STT]_[MãNgườiNói]_[HànhĐộng]`**
 ### 📜 3.1. File `QuestLines.xlsx` (Nhiệm Vụ 3 Cấp)
 
 #### Sheet `QuestLines`:
-- `ID`, `Name`, `Description`.
+- `ID`, `Name`.
 
 #### Sheet `Quests`:
 - `ID`, `QuestLineID`, `Name`, `Description`, `ChapterID`, `PrerequisiteQuestIDs`, `RequiredLevel`, `QuestType`, `RewardID`.
 
 #### Sheet `Steps`:
-- `ID`, `QuestID`, `ActorID`, `Type`, `DialogueBeforeStep`, `IncompleteDialogue`, `CompleteDialogue`, `TargetID`, `RequiredAmount`.
+- `ID`, `QuestID`, `ActorID`, `Type`, `Description`, `DialogueBeforeStep`, `IncompleteDialogue`, `CompleteDialogue`, `TargetID`, `RequiredAmount`.
 
 ---
 

@@ -93,6 +93,12 @@ public class DialogueManager : MonoBehaviour
         GameEvent.OnAdvanceDialogueEvent += OnAdvance;
 
         var currentNode = currentDialogue.Nodes[currentNodeIndex];
+        if (currentNode.StepEnd || currentNode.IsStepEnd)
+        {
+            Debug.Log($"[DialogueManager] Node '{currentNode.NodeID}' has StepEnd flag set -> Invoking GameEvent.OnCompleteStep!");
+            GameEvent.OnCompleteStep?.Invoke();
+        }
+
         ActorConfig actor = gameNarrativeData.GetActorConfig(currentNode.ActorID);
 
         string lineText = "";
@@ -271,6 +277,20 @@ public class DialogueManager : MonoBehaviour
 
         string cleanTargetId = targetNodeId.Trim();
 
+        if (string.Equals(cleanTargetId, "step_end", StringComparison.OrdinalIgnoreCase))
+        {
+            Debug.Log("[DialogueManager] Target node ID is 'step_end' -> Invoking GameEvent.OnCompleteStep!");
+            GameEvent.OnCompleteStep?.Invoke();
+            DialogueEndAndCloseDialogueUI();
+            return;
+        }
+
+        if (string.Equals(cleanTargetId, "node_end", StringComparison.OrdinalIgnoreCase))
+        {
+            DialogueEndAndCloseDialogueUI();
+            return;
+        }
+
         if (isNodeTreeMode)
         {
             int index = currentDialogue.Nodes.FindIndex(n => n.NodeID != null && n.NodeID.Trim().Equals(cleanTargetId, StringComparison.OrdinalIgnoreCase));
@@ -291,6 +311,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning($"[DialogueManager] Dialogue ended because target Node/Dialogue ID '{cleanTargetId}' (requested by Node '{currentDialogue?.Nodes?[currentNodeIndex]?.NodeID}') WAS NOT FOUND in current tree or DialogueConfigs!");
             DialogueEndAndCloseDialogueUI();
         }
     }
