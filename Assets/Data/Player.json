@@ -1,15 +1,15 @@
 {
   "account_info": {
     "player_name": "Congyon",
-    "level": 10,
-    "current_exp": 9800,
+    "level": 11,
+    "current_exp": 1000,
     "avatar_icon": "Wukong05_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 275,
-      "Jade": 789000,
-      "Coin": 21208000,
+      "Energy": 255,
+      "Jade": 789300,
+      "Coin": 20548000,
       "RelicEssence": 68550800,
       "ArmorPrimorite": 5904500,
       "Ticket": 301
@@ -28,7 +28,7 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 17
+        "quantity": 12
       },
       {
         "id": "Yellow_Jade_Gemstone",
@@ -93,7 +93,7 @@
       {
         "id": "rare_exp",
         "type": "Exp",
-        "quantity": 42
+        "quantity": 39
       },
       {
         "id": "Jade_Chunk",
@@ -128,7 +128,7 @@
       {
         "id": "fine_exp",
         "type": "Exp",
-        "quantity": 15
+        "quantity": 13
       },
       {
         "id": "Jade_Sliver",
@@ -138,7 +138,7 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 339
+        "quantity": 353
       },
       {
         "id": "Tofu_Soup",
@@ -163,7 +163,7 @@
       {
         "id": "Slime",
         "type": "Material",
-        "quantity": 54
+        "quantity": 57
       },
       {
         "id": "Meat",
@@ -202,7 +202,7 @@
         "template_id": "Nimbus_Cudgel",
         "current_level": 100,
         "current_updgrade": 6,
-        "equip": "SunWukong"
+        "equip": "ErlangShen"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
@@ -216,7 +216,7 @@
         "template_id": "Triple_Edged_Blade",
         "current_level": 40,
         "current_updgrade": 1,
-        "equip": "ErlangShen"
+        "equip": "SunWukong"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
@@ -1097,7 +1097,7 @@
         "exp": 70,
         "ascension_tier": 1,
         "star_up": 1,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
         "armors": []
       },
       {
@@ -1115,7 +1115,7 @@
         "exp": 89,
         "ascension_tier": 1,
         "star_up": 0,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777745f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
         "armors": [
           {
             "id": "0f8fad5b-d9cb-469f-a165-70867728950e",
@@ -1145,8 +1145,8 @@
       },
       {
         "id": "LiJing",
-        "level": 5,
-        "exp": 33,
+        "level": 20,
+        "exp": 91,
         "ascension_tier": 0,
         "star_up": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884775748f",
@@ -1205,19 +1205,23 @@
       },
       {
         "position": 2,
-        "character_id": "ErlangShen"
-      },
-      {
-        "position": 3,
         "character_id": "SunWukong"
       },
       {
-        "position": 4,
+        "position": 3,
         "character_id": ""
       },
       {
-        "position": 6,
+        "position": 4,
         "character_id": "ThirdPrinceNezha"
+      },
+      {
+        "position": 5,
+        "character_id": "ErlangShen"
+      },
+      {
+        "position": 6,
+        "character_id": ""
       }
     ],
     "active_global_buffs": [
@@ -1261,7 +1265,8 @@
     "last_scene_name": "Ocean",
     "destroyed_resources": {
       "f689cde0-a2a7-4c35-9b9a-d4ee7ac3fe43": 639216212001476048,
-      "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639219011415650138
+      "f3ad7db9-7466-4997-9c79-ef98d0576d3d": 639219501226459783,
+      "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639219486971481372
     }
   },
   "quest": {
@@ -1270,16 +1275,16 @@
       "Q_Chapter_01_Act_01"
     ],
     "ClaimableQuestIDs": [],
-    "ActiveQuestID": "Q_Chapter_01_Act_02",
+    "ActiveQuestID": "",
     "ActiveStepIndex": 0,
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639218448000000000,
+    "last_reset_time_ticks": 639219312000000000,
     "active_daily_quests": {
+      "dq_gather_peach": 0,
       "dp_gacha_character": 0,
-      "dq_upgrade_character": 0,
-      "dq_gather_peach": 0
+      "dq_clear_battle": 1
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

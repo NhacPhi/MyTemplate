@@ -158,7 +158,7 @@ Cấu trúc: **`node_[STT]_[MãNgườiNói]_[HànhĐộng]`**
 | :--- | :---: | :--- |
 | `NodeID` | ✅ | ID Node sở hữu lựa chọn này (VD: `node_01_DragonKing_AskHelp`) |
 | `Text` | ✅ | Chữ hiển thị trên nút lựa chọn (VD: *"1. Ta sẵn sàng giúp!"*) |
-| `ActionChoiceType` | ✅ | Hành động (`NextNode`, `AcceptQuest`, `CompleteStep`, `OpenShop`, `CloseDialogue`...) |
+| `ActionChoiceType` | ✅ | Hành động (`NextNode`, `AcceptQuest`, `Reject`, `CompleteStep`, `OpenShop`, `CloseDialogue`...) |
 | `TargetNodeID` | ⚪ | ID Node nhảy tới (khi `NextNode`) |
 | `Param` | ⚪ | Tham số phụ đi kèm (VD: ID Quest `Q_QL01_01_BorrowWeapon` khi `AcceptQuest`) |
 

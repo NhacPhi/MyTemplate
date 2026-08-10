@@ -32,6 +32,7 @@ public class QuestManager
     public void StartGame()
     {
         GameEvent.OnAcceptQuest += AcceptQuest;
+        GameEvent.OnRejectQuest += RejectQuest;
         GameEvent.OnCompleteStep += EndStep;
         GameEvent.OnMakeWinChoice += MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent += CheckStepValidity;
@@ -46,6 +47,7 @@ public class QuestManager
 
     ~QuestManager() {
         GameEvent.OnAcceptQuest -= AcceptQuest;
+        GameEvent.OnRejectQuest -= RejectQuest;
         GameEvent.OnCompleteStep -= EndStep;
         GameEvent.OnMakeWinChoice -= MakeWinningChoice;
         GameEvent.OnContinueWithStepEvent -= CheckStepValidity;
@@ -127,6 +129,15 @@ public class QuestManager
         
         Debug.Log($"[QuestManager] GetActiveQuestTypeForActor({actorID}): No active quest found for this NPC.");
         return null;
+    }
+
+    /// <summary>
+    /// Checks if the specified actor is currently involved in an active quest step.
+    /// </summary>
+    public bool IsNPCInQuestProgress(string actorID)
+    {
+        if (string.IsNullOrEmpty(actorID)) return false;
+        return GetActiveQuestTypeForActor(actorID).HasValue;
     }
 
     /// <summary>
@@ -312,6 +323,19 @@ public class QuestManager
         }
         
         Debug.LogWarning($"[QuestManager] ERROR: Could not find quest with ID '{questID}' in any loaded QuestLines!");
+    }
+
+    private bool isStepRejected = false;
+
+    public void RejectQuest(string questID)
+    {
+        Debug.Log($"[QuestManager] RejectQuest() triggered for ID: '{questID}'");
+        isStepRejected = true;
+
+        if (!string.IsNullOrEmpty(questID) && currentQuest != null && string.Equals(currentQuest.ID, questID, StringComparison.OrdinalIgnoreCase))
+        {
+            StopTrackingQuest();
+        }
     }
 
     public void StopTrackingQuest()
@@ -688,6 +712,13 @@ public class QuestManager
 
         string lastDialogueOwner = dialogueOwnerStepID;
         dialogueOwnerStepID = null;
+
+        if (isStepRejected)
+        {
+            isStepRejected = false;
+            Debug.Log($"[QuestManager] EndDialogue skipped because player rejected the quest/step.");
+            return;
+        }
 
         // Verify that the dialogue that just ended belonged to currentStep before any step completion occurred
         bool isSameStepDialogue = !string.IsNullOrEmpty(lastDialogueOwner) && string.Equals(lastDialogueOwner, currentStep.ID, StringComparison.OrdinalIgnoreCase);

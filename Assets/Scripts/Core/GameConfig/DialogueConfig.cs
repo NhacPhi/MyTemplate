@@ -14,7 +14,9 @@ public enum ChoiceActionType
     ContinueWithStep = 7,  // Tương thích ngược
     WinningChoice = 8,     // Tương thích ngược
     LosingChoice = 9,      // Tương thích ngược
-    IncompleteStep = 10    // Tương thích ngược
+    IncompleteStep = 10,   // Tương thích ngược
+    Reject = 11,           // Từ chối Quest
+    RejectQuest = 11       // Alias cho Reject
 }
 
 public enum DialogueType

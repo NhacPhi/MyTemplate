@@ -407,7 +407,7 @@ public class QuestScene : WindowController
                         objective = $"{giveItemToStr} {actorName}";
                         break;
                     case StepType.DefeatEnemy:
-                        objective = $"{defeatEnemyStr} {step.ActorID}";
+                        objective = $"{defeatEnemyStr} {actorName}";
                         break;
                     case StepType.CollectItem:
                     case StepType.CheckItem:

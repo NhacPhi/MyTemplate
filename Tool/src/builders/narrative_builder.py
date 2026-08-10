@@ -43,7 +43,9 @@ ACTION_TYPE_MAP = {
     "continuewithstep": 7,
     "winningchoice": 8,
     "losingchoice": 9,
-    "incompletestep": 10
+    "incompletestep": 10,
+    "reject": 11,
+    "rejectquest": 11
 }
 
 def parse_action_type(val):

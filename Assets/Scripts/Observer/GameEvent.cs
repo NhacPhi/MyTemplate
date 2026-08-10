@@ -38,6 +38,7 @@ public static class GameEvent
     public static Action OnMakeWinChoice;
     public static Action OnMakeLosingChoice;
     public static Action<string> OnAcceptQuest;
+    public static Action<string> OnRejectQuest;
     public static Action OnCompleteStep;
     public static Action OnContinueWithStepEvent;
     public static Action OnQuestUpdated;

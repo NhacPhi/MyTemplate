@@ -6,6 +6,8 @@ using VContainer;
 public class InteractionUI : MonoBehaviour
 {
     [Inject] private GameDataBase gameDataBase;
+    private QuestManager questManager;
+    private DailyQuestManager dailyQuestManager;
     private GameNarrativeData gameNarrativeData;
 
     [SerializeField] private List<InteractionOption> interactions;
@@ -83,6 +85,67 @@ public class InteractionUI : MonoBehaviour
         return gameNarrativeData;
     }
 
+    private QuestManager GetQuestManager()
+    {
+        if (questManager != null) return questManager;
+
+        if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            try
+            {
+                questManager = GameplayScope.Instance.Container.Resolve<QuestManager>();
+            }
+            catch { }
+        }
+        return questManager;
+    }
+
+    private DailyQuestManager GetDailyQuestManager()
+    {
+        if (dailyQuestManager != null) return dailyQuestManager;
+
+        if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            try
+            {
+                dailyQuestManager = GameplayScope.Instance.Container.Resolve<DailyQuestManager>();
+            }
+            catch { }
+        }
+        return dailyQuestManager;
+    }
+
+    private bool IsNPCInQuestProgress(string actorID)
+    {
+        if (string.IsNullOrEmpty(actorID)) return false;
+
+        var qMgr = GetQuestManager();
+        if (qMgr != null && qMgr.IsNPCInQuestProgress(actorID))
+        {
+            return true;
+        }
+
+        var dqMgr = GetDailyQuestManager();
+        var narrativeData = GetGameNarrativeData();
+        if (dqMgr != null && narrativeData != null && dqMgr.SaveData != null)
+        {
+            string trackedDaily = dqMgr.SaveData.TrackedQuestID;
+            if (!string.IsNullOrEmpty(trackedDaily) && narrativeData.DailyQuestConfigs != null && narrativeData.DailyQuestConfigs.TryGetValue(trackedDaily, out var config))
+            {
+                if (config.ObjectiveType == ObjectiveType.TalkToNPC && string.Equals(config.TargetID?.Trim(), actorID.Trim(), System.StringComparison.OrdinalIgnoreCase))
+                {
+                    int currentProgress = dqMgr.SaveData.ActiveDailyQuests.GetValueOrDefault(trackedDaily, 0);
+                    if (currentProgress < config.RequireAmount)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     private void UpdateInteractionUI(List<Interaction> activeInteractions)
     {
         // Tắt hết các nút hiện tại
@@ -95,7 +158,33 @@ public class InteractionUI : MonoBehaviour
 
         if (activeInteractions == null || activeInteractions.Count == 0) return;
 
+        // Kiểm tra xem có NPC nào trong danh sách tương tác đang thuộc tiến trình nhiệm vụ hay không
+        bool hasNPCInQuestProgress = false;
         foreach (var interaction in activeInteractions)
+        {
+            if (interaction != null && interaction.type == InteractionType.Talk && interaction.interactableObject != null)
+            {
+                StepController stepController = interaction.interactableObject.GetComponent<StepController>()
+                    ?? interaction.interactableObject.GetComponentInParent<StepController>();
+                if (stepController != null && stepController.Actor != null)
+                {
+                    if (IsNPCInQuestProgress(stepController.Actor.ID))
+                    {
+                        hasNPCInQuestProgress = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Nếu NPC đang trong tiến trình nhiệm vụ, chỉ hiển thị option Talk
+        List<Interaction> displayInteractions = activeInteractions;
+        if (hasNPCInQuestProgress)
+        {
+            displayInteractions = activeInteractions.FindAll(i => i != null && i.type == InteractionType.Talk);
+        }
+
+        foreach (var interaction in displayInteractions)
         {
             if (interaction == null || interaction.interactableObject == null) continue;
 

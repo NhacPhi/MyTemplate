@@ -1823,7 +1823,7 @@
                     },
                     {
                         "text_hash": 33952206,
-                        "action_type": 6,
+                        "action_type": 11,
                         "target_node_id": "DLG_Chapter01_Act01_Step01_Node_End",
                         "param": ""
                     }
@@ -2051,6 +2051,143 @@
                 "node_id": "DLG_Chapter01_Act01_Step03_Start_Node_09",
                 "actor_id": "Sun_Wukong",
                 "text_hash": 2399276722,
+                "next_node_id": "step_end",
+                "step_end": false,
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Chapter01_Act02_Step01_Start": {
+        "id": "DLG_Chapter01_Act02_Step01_Start",
+        "type": "Start",
+        "nodes": [
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Start_Node_Start",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3206861698,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Start_Node_01",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Start_Node_01",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 3748027695,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Start_Node_02",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Start_Node_02",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1372334716,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Start_Node_03",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Start_Node_03",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 503407647,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Start_Node_04",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Start_Node_04",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 178164897,
+                "next_node_id": "start_battle",
+                "step_end": false,
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Chapter01_Act02_Step01_Complate": {
+        "id": "DLG_Chapter01_Act02_Step01_Complate",
+        "type": "Completion",
+        "nodes": [
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_Start",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 494942885,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_01",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1016447382,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_02",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_02",
+                "actor_id": "ThirdDragonPrince",
+                "text_hash": 1147699461,
+                "next_node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_03",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step01_Complate_Node_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 2798661247,
+                "next_node_id": "step_end",
+                "step_end": false,
+                "choices": null
+            }
+        ]
+    },
+    "DLG_Chapter01_Act02_Step02": {
+        "id": "DLG_Chapter01_Act02_Step02",
+        "type": "Start",
+        "nodes": [
+            {
+                "node_id": "DLG_Chapter01_Act02_Step02_Node_Start",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 1265368464,
+                "next_node_id": "",
+                "step_end": false,
+                "choices": [
+                    {
+                        "text_hash": 2635386349,
+                        "action_type": 1,
+                        "target_node_id": "DLG_Chapter01_Act02_Step02_Node_01",
+                        "param": ""
+                    }
+                ]
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step02_Node_01",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 1188143325,
+                "next_node_id": "DLG_Chapter01_Act02_Step02_Node_02",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step02_Node_02",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 2611497130,
+                "next_node_id": "DLG_Chapter01_Act02_Step02_Node_03",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step02_Node_03",
+                "actor_id": "Sun_Wukong",
+                "text_hash": 3681332252,
+                "next_node_id": "DLG_Chapter01_Act02_Step02_Node_04",
+                "step_end": false,
+                "choices": null
+            },
+            {
+                "node_id": "DLG_Chapter01_Act02_Step02_Node_04",
+                "actor_id": "Dragon_king_Eatern_Sea",
+                "text_hash": 1890641099,
                 "next_node_id": "step_end",
                 "step_end": false,
                 "choices": null

@@ -234,6 +234,14 @@ public class DialogueManager : MonoBehaviour
                 GameEvent.OnAcceptQuest?.Invoke(choice.Param);
                 break;
 
+            case ChoiceActionType.Reject:
+                GameEvent.OnRejectQuest?.Invoke(choice.Param);
+                if (string.Equals(targetNode, "step_end", StringComparison.OrdinalIgnoreCase))
+                {
+                    targetNode = "node_end";
+                }
+                break;
+
             case ChoiceActionType.CompleteStep:
             case ChoiceActionType.WinningChoice:
                 GameEvent.OnCompleteStep?.Invoke();
