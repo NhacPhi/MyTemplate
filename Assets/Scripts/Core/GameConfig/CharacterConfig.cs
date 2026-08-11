@@ -58,24 +58,22 @@ public class CharacterConfig
 
     public int GetStat(StatType type)
     {
-        if (Stats.TryGetValue(type, out int value))
+        if (Stats != null && Stats.TryGetValue(type, out int value))
         {
             return value;
         }
 
-        LogCommon.LogWarning($"{type} not Found");
-        return default;
+        return 0;
     }
 
     public int GetUpdateStat(StatType type)
     {
-        if (Upgrades.TryGetValue(type, out int value))
+        if (Upgrades != null && Upgrades.TryGetValue(type, out int value))
         {
             return value;
         }
 
-        LogCommon.LogWarning($"{type} not Found");
-        return default;
+        return 0;
     }
 
     public int GetStatByLevel(StatType type, int level)

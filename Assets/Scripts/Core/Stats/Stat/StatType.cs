@@ -9,7 +9,7 @@ public enum StatType
     DEF_SHRED,
     CRIT_RATE,
     CRIT_DMG,
-    PEN,
+    PENETRATION,
     CRIT_DMG_RES,
     SHIELD,
     EHR, //Effect Hit Rate

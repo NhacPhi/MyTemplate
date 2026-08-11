@@ -76,11 +76,11 @@ public class CharacterCardInfo : CharacterCard
         txtATK.text = GetStatText(StatType.ATK, characterProfile);
         txtDEF.text = GetStatText(StatType.DEF, characterProfile);
         txtSPD.text = GetStatText(StatType.SPEED, characterProfile);
-        txtDEFShred.text = "0"; // stat.DEFShred.ToString();
+        txtDEFShred.text = GetStatText(StatType.DEF_SHRED, characterProfile);
         txtCritRate.text = GetStatText(StatType.CRIT_RATE, characterProfile, true);
         txtCriteDMG.text = GetStatText(StatType.CRIT_DMG, characterProfile, true, 175);
-        txtPenetration.text = "0"; // stat.Penetration.ToString();
-        txtCritDGMRes.text = "0"; // stat.CRITDMGRes.ToString();
+        txtPenetration.text = GetStatText(StatType.PENETRATION, characterProfile, true);
+        txtCritDGMRes.text = GetStatText(StatType.CRIT_DMG_RES, characterProfile, true);
 
         int starUp = characterProfile.SaveData.StarUp;
         baseSkill.SetSkillUI(characterConfig.BaseSkillIcon, 

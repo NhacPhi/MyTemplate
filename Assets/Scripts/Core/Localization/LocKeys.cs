@@ -245,6 +245,10 @@ public static class LocKeys
 
     public const long UI_GO_AWAY = 2574217525;
 
+    public const long UI_O_DEF_SHRED = 1764894196;
+
+    public const long UI_O_PENETRATION = 3983025424;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

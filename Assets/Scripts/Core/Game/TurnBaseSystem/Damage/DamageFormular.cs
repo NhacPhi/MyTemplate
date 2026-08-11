@@ -4,6 +4,7 @@ using UnityEngine;
 public static class DamageFormular 
 {
     private static System.Collections.Generic.Dictionary<int, int> prdAttackCounts = new System.Collections.Generic.Dictionary<int, int>();
+    private const float DEF_CONSTANT = 400f;
 
    public static void DealDamge(DamageBonus damageBonus, Transform source, Transform target)
     {
@@ -50,9 +51,15 @@ public static class DamageFormular
                 prdAttackCounts[sourceId] = 1; // Reset PRD counter
                 
                 var critDmg = sourceStats.GetStat(StatType.CRIT_DMG);
-                // LoL Base Crit Damage is 175%, plus any bonus Crit Dmg
-                float critMultiplier = (175f + (critDmg != null ? critDmg.Value : 0f)) / 100f;
-                damageResult *= critMultiplier;
+                var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
+
+                float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
+                float critMultiplier = (175f + attackerCritDmg) / 100f;
+
+                float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
+                float critResMultiplier = Mathf.Max(0f, 1f - (defenderCritRes / 100f));
+
+                damageResult = damageResult * critMultiplier * critResMultiplier;
             }
             else
             {
@@ -60,14 +67,13 @@ public static class DamageFormular
             }
         }
 
-        var targetDef = targetStats.GetStat(StatType.DEF);
-
         if (targetSkill)
         {
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        damageResult = Mathf.RoundToInt(damageResult * (100f / (100 + targetDef.Value)));
+        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats);
+        damageResult = Mathf.RoundToInt(damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef)));
         targetStats.TakeDamage(damageResult, source.transform, damageBonus.Tags);
         UIEvent.DamagePopup(damageResult, target.transform.position, isCritical);
     }
@@ -88,14 +94,49 @@ public static class DamageFormular
             sourceSkill.ApplyAttackSkill(ref damageResult);
         }
 
-        var targetDef = targetStats.GetStat(StatType.DEF);
+        var critRate = sourceStats.GetStat(StatType.CRIT_RATE);
+        if (critRate != null && critRate.Value > 0)
+        {
+            var critDmg = sourceStats.GetStat(StatType.CRIT_DMG);
+            var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
+
+            float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
+            float critMultiplier = (175f + attackerCritDmg) / 100f;
+
+            float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
+            float critResMultiplier = Mathf.Max(0f, 1f - (defenderCritRes / 100f));
+
+            float expectedCritFactor = 1f + (critRate.Value / 100f) * ((critMultiplier * critResMultiplier) - 1f);
+            damageResult *= expectedCritFactor;
+        }
+
         if (targetSkill != null)
         {
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        damageResult = damageResult * (100f / (100 + targetDef.Value));
+        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats);
+        damageResult = damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef));
         return damageResult;
+    }
+
+    private static float CalculateEffectiveDefense(IDamagable sourceStats, IDamagable targetStats)
+    {
+        var targetDefStat = targetStats.GetStat(StatType.DEF);
+        float baseDef = targetDefStat != null ? targetDefStat.Value : 0f;
+
+        var penStat = sourceStats.GetStat(StatType.PENETRATION);
+        var defShredStat = sourceStats.GetStat(StatType.DEF_SHRED);
+
+        float penPercent = penStat != null ? penStat.Value : 0f; // VD: 20 -> 20%
+        float defShredFlat = defShredStat != null ? defShredStat.Value : 0f; // VD: 50 -> 50
+
+        // Bước 1: Xuyên giáp % (PEN) tính trước
+        float defAfterPen = baseDef * (1f - (penPercent / 100f));
+        // Bước 2: Sát lực (DEF_SHRED - giảm giáp phẳng) tính sau cùng
+        float effectiveDef = Mathf.Max(0f, defAfterPen - defShredFlat);
+
+        return effectiveDef;
     }
 
 

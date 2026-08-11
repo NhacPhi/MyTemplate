@@ -93,7 +93,8 @@ public static class Utility
             case StatType.SPEED: locailzationID = "UI_SPD"; break;
             case StatType.CRIT_RATE: locailzationID = "UI_CRIT_RATE"; break;
             case StatType.CRIT_DMG: locailzationID = "UI_CRIT_DMG"; break;
-            case StatType.PEN: locailzationID = "UI_PENETRATION"; break;
+            case StatType.PENETRATION: locailzationID = "UI_PENETRATION"; break;
+            case StatType.DEF_SHRED: locailzationID = "UI_DEF_SHRED"; break;
             case StatType.CRIT_DMG_RES: locailzationID = "UI_CRIT_DMG_RES"; break;
         }
 
@@ -140,7 +141,7 @@ public static class Utility
     //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
     public static int GetStatGrowthLevel(int level, float growth)
     {
-        return Convert.ToInt32(growth * (level - 1) * (0.7f + 0.03f * (level - 1)));
+        return Convert.ToInt32(growth * (level - 1) * (1.0f + 0.005f * (level - 1)));
     }
 
     //Coin to upgrade

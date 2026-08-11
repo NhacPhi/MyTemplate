@@ -96,14 +96,21 @@ public class StatsController : CoreComponent, IEffectable
 
         this.stats = new Dictionary<StatType, Stat>();
 
-
-        foreach (var key in _statProvider.BaseConfig.Stats.Keys)
+        foreach (StatType statType in System.Enum.GetValues(typeof(StatType)))
         {
-            Stat stat = new(_statProvider.GetTotalStat(key));
+            if (statType == StatType.None) continue;
+
+            float initialValue = 0f;
+            if (_statProvider != null)
+            {
+                initialValue = _statProvider.GetTotalStat(statType);
+            }
+
+            Stat stat = new(initialValue);
 #if UNITY_EDITOR
             stat.OnValueChange += HandleNotifyEditor;
 #endif
-            stats.Add(key, stat);
+            stats.Add(statType, stat);
         }
 #if UNITY_EDITOR
         NotifyEditor?.Invoke();
