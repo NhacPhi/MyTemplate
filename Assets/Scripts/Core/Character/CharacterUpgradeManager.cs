@@ -76,11 +76,14 @@ public class CharacterUpgradeManager
     /// <summary>
     /// Trả về giới hạn level hiện tại (ví dụ 20, 40... nếu chưa đột phá, hoặc 100 nếu đã hết mốc).
     /// </summary>
-    private int GetMaxLevelCap()
+    public int GetMaxLevelCap()
     {
-        GetNextAscensionRequirements(out _, out int reqLevel, out _, out _);
+        if (GetNextAscensionRequirements(out _, out int reqLevel, out _, out _) && reqLevel > 0)
+        {
+            return reqLevel;
+        }
 
-        return reqLevel;
+        return Definition.MAX_CHARACTER_LEVEL;
     }
 
     /// <summary>
@@ -239,7 +242,7 @@ public class CharacterUpgradeManager
             int    expValue        = expItem.Item2;
             int    availableQty    = expItem.Item3;
 
-            int amountNeeded = (expNeeded - currentExp) / expValue;
+            int amountNeeded = (int)Math.Ceiling((double)(expNeeded - currentExp) / expValue);
             int useAmount    = Math.Min(amountNeeded, availableQty);
 
             if (useAmount > 0)
@@ -247,6 +250,8 @@ public class CharacterUpgradeManager
                 selectedItems.Add(id, useAmount);
                 currentExp += useAmount * expValue;
             }
+
+            if (currentExp >= expNeeded) break;
         }
 
         // Nếu vẫn chưa đủ, thêm 1 item nhỏ nhất còn thừa

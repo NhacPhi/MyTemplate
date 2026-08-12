@@ -14,17 +14,16 @@ public class EnemyProfileModel : IStatProvider
         _level = level;
     }
 
-    public float GetBaseStat(StatType type)
-    {
-        if (BaseConfig == null) return 0f;
-        float baseStat = BaseConfig.GetStat(type);
-        float updateStat = BaseConfig.GetUpdateStat(type);
-        float growth = Utility.GetStatGrowthLevel(_level, updateStat);
-        return baseStat + growth;
-    }
-
     public int GetTotalStat(StatType type)
     {
-        return Mathf.RoundToInt(GetBaseStat(type));
+        float baseValue = BaseConfig.GetStat(type);
+        float growth    = baseValue * 0.1f * (_level - 1);
+
+        return Mathf.RoundToInt(baseValue + growth);
+    }
+
+    public float GetBaseStat(StatType type)
+    {
+        return BaseConfig.GetStat(type);
     }
 }

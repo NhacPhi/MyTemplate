@@ -93,7 +93,7 @@ Phân loại Class quyết định vai trò thực tế của Entity trên chi�
 | :--- | :---: | :---: | :---: | :--- |
 | 🧑‍💻 **`Character`** | **1.0x** (100%) | **1.0x** (100%) | **1.0x** (100%) | Đội hình 3-4 Tướng của người chơi. Giữ nguyên chỉ số chuẩn. |
 | 👾 **`Creep`** | **0.5x** (50%) | **0.7x** (70%) | **0.6x** (60%) | Quái nhỏ / Quái thường. Máu & Dame thấp để làm bao cát tích Ulti. |
-| 👑 **`Boss`** | **1.8x** (180%) | **1.2x** (120%) | **1.2x** (120%) | Trùm màn chơi (Không thể mặc đồ). **HP chỉ nhỉnh hơn Tướng 1.8 lần**, giáp + **`crit_dmg_res` +10%**. |
+| 👑 **`Boss`** | **4.0x** (400%) | **1.3x** (130%) | **1.4x** (140%) | Trùm màn chơi (1-3 Boss/màn). **HP x4 lần**, giáp dày + **`crit_dmg_res` +20%**. |
 
 ---
 
@@ -139,11 +139,7 @@ Cột **`Stat_Bias`** cho phép Designer thiết lập phong cách cá thể cho
 4. **`CharacterCardInfo.cs`**:
    - Cập nhật UI hiển thị chỉ số động cho `txtDEFShred`, `txtPenetration`, và `txtCritDGMRes` thông qua `GetStatText(...)`.
 
-5. **`EnemyProfileModel.cs`**:
-   - Cập nhật hàm `GetBaseStat` và `GetTotalStat` sử dụng công thức tăng trưởng mượt màng `Utility.GetStatGrowthLevel(_level, BaseConfig.GetUpdateStat(type))`.
-   - Giúp toàn bộ Quái nhỏ (Creep) và Boss trong từng Màn chơi (Stage) tăng trưởng chỉ số chính xác 100% theo Level được khai báo trong sheet `StageEnemies`!
-
-6. **`HealthBar.cs`**:
+5. **`HealthBar.cs`**:
    - Tích hợp **Thuật toán Tự Động Chia Mốc Đẹp (`GetNiceRoundNumber`) & Mục Tiêu 6 Vạch Lớn Cố Định**:
      - Loại bỏ hoàn toàn hằng số cứng `TICK_UNIT = 2000f`.
      - Dù Máu MaxHP là **3,000 HP** hay **600,000 HP** hay **10,000,000 HP**, thanh máu **LUÔN LUÔN hiển thị đúng 6 Vạch Lớn** (full height) và **3 Vạch Nhỏ** (50% height) giữa mỗi vạch lớn.

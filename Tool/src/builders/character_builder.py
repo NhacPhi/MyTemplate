@@ -35,10 +35,13 @@ class CharacterConfigBuilder(BaseBuilder):
                 if len(mc) < len(dm):
                     mc.extend([mc[-1]] * (len(dm) - len(mc)))
 
+                name_val = str(row['Name']).strip() if pd.notna(row['Name']) and str(row['Name']).strip() != "" else f"{skill_id}_Name"
+                des_val = str(row['Des']).strip() if pd.notna(row['Des']) and str(row['Des']).strip() != "" else f"{skill_id}_Des"
+
                 skill_lookup[skill_id] = SkillComponent(
                     id=skill_id,
-                    name_hash=self.get_hash((row['Name'].strip())) if not pd.isna(row['Name']) else 0,
-                    des_hash=self.get_hash((row['Des']).strip()) if not pd.isna(row['Des']) else 0,
+                    name_hash=self.get_hash(name_val),
+                    des_hash=self.get_hash(des_val),
                     skill=str(row['Type']).strip() if not pd.isna(row['Type']) else "None",
                     skill_type=str(row['SkillType']).strip() if not pd.isna(row['SkillType']) else "None",
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
@@ -51,12 +54,14 @@ class CharacterConfigBuilder(BaseBuilder):
                 )
 
         character_data = {}
+        char_class_map = {}
         if "Character" in all_sheets:
             df = all_sheets["Character"]
             for _, row in df.iterrows():
                 if pd.isna(row['ID']) : continue
 
                 character_id = str(row['ID']).strip()
+                char_class_map[character_id] = str(row['Class']).strip() if 'Class' in df.columns and pd.notna(row['Class']) else 'Character'
 
                 base_id = str(row['Base']).strip() if not pd.isna(row['Base']) else None
                 major_id = str(row['Major']).strip() if not pd.isna(row['Major']) else None
@@ -97,8 +102,8 @@ class CharacterConfigBuilder(BaseBuilder):
         }
         class_dict = {
             'Character': (1.0, 1.0, 1.0, 0),
-            'Creep':     (0.7, 0.7, 0.7, 0),
-            'Boss':      (1.8, 1.2, 1.2, 10)
+            'Creep':     (1.0, 1.4, 1.2, 0),
+            'Boss':      (1.5, 1.2, 1.2, 10)
         }
         bias_dict = {
             'Balanced':  (1.00, 1.00, 1.00,  0, 0, 0,  0, 0, 0),
@@ -131,7 +136,7 @@ class CharacterConfigBuilder(BaseBuilder):
 
                     rare = character_data[char_id].rare if (not rare_raw or rare_raw.startswith('=')) else rare_raw
                     role = character_data[char_id].type if (not role_raw or role_raw.startswith('=')) else role_raw
-                    cls = str(row['Class']).strip() if ('Class' in df.columns and pd.notna(row['Class']) and not str(row['Class']).startswith('=')) else ('Boss' if 'Boss' in char_id else ('Creep' if char_id in ['VanguardTiger', 'RatMonster', 'CrabSolider', 'SquidSolider', 'Benborba', 'Baborben', 'YoungBufflalo', 'Minions', 'HeavenlySoddier'] else 'Character'))
+                    cls = char_class_map.get(char_id, 'Character') if (not cls_raw or cls_raw.startswith('=')) else cls_raw
                     bias = 'Balanced' if (not bias_raw or bias_raw.startswith('=')) else bias_raw
 
                     r_mult, r_tier = rarity_mult.get(rare, (1.0, 0)), rarity_tier.get(rare, 0)
@@ -156,12 +161,12 @@ class CharacterConfigBuilder(BaseBuilder):
                     char_stats['atk'] = parse_val(row.get('atk')) or calc_atk
                     char_stats['def'] = parse_val(row.get('def')) or calc_def
                     char_stats['speed'] = parse_val(row.get('speed')) or calc_spd
-                    char_stats['def_shred'] = parse_val(row.get('def_shred')) or calc_shred
-                    char_stats['crit_rate'] = parse_val(row.get('crit_rare')) or parse_val(row.get('crit_rate')) or calc_cr
-                    char_stats['crit_dmg'] = parse_val(row.get('crit_dmg')) or calc_cd
-                    char_stats['penetration'] = parse_val(row.get('penetration')) or calc_pen
-                    char_stats['crit_dmg_res'] = parse_val(row.get('crit_dmg_res')) or calc_res
-
+                    char_stats['def_shred'] = parse_val(row.get('def_shred')) if parse_val(row.get('def_shred')) is not None else calc_shred
+                    char_stats['crit_rate'] = parse_val(row.get('crit_rate')) or parse_val(row.get('crit_rare')) or calc_cr
+                    char_stats['crit_dmg'] = parse_val(row.get('crit_dmg')) if parse_val(row.get('crit_dmg')) is not None else calc_cd
+                    char_stats['penetration'] = parse_val(row.get('penetration')) or parse_val(row.get('pen')) or calc_pen
+                    char_stats['crit_dmg_res'] = parse_val(row.get('crit_dmg_res')) if parse_val(row.get('crit_dmg_res')) is not None else calc_res
+                        
                     character_data[char_id].stats = char_stats
 
         if "CharacterAttribute" in all_sheets:

@@ -16,7 +16,7 @@ public class HealthBar : BaseAttributeUI
     [SerializeField] private RectTransform tickContainer;
     private List<GameObject> activeTicks = new List<GameObject>();
 
-    private const float TICK_UNIT = 4000f; // Mỗi 4000 máu 1 vạch lớn 
+    private const float TICK_UNIT = 5000f; // Mỗi 4000 máu 1 vạch lớn 
     private float maxHP;
     private float currentHP;
     private float currentShield;

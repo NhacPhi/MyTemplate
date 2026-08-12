@@ -83,11 +83,7 @@ public class BattleManager : MonoBehaviour
                 chosenSkill = SkillCharacter.Major;
         }
 
-        if (!skillManager.Skills.TryGetValue(chosenSkill, out var skillRuntime))
-        {
-            skillRuntime = skillManager.Skills.Values.FirstOrDefault();
-            if (skillRuntime == null) return null;
-        }
+        var skillRuntime = skillManager.Skills[chosenSkill];
         
         var validTargets = TargetSystem.GetValidTargetsForSkill(
             skillRuntime, 
