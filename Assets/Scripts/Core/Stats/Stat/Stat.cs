@@ -81,8 +81,8 @@ public class Stat
 
     public virtual void ReCalculateValue()
     {
-        float baseConstant = 0f;
-        float constant = 0f;
+        float baseFlat = 0f;
+        float flat = 0f;
         float percent = 0f;
 
         if(statModifiers!= null)
@@ -91,11 +91,11 @@ public class Stat
             {
                 switch (modifier.Type)
                 {
-                    case ModifyType.BaseConstant:
-                        baseConstant += modifier.Value;
+                    case ModifyType.BaseFlat:
+                        baseFlat += modifier.Value;
                         continue;
-                    case ModifyType.Constant:
-                        constant += modifier.Value;
+                    case ModifyType.Flat:
+                        flat += modifier.Value;
                         continue;
                     case ModifyType.Percent:
                         percent += modifier.Value;
@@ -105,7 +105,7 @@ public class Stat
 
         }
 
-        float filaValue = (BaseValue + baseConstant) * (1f + percent) + constant;
+        float filaValue = (BaseValue + baseFlat) * (1f + percent) + flat;
 
         value = (float)Math.Round(filaValue, 0);
     }

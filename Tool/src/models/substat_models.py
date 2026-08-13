@@ -7,6 +7,7 @@ class SetBonusModel:
     min: float 
     max: float
     modifier_type: str
+    weight: int = 100
 
     def to_dict(self):
         return {k: v for k, v in asdict(self).items() if v is not None}

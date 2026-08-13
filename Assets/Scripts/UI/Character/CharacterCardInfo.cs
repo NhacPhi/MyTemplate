@@ -58,8 +58,13 @@ public class CharacterCardInfo : CharacterCard
     {
         currentCharracter = id;
         var characterProfile = characterManager.GetCharacter(id);
+        if (characterProfile != null)
+        {
+            characterProfile.RefreshAllEquippedArmors();
+        }
+
         CharacterConfig characterConfig = gameDataBase.GetCharacterConfig(id);
-        if (characterManager == null)
+        if (characterManager == null || characterProfile == null)
         {
             LogCommon.Log("Character Data null with id: " + id);
             return;
@@ -105,6 +110,7 @@ public class CharacterCardInfo : CharacterCard
     {
         int originalProfileTotal = profile.GetTotalStat(type);
         int profileTotal = originalProfileTotal + baseOffset;
+
         float globalFlat = 0f;
         float globalPercent = 0f;
 
@@ -118,7 +124,7 @@ public class CharacterCardInfo : CharacterCard
             {
                 if (buff.IsActive && buff.StatType == type)
                 {
-                    if (buff.ModifierType == ModifyType.Constant) globalFlat += buff.Value;
+                    if (buff.ModifierType == ModifyType.Flat) globalFlat += buff.Value;
                     else if (buff.ModifierType == ModifyType.Percent) globalPercent += buff.Value;
                 }
             }
@@ -143,8 +149,6 @@ public class CharacterCardInfo : CharacterCard
             foodBonus = 100 - profileTotal;
         }
 
-        Debug.Log($"[CharacterCardInfo] Stat: {type}, ProfileTotal: {originalProfileTotal}, FoodBonus: {foodBonus} (Flat: {globalFlat}, Percent: {globalPercent})");
-
         if (foodBonus > 0)
         {
             return $"{profileTotal}{pct} <color=#00FF00>+{foodBonus}{pct}</color>";
@@ -153,6 +157,7 @@ public class CharacterCardInfo : CharacterCard
         {
             return $"{profileTotal}{pct} <color=#FF0000>{foodBonus}{pct}</color>";
         }
+
         return $"{profileTotal}{pct}";
     }
 }

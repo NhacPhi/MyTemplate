@@ -15,6 +15,7 @@ public class InventoryManager : IDisposable
     private void Init()
     {
         GameEvent.OnRequestPickupItem += HandlePickupItem;
+        ResetAllPlayerArmorsToLevel1();
     }
 
     public void Dispose()
@@ -65,11 +66,12 @@ public class InventoryManager : IDisposable
     }
 
 
-    private InventorySaveData _saveData => _save.Player.Inventory;
+    private SaveSystem Save => _save ?? SaveSystem.Instance;
+    private InventorySaveData _saveData => Save?.Player?.Inventory;
 
-    public List<WeaponSaveData> Weapons => _saveData.Weapons;
-    public List<ArmorSaveData> Armors => _saveData.Armors;
-    public List<ItemSaveData> Items => _saveData.Items;
+    public List<WeaponSaveData> Weapons => _saveData?.Weapons;
+    public List<ArmorSaveData> Armors => _saveData?.Armors;
+    public List<ItemSaveData> Items => _saveData?.Items;
 
     public bool IsDirty { get; set; } = true; // Mark true initially to force first load
 
@@ -197,9 +199,92 @@ public class InventoryManager : IDisposable
         return _save.Player.Inventory.GetWeapon(uuid);
     }
 
+    public void ResetAllPlayerArmorsToLevel1()
+    {
+        if (_saveData?.Armors == null) return;
+        foreach (var armor in _saveData.Armors)
+        {
+            if (armor == null) continue;
+            armor.Level = 1;
+            InitArmorMainStatAndSubstats(armor);
+        }
+    }
+
+    public void InitArmorMainStatAndSubstats(ArmorSaveData armor)
+    {
+        if (armor == null || string.IsNullOrEmpty(armor.TemplateID) || _gameDataBase == null) return;
+        var config = _gameDataBase.GetItemConfig(armor.TemplateID);
+        if (config == null || config.Type != ItemType.Armor || config.Armor == null) return;
+
+        if (armor.MainStatType == StatType.None)
+        {
+            armor.MainStatType = GetRandomMainStatType(config.Armor.Part, config.Armor.MainStat?.Type ?? StatType.ATK);
+        }
+
+        if (armor.Substats == null)
+        {
+            armor.Substats = new List<RolledSubStat>();
+        }
+
+        // Quy định số lượng dòng Substat ban đầu dựa vào độ hiếm (Rare)
+        int targetInitialCount = Utility.GetInitialSubstatCountByRare(armor.Rare);
+
+        if (armor.Level <= 1)
+        {
+            foreach (var sub in armor.Substats)
+            {
+                sub.Level = 1;
+            }
+
+            // Nếu số lượng substats vượt quá hạn mức ban đầu của Rare thì điều chỉnh lại
+            if (armor.Substats.Count > targetInitialCount)
+            {
+                armor.Substats = armor.Substats.GetRange(0, targetInitialCount);
+            }
+            // Nếu chưa đủ số lượng ban đầu thì roll bổ sung từ Pool
+            else if (armor.Substats.Count < targetInitialCount && !string.IsNullOrEmpty(config.Armor.SubstatPoolID))
+            {
+                var poolConfig = _gameDataBase.GetSubstatPoolConfig(config.Armor.SubstatPoolID);
+                if (poolConfig != null && poolConfig.Pools != null && poolConfig.Pools.Count > 0)
+                {
+                    while (armor.Substats.Count < targetInitialCount)
+                    {
+                        var existingTypes = new HashSet<StatType>();
+                        foreach (var sub in armor.Substats) existingTypes.Add(sub.Type);
+
+                        var available = poolConfig.Pools.FindAll(p => !existingTypes.Contains(p.Type));
+                        if (available.Count == 0) break;
+
+                        var chosen = available[UnityEngine.Random.Range(0, available.Count)];
+                        armor.Substats.Add(new RolledSubStat(chosen.Type, chosen.ModifierType, 1));
+                    }
+                }
+            }
+        }
+    }
+
+    private StatType GetRandomMainStatType(ArmorPart part, StatType defaultFixedType)
+    {
+        switch (part)
+        {
+            case ArmorPart.Boots:
+                StatType[] bootsPool = new StatType[] { StatType.SPEED, StatType.ATK, StatType.HP, StatType.DEF };
+                return bootsPool[UnityEngine.Random.Range(0, bootsPool.Length)];
+            case ArmorPart.Ring:
+                StatType[] ringPool = new StatType[] { StatType.CRIT_RATE, StatType.CRIT_DMG, StatType.ATK, StatType.HP };
+                return ringPool[UnityEngine.Random.Range(0, ringPool.Length)];
+            case ArmorPart.Belt:
+                StatType[] beltPool = new StatType[] { StatType.ATK, StatType.HP, StatType.DEF, StatType.PENETRATION };
+                return beltPool[UnityEngine.Random.Range(0, beltPool.Length)];
+            default:
+                return defaultFixedType;
+        }
+    }
+
     public void AddArmor(ArmorSaveData armor)
     {
-        if(armor == null) return;
+        if (armor == null) return;
+        InitArmorMainStatAndSubstats(armor);
         _saveData.Armors.Add(armor);
         IsDirty = true;
         UIEvent.OnInventoryChanged?.Invoke();

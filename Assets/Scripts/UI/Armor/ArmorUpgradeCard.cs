@@ -255,15 +255,34 @@ public class ArmorUpgradeCard : MonoBehaviour
 
         if (armorSave.Substats == null || subStatSlots == null) return;
 
+        SubstatPoolConfig poolConfig = null;
+        if (config?.Armor != null && !string.IsNullOrEmpty(config.Armor.SubstatPoolID))
+        {
+            poolConfig = gameDataBase.GetSubstatPoolConfig(config.Armor.SubstatPoolID);
+        }
+
         // Hiển thị substats đã có
         for (int i = 0; i < armorSave.Substats.Count && i < subStatSlots.Count; i++)
         {
             var sub = armorSave.Substats[i];
+
+            if (poolConfig != null && poolConfig.Pools != null)
+            {
+                var poolComp = poolConfig.Pools.Find(p => p.Type == sub.Type && p.ModifierType == sub.ModifierType)
+                            ?? poolConfig.Pools.Find(p => p.Type == sub.Type);
+                if (poolComp != null)
+                {
+                    float avgPerRoll = (poolComp.Min + poolComp.Max) * 0.5f;
+                    int calculatedVal = Mathf.RoundToInt(avgPerRoll * Mathf.Max(1, sub.Level));
+                    sub.SetCalculatedValue(calculatedVal);
+                }
+            }
+
             var slot = subStatSlots.FirstOrDefault(s => s.Type == sub.Type);
             if (slot != null)
             {
                 slot.gameObject.SetActive(true);
-                slot.UpdateStat(sub.Value, sub.Level);
+                slot.UpdateStat(sub.Value, sub.Level, sub.ModifierType);
             }
         }
     }
@@ -317,13 +336,15 @@ public class ArmorUpgradeCard : MonoBehaviour
         if (config.Armor != null && config.Armor.MainStat != null)
         {
             var mainStat = config.Armor.MainStat;
-            txtMainStatName.text = Utility.GetContextByStatType(mainStat.Type);
+            StatType actualMainType = (armorSave.MainStatType != StatType.None)
+                ? armorSave.MainStatType
+                : mainStat.Type;
 
-            iconMainStat.sprite = gameDataBase.GetStatIcon(mainStat.Type);
+            txtMainStatName.text = Utility.GetContextByStatType(actualMainType);
+            iconMainStat.sprite = gameDataBase.GetStatIcon(actualMainType);
 
-            int currentMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, armorSave.Level);
-
-            int nextMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, targetLevel);
+            int currentMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, armorSave.Level, armorSave.Rare);
+            int nextMainStatValue = Utility.GetArmorMainStatByLevel(mainStat.Value, targetLevel, armorSave.Rare);
 
             txtCurrentMainStat.text = currentMainStatValue.ToString();
             txtNextMainStat.text = nextMainStatValue.ToString();

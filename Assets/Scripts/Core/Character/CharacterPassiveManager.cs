@@ -35,14 +35,14 @@ public class CharacterPassiveManager
     /// <summary>
     /// Lấy tổng các modifier tĩnh (+ điểm số thẳng) từ tất cả passive đang hoạt động
     /// </summary>
-    public float GetTotalConstantBonus(StatType statType)
+    public float GetTotalFlatBonus(StatType statType)
     {
         float total = 0f;
         foreach (var passive in _activePassives)
         {
             foreach (var mod in passive.Modifiers)
             {
-                if (mod.Type == statType && mod.ModifierType == ModifyType.Constant)
+                if (mod.Type == statType && mod.ModifierType == ModifyType.Flat)
                 {
                     total += mod.TotalValue;
                 }

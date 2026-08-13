@@ -39,7 +39,7 @@ class SetBonusBuilder(BaseBuilder):
                     pieces=int(row['Pieces_Required']) if pd.notna(row['Pieces_Required']) else 0,
                     stat=str(row['Bonus_Stat_Type']).strip() if pd.notna(row['Bonus_Stat_Type']) else "",
                     value=float(row['Bonus_Value']) if pd.notna(row['Bonus_Value']) else 0.0,
-                    modifier_type=str(row['Modifier_Type']).strip() if pd.notna(row['Modifier_Type']) else "Constant"
+                    modifier_type=str(row['Modifier_Type']).strip() if pd.notna(row['Modifier_Type']) else "Flat"
                 )
 
 

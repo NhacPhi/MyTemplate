@@ -315,7 +315,7 @@
                     "effect_type": "GlobalStatBuff",
                     "value": 200.0,
                     "stat_type": "ATK",
-                    "mod_type": "Constant ",
+                    "mod_type": "Flat",
                     "duration_minutes": 10.0
                 }
             ]
@@ -333,7 +333,7 @@
                     "effect_type": "GlobalStatBuff",
                     "value": 500.0,
                     "stat_type": "HP",
-                    "mod_type": "Constant ",
+                    "mod_type": "Flat",
                     "duration_minutes": 5.0
                 }
             ]
@@ -369,7 +369,7 @@
                     "effect_type": "GlobalStatBuff",
                     "value": 100.0,
                     "stat_type": "DEF",
-                    "mod_type": "Constant ",
+                    "mod_type": "Flat",
                     "duration_minutes": 5.0
                 }
             ]
@@ -387,7 +387,7 @@
                     "effect_type": "GlobalStatBuff",
                     "value": 15.0,
                     "stat_type": "CRIT_RATE",
-                    "mod_type": "Constant ",
+                    "mod_type": "Flat",
                     "duration_minutes": 10.0
                 }
             ]
@@ -423,7 +423,7 @@
                     "effect_type": "GlobalStatBuff",
                     "value": 30.0,
                     "stat_type": "CRIT_DMG_RES",
-                    "mod_type": "Constant ",
+                    "mod_type": "Flat",
                     "duration_minutes": 10.0
                 }
             ]
@@ -837,9 +837,9 @@
             "armor_set": "Armor01",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -854,9 +854,9 @@
             "armor_set": "Armor02",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -871,9 +871,9 @@
             "armor_set": "Armor03",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -888,9 +888,9 @@
             "armor_set": "Armor04",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -905,9 +905,9 @@
             "armor_set": "Armor05",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -922,9 +922,9 @@
             "armor_set": "Armor06",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -939,9 +939,9 @@
             "armor_set": "Armor01",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -956,9 +956,9 @@
             "armor_set": "Armor02",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -973,9 +973,9 @@
             "armor_set": "Armor03",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -990,9 +990,9 @@
             "armor_set": "Armor04",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1007,9 +1007,9 @@
             "armor_set": "Armor05",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1024,9 +1024,9 @@
             "armor_set": "Armor06",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1041,9 +1041,9 @@
             "armor_set": "Armor01",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1058,9 +1058,9 @@
             "armor_set": "Armor02",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1075,9 +1075,9 @@
             "armor_set": "Armor03",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1092,9 +1092,9 @@
             "armor_set": "Armor04",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1109,9 +1109,9 @@
             "armor_set": "Armor05",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1126,9 +1126,9 @@
             "armor_set": "Armor06",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1145,7 +1145,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1162,7 +1162,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1179,7 +1179,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1196,7 +1196,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1213,7 +1213,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1230,7 +1230,7 @@
             "main_stat": {
                 "type": "speed",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1245,9 +1245,9 @@
             "armor_set": "Armor01",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1262,9 +1262,9 @@
             "armor_set": "Armor02",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1279,9 +1279,9 @@
             "armor_set": "Armor03",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1296,9 +1296,9 @@
             "armor_set": "Armor04",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1313,9 +1313,9 @@
             "armor_set": "Armor05",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1330,9 +1330,9 @@
             "armor_set": "Armor06",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
+                "type": "penetration",
                 "value": 10.0,
-                "mod_type": "Constant"
+                "mod_type": "Flat"
             }
         }
     },
@@ -1347,9 +1347,9 @@
             "armor_set": "Armor01",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1364,9 +1364,9 @@
             "armor_set": "Armor02",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1381,9 +1381,9 @@
             "armor_set": "Armor03",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1398,9 +1398,9 @@
             "armor_set": "Armor04",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1415,9 +1415,9 @@
             "armor_set": "Armor05",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },
@@ -1432,9 +1432,9 @@
             "armor_set": "Armor06",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
-                "type": "speed",
-                "value": 10.0,
-                "mod_type": "Constant"
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
             }
         }
     },

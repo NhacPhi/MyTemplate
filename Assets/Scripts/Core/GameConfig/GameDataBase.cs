@@ -290,6 +290,29 @@ public class GameDataBase
         return expConfig;
     }
 
+    public int GetCharacterExpForNextLevel(string expTier, int nextLevel)
+    {
+        if (nextLevel > Definition.MAX_CHARACTER_LEVEL) return 0;
+
+        var expConfig = GetExpConfig(expTier);
+        if (expConfig != null && expConfig.UpExp != null && expConfig.UpExp.TryGetValue(nextLevel.ToString(), out int exp) && exp > 0)
+        {
+            return exp;
+        }
+
+        float rareMultiplier = expTier switch
+        {
+            "Curve_R" => 1.0f,
+            "Curve_SR" => 1.15f,
+            "Curve_SSR" => 1.35f,
+            "Curve_UR" => 1.5f,
+            _ => 1.0f
+        };
+
+        return (int)(Utility.GetCharacterExpByLevel(nextLevel) * rareMultiplier);
+    }
+
+
     public AscensionConfig GetAscensionConfig(string key)
     {
         AscensionConfigs.TryGetValue(key, out AscensionConfig ascensionConfig);

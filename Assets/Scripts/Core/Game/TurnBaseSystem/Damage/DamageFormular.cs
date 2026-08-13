@@ -54,12 +54,15 @@ public static class DamageFormular
                 var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
 
                 float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
-                float critMultiplier = (175f + attackerCritDmg) / 100f;
-
                 float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
-                float critResMultiplier = Mathf.Max(0f, 1f - (defenderCritRes / 100f));
 
-                damageResult = damageResult * critMultiplier * critResMultiplier;
+                // Cách 1 (Chuẩn Honkai Star Rail / Direct Subtraction):
+                // Tổng % Crit DMG = 150% (Base Gốc) + Crit DMG Kẻ Tấn Công - Kháng Bạo Kích Mục Tiêu
+                // Tối thiểu = 100% (Đòn Crit luôn gây ít nhất 100% bằng đòn đánh thường)
+                float totalCritDmgPercent = Mathf.Max(100f, 150f + attackerCritDmg - defenderCritRes);
+                float critMultiplier = totalCritDmgPercent / 100f;
+
+                damageResult = damageResult * critMultiplier;
             }
             else
             {
@@ -101,12 +104,12 @@ public static class DamageFormular
             var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
 
             float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
-            float critMultiplier = (175f + attackerCritDmg) / 100f;
-
             float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
-            float critResMultiplier = Mathf.Max(0f, 1f - (defenderCritRes / 100f));
 
-            float expectedCritFactor = 1f + (critRate.Value / 100f) * ((critMultiplier * critResMultiplier) - 1f);
+            float totalCritDmgPercent = Mathf.Max(100f, 150f + attackerCritDmg - defenderCritRes);
+            float critMultiplier = totalCritDmgPercent / 100f;
+
+            float expectedCritFactor = 1f + (critRate.Value / 100f) * (critMultiplier - 1f);
             damageResult *= expectedCritFactor;
         }
 

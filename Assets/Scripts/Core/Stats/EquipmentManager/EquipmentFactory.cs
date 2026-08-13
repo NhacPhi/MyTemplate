@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +40,7 @@ public static class EquipmentFactory
                 runtimeWeapon.Modifiers.Add(new EquipModifier()
                 {
                     Type = statType,
-                    ModifierType = ModifyType.Constant,
+                    ModifierType = ModifyType.Flat,
                     BaseValue = baseVal,
                     UpgradeBonus = upgradeVal
                 });
@@ -79,7 +79,7 @@ public static class EquipmentFactory
         return runtimeWeapon;
     }
 
-    public static EquipmentData CreateArmorData(ArmorSaveData saveData, ItemConfig config)
+    public static EquipmentData CreateArmorData(ArmorSaveData saveData, ItemConfig config, GameDataBase gameData = null)
     {
         if(config.Type != ItemType.Armor || config.Armor == null) return null;
 
@@ -94,28 +94,57 @@ public static class EquipmentFactory
 
         var mainStat = config.Armor.MainStat;
 
-        if(mainStat != null)
+        if (mainStat != null)
         {
-            float upgradeBonus = 0;
+            StatType actualMainStatType = (saveData.MainStatType != StatType.None) 
+                ? saveData.MainStatType 
+                : mainStat.Type;
 
             runtimeArmor.Modifiers.Add(new EquipModifier()
             {
-                Type = mainStat.Type,
+                Type = actualMainStatType,
                 ModifierType = mainStat.ModifierType,
-                BaseValue = Utility.GetArmorMainStatByLevel(mainStat.Value, saveData.Level),
-                UpgradeBonus = upgradeBonus
+                BaseValue = Utility.GetArmorMainStatByLevel(mainStat.Value, saveData.Level, saveData.Rare),
+                UpgradeBonus = 0
             });
         }
 
-        if(saveData.Substats != null)
+        if (saveData.Substats != null)
         {
-            foreach(var sub in saveData.Substats)
+            SubstatPoolConfig poolConfig = null;
+            if (gameData != null && !string.IsNullOrEmpty(config.Armor.SubstatPoolID))
             {
+                poolConfig = gameData.GetSubstatPoolConfig(config.Armor.SubstatPoolID);
+            }
+
+            foreach (var sub in saveData.Substats)
+            {
+                float finalSubValue = 0;
+
+                // Tự động Recalculate Substat Value dựa theo Excel Config mới nhất & Level trong Save
+                if (poolConfig != null && poolConfig.Pools != null)
+                {
+                    var poolComp = poolConfig.Pools.Find(p => p.Type == sub.Type && p.ModifierType == sub.ModifierType) 
+                                ?? poolConfig.Pools.Find(p => p.Type == sub.Type);
+                    if (poolComp != null)
+                    {
+                        // Giá trị trung bình của 1 lần roll từ Pool Excel nhân với số lần roll (Level)
+                        float avgPerRoll = (poolComp.Min + poolComp.Max) * 0.5f;
+                        int rollCount = Mathf.Max(1, sub.Level);
+                        finalSubValue = Mathf.Round(avgPerRoll * rollCount);
+                        sub.SetCalculatedValue((int)finalSubValue);
+                    }
+                }
+                else
+                {
+                    finalSubValue = sub.Value;
+                }
+
                 runtimeArmor.Modifiers.Add(new EquipModifier
                 {
                     Type = sub.Type,
                     ModifierType = sub.ModifierType,
-                    BaseValue = sub.Value,
+                    BaseValue = finalSubValue,
                     UpgradeBonus = 0
                 });
             }

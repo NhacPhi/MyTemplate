@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 
 public enum ModifyType
 {
     None,
-    BaseConstant, // Tăng vào chỉ số gốc
-    Constant, // Tăng vào chỉ số được giới hạn = Flat Bonus
-    Percent, // Tăng theo %
+    BaseFlat, // Tăng vào chỉ số gốc (Base Flat)
+    Flat,     // Tăng vào chỉ số cộng thẳng (Flat Stat)
+    Percent,  // Tăng theo % (Percent Stat)
 }
 
 public class Modifier : IEquatable<Modifier>, IEqualityComparer<Modifier>

@@ -117,15 +117,25 @@ public class CharacterCardArmor : CharacterCard
                 }
             }
 
-            txtHP.text = characterProfile.GetTotalArmorConstantStat(StatType.HP).ToString();
-            txtATK.text = characterProfile.GetTotalArmorConstantStat(StatType.ATK).ToString();
-            txtDEF.text = characterProfile.GetTotalArmorConstantStat(StatType.DEF).ToString();
-            txtSPD.text = characterProfile.GetTotalArmorConstantStat(StatType.SPEED).ToString();
-            txtDEFShred.text = defShred.ToString();
-            txtCritRate.text = critRate.ToString();
-            txtCritDMG.text = critDMG.ToString();
-            txtPenetration.text = penetration.ToString();
-            txtCritDGMRes.text = critDMGRes.ToString();
+            int hpContrib = characterProfile.GetTotalArmorStatContribution(StatType.HP);
+            int atkContrib = characterProfile.GetTotalArmorStatContribution(StatType.ATK);
+            int defContrib = characterProfile.GetTotalArmorStatContribution(StatType.DEF);
+            int spdContrib = characterProfile.GetTotalArmorStatContribution(StatType.SPEED);
+            int defShredContrib = characterProfile.GetTotalArmorStatContribution(StatType.DEF_SHRED);
+            int critRateContrib = characterProfile.GetTotalArmorStatContribution(StatType.CRIT_RATE);
+            int critDMGContrib = characterProfile.GetTotalArmorStatContribution(StatType.CRIT_DMG);
+            int penContrib = characterProfile.GetTotalArmorStatContribution(StatType.PENETRATION);
+            int critResContrib = characterProfile.GetTotalArmorStatContribution(StatType.CRIT_DMG_RES);
+
+            txtHP.text = hpContrib > 0 ? $"+{hpContrib}" : hpContrib.ToString();
+            txtATK.text = atkContrib > 0 ? $"+{atkContrib}" : atkContrib.ToString();
+            txtDEF.text = defContrib > 0 ? $"+{defContrib}" : defContrib.ToString();
+            txtSPD.text = spdContrib > 0 ? $"+{spdContrib}" : spdContrib.ToString();
+            txtDEFShred.text = defShredContrib > 0 ? $"+{defShredContrib}" : defShredContrib.ToString();
+            txtCritRate.text = $"{critRateContrib}%";
+            txtCritDMG.text = $"{critDMGContrib}%";
+            txtPenetration.text = $"{penContrib}%";
+            txtCritDGMRes.text = $"{critResContrib}%";
         }
         else
         {
@@ -135,15 +145,15 @@ public class CharacterCardArmor : CharacterCard
                 armor.SwitchStatusArmorUI(true);
             }
 
-            txtHP.text = hp.ToString();
-            txtATK.text = atk.ToString();
-            txtDEF.text = def.ToString();
-            txtSPD.text = spd.ToString();
-            txtDEFShred.text = defShred.ToString();
-            txtCritRate.text = critRate.ToString();
-            txtCritDMG.text = critDMG.ToString();
-            txtPenetration.text = penetration.ToString();
-            txtCritDGMRes.text = critDMGRes.ToString();
+            txtHP.text = "0";
+            txtATK.text = "0";
+            txtDEF.text = "0";
+            txtSPD.text = "0";
+            txtDEFShred.text = "0";
+            txtCritRate.text = "0%";
+            txtCritDMG.text = "0%";
+            txtPenetration.text = "0%";
+            txtCritDGMRes.text = "0%";
         }
 
         foreach(var ui in setBonusUIs)

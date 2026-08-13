@@ -42,7 +42,8 @@ class SubstatPoolBuilder(BaseBuilder):
                     stat_type=str(row['StatType']).strip(),
                     min=float(row['Min']) if pd.notna(row['Min']) else 0.0,
                     max=float(row['Max']) if pd.notna(row['Max']) else 0.0,
-                    modifier_type=str(row['Modifier_Type']).strip() if pd.notna(row['Modifier_Type']) else ""
+                    modifier_type=str(row['Modifier_Type']).strip() if pd.notna(row['Modifier_Type']) else "Flat",
+                    weight=int(row['Weight']) if ('Weight' in row and pd.notna(row['Weight'])) else 100
                 )
                 
                 # Thêm vào danh sách của PoolID tương ứng

@@ -54,7 +54,8 @@ public static class Utility
     //Stat(level)=Base+Growth×(level-1)×(0.7+0.03×(level-1))
     public static int GetCharacterExpByLevel(int level)
     {
-        return 1800 + 1000 * (level - 1) + 600 * (level - 1) * (level - 1);
+        if (level <= 1) return 0;
+        return 500 + 300 * (level - 1) + 20 * (level - 1) * (level - 1);
     }
 
     public static string GetExpConfigIDByCharacterRare(CharacterRare rare)
@@ -294,12 +295,65 @@ public static class Utility
     }
 
     /// <summary>
-    /// Tính main stat của armor theo level.
-    /// MainStat(level) = baseValue + baseValue × 0.12 × level
+    /// Hệ số nhân chỉ số Main Stat theo phẩm chất (Rarity Multiplier).
+    /// Common: x1.0, Uncommon: x1.25, Rare: x1.6, Epic: x2.2, Legendary: x3.0
     /// </summary>
-    public static int GetArmorMainStatByLevel(float baseValue, int level)
+    public static float GetRarityMultiplier(Rare rare)
     {
-        return Convert.ToInt32(baseValue + baseValue * 0.12f * level);
+        return rare switch
+        {
+            Rare.Common => 1.0f,
+            Rare.Uncommon => 1.25f,
+            Rare.Rare => 1.6f,
+            Rare.Epic => 2.2f,
+            Rare.Legendary => 3.0f,
+            _ => 1.0f
+        };
+    }
+
+    /// <summary>
+    /// Giới hạn Level tối đa của trang bị theo độ hiếm.
+    /// Common: 6, Uncommon: 9, Rare: 12, Epic: 15, Legendary: 15
+    /// </summary>
+    public static int GetMaxArmorLevelByRare(Rare rare)
+    {
+        return rare switch
+        {
+            Rare.Common => 6,
+            Rare.Uncommon => 9,
+            Rare.Rare => 12,
+            Rare.Epic => 15,
+            Rare.Legendary => 15,
+            _ => 15
+        };
+    }
+
+    /// <summary>
+    /// Tính main stat của armor theo level và độ hiếm (Rare).
+    /// MainStat = (baseValue × rarityMultiplier) × (1 + 0.12 × level)
+    /// </summary>
+    public static int GetArmorMainStatByLevel(float baseValue, int level, Rare rare = Rare.Common)
+    {
+        float rarityMult = GetRarityMultiplier(rare);
+        float finalBase = baseValue * rarityMult;
+        return Convert.ToInt32(finalBase + finalBase * 0.12f * level);
+    }
+
+    /// <summary>
+    /// Quy định số lượng dòng substat ban đầu theo độ hiếm (Rare) của món giáp.
+    /// Common: 0, Uncommon: 1, Rare: 2, Epic: 3, Legendary: 4
+    /// </summary>
+    public static int GetInitialSubstatCountByRare(Rare rare)
+    {
+        return rare switch
+        {
+            Rare.Common => 0,
+            Rare.Uncommon => 1,
+            Rare.Rare => 2,
+            Rare.Epic => 3,
+            Rare.Legendary => 4,
+            _ => 0
+        };
     }
 
     /// <summary>

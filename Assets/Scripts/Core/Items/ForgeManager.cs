@@ -425,59 +425,42 @@ public class ForgeManager
 
         if (availablePool.Count == 0) return;
 
-        // Random chọn 1 stat từ pool
-        int randomIndex = Random.Range(0, availablePool.Count);
-        var chosen = availablePool[randomIndex];
+        // Random chọn 1 stat từ pool theo Trọng số (Weight)
+        int totalWeight = 0;
+        foreach (var p in availablePool)
+        {
+            totalWeight += Mathf.Max(1, p.Weight);
+        }
 
-        // Random giá trị trong [Min, Max]
-        int rolledValue = UnityEngine.Mathf.RoundToInt(
-            UnityEngine.Random.Range(chosen.Min, chosen.Max)
-        );
+        int randomPoint = Random.Range(0, totalWeight);
+        SubstatComponent chosen = availablePool[0];
+        int currentWeightSum = 0;
 
-        var newSub = new RolledSubStat(chosen.Type, rolledValue, chosen.ModifierType);
+        foreach (var p in availablePool)
+        {
+            currentWeightSum += Mathf.Max(1, p.Weight);
+            if (randomPoint < currentWeightSum)
+            {
+                chosen = p;
+                break;
+            }
+        }
+
+        var newSub = new RolledSubStat(chosen.Type, chosen.ModifierType, 1);
         armorSave.Substats.Add(newSub);
     }
 
     /// <summary>
-    /// Nâng cấp 1 substat ngẫu nhiên trong danh sách hiện có.
+    /// Nâng cấp 1 substat ngẫu nhiên trong danh sách hiện có (tăng level/số lần roll lên 1).
     /// </summary>
     private void UpgradeRandomSubStat(ArmorSaveData armorSave, SubstatPoolConfig poolConfig)
     {
-        if (armorSave.Substats.Count == 0) return;
+        if (armorSave.Substats == null || armorSave.Substats.Count == 0) return;
 
-        // Chọn ngẫu nhiên 1 substat
+        // Chọn ngẫu nhiên 1 substat và tăng level/số lần roll
         int randomIndex = Random.Range(0, armorSave.Substats.Count);
         var subToUpgrade = armorSave.Substats[randomIndex];
-
-        // Tìm pool config tương ứng để lấy range bonus
-        SubstatComponent matchingPool = null;
-        if (poolConfig.Pools != null)
-        {
-            foreach (var pool in poolConfig.Pools)
-            {
-                if (pool.Type == subToUpgrade.Type)
-                {
-                    matchingPool = pool;
-                    break;
-                }
-            }
-        }
-
-        // Tính bonus: random 70%-100% của min value
-        int bonusValue;
-        if (matchingPool != null)
-        {
-            bonusValue = Mathf.RoundToInt(
-                Random.Range(matchingPool.Min * 0.7f, matchingPool.Min)
-            );
-        }
-        else
-        {
-            bonusValue = 1; // Fallback
-        }
-
-        if (bonusValue < 1) bonusValue = 1;
-        subToUpgrade.Upgrade(bonusValue);
+        subToUpgrade.Upgrade(1);
     }
 
     /// <summary>

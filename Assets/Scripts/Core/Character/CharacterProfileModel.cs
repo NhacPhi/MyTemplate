@@ -96,7 +96,7 @@ public class CharacterProfileModel : IStatProvider
                 {
                     var armorConfig = _gameDataBase.GetItemConfig(armorSave.TemplateID);
 
-                    var armorData   = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+                    var armorData   = EquipmentFactory.CreateArmorData(armorSave, armorConfig, _gameDataBase);
 
                     Equipment.Equip(armorData);
                 }
@@ -233,7 +233,7 @@ public class CharacterProfileModel : IStatProvider
         }
 
         var armorConfig  = _gameDataBase.GetItemConfig(armorSave.TemplateID);
-        var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+        var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig, _gameDataBase);
 
         Equipment.Equip(runtimeArmor);
 
@@ -392,21 +392,32 @@ public class CharacterProfileModel : IStatProvider
 
     public int GetTotalStat(StatType type)
     {
-        float baseStat     = GetBaseStat(type);
-        float flatBonus    = Equipment.GetTotalConstantBonus(type) + PassivesManager.GetTotalConstantBonus(type);
-        float percentBonus = (Equipment.GetTotalPercentBonus(type) + PassivesManager.GetTotalPercentBonus(type)) / 100f;
+        float charBaseStat   = GetBaseStat(type);
+        float weaponBaseStat = Equipment.GetWeaponFlatBonus(type);
+        float totalBaseStat  = charBaseStat + weaponBaseStat;
 
-        int totalStat = Mathf.RoundToInt((baseStat + flatBonus) * (1 + percentBonus));
+        float flatBonus      = Equipment.GetArmorFlatBonus(type) + PassivesManager.GetTotalFlatBonus(type);
+        float percentBonus   = Equipment.GetTotalPercentBonus(type) + PassivesManager.GetTotalPercentBonus(type);
 
-        if (type == StatType.CRIT_RATE && totalStat > 100)
+        // Các chỉ số Tỷ lệ % (Crit Rate, Crit DMG, Pen %, Crit DMG Res, Def Shred) -> Cộng dồn trực tiếp % vào Base
+        if (type == StatType.CRIT_RATE || type == StatType.CRIT_DMG || 
+            type == StatType.PENETRATION || type == StatType.CRIT_DMG_RES || 
+            type == StatType.DEF_SHRED || type == StatType.EHR || type == StatType.RES)
         {
-            totalStat = 100;
+            int totalPercentStat = Mathf.RoundToInt(totalBaseStat + flatBonus + percentBonus);
+            if (type == StatType.CRIT_RATE && totalPercentStat > 100)
+            {
+                totalPercentStat = 100;
+            }
+            return totalPercentStat;
         }
 
+        // Các chỉ số Nền (HP, ATK, DEF, SPEED): (Base Nhân Vật + Base Vũ Khí) * (1 + % / 100) + Flat Giáp & Passive
+        int totalStat = Mathf.RoundToInt(totalBaseStat * (1f + (percentBonus / 100f)) + flatBonus);
         return totalStat;
     }
 
-    public float GetTotalArmorConstantStat(StatType type)
+    public float GetTotalArmorFlatStat(StatType type)
     {
         float total = 0f;
 
@@ -419,13 +430,79 @@ public class CharacterProfileModel : IStatProvider
 
             foreach (var mod in item.Modifiers)
             {
-                if (mod.Type == type && mod.ModifierType == ModifyType.Constant)
+                if (mod.Type == type && mod.ModifierType == ModifyType.Flat)
                 {
                     total += mod.TotalValue;
                 }
             }
         }
         return total;
+    }
+
+    /// <summary>
+    /// Tính tổng chỉ số đóng góp từ toàn bộ giáp (bao gồm Flat và % quy đổi dựa vào BaseStat nhân vật).
+    /// </summary>
+    public int GetTotalArmorStatContribution(StatType type)
+    {
+        float flatTotal = 0f;
+        float percentTotal = 0f;
+
+        foreach (var kvp in Equipment.EquippedItems)
+        {
+            EquipSlot slot = kvp.Key;
+            EquipmentData item = kvp.Value;
+
+            if (slot == EquipSlot.Weapon) continue;
+
+            foreach (var mod in item.Modifiers)
+            {
+                if (mod.Type == type)
+                {
+                    if (mod.ModifierType == ModifyType.Flat)
+                    {
+                        flatTotal += mod.TotalValue;
+                    }
+                    else if (mod.ModifierType == ModifyType.Percent)
+                    {
+                        percentTotal += mod.TotalValue;
+                    }
+                }
+            }
+        }
+
+        // Cộng thêm các chỉ số Set Bonus đang kích hoạt từ Giáp
+        var activeBonuses = Equipment.GetActiveSetBonuses();
+        if (activeBonuses != null)
+        {
+            foreach (var bonus in activeBonuses)
+            {
+                if (bonus.Stat == type)
+                {
+                    if (bonus.Modifier == ModifyType.Flat)
+                    {
+                        flatTotal += bonus.Value;
+                    }
+                    else if (bonus.Modifier == ModifyType.Percent)
+                    {
+                        percentTotal += bonus.Value;
+                    }
+                }
+            }
+        }
+
+        // Các chỉ số phần trăm thuần túy (Crit Rate, Crit DMG, Penetration %, Crit DMG Res, Def Shred)
+        if (type == StatType.CRIT_RATE || type == StatType.CRIT_DMG || 
+            type == StatType.PENETRATION || type == StatType.CRIT_DMG_RES ||
+            type == StatType.DEF_SHRED || type == StatType.EHR || type == StatType.RES)
+        {
+            return Mathf.RoundToInt(percentTotal + flatTotal);
+        }
+
+        // Các chỉ số nền: HP, ATK, DEF, SPEED -> Tính tổng Flat + (% nhân với Total BaseStat = Base Nhân Vật + Base Vũ Khí)
+        float totalBaseStat = GetBaseStat(type) + Equipment.GetWeaponFlatBonus(type);
+        float percentContribution = totalBaseStat * (percentTotal / 100f);
+
+        return Mathf.RoundToInt(flatTotal + percentContribution);
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -472,12 +549,34 @@ public class CharacterProfileModel : IStatProvider
 
                 Equipment.Unequip(slotType);
 
-                var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig);
+                var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig, _gameDataBase);
                 Equipment.Equip(runtimeArmor);
 
                 OnEquipmentChanged?.Invoke();
                 OnStatsChanged?.Invoke();
             }
         }
+    }
+
+    public void RefreshAllEquippedArmors()
+    {
+        if (SaveData.Armors == null) return;
+        foreach (var armorPart in SaveData.Armors)
+        {
+            var armorSave = _inventory.GetArmor(armorPart.ID);
+            if (armorSave != null)
+            {
+                var armorConfig = _gameDataBase.GetItemConfig(armorSave.TemplateID);
+                if (armorConfig?.Armor != null)
+                {
+                    var slotType = EquipmentFactory.ConvertPartToSlot(armorConfig.Armor.Part);
+                    Equipment.Unequip(slotType);
+                    var runtimeArmor = EquipmentFactory.CreateArmorData(armorSave, armorConfig, _gameDataBase);
+                    Equipment.Equip(runtimeArmor);
+                }
+            }
+        }
+        OnEquipmentChanged?.Invoke();
+        OnStatsChanged?.Invoke();
     }
 }

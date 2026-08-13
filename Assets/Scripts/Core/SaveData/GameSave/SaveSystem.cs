@@ -17,8 +17,8 @@ public class SaveSystem
     private SettingSave settings;
     private PlayerSave player;
 
-    public SettingSave Settings => settings;
-    public PlayerSave Player => player;
+    public SettingSave Settings => settings ?? (settings = new SettingSave());
+    public PlayerSave Player => player ?? (player = new PlayerSave());
 
     public void Init()
     {

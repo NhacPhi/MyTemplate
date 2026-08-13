@@ -20,6 +20,9 @@ public class ArmorSaveData
     [JsonProperty("substats")]
     public List<RolledSubStat> Substats;
 
+    [JsonProperty("main_stat_type")]
+    public StatType MainStatType;
+
     [JsonProperty("equip")]
     public string Equip;
 }

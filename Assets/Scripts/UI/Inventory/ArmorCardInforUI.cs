@@ -61,16 +61,39 @@ public class ArmorCardInforUI : MonoBehaviour
 
             // Main Stat 
             var mainStat = itemConfig.Armor.MainStat;
-            iconMainStat.sprite = gameDataBase.GetStatIcon(mainStat.Type);
-            txtStatType.text = Utility.GetContextByStatType(mainStat.Type);
-            txtStatValue.text = Utility.GetArmorMainStatByLevel(mainStat.Value, item.Level).ToString();
+            StatType actualMainType = (item.MainStatType != StatType.None) 
+                ? item.MainStatType 
+                : (mainStat != null ? mainStat.Type : StatType.ATK);
+            float baseMainValue = mainStat != null ? mainStat.Value : 0f;
+
+            iconMainStat.sprite = gameDataBase.GetStatIcon(actualMainType);
+            txtStatType.text = Utility.GetContextByStatType(actualMainType);
+            txtStatValue.text = Utility.GetArmorMainStatByLevel(baseMainValue, item.Level, item.Rare).ToString();
 
             armor.Init(item.UUID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;
-            if (item.Substats.Count > 0)
+
+            SubstatPoolConfig poolConfig = null;
+            if (!string.IsNullOrEmpty(itemConfig.Armor.SubstatPoolID))
+            {
+                poolConfig = gameDataBase.GetSubstatPoolConfig(itemConfig.Armor.SubstatPoolID);
+            }
+
+            if (item.Substats != null && item.Substats.Count > 0)
             {
                 foreach (var obj in item.Substats)
                 {
+                    if (poolConfig != null && poolConfig.Pools != null)
+                    {
+                        var poolComp = poolConfig.Pools.Find(p => p.Type == obj.Type && p.ModifierType == obj.ModifierType)
+                                    ?? poolConfig.Pools.Find(p => p.Type == obj.Type);
+                        if (poolComp != null)
+                        {
+                            float avgPerRoll = (poolComp.Min + poolComp.Max) * 0.5f;
+                            int calculatedVal = Mathf.RoundToInt(avgPerRoll * Mathf.Max(1, obj.Level));
+                            obj.SetCalculatedValue(calculatedVal);
+                        }
+                    }
                     UpdateArmorStatsUI(obj);
                 }
             }
@@ -98,7 +121,7 @@ public class ArmorCardInforUI : MonoBehaviour
             if(armor.Type == stats.Type)
             {
                 armor.gameObject.SetActive(true);
-                armor.UpdateStat(stats.Value, stats.Level);
+                armor.UpdateStat(stats.Value, stats.Level, stats.ModifierType);
             }
         }
     }

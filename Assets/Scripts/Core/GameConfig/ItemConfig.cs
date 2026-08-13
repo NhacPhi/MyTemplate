@@ -245,6 +245,9 @@ public class SubstatComponent
 
     [JsonProperty("modifier_type")] 
     public ModifyType ModifierType;
+
+    [JsonProperty("weight")]
+    public int Weight = 100;
 }
 
 [Serializable]

@@ -87,7 +87,7 @@ class CharacterConfigBuilder(BaseBuilder):
         role_base_data = {
             'Tanker':   {'hp': 4000, 'atk': 900,  'def': 375, 'speed': 80,  'crit_rate': 5,  'crit_dmg': 0,  'def_shred': 0,  'penetration': 0, 'crit_dmg_res': 5},
             'Fighter':  {'hp': 2750, 'atk': 1650, 'def': 275, 'speed': 90,  'crit_rate': 5,  'crit_dmg': 5,  'def_shred': 5,  'penetration': 2, 'crit_dmg_res': 0},
-            'Assassin': {'hp': 2000, 'atk': 2250, 'def': 200, 'speed': 105, 'crit_rate': 10, 'crit_dmg': 15, 'def_shred': 10, 'penetration': 5, 'crit_dmg_res': 0},
+            'Assassin': {'hp': 2500, 'atk': 2250, 'def': 250, 'speed': 105, 'crit_rate': 10, 'crit_dmg': 15, 'def_shred': 10, 'penetration': 5, 'crit_dmg_res': 0},
             'Mage':     {'hp': 2250, 'atk': 2100, 'def': 210, 'speed': 95,  'crit_rate': 5,  'crit_dmg': 10, 'def_shred': 0,  'penetration': 5, 'crit_dmg_res': 0},
             'Support':  {'hp': 3000, 'atk': 1050, 'def': 250, 'speed': 100, 'crit_rate': 5,  'crit_dmg': 0,  'def_shred': 0,  'penetration': 0, 'crit_dmg_res': 3},
             'ADCarry':  {'hp': 2200, 'atk': 2200, 'def': 220, 'speed': 100, 'crit_rate': 8,  'crit_dmg': 10, 'def_shred': 5,  'penetration': 4, 'crit_dmg_res': 0}

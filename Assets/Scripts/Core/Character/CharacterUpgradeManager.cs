@@ -44,8 +44,7 @@ public class CharacterUpgradeManager
         
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
-        int expNeedToUpdateLevel = 0;
-        _gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((saveData.Level + 1).ToString(), out expNeedToUpdateLevel);
+        int expNeedToUpdateLevel = _gameDataBase.GetCharacterExpForNextLevel(expTier, saveData.Level + 1);
         return Math.Max(0, expNeedToUpdateLevel - saveData.Exp);
     }
 
@@ -60,14 +59,12 @@ public class CharacterUpgradeManager
 
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
-        var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
         int totalNeeded = 0;
         for (int i = saveData.Level; i < targetLevel; i++)
         {
-            string nextLevelStr = (i + 1).ToString();
-            if (expConfig.UpExp.TryGetValue(nextLevelStr, out int reqExp))
-                totalNeeded += reqExp;
+            int reqExp = _gameDataBase.GetCharacterExpForNextLevel(expTier, i + 1);
+            totalNeeded += reqExp;
         }
 
         return totalNeeded - saveData.Exp;
@@ -78,9 +75,19 @@ public class CharacterUpgradeManager
     /// </summary>
     public int GetMaxLevelCap()
     {
-        if (GetNextAscensionRequirements(out _, out int reqLevel, out _, out _) && reqLevel > 0)
+        var saveData = _profile.SaveData;
+        int nextTier = saveData.AscensionTier + 1;
+        var characterConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
+        if (characterConfig != null)
         {
-            return reqLevel;
+            var ascensionConfig = _gameDataBase.GetAscensionConfig(
+                Utility.GetAscentionConfigIDByCharacterRare(characterConfig.Rare));
+            if (ascensionConfig != null && ascensionConfig.TierConfigs != null &&
+                ascensionConfig.TierConfigs.TryGetValue(nextTier.ToString(), out TierConfig tierConfig))
+            {
+                if (tierConfig.LevelRequire > 0)
+                    return tierConfig.LevelRequire;
+            }
         }
 
         return Definition.MAX_CHARACTER_LEVEL;
@@ -101,13 +108,12 @@ public class CharacterUpgradeManager
 
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
-        var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
         while (saveData.Level < levelCap)
         {
-            var nextLevelStr = (saveData.Level + 1).ToString();
+            int expNeedToUpdateLevel = _gameDataBase.GetCharacterExpForNextLevel(expTier, saveData.Level + 1);
 
-            if (!expConfig.UpExp.TryGetValue(nextLevelStr, out int expNeedToUpdateLevel))
+            if (expNeedToUpdateLevel <= 0)
             {
                 saveData.Level = Definition.MAX_CHARACTER_LEVEL;
                 saveData.Exp   = 0;
@@ -194,12 +200,11 @@ public class CharacterUpgradeManager
 
         var charConfig = _gameDataBase.GetCharacterConfig(saveData.ID);
         var expTier    = Utility.GetExpConfigIDByCharacterRare(charConfig.Rare);
-        var expConfig  = _gameDataBase.GetExpConfig(expTier);
 
         while (level < levelCap)
         {
-            string nextLevelStr = (level + 1).ToString();
-            if (!expConfig.UpExp.TryGetValue(nextLevelStr, out int reqExp)) break;
+            int reqExp = _gameDataBase.GetCharacterExpForNextLevel(expTier, level + 1);
+            if (reqExp <= 0) break;
 
             int coinNeeded = Utility.GetCoinNeedToUpgradeCacultivate(level + 1)
                            - Utility.GetCoinNeedToUpgradeCacultivate(level);

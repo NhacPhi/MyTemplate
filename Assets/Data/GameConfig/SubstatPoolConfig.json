@@ -4,50 +4,185 @@
             {
                 "stat_type": "HP",
                 "min": 100.0,
-                "max": 2000.0,
-                "modifier_type": "Constant"
+                "max": 500.0,
+                "modifier_type": "Flat",
+                "weight": 100
             },
             {
                 "stat_type": "ATK",
-                "min": 100.0,
-                "max": 1000.0,
-                "modifier_type": "Constant"
+                "min": 15.0,
+                "max": 75.0,
+                "modifier_type": "Flat",
+                "weight": 100
             },
             {
                 "stat_type": "DEF",
-                "min": 100.0,
-                "max": 300.0,
-                "modifier_type": "Constant"
+                "min": 10.0,
+                "max": 50.0,
+                "modifier_type": "Flat",
+                "weight": 100
+            },
+            {
+                "stat_type": "HP",
+                "min": 2.0,
+                "max": 6.0,
+                "modifier_type": "Percent",
+                "weight": 60
+            },
+            {
+                "stat_type": "ATK",
+                "min": 2.0,
+                "max": 6.0,
+                "modifier_type": "Percent",
+                "weight": 60
+            },
+            {
+                "stat_type": "DEF",
+                "min": 2.0,
+                "max": 6.0,
+                "modifier_type": "Percent",
+                "weight": 60
+            },
+            {
+                "stat_type": "PENETRATION",
+                "min": 3.0,
+                "max": 8.0,
+                "modifier_type": "Percent",
+                "weight": 75
+            },
+            {
+                "stat_type": "CRIT_RATE",
+                "min": 2.0,
+                "max": 5.0,
+                "modifier_type": "Percent",
+                "weight": 35
+            },
+            {
+                "stat_type": "CRIT_DMG",
+                "min": 5.0,
+                "max": 12.0,
+                "modifier_type": "Percent",
+                "weight": 30
+            },
+            {
+                "stat_type": "DEF_SHRED",
+                "min": 5.0,
+                "max": 20.0,
+                "modifier_type": "Flat",
+                "weight": 25
+            },
+            {
+                "stat_type": "SPEED",
+                "min": 1.0,
+                "max": 4.0,
+                "modifier_type": "Flat",
+                "weight": 25
+            },
+            {
+                "stat_type": "CRIT_DMG_RES",
+                "min": 2.0,
+                "max": 5.0,
+                "modifier_type": "Percent",
+                "weight": 20
+            }
+        ]
+    },
+    "Tanker_Pool": {
+        "Pools": [
+            {
+                "stat_type": "HP",
+                "min": 200.0,
+                "max": 800.0,
+                "modifier_type": "Flat",
+                "weight": 100
+            },
+            {
+                "stat_type": "DEF",
+                "min": 20.0,
+                "max": 80.0,
+                "modifier_type": "Flat",
+                "weight": 100
+            },
+            {
+                "stat_type": "HP",
+                "min": 3.0,
+                "max": 8.0,
+                "modifier_type": "Percent",
+                "weight": 70
+            },
+            {
+                "stat_type": "DEF",
+                "min": 3.0,
+                "max": 8.0,
+                "modifier_type": "Percent",
+                "weight": 70
+            },
+            {
+                "stat_type": "CRIT_DMG_RES",
+                "min": 2.0,
+                "max": 5.0,
+                "modifier_type": "Percent",
+                "weight": 40
+            },
+            {
+                "stat_type": "SPEED",
+                "min": 1.0,
+                "max": 3.0,
+                "modifier_type": "Flat",
+                "weight": 20
+            }
+        ]
+    },
+    "Assassin_Pool": {
+        "Pools": [
+            {
+                "stat_type": "ATK",
+                "min": 25.0,
+                "max": 100.0,
+                "modifier_type": "Flat",
+                "weight": 100
+            },
+            {
+                "stat_type": "ATK",
+                "min": 3.0,
+                "max": 7.0,
+                "modifier_type": "Percent",
+                "weight": 80
+            },
+            {
+                "stat_type": "DEF_SHRED",
+                "min": 10.0,
+                "max": 30.0,
+                "modifier_type": "Flat",
+                "weight": 75
+            },
+            {
+                "stat_type": "PENETRATION",
+                "min": 4.0,
+                "max": 10.0,
+                "modifier_type": "Percent",
+                "weight": 40
+            },
+            {
+                "stat_type": "CRIT_RATE",
+                "min": 3.0,
+                "max": 7.0,
+                "modifier_type": "Percent",
+                "weight": 50
+            },
+            {
+                "stat_type": "CRIT_DMG",
+                "min": 8.0,
+                "max": 18.0,
+                "modifier_type": "Percent",
+                "weight": 45
             },
             {
                 "stat_type": "SPEED",
                 "min": 2.0,
                 "max": 5.0,
-                "modifier_type": "Constant"
-            },
-            {
-                "stat_type": "CRIT_RATE",
-                "min": 3.0,
-                "max": 6.0,
-                "modifier_type": "Constant"
-            },
-            {
-                "stat_type": "CRIT_DMG",
-                "min": 10.0,
-                "max": 20.0,
-                "modifier_type": "Constant"
-            },
-            {
-                "stat_type": "PENETRATION",
-                "min": 10.0,
-                "max": 20.0,
-                "modifier_type": "Constant"
-            },
-            {
-                "stat_type": "CRIT_DMG_RES",
-                "min": 10.0,
-                "max": 20.0,
-                "modifier_type": "Constant"
+                "modifier_type": "Flat",
+                "weight": 35
             }
         ]
     }

@@ -9,9 +9,9 @@ public class ArmorStatsUI : MonoBehaviour
 
     public StatType Type => type;
 
-    public void UpdateStat(int value, int level)
+    public void UpdateStat(int value, int level, ModifyType modType = ModifyType.Flat)
     {
         txtLevel.text = level.ToString();
-        txtStats.text = value.ToString();
+        txtStats.text = modType == ModifyType.Percent ? $"{value}%" : value.ToString();
     }
 }

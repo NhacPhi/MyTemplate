@@ -72,7 +72,7 @@ public class CharacterCardCultivate : CharacterCard
         int expNeedToUpdate = 0;
         if (data.Level < Definition.MAX_CHARACTER_LEVEL)
         {
-            gameDataBase.GetExpConfig(expTier).UpExp.TryGetValue((data.Level + 1).ToString(), out expNeedToUpdate);
+            expNeedToUpdate = gameDataBase.GetCharacterExpForNextLevel(expTier, data.Level + 1);
         }
 
         if (expNeedToUpdate > 0)
@@ -88,13 +88,13 @@ public class CharacterCardCultivate : CharacterCard
             sliderExp.value = 1f;
         }
         int currentHP = config.GetStatByLevel(StatType.HP, data.Level);
-        float nextHP = config.GetStatByLevel(StatType.HP, data.Level + 1);
+        int nextHP = config.GetStatByLevel(StatType.HP, data.Level + 1);
 
-        float currentATK = config.GetStatByLevel(StatType.ATK, data.Level);
-        float nextATK = config.GetStatByLevel(StatType.ATK, data.Level + 1);
+        int currentATK = config.GetStatByLevel(StatType.ATK, data.Level);
+        int nextATK = config.GetStatByLevel(StatType.ATK, data.Level + 1);
 
-        float currentDEF = config.GetStatByLevel(StatType.DEF, data.Level);
-        float nextDEF = config.GetStatByLevel(StatType.DEF, data.Level + 1);
+        int currentDEF = config.GetStatByLevel(StatType.DEF, data.Level);
+        int nextDEF = config.GetStatByLevel(StatType.DEF, data.Level + 1);
 
         txtCurrentHP.text = currentHP.ToString();
         txtCurrentATK.text = currentATK.ToString();

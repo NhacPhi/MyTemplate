@@ -131,14 +131,36 @@ public class ArmorTooltipUI : MonoBehaviour
 
         // Main Stat 
         var mainStat = armorConfig.Armor.MainStat;
-        icon.sprite = gameDataBase.GetStatIcon(mainStat.Type);
-        txtStatType.text = Utility.GetContextByStatType(mainStat.Type);
-        txtStatValue.text = Utility.GetArmorMainStatByLevel(mainStat.Value, armorSaveData.Level).ToString();
+        StatType actualMainType = (armorSaveData.MainStatType != StatType.None) 
+            ? armorSaveData.MainStatType 
+            : (mainStat != null ? mainStat.Type : StatType.ATK);
+        float baseMainValue = mainStat != null ? mainStat.Value : 0f;
 
-        if (armorSaveData.Substats.Count > 0)
+        icon.sprite = gameDataBase.GetStatIcon(actualMainType);
+        txtStatType.text = Utility.GetContextByStatType(actualMainType);
+        txtStatValue.text = Utility.GetArmorMainStatByLevel(baseMainValue, armorSaveData.Level, armorSaveData.Rare).ToString();
+
+        SubstatPoolConfig poolConfig = null;
+        if (!string.IsNullOrEmpty(armorConfig.Armor.SubstatPoolID))
+        {
+            poolConfig = gameDataBase.GetSubstatPoolConfig(armorConfig.Armor.SubstatPoolID);
+        }
+
+        if (armorSaveData.Substats != null && armorSaveData.Substats.Count > 0)
         {
             foreach (var obj in armorSaveData.Substats)
             {
+                if (poolConfig != null && poolConfig.Pools != null)
+                {
+                    var poolComp = poolConfig.Pools.Find(p => p.Type == obj.Type && p.ModifierType == obj.ModifierType)
+                                ?? poolConfig.Pools.Find(p => p.Type == obj.Type);
+                    if (poolComp != null)
+                    {
+                        float avgPerRoll = (poolComp.Min + poolComp.Max) * 0.5f;
+                        int calculatedVal = Mathf.RoundToInt(avgPerRoll * Mathf.Max(1, obj.Level));
+                        obj.SetCalculatedValue(calculatedVal);
+                    }
+                }
                 UpdateArmorSubstatsUI(obj);
             }
         }
@@ -214,7 +236,7 @@ public class ArmorTooltipUI : MonoBehaviour
             if (armor.Type == stats.Type)
             {
                 armor.gameObject.SetActive(true);
-                armor.UpdateStat(stats.Value, stats.Level);
+                armor.UpdateStat(stats.Value, stats.Level, stats.ModifierType);
             }
         }
     }

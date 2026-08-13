@@ -33,22 +33,35 @@ public class GameSettingsScene : WindowController
     {
         Debug.Log("[GameSettingsScene] Ignored close request due to click propagation cooldown.");
     }
+    private SaveSystem SaveData
+    {
+        get
+        {
+            if (save == null) save = SaveSystem.Instance;
+            return save;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         LoadGameSettingUI();
-        sliderSound.onValueChanged.AddListener((v) => {
-            txtNumberSound.text = v.ToString("0");
-            save.Settings.MusicVolune = (int)v;
-            if (audioManager != null)
-            {
-                audioManager.UpdateVolume(v / 100f);
-            }
-        });
 
-        btnClose.onClick.AddListener(() => { OnCloseScene(); });
-        btnShowFPSSetting.onClick.AddListener(() => { ShowPopupConfirmSettings(SettingsType.FPS); });
-        btnShowLangSetting.onClick.AddListener(() => { ShowPopupConfirmSettings(SettingsType.LANGUAGE); });
+        if (sliderSound != null)
+        {
+            sliderSound.onValueChanged.AddListener((v) => {
+                if (txtNumberSound != null) txtNumberSound.text = v.ToString("0");
+                if (SaveData?.Settings != null) SaveData.Settings.MusicVolune = (int)v;
+                if (audioManager != null)
+                {
+                    audioManager.UpdateVolume(v / 100f);
+                }
+            });
+        }
+
+        if (btnClose != null) btnClose.onClick.AddListener(() => { OnCloseScene(); });
+        if (btnShowFPSSetting != null) btnShowFPSSetting.onClick.AddListener(() => { ShowPopupConfirmSettings(SettingsType.FPS); });
+        if (btnShowLangSetting != null) btnShowLangSetting.onClick.AddListener(() => { ShowPopupConfirmSettings(SettingsType.LANGUAGE); });
     }
 
     public void OnCloseScene()
@@ -61,7 +74,7 @@ public class GameSettingsScene : WindowController
         }
 
         base.UI_Close();
-        save.SaveDataToDisk(GameSaveType.GameSetting);
+        if (SaveData != null) SaveData.SaveDataToDisk(GameSaveType.GameSetting);
 
         if (OnCloseAction != null)
         {
@@ -69,7 +82,7 @@ public class GameSettingsScene : WindowController
             OnCloseAction = null; // Reset callback
             callback.Invoke();
         }
-        else
+        else if (uiManager != null)
         {
             uiManager.ShowPanel(ScreenIds.PanelStartGame);
         }
@@ -77,9 +90,12 @@ public class GameSettingsScene : WindowController
     
     private void LoadGameSettingUI()
     {
-        txtFPS.text = save.Settings.FPS.ToString();
-        txtNumberSound.text = save.Settings.MusicVolune.ToString();
-        sliderSound.value = save.Settings.MusicVolune;
+        var targetSave = SaveData;
+        if (targetSave == null || targetSave.Settings == null) return;
+
+        if (txtFPS != null) txtFPS.text = targetSave.Settings.FPS.ToString();
+        if (txtNumberSound != null) txtNumberSound.text = targetSave.Settings.MusicVolune.ToString();
+        if (sliderSound != null) sliderSound.value = targetSave.Settings.MusicVolune;
     }
 
     public void ShowPopupConfirmSettings(SettingsType type)
