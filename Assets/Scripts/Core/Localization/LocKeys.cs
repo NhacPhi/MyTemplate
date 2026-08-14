@@ -249,6 +249,20 @@ public static class LocKeys
 
     public const long UI_O_PENETRATION = 3983025424;
 
+    public const long MSG_NOT_ENOUGH_RESOURCE = 1512338653;
+
+    public const long ENERGY = 2703546434;
+
+    public const long JADE = 778914301;
+
+    public const long COIN = 1523970398;
+
+    public const long RELICESSENCE = 1684625678;
+
+    public const long ARMORPRIMORITE = 745046774;
+
+    public const long TICKET = 1517191102;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;

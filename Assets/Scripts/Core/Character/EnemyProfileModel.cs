@@ -17,8 +17,14 @@ public class EnemyProfileModel : IStatProvider
     public int GetTotalStat(StatType type)
     {
         float baseValue = BaseConfig.GetStat(type);
-        float growth    = baseValue * 0.1f * (_level - 1);
+        if (type == StatType.SPEED || type == StatType.CRIT_RATE || type == StatType.CRIT_DMG || 
+            type == StatType.PENETRATION || type == StatType.CRIT_DMG_RES || type == StatType.DEF_SHRED || 
+            type == StatType.EHR || type == StatType.RES)
+        {
+            return Mathf.RoundToInt(baseValue);
+        }
 
+        float growth = baseValue * 0.1f * (_level - 1);
         return Mathf.RoundToInt(baseValue + growth);
     }
 

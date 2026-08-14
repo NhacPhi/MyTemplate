@@ -32,6 +32,7 @@ public class ArmorTooltipUI : MonoBehaviour
 
     public string CurrentCharacterID = "";
     private string currentArmorPart;
+    public string CurrentArmorPart => currentArmorPart;
 
     private void Awake()
     {
@@ -109,6 +110,7 @@ public class ArmorTooltipUI : MonoBehaviour
 
     private void Hide()
     {
+        currentArmorPart = null;
         gameObject.SetActive(false);
     }
 
@@ -134,11 +136,13 @@ public class ArmorTooltipUI : MonoBehaviour
         StatType actualMainType = (armorSaveData.MainStatType != StatType.None) 
             ? armorSaveData.MainStatType 
             : (mainStat != null ? mainStat.Type : StatType.ATK);
-        float baseMainValue = mainStat != null ? mainStat.Value : 0f;
+        ModifyType modType = mainStat != null ? mainStat.ModifierType : ModifyType.Flat;
+        float baseMainValue = Utility.GetAppropriateArmorMainBaseValue(actualMainType, modType, mainStat != null ? mainStat.Value : 0f);
 
         icon.sprite = gameDataBase.GetStatIcon(actualMainType);
         txtStatType.text = Utility.GetContextByStatType(actualMainType);
-        txtStatValue.text = Utility.GetArmorMainStatByLevel(baseMainValue, armorSaveData.Level, armorSaveData.Rare).ToString();
+        float calculatedMainVal = Utility.GetArmorMainStatByLevel(baseMainValue, armorSaveData.Level, armorSaveData.Rare);
+        txtStatValue.text = Utility.GetConvertStatValueToString(calculatedMainVal, modType, actualMainType);
 
         SubstatPoolConfig poolConfig = null;
         if (!string.IsNullOrEmpty(armorConfig.Armor.SubstatPoolID))

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -145,6 +145,8 @@ namespace UIFramework
         }
 
         private void DoShow(WindowHistoryEntry windowEntry) {
+            bool isPopup = (windowEntry.Properties != null && windowEntry.Properties.IsPopup) || (windowEntry.Screen != null && windowEntry.Screen.IsPopup);
+
             if (CurrentWindow == windowEntry.Screen) {
                 Debug.LogWarning(
                     string.Format(
@@ -156,14 +158,14 @@ namespace UIFramework
             }
             else if (CurrentWindow != null
                      && CurrentWindow.HideOnForegroundLost
-                     && !windowEntry.Screen.IsPopup) {
+                     && !isPopup) {
                 CurrentWindow.Hide();
             }
 
             windowHistory.Push(windowEntry);
             AddTransition(windowEntry.Screen);
 
-            if (windowEntry.Screen.IsPopup) {
+            if (isPopup) {
                 priorityParaLayer.DarkenBG();
             }
 

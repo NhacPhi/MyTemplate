@@ -31,6 +31,7 @@ public class ScreenIds
 
     // Popup
     public const string PopupConfirm = "PopupConfirm";
+    public const string PopupNotification = "PopupNotification";
     public const string PopupConfirmSettings = "PopupConfirmSettings";
     public const string PopupChangeAvatar = "PopupChangeAvatar";
     public const string PopupShopBuy = "PopupShopBuy";

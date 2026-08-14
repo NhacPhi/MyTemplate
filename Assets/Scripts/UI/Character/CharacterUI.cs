@@ -258,8 +258,16 @@ public class CharacterUI : MonoBehaviour
 
     public void ShowArmorStatTooltipUI(string id)
     {
+        if (currentArmorUI.gameObject.activeSelf && currentArmorUI.CurrentArmorPart == id)
+        {
+            currentArmorUI.gameObject.SetActive(false);
+            bgDetectTrigger.gameObject.SetActive(false);
+            return;
+        }
+
         currentArmorUI.gameObject.SetActive(true);
         currentArmorUI.CurrentCharacterID = currentCharacter;
+        bgDetectTrigger.gameObject.SetActive(true);
     }
 
     public void ShowBackgroundDetectTrigger(bool value)

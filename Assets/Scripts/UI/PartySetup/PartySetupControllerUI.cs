@@ -132,7 +132,6 @@ public class PartySetupControllerUI : MonoBehaviour
 
     public void SavePartySetup()
     {
-        CleanData();
         ReorganizeActiveSlotsData();
         _saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
     }

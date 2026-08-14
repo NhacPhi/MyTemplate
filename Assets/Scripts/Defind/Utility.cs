@@ -102,15 +102,52 @@ public static class Utility
         return LocalizationManager.Instance.GetLocalizedValue(locailzationID);
     }
 
-    public static string GetConvertStatValueToString(float value, ModifyType type)
+    public static bool IsPercentStat(StatType statType, ModifyType type = ModifyType.Flat)
     {
-        if (type == ModifyType.Percent)
+        if (type == ModifyType.Percent) return true;
+
+        return statType switch
+        {
+            StatType.CRIT_RATE or
+            StatType.CRIT_DMG or
+            StatType.PENETRATION or
+            StatType.CRIT_DMG_RES or
+            StatType.EHR or
+            StatType.RES => true,
+            _ => false
+        };
+    }
+
+    public static float GetAppropriateArmorMainBaseValue(StatType statType, ModifyType modType, float fallbackValue)
+    {
+        if (IsPercentStat(statType, modType))
+        {
+            if (statType == StatType.CRIT_RATE || statType == StatType.CRIT_DMG) return 2.5f;
+            return 3.5f;
+        }
+        else
+        {
+            switch (statType)
+            {
+                case StatType.SPEED: return 3.0f;
+                case StatType.ATK: return 20.0f;
+                case StatType.HP: return 100.0f;
+                case StatType.DEF: return 15.0f;
+                case StatType.DEF_SHRED: return 30.0f;
+                default: return fallbackValue > 0 ? fallbackValue : 20.0f;
+            }
+        }
+    }
+
+    public static string GetConvertStatValueToString(float value, ModifyType type, StatType statType = StatType.None)
+    {
+        if (IsPercentStat(statType, type))
         {
             return value.ToString() + "%";
         }
         else
         {
-            return value+ "%";
+            return value.ToString();
         }
     }
 

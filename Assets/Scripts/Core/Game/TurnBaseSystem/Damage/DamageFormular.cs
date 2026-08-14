@@ -132,11 +132,11 @@ public static class DamageFormular
         var defShredStat = sourceStats.GetStat(StatType.DEF_SHRED);
 
         float penPercent = penStat != null ? penStat.Value : 0f; // VD: 20 -> 20%
-        float defShredFlat = defShredStat != null ? defShredStat.Value : 0f; // VD: 50 -> 50
+        float defShredFlat = defShredStat != null ? defShredStat.Value : 0f; // VD: 150 -> 150 DEF Phẳng
 
         // Bước 1: Xuyên giáp % (PEN) tính trước
         float defAfterPen = baseDef * (1f - (penPercent / 100f));
-        // Bước 2: Sát lực (DEF_SHRED - giảm giáp phẳng) tính sau cùng
+        // Bước 2: Trừ giáp phẳng (DEF_SHRED) trừ trực tiếp chỉ số giáp
         float effectiveDef = Mathf.Max(0f, defAfterPen - defShredFlat);
 
         return effectiveDef;

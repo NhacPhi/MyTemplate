@@ -47,6 +47,11 @@ public class PrepareBattleScene : WindowController
             if (!_currencyManager.Spend(CurrencyType.Energy, 5))
             {
                 Debug.LogWarning("[PrepareBattleScene] Không đủ 5 Thể lực (Stamina/Energy) để bắt đầu trận đấu!");
+                
+                if (uiManager != null)
+                {
+                    uiManager.ShowNotEnoughResourceNotification(CurrencyType.Energy);
+                }
                 return;
             }
         }

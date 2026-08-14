@@ -2,17 +2,17 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 11,
-    "current_exp": 3400,
+    "current_exp": 5800,
     "avatar_icon": "ZhuBajie_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 55,
-      "Jade": 789700,
-      "Coin": 16733520,
-      "RelicEssence": 68435280,
-      "ArmorPrimorite": 5135700,
-      "Ticket": 297
+      "Energy": 190,
+      "Jade": 790100,
+      "Coin": 14093440,
+      "RelicEssence": 68294160,
+      "ArmorPrimorite": 4204100,
+      "Ticket": 296
     },
     "items": [
       {
@@ -23,7 +23,7 @@
       {
         "id": "supreme_exp",
         "type": "Exp",
-        "quantity": 200
+        "quantity": 194
       },
       {
         "id": "Jade_Gemstone",
@@ -48,7 +48,7 @@
       {
         "id": "Garnet_Gemstone",
         "type": "Gemstone",
-        "quantity": 70
+        "quantity": 65
       },
       {
         "id": "ThirdPrinceNezha",
@@ -101,11 +101,6 @@
         "quantity": 200
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 200
-      },
-      {
         "id": "Jade_Fragment",
         "type": "Gemstone",
         "quantity": 1
@@ -116,9 +111,9 @@
         "quantity": 9
       },
       {
-        "id": "Garnet_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 200
       },
       {
         "id": "Yellow_Jade_Fragment",
@@ -129,6 +124,11 @@
         "id": "ShaWujing",
         "type": "Shard",
         "quantity": 301
+      },
+      {
+        "id": "Garnet_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Tofu_Soup",
@@ -153,12 +153,22 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 205
+        "quantity": 225
       },
       {
         "id": "Jade_Sliver",
         "type": "Gemstone",
         "quantity": 1
+      },
+      {
+        "id": "Lotus",
+        "type": "Food",
+        "quantity": 27
+      },
+      {
+        "id": "Slime",
+        "type": "Material",
+        "quantity": 58
       },
       {
         "id": "Meat",
@@ -179,16 +189,6 @@
         "id": "Murshroom_Steamed_Buns",
         "type": "Food",
         "quantity": 55
-      },
-      {
-        "id": "Lotus",
-        "type": "Food",
-        "quantity": 27
-      },
-      {
-        "id": "Slime",
-        "type": "Material",
-        "quantity": 58
       },
       {
         "id": "Fried_Radish_Balls",
@@ -212,18 +212,18 @@
         "equip": "ErlangShen"
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
+        "template_id": "Nimbus_Cudgel",
+        "current_level": 30,
+        "current_updgrade": 6,
+        "equip": "SunWukong"
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
         "template_id": "Vanguard_Of_Volition",
         "current_level": 22,
         "current_updgrade": 1,
         "equip": "BullDemonKing"
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777744f",
-        "template_id": "Nimbus_Cudgel",
-        "current_level": 20,
-        "current_updgrade": 6,
-        "equip": "SunWukong"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777754f",
@@ -282,11 +282,18 @@
         "equip": "LiJing"
       },
       {
+        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
+        "template_id": "Nimbus_Cloud",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "fb966bf3-bafe-4461-ab59-bcab9ea3bb95",
         "template_id": "Ninefold_Staff",
         "current_level": 1,
         "current_updgrade": 0,
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
@@ -294,13 +301,6 @@
         "current_level": 1,
         "current_updgrade": 1,
         "equip": "TangSanZang"
-      },
-      {
-        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
-        "template_id": "Nimbus_Cloud",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
       },
       {
         "uuid": "ca0f3ca8-8f2a-44ef-953f-81af61125998",
@@ -387,6 +387,13 @@
         "equip": ""
       },
       {
+        "uuid": "31175114-9ce5-4b81-9b7f-6210472aca78",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "6ef77ac3-5a49-4a54-853f-6455364f5490",
         "template_id": "Crescent_Axe",
         "current_level": 1,
@@ -401,8 +408,8 @@
         "equip": ""
       },
       {
-        "uuid": "31175114-9ce5-4b81-9b7f-6210472aca78",
-        "template_id": "Sunburst_Spade",
+        "uuid": "98275efd-0a4f-4930-b96a-ab97fecde09e",
+        "template_id": "Crescent_Axe",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -470,6 +477,66 @@
         "equip": "SunWukong"
       },
       {
+        "instance_id": "5f8fad5b-d9cb-469f-a165-70867728950e",
+        "template_id": "Armor01_Ring",
+        "level": 15,
+        "rare": "Legendary",
+        "substats": [
+          {
+            "type": "SPEED",
+            "level": 2,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "PENETRATION",
+            "level": 2,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_DMG",
+            "level": 3,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "ATK",
+            "level": 2,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "CRIT_DMG",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
+        "template_id": "Armor01_Chestplate",
+        "level": 15,
+        "rare": "Legendary",
+        "substats": [
+          {
+            "type": "CRIT_RATE",
+            "level": 2,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "HP",
+            "level": 2,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "DEF",
+            "level": 2,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "SPEED",
+            "level": 3,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "SunWukong"
+      },
+      {
         "instance_id": "4f8fad5b-d9cb-469f-a165-70867728950e",
         "template_id": "Armor01_Belt",
         "level": 12,
@@ -530,11 +597,51 @@
         "equip": "SunWukong"
       },
       {
-        "instance_id": "5f8fad5b-d9cb-469f-a165-70867728950e",
-        "template_id": "Armor01_Ring",
-        "level": 1,
-        "rare": "Legendary",
+        "instance_id": "4f8fad5b-d9cb-469f-d165-72867728950e",
+        "template_id": "Armor04_Belt",
+        "level": 15,
+        "rare": "Epic",
         "substats": [
+          {
+            "type": "ATK",
+            "level": 3,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG",
+            "level": 2,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "HP",
+            "level": 2,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "ErlangShen"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-32867728950e",
+        "template_id": "Armor04_Gloves",
+        "level": 15,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "CRIT_DMG",
+            "level": 3,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "ATK",
+            "level": 2,
+            "modifier_type": "Percent"
+          },
           {
             "type": "SPEED",
             "level": 1,
@@ -542,12 +649,92 @@
           },
           {
             "type": "PENETRATION",
+            "level": 2,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "ErlangShen"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-57867728950e",
+        "template_id": "Armor04_Helmet",
+        "level": 12,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "HP",
             "level": 1,
             "modifier_type": "Flat"
           },
           {
-            "type": "CRIT_DMG",
+            "type": "SPEED",
+            "level": 3,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "ATK",
             "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 2,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "ErlangShen"
+      },
+      {
+        "instance_id": "4f8fdd5-d9cb-469f-e165-72867728950e",
+        "template_id": "Armor04_Ring",
+        "level": 12,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "SPEED",
+            "level": 3,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 2,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "CRIT_RATE",
+        "equip": "ErlangShen"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e465-72867728950e",
+        "template_id": "Armor04_Boots",
+        "level": 12,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "PENETRATION",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "DEF",
+            "level": 3,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_RATE",
+            "level": 2,
             "modifier_type": "Percent"
           },
           {
@@ -556,17 +743,42 @@
             "modifier_type": "Percent"
           }
         ],
-        "main_stat_type": "CRIT_DMG",
-        "equip": "SunWukong"
+        "main_stat_type": "ATK",
+        "equip": "ErlangShen"
       },
       {
-        "instance_id": "1f8fad5b-d9cb-469f-a165-70867728950e",
-        "template_id": "Armor01_Chestplate",
+        "instance_id": "4f8fed5-d9cb-469f-e565-72867728950e",
+        "template_id": "Armor06_Boots",
         "level": 1,
-        "rare": "Legendary",
+        "rare": "Epic",
         "substats": [
           {
-            "type": "CRIT_RATE",
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "SPEED",
+        "equip": "LiJing"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e165-72867728950e",
+        "template_id": "Armor06_Ring",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "ATK",
             "level": 1,
             "modifier_type": "Percent"
           },
@@ -577,86 +789,6 @@
           },
           {
             "type": "DEF",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "DEF",
-        "equip": "SunWukong"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-27867728950e",
-        "template_id": "Armor06_Chestplate",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "PENETRATION",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "DEF",
-        "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-25867728950e",
-        "template_id": "Armor04_Chestplate",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "CRIT_RATE",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "DEF",
-        "equip": "ErlangShen"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-67867728950e",
-        "template_id": "Armor06_Helmet",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "CRIT_DMG_RES",
             "level": 1,
             "modifier_type": "Percent"
           }
@@ -690,54 +822,79 @@
         "equip": "LiJing"
       },
       {
-        "instance_id": "4f8fad5b-d9cb-469f-d165-72867728950e",
-        "template_id": "Armor04_Belt",
+        "instance_id": "4f8fed5-d9cb-469f-e565-67867728950e",
+        "template_id": "Armor06_Helmet",
         "level": 1,
         "rare": "Epic",
         "substats": [
           {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "LiJing"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-25867728950e",
+        "template_id": "Armor04_Chestplate",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_RATE",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
             "type": "ATK",
             "level": 1,
             "modifier_type": "Percent"
-          },
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "ErlangShen"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-27867728950e",
+        "template_id": "Armor06_Chestplate",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
           {
-            "type": "CRIT_DMG",
+            "type": "PENETRATION",
             "level": 1,
-            "modifier_type": "Percent"
+            "modifier_type": "Flat"
           },
           {
-            "type": "DEF",
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "ATK",
             "level": 1,
             "modifier_type": "Percent"
           }
         ],
         "main_stat_type": "DEF",
         "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-32867728950e",
-        "template_id": "Armor04_Gloves",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "CRIT_DMG",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "ErlangShen"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-e165-72867728950e",
@@ -765,131 +922,6 @@
         "equip": "LiJing"
       },
       {
-        "instance_id": "4f8fed5-d9cb-469f-e565-72867728950e",
-        "template_id": "Armor06_Boots",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "SPEED",
-        "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e465-72867728950e",
-        "template_id": "Armor04_Boots",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "PENETRATION",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "DEF",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "CRIT_RATE",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "ErlangShen"
-      },
-      {
-        "instance_id": "4f8fdd5-d9cb-469f-e165-72867728950e",
-        "template_id": "Armor04_Ring",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "DEF",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "CRIT_RATE",
-        "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-57867728950e",
-        "template_id": "Armor04_Helmet",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "HP",
-        "equip": "ErlangShen"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e165-72867728950e",
-        "template_id": "Armor06_Ring",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "DEF",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "HP",
-        "equip": "ErlangShen"
-      },
-      {
         "instance_id": "4f8fad5b-d9cb-469f-b165-72867728950e",
         "template_id": "Armor02_Belt",
         "level": 1,
@@ -907,7 +939,7 @@
           }
         ],
         "main_stat_type": "ATK",
-        "equip": "ErlangShen"
+        "equip": "BullDemonKing"
       },
       {
         "instance_id": "4f8fbd5b-d9cb-469f-e165-72867728950e",
@@ -1010,6 +1042,51 @@
         "equip": "BullDemonKing"
       },
       {
+        "instance_id": "4f8fed5-d9cb-469f-e365-72867728950e",
+        "template_id": "Armor03_Boots",
+        "level": 1,
+        "rare": "Uncommon",
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "ThirdPrinceNezha"
+      },
+      {
+        "instance_id": "4f8fad5b-d9cb-469f-c165-72867728950e",
+        "template_id": "Armor03_Belt",
+        "level": 1,
+        "rare": "Uncommon",
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": ""
+      },
+      {
+        "instance_id": "4f8fcd5-d9cb-469f-e165-72867728950e",
+        "template_id": "Armor03_Ring",
+        "level": 1,
+        "rare": "Uncommon",
+        "substats": [
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "ThirdPrinceNezha"
+      },
+      {
         "instance_id": "4f8fed5-d9cb-469f-e565-42867728950e",
         "template_id": "Armor03_Gloves",
         "level": 1,
@@ -1037,7 +1114,7 @@
           }
         ],
         "main_stat_type": "HP",
-        "equip": "ThirdPrinceNezha"
+        "equip": ""
       },
       {
         "instance_id": "4f8fed5-d9cb-469f-e565-24867728950e",
@@ -1055,48 +1132,12 @@
         "equip": "ThirdPrinceNezha"
       },
       {
-        "instance_id": "4f8fcd5-d9cb-469f-e165-72867728950e",
-        "template_id": "Armor03_Ring",
+        "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+        "template_id": "Armor05_Belt",
         "level": 1,
-        "rare": "Uncommon",
-        "substats": [
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "ThirdPrinceNezha"
-      },
-      {
-        "instance_id": "4f8fad5b-d9cb-469f-c165-72867728950e",
-        "template_id": "Armor03_Belt",
-        "level": 1,
-        "rare": "Uncommon",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "BullDemonKing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e365-72867728950e",
-        "template_id": "Armor03_Boots",
-        "level": 1,
-        "rare": "Uncommon",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "HP",
+        "rare": "Common",
+        "substats": [],
+        "main_stat_type": "DEF",
         "equip": "ThirdPrinceNezha"
       },
       {
@@ -1106,7 +1147,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "DEF",
-        "equip": ""
+        "equip": "ZhuBaJie"
       },
       {
         "instance_id": "0f8fad5b-d9cb-469f-a165-76867728950e",
@@ -1115,7 +1156,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "ZhuBaJie"
       },
       {
         "instance_id": "2f8fad5b-d9cb-469f-a165-74867728950e",
@@ -1133,16 +1174,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
-      },
-      {
-        "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
-        "template_id": "Armor05_Belt",
-        "level": 1,
-        "rare": "Common",
-        "substats": [],
-        "main_stat_type": "DEF",
-        "equip": "ThirdPrinceNezha"
+        "equip": "ZhuBaJie"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
@@ -1151,7 +1183,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "ZhuBaJie"
       }
     ]
   },
@@ -1174,10 +1206,6 @@
             "type": "Gloves"
           },
           {
-            "id": "4f8fad5b-d9cb-469f-a165-70867728950e",
-            "type": "Belt"
-          },
-          {
             "id": "3f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Boots"
           },
@@ -1188,6 +1216,10 @@
           {
             "id": "1f8fad5b-d9cb-469f-a165-70867728950e",
             "type": "Chestplate"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-a165-70867728950e",
+            "type": "Belt"
           }
         ]
       },
@@ -1213,14 +1245,6 @@
             "type": "Helmet"
           },
           {
-            "id": "4f8fed5-d9cb-469f-e465-72867728950e",
-            "type": "Boots"
-          },
-          {
-            "id": "4f8fed5-d9cb-469f-e165-72867728950e",
-            "type": "Ring"
-          },
-          {
             "id": "4f8fed5-d9cb-469f-e565-25867728950e",
             "type": "Chestplate"
           },
@@ -1229,8 +1253,16 @@
             "type": "Gloves"
           },
           {
-            "id": "4f8fad5b-d9cb-469f-b165-72867728950e",
+            "id": "4f8fed5-d9cb-469f-e465-72867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-d165-72867728950e",
             "type": "Belt"
+          },
+          {
+            "id": "4f8fdd5-d9cb-469f-e165-72867728950e",
+            "type": "Ring"
           }
         ]
       },
@@ -1263,18 +1295,18 @@
             "type": "Boots"
           },
           {
-            "id": "4f8fdd5-d9cb-469f-e165-72867728950e",
+            "id": "4f8fed5-d9cb-469f-e165-72867728950e",
             "type": "Ring"
           }
         ]
       },
       {
         "id": "LittleWhiteDragon",
-        "level": 1,
-        "exp": 0,
+        "level": 20,
+        "exp": 1683,
         "ascension_tier": 0,
         "star_up": 0,
-        "weapon": "",
+        "weapon": "fb966bf3-bafe-4461-ab59-bcab9ea3bb95",
         "armors": []
       },
       {
@@ -1285,6 +1317,10 @@
         "star_up": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777746f",
         "armors": [
+          {
+            "id": "4f8fad5b-d9cb-469f-b165-72867728950e",
+            "type": "Belt"
+          },
           {
             "id": "4f8fbd5b-d9cb-469f-e165-72867728950e",
             "type": "Ring"
@@ -1304,21 +1340,34 @@
           {
             "id": "4f8fed5-d9cb-469f-e565-23867728950e",
             "type": "Chestplate"
-          },
-          {
-            "id": "4f8fad5b-d9cb-469f-c165-72867728950e",
-            "type": "Belt"
           }
         ]
       },
       {
         "id": "ZhuBaJie",
-        "level": 1,
-        "exp": 0,
+        "level": 20,
+        "exp": 3214,
         "ascension_tier": 0,
         "star_up": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884779748f",
-        "armors": []
+        "armors": [
+          {
+            "id": "3f8fad5b-d9cb-469f-a164-73867728950e",
+            "type": "Chestplate"
+          },
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+            "type": "Ring"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+            "type": "Boots"
+          }
+        ]
       },
       {
         "id": "ShaWujing",
@@ -1342,10 +1391,6 @@
             "type": "Gloves"
           },
           {
-            "id": "4f8fed5-d9cb-469f-e565-47867728950e",
-            "type": "Helmet"
-          },
-          {
             "id": "4f8fed5-d9cb-469f-e565-24867728950e",
             "type": "Chestplate"
           },
@@ -1367,11 +1412,11 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "LiJing"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 2,
-        "character_id": ""
+        "character_id": "LiJing"
       },
       {
         "position": 3,
@@ -1383,7 +1428,7 @@
       },
       {
         "position": 5,
-        "character_id": ""
+        "character_id": "ThirdPrinceNezha"
       },
       {
         "position": 6,
@@ -1413,10 +1458,10 @@
     "banner_data_map": {
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 10,
+        "pity_count": 11,
         "selected_target_id": "Nimbus_Cudgel",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 210
+        "total_summon_count": 211
       },
       "banner_char_01": {
         "banner_id": "banner_char_01",
@@ -1428,7 +1473,7 @@
     }
   },
   "world_state": {
-    "last_scene_name": "Sky",
+    "last_scene_name": "Home",
     "destroyed_resources": {}
   },
   "quest": {
@@ -1442,11 +1487,11 @@
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639221904000000000,
+    "last_reset_time_ticks": 639222768000000000,
     "active_daily_quests": {
-      "dp_gacha_character": 0,
-      "dq_upgrade_weapon": 0,
-      "dq_clear_battle": 1
+      "dq_clear_battle": 1,
+      "dp_gacha_weapon": 1,
+      "dq_upgrade_weapon": 1
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

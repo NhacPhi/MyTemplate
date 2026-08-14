@@ -79,25 +79,54 @@ public class LocalizationManager : SingletonPersistent<LocalizationManager>
     {
         if (string.IsNullOrEmpty(stringID)) return "";
 
+        string cleanID = stringID.Trim().ToUpper();
+
         // check in cache before Reflection 
-        if (!keyCache.TryGetValue(stringID, out long hashKey))
+        if (!keyCache.TryGetValue(cleanID, out long hashKey))
         {
             // use Reflection to get LocKeys
-            FieldInfo field = typeof(LocKeys).GetField(stringID, BindingFlags.Public | BindingFlags.Static);
+            FieldInfo field = typeof(LocKeys).GetField(cleanID, BindingFlags.Public | BindingFlags.Static);
 
             if (field != null && field.IsLiteral) // IsLiteral make sure is constant
             {
                 hashKey = (long)field.GetValue(null);
-                keyCache[stringID] = hashKey; // cache data
+                keyCache[cleanID] = hashKey; // cache data
             }
             else
             {
-                Debug.LogWarning($"Key UUID '{stringID}' not found in LocKeys class.");
-                return missingTextString;
+                Debug.LogWarning($"Key UUID '{stringID}' (cleaned: '{cleanID}') not found in LocKeys class.");
+                return stringID;
             }
         }
 
         return GetLocalizedValue(hashKey);
+    }
+
+    /// <summary>
+    /// Lấy chuỗi dịch theo templateKey và tự động thay thế biến trong ngoặc {paramName}
+    /// Ví dụ: GetLocalizedFormat("msg_not_enough_resource", ("resource_name", "Vàng")) -> "Không đủ Vàng!"
+    /// </summary>
+    public string GetLocalizedFormat(string templateKey, params (string paramName, string paramValue)[] args)
+    {
+        string text = GetLocalizedValue(templateKey);
+        if (string.IsNullOrEmpty(text) || text == missingTextString) return templateKey;
+
+        if (args != null)
+        {
+            foreach (var (paramName, paramValue) in args)
+            {
+                text = text.Replace("{" + paramName + "}", paramValue);
+            }
+        }
+        return text;
+    }
+
+    /// <summary>
+    /// Overload đơn giản với 1 tham số thay thế {paramName}
+    /// </summary>
+    public string GetLocalizedFormat(string templateKey, string paramName, string paramValue)
+    {
+        return GetLocalizedFormat(templateKey, (paramName, paramValue));
     }
 
     public bool IsReady => isReady;

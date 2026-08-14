@@ -77,6 +77,49 @@ public class UIManager : MonoBehaviour
         OpenWindowScene(ScreenIds.PopupConfirm, popupProps);
     }
 
+    public void ShowNotification(string message, string title = null, Action confirmAction = null)
+    {
+        string popupTitle = string.IsNullOrEmpty(title) 
+            ? LocalizationManager.Instance.GetLocalizedValue("UI_REMIND") 
+            : title;
+            
+        string confirmBtn = LocalizationManager.Instance.GetLocalizedValue("UI_CONFIRM");
+        if (string.IsNullOrEmpty(confirmBtn) || confirmBtn == "UI_CONFIRM")
+        {
+            confirmBtn = "OK";
+        }
+
+        NotificationPopupProperties notificationProps = new NotificationPopupProperties(
+            popupTitle,
+            message,
+            confirmBtn,
+            confirmAction
+        );
+        OpenWindowScene(ScreenIds.PopupNotification, notificationProps);
+    }
+
+    public void ShowNotEnoughResourceNotification(CurrencyType type, Action confirmAction = null)
+    {
+        ShowNotEnoughResourceNotification(type.ToString(), confirmAction);
+    }
+
+    public void ShowNotEnoughResourceNotification(string resourceID, Action confirmAction = null)
+    {
+        string resourceName = LocalizationManager.Instance.GetLocalizedValue(resourceID);
+        if (string.IsNullOrEmpty(resourceName))
+        {
+            resourceName = resourceID;
+        }
+
+        string msg = LocalizationManager.Instance.GetLocalizedFormat("msg_not_enough_resource", "resource_name", resourceName);
+        if (string.IsNullOrEmpty(msg) || msg == "msg_not_enough_resource")
+        {
+            msg = $"Không đủ {resourceName}!";
+        }
+
+        ShowNotification(msg, null, confirmAction);
+    }
+
 
     public void PreloadScreen(string id)
     {
@@ -87,6 +130,12 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"[TransitionLog] UIManager: OpenWindowScene requested for {id}");
         EnsureScreenLoaded(id);
+        var currentWindow = _uiFrame != null ? _uiFrame.GetCurrentWindow() : null;
+        if (currentWindow != null && currentWindow.ScreenId == id)
+        {
+            Debug.Log($"[UIManager] Window {id} is already open and active. Skipping duplicate open call.");
+            return;
+        }
         _uiFrame.OpenWindow(id);
     }
 
@@ -94,6 +143,12 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"[TransitionLog] UIManager: OpenWindowScene<T> requested for {id}");
         EnsureScreenLoaded(id);
+        var currentWindow = _uiFrame != null ? _uiFrame.GetCurrentWindow() : null;
+        if (currentWindow != null && currentWindow.ScreenId == id)
+        {
+            Debug.Log($"[UIManager] Window {id} is already open and active. Skipping duplicate open call.");
+            return;
+        }
         _uiFrame.OpenWindow(id, properties);
     }
 

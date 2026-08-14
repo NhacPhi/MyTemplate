@@ -64,11 +64,13 @@ public class ArmorCardInforUI : MonoBehaviour
             StatType actualMainType = (item.MainStatType != StatType.None) 
                 ? item.MainStatType 
                 : (mainStat != null ? mainStat.Type : StatType.ATK);
-            float baseMainValue = mainStat != null ? mainStat.Value : 0f;
+            ModifyType modType = mainStat != null ? mainStat.ModifierType : ModifyType.Flat;
+            float baseMainValue = Utility.GetAppropriateArmorMainBaseValue(actualMainType, modType, mainStat != null ? mainStat.Value : 0f);
 
             iconMainStat.sprite = gameDataBase.GetStatIcon(actualMainType);
             txtStatType.text = Utility.GetContextByStatType(actualMainType);
-            txtStatValue.text = Utility.GetArmorMainStatByLevel(baseMainValue, item.Level, item.Rare).ToString();
+            float calculatedMainVal = Utility.GetArmorMainStatByLevel(baseMainValue, item.Level, item.Rare);
+            txtStatValue.text = Utility.GetConvertStatValueToString(calculatedMainVal, modType, actualMainType);
 
             armor.Init(item.UUID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;

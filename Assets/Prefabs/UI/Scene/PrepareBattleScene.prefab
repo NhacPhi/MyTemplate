@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8147199443166575339
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2722,8 +2722,10 @@ MonoBehaviour:
     hideOnForegroundLost: 1
     windowQueuePriority: 0
     isPopup: 0
+  _partySetupController: {fileID: 0}
   _loadLocation: {fileID: 11400000, guid: 8dc720cd5af33694d9ed842c3fcad908, type: 2}
   _battleSceneSO: {fileID: 11400000, guid: fc3c26116a71c2d479ed351cbd3b7b87, type: 2}
+  _btnStartBattle: {fileID: 0}
 --- !u!1 &8020991213063520485
 GameObject:
   m_ObjectHideFlags: 0

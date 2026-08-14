@@ -1,29 +1,23 @@
 using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UIFramework;
-using UnityEngine;
-
 
 [Serializable]
-public class ConfirmationPopupProperties : WindowProperties
+public class NotificationPopupProperties : WindowProperties
 {
     public readonly string title;
     public readonly string txtButtonConfirm;
-    public readonly string txtButtonCancel;
     public readonly string txtMessage;
-
     public readonly Action confirmAction;
-    public readonly Action cancelAction;
 
-    public ConfirmationPopupProperties(string title, string txtMessage, string txtButtonConfirm = "Confirm", string txtButtonCancel = "Cancel", Action confirmAction = null, Action cancelAction = null)
+    public NotificationPopupProperties(string title, string txtMessage, string txtButtonConfirm = "OK", Action confirmAction = null)
     {
         this.title = title;
         this.txtMessage = txtMessage;
         this.txtButtonConfirm = txtButtonConfirm;
-        this.txtButtonCancel = txtButtonCancel;
         this.confirmAction = confirmAction;
-        this.cancelAction = cancelAction;
 
         IsPopup = true;
         HideOnForegroundLost = false;
@@ -31,23 +25,17 @@ public class ConfirmationPopupProperties : WindowProperties
     }
 }
 
-
-public class ConfirmPopupController : WindowController<ConfirmationPopupProperties>
+public class NotificationPopupController : WindowController<NotificationPopupProperties>
 {
     [SerializeField] public TextMeshProUGUI titleLable;
     [SerializeField] public TextMeshProUGUI txtMessage;
     [SerializeField] public TextMeshProUGUI txtConfirmButton;
-    [SerializeField] public TextMeshProUGUI txtCancelButton;
 
     [SerializeField] public Button btnConfirm;
-    [SerializeField] public Button btnCancel;
 
     private void Start()
     {
         if (btnConfirm != null) btnConfirm.onClick.AddListener(() => UI_Confirm());
-        if (btnCancel != null) btnCancel.onClick.AddListener(() => UI_Cancel());
-        
-        // Delay 1 frame để chắc chắn đè lên các component Localization tự động (nếu có)
         RefreshUI();
     }
 
@@ -68,28 +56,15 @@ public class ConfirmPopupController : WindowController<ConfirmationPopupProperti
 
         if (titleLable != null) titleLable.text = Properties.title;
         if (txtMessage != null) txtMessage.text = Properties.txtMessage;
-        
-        bool hasCancelButton = !string.IsNullOrEmpty(Properties.txtButtonCancel);
-        if (btnCancel != null) btnCancel.gameObject.SetActive(hasCancelButton);
-        if (txtCancelButton != null && hasCancelButton) txtCancelButton.text = Properties.txtButtonCancel;
         if (txtConfirmButton != null) txtConfirmButton.text = Properties.txtButtonConfirm;
     }
 
     public void UI_Confirm()
     {
         UI_Close();
-        if (Properties.confirmAction != null)
+        if (Properties != null && Properties.confirmAction != null)
         {
             Properties.confirmAction();
-        }
-    }
-
-    public void UI_Cancel()
-    {
-        UI_Close();
-        if (Properties.cancelAction != null)
-        {
-            Properties.cancelAction();
         }
     }
 }

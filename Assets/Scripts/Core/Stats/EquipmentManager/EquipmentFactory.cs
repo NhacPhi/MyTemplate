@@ -100,11 +100,13 @@ public static class EquipmentFactory
                 ? saveData.MainStatType 
                 : mainStat.Type;
 
+            float baseValue = Utility.GetAppropriateArmorMainBaseValue(actualMainStatType, mainStat.ModifierType, mainStat.Value);
+
             runtimeArmor.Modifiers.Add(new EquipModifier()
             {
                 Type = actualMainStatType,
                 ModifierType = mainStat.ModifierType,
-                BaseValue = Utility.GetArmorMainStatByLevel(mainStat.Value, saveData.Level, saveData.Rare),
+                BaseValue = Utility.GetArmorMainStatByLevel(baseValue, saveData.Level, saveData.Rare),
                 UpgradeBonus = 0
             });
         }
