@@ -7,7 +7,7 @@
   },
   "inventory": {
     "currencies": {
-      "Energy": 190,
+      "Energy": 95,
       "Jade": 790100,
       "Coin": 14093440,
       "RelicEssence": 68294160,
@@ -168,7 +168,7 @@
       {
         "id": "Slime",
         "type": "Material",
-        "quantity": 58
+        "quantity": 59
       },
       {
         "id": "Meat",
@@ -1412,15 +1412,15 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "ZhuBaJie"
-      },
-      {
-        "position": 2,
         "character_id": "LiJing"
       },
       {
-        "position": 3,
+        "position": 2,
         "character_id": "SunWukong"
+      },
+      {
+        "position": 3,
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 4,
@@ -1473,8 +1473,10 @@
     }
   },
   "world_state": {
-    "last_scene_name": "Home",
-    "destroyed_resources": {}
+    "last_scene_name": "Sky",
+    "destroyed_resources": {
+      "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639223907812530416
+    }
   },
   "quest": {
     "CompletedQuestLineIDs": [],
@@ -1487,11 +1489,11 @@
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639222768000000000,
+    "last_reset_time_ticks": 639225360000000000,
     "active_daily_quests": {
-      "dq_clear_battle": 1,
-      "dp_gacha_weapon": 1,
-      "dq_upgrade_weapon": 1
+      "dq_gather_peach": 0,
+      "dq_upgrade_weapon": 0,
+      "dp_gacha_character": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

@@ -60,7 +60,7 @@ public class EnemyManager
 
                 var enemycf = _gameDataBase.GetCharacterConfig(config.EnemyID);
 
-                IStatProvider enemyProfile = new EnemyProfileModel(enemycf, config.EnemyLevel);
+                IStatProvider enemyProfile = new EnemyProfileModel(enemycf, config.EnemyLevel, config.EnemyID);
 
                 var statsController = enemyInstance.GetComponent<StatsController>();
 

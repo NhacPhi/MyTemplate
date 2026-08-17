@@ -196,12 +196,15 @@ public class BattleManager : MonoBehaviour
                 var character = _characters.GetValueOrDefault(key);
                 var pos = _characterPosisions[slot_position - 1].transform.position;
 
-                if (character.GetComponent<SortingGroup>() == null)
-                {
-                    SortingGroup sp = character.gameObject.AddComponent<SortingGroup>();
+                int sortingOrderValue = 1000 - Mathf.RoundToInt(pos.y * 100f);
 
-                    sp.sortingOrder = order;
+                SortingGroup sp = character.GetComponent<SortingGroup>();
+                if (sp == null)
+                {
+                    sp = character.gameObject.AddComponent<SortingGroup>();
                 }
+                sp.sortingOrder = sortingOrderValue;
+                order = sortingOrderValue;
 
                 character.RenderOrder = order;
 
@@ -233,12 +236,15 @@ public class BattleManager : MonoBehaviour
             var pos = _enemiesPositions[slot_position - 1].transform.position;
             enemy.transform.position = pos + Vector3.up * OffsetY;
             enemy.gameObject.GetComponent<EntityStateData>().SetRootTransform();
-            if (enemy.GetComponent<SortingGroup>() == null)
-            {
-                SortingGroup sp = enemy.gameObject.AddComponent<SortingGroup>();
+            int sortingOrderValue = 1000 - Mathf.RoundToInt(pos.y * 100f);
 
-                sp.sortingOrder = order;
+            SortingGroup sp = enemy.GetComponent<SortingGroup>();
+            if (sp == null)
+            {
+                sp = enemy.gameObject.AddComponent<SortingGroup>();
             }
+            sp.sortingOrder = sortingOrderValue;
+            order = sortingOrderValue;
 
             enemy.RenderOrder = order;
 

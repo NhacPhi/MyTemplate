@@ -56,6 +56,10 @@ public class StatsController : CoreComponent, IEffectable
     public void Setup(IStatProvider provider)
     {
         _statProvider = provider;
+        if (_statProvider != null && !string.IsNullOrEmpty(_statProvider.EntityID))
+        {
+            EntityID = _statProvider.EntityID;
+        }
         InitAttribute();
     }
 

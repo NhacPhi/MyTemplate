@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class EnemyProfileModel : IStatProvider
 {
+    public string EntityID { get; private set; }
     public CharacterConfig BaseConfig { get; private set; } // Implement từ IStatProvider
     private int _level;
 
 
-    public EnemyProfileModel(CharacterConfig config, int level)
+    public EnemyProfileModel(CharacterConfig config, int level, string entityID = "")
     {
         BaseConfig = config;
         _level = level;
+        EntityID = entityID;
     }
 
     public int GetTotalStat(StatType type)

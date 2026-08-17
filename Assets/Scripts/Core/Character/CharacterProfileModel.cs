@@ -19,6 +19,8 @@ public class CharacterProfileModel : IStatProvider
     private CharacterSaveData _saveData;
     public CharacterSaveData SaveData => _saveData;
 
+    public string EntityID => _saveData != null ? _saveData.ID : "";
+
     private CharacterConfig _baseConfig;
     public CharacterConfig BaseConfig => _baseConfig;
 

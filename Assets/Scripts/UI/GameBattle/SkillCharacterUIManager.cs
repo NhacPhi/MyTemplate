@@ -36,8 +36,18 @@ public class SkillCharacterUIManager : MonoBehaviour
 
     public void UpdateSkillCharacterUI(Entity character)
     {
-
         var characterConfig = _gameData.GetCharacterConfig(character.GetEntityID());
+
+        // Update the large avatar (the last element in the prediction list) to match the active skill UI character
+        if (_preditionAvatar != null && _preditionAvatar.Count > 0)
+        {
+            var largeAvatar = _preditionAvatar[_preditionAvatar.Count - 1];
+            if (largeAvatar != null && characterConfig.Icon != null)
+            {
+                largeAvatar.sprite = characterConfig.Icon;
+                largeAvatar.gameObject.SetActive(true);
+            }
+        }
 
         _baseSkill.gameObject.GetComponent<ToggleBase>().ActiveToggle(true);
 
@@ -75,25 +85,46 @@ public class SkillCharacterUIManager : MonoBehaviour
 
     public void UpdatePredictionAvatar(List<Entity> entities)
     {
-        for(int i = 0; i < entities.Count; i++)
+        if (entities == null || _preditionAvatar == null) return;
+
+        // Loop only up to Count - 1, leaving the last slot (Large Avatar) for the active skill character
+        int predictionSlots = _preditionAvatar.Count - 1;
+
+        for (int i = 0; i < predictionSlots; i++)
         {
-            var entityID = entities[i].GetEntityID();
-            _preditionAvatar[i].sprite = _gameData.GetCharacterConfig(entityID).Icon;
+            if (i < entities.Count && entities[i] != null)
+            {
+                var entityID = entities[i].GetEntityID();
+                var config = _gameData.GetCharacterConfig(entityID);
+                if (config != null && config.Icon != null)
+                {
+                    _preditionAvatar[i].sprite = config.Icon;
+                    _preditionAvatar[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    _preditionAvatar[i].gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                _preditionAvatar[i].gameObject.SetActive(false);
+            }
         }
-
-        //var index = entities.Count;
-
-        //if (index == _preditionAvatar.Count) return;
-
-        //for(int i = index; i <_preditionAvatar.Count; i++)
-        //{
-        //    _preditionAvatar[i].gameObject.SetActive(false);
-        //}
     }
 
     public void SkillSwitchOnOff(bool isOn)
     {
-        _skill.gameObject.SetActive(isOn);
+        if (_skill != null) _skill.gameObject.SetActive(isOn);
+        
+        if (_preditionAvatar != null && _preditionAvatar.Count > 0)
+        {
+            var largeAvatar = _preditionAvatar[_preditionAvatar.Count - 1];
+            if (largeAvatar != null)
+            {
+                largeAvatar.gameObject.SetActive(isOn);
+            }
+        }
     }
 
     public void ActiveBossUI(bool active)

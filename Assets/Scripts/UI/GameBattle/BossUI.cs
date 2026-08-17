@@ -42,7 +42,9 @@ public class BossUI : MonoBehaviour
 
     public void UpdateSkillBossUI(Entity boss)
     {
+        if (boss == null) return;
         var characterConfig = _gameData.GetCharacterConfig(boss.GetEntityID());
+        if (characterConfig == null) return;
 
         var avatar = characterConfig.Icon;
 
@@ -50,43 +52,56 @@ public class BossUI : MonoBehaviour
         var majorSkill = characterConfig.MajorSkillIcon;
         var ultimateSKill = characterConfig.UltimateSkillIcon;
 
-        _baseSkill.SetIconSkill(baseSkill);
-        _majorSkill.SetIconSkill(majorSkill);
-        _ultimateSkill.SetIconSkill(ultimateSKill);
+        if (_baseSkill != null) _baseSkill.SetIconSkill(baseSkill);
+        if (_majorSkill != null) _majorSkill.SetIconSkill(majorSkill);
+        if (_ultimateSkill != null) _ultimateSkill.SetIconSkill(ultimateSKill);
 
         var skillConfig = characterConfig.Skills;
 
-        foreach (var kvp in skillConfig)
+        if (skillConfig != null)
         {
-            SkillCharacter type = kvp.Key;
-            SkillComponent data = kvp.Value;
-
-            int currentCD = boss.GetCoreComponent<EntitySkill>().GetCurrentCooldown(type);
-
-            switch (type)
+            foreach (var kvp in skillConfig)
             {
-                case SkillCharacter.Base:
-                    _baseSkill.UpdateSkillUI(data, currentCD);
-                    break;
-                case SkillCharacter.Major:
-                    _majorSkill.UpdateSkillUI(data, currentCD);
-                    break;
-                case SkillCharacter.Ultimate:
-                    _ultimateSkill.UpdateSkillUI(data, currentCD);
-                    break;
+                SkillCharacter type = kvp.Key;
+                SkillComponent data = kvp.Value;
+
+                var entitySkill = boss.GetCoreComponent<EntitySkill>();
+                if (entitySkill == null) continue;
+
+                int currentCD = entitySkill.GetCurrentCooldown(type);
+
+                switch (type)
+                {
+                    case SkillCharacter.Base:
+                        if (_baseSkill != null) _baseSkill.UpdateSkillUI(data, currentCD);
+                        break;
+                    case SkillCharacter.Major:
+                        if (_majorSkill != null) _majorSkill.UpdateSkillUI(data, currentCD);
+                        break;
+                    case SkillCharacter.Ultimate:
+                        if (_ultimateSkill != null) _ultimateSkill.UpdateSkillUI(data, currentCD);
+                        break;
+                }
             }
         }
 
-        _txtBossName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
+        if (_txtBossName != null && characterConfig.Name != null)
+            _txtBossName.text = LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name);
 
-        var characterHp = boss.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp);
+        var entityStats = boss.GetCoreComponent<EntityStats>();
+        if (entityStats != null && _bossHP != null)
+        {
+            var characterHp = entityStats.GetAttribute(AttributeType.Hp);
+            if (characterHp != null)
+            {
+                _bossHP.minValue = 0;
+                _bossHP.maxValue = characterHp.MaxValue;
+                _bossHP.value = characterHp.Value;
+            }
+        }
 
-        _bossHP.minValue = 0;
-        _bossHP.maxValue = characterHp.MaxValue;
-
-        _bossHP.value = characterHp.Value;
-
-        _bossAvatar.sprite = avatar;
+        if (_bossAvatar != null)
+            _bossAvatar.sprite = avatar;
 
     }
 }

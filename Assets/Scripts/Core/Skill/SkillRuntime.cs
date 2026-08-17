@@ -27,6 +27,11 @@ public abstract class SkillRuntime
         CurrentCooldown = GetSkillData().MaxCoolDown;
     }
 
+    public void ResetCooldown()
+    {
+        CurrentCooldown = 0;
+    }
+
     public void TickCooldown()
     {
         if (CurrentCooldown > 0)
