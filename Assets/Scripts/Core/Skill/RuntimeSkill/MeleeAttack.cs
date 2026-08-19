@@ -13,6 +13,14 @@ public class MeleeAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
+    public override DamageBonus CalculateRawDamage()
+    {
+        var bonus = base.CalculateRawDamage();
+        if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
+        bonus.Tags.Add("BasicAttack");
+        return bonus;
+    }
+
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
         var enemy = caster.Target.gameObject.GetComponent<Entity>();

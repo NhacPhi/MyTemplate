@@ -13,9 +13,17 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
-    public void OnDealDamage(ref float damgeInput)
+    public override DamageBonus CalculateRawDamage()
     {
-        // Caculate damge
+        var bonus = base.CalculateRawDamage();
+        if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
+        bonus.Tags.Add("UltimateSkill");
+        return bonus;
+    }
+
+    public void OnDealDamage(ref float damageInput)
+    {
+        // Handled dynamically by Event Handlers in Damage Pipeline
     }
 
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)

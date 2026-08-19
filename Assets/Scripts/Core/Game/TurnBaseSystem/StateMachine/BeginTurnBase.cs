@@ -53,7 +53,7 @@ public class BeginTurnBase : BattleBaseState
 
                 if (battleManager != null)
                 {
-                    await UniTask.Delay(1000, ignoreTimeScale: true, cancellationToken: battleManager.DestroyCancellationToken);
+                    await UniTask.Delay(150, cancellationToken: battleManager.DestroyCancellationToken);
                 }
             }
 

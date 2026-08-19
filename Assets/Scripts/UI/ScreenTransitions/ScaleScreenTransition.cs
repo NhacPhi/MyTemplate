@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UIFramework;
@@ -22,7 +22,7 @@ public class ScaleScreenTransition : TransitionComponent
                 canvasGroup = rTransform.gameObject.AddComponent<CanvasGroup>();
             }
 
-            canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent);
+            canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent).SetUpdate(true);
         }
 
         rTransform.DOKill();

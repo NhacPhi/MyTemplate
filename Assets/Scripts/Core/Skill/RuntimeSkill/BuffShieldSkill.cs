@@ -12,8 +12,9 @@ public class BuffShieldSkill : SkillRuntime
     }
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy);
+        var targetType = skillData.TargetType;
+        var targetEntity = caster.Target != null ? caster.Target.gameObject.GetComponent<Entity>() : null;
+        if (targetEntity != null) caster.HandleTurn(targetEntity);
 
         var state = caster.GetCoreComponent<EntityStateData>();
 
@@ -21,9 +22,39 @@ public class BuffShieldSkill : SkillRuntime
         caster.PlaySFX(skillData.Sound);
         EntityStats stat = caster.GetCoreComponent<EntityStats>();
 
-        var shield = CalculateRawDamage().FlatValue + CalculateRawDamage().DamageMultiplier * stat.GetStat(StatType.ATK).Value;
+        // Tính khiên theo % HP Tối Đa (nếu HP > 0) hoặc theo ATK
+        float baseStat = (stat.GetStat(StatType.HP) != null && stat.GetStat(StatType.HP).Value > 0)
+            ? stat.GetStat(StatType.HP).Value
+            : (stat.GetStat(StatType.ATK) != null ? stat.GetStat(StatType.ATK).Value : 1000f);
 
-        stat.BuffShield(shield);
+        var shieldAmount = CalculateRawDamage().DamageMultiplier * baseStat;
+
+        if (targetType == SkillTargetType.SameRowAllies && BattleManager.Instance != null)
+        {
+            var allies = BattleManager.Instance.GetEntitiesByTeam(caster.Team);
+            foreach (var ally in allies)
+            {
+                if (ally != null && !ally.GetCoreComponent<EntityStats>().IsDead && ally.Row == caster.Row)
+                {
+                    ally.GetCoreComponent<EntityStats>()?.BuffShield(shieldAmount);
+                }
+            }
+        }
+        else if (targetType == SkillTargetType.AllAllies && BattleManager.Instance != null)
+        {
+            var allies = BattleManager.Instance.GetEntitiesByTeam(caster.Team);
+            foreach (var ally in allies)
+            {
+                if (ally != null && !ally.GetCoreComponent<EntityStats>().IsDead)
+                {
+                    ally.GetCoreComponent<EntityStats>()?.BuffShield(shieldAmount);
+                }
+            }
+        }
+        else
+        {
+            stat.BuffShield(shieldAmount);
+        }
 
         await state.WaitForAnimEnd();
 

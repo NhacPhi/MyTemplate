@@ -116,7 +116,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 9.0871, y: 0}
+  m_AnchoredPosition: {x: 9.087158, y: 0}
   m_SizeDelta: {x: 17.5542, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6465884418483819669
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4545922537858938301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14894ef619273784bac6621c2c25c3d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DespawnTime: 1
+  DespawnTime: 2
 --- !u!114 &-2293442604398923256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,11 +233,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2b179c881316c4298d0e2701bcc557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveUpDistance: 8
-  Duration: 1
-  StartScale: 0.2
-  PeakScale: 1.1
-  EndScale: 0.5
+  normalMoveDistance: 2
+  critMoveDistance: 2
+  randomScatterX: 0.35
+  normalPeakScale: 1.25
+  critPeakScale: 1.4
+  normalEndScale: 1
+  critEndScale: 1.1
+  normalDuration: 1
+  critDuration: 1
 --- !u!1 &8685012597900474081
 GameObject:
   m_ObjectHideFlags: 0

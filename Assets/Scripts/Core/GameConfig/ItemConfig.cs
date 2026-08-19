@@ -62,7 +62,7 @@ public class ItemConfig
         {
             return Type switch
             {
-                ItemType.Weapon => "Atlas_icon_weapon",
+                ItemType.Weapon => "Atlas_small_icon_weapon",
                 ItemType.Armor => "Atlas_icon_armor",
                 ItemType.Gemstone => "Atlas_icon_gemstone",
                 ItemType.Material => "Atlas_icon_material",

@@ -47,7 +47,7 @@ public class CombatText : IInitializable, IDisposable
             clone.TMP.color = Color.white;
 
         var jump = clone.GetComponent<NumberJumpAnimation>();
-        if (jump != null) jump.PlayAnimation();
+        if (jump != null) jump.PlayAnimation(isCris);
     }
 
     public void CreateHealPopup(float heal, Vector3 position)
@@ -61,7 +61,7 @@ public class CombatText : IInitializable, IDisposable
         clone.TMP.color = Color.green;
 
         var jump = clone.GetComponent<NumberJumpAnimation>();
-        if (jump != null) jump.PlayAnimation();
+        if (jump != null) jump.PlayAnimation(false);
     }
 
     public void CreateTextPopup(string text, Vector3 position)

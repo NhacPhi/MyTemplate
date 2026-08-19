@@ -17,17 +17,21 @@ public class EntityMoveUp : EntityStateBase
     public override void Enter()
     {
         _isSortingRender = false;
-        _dist = Vector3.Distance(data.Entity.transform.position, data.Entity.Target.transform.position);
+        _dist = Vector3.Distance(data.Entity.transform.position, data.MovePosition);
     }
 
     public override void LogicUpdate()
     {
         if(!_isSortingRender)
         {
-            var dist = Vector3.Distance(data.Entity.transform.position, data.Entity.Target.transform.position);
-            if(dist < _dist/2)
+            var remainingDist = Vector3.Distance(data.Entity.transform.position, data.MovePosition);
+            if(remainingDist <= _dist / 2f || _dist < 0.1f)
             {
-                data.Entity.SetRenderOrder(data.Entity.Target.gameObject.GetComponent<Entity>().RenderOrder + 1);
+                var targetEntity = data.Entity.Target != null ? data.Entity.Target.GetComponent<Entity>() : null;
+                if (targetEntity != null)
+                {
+                    data.Entity.SetRenderOrder(targetEntity.RenderOrder + 1);
+                }
                 _isSortingRender = true;
             }
         }

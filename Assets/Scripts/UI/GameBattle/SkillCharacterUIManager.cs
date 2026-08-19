@@ -23,7 +23,40 @@ public class SkillCharacterUIManager : MonoBehaviour
         UIEvent.OnUpdateSkillCharacterUI += UpdateSkillCharacterUI;
         UIEvent.OnUpdateEntityPrediction += UpdatePredictionAvatar;
         UIEvent.OnSwithActiveSkilCharacter += SkillSwitchOnOff;
-        UIEvent.OnActiveBossUI+= ActiveBossUI;
+        UIEvent.OnActiveBossUI += ActiveBossUI;
+
+        RefreshCurrentBattleUI();
+    }
+
+    public void RefreshCurrentBattleUI()
+    {
+        if (BattleManager.Instance != null)
+        {
+            if (BattleManager.Instance.TurnSystem != null)
+            {
+                var predictedOrder = BattleManager.Instance.TurnSystem.PredictTurnOrder();
+                if (predictedOrder != null && predictedOrder.Count > 0)
+                {
+                    UpdatePredictionAvatar(predictedOrder);
+                }
+            }
+
+            if (BattleManager.Instance.CurrentCaster != null)
+            {
+                UpdateSkillCharacterUI(BattleManager.Instance.CurrentCaster);
+                SkillSwitchOnOff(BattleManager.Instance.CurrentCaster.Team == TeamSide.Player);
+            }
+
+            if (BattleManager.Instance.Boss != null)
+            {
+                ActiveBossUI(true);
+                UIEvent.OnUpdateBossUI?.Invoke(BattleManager.Instance.Boss);
+            }
+            else
+            {
+                ActiveBossUI(false);
+            }
+        }
     }
 
     private void OnDisable()
@@ -36,7 +69,10 @@ public class SkillCharacterUIManager : MonoBehaviour
 
     public void UpdateSkillCharacterUI(Entity character)
     {
+        if (character == null || _gameData == null) return;
+
         var characterConfig = _gameData.GetCharacterConfig(character.GetEntityID());
+        if (characterConfig == null) return;
 
         // Update the large avatar (the last element in the prediction list) to match the active skill UI character
         if (_preditionAvatar != null && _preditionAvatar.Count > 0)
@@ -49,35 +85,42 @@ public class SkillCharacterUIManager : MonoBehaviour
             }
         }
 
-        _baseSkill.gameObject.GetComponent<ToggleBase>().ActiveToggle(true);
-
-        var baseSkill = characterConfig.BaseSkillIcon;
-        var majorSkill = characterConfig.MajorSkillIcon;
-        var ultimateSKill = characterConfig.UltimateSkillIcon;
-
-        _baseSkill.SetIconSkill(baseSkill);
-        _majorSkill.SetIconSkill(majorSkill);
-        _ultimateSkill.SetIconSkill(ultimateSKill);
+        if (_baseSkill != null)
+        {
+            _baseSkill.ActiveToggle(true);
+            _baseSkill.SetIconSkill(characterConfig.BaseSkillIcon);
+        }
+        if (_majorSkill != null)
+        {
+            _majorSkill.SetIconSkill(characterConfig.MajorSkillIcon);
+        }
+        if (_ultimateSkill != null)
+        {
+            _ultimateSkill.SetIconSkill(characterConfig.UltimateSkillIcon);
+        }
 
         var skillConfig = characterConfig.Skills;
+        if (skillConfig == null) return;
+
+        var entitySkill = character.GetCoreComponent<EntitySkill>();
 
         foreach (var kvp in skillConfig)
         {
             SkillCharacter type = kvp.Key;
             SkillComponent data = kvp.Value;
 
-            int currentCD = character.GetCoreComponent<EntitySkill>().GetCurrentCooldown(type);
+            int currentCD = entitySkill != null ? entitySkill.GetCurrentCooldown(type) : 0;
 
             switch (type)
             {
                 case SkillCharacter.Base:
-                    _baseSkill.UpdateSkillUI(data, currentCD);
+                    if (_baseSkill != null) _baseSkill.UpdateSkillUI(data, currentCD);
                     break;
                 case SkillCharacter.Major:
-                    _majorSkill.UpdateSkillUI(data, currentCD);
+                    if (_majorSkill != null) _majorSkill.UpdateSkillUI(data, currentCD);
                     break;
                 case SkillCharacter.Ultimate:
-                    _ultimateSkill.UpdateSkillUI(data, currentCD);
+                    if (_ultimateSkill != null) _ultimateSkill.UpdateSkillUI(data, currentCD);
                     break;
             }
         }

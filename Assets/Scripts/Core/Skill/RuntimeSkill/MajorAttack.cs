@@ -14,6 +14,14 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
     public override SkillData GetSkillData() => skillData;
 
+    public override DamageBonus CalculateRawDamage()
+    {
+        var bonus = base.CalculateRawDamage();
+        if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
+        bonus.Tags.Add("MajorSkill");
+        return bonus;
+    }
+
     public void OnDealDamage(ref float damgeInput)
     {
         // Caculate damge

@@ -16,6 +16,9 @@ public class CombatContext
     // Thông tin bổ sung (Ví dụ: tên kỹ năng vừa dùng, ID buff, loại sát thương...)
     public string EventContextInfo { get; set; }
 
+    // Thông tin sát thương đang được tính toán (cho sự kiện OnBeforeDealDamage)
+    public DamageBonus? DamageBonus { get; set; }
+
     // Tập hợp các Tags gắn liền với sự kiện (VD: "Critical", "SkillDamage", "Burn", "Heal")
     public HashSet<string> Tags { get; private set; }
 

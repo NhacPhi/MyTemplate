@@ -105,7 +105,7 @@ public class RingOfUniverseData: SkillData
     public string ringObjectReference = "Ring_Of_Universe";
 
     [Header("Distance Settings")]
-    public float OvershootDistance = 2.0f; // Khoảng cách bay vượt qua sau lưng mục tiêu (mét/đơn vị)
+    public float OvershootDistance = 4.0f; // Khoảng cách bay vượt qua sau lưng mục tiêu (mét/đơn vị)
 
     public override SkillRuntime CreateRuntimeSkill(EntityStats owner) => new RingOfUniverseSkill(owner, this);
 }

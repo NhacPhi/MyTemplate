@@ -105,31 +105,73 @@ public class SkillTooltipHandler : MonoBehaviour
             }
         }
 
-        // 2. Lấy giá trị Effect nếu có
+        // 2. Lấy giá trị Effect & Duration nếu có
         float effectValue = 0f;
+        int effectDuration = 0;
         if (!string.IsNullOrEmpty(skillComp.EffectID))
         {
             var effectConfig = _gameDataBase.GetEffectConfig(skillComp.EffectID);
             if (effectConfig != null)
             {
                 effectValue = effectConfig.Value;
+                effectDuration = effectConfig.Duration;
             }
         }
 
-        // Format description: {0} = DamageMultiplier%, {1} = Passive Value, {2} = Effect Value
+        // Format description thông minh theo loại kỹ năng và effect
         string rawDescription = LocalizationManager.Instance.GetLocalizedValue(skillComp.Description);
-        string formattedDescription;
-        try
+        string formattedDescription = rawDescription;
+        if (!string.IsNullOrEmpty(rawDescription))
         {
-            formattedDescription = string.Format(rawDescription,
-                (damageMultiplier * 100f).ToString("F0"),   // {0} DamageMultiplier %
-                passiveValue,                               // {1} Passive Value
-                effectValue                                 // {2} Effect Value
-            );
-        }
-        catch (System.FormatException)
-        {
-            formattedDescription = rawDescription;
+            try
+            {
+                object arg0 = (damageMultiplier * 100f).ToString("F0");
+                object arg1 = "";
+                object arg2 = "";
+                object arg3 = "";
+
+                if (skillComp.Skill == Skill.StatModifier || skillComp.TargetType == SkillTargetType.Self)
+                {
+                    // Với skill buff (như Ngưu Ma Vương M, Sa Tăng M):
+                    // {0} = % Buff (Lấy từ DamageMultiplier hoặc Effect Value)
+                    // {1} = Duration (Số hiệp)
+                    // {2} = Secondary effect value (nếu có)
+                    arg0 = (damageMultiplier > 0 && damageMultiplier != 1f) 
+                        ? (damageMultiplier * 100f).ToString("F0") 
+                        : (effectValue > 0 ? effectValue.ToString("F0") : (damageMultiplier * 100f).ToString("F0"));
+                    arg1 = effectDuration > 0 ? effectDuration : (passiveValue > 0 ? passiveValue : 1);
+                    arg2 = effectValue > 0 ? effectValue : passiveValue;
+                    arg3 = effectDuration;
+                }
+                else if (!string.IsNullOrEmpty(skillComp.EffectID))
+                {
+                    // Với skill tấn công có đính kèm Effect (như Ngưu Ma Vương U Poison, Đường Tăng Choáng, ...):
+                    // {0} = DamageMultiplier %
+                    // {1} = Effect Value (hoặc Passive Value)
+                    // {2} = Effect Duration
+                    // {3} = Passive Value
+                    arg1 = effectValue > 0 ? effectValue.ToString("F0") : (passiveValue > 0 ? passiveValue.ToString("F0") : effectDuration.ToString());
+                    arg2 = effectDuration > 0 ? effectDuration : passiveValue;
+                    arg3 = passiveValue;
+                }
+                else
+                {
+                    // Với skill thông thường / có passive:
+                    // {0} = DamageMultiplier %
+                    // {1} = Passive Value
+                    // {2} = Effect Value
+                    // {3} = Effect Duration
+                    arg1 = passiveValue;
+                    arg2 = effectValue;
+                    arg3 = effectDuration;
+                }
+
+                formattedDescription = string.Format(rawDescription, arg0, arg1, arg2, arg3);
+            }
+            catch (System.FormatException)
+            {
+                formattedDescription = rawDescription;
+            }
         }
 
         var data = new SkillTooltipData

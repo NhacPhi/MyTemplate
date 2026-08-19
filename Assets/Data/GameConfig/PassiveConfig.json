@@ -11,7 +11,7 @@
                     20.0,
                     25.0,
                     30.0,
-                    34.0
+                    35.0
                 ]
             },
             {
@@ -23,7 +23,7 @@
                     20.0,
                     25.0,
                     30.0,
-                    34.0
+                    35.0
                 ]
             }
         ],
@@ -32,12 +32,12 @@
                 "event_type": "OnAfterSkillExcute",
                 "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
-                    10.0,
-                    15.0,
                     20.0,
                     25.0,
                     30.0,
-                    40.0
+                    35.0,
+                    40.0,
+                    50.0
                 ],
                 "target": "self",
                 "condition_filter": "SingleTarget, TargetDead",
@@ -53,12 +53,12 @@
                 "stat_type": "CRIT_DMG",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    10.0,
-                    15.0,
-                    20.0,
-                    25.0,
-                    31.0,
-                    34.0
+                    30.0,
+                    36.0,
+                    42.0,
+                    48.0,
+                    54.0,
+                    60.0
                 ]
             }
         ],
@@ -449,7 +449,7 @@
         ]
     },
     "psv_sunwukong_major": {
-        "desc_template_hash": 3419521401,
+        "desc_template_hash": 3130803189,
         "static_modifiers": [],
         "combat_events": [
             {
@@ -457,6 +457,10 @@
                 "effect_id": "Eff_Lifesteal",
                 "modify_by_upgrade": [
                     20.0,
+                    25.0,
+                    30.0,
+                    30.0,
+                    30.0,
                     30.0
                 ],
                 "target": "self",
@@ -467,15 +471,19 @@
         ]
     },
     "psv_sunwukong_ultiamte": {
-        "desc_template_hash": 22218017,
+        "desc_template_hash": 1795897913,
         "static_modifiers": [],
         "combat_events": [
             {
                 "event_type": "OnAfterDealDamage",
                 "effect_id": "Eff_ReduceDefense",
                 "modify_by_upgrade": [
+                    15.0,
                     20.0,
-                    30.0
+                    25.0,
+                    25.0,
+                    25.0,
+                    25.0
                 ],
                 "target": "enemy",
                 "condition_filter": "UltimateSkill",
@@ -483,5 +491,111 @@
                 "internal_cooldown": 0
             }
         ]
+    },
+    "psv_erlangshen_major": {
+        "desc_template_hash": 1818431434,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_IncreaseCritDmg",
+                "modify_by_upgrade": [
+                    60.0,
+                    80.0,
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0
+                ],
+                "target": "self",
+                "condition_filter": "MajorSkill",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_lijing_base": {
+        "desc_template_hash": 4002581658,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_AddShield",
+                "modify_by_upgrade": [
+                    5.0,
+                    5.0,
+                    5.0,
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "target": "self",
+                "condition_filter": "BasicAttack",
+                "effect_param": 5.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_lijing_ultimate": {
+        "desc_template_hash": 219338617,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_HPScalingDamage",
+                "modify_by_upgrade": [
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0
+                ],
+                "target": "self",
+                "condition_filter": "UltimateSkill",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_erlangshen_ultimate": {
+        "desc_template_hash": 977773207,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_ArmorPenetration",
+                "modify_by_upgrade": [
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0
+                ],
+                "target": "self",
+                "condition_filter": "UltimateSkill",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_linglong_pagoda": {
+        "desc_template_hash": 3451749993,
+        "static_modifiers": [
+            {
+                "stat_type": "HP",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    15.0,
+                    20.0,
+                    25.0,
+                    30.0,
+                    35.0,
+                    40.0
+                ]
+            }
+        ],
+        "combat_events": []
     }
 }

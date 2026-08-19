@@ -75,15 +75,15 @@ public static class PassiveEventListener
     /// </summary>
     private static Entity ResolveTarget(string targetType, CombatContext context)
     {
-        if (string.IsNullOrEmpty(targetType)) return context.Source; // Mặc định là Source (Self)
+        if (string.IsNullOrEmpty(targetType)) return context.Source;
 
-        switch (targetType)
+        switch (targetType.ToLower())
         {
-            case "Self":
+            case "self":
                 return context.Source;
-            case "Target":
+            case "target":
+            case "enemy":
                 return context.Target;
-            // Ở đây bạn có thể mở rộng cho "AllAllies", "LowestHPAlly"... (trả về List<Entity> nếu cần AoE)
             default:
                 return context.Source;
         }

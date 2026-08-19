@@ -57,7 +57,7 @@ public class SlideScreenTransition : TransitionComponent
 
         if (canvasGroup != null) {
             if (doFade) {
-                canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent);
+                canvasGroup.DOFade(isOutAnimation ? 0f : 1f, duration * fadeDurationPercent).SetUpdate(true);
             }
             else if (!isOutAnimation) {
                 canvasGroup.alpha = 1f;

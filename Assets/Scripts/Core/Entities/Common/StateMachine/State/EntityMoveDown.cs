@@ -17,15 +17,15 @@ public class EntityMoveDown : EntityStateBase
     public override void Enter()
     {
         _isSortingRender = false;
-        _dist = Vector3.Distance(data.RootPosition, data.Entity.Target.transform.position);
+        _dist = Vector3.Distance(data.Entity.transform.position, data.RootPosition);
     }
 
     public override void LogicUpdate()
     {
         if (!_isSortingRender)
         {
-            var dist = Vector3.Distance(data.Entity.transform.position, data.RootPosition);
-            if (dist < _dist / 2)
+            var remainingDist = Vector3.Distance(data.Entity.transform.position, data.RootPosition);
+            if (remainingDist <= _dist / 2f || _dist < 0.1f)
             {
                 data.Entity.SetRenderOrder(data.Entity.RenderOrder);
                 _isSortingRender = true;

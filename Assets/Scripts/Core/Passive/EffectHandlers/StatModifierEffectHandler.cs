@@ -13,16 +13,38 @@ public class StatModifierEffectHandler : IEffectHandler
 
     public void Execute(Entity target, float effectValue, CombatContext context)
     {
+        // 1. Nếu đang trong luồng tính toán đòn đánh (OnBeforeDealDamage), cập nhật trực tiếp vào DamageBonus
+        if (context != null && context.DamageBonus.HasValue)
+        {
+            var bonus = context.DamageBonus.Value;
+            switch (_targetStat)
+            {
+                case StatType.CRIT_DMG:
+                    bonus.CritDmgBonus += effectValue;
+                    context.DamageBonus = bonus;
+                    return;
+                case StatType.CRIT_RATE:
+                    bonus.CritRateBonus += effectValue;
+                    context.DamageBonus = bonus;
+                    return;
+                case StatType.ATK:
+                    bonus.DamageMultiplier += _isPercentage ? (effectValue / 100f) : 0f;
+                    bonus.FlatValue += !_isPercentage ? effectValue : 0f;
+                    context.DamageBonus = bonus;
+                    return;
+            }
+        }
+
+        // 2. Mặc định áp dụng Modifier lên EntityStats của mục tiêu
         var stats = target.GetCoreComponent<EntityStats>();
         if (stats == null) return;
 
-        // Lấy stat tương ứng dựa vào _targetStat
         var stat = stats.GetStat(_targetStat);
         if (stat != null)
         {
-            // Tùy thuộc vào code của bạn (dùng AddModifier hay cộng trực tiếp)
-            // Ví dụ:
-            // stat.AddModifier(new StatModifier(effectValue, _isPercentage ? StatModType.PercentAdd : StatModType.Flat));
+            var modType = _isPercentage ? ModifyType.Percent : ModifyType.Flat;
+            float val = _isPercentage ? (effectValue / 100f) : effectValue;
+            stat.AddModifier(new Modifier(val, modType));
             
             Debug.Log($"[Passive] Đã áp dụng {effectValue} ({(_isPercentage ? "%" : "Flat")}) vào chỉ số {_targetStat} của {target.name}");
         }

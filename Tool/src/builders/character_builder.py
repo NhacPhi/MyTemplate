@@ -47,7 +47,6 @@ class CharacterConfigBuilder(BaseBuilder):
                     target_type=str(row['TargetType']).strip() if not pd.isna(row['TargetType']) else "None",
                     damage_multiplier=dm,
                     max_cooldown=mc,
-                    flat_damage=float(row['FlatDamage']) if not pd.isna(row['FlatDamage']) else 0,
                     effect_id=str(row['Effect']).strip() if not pd.isna(row['Effect']) else "None",
                     passive_id=str(row['PassiveID']).strip() if 'PassiveID' in df_skills.columns and not pd.isna(row['PassiveID']) else "",
                     sound=str(row['Sound']).strip() if not pd.isna(row['Sound']) else ""

@@ -31,6 +31,7 @@ public class UpgradeRelicScene : WindowController
 
                 UIEvent.OnWeaponUpgraded?.Invoke(currentWeapon);
             }
+            UIEvent.OnCloseUpgradeRelicScene?.Invoke();
             uiManager.CloseWindowScene(ScreenIds.UpgradeRelicScene);
         });
     }

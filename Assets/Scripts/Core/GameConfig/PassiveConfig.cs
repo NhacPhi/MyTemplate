@@ -75,6 +75,9 @@ public class CombatEventConfig
 [Serializable]
 public class PassiveConfig
 {
+    [JsonIgnore]
+    public string ID { get; set; }
+
     [JsonProperty("desc_template_hash")]
     public long DescTemplateHash;
 

@@ -43,7 +43,6 @@ class SkillComponent:
     target_type: str
     damage_multiplier: List[float]
     max_cooldown: List[int]
-    flat_damage: float
     effect_id: str
     sound: str = ""
     passive_id: str = ""

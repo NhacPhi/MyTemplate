@@ -6,6 +6,7 @@ public class PassiveInstance : IDisposable
 {
     public PassiveConfig Config { get; private set; }
     private int _level;
+    public int Level => _level;
     private CharacterProfileModel _owner;
 
     // Danh sách các modifier (tăng chỉ số) đang được active bởi Passive này

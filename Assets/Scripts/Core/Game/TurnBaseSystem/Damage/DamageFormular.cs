@@ -4,11 +4,17 @@ using UnityEngine;
 public static class DamageFormular 
 {
     private static System.Collections.Generic.Dictionary<int, int> prdAttackCounts = new System.Collections.Generic.Dictionary<int, int>();
-    private const float DEF_CONSTANT = 400f;
+    private const float DEF_CONSTANT = 1000f;
 
-   public static void DealDamge(DamageBonus damageBonus, Transform source, Transform target)
+    public static void DealDamge(DamageBonus damageBonus, Transform source, Transform target)
     {
-        if(!source.TryGetComponent(out Tech.Composite.Core sourceCore)) return;
+        DealDamage(damageBonus, source, target);
+    }
+
+    public static void DealDamage(DamageBonus damageBonus, Transform source, Transform target)
+    {
+        if (source == null || target == null) return;
+        if (!source.TryGetComponent(out Tech.Composite.Core sourceCore)) return;
         if (!target.TryGetComponent(out Tech.Composite.Core targetCore)) return;
 
         DealDamage(damageBonus, sourceCore, targetCore);
@@ -23,7 +29,7 @@ public static class DamageFormular
 
         var sourceAtk = sourceStats.GetStat(StatType.ATK);
 
-        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier + damageBonus.FlatValue;
+        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
 
         if (sourceSkill != null)
         {
@@ -32,7 +38,8 @@ public static class DamageFormular
 
         bool isCritical = false;
         var critRate = sourceStats.GetStat(StatType.CRIT_RATE);
-        if (critRate != null && critRate.Value > 0)
+        float baseCritRate = (critRate != null ? critRate.Value : 0f) + damageBonus.CritRateBonus;
+        if (baseCritRate > 0)
         {
             int sourceId = source.GetInstanceID();
             if (!prdAttackCounts.TryGetValue(sourceId, out int attackCount))
@@ -40,7 +47,7 @@ public static class DamageFormular
                 attackCount = 1;
             }
 
-            float p = critRate.Value / 100f;
+            float p = baseCritRate / 100f;
             // PRD Constant Approximation (C ≈ P * P) for smoother distribution
             float c = (p >= 1f) ? 1f : (p * p);
             float currentCritChance = c * attackCount * 100f;
@@ -53,7 +60,7 @@ public static class DamageFormular
                 var critDmg = sourceStats.GetStat(StatType.CRIT_DMG);
                 var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
 
-                float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
+                float attackerCritDmg = (critDmg != null ? critDmg.Value : 0f) + damageBonus.CritDmgBonus;
                 float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
 
                 // Cách 1 (Chuẩn Honkai Star Rail / Direct Subtraction):
@@ -75,7 +82,21 @@ public static class DamageFormular
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats);
+        // Giảm sát thương nhận vào từ nội tại bảo vật (ví dụ: Lung Linh Bảo Tháp psv_linglong_pagoda giảm 10% ST)
+        var targetPassive = target.GetComponent<EntityPassive>();
+        if (targetPassive != null && targetPassive.ActivePassives != null)
+        {
+            foreach (var p in targetPassive.ActivePassives)
+            {
+                if (p.Config != null && p.Config.ID == "psv_linglong_pagoda")
+                {
+                    damageResult *= 0.90f;
+                    break;
+                }
+            }
+        }
+
+        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats, damageBonus.PenetrationBonus);
         damageResult = Mathf.RoundToInt(damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef)));
         targetStats.TakeDamage(damageResult, source.transform, damageBonus.Tags);
         UIEvent.DamagePopup(damageResult, target.transform.position, isCritical);
@@ -90,7 +111,7 @@ public static class DamageFormular
         if (sourceStats == null || targetStats == null) return 0;
 
         var sourceAtk = sourceStats.GetStat(StatType.ATK);
-        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier + damageBonus.FlatValue;
+        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
 
         if (sourceSkill != null)
         {
@@ -98,32 +119,44 @@ public static class DamageFormular
         }
 
         var critRate = sourceStats.GetStat(StatType.CRIT_RATE);
-        if (critRate != null && critRate.Value > 0)
+        float baseCritRate = (critRate != null ? critRate.Value : 0f) + damageBonus.CritRateBonus;
+        if (baseCritRate > 0)
         {
             var critDmg = sourceStats.GetStat(StatType.CRIT_DMG);
             var critDmgRes = targetStats.GetStat(StatType.CRIT_DMG_RES);
 
-            float attackerCritDmg = critDmg != null ? critDmg.Value : 0f;
+            float attackerCritDmg = (critDmg != null ? critDmg.Value : 0f) + damageBonus.CritDmgBonus;
             float defenderCritRes = critDmgRes != null ? critDmgRes.Value : 0f;
 
             float totalCritDmgPercent = Mathf.Max(100f, 150f + attackerCritDmg - defenderCritRes);
-            float critMultiplier = totalCritDmgPercent / 100f;
-
-            float expectedCritFactor = 1f + (critRate.Value / 100f) * (critMultiplier - 1f);
-            damageResult *= expectedCritFactor;
+            damageResult = damageResult * (totalCritDmgPercent / 100f);
         }
 
-        if (targetSkill != null)
+        if (targetSkill)
         {
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats);
-        damageResult = damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef));
+        // Giảm sát thương nhận vào từ nội tại bảo vật (ví dụ: Lung Linh Bảo Tháp psv_linglong_pagoda giảm 10% ST)
+        var targetPassive = target.GetComponent<EntityPassive>();
+        if (targetPassive != null && targetPassive.ActivePassives != null)
+        {
+            foreach (var p in targetPassive.ActivePassives)
+            {
+                if (p.Config != null && p.Config.ID == "psv_linglong_pagoda")
+                {
+                    damageResult *= 0.90f;
+                    break;
+                }
+            }
+        }
+
+        float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats, damageBonus.PenetrationBonus);
+        damageResult = Mathf.RoundToInt(damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef)));
         return damageResult;
     }
 
-    private static float CalculateEffectiveDefense(IDamagable sourceStats, IDamagable targetStats)
+    private static float CalculateEffectiveDefense(IDamagable sourceStats, IDamagable targetStats, float penetrationBonus = 0f)
     {
         var targetDefStat = targetStats.GetStat(StatType.DEF);
         float baseDef = targetDefStat != null ? targetDefStat.Value : 0f;
@@ -131,7 +164,7 @@ public static class DamageFormular
         var penStat = sourceStats.GetStat(StatType.PENETRATION);
         var defShredStat = sourceStats.GetStat(StatType.DEF_SHRED);
 
-        float penPercent = penStat != null ? penStat.Value : 0f; // VD: 20 -> 20%
+        float penPercent = Mathf.Clamp((penStat != null ? penStat.Value : 0f) + penetrationBonus, 0f, 100f); // Giới hạn tối đa 100%
         float defShredFlat = defShredStat != null ? defShredStat.Value : 0f; // VD: 150 -> 150 DEF Phẳng
 
         // Bước 1: Xuyên giáp % (PEN) tính trước

@@ -128,6 +128,17 @@ public class BattleManager : MonoBehaviour
         get { return _boss; }
     }
 
+    public List<Entity> GetEntitiesByTeam(TeamSide team)
+    {
+        if (team == TeamSide.Player)
+        {
+            return Characters != null ? Characters.Values.ToList() : new List<Entity>();
+        }
+        else
+        {
+            return Enemies != null ? Enemies : new List<Entity>();
+        }
+    }
 
     public bool IsExecutedAction = false;
 
@@ -196,15 +207,12 @@ public class BattleManager : MonoBehaviour
                 var character = _characters.GetValueOrDefault(key);
                 var pos = _characterPosisions[slot_position - 1].transform.position;
 
-                int sortingOrderValue = 1000 - Mathf.RoundToInt(pos.y * 100f);
-
                 SortingGroup sp = character.GetComponent<SortingGroup>();
                 if (sp == null)
                 {
                     sp = character.gameObject.AddComponent<SortingGroup>();
                 }
-                sp.sortingOrder = sortingOrderValue;
-                order = sortingOrderValue;
+                sp.sortingOrder = order;
 
                 character.RenderOrder = order;
 
@@ -236,15 +244,12 @@ public class BattleManager : MonoBehaviour
             var pos = _enemiesPositions[slot_position - 1].transform.position;
             enemy.transform.position = pos + Vector3.up * OffsetY;
             enemy.gameObject.GetComponent<EntityStateData>().SetRootTransform();
-            int sortingOrderValue = 1000 - Mathf.RoundToInt(pos.y * 100f);
-
             SortingGroup sp = enemy.GetComponent<SortingGroup>();
             if (sp == null)
             {
                 sp = enemy.gameObject.AddComponent<SortingGroup>();
             }
-            sp.sortingOrder = sortingOrderValue;
-            order = sortingOrderValue;
+            sp.sortingOrder = order;
 
             enemy.RenderOrder = order;
 
@@ -284,7 +289,12 @@ public class BattleManager : MonoBehaviour
     {
         _currentSkill = type;
 
-        var skill = _currentCaster.GetCoreComponent<EntitySkill>().Skills.GetValueOrDefault(_currentSkill);
+        if (_currentCaster == null) return;
+
+        var entitySkill = _currentCaster.GetCoreComponent<EntitySkill>();
+        if (entitySkill == null || entitySkill.Skills == null) return;
+
+        var skill = entitySkill.Skills.GetValueOrDefault(_currentSkill);
 
         if(skill != null)
         {
@@ -298,8 +308,15 @@ public class BattleManager : MonoBehaviour
     
     public void SetCurrentTarget(Entity target)
     {
-        SkillTargetType type = _currentCaster.GetCoreComponent<EntitySkill>()
-            .Skills.GetValueOrDefault(_currentSkill).GetSkillData().TargetType;
+        if (_currentCaster == null) return;
+
+        var entitySkill = _currentCaster.GetCoreComponent<EntitySkill>();
+        if (entitySkill == null || entitySkill.Skills == null) return;
+
+        var skillRuntime = entitySkill.Skills.GetValueOrDefault(_currentSkill);
+        if (skillRuntime == null || skillRuntime.GetSkillData() == null) return;
+
+        SkillTargetType type = skillRuntime.GetSkillData().TargetType;
         _currentCaster.SetTargets(TargetSystem.GetTargets(_currentCaster, type, target, _activeEntities));
     }
 

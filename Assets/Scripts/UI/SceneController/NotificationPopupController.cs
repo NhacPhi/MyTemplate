@@ -22,6 +22,7 @@ public class NotificationPopupProperties : WindowProperties
         IsPopup = true;
         HideOnForegroundLost = false;
         SuppressPrefabProperties = true;
+        WindowQueuePriority = WindowPriority.ForceForeground;
     }
 }
 

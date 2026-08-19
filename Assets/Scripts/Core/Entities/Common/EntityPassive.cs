@@ -45,6 +45,41 @@ public class EntityPassive : CoreComponent, IAsyncInitializer
         await UniTask.CompletedTask;
     }
 
+    public void ProcessDamageBonus(ref DamageBonus bonus, Entity target, HashSet<string> tags = null)
+    {
+        if (ActivePassives == null || ActivePassives.Count == 0) return;
+
+        var context = new CombatContext(_entity, target, 0f);
+        context.DamageBonus = bonus;
+
+        if (tags != null)
+        {
+            foreach (var tag in tags) context.AddTag(tag);
+        }
+        if (bonus.Tags != null)
+        {
+            foreach (var tag in bonus.Tags) context.AddTag(tag);
+        }
+
+        foreach (var passive in ActivePassives)
+        {
+            if (passive.Config == null || passive.Config.CombatEvents == null) continue;
+
+            foreach (var evtConfig in passive.Config.CombatEvents)
+            {
+                if (evtConfig.EventType == "OnBeforeDealDamage")
+                {
+                    PassiveEventListener.EvaluateAndExecute(evtConfig, passive.Level, context);
+                }
+            }
+        }
+
+        if (context.DamageBonus.HasValue)
+        {
+            bonus = context.DamageBonus.Value;
+        }
+    }
+
     private void OnDestroy()
     {
         // Gỡ sự kiện khi Entity bị hủy để tránh Memory Leak

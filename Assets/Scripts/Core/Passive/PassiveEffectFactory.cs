@@ -17,7 +17,13 @@ public static class PassiveEffectFactory
         { "Eff_ReduceDefense", new StatModifierEffectHandler(StatType.DEF, true) },
         { "Eff_IncreaseAttack", new StatModifierEffectHandler(StatType.ATK, true) },
         { "Eff_ReduceSpeed", new StatModifierEffectHandler(StatType.SPEED, true) },
-        { "Eff_IncreaseCritRate", new StatModifierEffectHandler(StatType.CRIT_RATE, false) }
+        { "Eff_IncreaseCritRate", new StatModifierEffectHandler(StatType.CRIT_RATE, false) },
+        { "Eff_IncreaseCritDmg", new StatModifierEffectHandler(StatType.CRIT_DMG, false) },
+
+        // ------ CÁC HANDLER SÁT THƯƠNG ĐẶC BIỆT ------
+        { "Eff_HPScalingDamage", new HPScalingDamageEffectHandler() },
+        { "Eff_ArmorPenetration", new ArmorPenetrationEffectHandler() },
+        { "Eff_CounterAttack", new CounterAttackEffectHandler() }
         
         // Thêm các Handler mới vào đây (VD: "Poison", "Stun", "ActionAdvance"...)
     };

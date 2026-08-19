@@ -70,6 +70,13 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     public void Init(List<AudioDatabase> databases)
     {
+        float volumeRatio = 1f;
+        if (_saveSystem != null && _saveSystem.Settings != null)
+        {
+            volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
+        }
+        UpdateVolume(volumeRatio);
+
         foreach (var db in databases)
         {
             if (db == null) continue;
@@ -150,17 +157,11 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
             if (clipToPlay != null && _musicSource != null)
             {
-                float volumeRatio = 1f;
-                if (_saveSystem != null && _saveSystem.Settings != null)
-                {
-                    volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
-                }
-
                 _activeConfigVolume = config.Volume;
                 _musicSource.loop = false;
                 _musicSource.Stop();
                 _musicSource.clip = clipToPlay;
-                _musicSource.volume = config.Volume * volumeRatio;
+                _musicSource.volume = config.Volume;
                 _musicSource.Play();
 
                 // Chờ cho đến khi bài hát phát xong hoặc có yêu cầu hủy
@@ -196,12 +197,6 @@ public class AudioManager : MonoBehaviour, IAudioManager
             return;
         }
 
-        float volumeRatio = 1f;
-        if (loop && _saveSystem != null && _saveSystem.Settings != null)
-        {
-            volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
-        }
-
         if (loop)
         {
             _activeConfigVolume = config.Volume;
@@ -212,12 +207,12 @@ public class AudioManager : MonoBehaviour, IAudioManager
         {
             activeSource.Stop();
             activeSource.clip = clipToPlay;
-            activeSource.volume = config.Volume * volumeRatio;
+            activeSource.volume = config.Volume;
             activeSource.Play();
         }
         else
         {
-            activeSource.PlayOneShot(clipToPlay, config.Volume * volumeRatio);
+            activeSource.PlayOneShot(clipToPlay, config.Volume);
         }
     }
 
@@ -248,9 +243,17 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     public void UpdateVolume(float volumeRatio)
     {
+        // Điều chỉnh Master Volume toàn cục cho toàn bộ hệ thống Audio trong Unity
+        AudioListener.volume = Mathf.Clamp01(volumeRatio);
+
         if (_musicSource != null)
         {
-            _musicSource.volume = _activeConfigVolume * volumeRatio;
+            _musicSource.volume = _activeConfigVolume;
+        }
+
+        if (_sfxSource != null)
+        {
+            _sfxSource.volume = 1f;
         }
     }
 }

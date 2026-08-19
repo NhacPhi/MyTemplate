@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 
@@ -37,42 +38,27 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
         _caster = caster;
         
         int spawnCount = 3;
-        bool allDead = false;
+        Entity currentTarget = caster.Target != null ? caster.Target.GetComponent<Entity>() : null;
 
         for (int i = 0; i < spawnCount; i++)
         {
-            Entity currentTarget = caster.Target != null ? caster.Target.GetComponent<Entity>() : null;
-            EntityStats targetStats = currentTarget != null ? currentTarget.GetComponent<EntityStats>() : null;
+            var targetStats = currentTarget != null ? currentTarget.GetComponent<EntityStats>() : null;
 
-            // Kiểm tra máu thực tế của mục tiêu (không cần máu ảo nữa vì các viên đạn trước đã xử lý xong)
+            // Nếu mục tiêu ban đầu/hiện tại không tồn tại hoặc đã bị tiêu diệt -> Tìm mục tiêu ngẫu nhiên mới hợp lệ theo quy tắc hàng & cột
             if (targetStats == null || targetStats.IsDead)
             {
-                Entity[] allEntities = Object.FindObjectsOfType<Entity>();
-                Entity nextTarget = null;
-                foreach (var e in allEntities)
-                {
-                    var eStats = e.GetComponent<EntityStats>();
-                    if (e.Team != caster.Team && eStats != null && !eStats.IsDead)
-                    {
-                        nextTarget = e;
-                        break; 
-                    }
-                }
-
-                if (nextTarget != null)
-                {
-                    caster.SetTarget(nextTarget);
-                    caster.HandleTurn(nextTarget); // Xoay người sang đích mới ngay lập tức
-                    currentTarget = nextTarget;
-                    targetStats = nextTarget.GetComponent<EntityStats>();
-                }
-                else
-                {
-                    // Quét sạch địch, không còn ai sống -> ngừng bắn
-                    allDead = true;
-                    break;
-                }
+                currentTarget = GetRandomValidTarget(caster);
+                targetStats = currentTarget != null ? currentTarget.GetComponent<EntityStats>() : null;
             }
+
+            if (currentTarget == null)
+            {
+                // Toàn bộ kẻ địch đã bị quét sạch -> ngừng bắn
+                break;
+            }
+
+            caster.SetTarget(currentTarget);
+            caster.HandleTurn(currentTarget); // Xoay người về phía mục tiêu mới
 
             // Tạo Task mới cho mỗi viên đạn
             _skillEnd = new UniTaskCompletionSource();
@@ -146,6 +132,14 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
         }
     }
 
+    public override DamageBonus CalculateRawDamage()
+    {
+        var bonus = base.CalculateRawDamage();
+        if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
+        bonus.Tags.Add("UltimateSkill");
+        return bonus;
+    }
+
     public void OnDealDamage(ref float damageInput)
     {
 
@@ -156,6 +150,40 @@ public class MoonBladeSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, IIm
         DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
 
         _skillEnd.TrySetResult();
+    }
+
+    private Entity GetRandomValidTarget(Entity caster)
+    {
+        List<Entity> opponentTeam = null;
+
+        if (BattleManager.Instance != null)
+        {
+            opponentTeam = caster.Team == TeamSide.Player 
+                ? BattleManager.Instance.Enemies 
+                : BattleManager.Instance.Characters.Values.ToList();
+        }
+        else
+        {
+            var allEntities = Object.FindObjectsOfType<Entity>();
+            opponentTeam = new List<Entity>();
+            foreach (var e in allEntities)
+            {
+                if (e.Team != caster.Team) opponentTeam.Add(e);
+            }
+        }
+
+        if (opponentTeam == null || opponentTeam.Count == 0) return null;
+
+        TargetManager targetManager = BattleManager.Instance != null && BattleManager.Instance.TargetSystem != null
+            ? BattleManager.Instance.TargetSystem
+            : new TargetManager();
+
+        List<Entity> validTargets = targetManager.GetValidEtitiesByColumnLogic(opponentTeam);
+
+        if (validTargets == null || validTargets.Count == 0) return null;
+
+        int randomIndex = Random.Range(0, validTargets.Count);
+        return validTargets[randomIndex];
     }
 }
 

@@ -11,12 +11,15 @@ public class ToggleSkillCharacterUI : ToggleBase
 
     public void SetIconSkill(Sprite sprite)
     {
-        _icon.sprite = sprite;
+        if (_icon != null && sprite != null)
+        {
+            _icon.sprite = sprite;
+        }
     }
 
     public override void OnSelected(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             UIEvent.OnChooseSkillCharacter?.Invoke(_type);
         }
@@ -26,28 +29,26 @@ public class ToggleSkillCharacterUI : ToggleBase
     {
         bool isReady = currentCooldown <= 0;
 
-        toggle.interactable = isReady;
-
-        if (isReady)
+        if (Toggle != null)
         {
-            _txtNumberCooldown.text = "";
+            Toggle.interactable = isReady;
+        }
 
-            if (_imgCooldown != null)
+        if (_txtNumberCooldown != null)
+        {
+            _txtNumberCooldown.text = isReady ? "" : currentCooldown.ToString();
+        }
+
+        if (_imgCooldown != null)
+        {
+            if (isReady)
             {
                 _imgCooldown.fillAmount = 0f;
             }
-        }
-        else
-        {
-            _txtNumberCooldown.text = currentCooldown.ToString();
-
-            if (_imgCooldown != null)
+            else
             {
-
-                int maxCooldown = skillData.GetMaxCooldown(0);
+                int maxCooldown = skillData != null ? skillData.GetMaxCooldown(0) : 1;
                 float maxCD = maxCooldown > 0 ? maxCooldown : 1f;
-
-
                 _imgCooldown.fillAmount = (float)currentCooldown / maxCD;
             }
         }

@@ -1421,6 +1421,14 @@ public static class LocKeys
 
     public const long STR_QUEST_LOCKED = 1707650376;
 
+    public const long STR_ERLANGSHEN_MAJOR_PASSIVE = 1818431434;
+
+    public const long STR_LINGLONG_PAGODA_NAME = 2070230644;
+
+    public const long STR_LINGLONG_PAGODA_DES = 610681366;
+
+    public const long STR_LINGLONG_PAGODA_SKILL = 3451749993;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;
@@ -1592,6 +1600,16 @@ public static class LocKeys
     public const long LIJING_M_DES = 2595721932;
 
     public const long LIJING_U_DES = 1426498449;
+
+    public const long STR_PSV_LIJING_BASE_DESC = 4002581658;
+
+    public const long STR_PSV_LIJING_ULT_DESC = 219338617;
+
+    public const long STR_ERLANGSHEN_ULT_PASSIVE = 977773207;
+
+    public const long STR_SUNWUKONG_MAJOR_PASSIVE = 3130803189;
+
+    public const long STR_SUNWUKONG_ULT_PASSIVE = 1795897913;
 
     public const long DEBUFF_DEF_NAME = 651413426;
 

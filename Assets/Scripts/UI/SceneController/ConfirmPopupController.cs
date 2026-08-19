@@ -28,6 +28,7 @@ public class ConfirmationPopupProperties : WindowProperties
         IsPopup = true;
         HideOnForegroundLost = false;
         SuppressPrefabProperties = true;
+        WindowQueuePriority = WindowPriority.ForceForeground;
     }
 }
 

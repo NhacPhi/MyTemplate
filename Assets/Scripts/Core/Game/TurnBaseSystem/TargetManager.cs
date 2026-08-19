@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -73,6 +73,8 @@ public class TargetManager
                 return enemyTeam;
             case SkillTargetType.AllAllies:
                 return allyTeam;
+            case SkillTargetType.SameRowAllies:
+                return allyTeam.Where(e => !e.GetCoreComponent<EntityStats>().IsDead && e.Row == caster.Row).ToList();
 
             default:
                 return new List<Entity>();
@@ -104,6 +106,10 @@ public class TargetManager
             case SkillTargetType.AllAllies:
                 targets = allEntities
                     .Where(e => e.Team == caster.Team && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                break;
+            case SkillTargetType.SameRowAllies:
+                targets = allEntities
+                    .Where(e => e.Team == caster.Team && !e.GetCoreComponent<EntityStats>().IsDead && e.Row == caster.Row).ToList();
                 break;
         }
 

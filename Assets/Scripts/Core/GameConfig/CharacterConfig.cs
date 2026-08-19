@@ -121,9 +121,6 @@ public class SkillComponent
     [JsonProperty("max_cooldown")]
     public int[] MaxCooldown { get; set; }
 
-    [JsonProperty("flat_damage")]
-    public float FlatDamage { get; set; }
-
     [JsonProperty("effect_id")]
     public string EffectID { get; set; }
 

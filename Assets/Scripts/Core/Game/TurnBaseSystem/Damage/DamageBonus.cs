@@ -5,6 +5,9 @@ public struct DamageBonus
 {
     public float FlatValue;
     public float DamageMultiplier;
+    public float PenetrationBonus;
+    public float CritDmgBonus;
+    public float CritRateBonus;
     public HashSet<string> Tags;
 
     public static DamageBonus GetDefault()
@@ -13,6 +16,9 @@ public struct DamageBonus
         {
             FlatValue = 0,
             DamageMultiplier = 1f,
+            PenetrationBonus = 0f,
+            CritDmgBonus = 0f,
+            CritRateBonus = 0f,
             Tags = new HashSet<string>()
         };
     }
@@ -27,7 +33,22 @@ public struct DamageBonus
         {
             FlatValue = a.FlatValue + b.FlatValue,
             DamageMultiplier = a.DamageMultiplier + (1 - b.DamageMultiplier),
+            PenetrationBonus = a.PenetrationBonus + b.PenetrationBonus,
+            CritDmgBonus = a.CritDmgBonus + b.CritDmgBonus,
+            CritRateBonus = a.CritRateBonus + b.CritRateBonus,
             Tags = newTags
         };
+    }
+
+    public DamageBonus AddTag(string tag)
+    {
+        if (Tags == null) Tags = new HashSet<string>();
+        if (!string.IsNullOrEmpty(tag)) Tags.Add(tag);
+        return this;
+    }
+
+    public bool HasTag(string tag)
+    {
+        return Tags != null && Tags.Contains(tag);
     }
 }

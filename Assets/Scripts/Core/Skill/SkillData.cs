@@ -6,15 +6,17 @@ public abstract class SkillData
 
     public string ID { get; set; }
 
+    public SkillType SkillType { get; set; }
+
     public SkillTargetType TargetType;
 
     public float DamageMultiplier;
 
     public int MaxCoolDown;
 
-    public float FlatDamage;
-
     public EffectConfig Effect;
+
+    public string PassiveID { get; set; }
 
     public string Sound { get; set; }
 

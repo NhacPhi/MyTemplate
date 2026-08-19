@@ -4,24 +4,24 @@ using System;
 [Serializable]
 public class SettingSave 
 {
-    private int fps;
-    private int musicVolune;
-    private string currentLocalized;
+    private int fps = 60;
+    private int musicVolune = 80;
+    private string currentLocalized = "VIETNAMESE";
 
     public int FPS
     {
-        get { return fps; }
+        get { return fps > 0 ? fps : 60; }
         set { fps = value; }
     }
     public int MusicVolune
     {
-        get { return musicVolune; }
+        get { return musicVolune >= 0 ? musicVolune : 80; }
         set { musicVolune = value; }
     }
 
     public string CurrentLocalized
     {
-        get { return currentLocalized; }
+        get { return !string.IsNullOrEmpty(currentLocalized) ? currentLocalized : "VIETNAMESE"; }
         set { currentLocalized = value; }
     }
 

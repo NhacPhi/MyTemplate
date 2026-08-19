@@ -13,15 +13,14 @@
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
                     0.8,
-                    1.0,
-                    1.2
+                    0.9,
+                    1.0
                 ],
                 "max_cooldown": [
                     0,
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "SunWukong_Attack",
                 "passive_id": ""
@@ -34,16 +33,15 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "AllEnemies",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.6,
+                    0.75,
+                    0.9
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "Wind_Blow",
                 "passive_id": "psv_sunwukong_major"
@@ -56,19 +54,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
                     1.8,
-                    1.8
+                    2.0,
+                    2.2
                 ],
                 "max_cooldown": [
                     5,
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "SunWukong_Main",
-                "passive_id": "psv_sunwukong_ultiamte"
+                "passive_id": ""
             }
         },
         "stats": {
@@ -120,7 +117,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "TangSanZang_Attack",
                 "passive_id": ""
@@ -142,7 +138,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "None",
                 "sound": "TangSanZang_Major",
                 "passive_id": ""
@@ -164,7 +159,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "EFF_Stun_def",
                 "sound": "TangSanZang_Main",
                 "passive_id": ""
@@ -219,7 +213,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Attack",
                 "passive_id": ""
@@ -232,16 +225,15 @@
                 "skill_type": "NonAttackSkill",
                 "target_type": "Self",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.25,
+                    0.3,
+                    0.35
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Major",
                 "passive_id": ""
@@ -263,7 +255,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Main",
                 "passive_id": ""
@@ -318,7 +309,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ShaWujing_Attack",
                 "passive_id": ""
@@ -340,7 +330,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "EFF_BufDEF_def",
                 "sound": "ShaWujing_Major",
                 "passive_id": ""
@@ -362,7 +351,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ShaWujing_Main",
                 "passive_id": ""
@@ -417,7 +405,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -439,7 +426,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -461,7 +447,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -516,7 +501,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -538,7 +522,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Major",
                 "passive_id": ""
@@ -560,7 +543,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Main",
                 "passive_id": ""
@@ -615,7 +597,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LittleWhiteDragon_Attack",
                 "passive_id": ""
@@ -637,7 +618,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LittleWhiteDragon_Major",
                 "passive_id": ""
@@ -659,7 +639,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LittleWhiteDragon_Main",
                 "passive_id": ""
@@ -714,7 +693,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -727,16 +705,15 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "Self",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.5,
+                    0.7,
+                    1.0
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "EFF_BufATK_def",
                 "sound": "BullDemonKing_Major",
                 "passive_id": ""
@@ -749,8 +726,8 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
+                    1.2,
                     1.5,
-                    1.8,
                     1.8
                 ],
                 "max_cooldown": [
@@ -758,7 +735,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "EFF_Posion_def",
                 "sound": "BullDemonKing_Main",
                 "passive_id": ""
@@ -805,15 +781,14 @@
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
                     0.8,
-                    1.0,
-                    1.2
+                    0.9,
+                    1.0
                 ],
                 "max_cooldown": [
                     0,
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -826,19 +801,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    1.2,
+                    1.4,
+                    1.6
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ErlangShen_Major",
-                "passive_id": ""
+                "passive_id": "psv_erlangshen_major"
             },
             "Ultimate": {
                 "id": "ErlangShen_U",
@@ -848,19 +822,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
-                    1.8
+                    0.6,
+                    0.7,
+                    0.9
                 ],
                 "max_cooldown": [
                     5,
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ErlangShen_Ultimate",
-                "passive_id": ""
+                "passive_id": "psv_erlangshen_ultimate"
             }
         },
         "stats": {
@@ -869,7 +842,7 @@
             "def": 468,
             "speed": 96,
             "def_shred": 11,
-            "crit_rate": 8,
+            "crit_rate": 12,
             "crit_dmg": 14,
             "penetration": 5,
             "crit_dmg_res": 0
@@ -912,7 +885,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -934,7 +906,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -956,7 +927,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1011,7 +981,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -1033,7 +1002,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1055,7 +1023,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1110,7 +1077,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "TheBoySage_Attack",
                 "passive_id": ""
@@ -1132,7 +1098,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "TheBoySage_Major",
                 "passive_id": ""
@@ -1154,7 +1119,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "TheBoySage_Main",
                 "passive_id": ""
@@ -1209,7 +1173,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldHornKing_Attack",
                 "passive_id": ""
@@ -1231,7 +1194,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldHornKing_Major",
                 "passive_id": ""
@@ -1253,7 +1215,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldHornKing_Main",
                 "passive_id": ""
@@ -1308,7 +1269,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "SilverHornKing_Attack",
                 "passive_id": ""
@@ -1330,7 +1290,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "SilverHornKing_Major",
                 "passive_id": ""
@@ -1352,7 +1311,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldHornKing_Main",
                 "passive_id": ""
@@ -1407,7 +1365,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "YellowWindMonster_Attack",
                 "passive_id": ""
@@ -1429,7 +1386,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 1000.0,
                 "effect_id": "None",
                 "sound": "YellowWindMonster_Major",
                 "passive_id": ""
@@ -1451,7 +1407,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "YellowWindMonster_Main",
                 "passive_id": ""
@@ -1506,7 +1461,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldfishDemon_Attack",
                 "passive_id": ""
@@ -1528,7 +1482,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldfishDemon_Major",
                 "passive_id": ""
@@ -1550,7 +1503,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "EFF_Stun_def",
                 "sound": "GoldfishDemon_Main",
                 "passive_id": ""
@@ -1605,7 +1557,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -1627,7 +1578,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1649,7 +1599,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1704,7 +1653,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -1726,7 +1674,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1748,7 +1695,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1803,7 +1749,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -1825,7 +1770,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1847,7 +1791,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1902,7 +1845,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -1924,7 +1866,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -1946,7 +1887,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2001,7 +1941,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -2023,7 +1962,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2045,7 +1983,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2100,7 +2037,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -2122,7 +2058,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2144,7 +2079,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2199,7 +2133,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -2221,7 +2154,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2243,7 +2175,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2298,7 +2229,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -2320,7 +2250,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2342,7 +2271,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "",
                 "passive_id": ""
@@ -2388,19 +2316,18 @@
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    0.8,
                     1.0,
-                    1.2
+                    1.2,
+                    1.5
                 ],
                 "max_cooldown": [
                     0,
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LiJing_Attack",
-                "passive_id": ""
+                "passive_id": "psv_lijing_base"
             },
             "Major": {
                 "id": "LiJing_M",
@@ -2408,18 +2335,17 @@
                 "des_hash": 2595721932,
                 "skill": "BuffShield",
                 "skill_type": "NonAttackSkill",
-                "target_type": "Self",
+                "target_type": "SameRowAllies",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.15,
+                    0.2,
+                    0.25
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "None",
                 "sound": "LiJing_Major",
                 "passive_id": ""
@@ -2432,19 +2358,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
-                    1.8
+                    2.2,
+                    2.5,
+                    3.0
                 ],
                 "max_cooldown": [
                     5,
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LiJing_Ultimate",
-                "passive_id": ""
+                "passive_id": "psv_lijing_ultimate"
             }
         },
         "stats": {
@@ -2496,7 +2421,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Attack",
                 "passive_id": ""
@@ -2509,16 +2433,15 @@
                 "skill_type": "NonAttackSkill",
                 "target_type": "Self",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.25,
+                    0.3,
+                    0.35
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Major",
                 "passive_id": ""
@@ -2540,7 +2463,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ZhuBaJie_Main",
                 "passive_id": ""
@@ -2595,7 +2517,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -2617,7 +2538,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Major",
                 "passive_id": ""
@@ -2639,7 +2559,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Main",
                 "passive_id": ""
@@ -2694,7 +2613,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "VanguardTiger_Attack",
                 "passive_id": ""
@@ -2707,16 +2625,15 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "Self",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.5,
+                    0.7,
+                    1.0
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "EFF_BufATK_def",
                 "sound": "BullDemonKing_Major",
                 "passive_id": ""
@@ -2729,8 +2646,8 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
+                    1.2,
                     1.5,
-                    1.8,
                     1.8
                 ],
                 "max_cooldown": [
@@ -2738,7 +2655,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "EFF_Posion_def",
                 "sound": "BullDemonKing_Main",
                 "passive_id": ""
@@ -2785,15 +2701,14 @@
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
                     0.8,
-                    1.0,
-                    1.2
+                    0.9,
+                    1.0
                 ],
                 "max_cooldown": [
                     0,
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Attack",
                 "passive_id": ""
@@ -2806,19 +2721,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    1.2,
+                    1.4,
+                    1.6
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ErlangShen_Major",
-                "passive_id": ""
+                "passive_id": "psv_erlangshen_major"
             },
             "Ultimate": {
                 "id": "ErlangShen_U",
@@ -2828,19 +2742,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
-                    1.8
+                    0.6,
+                    0.7,
+                    0.9
                 ],
                 "max_cooldown": [
                     5,
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "ErlangShen_Ultimate",
-                "passive_id": ""
+                "passive_id": "psv_erlangshen_ultimate"
             }
         },
         "stats": {
@@ -2883,19 +2796,18 @@
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    0.8,
                     1.0,
-                    1.2
+                    1.2,
+                    1.5
                 ],
                 "max_cooldown": [
                     0,
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LiJing_Attack",
-                "passive_id": ""
+                "passive_id": "psv_lijing_base"
             },
             "Major": {
                 "id": "LiJing_M",
@@ -2903,18 +2815,17 @@
                 "des_hash": 2595721932,
                 "skill": "BuffShield",
                 "skill_type": "NonAttackSkill",
-                "target_type": "Self",
+                "target_type": "SameRowAllies",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.15,
+                    0.2,
+                    0.25
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "None",
                 "sound": "LiJing_Major",
                 "passive_id": ""
@@ -2927,19 +2838,18 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
-                    1.8
+                    2.2,
+                    2.5,
+                    3.0
                 ],
                 "max_cooldown": [
                     5,
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "LiJing_Ultimate",
-                "passive_id": ""
+                "passive_id": "psv_lijing_ultimate"
             }
         },
         "stats": {
@@ -2991,7 +2901,6 @@
                     0,
                     0
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "None",
                 "sound": "GoldfishDemon_Attack",
                 "passive_id": ""
@@ -3013,7 +2922,6 @@
                     4,
                     3
                 ],
-                "flat_damage": 0.0,
                 "effect_id": "None",
                 "sound": "ThirdDragonPrince_Major",
                 "passive_id": ""
@@ -3035,7 +2943,6 @@
                     5,
                     4
                 ],
-                "flat_damage": 100.0,
                 "effect_id": "EFF_Frozen_def",
                 "sound": "ThirdDragonPrince_Ultimate",
                 "passive_id": ""

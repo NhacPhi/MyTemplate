@@ -28,6 +28,9 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         UIEvent.OnSelectWeaponCard += SelectedWeaponCard;
         UIEvent.OnUpdateSingleWeaponCard += UpdateSingleUI;
         UIEvent.OnInventoryChanged += RefreshUI;
+        UIEvent.OnWeaponUpgraded += UpdateSingleUI;
+        UIEvent.OnEquipmentUpgraded += UpdateSingleUI;
+        RefreshUI();
     }
 
     private void OnDisable()
@@ -35,6 +38,8 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         UIEvent.OnSelectWeaponCard -= SelectedWeaponCard;
         UIEvent.OnUpdateSingleWeaponCard -= UpdateSingleUI;
         UIEvent.OnInventoryChanged -= RefreshUI;
+        UIEvent.OnWeaponUpgraded -= UpdateSingleUI;
+        UIEvent.OnEquipmentUpgraded -= UpdateSingleUI;
     }
 
     private void OnDestroy()
@@ -51,11 +56,16 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
         });
         Init();
 
-        ResetWeaponCardCategory(inventory.Weapons.FirstOrDefault().UUID);
+        if (inventory.Weapons != null && inventory.Weapons.Count > 0)
+        {
+            ResetWeaponCardCategory(inventory.Weapons.FirstOrDefault().UUID);
+        }
     }
 
     public void Init()
     {
+        if (weapons.Count > 0) return;
+
         foreach (var item in inventory.Weapons)
         {
             var obj = Instantiate(prefabsUI, content.transform);
@@ -75,6 +85,7 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     public void RefreshUI()
     {
         var inventoryWeapons = inventory.Weapons;
+        if (inventoryWeapons == null) return;
 
         for(int i = 0; i < inventoryWeapons.Count; i++)
         {
@@ -92,6 +103,7 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
                 var obj = Instantiate(prefabsUI, content.transform);
                 weaponUI = obj.GetComponent<WeaponCategoryUI>();
                 weaponUI.gameObject.SetActive(true);
+                weapons.Add(weaponUI);
             }
 
             //Init data
@@ -112,14 +124,18 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     // Update data cho đúng UI đó
     public void UpdateSingleUI(string uuid)
     {
-        var weaponUI = weapons.Find(x => x.ID == uuid);
+        if (string.IsNullOrEmpty(uuid)) return;
+        var weaponUI = weapons.Find(x => x != null && x.ID == uuid);
         if(weaponUI != null) 
         {
             var itemData = inventory.GetWeapon(uuid);
-            var weaponConfig = gameDataBase.GetItemConfig(itemData.TemplateID);
-            Sprite avatar = itemData.Equip != "" ? gameDataBase.GetCharacterConfig(itemData.Equip).Icon : null;
-            weaponUI.Init(itemData.UUID, weaponConfig.Rarity, weaponConfig.Icon,
-                weaponConfig.IconBG, avatar, itemData.CurrentLevel, itemData.CurrentUpgrade);
+            if (itemData != null)
+            {
+                var weaponConfig = gameDataBase.GetItemConfig(itemData.TemplateID);
+                Sprite avatar = itemData.Equip != "" ? gameDataBase.GetCharacterConfig(itemData.Equip).Icon : null;
+                weaponUI.Init(itemData.UUID, weaponConfig.Rarity, weaponConfig.Icon,
+                    weaponConfig.IconBG, avatar, itemData.CurrentLevel, itemData.CurrentUpgrade);
+            }
         }
     }
     public void SelectedWeaponCard(string id)

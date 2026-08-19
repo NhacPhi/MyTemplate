@@ -34,6 +34,10 @@ namespace Core.Scope
             //_objectResolver.Inject(PoolManager.Instance);
             saveSystem.Init();
             saveSystem.LoadSaveDataFromDisk();
+            if (saveSystem.Settings != null)
+            {
+                audioManager.UpdateVolume(saveSystem.Settings.MusicVolune / 100f);
+            }
             currencyMM.Init();
 
 

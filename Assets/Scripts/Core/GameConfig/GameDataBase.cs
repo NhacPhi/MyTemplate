@@ -82,6 +82,13 @@ public class GameDataBase
         StarUpConfigs = Json.DeserializeObject<Dictionary<string, StarUpConfig>>(starUpText.text);
 
         PassiveConfigs = Json.DeserializeObject<Dictionary<string, PassiveConfig>>(passiveText.text);
+        if (PassiveConfigs != null)
+        {
+            foreach (var kvp in PassiveConfigs)
+            {
+                kvp.Value.ID = kvp.Key;
+            }
+        }
         SetBonusConfigs = Json.DeserializeObject<Dictionary<string, SetBonusConfig>>(setBonusText.text);
         SubstatPoolConfigs = Json.DeserializeObject<Dictionary<string, SubstatPoolConfig>>(substatPoolText.text);
         ShopConfigs = Json.DeserializeObject<Dictionary<string, ShopProductConfig>>(shopText.text);
@@ -119,7 +126,7 @@ public class GameDataBase
         atlasAddresses.Add("Atlas_consumables");
         atlasAddresses.Add("Atlas_icon_armor");
         atlasAddresses.Add("Atlas_icon_gemstone");
-        atlasAddresses.Add("Atlas_icon_weapon");
+        atlasAddresses.Add("Atlas_small_icon_weapon");
         atlasAddresses.Add("Atlas_big_icon_weapon");
         atlasAddresses.Add("Atlas_icon_material");
 
@@ -149,7 +156,12 @@ public class GameDataBase
 
             if (config.Type == ItemType.Weapon && config.Weapon != null)
             {
-                config.Weapon.BigIcon = atlasProvider.GetSprite("Atlas_big_icon_weapon", item.Key + "_big");
+                var bigSprite = atlasProvider.GetSprite("Atlas_big_icon_weapon", item.Key + "_big");
+                if (bigSprite == null)
+                {
+                    bigSprite = atlasProvider.GetSprite("Atlas_big_icon_weapon", item.Key);
+                }
+                config.Weapon.BigIcon = bigSprite;
             }
         }
 

@@ -57,6 +57,7 @@ public enum SkillTargetType
     //Position Aoe
     EnemyColumn,
     EnemyRow,
+    SameRowAllies,
 
     // Special
     DeadAlly // Hồi sinh
@@ -103,6 +104,8 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
                 SkillData skillData = SkillDataFactory.Create(skillConfig.Skill);
 
                 skillData.ID = skillConfig.ID;
+                skillData.SkillType = skillConfig.Type;
+                skillData.PassiveID = skillConfig.PassiveID;
 
                 skillData.TargetType = skillConfig.TargetType;
 
@@ -111,8 +114,6 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
                 skillData.DamageMultiplier = skillConfig.GetDamageMultiplier(enhancementLevel);
 
                 skillData.MaxCoolDown = skillConfig.GetMaxCooldown(enhancementLevel);
-
-                skillData.FlatDamage = skillConfig.FlatDamage;
 
                 skillData.Sound = skillConfig.Sound;
 

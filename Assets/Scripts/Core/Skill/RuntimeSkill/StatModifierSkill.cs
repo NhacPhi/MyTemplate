@@ -13,17 +13,18 @@ public class StatModifierSkill : SkillRuntime
     }
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy);
+        Entity targetEntity = caster.Target != null ? caster.Target.gameObject.GetComponent<Entity>() : caster;
+        if (targetEntity != null)
+        {
+            caster.HandleTurn(targetEntity);
+        }
 
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
         caster.PlaySFX(skillData.Sound);
-        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
-        {
-            ApplyEffectsToTarget(caster, currentTurnID);
-        }
+        
+        ApplyEffectsToTarget(caster, currentTurnID);
 
         await state.WaitForAnimEnd();
 

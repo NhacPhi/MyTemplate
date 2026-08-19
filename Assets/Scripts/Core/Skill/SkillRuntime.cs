@@ -42,11 +42,31 @@ public abstract class SkillRuntime
 
     public virtual DamageBonus CalculateRawDamage()
     {
-        return new DamageBonus()
+        var bonus = new DamageBonus()
         {
-            FlatValue = GetSkillData().FlatDamage,
-            DamageMultiplier = GetSkillData().DamageMultiplier
+            DamageMultiplier = GetSkillData() != null ? GetSkillData().DamageMultiplier : 1f,
+            Tags = new HashSet<string>()
         };
+
+        if (GetSkillData() != null)
+        {
+            bonus.Tags.Add(GetSkillData().SkillType.ToString());
+        }
+
+        if (owner != null)
+        {
+            var entityPassive = owner.GetComponent<EntityPassive>();
+            if (entityPassive != null)
+            {
+                var casterEntity = owner.GetComponent<Entity>();
+                var targetEntity = casterEntity != null && casterEntity.Target != null 
+                    ? casterEntity.Target.GetComponent<Entity>() 
+                    : null;
+                entityPassive.ProcessDamageBonus(ref bonus, targetEntity, bonus.Tags);
+            }
+        }
+
+        return bonus;
     }
 
     protected virtual void ApplyEffectsToTarget(Entity caster, int currentTurnID)
