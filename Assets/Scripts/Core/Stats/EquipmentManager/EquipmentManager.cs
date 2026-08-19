@@ -59,8 +59,17 @@ public class EquipmentManager
         var activeBonuses = _setBonusEvaluator.GetActiveSetBonuses(this);
         if(activeBonuses != null)
         {
-            total += activeBonuses.Where(b => b.Stat == statType && b.Modifier == ModifyType.Flat)
-                      .Sum(b => b.Value);
+            foreach (var b in activeBonuses)
+            {
+                if (b.Stats != null && b.Stats.Count > 0)
+                {
+                    total += b.Stats.Where(s => s.Stat == statType && s.Modifier == ModifyType.Flat).Sum(s => s.Value);
+                }
+                else if (b.Stat == statType && b.Modifier == ModifyType.Flat)
+                {
+                    total += b.Value;
+                }
+            }
         }
 
         return total;
@@ -100,8 +109,17 @@ public class EquipmentManager
         var activeBonuses = _setBonusEvaluator.GetActiveSetBonuses(this);
         if (activeBonuses != null)
         {
-            total += activeBonuses.Where(b => b.Stat == statType && b.Modifier == ModifyType.Flat)
-                      .Sum(b => b.Value);
+            foreach (var b in activeBonuses)
+            {
+                if (b.Stats != null && b.Stats.Count > 0)
+                {
+                    total += b.Stats.Where(s => s.Stat == statType && s.Modifier == ModifyType.Flat).Sum(s => s.Value);
+                }
+                else if (b.Stat == statType && b.Modifier == ModifyType.Flat)
+                {
+                    total += b.Value;
+                }
+            }
         }
 
         return total;
@@ -126,8 +144,17 @@ public class EquipmentManager
 
         if(activeBonuses != null)
         {
-            total += activeBonuses.Where(b => b.Stat == statType && b.Modifier == ModifyType.Percent)
-                      .Sum(b => b.Value);
+            foreach (var b in activeBonuses)
+            {
+                if (b.Stats != null && b.Stats.Count > 0)
+                {
+                    total += b.Stats.Where(s => s.Stat == statType && s.Modifier == ModifyType.Percent).Sum(s => s.Value);
+                }
+                else if (b.Stat == statType && b.Modifier == ModifyType.Percent)
+                {
+                    total += b.Value;
+                }
+            }
         }
 
         return total;

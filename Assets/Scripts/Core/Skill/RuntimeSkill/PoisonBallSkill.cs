@@ -25,8 +25,8 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
     public async UniTask PerformSummon(SkillData config, Entity caster,int currentTurnID)
     {
         _skillEnd = new UniTaskCompletionSource();
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
-        caster.HandleTurn(enemy);
+        var enemy = caster.Target != null ? caster.Target.gameObject.GetComponent<Entity>() : null;
+        if (enemy != null) caster.HandleTurn(enemy);
         var state = caster.GetCoreComponent<EntityStateData>();
 
         caster.StateManager.ChangeState(EntityState.MAIN_SKILL);
@@ -34,35 +34,49 @@ public class PoisonBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         await UniTask.Delay(1500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         _caster = caster;
-        firreBallPrefab.transform.SetParent(caster.transform);
-        Vector3 spawnOffset = skillData.Offset;
-        Vector3 scale = new Vector3(2.5f, 2.5f, 2.5f);
-        if (caster.Team == TeamSide.Enemy)
+        if (firreBallPrefab != null && caster.Target != null)
         {
-            spawnOffset.x *= -1f;
-            scale.y *= -1f; // Do Prefab bị xoay Z = 90 nên lật trục Y sẽ tương đương lật ngang
+            firreBallPrefab.transform.SetParent(caster.transform);
+            Vector3 spawnOffset = skillData.Offset;
+            Vector3 scale = new Vector3(2.5f, 2.5f, 2.5f);
+            if (caster.Team == TeamSide.Enemy)
+            {
+                spawnOffset.x *= -1f;
+                scale.y *= -1f; // Do Prefab bị xoay Z = 90 nên lật trục Y sẽ tương đương lật ngang
+            }
+            firreBallPrefab.transform.localPosition = spawnOffset;
+            firreBallPrefab.transform.localScale = scale;
+            firreBallPrefab.gameObject.SetActive(true);
+
+            var controller = firreBallPrefab.GetComponent<FireballController>();
+            if (controller != null)
+            {
+                Vector3 flyDir = caster.Target.transform.position - firreBallPrefab.transform.position;
+                controller.Initialize(
+                    caster: caster,
+                    skill: this,
+                    direction: flyDir
+                );
+            }
         }
-        firreBallPrefab.transform.localPosition = spawnOffset;
-        firreBallPrefab.transform.localScale = scale;
-        firreBallPrefab.gameObject.SetActive(true);
+        else if (enemy != null)
+        {
+            // Fallback gây sát thương trực tiếp nếu không có prefab đạn
+            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            _skillEnd.TrySetResult();
+        }
 
-        var controller = firreBallPrefab.GetComponent<FireballController>();
-
-        Vector3 flyDir = caster.Target.transform.position - firreBallPrefab.transform.position;
-
-        controller.Initialize(
-            caster: caster,
-            skill: this,
-            direction: flyDir
-            );
-
-        await state.WaitForAnimEnd();
+        if (state != null)
+        {
+            await state.WaitForAnimEnd();
+        }
 
         caster.StateManager.ChangeState(EntityState.IDLE);
 
-        await _skillEnd.Task;
+        // Chờ đạn chạm mục tiêu hoặc timeout an toàn sau 2.5s để không bao giờ bị treo game
+        await UniTask.WhenAny(_skillEnd.Task, UniTask.Delay(2500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy()));
 
-        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
+        if (enemy != null && enemy.GetCoreComponent<EntityStats>() != null && !enemy.GetCoreComponent<EntityStats>().IsDead)
         {
             ApplyEffectsToTarget(caster, currentTurnID);
         }

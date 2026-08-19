@@ -320,9 +320,10 @@ public class StatsController : CoreComponent, IEffectable
 
     public bool CanTakeTurn()
     {
+        if (statusEffects == null) return true;
         foreach (var effect in statusEffects)
         {
-            if (effect.Data.Type == EffectType.Stun || effect.Data.Type == EffectType.Frozen) return false;
+            if (effect != null && effect.Data != null && (effect.Data.Type == EffectType.Stun || effect.Data.Type == EffectType.Frozen)) return false;
         }
         return true;
     }

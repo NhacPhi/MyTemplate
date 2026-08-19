@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class StatBuffEffect : StatusEffect
@@ -70,6 +70,11 @@ public class StatBuffEffect : StatusEffect
         if (CurrentStack > 0)
         {
             float newBuffValue = _data.Value * CurrentStack;
+            if (Data != null && Data.ModifyType == ModifyType.Percent)
+            {
+                newBuffValue /= 100f; // Chia 100 để 30% thành 0.30 cho công thức (1 + percent) trong Stat.cs
+            }
+
             _currentModifier = new Modifier(newBuffValue, Data.ModifyType);
 
             Target.AddModifier(_targetStat, _currentModifier);

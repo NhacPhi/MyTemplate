@@ -71,6 +71,40 @@ public class NumberJumpAnimation : MonoBehaviour
         currentSequence.Insert(fadeStartTime, canvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InQuad));
     }
 
+    public void PlayTextAnimation(float scaleMultiplier = 0.65f, float totalDuration = 0.95f)
+    {
+        currentSequence?.Kill();
+        transform.DOKill();
+        if (canvasGroup != null) canvasGroup.DOKill();
+
+        // 1. Reset trạng thái ban đầu
+        canvasGroup.alpha = 0f;
+        transform.localScale = Vector3.zero;
+
+        Vector3 startPos = transform.position;
+        Vector3 peakPos = startPos + new Vector3(0f, 0.85f, 0f);
+
+        float peakScale = scaleMultiplier * 1.15f;
+        float endScale = scaleMultiplier;
+
+        currentSequence = DOTween.Sequence();
+
+        // 2. Pop-in mềm mại & bay lên trên
+        currentSequence.Append(canvasGroup.DOFade(1f, 0.15f));
+        currentSequence.Join(transform.DOScale(peakScale, 0.18f).SetEase(Ease.OutBack));
+        currentSequence.Join(transform.DOMoveY(peakPos.y, 0.35f).SetEase(Ease.OutCubic));
+
+        // 3. Co nhẹ về kích thước chuẩn vừa mắt để người chơi đọc kịp
+        currentSequence.Insert(0.18f, transform.DOScale(endScale, 0.15f).SetEase(Ease.InOutQuad));
+
+        // 4. Giữ nguyên trên màn hình rồi trôi nhẹ lên và Fade Out
+        float fadeStartTime = totalDuration * 0.6f;
+        float fadeDuration = totalDuration - fadeStartTime;
+
+        currentSequence.Insert(fadeStartTime, transform.DOMoveY(peakPos.y + 0.45f, fadeDuration).SetEase(Ease.InQuad));
+        currentSequence.Insert(fadeStartTime, canvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InQuad));
+    }
+
     private void OnDisable()
     {
         currentSequence?.Kill();

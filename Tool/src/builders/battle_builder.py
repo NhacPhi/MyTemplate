@@ -28,7 +28,7 @@ class EffectConfigBuilder(BaseBuilder):
                     modify_type = str(row['ModifyType']).strip() if pd.notna(row['ModifyType']) else "None",
                     duration=int(row['Duration']) if pd.notna(row['Duration']) else 0,
                     value=int(row['Value']) if pd.notna(row['Value']) else 0,
-                    max_stack=int(row['Value']) if pd.notna(row['Value']) else 0
+                    max_stack=int(row['MaxStack']) if 'MaxStack' in row and pd.notna(row['MaxStack']) else 1
                 )
             
         final_effect_data = {e_id: effect.to_dict() for e_id, effect in effect_skill_data.items()}

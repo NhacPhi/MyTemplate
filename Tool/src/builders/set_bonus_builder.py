@@ -32,15 +32,47 @@ class SetBonusBuilder(BaseBuilder):
                     continue
                 
                 set_id = str(row['ID']).strip()
+                name_val = row['Name'] if pd.notna(row.get('Name')) else ""
+                pieces_val = int(row['Pieces_Required']) if pd.notna(row.get('Pieces_Required')) else 6
                 
-                # Tạo model từ dòng dữ liệu
-                set_bonus_configs[set_id] = SetBonusModel(
-                    name_hash=self.get_hash(row['Name']),
-                    pieces=int(row['Pieces_Required']) if pd.notna(row['Pieces_Required']) else 0,
-                    stat=str(row['Bonus_Stat_Type']).strip() if pd.notna(row['Bonus_Stat_Type']) else "",
-                    value=float(row['Bonus_Value']) if pd.notna(row['Bonus_Value']) else 0.0,
-                    modifier_type=str(row['Modifier_Type']).strip() if pd.notna(row['Modifier_Type']) else "Flat"
-                )
+                raw_stats = [s.strip() for s in str(row['Bonus_Stat_Type']).split(',')] if pd.notna(row.get('Bonus_Stat_Type')) else [""]
+                raw_values = [v.strip() for v in str(row['Bonus_Value']).split(',')] if pd.notna(row.get('Bonus_Value')) else ["0"]
+                raw_mods = [m.strip() for m in str(row['Modifier_Type']).split(',')] if pd.notna(row.get('Modifier_Type')) else ["Flat"]
+
+                entries = []
+                for i in range(len(raw_stats)):
+                    s_name = raw_stats[i].strip()
+                    if not s_name: continue
+                    try:
+                        v_val = float(raw_values[i].strip()) if i < len(raw_values) else float(raw_values[0].strip())
+                    except ValueError:
+                        v_val = 0.0
+                    m_val = raw_mods[i].strip() if i < len(raw_mods) else raw_mods[0].strip()
+                    entries.append({
+                        "stat": s_name,
+                        "value": v_val,
+                        "modifier_type": m_val
+                    })
+
+                if set_id in set_bonus_configs:
+                    existing_model = set_bonus_configs[set_id]
+                    if existing_model.stats is None:
+                        existing_model.stats = [{
+                            "stat": existing_model.stat,
+                            "value": existing_model.value,
+                            "modifier_type": existing_model.modifier_type
+                        }]
+                    existing_model.stats.extend(entries)
+                else:
+                    first_entry = entries[0] if entries else {"stat": "", "value": 0.0, "modifier_type": "Flat"}
+                    set_bonus_configs[set_id] = SetBonusModel(
+                        name_hash=self.get_hash(name_val),
+                        pieces=pieces_val,
+                        stat=first_entry["stat"],
+                        value=first_entry["value"],
+                        modifier_type=first_entry["modifier_type"],
+                        stats=entries if len(entries) > 1 else None
+                    )
 
 
             final_data = {item_id: item.to_dict() for item_id, item in set_bonus_configs.items()}

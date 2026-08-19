@@ -192,6 +192,7 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 | **Cân Đẩu Vân**<br>`Nimbus_Cloud` | **Rare (SR)** | `Mage` | **Tôn Ngộ Không / Mage** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | *Không có* | **Bị đánh AOE tăng Điểm Hành Động:**<br>`[10, 15, 20, 25, 30, 40]%` Action Point |
 | **Trùy Đồng**<br>`Bronze_Hammer` | **Uncommon (R)** | `Tanker` | **Lý Thiên Vương** | HP: `600`<br>ATK: `30` | +60 HP<br>+3 ATK | **+% Tốc Độ (Speed):**<br>`[5, 7.5, 10, 12.5, 17, 22]%` | *Không có* |
 | **Xiên Chín Đầu**<br>`Ennead_spear` | **Uncommon (R)** | `Normal` | **Bạch Long Mã** | HP: `450`<br>ATK: `60` | +45 HP<br>+6 ATK | **+% Tỷ Lệ Bạo Kích:**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
+| **Hỗn Độn Thiết**<br>`Ferrous_Chaos` | **Legendary (UR)** | `Fighter` | **Đấu Sĩ UR** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% ATK & +% DEF:**<br>`[10, 15, 20, 25, 30, 35]%` | **Áp Đảo (HP > 50%):** Tăng 16% ST Kỹ Năng<br>**Huyết Chiến (HP ≤ 50%):** Nhận 16% Hút Máu |
 | **Xẻng Tứ Minh**<br>`Sunburst_Spade` | **Common (Normal)** | `Normal` | **Sa Ngộ Tĩnh** | HP: `300`<br>ATK: `40` | +30 HP<br>+4 ATK | *Không có* | **Tăng ST Đòn Đánh Đơn:**<br>`[10, 15, 20, 25, 30, 40]%` |
 
 ---
@@ -208,3 +209,13 @@ $$\text{Tổng Hệ Số Crit} = 150\% (\text{Base}) + \text{CritDMG}_{\text{tư
 
 ### 3. Công thức Sát Thương Thực Nhận (Final Damage):
 $$\text{Damage Cuối} = \text{ATK} \times \text{DamageMultiplier} \times \text{DamageBonus} \times \text{Hệ Số Crit} \times \text{Hệ Số Sát Thương Nhận}$$
+
+### 4. Công thức Tính Chiến Lực (Combat Power Rating):
+Chiến Lực phản ánh toàn diện Sức mạnh Tấn công, Độ sinh tồn và Tốc độ ra đòn của nhân vật:
+$$\text{OffensivePower} = \text{ATK} \times \left(1 + \frac{\text{CritRate}}{100} \times \frac{50 + \text{CritDMG}}{100}\right) \times \left(1 + \frac{\text{Penetration}}{100} + \frac{\text{FlatPen}}{400}\right)$$
+$$\text{DefensivePower} = \frac{\text{HP} \times \left(1 + \frac{\text{DEF}}{400}\right)}{2.5} \times \left(1 + \frac{\text{CritDMGRes}}{100}\right)$$
+$$\text{SpeedFactor} = \frac{\text{Speed}}{100}$$
+$$\text{UtilityPoints} = (\text{EHR} \times 15) + (\text{RES} \times 15)$$
+$$\text{StarBonus} = \text{StarUp} \times 250$$
+$$\mathbf{\text{Tổng Chiến Lực}} = \mathbf{\text{Round}}\Big( (\text{OffensivePower} + \text{DefensivePower}) \times \text{SpeedFactor} + \text{UtilityPoints} + \text{StarBonus} \Big)$$
+

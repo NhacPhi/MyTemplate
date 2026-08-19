@@ -86,6 +86,7 @@ public class SkillTooltipHandler : MonoBehaviour
 
         // 1. Lấy giá trị Passive nếu có
         float passiveValue = 0f;
+        float passiveParam = 0f;
         if (!string.IsNullOrEmpty(skillComp.PassiveID))
         {
             var passiveConfig = _gameDataBase.GetPassiveConfig(skillComp.PassiveID);
@@ -97,10 +98,14 @@ public class SkillTooltipHandler : MonoBehaviour
                     var list = passiveConfig.StaticModifiers[0].ModifyByUpgrade;
                     passiveValue = list[Mathf.Min(index, list.Count - 1)];
                 }
-                else if (passiveConfig.CombatEvents != null && passiveConfig.CombatEvents.Count > 0 && passiveConfig.CombatEvents[0].ModifyByUpgrade != null && passiveConfig.CombatEvents[0].ModifyByUpgrade.Count > 0)
+                else if (passiveConfig.CombatEvents != null && passiveConfig.CombatEvents.Count > 0)
                 {
-                    var list = passiveConfig.CombatEvents[0].ModifyByUpgrade;
-                    passiveValue = list[Mathf.Min(index, list.Count - 1)];
+                    var ce = passiveConfig.CombatEvents[0];
+                    if (ce.ModifyByUpgrade != null && ce.ModifyByUpgrade.Count > 0)
+                    {
+                        passiveValue = ce.ModifyByUpgrade[Mathf.Min(index, ce.ModifyByUpgrade.Count - 1)];
+                    }
+                    passiveParam = ce.EffectParam > 0 ? ce.EffectParam : 100f;
                 }
             }
         }
@@ -123,6 +128,14 @@ public class SkillTooltipHandler : MonoBehaviour
         string formattedDescription = rawDescription;
         if (!string.IsNullOrEmpty(rawDescription))
         {
+            // Tự động sửa các lỗi gõ nhầm dấu ngoặc vuông và escape ký tự xuống dòng
+            rawDescription = rawDescription
+                .Replace("{0]", "{0}")
+                .Replace("{1]", "{1}")
+                .Replace("{2]", "{2}")
+                .Replace("{3]", "{3}")
+                .Replace("\\n", "\n");
+
             try
             {
                 object arg0 = (damageMultiplier * 100f).ToString("F0");
@@ -156,20 +169,21 @@ public class SkillTooltipHandler : MonoBehaviour
                 }
                 else
                 {
-                    // Với skill thông thường / có passive:
-                    // {0} = DamageMultiplier %
-                    // {1} = Passive Value
-                    // {2} = Effect Value
+                    // Với skill thông thường / có passive (như BullDemonKing_B):
+                    // {0} = DamageMultiplier % (100%)
+                    // {1} = Passive Value (Xác suất %: 50%, 75%, 100%)
+                    // {2} = Passive Param (Sát thương phản đòn: 100%)
                     // {3} = Effect Duration
-                    arg1 = passiveValue;
-                    arg2 = effectValue;
-                    arg3 = effectDuration;
+                    arg1 = passiveValue > 0 ? passiveValue.ToString("F0") : (effectValue > 0 ? effectValue.ToString("F0") : "");
+                    arg2 = passiveParam > 0 ? passiveParam.ToString("F0") : (effectValue > 0 ? effectValue.ToString("F0") : "");
+                    arg3 = effectDuration > 0 ? effectDuration.ToString() : "";
                 }
 
                 formattedDescription = string.Format(rawDescription, arg0, arg1, arg2, arg3);
             }
-            catch (System.FormatException)
+            catch (System.Exception ex)
             {
+                Debug.LogWarning($"[SkillTooltipHandler] Format description failed for {skillComp.ID}: {ex.Message}");
                 formattedDescription = rawDescription;
             }
         }

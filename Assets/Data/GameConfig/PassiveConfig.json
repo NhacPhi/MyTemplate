@@ -597,5 +597,90 @@
             }
         ],
         "combat_events": []
+    },
+    "psv_bulldemonking_counter": {
+        "desc_template_hash": 1410265506,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnTakeDamage",
+                "effect_id": "Eff_CounterAttack",
+                "modify_by_upgrade": [
+                    50.0,
+                    75.0,
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0
+                ],
+                "target": "enemy",
+                "condition_filter": "BasicAttack",
+                "effect_param": 100.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_ferrous_chaos": {
+        "desc_template_hash": 2047482786,
+        "static_modifiers": [
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    15.0,
+                    20.0,
+                    25.0,
+                    30.0,
+                    35.0
+                ]
+            },
+            {
+                "stat_type": "DEF",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    15.0,
+                    20.0,
+                    25.0,
+                    30.0,
+                    35.0
+                ]
+            }
+        ],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_IncreaseAttack",
+                "modify_by_upgrade": [
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0
+                ],
+                "target": "self",
+                "condition_filter": "IsSkill, HP_Above_50",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            },
+            {
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_Lifesteal",
+                "modify_by_upgrade": [
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0,
+                    16.0
+                ],
+                "target": "self",
+                "condition_filter": "HP_BelowOrEqual_50",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
     }
 }

@@ -31,49 +31,68 @@ public class PoisonEffect : StatusEffect
 
     private async UniTaskVoid SpawnVFXAsync()
     {
-        GameObject vfxPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(poisonAddress);
-
-        if (this.IsStop || Target == null || vfxPrefab == null)
+        try
         {
-            return;
-        }
+            if (string.IsNullOrEmpty(poisonAddress) || AddressablesManager.Instance == null) return;
 
-        _posionVFX = GameObject.Instantiate(vfxPrefab, Target.gameObject.transform);
-        _posionVFX.transform.localPosition = Vector3.zero;
+            GameObject vfxPrefab = await AddressablesManager.Instance.LoadAssetAsync<GameObject>(poisonAddress);
+
+            if (this.IsStop || Target == null || vfxPrefab == null)
+            {
+                return;
+            }
+
+            _posionVFX = GameObject.Instantiate(vfxPrefab, Target.gameObject.transform);
+            _posionVFX.transform.localPosition = Vector3.zero;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"[PoisonEffect] Không thể load VFX độc: {ex.Message}");
+        }
     }
 
 
     public override void OnStartOfTurn() 
     {
-        float poisonDamage = 0;
-
-        // 1. Kiểm tra xem Độc này trừ máu Thẳng hay trừ theo % Máu Tối Đa
-        if (_data.ModifyType == ModifyType.Percent)
+        try
         {
-            // Nếu là Percent: Value 5 có nghĩa là mất 5% HP tối đa mỗi hiệp
-            // (Giả sử bạn có hàm GetMaxHP hoặc thuộc tính MaxHP trong StatsController)
-            float maxHP = Target.GetStat(StatType.HP).BaseValue; // Tùy vào code lấy MaxHP của bạn
-            poisonDamage = maxHP * (_data.Value / 100f);
+            float poisonDamage = 0f;
+
+            // 1. Kiểm tra xem Độc này trừ máu Thẳng hay trừ theo % Máu Tối Đa
+            if (_data != null && _data.ModifyType == ModifyType.Percent)
+            {
+                var hpStat = Target != null ? Target.GetStat(StatType.HP) : null;
+                float maxHP = (hpStat != null && hpStat.Value > 0) 
+                    ? hpStat.Value 
+                    : ((hpStat != null && hpStat.BaseValue > 0) ? hpStat.BaseValue : 1000f);
+                poisonDamage = maxHP * (_data.Value / 100f);
+            }
+            else if (_data != null)
+            {
+                poisonDamage = _data.Value;
+            }
+            else
+            {
+                poisonDamage = 50f;
+            }
+
+            // 2. Nhân với số Stack hiện tại
+            poisonDamage *= Mathf.Max(1, CurrentStack);
+
+            // 3. Trừ máu mục tiêu (Gắn tag DoT, Poison để không làm ngắt animation hoặc làm gián đoạn State Machine)
+            if (Target is EntityStats entityStats && entityStats != null && !entityStats.IsDead)
+            {
+                var dotTags = new System.Collections.Generic.HashSet<string> { "DoT", "Poison" };
+                entityStats.TakeDamage(poisonDamage, entityStats.gameObject.transform, dotTags);
+                UIEvent.DamagePopup?.Invoke(poisonDamage, entityStats.transform.position, false);
+            }
+
+            Debug.Log($"[Effect] {Target?.EntityID} bị mất {poisonDamage} máu do ĐỘC! (Đang có {CurrentStack} Stack)");
         }
-        else
+        catch (System.Exception ex)
         {
-            // Nếu là Constant: Trừ thẳng Value (VD: 50 máu)
-            poisonDamage = _data.Value;
+            Debug.LogError($"[PoisonEffect] Lỗi khi xử lý sát thương độc: {ex}");
         }
-
-        // 2. Nhân với số Stack hiện tại (VD: 2 lớp Độc thì đau gấp đôi)
-        poisonDamage *= CurrentStack;
-
-        // 3. Trừ máu mục tiêu! 
-        // (Giả sử bạn có hàm TakeDamage. Nên truyền thêm Caster vào để game biết ai là hung thủ giết quái)
-        if (Target is EntityStats entityStats)
-        {
-            entityStats.TakeDamage(poisonDamage, entityStats.gameObject.transform);
-            UIEvent.DamagePopup(poisonDamage, entityStats.transform.position, false);
-        }
-
-
-        Debug.Log($"[Effect] {Target.EntityID} bị mất {poisonDamage} máu do ĐỘC! (Đang có {CurrentStack} Stack)");
     }
 
     public override void OnEndOfTurn() 

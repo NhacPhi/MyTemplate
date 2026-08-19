@@ -35,8 +35,66 @@ public static class PassiveEventListener
         }
 
         // Kiểm tra xem Context thực tế có chứa TẤT CẢ các Tags mà JSON yêu cầu không (Logic AND)
-        foreach (var requiredTag in evtConfig.ConditionTags)
+        foreach (var rawTag in evtConfig.ConditionTags)
         {
+            string requiredTag = rawTag?.Trim();
+            if (string.IsNullOrEmpty(requiredTag)) continue;
+
+            // 1. Kiểm tra điều kiện Máu của chủ sở hữu (Source HP)
+            if (requiredTag.Equals("HP_Above_50", System.StringComparison.OrdinalIgnoreCase))
+            {
+                var stats = context.Source != null ? context.Source.GetCoreComponent<EntityStats>() : null;
+                if (stats != null)
+                {
+                    var hp = stats.GetAttribute(AttributeType.Hp);
+                    if (hp == null || (hp.Value / hp.MaxValue) <= 0.5f) return false;
+                }
+                continue;
+            }
+
+            if (requiredTag.Equals("HP_BelowOrEqual_50", System.StringComparison.OrdinalIgnoreCase) ||
+                requiredTag.Equals("HP_Below_50", System.StringComparison.OrdinalIgnoreCase) ||
+                requiredTag.Equals("HP_Under_50", System.StringComparison.OrdinalIgnoreCase))
+            {
+                var stats = context.Source != null ? context.Source.GetCoreComponent<EntityStats>() : null;
+                if (stats != null)
+                {
+                    var hp = stats.GetAttribute(AttributeType.Hp);
+                    if (hp == null || (hp.Value / hp.MaxValue) > 0.5f) return false;
+                }
+                continue;
+            }
+
+            // 2. Kiểm tra điều kiện Kỹ năng (IsSkill)
+            if (requiredTag.Equals("IsSkill", System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (context.HasTag("ActiveSkill") || context.HasTag("MajorSkill") || context.HasTag("UltimateSkill") || context.HasTag("IsSkill") || context.HasTag("Skill"))
+                {
+                    continue;
+                }
+                return false;
+            }
+
+            // 3. Kiểm tra điều kiện Target sống / chết
+            if (requiredTag.Equals("TargetDead", System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (context.Target != null && context.Target.GetCoreComponent<EntityStats>() != null && context.Target.GetCoreComponent<EntityStats>().IsDead)
+                {
+                    continue;
+                }
+                return false;
+            }
+
+            if (requiredTag.Equals("TargetAlive", System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (context.Target != null && context.Target.GetCoreComponent<EntityStats>() != null && !context.Target.GetCoreComponent<EntityStats>().IsDead)
+                {
+                    continue;
+                }
+                return false;
+            }
+
+            // 4. So khớp tag thông thường
             if (!context.HasTag(requiredTag))
             {
                 return false; // Thiếu 1 tag yêu cầu -> Match thất bại

@@ -581,4 +581,48 @@ public class CharacterProfileModel : IStatProvider
         OnEquipmentChanged?.Invoke();
         OnStatsChanged?.Invoke();
     }
+
+    /// <summary>
+    /// Tính toán Tổng Điểm Chiến Lực (Combat Power) của nhân vật dựa theo công thức Damage & EHP thực chiến.
+    /// </summary>
+    public int CalculatePower()
+    {
+        float hp = GetTotalStat(StatType.HP);
+        float atk = GetTotalStat(StatType.ATK);
+        float def = GetTotalStat(StatType.DEF);
+        float speed = Mathf.Max(1f, GetTotalStat(StatType.SPEED));
+
+        float critRate = Mathf.Clamp(GetTotalStat(StatType.CRIT_RATE), 0f, 100f);
+        float critDmg = GetTotalStat(StatType.CRIT_DMG);
+        float pen = GetTotalStat(StatType.PENETRATION);
+        float defShred = GetTotalStat(StatType.DEF_SHRED);
+
+        float critRes = GetTotalStat(StatType.CRIT_DMG_RES);
+        float ehr = GetTotalStat(StatType.EHR);
+        float res = GetTotalStat(StatType.RES);
+
+        // 1. Điểm Tấn Công (Offensive Rating)
+        // Base Crit DMG = 150% (tức là bonus +50% khi nổ bạo kích)
+        float critMultiplier = 1.0f + (critRate / 100f) * ((50f + critDmg) / 100f);
+        float penFactor = 1.0f + (pen / 100f) + (defShred / 100f);
+        float offensivePower = atk * critMultiplier * penFactor;
+
+        // 2. Điểm Sinh Tồn (Defensive Rating / Effective HP)
+        // EHP = HP * (1 + DEF / 400), quy đổi theo tỷ lệ HP/ATK (2.5)
+        float ehp = hp * (1.0f + (def / 400f));
+        float critResFactor = 1.0f + (critRes / 100f);
+        float defensivePower = (ehp / 2.5f) * critResFactor;
+
+        // 3. Hệ Số Tốc Độ & Tiện Ích (Speed & Utility Factor)
+        float speedFactor = speed / 100f;
+        float utilityPoints = (ehr * 15f) + (res * 15f);
+
+        // 4. Điểm Thức Tỉnh Sao (Star Level Bonus)
+        int starLevel = SaveData != null ? SaveData.StarUp : 0;
+        float starBonus = starLevel * 250f;
+
+        float totalPower = (offensivePower + defensivePower) * speedFactor + utilityPoints + starBonus;
+
+        return Mathf.Max(1, Mathf.RoundToInt(totalPower));
+    }
 }

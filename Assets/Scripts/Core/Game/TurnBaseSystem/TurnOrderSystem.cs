@@ -22,18 +22,22 @@ public class TurnOrderSystem
 
     public Entity GetNextCharacter()
     {
-        var nextEntity = _entities
-            .Where(e => !e.GetComponent<EntityStats>().IsDead)
+        var aliveEntities = _entities
+            .Where(e => e != null && e.GetComponent<EntityStats>() != null && !e.GetComponent<EntityStats>().IsDead)
             .OrderBy(e => e.GetComponent<EntityStats>().CurrentAV)
-            .First();
+            .ToList();
 
+        if (aliveEntities.Count == 0) return null;
+
+        var nextEntity = aliveEntities[0];
         var nextStats = nextEntity.GetComponent<EntityStats>();
         float minAV = nextStats.CurrentAV;
 
         foreach(var entity in _entities)
         {
+            if (entity == null) continue;
             var stats = entity.GetComponent<EntityStats>();
-            if (stats.IsDead) continue;
+            if (stats == null || stats.IsDead) continue;
 
             stats.CurrentAV -= minAV;
 
@@ -45,8 +49,12 @@ public class TurnOrderSystem
 
     public void ResetEntityAV(Entity entity)
     {
+        if (entity == null) return;
         var stats = entity.GetComponent<EntityStats>();
-        stats.CurrentAV = MAX_AP / stats.GetStat(StatType.SPEED).Value;
+        if (stats == null) return;
+        var speedStat = stats.GetStat(StatType.SPEED);
+        float speed = (speedStat != null && speedStat.Value > 0) ? speedStat.Value : 100f;
+        stats.CurrentAV = MAX_AP / speed;
     }
 
     public List<Entity> PredictTurnOrder(int turnsToPredict = 6)

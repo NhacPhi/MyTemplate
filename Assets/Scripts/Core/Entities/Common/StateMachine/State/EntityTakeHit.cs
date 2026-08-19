@@ -18,7 +18,11 @@ public class EntityTakeHit : EntityStateBase
 
         data.Anim.RegisterEventAtTime(0.9f, () =>
         {
-            data.StateManager.ChangeState(EntityState.IDLE);
+            // Chỉ trở về IDLE nếu hiện tại vẫn đang ở đúng state HIT (tránh ghi đè khi nhân vật đã sang MOVE_UP/ATTACK)
+            if (data.StateManager != null && data.StateManager.CurrentState == this)
+            {
+                data.StateManager.ChangeState(EntityState.IDLE);
+            }
         });
     }
 
@@ -26,9 +30,22 @@ public class EntityTakeHit : EntityStateBase
     protected async UniTaskVoid WaitInit()
     {
         await UniTask.Yield();
-        data.Entity.GetComponent<EntityStats>().OnHit += (_, _, _) =>
+        var stats = data.Entity != null ? data.Entity.GetComponent<EntityStats>() : null;
+        if (stats != null)
         {
-            data.StateManager.ChangeState(EntityState.HIT);
-        };
+            stats.OnHit += (_, _, tags) =>
+            {
+                // Sát thương DoT (Độc, Cháy, Chảy máu...) không làm giật stagger animation hoặc đổi state
+                if (tags != null && (tags.Contains("DoT") || tags.Contains("Poison") || tags.Contains("Burn") || tags.Contains("Bleed")))
+                {
+                    return;
+                }
+
+                if (data.StateManager != null)
+                {
+                    data.StateManager.ChangeState(EntityState.HIT);
+                }
+            };
+        }
     }
 }

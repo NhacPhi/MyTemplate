@@ -191,26 +191,6 @@ public class PlayerCharacterManager : IInitializable, IDisposable
 
         if (profile == null) return 0;
 
-        float totalPower = 0f;
-
-        totalPower += profile.GetTotalStat(StatType.HP) * 0.2f;
-
-        totalPower += profile.GetTotalStat(StatType.ATK) * 2.5f;
-
-        totalPower += profile.GetTotalStat(StatType.DEF) * 1.5f;
-
-        // totalPower += profile.GetTotalStat(StatType.CritRate) * 1000f;
-
-        //if (profile.SaveData.SkillLevels != null)
-        //{
-        //    foreach (var skill in profile.SaveData.SkillLevels)
-        //    {
-        //        int skillLevel = skill.Value;
-        //     
-        //        totalPower += (skillLevel * 100);
-        //    }
-        //}
-
-        return Mathf.RoundToInt(totalPower);
+        return profile.CalculatePower();
     }
 }

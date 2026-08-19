@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Tech.StateMachine;
 using UnityEngine;
 
@@ -14,6 +15,13 @@ public class OrderState : BattleBaseState
     public override void Enter()
     {
         Entity nextCharacter = battleManager.TurnSystem.GetNextCharacter();
+        if (nextCharacter == null)
+        {
+            bool isAllEnemiesDead = battleManager.Enemies.All(e => e == null || e.GetCoreComponent<EntityStats>() == null || e.GetCoreComponent<EntityStats>().IsDead);
+            battleManager.ResultBattle = isAllEnemiesDead ? BattleResult.Win : BattleResult.Lose;
+            battleManager.StateMachine.ChangeState(BattleState.ResultState);
+            return;
+        }
 
         battleManager.CurrentCaster = nextCharacter;
         
@@ -21,13 +29,13 @@ public class OrderState : BattleBaseState
 
         var pos = new Vector3(pos_char.x, pos_char.y - battleManager.OffsetY, pos_char.z);
 
-        battleManager.SeletionCircle.transform.position = pos;
+        if (battleManager.SeletionCircle != null)
+            battleManager.SeletionCircle.transform.position = pos;
 
         if (battleManager.Boss)
             UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
 
         battleManager.StateMachine.ChangeState(BattleState.BeginTurnBase);
-
     }
 
     public override void Exit()

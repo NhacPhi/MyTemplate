@@ -172,6 +172,17 @@ public class SkillCharacterUIManager : MonoBehaviour
 
     public void ActiveBossUI(bool active)
     {
-        _bossUI.SetActive(active);
+        if (_bossUI != null)
+        {
+            _bossUI.SetActive(active);
+            if (active && BattleManager.Instance != null && BattleManager.Instance.Boss != null)
+            {
+                var bossUIComp = _bossUI.GetComponent<BossUI>();
+                if (bossUIComp != null)
+                {
+                    bossUIComp.UpdateSkillBossUI(BattleManager.Instance.Boss);
+                }
+            }
+        }
     }
 }

@@ -188,23 +188,17 @@ public class BattleManager : MonoBehaviour
         // Load locaiton of character 
         var activeSlot = SaveSystem.Player.Roster.ActiveSlots;
 
-        int order = 0;
-
-        foreach(var slot in activeSlot)
+        foreach (var slot in activeSlot)
         {
-            if(order == 6)
-            {
-                order = 0;
-            }
-
-            order += 2;
-
-            if (slot.CharacterID != "")
+            if (!string.IsNullOrEmpty(slot.CharacterID))
             {
                 var key = slot.CharacterID;
                 var slot_position = slot.Position;
+                int renderOrder = GetRenderOrderBySlot(slot_position);
 
                 var character = _characters.GetValueOrDefault(key);
+                if (character == null) continue;
+
                 var pos = _characterPosisions[slot_position - 1].transform.position;
 
                 SortingGroup sp = character.GetComponent<SortingGroup>();
@@ -212,9 +206,9 @@ public class BattleManager : MonoBehaviour
                 {
                     sp = character.gameObject.AddComponent<SortingGroup>();
                 }
-                sp.sortingOrder = order;
+                sp.sortingOrder = renderOrder;
 
-                character.RenderOrder = order;
+                character.RenderOrder = renderOrder;
 
                 character.Team = TeamSide.Player;
 
@@ -228,18 +222,13 @@ public class BattleManager : MonoBehaviour
 
         var battleConfig = GameDataBase.GetBattleConfig(BattleSession.PendingBattleID);
 
-        order = 0;
-        for(int i = 0; i < _enemies.Count; i++)
+        for (int i = 0; i < _enemies.Count; i++)
         {
-            SetEntityPositionBySlot(Enemies[i], battleConfig.Enemies[i].Slot);
-            if (order == 6)
-            {
-                order = 0;
-            }
-
-            order += 2;
-            //var key = enemyConfig.EnemyID;
             var slot_position = battleConfig.Enemies[i].Slot;
+            int renderOrder = GetRenderOrderBySlot(slot_position);
+
+            SetEntityPositionBySlot(Enemies[i], slot_position);
+
             var enemy = _enemies[i];
             var pos = _enemiesPositions[slot_position - 1].transform.position;
             enemy.transform.position = pos + Vector3.up * OffsetY;
@@ -249,12 +238,21 @@ public class BattleManager : MonoBehaviour
             {
                 sp = enemy.gameObject.AddComponent<SortingGroup>();
             }
-            sp.sortingOrder = order;
+            sp.sortingOrder = renderOrder;
 
-            enemy.RenderOrder = order;
+            enemy.RenderOrder = renderOrder;
 
             enemy.Team = TeamSide.Enemy;
         }
+    }
+
+    public static int GetRenderOrderBySlot(int slot)
+    {
+        // Slot 1 & 4 (Hàng Trên Cùng - Y cao nhất): Sorting Layer 2 (Vẽ phía sau)
+        // Slot 2 & 5 (Hàng Ở Giữa - Y trung bình):  Sorting Layer 4 (Vẽ ở giữa)
+        // Slot 3 & 6 (Hàng Dưới Cùng - Y thấp nhất): Sorting Layer 6 (Vẽ đè lên trước)
+        int rowInGrid = ((slot - 1) % 3) + 1;
+        return rowInGrid * 2;
     }
 
     public void SetEntityPositionBySlot(Entity entity, int slot)

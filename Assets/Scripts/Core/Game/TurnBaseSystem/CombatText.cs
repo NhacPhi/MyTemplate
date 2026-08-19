@@ -68,11 +68,34 @@ public class CombatText : IInitializable, IDisposable
     {
         if (popupPrefab == null) return;
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
-        clone.SetAnimationEnabled(false); // Tắt animation cho các hiệu ứng chữ/mất lượt
+        clone.SetAnimationEnabled(true);
         clone.SetText(text);
         clone.SetCritical(false);
-        // Đặt màu tím nhạt/xanh cyan cho hiệu ứng trạng thái
-        clone.TMP.color = new Color(0.3f, 0.9f, 1f); 
+
+        // Đặt màu sắc nổi bật, sang trọng theo ngữ cảnh
+        if (text.Contains("Phản Kích") || text.Contains("Counter"))
+        {
+            clone.TMP.color = new Color(1f, 0.85f, 0.2f); // Vàng kim rực rỡ
+        }
+        else if (text.Contains("Choáng") || text.Contains("Stun") || text.Contains("Băng") || text.Contains("Frozen"))
+        {
+            clone.TMP.color = new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết
+        }
+        else if (text.Contains("Độc") || text.Contains("Poison"))
+        {
+            clone.TMP.color = new Color(0.6f, 1f, 0.35f); // Xanh ngọc độc
+        }
+        else
+        {
+            clone.TMP.color = new Color(0.35f, 0.85f, 1f); // Xanh Cyan tinh tế
+        }
+
+        var jump = clone.GetComponent<NumberJumpAnimation>();
+        if (jump != null)
+        {
+            // Scale nhỏ lại (0.6f) để chữ không bị quá to như số sát thương, thời lượng 0.95s mượt mà
+            jump.PlayTextAnimation(scaleMultiplier: 0.8f, totalDuration: 0.5f);
+        }
     }
     public void Dispose()
     {

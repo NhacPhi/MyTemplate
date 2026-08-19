@@ -26,13 +26,22 @@ public class BossUI : MonoBehaviour
         if (BattleManager.Instance != null)
         {
             BattleManager.Instance.CheckBattleHasBosss();
-            gameObject.SetActive(BattleManager.Instance.Boss != null);
+            bool hasBoss = BattleManager.Instance.Boss != null;
+            gameObject.SetActive(hasBoss);
+            if (hasBoss)
+            {
+                UpdateSkillBossUI(BattleManager.Instance.Boss);
+            }
         }
     }
 
     private void OnEnable()
     {
         UIEvent.OnUpdateBossUI += UpdateSkillBossUI;
+        if (BattleManager.Instance != null && BattleManager.Instance.Boss != null)
+        {
+            UpdateSkillBossUI(BattleManager.Instance.Boss);
+        }
     }
 
     private void OnDisable()

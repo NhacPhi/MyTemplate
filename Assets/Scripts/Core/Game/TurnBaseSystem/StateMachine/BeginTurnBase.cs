@@ -24,10 +24,14 @@ public class BeginTurnBase : BattleBaseState
 
             // Effect Xử lý sát thương / Hồi phục theo thời gian
             var stats = battleManager.CurrentCaster.GetCoreComponent<StatsController>();
-            bool skipTurn = !stats.CanTakeTurn();
-            stats.ProcessStartOfTurn();
+            bool skipTurn = stats != null && !stats.CanTakeTurn();
+            if (stats != null)
+            {
+                stats.ProcessStartOfTurn();
+            }
 
-            if (battleManager.CurrentCaster.GetCoreComponent<EntityStats>().IsDead)
+            var entityStats = battleManager.CurrentCaster.GetCoreComponent<EntityStats>();
+            if (entityStats != null && entityStats.IsDead)
             {
                 battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
                 return;
@@ -59,8 +63,11 @@ public class BeginTurnBase : BattleBaseState
 
             if (battleManager == null || battleManager.CurrentCaster == null) return;
 
-            if (battleManager.Boss)
+            if (battleManager.Boss != null)
+            {
+                UIEvent.OnActiveBossUI?.Invoke(true);
                 UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
+            }
 
             UIEvent.OnUpdateEntityPrediction?.Invoke(battleManager.TurnSystem.PredictTurnOrder());
 
