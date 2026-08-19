@@ -38,7 +38,22 @@ public class RingOfUniverseSkill : SkillRuntime, IAttackSkill, IReturningProject
 
     public void OnProjectileHit(Entity target, GameObject projectile)
     {
-        DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
+        var damageBonus = CalculateRawDamage();
+
+        var controller = projectile != null ? projectile.GetComponent<ProjectileController>() : null;
+        if (controller != null && controller.State == ProjectileState.Returning)
+        {
+            // Lượt về: Luôn luôn Bạo Kích 100% (Guaranteed Critical Hit)
+            damageBonus.CritRateBonus += 1000f;
+            damageBonus.Tags.Add("ReturningHit");
+            damageBonus.Tags.Add("GuaranteedCrit");
+        }
+        else
+        {
+            damageBonus.Tags.Add("OutwardHit");
+        }
+
+        DamageFormular.DealDamage(damageBonus, _caster, target);
     }
 
     public void OnProjectileReturned(GameObject projectitle)

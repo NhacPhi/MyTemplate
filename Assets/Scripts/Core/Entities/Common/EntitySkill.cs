@@ -32,7 +32,8 @@ public enum Skill
     PoisonBall,
     DivineWind,
     MoonBlade,
-    FrozenBall
+    FrozenBall,
+    NezhaExecution
 }
 
 public enum SkillType

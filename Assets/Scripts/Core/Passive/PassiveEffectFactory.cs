@@ -23,9 +23,8 @@ public static class PassiveEffectFactory
         // ------ CÁC HANDLER SÁT THƯƠNG ĐẶC BIỆT ------
         { "Eff_HPScalingDamage", new HPScalingDamageEffectHandler() },
         { "Eff_ArmorPenetration", new ArmorPenetrationEffectHandler() },
-        { "Eff_CounterAttack", new CounterAttackEffectHandler() }
-        
-        // Thêm các Handler mới vào đây (VD: "Poison", "Stun", "ActionAdvance"...)
+        { "Eff_CounterAttack", new CounterAttackEffectHandler() },
+        { "Eff_Action_Point_Boost", new ActionAdvanceEffectHandler() }
     };
 
     public static void ExecuteEffect(string effectId, Entity target, float effectValue, CombatContext context)

@@ -513,9 +513,9 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.4,
+                    0.5,
+                    0.6
                 ],
                 "max_cooldown": [
                     4,
@@ -530,12 +530,12 @@
                 "id": "ThirdPrinceNezha_U",
                 "name_hash": 598886642,
                 "des_hash": 1060479304,
-                "skill": "EmpowerAttack",
+                "skill": "NezhaExecution",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
+                    1.4,
+                    1.6,
                     1.8
                 ],
                 "max_cooldown": [
@@ -545,7 +545,7 @@
                 ],
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Main",
-                "passive_id": ""
+                "passive_id": "psv_nezha_ultimate"
             }
         },
         "stats": {
@@ -2529,9 +2529,9 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.4,
+                    0.5,
+                    0.6
                 ],
                 "max_cooldown": [
                     4,
@@ -2546,12 +2546,12 @@
                 "id": "ThirdPrinceNezha_U",
                 "name_hash": 598886642,
                 "des_hash": 1060479304,
-                "skill": "EmpowerAttack",
+                "skill": "NezhaExecution",
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
-                    1.8,
+                    1.4,
+                    1.6,
                     1.8
                 ],
                 "max_cooldown": [
@@ -2561,7 +2561,7 @@
                 ],
                 "effect_id": "None",
                 "sound": "ThirdPrinceNezha_Main",
-                "passive_id": ""
+                "passive_id": "psv_nezha_ultimate"
             }
         },
         "stats": {

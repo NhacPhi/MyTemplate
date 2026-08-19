@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tech.Composite;
 using UnityEngine;
 
@@ -98,6 +99,14 @@ public static class DamageFormular
 
         float effectiveDef = CalculateEffectiveDefense(sourceStats, targetStats, damageBonus.PenetrationBonus);
         damageResult = Mathf.RoundToInt(damageResult * (DEF_CONSTANT / (DEF_CONSTANT + effectiveDef)));
+
+        if (isCritical)
+        {
+            if (damageBonus.Tags == null) damageBonus.Tags = new HashSet<string>();
+            damageBonus.Tags.Add("IsCritical");
+            damageBonus.Tags.Add("Critical");
+        }
+
         targetStats.TakeDamage(damageResult, source.transform, damageBonus.Tags);
         UIEvent.DamagePopup(damageResult, target.transform.position, isCritical);
     }

@@ -88,14 +88,25 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 ---
 
 ### 🛞 5. NA TRA TAM THÁI TỬ (ThirdPrinceNezha)
-* **Phẩm chất:** `SSR` | **Hệ/Vai trò:** `Assassin` (Tốc Độ Siêu Tốc & Đòn Đánh Bạo Kích)
+* **Phẩm chất:** `SSR` | **Hệ/Vai trò:** `Assassin` (Sát Thủ Tốc Độ & Bạo Kích Hai Lượt Càn Khôn)
 * **Vũ khí đặc trưng:** **Ý Chí Tiên Phong (`Vanguard_Of_Volition`)** / **Phong Hỏa Luân**
-* **Chỉ số cơ bản:** **HP:** `4,133` | **ATK:** `3,230` | **DEF:** `331` | **Speed:** `111` | **Crit Rate:** `16%` | **Crit DMG:** `29%`
+* **Chỉ số cơ bản (Level 1):** **HP:** `3,444` | **ATK:** `3,589` | **DEF:** `344` | **Speed:** `111` | **Crit Rate:** `16%` | **Crit DMG:** `29%` | **Phá Giáp (DEF Shred):** `21%`
 
 #### 🗡️ Bộ Kỹ Năng:
-1. **Đánh Thường (`ThirdPrinceNezha_B` - Hỏa Tiêm Đột Tấn):** Đâm thương gây `[80%, 100%, 120%]` ATK.
-2. **Kỹ Năng Major (`ThirdPrinceNezha_M` - Càn Khôn Phá Trận):** Phóng Vòng Càn Khôn gây `[100%, 150%, 150%]` ATK.
-3. **Tuyệt Kỹ Ultimate (`ThirdPrinceNezha_U` - Hỏa Tiêm Liệt Hỏa):** Sốc sát thương đâm liên hoàn gây `[150%, 180%, 180%]` ATK.
+1. **Đánh Thường (`ThirdPrinceNezha_B` - Hỏa Tiêm Đột Tấn):**
+   - **Loại:** `MeleeAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
+2. **Kỹ Năng Major (`ThirdPrinceNezha_M` - Càn Khôn Phá Trận):**
+   - **Loại:** `FireRing` (`RingOfUniverseSkill` - Đạn đạo bay 2 lượt) | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[40%, 50%, 60%]` ATK / hit | **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Cơ chế Độc Quyền (Double Hit - Guaranteed Return Crit):**
+     - **Lượt Đi (Outward):** Vòng Càn Khôn bay tới xuyên qua mục tiêu gây sát thương `[40%, 50%, 60%]` ATK theo tỷ lệ bạo kích thông thường.
+     - **Lượt Về (Returning):** Sau khi đạt điểm cực đại, Vòng Càn Khôn xoay cực tốc đâm ngược trở lại, **Chắc Chắn Gây Sát Thương Bạo Kích 100% (Guaranteed Critical Strike)** kèm theo hiệu ứng âm thanh đanh thép (Gây thêm $\approx 107\%$ ATK).
+     - $\Rightarrow$ **Tổng Sát Thương Major:** $\approx \mathbf{111\% \to 167\%}$ ATK.
+3. **Tuyệt Kỹ Ultimate (`ThirdPrinceNezha_U` - Hỏa Tiêm Liệt Hỏa):**
+   - **Loại:** `NezhaExecution` (`NezhaExecutionSkill` - Đột Kích & Càn Quét Kích Sát) | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[140%, 160%, 180%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **Cơ chế Độc Quyền (Càn Quét Chiến Trường):** Khi đòn đánh **KẾT LIỄU mục tiêu**, Na Tra lập tức kích hoạt hiệu ứng **[Càn Quét]**, tự động đổi hướng lướt sang tấn công 1 kẻ địch hợp lệ ngẫu nhiên khác (tuân theo luật Hàng & Cột) với **`120% ATK`** (Tổng combo đạt **`300%` ATK**).
 
 ---
 
@@ -187,6 +198,7 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 | **Quạt Quế Phách**<br>`Moonlit_Firelfy` | **Legendary (UR)** | `Mage` | **Pháp Sư UR** | HP: `1125`<br>ATK: `275` | +113 HP<br>+28 ATK | **+% ATK & +% DEF:**<br>`[5, 7.5, 10, 12.5, 17, 24]%` | **Dùng chiêu buff -> Giảm 1 CD:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
 | **Cửu Xỉ Đinh Ba**<br>`Nine_ToolThed_Rake` | **Legendary (UR)** | `Tanker` | **Trư Bát Giới** | HP: `2000`<br>ATK: `100` | +200 HP<br>+10 ATK | **+% HP & +% Chính Xác:**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | **Chịu đòn đơn tăng DEF dồn 6 tầng:**<br>`[4, 5, 6, 7, 8, 10]%` DEF/tầng |
 | **Võng Sinh**<br>`Reincarnation` | **Epic (SSR)** | `Assassin` | **Hồng Hài Nhi** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Tấn Công (ATK):**<br>`[10, 15, 20, 25, 35, 40]%` | **Đánh đơn gây hiệu ứng Xé Toạc:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
+| **Phong Hỏa Luân**<br>`Windfire_Wheel` | **Epic (SSR)** | `Assassin` | **Tam Thái Tử Na Tra** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Sát Thương Bạo Kích & +% Tấn Công:**<br>`[8, 10, 12, 14, 17, 20]%` | **Khi gây ST Bạo Kích tăng Điểm Hành Động:**<br>`[10, 12, 14, 16, 18, 20]%` Action Point |
 | **Quạt Ba Tiêu**<br>`Plantain_Fan` | **Epic (SSR)** | `Mage` | **Ngưu Ma Vương** | HP: `742`<br>ATK: `182` | +74 HP<br>+18 ATK | **+% Chính Xác (EHR):**<br>`[10, 15, 20, 25, 34, 40]%` | **Đòn đơn gây hiệu ứng Đánh Dấu:**<br>Tỷ lệ: `[40, 50, 60, 70, 80, 90]%` |
 | **Cửu Hằng Trượng**<br>`Ninefold_Staff` | **Rare (SR)** | `Mage` | **Đường Tam Tạng** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Chính Xác (EHR):**<br>`[10, 15, 20, 25, 31, 34]%` | **Bắt đầu hiệp tự xóa 1 debuff:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
 | **Cân Đẩu Vân**<br>`Nimbus_Cloud` | **Rare (SR)** | `Mage` | **Tôn Ngộ Không / Mage** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | *Không có* | **Bị đánh AOE tăng Điểm Hành Động:**<br>`[10, 15, 20, 25, 30, 40]%` Action Point |

@@ -43,6 +43,8 @@ public static class SkillDataFactory
             case Skill.MoonBlade: return new MoonBladeData();
 
             case Skill.FrozenBall: return new FrozenBallData();
+
+            case Skill.NezhaExecution: return new NezhaExecutionData();
         }
 
         return null;

@@ -77,6 +77,10 @@ public class CombatText : IInitializable, IDisposable
         {
             clone.TMP.color = new Color(1f, 0.85f, 0.2f); // Vàng kim rực rỡ
         }
+        else if (text.Contains("Càn Quét") || text.Contains("Sweep"))
+        {
+            clone.TMP.color = new Color(1f, 0.55f, 0.1f); // Vàng cam phong hỏa
+        }
         else if (text.Contains("Choáng") || text.Contains("Stun") || text.Contains("Băng") || text.Contains("Frozen"))
         {
             clone.TMP.color = new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết

@@ -1617,6 +1617,10 @@ public static class LocKeys
 
     public const long LIJING_U_DES = 1426498449;
 
+    public const long STR_NEZHA_ULT_PASSIVE = 3606654452;
+
+    public const long STR_SWEEP_ATTACK = 2311945029;
+
     public const long DEBUFF_DEF_NAME = 651413426;
 
     public const long DEBUFF_DEF_DES = 3959374962;

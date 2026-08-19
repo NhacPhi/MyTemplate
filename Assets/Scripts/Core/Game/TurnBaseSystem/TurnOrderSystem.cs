@@ -57,6 +57,20 @@ public class TurnOrderSystem
         stats.CurrentAV = MAX_AP / speed;
     }
 
+    public void AdvanceAction(Entity entity, float percentAdvance)
+    {
+        if (entity == null) return;
+        var stats = entity.GetComponent<EntityStats>();
+        if (stats == null || stats.IsDead) return;
+
+        var speedStat = stats.GetStat(StatType.SPEED);
+        float speed = (speedStat != null && speedStat.Value > 0) ? speedStat.Value : 100f;
+        float baseAV = MAX_AP / speed;
+
+        stats.CurrentAV -= baseAV * (percentAdvance / 100f);
+        if (stats.CurrentAV < 0) stats.CurrentAV = 0;
+    }
+
     public List<Entity> PredictTurnOrder(int turnsToPredict = 6)
     {
         List<Entity> predictedOrder = new List<Entity>();

@@ -11,6 +11,7 @@ public enum ProjectileState
 public class ProjectileController : MonoBehaviour
 {
     private ProjectileState _state;
+    public ProjectileState State => _state;
     private Entity _caster;
     private IReturningProjectileSkill _skillHandler;
 
