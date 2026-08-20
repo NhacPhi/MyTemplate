@@ -29,7 +29,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterSkillExcute",
+                "event_type": "OnAfterDealDamage",
                 "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     20.0,
@@ -64,7 +64,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterSkillExcute",
+                "event_type": "OnAfterDealDamage",
                 "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
                     30.0,
@@ -158,24 +158,24 @@
                 "stat_type": "HP",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    5.0,
-                    7.5,
                     10.0,
-                    12.5,
-                    16.0,
-                    20.0
+                    14.0,
+                    18.0,
+                    22.0,
+                    26.0,
+                    32.0
                 ]
             },
             {
-                "stat_type": "EHR",
+                "stat_type": "DEF",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    5.0,
-                    7.5,
                     10.0,
-                    12.5,
-                    16.0,
-                    20.0
+                    14.0,
+                    18.0,
+                    22.0,
+                    26.0,
+                    32.0
                 ]
             }
         ],
@@ -192,8 +192,8 @@
                     10.0
                 ],
                 "target": "self",
-                "condition_filter": "SingleTarget",
-                "effect_param": 6.0,
+                "condition_filter": "",
+                "effect_param": 5.0,
                 "internal_cooldown": 0
             }
         ]

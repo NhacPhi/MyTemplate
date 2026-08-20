@@ -1445,6 +1445,8 @@ public static class LocKeys
 
     public const long STR_FERROUS_CHAOS_SKILL = 2047482786;
 
+    public const long STR_COOLDOWN_REDUCED = 2448984470;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;

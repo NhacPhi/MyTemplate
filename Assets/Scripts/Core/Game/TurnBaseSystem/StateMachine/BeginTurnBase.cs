@@ -42,7 +42,7 @@ public class BeginTurnBase : BattleBaseState
             {
                 // Hiển thị chữ mất lượt địa phương hóa lên đầu nhân vật
                 string skipText = LocalizationManager.Instance.GetLocalizedValue("STR_SKIP_TURN");
-                UIEvent.TextPopup?.Invoke(skipText, battleManager.CurrentCaster.transform.position);
+                UIEvent.TextPopup?.Invoke(skipText, battleManager.CurrentCaster.transform.position, new Color(0.4f, 0.9f, 1f));
 
                 battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
                 return;

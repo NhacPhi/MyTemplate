@@ -39,6 +39,13 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
    - **Hệ số ST:** `[180%, 200%, 220%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
    - **Nội tại (`psv_sunwukong_ultiamte`):** Đòn đánh có khả năng **Phá Giáp (DEF Shred) mục tiêu `[15%, 20%, 25%]`**.
 
+#### 🪓 Vũ Khí Trấn Phái: GẬY NHƯ Ý (`Nimbus_Cudgel`)
+* **Phẩm chất:** `Legendary (UR)` | **Hệ:** `Fighter`
+* **Chỉ số cơ bản:** **HP:** `1,650` (+`165`/cấp) | **ATK:** `450` (+`45`/cấp)
+* **Nội tại Trấn Phái (`psv_nimbus_cudgel`):**
+  - **Chỉ số tĩnh:** Tăng **`[10%, 15%, 20%, 25%, 30%, 35%]` ATK** và **DEF**.
+  - **Hiệu ứng Chiến Đấu (`Eff_Action_Point_Boost`):** Sau khi tung đòn tấn công đơn mục tiêu **đánh bại kẻ địch (`SingleTarget, TargetDead`)**, Điểm Hành Động (Action Point) của bản thân **tăng ngay `[20%, 25%, 30%, 35%, 40%, 50%]`** để lập tức có thêm lượt đi càn quét tiếp theo!
+
 ---
 
 ### 👁️ 2. DƯƠNG TIỄN (ErlangShen - Nhị Lang Thần)
@@ -60,6 +67,13 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
    - **Loại:** `MoonBladeSkill` | **Mục tiêu:** `SingleEnemy` (Chuyển mục tiêu nếu kẻ địch chết)
    - **Cơ chế:** Tung liên tiếp **3 nhát chém**. Mỗi nhát gây **`[50%, 60%, 70%]`** ATK (Tổng $150\% \to 210\%$ ATK).
    - **Hiệu ứng đặc biệt:** Kỹ năng có sẵn **`30% Xuyên Giáp (Penetration)`**. Nếu mục tiêu chết trước khi hết 3 hit, các nhát chém còn lại tự động bay sang kẻ địch kế bên. Hồi chiêu: `[5, 5, 4]` lượt.
+
+#### 🪓 Vũ Khí Trấn Phái: TAM TIÊM LƯỠNG NHẬN ĐAO (`Triple_Edged_Blade`)
+* **Phẩm chất:** `Legendary (UR)` | **Hệ:** `Fighter`
+* **Chỉ số cơ bản:** **HP:** `1,650` (+`165`/cấp) | **ATK:** `450` (+`45`/cấp)
+* **Nội tại Trấn Phái (`psv_triple_edged_blade`):**
+  - **Chỉ số tĩnh:** Tăng **`[30%, 36%, 42%, 48%, 54%, 60%]` Sát Thương Bạo Kích (CRIT_DMG)**.
+  - **Hiệu ứng Chiến Đấu (`Eff_Reduce_Cooldown`):** Sau khi thi triển kỹ năng đơn mục tiêu **đánh bại kẻ địch (`IsSkill, SingleTarget, TargetDead`)**, có **`[30%, 40%, 50%, 60%, 70%, 80%]` xác suất** lập tức **giảm 1 lượt hồi chiêu (`-1 CD`)** cho toàn bộ kỹ năng của bản thân!
 
 ---
 
@@ -155,14 +169,30 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 ---
 
 ### 🐷 8. TRƯ BÁT GIỚI (ZhuBaJie)
-* **Phẩm chất:** `SR` | **Hệ/Vai trò:** `Tanker` (Hồi Máu Sinh Tồn & Cào Phá Giáp)
+* **Phẩm chất:** `SR` *(Boss: `MarshalTianpeng` SSR)* | **Hệ/Vai trò:** `Tanker / Bruiser` (Đấu Sĩ Chống Chịu - Thủy Giáp & Phá Giáp Trảm)
 * **Vũ khí đặc trưng:** **Cửu Xỉ Đinh Ba (`Nine_ToolThed_Rake`)**
 * **Chỉ số cơ bản:** **HP:** `5,800` | **ATK:** `1,096` | **DEF:** `457` | **Speed:** `79`
 
 #### 🗡️ Bộ Kỹ Năng:
-1. **Đánh Thường (`ZhuBaJie_B` - Cào Cửu Xỉ):** Gây `[80%, 100%, 120%]` ATK.
-2. **Kỹ Năng Major (`ZhuBaJie_M` - Ăn Uống Dưỡng Sức):** Tự ăn đùi gà hồi `[10%, 15%, 15%]` HP tối đa.
-3. **Tuyệt Kỹ Ultimate (`ZhuBaJie_U` - Thiên Bồng Giáng Thế):** Vung đinh ba đập mạnh gây `[150%, 180%, 180%]` ATK.
+1. **Đánh Thường (`ZhuBaJie_B` - Cửu Xỉ Thần Bát):**
+   - **Loại:** `MeleeAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
+2. **Kỹ Năng Major (`ZhuBaJie_M` - Thiên Bồng Giáp Trận):**
+   - **Loại:** `BuffShield` (`NonAttackSkill`) | **Mục tiêu:** `Self`
+   - **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Hiệu ứng:** Vận linh lực tạo cho bản thân một lớp Giáp Ảo hấp thụ sát thương bằng **`[25%, 30%, 35%]` HP Tối Đa** của Bát Giới trong 2 hiệp.
+3. **Tuyệt Kỹ Ultimate (`ZhuBaJie_U` - Thần Thể Biến Hóa):**
+   - **Loại:** `EmpoweredAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **Hệ số ST:** `[140%, 160%, 180%]` ATK.
+   - **Hiệu ứng đặc biệt (`EFF_Zhu_DefShred`):** Dốc toàn lực giáng một đòn trời giáng xuống mục tiêu, đồng thời khiến đối phương rơi vào trạng thái **[Suy Yếu]**, **giảm `20%` Phòng Thủ (`DEF`) trong `2 hiệp`**.
+
+#### 🪓 Vũ Khí Trấn Phái: CỬU XỈ ĐINH BA (`Nine_ToolThed_Rake`)
+* **Phẩm chất:** `Legendary (UR)` | **Hệ:** `Tanker`
+* **Chỉ số cơ bản:** **HP:** `2,000` (+`200`/cấp) | **ATK:** `100` (+`10`/cấp)
+* **Nội tại Trấn Phái (`psv_nine_toothed_rake` - Thượng Bảo Kim Thân):**
+  - **Chỉ số tĩnh:** Tăng **`[10%, 14%, 18%, 22%, 26%, 32%]` HP** và **DEF**.
+  - **Hiệu ứng Chiến Đấu (`Eff_Stackable_DEF_Buff`):** Mỗi khi chịu sát thương, Phòng Thủ (DEF) tăng thêm **`[4%, 5%, 6%, 7%, 8%, 10%]`**, tối đa cộng dồn **5 tầng** *(Tối đa $+50\%$ DEF)*. Khi đạt đủ 5 tầng, lập tức **hồi phục `10% HP Tối Đa`**.
 
 ---
 

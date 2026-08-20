@@ -196,7 +196,7 @@ public class StatsController : CoreComponent, IEffectable
             if (clone.Data != null)
             {
                 string effectName = LocalizationManager.Instance.GetLocalizedValue(clone.Data.Name);
-                UIEvent.TextPopup?.Invoke(effectName, this.transform.position);
+                UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(clone.Data));
             }
             return;
         }
@@ -227,7 +227,26 @@ public class StatsController : CoreComponent, IEffectable
         if (existEffect.Data != null)
         {
             string effectName = LocalizationManager.Instance.GetLocalizedValue(existEffect.Data.Name);
-            UIEvent.TextPopup?.Invoke(effectName, this.transform.position);
+            UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(existEffect.Data));
+        }
+    }
+
+    private Color GetEffectTextColor(EffectConfig data)
+    {
+        if (data == null) return new Color(0.35f, 0.85f, 1f);
+        switch (data.Type)
+        {
+            case EffectType.Poison:
+                return new Color(0.6f, 1f, 0.35f); // Xanh ngọc độc
+            case EffectType.Stun:
+            case EffectType.Frozen:
+                return new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết
+            case EffectType.StatDebuff:
+                return new Color(0.95f, 0.35f, 0.35f); // Đỏ cam suy yếu / giảm chỉ số
+            case EffectType.StatBuff:
+                return new Color(0.35f, 0.95f, 0.45f); // Xanh lá buff
+            default:
+                return data.IsBuff() ? new Color(0.35f, 0.95f, 0.45f) : new Color(0.95f, 0.35f, 0.35f);
         }
     }
     public void RemoveEffect(StatusEffect effect, bool ignoreStack)

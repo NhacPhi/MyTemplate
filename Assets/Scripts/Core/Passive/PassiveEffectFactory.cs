@@ -24,7 +24,9 @@ public static class PassiveEffectFactory
         { "Eff_HPScalingDamage", new HPScalingDamageEffectHandler() },
         { "Eff_ArmorPenetration", new ArmorPenetrationEffectHandler() },
         { "Eff_CounterAttack", new CounterAttackEffectHandler() },
-        { "Eff_Action_Point_Boost", new ActionAdvanceEffectHandler() }
+        { "Eff_Action_Point_Boost", new ActionAdvanceEffectHandler() },
+        { "Eff_Stackable_DEF_Buff", new StackableDefEffectHandler() },
+        { "Eff_Reduce_Cooldown", new CooldownReductionEffectHandler() }
     };
 
     public static void ExecuteEffect(string effectId, Entity target, float effectValue, CombatContext context)

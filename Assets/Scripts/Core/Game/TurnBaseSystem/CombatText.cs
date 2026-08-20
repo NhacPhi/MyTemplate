@@ -64,7 +64,7 @@ public class CombatText : IInitializable, IDisposable
         if (jump != null) jump.PlayAnimation(false);
     }
 
-    public void CreateTextPopup(string text, Vector3 position)
+    public void CreateTextPopup(string text, Vector3 position, Color? color = null)
     {
         if (popupPrefab == null) return;
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
@@ -72,33 +72,13 @@ public class CombatText : IInitializable, IDisposable
         clone.SetText(text);
         clone.SetCritical(false);
 
-        // Đặt màu sắc nổi bật, sang trọng theo ngữ cảnh
-        if (text.Contains("Phản Kích") || text.Contains("Counter"))
-        {
-            clone.TMP.color = new Color(1f, 0.85f, 0.2f); // Vàng kim rực rỡ
-        }
-        else if (text.Contains("Càn Quét") || text.Contains("Sweep"))
-        {
-            clone.TMP.color = new Color(1f, 0.55f, 0.1f); // Vàng cam phong hỏa
-        }
-        else if (text.Contains("Choáng") || text.Contains("Stun") || text.Contains("Băng") || text.Contains("Frozen"))
-        {
-            clone.TMP.color = new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết
-        }
-        else if (text.Contains("Độc") || text.Contains("Poison"))
-        {
-            clone.TMP.color = new Color(0.6f, 1f, 0.35f); // Xanh ngọc độc
-        }
-        else
-        {
-            clone.TMP.color = new Color(0.35f, 0.85f, 1f); // Xanh Cyan tinh tế
-        }
+        // Áp dụng màu trực tiếp từ nguồn gọi (EffectType, Skill, v.v.), mặc định là màu Xanh Cyan
+        clone.TMP.color = color ?? new Color(0.35f, 0.85f, 1f);
 
         var jump = clone.GetComponent<NumberJumpAnimation>();
         if (jump != null)
         {
-            // Scale nhỏ lại (0.6f) để chữ không bị quá to như số sát thương, thời lượng 0.95s mượt mà
-            jump.PlayTextAnimation(scaleMultiplier: 0.8f, totalDuration: 0.5f);
+            jump.PlayTextAnimation(scaleMultiplier: 0.8f, totalDuration: 1f);
         }
     }
     public void Dispose()

@@ -66,7 +66,7 @@ public class NezhaExecutionSkill : SkillRuntime, IAttackSkill
                     ? LocalizationManager.Instance.GetLocalizedValue("STR_SWEEP_ATTACK") 
                     : "Càn Quét";
 
-                UIEvent.TextPopup?.Invoke(sweepText, caster.transform.position + Vector3.up * 1.5f);
+                UIEvent.TextPopup?.Invoke(sweepText, caster.transform.position + Vector3.up * 1.5f, new Color(1f, 0.55f, 0.1f));
 
                 await UniTask.Delay(150, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 

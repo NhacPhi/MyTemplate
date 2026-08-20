@@ -87,7 +87,7 @@ public static class UIEvent
     // TextPopup
     public static Action<float, Vector3, bool> DamagePopup;
     public static Action<float, Vector3> HealPopup;
-    public static Action<string, Vector3> TextPopup;
+    public static Action<string, Vector3, Color?> TextPopup;
 
     // Battle
     public static Action<SkillCharacter> OnChooseSkillCharacter;

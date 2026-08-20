@@ -167,6 +167,23 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
         }
     }
 
+    public void ReduceAllCooldowns(int amount = 1)
+    {
+        foreach (var runtime in Skills.Values)
+        {
+            runtime.ReduceCooldown(amount);
+        }
+    }
+
+    public void ReduceCooldown(SkillCharacter type, int amount = 1)
+    {
+        var skill = GetSkill(type);
+        if (skill != null)
+        {
+            skill.ReduceCooldown(amount);
+        }
+    }
+
     public SkillRuntime GetSkill(SkillCharacter type)
     {
         if (Skills.TryGetValue(type, out SkillRuntime runtime))

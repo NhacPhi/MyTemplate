@@ -50,7 +50,7 @@ public class CounterAttackEffectHandler : IEffectHandler
                 // Hiển thị chữ [Phản Kích] trên đầu nhân vật phản đòn
                 string counterText = LocalizationManager.Instance.GetLocalizedValue("STR_COUNTER_ATTACK");
 
-                UIEvent.TextPopup?.Invoke(counterText, source.transform.position + Vector3.up * 1.5f);
+                UIEvent.TextPopup?.Invoke(counterText, source.transform.position + Vector3.up * 1.5f, new Color(1f, 0.85f, 0.2f));
 
                 var stateData = source.GetCoreComponent<EntityStateData>();
                 if (stateData != null && source.StateManager != null)

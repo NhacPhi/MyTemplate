@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class TurnOrderSystem 
 {
@@ -54,7 +56,17 @@ public class TurnOrderSystem
         if (stats == null) return;
         var speedStat = stats.GetStat(StatType.SPEED);
         float speed = (speedStat != null && speedStat.Value > 0) ? speedStat.Value : 100f;
-        stats.CurrentAV = MAX_AP / speed;
+        float baseAV = MAX_AP / speed;
+
+        // Nếu trong lượt vừa rồi entity được nhận AdvanceAction (CurrentAV < 0), ta trừ phần được kéo vào BaseAV của vòng mới
+        if (stats.CurrentAV < 0)
+        {
+            stats.CurrentAV = Mathf.Max(0, baseAV + stats.CurrentAV);
+        }
+        else
+        {
+            stats.CurrentAV = baseAV;
+        }
     }
 
     public void AdvanceAction(Entity entity, float percentAdvance)
@@ -67,8 +79,8 @@ public class TurnOrderSystem
         float speed = (speedStat != null && speedStat.Value > 0) ? speedStat.Value : 100f;
         float baseAV = MAX_AP / speed;
 
+        // Giảm CurrentAV tương ứng với số % BaseAV được kéo
         stats.CurrentAV -= baseAV * (percentAdvance / 100f);
-        if (stats.CurrentAV < 0) stats.CurrentAV = 0;
     }
 
     public List<Entity> PredictTurnOrder(int turnsToPredict = 6)

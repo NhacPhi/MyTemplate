@@ -40,6 +40,11 @@ public abstract class SkillRuntime
         }
     }
 
+    public void ReduceCooldown(int amount = 1)
+    {
+        CurrentCooldown = Math.Max(0, CurrentCooldown - amount);
+    }
+
     public virtual DamageBonus CalculateRawDamage()
     {
         var bonus = new DamageBonus()
