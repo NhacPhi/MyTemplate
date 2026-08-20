@@ -197,9 +197,23 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 ---
 
 ### 🌊 9. SA NGỘ TĨNH (ShaWujing)
-* **Phẩm chất:** `SR` | **Hệ/Vai trò:** `Tanker / Support` (Lưu Sa Hộ Thể)
-* **Vũ khí đặc trưng:** **Xẻng Tứ Minh (`Sunburst_Spade`)**
+* **Phẩm chất:** `SR` | **Hệ/Vai trò:** `Tanker / Support` (Đấu Sĩ Hỗ Trợ - Tự Phục Hồi & Lưu Sa Giảm Tốc)
+* **Vũ khí đặc trưng:** **Hàng Yêu Bảo Trượng (`Demon_Subduing_Staff`)** / **Xẻng Tứ Minh (`Sunburst_Spade`)**
 * **Chỉ số cơ bản:** **HP:** `5,800` | **ATK:** `1,096` | **DEF:** `457` | **Speed:** `79`
+
+#### 🗡️ Bộ Kỹ Năng:
+1. **Đánh Thường (`ShaWujing_B` - Bảo Trượng Trảm):**
+   - **Loại:** `MeleeAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
+2. **Kỹ Năng Major (`ShaWujing_M` - Lưu Cát Linh Dược):**
+   - **Loại:** `Healing` (`NonAttackSkill`) | **Mục tiêu:** `Self`
+   - **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Cơ chế Hồi Phục & Phòng Thủ:** Lập tức hồi phục lượng Máu tương đương **`[100%, 150%, 150%]` ATK** cho bản thân, đồng thời **tăng `20%` Phòng Thủ (`EFF_BufDEF_def`) trong `2 hiệp`**.
+3. **Tuyệt Kỹ Ultimate (`ShaWujing_U` - Lưu Cát Trầm Luân):**
+   - **Loại:** `EmpoweredAttack` (`ActiveSkill`) | **Mục tiêu:** `SingleEnemy`
+   - **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **Hệ số ST:** `[150%, 180%, 180%]` ATK.
+   - **Hiệu ứng đặc biệt (`EFF_DefSpd_def`):** Xoay mạnh Huyền Trượng rồi giáng một đòn cực uy lực xuống mục tiêu, đồng thời khiến kẻ địch rơi vào trạng thái **[Cát Lún] - Giảm `20%` Tốc Độ (`SPEED`) trong `2 hiệp`**.
 
 ---
 

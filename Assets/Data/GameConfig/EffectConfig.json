@@ -34,10 +34,10 @@
         "des_hash": 2257527410,
         "type": "StatBuff",
         "target_stat": "DEF",
-        "modify_type": "Flat",
+        "modify_type": "Percent",
         "duration": 2,
         "max_stack": 1,
-        "value": 200
+        "value": 20
     },
     "EFF_BufSpd_def": {
         "name_hash": 4234704328,
@@ -108,5 +108,15 @@
         "duration": 2,
         "max_stack": 1,
         "value": -20
+    },
+    "EFF_Sha_Buff_DEF": {
+        "name_hash": 209041975,
+        "des_hash": 2257527410,
+        "type": "StatBuff",
+        "target_stat": "DEF",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": 25
     }
 }
