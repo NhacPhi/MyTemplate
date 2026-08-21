@@ -125,20 +125,20 @@
                 "id": "TangSanZang_M",
                 "name_hash": 1803905392,
                 "des_hash": 1806441278,
-                "skill": "BuffShield",
+                "skill": "StatModifier",
                 "skill_type": "NonAttackSkill",
-                "target_type": "Self",
+                "target_type": "SameRowAllies",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.0,
+                    0.0,
+                    0.0
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_Tang_Buff_ATK",
                 "sound": "TangSanZang_Major",
                 "passive_id": ""
             },
@@ -618,7 +618,7 @@
                     4,
                     3
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_Dragon_Speed",
                 "sound": "LittleWhiteDragon_Major",
                 "passive_id": ""
             },

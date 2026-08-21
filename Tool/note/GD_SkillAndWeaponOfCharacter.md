@@ -218,16 +218,44 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 ---
 
 ### 📜 10. ĐƯỜNG TAM TẠNG (TangSanZang)
-* **Phẩm chất:** `R` | **Hệ/Vai trò:** `Mage / Support` (Khắc Chế Yêu Quái & Hồi Máu)
+* **Phẩm chất:** `R` | **Hệ/Vai trò:** `Mage / Support` (Pháp Sư Hỗ Trợ - Buff Công Hàng & Khống Chế Choáng)
 * **Vũ khí đặc trưng:** **Cửu Hằng Trượng (`Ninefold_Staff`)**
 * **Chỉ số cơ bản:** **HP:** `3,830` | **ATK:** `1,532` | **DEF:** `306` | **Speed:** `96`
 
+#### 🗡️ Bộ Kỹ Năng:
+1. **Đánh Thường (`TangSanZang_B` - Tích Trượng Kim Quang):**
+   - **Loại:** `Range` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
+2. **Kỹ Năng Major (`TangSanZang_M` - Kinh Mạn Kim Quang):**
+   - **Loại:** `StatModifier` (`NonAttackSkill`) | **Mục tiêu:** `SameRowAllies` (Đồng minh cùng hàng)
+   - **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Cơ chế Buff Hàng:** Ngưng tụ màn kinh thư vàng bao bọc đồng đội, tăng **`20%` Tấn Công (`ATK`)** cho **toàn bộ đồng minh cùng hàng** trong **`2 hiệp` (`EFF_Tang_Buff_ATK`)**.
+3. **Tuyệt Kỹ Ultimate (`TangSanZang_U` - Kính Bát Trấn Ma):**
+   - **Loại:** `EmpowerAttack` (`ActiveSkill`) | **Mục tiêu:** `SingleEnemy`
+   - **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **Hệ số ST:** `[150%, 180%, 180%]` ATK.
+   - **Hiệu ứng đặc biệt (`EFF_Stun_def`):** Áp sát đưa Bát Vàng ra phóng chiếu hào quang Phật pháp chói lọi, khiến mục tiêu rơi vào trạng thái **`[Choáng (Stun)]` trong `1 hiệp`**.
+
 ---
 
-### 🐉 11. BẠCH LONG MÃ (LittleWhiteDragon)
-* **Phẩm chất:** `R` | **Hệ/Vai trò:** `ADCarry` (Tầm Xa Bắn Tỉa)
-* **Vũ khí đặc trưng:** **Xiên Chín Đầu (`Ennead_spear`)**
+### 🐉 11. BẠCH LONG MÃ / TIỂU BẠCH LONG (LittleWhiteDragon)
+* **Phẩm chất:** `R` | **Hệ/Vai trò:** `ADCarry` (Sát Thương Chủ Lực Tốc Độ - Diệt Giáp Ảo & Xuyên Giáp)
+* **Vũ khí đặc trưng:** **Võng Sinh (`Reincarnation`)** / **Xiên Chín Đầu (`Ennead_spear`)**
 * **Chỉ số cơ bản:** **HP:** `3,830` | **ATK:** `1,532` | **DEF:** `306` | **Speed:** `96`
+
+#### 🗡️ Bộ Kỹ Năng:
+1. **Đánh Thường (`LittleWhiteDragon_B` - Bạch Long Kiếm Trảm):**
+   - **Loại:** `MeleeAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
+   - **Nội tại:** Đòn đánh tự nhiên sở hữu **`30% Xuyên Giáp (Armor Penetration)`**, bỏ qua 30% Phòng Thủ của mục tiêu.
+2. **Kỹ Năng Major (`LittleWhiteDragon_M` - Càn Lôi Truy Phong):**
+   - **Loại:** `ThunderBall` (`ActiveSkill` - Vừa tấn công vừa buff tốc) | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[100%, 150%, 150%]` ATK | **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Cơ chế Buff Tốc:** Phóng cầu sét lôi long tấn công kẻ địch, đồng thời bản thân lập tức nhận trạng thái **[Truy Phong] - Tăng `30%` Tốc Độ (`SPEED`) trong `2 hiệp` (`EFF_Dragon_Speed`)**.
+3. **Tuyệt Kỹ Ultimate (`LittleWhiteDragon_U` - Hải Sóng Nộ Trào):**
+   - **Loại:** `EmpowerAttack` (`ActiveSkill`) | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[150%, 180%, 180%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **CƠ CHẾ DIỆT GIÁP ẢO (`ShieldBreaker`):** Nếu mục tiêu **ĐANG CÓ GIÁP ẢO (`Shield > 0`)**, sát thương gây ra được **NHÂN ĐÔI ($\times 200\% \rightarrow \mathbf{360\%}$ ATK)**!
 
 ---
 
@@ -241,15 +269,13 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 | **Phù Loan**<br>`Wings_of_Phoenix` | **Legendary (UR)** | `Support` | **Quan Âm Bồ Tát** | HP: `1750`<br>ATK: `150` | +175 HP<br>+15 ATK | **+% Kháng Hiệu Ứng (RES):**<br>`[10, 15, 20, 25, 34, 41]%` | **Bị tấn công tự động xóa 2 debuff:**<br>Tỷ lệ: `[40, 50, 60, 70, 80, 90]%` |
 | **Quạt Quế Phách**<br>`Moonlit_Firelfy` | **Legendary (UR)** | `Mage` | **Pháp Sư UR** | HP: `1125`<br>ATK: `275` | +113 HP<br>+28 ATK | **+% ATK & +% DEF:**<br>`[5, 7.5, 10, 12.5, 17, 24]%` | **Dùng chiêu buff -> Giảm 1 CD:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
 | **Cửu Xỉ Đinh Ba**<br>`Nine_ToolThed_Rake` | **Legendary (UR)** | `Tanker` | **Trư Bát Giới** | HP: `2000`<br>ATK: `100` | +200 HP<br>+10 ATK | **+% HP & +% Chính Xác:**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | **Chịu đòn đơn tăng DEF dồn 6 tầng:**<br>`[4, 5, 6, 7, 8, 10]%` DEF/tầng |
-| **Võng Sinh**<br>`Reincarnation` | **Epic (SSR)** | `Assassin` | **Hồng Hài Nhi** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Tấn Công (ATK):**<br>`[10, 15, 20, 25, 35, 40]%` | **Đánh đơn gây hiệu ứng Xé Toạc:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
-| **Phong Hỏa Luân**<br>`Windfire_Wheel` | **Epic (SSR)** | `Assassin` | **Tam Thái Tử Na Tra** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Sát Thương Bạo Kích & +% Tấn Công:**<br>`[8, 10, 12, 14, 17, 20]%` | **Khi gây ST Bạo Kích tăng Điểm Hành Động:**<br>`[10, 12, 14, 16, 18, 20]%` Action Point |
-| **Quạt Ba Tiêu**<br>`Plantain_Fan` | **Epic (SSR)** | `Mage` | **Ngưu Ma Vương** | HP: `742`<br>ATK: `182` | +74 HP<br>+18 ATK | **+% Chính Xác (EHR):**<br>`[10, 15, 20, 25, 34, 40]%` | **Đòn đơn gây hiệu ứng Đánh Dấu:**<br>Tỷ lệ: `[40, 50, 60, 70, 80, 90]%` |
-| **Cửu Hằng Trượng**<br>`Ninefold_Staff` | **Rare (SR)** | `Mage` | **Đường Tam Tạng** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Chính Xác (EHR):**<br>`[10, 15, 20, 25, 31, 34]%` | **Bắt đầu hiệp tự xóa 1 debuff:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
+| **Võng Sinh**<br>`Reincarnation` | **Epic (SSR)** | `ADCarry` | **Tiểu Bạch Long / Tân Thủ** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Tấn Công (ATK):**<br>`[8, 11, 14, 17, 20, 25]%` | **Đòn tấn công đơn mục tiêu tăng ST:**<br>`[10, 13, 16, 19, 22, 25]%` Sát Thương |
+| **Cửu Hằng Trượng**<br>`Ninefold_Staff` | **Rare (SR)** | `Support` | **Đường Tam Tạng** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Tốc Độ (Speed):**<br>`[6, 8, 10, 12, 15, 20]%` | **Tăng hiệu quả Kỹ Năng Cường Hóa/Buff:**<br>Tăng thêm `[30, 35, 40, 45, 50, 60]%` hiệu quả |
 | **Cân Đẩu Vân**<br>`Nimbus_Cloud` | **Rare (SR)** | `Mage` | **Tôn Ngộ Không / Mage** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | *Không có* | **Bị đánh AOE tăng Điểm Hành Động:**<br>`[10, 15, 20, 25, 30, 40]%` Action Point |
-| **Trùy Đồng**<br>`Bronze_Hammer` | **Uncommon (R)** | `Tanker` | **Lý Thiên Vương** | HP: `600`<br>ATK: `30` | +60 HP<br>+3 ATK | **+% Tốc Độ (Speed):**<br>`[5, 7.5, 10, 12.5, 17, 22]%` | *Không có* |
-| **Xiên Chín Đầu**<br>`Ennead_spear` | **Uncommon (R)** | `Normal` | **Bạch Long Mã** | HP: `450`<br>ATK: `60` | +45 HP<br>+6 ATK | **+% Tỷ Lệ Bạo Kích:**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
+| **Trùy Đồng**<br>`Bronze_Hammer` | **Uncommon (R)** | `Tanker` | **Tướng Chống Chịu Đầu Game** | HP: `600`<br>ATK: `30` | +60 HP<br>+3 ATK | **+% Phòng Thủ (DEF):**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
+| **Xiên Chín Đầu**<br>`Ennead_spear` | **Uncommon (R)** | `Normal` | **Tướng Sát Thương Đầu Game** | HP: `450`<br>ATK: `60` | +45 HP<br>+6 ATK | **+% Tỷ Lệ Bạo Kích (CRIT_RATE):**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
 | **Hỗn Độn Thiết**<br>`Ferrous_Chaos` | **Legendary (UR)** | `Fighter` | **Đấu Sĩ UR** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% ATK & +% DEF:**<br>`[10, 15, 20, 25, 30, 35]%` | **Áp Đảo (HP > 50%):** Tăng 16% ST Kỹ Năng<br>**Huyết Chiến (HP ≤ 50%):** Nhận 16% Hút Máu |
-| **Xẻng Tứ Minh**<br>`Sunburst_Spade` | **Common (Normal)** | `Normal` | **Sa Ngộ Tĩnh** | HP: `300`<br>ATK: `40` | +30 HP<br>+4 ATK | *Không có* | **Tăng ST Đòn Đánh Đơn:**<br>`[10, 15, 20, 25, 30, 40]%` |
+| **Xẻng Tứ Minh**<br>`Sunburst_Spade` | **Common (Normal)** | `Normal` | **Vũ Khí Khởi Đầu Tân Thủ** | HP: `300`<br>ATK: `40` | +30 HP<br>+4 ATK | **+% Tấn Công (ATK):**<br>`[5, 7.5, 10, 12.5, 15, 20]%` | *Không có* |
 
 ---
 

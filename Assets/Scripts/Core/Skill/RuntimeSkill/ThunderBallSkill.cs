@@ -59,6 +59,17 @@ public class ThunderBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, I
 
         await _skillEnd.Task;
 
+        // Tự động nhận trạng thái buff tốc (như [Truy Phong] +30% Speed) cho bản thân Caster
+        if (skillData.Effect != null)
+        {
+            var casterStats = caster.GetCoreComponent<StatsController>();
+            if (casterStats != null)
+            {
+                StatusEffect speedBuff = EffectFactory.CreateEffect(skillData.ID, skillData.Effect, casterStats);
+                casterStats.ApplyEffect(speedBuff, 0);
+            }
+        }
+
         await UniTask.Delay(500, cancellationToken: caster.transform.GetCancellationTokenOnDestroy());
 
         PutOnCooldown();

@@ -120,33 +120,33 @@
         "desc_template_hash": 4283687564,
         "static_modifiers": [
             {
-                "stat_type": "EHR",
+                "stat_type": "SPEED",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
+                    6.0,
+                    8.0,
                     10.0,
+                    12.0,
                     15.0,
-                    20.0,
-                    25.0,
-                    31.0,
-                    34.0
+                    20.0
                 ]
             }
         ],
         "combat_events": [
             {
                 "event_type": "OnSkillStart",
-                "effect_id": "Eff_Cleanse",
+                "effect_id": "Eff_Buff_Enhance",
                 "modify_by_upgrade": [
                     30.0,
+                    35.0,
                     40.0,
+                    45.0,
                     50.0,
-                    60.0,
-                    70.0,
-                    80.0
+                    60.0
                 ],
                 "target": "self",
-                "condition_filter": "HasDebuff",
-                "effect_param": 1.0,
+                "condition_filter": "",
+                "effect_param": 0.0,
                 "internal_cooldown": 0
             }
         ]
@@ -222,25 +222,21 @@
     },
     "psv_sunburst_spade": {
         "desc_template_hash": 1948169639,
-        "static_modifiers": [],
-        "combat_events": [
+        "static_modifiers": [
             {
-                "event_type": "OnBeforeDealDamage",
-                "effect_id": "Eff_IncreaseAttack",
+                "stat_type": "ATK",
+                "modify_type": "Percent",
                 "modify_by_upgrade": [
+                    5.0,
+                    7.5,
                     10.0,
+                    12.5,
                     15.0,
-                    20.0,
-                    25.0,
-                    30.0,
-                    40.0
-                ],
-                "target": "self",
-                "condition_filter": "SingleTarget",
-                "effect_param": 0.0,
-                "internal_cooldown": 0
+                    20.0
+                ]
             }
-        ]
+        ],
+        "combat_events": []
     },
     "psv_reincarnation": {
         "desc_template_hash": 804519622,
@@ -249,30 +245,30 @@
                 "stat_type": "ATK",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    10.0,
-                    15.0,
+                    8.0,
+                    11.0,
+                    14.0,
+                    17.0,
                     20.0,
-                    25.0,
-                    35.0,
-                    40.0
+                    25.0
                 ]
             }
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterTakeDamage",
-                "effect_id": "Eff_Lacerate_Debuff",
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_IncreaseAttack",
                 "modify_by_upgrade": [
-                    30.0,
-                    40.0,
-                    50.0,
-                    60.0,
-                    70.0,
-                    80.0
+                    10.0,
+                    13.0,
+                    16.0,
+                    19.0,
+                    22.0,
+                    25.0
                 ],
-                "target": "enemy",
+                "target": "self",
                 "condition_filter": "SingleTarget",
-                "effect_param": 2.0,
+                "effect_param": 0.0,
                 "internal_cooldown": 0
             }
         ]
@@ -317,15 +313,15 @@
         "desc_template_hash": 820555814,
         "static_modifiers": [
             {
-                "stat_type": "SPEED",
+                "stat_type": "DEF",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
                     5.0,
                     7.5,
                     10.0,
                     12.5,
-                    17.0,
-                    22.0
+                    16.0,
+                    20.0
                 ]
             }
         ],

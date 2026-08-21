@@ -115,6 +115,15 @@ public class PassiveInstance : IDisposable
         PassiveEventListener.EvaluateAndExecute(evtConfig, _level, context);
     }
 
+    public float GetCombatEventValue(int eventIndex = 0)
+    {
+        if (Config == null || Config.CombatEvents == null || Config.CombatEvents.Count <= eventIndex) return 0f;
+        var ce = Config.CombatEvents[eventIndex];
+        if (ce.ModifyByUpgrade == null || ce.ModifyByUpgrade.Count == 0) return ce.EffectParam;
+        int idx = Mathf.Clamp(_level - 1, 0, ce.ModifyByUpgrade.Count - 1);
+        return ce.ModifyByUpgrade[idx];
+    }
+
     // Condition trigger passive event
     // Passive EDA (T-C-T-E Trigger, Condition, Target, Effect)
     // Target (Base: Self, Target, Source Ap dung ke dich gay sat thuong cho minhf)

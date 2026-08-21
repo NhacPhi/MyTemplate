@@ -2,14 +2,14 @@
   "account_info": {
     "player_name": "Congyon",
     "level": 12,
-    "current_exp": 2600,
+    "current_exp": 5000,
     "avatar_icon": "Wukong03_avatar"
   },
   "inventory": {
     "currencies": {
-      "Energy": 190,
-      "Jade": 791400,
-      "Coin": 10072960,
+      "Energy": 160,
+      "Jade": 791800,
+      "Coin": 9342960,
       "RelicEssence": 68012240,
       "ArmorPrimorite": 3660200,
       "Ticket": 296
@@ -21,39 +21,9 @@
         "quantity": 121
       },
       {
-        "id": "supreme_exp",
-        "type": "Exp",
-        "quantity": 127
-      },
-      {
-        "id": "Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Yellow_Jade_Gemstone",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Dragon_Bread_Noodies",
+        "id": "Jade_Parcels",
         "type": "Food",
-        "quantity": 45
-      },
-      {
-        "id": "LiJing",
-        "type": "Shard",
-        "quantity": 30
-      },
-      {
-        "id": "Garnet_Gemstone",
-        "type": "Gemstone",
-        "quantity": 50
-      },
-      {
-        "id": "ThirdPrinceNezha",
-        "type": "Shard",
-        "quantity": 1
+        "quantity": 82
       },
       {
         "id": "BullDemonKing",
@@ -61,14 +31,44 @@
         "quantity": 181
       },
       {
+        "id": "ThirdPrinceNezha",
+        "type": "Shard",
+        "quantity": 1
+      },
+      {
+        "id": "Garnet_Gemstone",
+        "type": "Gemstone",
+        "quantity": 45
+      },
+      {
         "id": "SunWukong",
         "type": "Shard",
         "quantity": 192
       },
       {
-        "id": "Jade_Parcels",
+        "id": "Dragon_Bread_Noodies",
         "type": "Food",
-        "quantity": 82
+        "quantity": 45
+      },
+      {
+        "id": "Yellow_Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "Jade_Gemstone",
+        "type": "Gemstone",
+        "quantity": 1
+      },
+      {
+        "id": "supreme_exp",
+        "type": "Exp",
+        "quantity": 104
+      },
+      {
+        "id": "LiJing",
+        "type": "Shard",
+        "quantity": 30
       },
       {
         "id": "Garnet_Chunk",
@@ -101,21 +101,6 @@
         "quantity": 200
       },
       {
-        "id": "fine_exp",
-        "type": "Exp",
-        "quantity": 200
-      },
-      {
-        "id": "Jade_Fragment",
-        "type": "Gemstone",
-        "quantity": 1
-      },
-      {
-        "id": "Shirmp_Dumplings",
-        "type": "Food",
-        "quantity": 9
-      },
-      {
         "id": "Garnet_Fragment",
         "type": "Gemstone",
         "quantity": 1
@@ -129,6 +114,21 @@
         "id": "ShaWujing",
         "type": "Shard",
         "quantity": 301
+      },
+      {
+        "id": "Shirmp_Dumplings",
+        "type": "Food",
+        "quantity": 9
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 200
+      },
+      {
+        "id": "Jade_Fragment",
+        "type": "Gemstone",
+        "quantity": 1
       },
       {
         "id": "Tofu_Soup",
@@ -153,17 +153,12 @@
       {
         "id": "common_exp",
         "type": "Exp",
-        "quantity": 290
+        "quantity": 310
       },
       {
         "id": "Jade_Sliver",
         "type": "Gemstone",
         "quantity": 1
-      },
-      {
-        "id": "Meat",
-        "type": "Food",
-        "quantity": 38
       },
       {
         "id": "LittleWhiteDragon",
@@ -189,6 +184,11 @@
         "id": "Slime",
         "type": "Material",
         "quantity": 59
+      },
+      {
+        "id": "Meat",
+        "type": "Food",
+        "quantity": 38
       },
       {
         "id": "Fried_Radish_Balls",
@@ -226,13 +226,6 @@
         "equip": "LiJing"
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884667777f",
-        "template_id": "Ferrous_Chaos",
-        "current_level": 25,
-        "current_updgrade": 1,
-        "equip": "BullDemonKing"
-      },
-      {
         "uuid": "80c4091f-3665-43f2-be0e-c9345eb72319",
         "template_id": "Nimbus_Cudgel",
         "current_level": 25,
@@ -247,6 +240,13 @@
         "equip": ""
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884667744f",
+        "template_id": "Ferrous_Chaos",
+        "current_level": 20,
+        "current_updgrade": 6,
+        "equip": "BullDemonKing"
+      },
+      {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777753f",
         "template_id": "Moonlit_Firelfy",
         "current_level": 3,
@@ -259,6 +259,13 @@
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884666667f",
+        "template_id": "Reincarnation",
+        "current_level": 25,
+        "current_updgrade": 1,
+        "equip": "LittleWhiteDragon"
       },
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777752f",
@@ -282,6 +289,13 @@
         "equip": ""
       },
       {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884776677f",
+        "template_id": "Reincarnation",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
         "uuid": "2be9137b-1598-4756-918e-5358ac56a2ad",
         "template_id": "Plantain_Fan",
         "current_level": 1,
@@ -296,11 +310,11 @@
         "equip": ""
       },
       {
-        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
-        "template_id": "Nimbus_Cloud",
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
+        "template_id": "Ninefold_Staff",
         "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
+        "current_updgrade": 1,
+        "equip": "TangSanZang"
       },
       {
         "uuid": "fb966bf3-bafe-4461-ab59-bcab9ea3bb95",
@@ -310,22 +324,8 @@
         "equip": ""
       },
       {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
-        "template_id": "Ninefold_Staff",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": "TangSanZang"
-      },
-      {
-        "uuid": "487af9cd-fa04-40c2-b30e-5dd5beb584ab",
-        "template_id": "Ennead_spear",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "ca0f3ca8-8f2a-44ef-953f-81af61125998",
-        "template_id": "Bronze_Hammer",
+        "uuid": "dad1f5d9-c7d5-43d7-8c98-6c8cdd91d24c",
+        "template_id": "Nimbus_Cloud",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -333,20 +333,6 @@
       {
         "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
         "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 1,
-        "equip": "LittleWhiteDragon"
-      },
-      {
-        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
-        "template_id": "Ennead_spear",
         "current_level": 1,
         "current_updgrade": 1,
         "equip": ""
@@ -359,10 +345,52 @@
         "equip": ""
       },
       {
+        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
         "uuid": "5cdaff9a-a9a2-4fbb-a8a6-955371674a84",
         "template_id": "Bronze_Hammer",
         "current_level": 1,
         "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "ca0f3ca8-8f2a-44ef-953f-81af61125998",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "b2233dfb-32b9-486b-8ea4-2a0fe9fa19dd",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "f0d055ef-4a34-4cb5-a734-8bf56fa7a4ac",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "487af9cd-fa04-40c2-b30e-5dd5beb584ab",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": ""
+      },
+      {
+        "uuid": "d2bfddeb-ebc8-45e1-a43c-42884777758f",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
         "equip": ""
       },
       {
@@ -380,15 +408,8 @@
         "equip": ""
       },
       {
-        "uuid": "b2233dfb-32b9-486b-8ea4-2a0fe9fa19dd",
-        "template_id": "Bronze_Hammer",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "6e677f70-5b56-4bb8-871b-3656fb91ecad",
-        "template_id": "Bronze_Hammer",
+        "uuid": "fa24cbe1-fbd8-4207-a453-5e52599f9a00",
+        "template_id": "Sunburst_Spade",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -410,13 +431,6 @@
       {
         "uuid": "6ef77ac3-5a49-4a54-853f-6455364f5490",
         "template_id": "Crescent_Axe",
-        "current_level": 1,
-        "current_updgrade": 0,
-        "equip": ""
-      },
-      {
-        "uuid": "fa24cbe1-fbd8-4207-a453-5e52599f9a00",
-        "template_id": "Sunburst_Spade",
         "current_level": 1,
         "current_updgrade": 0,
         "equip": ""
@@ -791,65 +805,15 @@
         "equip": "BullDemonKing"
       },
       {
-        "instance_id": "4f8fed5-d9cb-469f-e565-27867728950e",
-        "template_id": "Armor06_Chestplate",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "PENETRATION",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "DEF",
-        "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-22867728950e",
-        "template_id": "Armor06_Gloves",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "CRIT_DMG",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "CRIT_RATE",
-            "level": 1,
-            "modifier_type": "Percent"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "LiJing"
-      },
-      {
-        "instance_id": "4f8fed5-d9cb-469f-e565-67867728950e",
-        "template_id": "Armor06_Helmet",
+        "instance_id": "4f8fed5-d9cb-469f-e565-72867728950e",
+        "template_id": "Armor06_Boots",
         "level": 1,
         "rare": "Epic",
         "substats": [
           {
             "type": "HP",
             "level": 1,
-            "modifier_type": "Flat"
+            "modifier_type": "Percent"
           },
           {
             "type": "SPEED",
@@ -857,12 +821,12 @@
             "modifier_type": "Flat"
           },
           {
-            "type": "CRIT_DMG_RES",
+            "type": "ATK",
             "level": 1,
-            "modifier_type": "Percent"
+            "modifier_type": "Flat"
           }
         ],
-        "main_stat_type": "HP",
+        "main_stat_type": "SPEED",
         "equip": "LiJing"
       },
       {
@@ -891,31 +855,6 @@
         "equip": "LiJing"
       },
       {
-        "instance_id": "4f8fed5-d9cb-469f-e565-72867728950e",
-        "template_id": "Armor06_Boots",
-        "level": 1,
-        "rare": "Epic",
-        "substats": [
-          {
-            "type": "HP",
-            "level": 1,
-            "modifier_type": "Percent"
-          },
-          {
-            "type": "SPEED",
-            "level": 1,
-            "modifier_type": "Flat"
-          },
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "SPEED",
-        "equip": "LiJing"
-      },
-      {
         "instance_id": "4f8fad5b-d9cb-469f-e165-72867728950e",
         "template_id": "Armor06_Belt",
         "level": 1,
@@ -935,6 +874,81 @@
             "type": "HP",
             "level": 1,
             "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "LiJing"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-22867728950e",
+        "template_id": "Armor06_Gloves",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_RATE",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "LiJing"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-27867728950e",
+        "template_id": "Armor06_Chestplate",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "PENETRATION",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "LiJing"
+      },
+      {
+        "instance_id": "4f8fed5-d9cb-469f-e565-67867728950e",
+        "template_id": "Armor06_Helmet",
+        "level": 1,
+        "rare": "Epic",
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
           }
         ],
         "main_stat_type": "HP",
@@ -1247,7 +1261,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "ATK",
-        "equip": "TangSanZang"
+        "equip": "LittleWhiteDragon"
       },
       {
         "instance_id": "5f8fad5b-d9cb-469f-a165-71867728950e",
@@ -1256,7 +1270,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "instance_id": "4f8fad5b-d9cb-469f-a165-72867728950e",
@@ -1265,7 +1279,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "DEF",
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a164-73867728950e",
@@ -1274,7 +1288,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "DEF",
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "instance_id": "0f8fad5b-d9cb-469f-a165-76867728950e",
@@ -1283,7 +1297,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       },
       {
         "instance_id": "3f8fad5b-d9cb-469f-a165-73867728950e",
@@ -1292,7 +1306,7 @@
         "rare": "Common",
         "substats": [],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "LittleWhiteDragon"
       }
     ]
   },
@@ -1334,9 +1348,9 @@
       },
       {
         "id": "TangSanZang",
-        "level": 15,
-        "exp": 0,
-        "ascension_tier": 0,
+        "level": 25,
+        "exp": 6000,
+        "ascension_tier": 1,
         "star_up": 0,
         "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777747f",
         "armors": []
@@ -1390,8 +1404,33 @@
         "exp": 1683,
         "ascension_tier": 0,
         "star_up": 0,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884777756f",
-        "armors": []
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884666667f",
+        "armors": [
+          {
+            "id": "0f8fad5b-d9cb-469f-a165-76867728950e",
+            "type": "Helmet"
+          },
+          {
+            "id": "2f8fad5b-d9cb-469f-a165-74867728950e",
+            "type": "Gloves"
+          },
+          {
+            "id": "4f8fad5b-d9cb-469f-a165-72867728950e",
+            "type": "Belt"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a164-73867728950e",
+            "type": "Chestplate"
+          },
+          {
+            "id": "3f8fad5b-d9cb-469f-a165-73867728950e",
+            "type": "Boots"
+          },
+          {
+            "id": "5f8fad5b-d9cb-469f-a165-71867728950e",
+            "type": "Ring"
+          }
+        ]
       },
       {
         "id": "BullDemonKing",
@@ -1399,7 +1438,7 @@
         "exp": 4,
         "ascension_tier": 1,
         "star_up": 0,
-        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884667777f",
+        "weapon": "d2bfddeb-ebc8-45e1-a43c-42884667744f",
         "armors": [
           {
             "id": "4f8fad5b-d9cb-469f-d165-72867728950e",
@@ -1508,27 +1547,27 @@
     "active_slots": [
       {
         "position": 1,
-        "character_id": "ZhuBaJie"
+        "character_id": "BullDemonKing"
       },
       {
         "position": 2,
-        "character_id": "ShaWujing"
+        "character_id": "ZhuBaJie"
       },
       {
         "position": 3,
-        "character_id": ""
+        "character_id": "LiJing"
       },
       {
         "position": 4,
-        "character_id": ""
+        "character_id": "LittleWhiteDragon"
       },
       {
         "position": 5,
-        "character_id": ""
+        "character_id": "TangSanZang"
       },
       {
         "position": 6,
-        "character_id": ""
+        "character_id": "SunWukong"
       }
     ],
     "active_global_buffs": [
@@ -1569,7 +1608,7 @@
     }
   },
   "world_state": {
-    "last_scene_name": "Tutorial",
+    "last_scene_name": "Sky",
     "destroyed_resources": {
       "166bfe7d-ff2e-4b51-be2a-0f55e84eb28c": 639223907812530416
     }
@@ -1585,11 +1624,11 @@
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639227952000000000,
+    "last_reset_time_ticks": 639228816000000000,
     "active_daily_quests": {
-      "dq_shopping": 0,
-      "dq_upgrade_weapon": 0,
-      "dp_gacha_character": 0
+      "dp_gacha_weapon": 0,
+      "dq_kill_slime": 0,
+      "dq_shopping": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""

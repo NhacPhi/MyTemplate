@@ -118,5 +118,25 @@
         "duration": 2,
         "max_stack": 1,
         "value": 25
+    },
+    "EFF_Dragon_Speed": {
+        "name_hash": 4234704328,
+        "des_hash": 87995034,
+        "type": "StatBuff",
+        "target_stat": "SPEED",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": 30
+    },
+    "EFF_Tang_Buff_ATK": {
+        "name_hash": 562538897,
+        "des_hash": 198365168,
+        "type": "StatBuff",
+        "target_stat": "ATK",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": 20
     }
 }

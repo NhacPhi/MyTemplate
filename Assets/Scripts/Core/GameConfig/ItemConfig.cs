@@ -27,7 +27,8 @@ public enum WeaponType
     Mage,
     Tanker,
     Normal,
-    Support
+    Support,
+    ADCarry
 }
 
 

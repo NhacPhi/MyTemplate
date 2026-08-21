@@ -18,6 +18,10 @@ public class MeleeAttack : SkillRuntime, IAttackSkill
         var bonus = base.CalculateRawDamage();
         if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
         bonus.Tags.Add("BasicAttack");
+        if (skillData != null && skillData.ID == "LittleWhiteDragon_B")
+        {
+            bonus.PenetrationBonus += 30f;
+        }
         return bonus;
     }
 

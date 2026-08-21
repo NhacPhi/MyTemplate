@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class SkillRuntime
 {
@@ -88,8 +89,46 @@ public abstract class SkillRuntime
             if (targetStats == null) continue;
 
             var attachedEffect = GetSkillData().Effect;
+            if (attachedEffect == null) continue;
 
-            StatusEffect newEffect = EffectFactory.CreateEffect(GetSkillData().ID, attachedEffect, targetStats);
+            // Kiểm tra khuếch đại hiệu quả Buff từ nội tại vũ khí (ví dụ Cửu Hằng Trượng psv_ninefold_staff)
+            float bonusBuffPercent = 0f;
+            if (caster != null && (attachedEffect.IsBuff() || GetSkillData().IsBuffSkill))
+            {
+                var casterPassive = caster.GetComponent<EntityPassive>();
+                if (casterPassive != null && casterPassive.ActivePassives != null)
+                {
+                    foreach (var passive in casterPassive.ActivePassives)
+                    {
+                        if (passive.Config != null && passive.Config.ID == "psv_ninefold_staff")
+                        {
+                            bonusBuffPercent += passive.GetCombatEventValue(0);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            EffectConfig effectToApply = attachedEffect;
+            if (bonusBuffPercent > 0f)
+            {
+                // Công thức khuếch đại: Giá trị mới = Giá trị gốc * (1 + bonusBuffPercent / 100)
+                // Ví dụ: 20% ATK buff được tăng 35% hiệu quả -> 20 * (1 + 0.35) = 27% ATK
+                float amplifiedValue = attachedEffect.Value * (1f + (bonusBuffPercent / 100f));
+                effectToApply = new EffectConfig
+                {
+                    Name = attachedEffect.Name,
+                    Description = attachedEffect.Description,
+                    Type = attachedEffect.Type,
+                    TargetStat = attachedEffect.TargetStat,
+                    ModifyType = attachedEffect.ModifyType,
+                    Duration = attachedEffect.Duration,
+                    MaxStack = attachedEffect.MaxStack,
+                    Value = Mathf.RoundToInt(amplifiedValue)
+                };
+            }
+
+            StatusEffect newEffect = EffectFactory.CreateEffect(GetSkillData().ID, effectToApply, targetStats);
 
             targetStats.ApplyEffect(newEffect, currentTurnID);
         }
@@ -124,6 +163,24 @@ public abstract class SkillRuntime
             case SkillTargetType.AllAllies:
                 if (caster.Targets != null)
                     foreach (var target in caster.Targets) { targetList.Add(target.gameObject.GetComponent<Entity>()); }
+                break;
+
+            case SkillTargetType.SameRowAllies:
+                if (BattleManager.Instance != null)
+                {
+                    var allies = BattleManager.Instance.GetEntitiesByTeam(caster.Team);
+                    foreach (var ally in allies)
+                    {
+                        if (ally != null && ally.GetCoreComponent<EntityStats>() != null && !ally.GetCoreComponent<EntityStats>().IsDead && ally.Row == caster.Row)
+                        {
+                            targetList.Add(ally);
+                        }
+                    }
+                }
+                else
+                {
+                    targetList.Add(caster);
+                }
                 break;
 
                 // Xử lý các trường hợp đặc biệt khác (Column, Row, DeadAlly...)

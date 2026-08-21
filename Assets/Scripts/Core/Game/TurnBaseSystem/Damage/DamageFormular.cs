@@ -32,6 +32,16 @@ public static class DamageFormular
 
         float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
 
+        // Cơ chế Diệt Giáp Ảo (Shield Breaker): x2 Sát Thương khi mục tiêu đang có Giáp Ảo
+        if (damageBonus.Tags != null && (damageBonus.Tags.Contains("ShieldBreaker") || damageBonus.Tags.Contains("DoubleDamageOnShield")))
+        {
+            var shieldAttr = targetStats.GetAttribute(AttributeType.Shield);
+            if (shieldAttr != null && shieldAttr.Value > 0)
+            {
+                damageResult *= 2f;
+            }
+        }
+
         if (sourceSkill != null)
         {
             sourceSkill.ApplyAttackSkill(ref damageResult);
@@ -121,6 +131,15 @@ public static class DamageFormular
 
         var sourceAtk = sourceStats.GetStat(StatType.ATK);
         float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
+
+        if (damageBonus.Tags != null && (damageBonus.Tags.Contains("ShieldBreaker") || damageBonus.Tags.Contains("DoubleDamageOnShield")))
+        {
+            var shieldAttr = targetStats.GetAttribute(AttributeType.Shield);
+            if (shieldAttr != null && shieldAttr.Value > 0)
+            {
+                damageResult *= 2f;
+            }
+        }
 
         if (sourceSkill != null)
         {

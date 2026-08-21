@@ -18,6 +18,10 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
         var bonus = base.CalculateRawDamage();
         if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
         bonus.Tags.Add("UltimateSkill");
+        if (skillData != null && skillData.ID == "LittleWhiteDragon_U")
+        {
+            bonus.Tags.Add("ShieldBreaker");
+        }
         return bonus;
     }
 
