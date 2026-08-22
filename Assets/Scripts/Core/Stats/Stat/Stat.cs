@@ -29,6 +29,7 @@ public class Stat
 
     private List<Modifier> statModifiers;
     public int ModifierCount => statModifiers.Count;
+    public List<Modifier> Modifiers => statModifiers;
     public Stat()
     {
         statModifiers = new List<Modifier>();

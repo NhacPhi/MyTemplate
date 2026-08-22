@@ -52,13 +52,13 @@ public class CombatText : IInitializable, IDisposable
 
     public void CreateHealPopup(float heal, Vector3 position)
     {
-        if (heal < 0) return;
+        if (heal <= 0 || popupPrefab == null) return;
 
         var clone = PoolManager.Instance.SpawnObject(popupPrefab, position, Quaternion.identity);
         clone.SetAnimationEnabled(true); // Bật animation cho hồi máu
-        clone.SetValue(heal);
+        clone.SetText($"+{Mathf.CeilToInt(heal)}");
         clone.SetCritical(false);
-        clone.TMP.color = Color.green;
+        clone.TMP.color = new Color(0.25f, 1f, 0.35f); // Xanh lá cây tươi sáng chuẩn hồi phục
 
         var jump = clone.GetComponent<NumberJumpAnimation>();
         if (jump != null) jump.PlayAnimation(false);

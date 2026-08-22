@@ -15,8 +15,5 @@ public class LifestealEffectHandler : IEffectHandler
         
         Debug.Log($"[PassiveSystem] Lifesteal kích hoạt! Sát thương: {damageDealt}, Máu hồi: {healAmount}");
         stats.HealingHP(healAmount);
-        
-        // Tùy chọn: Gọi UI hiển thị máu hồi
-        UIEvent.HealPopup?.Invoke(healAmount, target.transform.position);
     }
 }

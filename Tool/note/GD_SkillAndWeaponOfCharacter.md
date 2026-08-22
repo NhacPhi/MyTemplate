@@ -72,7 +72,7 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 * **Phẩm chất:** `Legendary (UR)` | **Hệ:** `Fighter`
 * **Chỉ số cơ bản:** **HP:** `1,650` (+`165`/cấp) | **ATK:** `450` (+`45`/cấp)
 * **Nội tại Trấn Phái (`psv_triple_edged_blade`):**
-  - **Chỉ số tĩnh:** Tăng **`[30%, 36%, 42%, 48%, 54%, 60%]` Sát Thương Bạo Kích (CRIT_DMG)**.
+  - **Chỉ số tĩnh:** Tăng **`[30%, 36%, 42%, 48%, 54%, 60%]` Sát Thương Bạo Kích (CRIT_DMG)** và **`[10%, 12%, 14%, 17%, 20%, 25%]` Tấn Công (ATK)**.
   - **Hiệu ứng Chiến Đấu (`Eff_Reduce_Cooldown`):** Sau khi thi triển kỹ năng đơn mục tiêu **đánh bại kẻ địch (`IsSkill, SingleTarget, TargetDead`)**, có **`[30%, 40%, 50%, 60%, 70%, 80%]` xác suất** lập tức **giảm 1 lượt hồi chiêu (`-1 CD`)** cho toàn bộ kỹ năng của bản thân!
 
 ---
@@ -126,7 +126,7 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 
 ### 🐂 6. NGƯU MA VƯƠNG (BullDemonKing)
 * **Phẩm chất:** `SSR` | **Hệ/Vai trò:** `Đấu Sĩ Chống Chịu (Bruiser)` (Đại Lực Ma Vương - Bá Khí Phản Đòn & Kịch Độc Bích Thủy)
-* **Vũ khí đặc trưng:** **Quạt Ba Tiêu (`Plantain_Fan`)**
+* **Vũ khí đặc trưng:** **Hỗn Độn Thiết (`Ferrous_Chaos`)**
 * **Chỉ số cơ bản:** **HP:** `6,670` | **ATK:** `1,175` | **DEF:** `598` | **Speed:** `84` | **Kháng Bạo Kích:** `14%`
 
 #### 🗡️ Bộ Kỹ Năng:
@@ -142,6 +142,29 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
    - **Loại:** `PoisonBall` | **Mục tiêu:** `SingleEnemy`
    - **Hồi chiêu:** `[5, 5, 4]` lượt.
    - **Công thức ST & Hiệu ứng (`EFF_Bull_Poison`):** Bích Thủy Kim Tinh Thú phóng ra luồng sóng chấn động gây ST bằng `[250%, 300%, 350%]` Tấn Công cho một kẻ địch, đồng thời khiến đối phương rơi vào trạng thái [Kịch Độc], mỗi hiệp chịu ST Độc bằng `8%` Máu Tối Đa (hoặc 8% Tấn Công) trong **`3 hiệp`**.
+
+---
+
+### 🍃 7. THIẾT PHIẾN CÔNG CHÚA (PrincessIronFan)
+* **Phẩm chất:** `SSR` | **Hệ/Vai trò:** `Pháp Sư Tấn Công (Offensive Mage)` (Bà La Sát - Bão Tố Âm Phong & Trảm Giáp)
+* **Vũ khí đặc trưng:** **Quạt Ba Tiêu (`Plantain_Fan`)** - Phẩm chất Legendary (UR)
+  - **Chỉ số cơ bản:** HP `742` (+`74`/cấp) | ATK `182` (+`18`/cấp)
+  - **Nội tại (`psv_plantain_fan`):** Tăng `[20, 25, 30, 35, 40, 50]%` ST Bạo Kích và `[10, 12, 14, 17, 20, 25]%` Tấn Công. Đòn tấn công kỹ năng có **60% xác suất** giảm `[15, 18, 21, 24, 27, 30]%` Phòng Thủ của mục tiêu trong 2 hiệp và gây thêm `[15, 18, 21, 24, 27, 30]%` Sát Thương lên kẻ địch đang chịu hiệu ứng bất lợi.
+* **Chỉ số cơ bản nhân vật:** **HP:** `5,450` | **ATK:** `1,420` | **DEF:** `430` | **Speed:** `98` | **CRIT_RATE:** `15%` | **CRIT_DMG:** `150%`
+
+#### 🗡️ Bộ Kỹ Năng:
+1. **Đánh Thường (`PrincessIronFan_B` - Phong Lôi Ba):**
+   - **Loại:** `RangeMagicAttack` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[100%, 120%, 140%]` ATK | **Hồi chiêu:** `0` lượt.
+   - **Hiệu ứng:** Có `50%` xác suất giảm 10% Tốc Độ của mục tiêu trong 2 hiệp.
+2. **Kỹ Năng Major (`PrincessIronFan_M` - Tam Muội Âm Phong):**
+   - **Loại:** `TorandoSkill` | **Mục tiêu:** `FrontRowEnemies` (Hàng trước của địch)
+   - **Hệ số ST:** `[130%, 150%, 180%]` ATK | **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Hiệu ứng [Bào Mòn]:** Giảm 20% Phòng Thủ (DEF) và khiến kẻ địch chịu thêm 15% Sát Thương Phép trong 2 hiệp.
+3. **Tuyệt Kỹ Ultimate (`PrincessIronFan_U` - Ba Tiêu Diệt Địa Phong):**
+   - **Loại:** `DivineWindSkill` | **Mục tiêu:** `SingleEnemy`
+   - **Hệ số ST:** `[300%, 360%, 420%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **Hiệu ứng [Hất Tung Vạn Dặm]:** Giảm 30% Điểm Hành Động của mục tiêu. Nếu mục tiêu đang chịu hiệu ứng bất lợi/giảm DEF, đòn đánh chắc chắn Bạo Kích (100% Crit) và tăng thêm 40% Sát Thương Bạo Kích.
 
 ---
 
@@ -264,17 +287,17 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 | Tên Vũ Khí (ID) | Phẩm Chất | Loại Tướng | Tướng Đặc Trưng | Chỉ Số Cơ Bản (HP/ATK) | Chỉ Số Tăng Mỗi Cấp | Nội Tại Tĩnh (Static Modifiers) | Hiệu Ứng Trận Đấu (Combat Events) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- |
 | **Gậy Như Ý**<br>`Nimbus_Cudgel` | **Legendary (UR)** | `Fighter` | **Tôn Ngộ Không** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% ATK & +% DEF:**<br>`[10, 15, 20, 25, 30, 35]%` | **Kích sát tăng Điểm Hành Động:**<br>`[20, 25, 30, 35, 40, 50]%` Action Point |
-| **Tam Tiêm Đao**<br>`Triple_Edged_Blade` | **Legendary (UR)** | `Fighter` | **Dương Tiễn** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% Sát Thương Bạo Kích:**<br>`[30, 36, 42, 48, 54, 60]%` | **Kích sát giảm 1 lượt hồi chiêu:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
+| **Tam Tiêm Đao**<br>`Triple_Edged_Blade` | **Legendary (UR)** | `Fighter` | **Dương Tiễn** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% Sát Thương Bạo Kích & +% Tấn Công:**<br>CRIT DMG: `[30, 36, 42, 48, 54, 60]%`<br>ATK: `[10, 12, 14, 17, 20, 25]%` | **Kích sát giảm 1 lượt hồi chiêu:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
 | **Tùy Tâm Thiết Can Binh**<br>`Vanguard_Of_Volition` | **Legendary (UR)** | `Assassin` | **Lục Nhĩ Mỹ Hầu / Na Tra / Sát Thủ UR** | HP: `875`<br>ATK: `325` | +88 HP<br>+33 ATK | **+% Sát Thương Bạo Kích & +% Tấn Công:**<br>CRIT DMG: `[20, 25, 30, 35, 40, 50]%`<br>ATK: `[10, 12, 14, 17, 20, 25]%` | **1. Bạo Kích tăng Điểm Hành Động:**<br>`[15, 18, 21, 24, 27, 30]%` Action Point<br>**2. Đánh đơn không chết -> Truy Kích Đánh Thường:**<br>Tỷ lệ: `[50, 60, 70, 80, 90, 100]%` |
-| **Phù Loan**<br>`Wings_of_Phoenix` | **Legendary (UR)** | `Support` | **Quan Âm Bồ Tát** | HP: `1750`<br>ATK: `150` | +175 HP<br>+15 ATK | **+% Kháng Hiệu Ứng (RES):**<br>`[10, 15, 20, 25, 34, 41]%` | **Bị tấn công tự động xóa 2 debuff:**<br>Tỷ lệ: `[40, 50, 60, 70, 80, 90]%` |
-| **Quạt Quế Phách**<br>`Moonlit_Firelfy` | **Legendary (UR)** | `Mage` | **Pháp Sư UR** | HP: `1125`<br>ATK: `275` | +113 HP<br>+28 ATK | **+% ATK & +% DEF:**<br>`[5, 7.5, 10, 12.5, 17, 24]%` | **Dùng chiêu buff -> Giảm 1 CD:**<br>Tỷ lệ: `[30, 40, 50, 60, 70, 80]%` |
+| **Phù Loan**<br>`Wings_of_Phoenix` | **Legendary (UR)** | `Support / Tanker` | **Quan Âm Bồ Tát / Tanker Trị Liệu** | HP: `1750`<br>ATK: `150` | +175 HP<br>+15 ATK | **+% HP & +% DEF:**<br>HP: `[15, 18, 21, 25, 30, 40]%`<br>DEF: `[10, 12, 14, 17, 20, 25]%` | **Tăng hiệu quả Kỹ Năng Hồi Máu:**<br>Tăng thêm `[30, 40, 50, 60, 70, 80]%` hiệu quả |
+| **Quạt Quế Phách**<br>`Moonlit_Firelfy` | **Legendary (UR)** | `Mage` | **Pháp Sư Hỗ Trợ UR** | HP: `1125`<br>ATK: `275` | +113 HP<br>+28 ATK | **+% Tốc Độ & +% Tấn Công:**<br>SPEED: `[8, 10, 12, 15, 18, 25]%`<br>ATK: `[10, 12, 14, 17, 20, 25]%` | **Tăng hiệu quả Kỹ Năng Cường Hóa & Hỗ Trợ:**<br>Tăng thêm `[40, 50, 60, 70, 80, 100]%` hiệu quả |
 | **Cửu Xỉ Đinh Ba**<br>`Nine_ToolThed_Rake` | **Legendary (UR)** | `Tanker` | **Trư Bát Giới** | HP: `2000`<br>ATK: `100` | +200 HP<br>+10 ATK | **+% HP & +% Chính Xác:**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | **Chịu đòn đơn tăng DEF dồn 6 tầng:**<br>`[4, 5, 6, 7, 8, 10]%` DEF/tầng |
 | **Võng Sinh**<br>`Reincarnation` | **Epic (SSR)** | `ADCarry` | **Tiểu Bạch Long / Tân Thủ** | HP: `578`<br>ATK: `214` | +58 HP<br>+21 ATK | **+% Tấn Công (ATK):**<br>`[8, 11, 14, 17, 20, 25]%` | **Đòn tấn công đơn mục tiêu tăng ST:**<br>`[10, 13, 16, 19, 22, 25]%` Sát Thương |
-| **Cửu Hằng Trượng**<br>`Ninefold_Staff` | **Rare (SR)** | `Support` | **Đường Tam Tạng** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Tốc Độ (Speed):**<br>`[6, 8, 10, 12, 15, 20]%` | **Tăng hiệu quả Kỹ Năng Cường Hóa/Buff:**<br>Tăng thêm `[30, 35, 40, 45, 50, 60]%` hiệu quả |
-| **Cân Đẩu Vân**<br>`Nimbus_Cloud` | **Rare (SR)** | `Mage` | **Tôn Ngộ Không / Mage** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | *Không có* | **Bị đánh AOE tăng Điểm Hành Động:**<br>`[10, 15, 20, 25, 30, 40]%` Action Point |
+| **Cửu Hằng Trượng**<br>`Ninefold_Staff` | **Rare (SR)** | `Support` | **Đường Tam Tạng** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Tốc Độ (SPEED):**<br>`[6, 8, 10, 12, 15, 20]%` | **Tăng hiệu quả Kỹ Năng Cường Hóa & Hỗ Trợ:**<br>Tăng thêm `[30, 35, 40, 45, 50, 60]%` hiệu quả |
+| **Cân Đẩu Vân**<br>`Nimbus_Cloud` | **Rare (SR)** | `Mage` | **Pháp Sư Khởi Đầu / Mage SR** | HP: `495`<br>ATK: `121` | +50 HP<br>+12 ATK | **+% Tốc Độ & +% Tấn Công:**<br>SPEED: `[4, 5, 6, 7, 8.5, 10]%`<br>ATK: `[5, 6.5, 8, 10, 12, 15]%` | **Khởi Đầu Thần Tốc (Tăng Điểm Hành Động khi vào lượt):**<br>`[10, 12, 14, 16, 18, 20]%` Action Point |
 | **Trùy Đồng**<br>`Bronze_Hammer` | **Uncommon (R)** | `Tanker` | **Tướng Chống Chịu Đầu Game** | HP: `600`<br>ATK: `30` | +60 HP<br>+3 ATK | **+% Phòng Thủ (DEF):**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
 | **Xiên Chín Đầu**<br>`Ennead_spear` | **Uncommon (R)** | `Normal` | **Tướng Sát Thương Đầu Game** | HP: `450`<br>ATK: `60` | +45 HP<br>+6 ATK | **+% Tỷ Lệ Bạo Kích (CRIT_RATE):**<br>`[5, 7.5, 10, 12.5, 16, 20]%` | *Không có* |
-| **Hỗn Độn Thiết**<br>`Ferrous_Chaos` | **Legendary (UR)** | `Fighter` | **Đấu Sĩ UR** | HP: `1375`<br>ATK: `225` | +138 HP<br>+23 ATK | **+% ATK & +% DEF:**<br>`[10, 15, 20, 25, 30, 35]%` | **Áp Đảo (HP > 50%):** Tăng 16% ST Kỹ Năng<br>**Huyết Chiến (HP ≤ 50%):** Nhận 16% Hút Máu |
+| **Quạt Ba Tiêu**<br>`Plantain_Fan` | **Legendary (UR)** | `Mage` | **Thiết Phiến Công Chúa** | HP: `742`<br>ATK: `182` | +74 HP<br>+18 ATK | **+% Sát Thương Bạo Kích & +% Tấn Công:**<br>CRIT DMG: `[20, 25, 30, 35, 40, 50]%`<br>ATK: `[10, 12, 14, 17, 20, 25]%` | **1. 60% xác suất Giảm Phòng Thủ khi đánh Kỹ Năng:** `[15, 18, 21, 24, 27, 30]%` DEF (2 hiệp)<br>**2. Tăng Sát Thương lên kẻ địch có Debuff:** `[15, 18, 21, 24, 27, 30]%` |
 | **Xẻng Tứ Minh**<br>`Sunburst_Spade` | **Common (Normal)** | `Normal` | **Vũ Khí Khởi Đầu Tân Thủ** | HP: `300`<br>ATK: `40` | +30 HP<br>+4 ATK | **+% Tấn Công (ATK):**<br>`[5, 7.5, 10, 12.5, 15, 20]%` | *Không có* |
 
 ---

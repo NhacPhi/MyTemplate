@@ -111,7 +111,11 @@ public class EntityStats : StatsController, IDamagable
 
     public void HealingHP(float value)
     {
+        if (value <= 0) return;
+
         var hp = GetAttribute(AttributeType.Hp);
+        if (hp == null) return;
+
         hp.Value += value;
 
         OnAttributeChange?.Invoke(new AttributeEvtArgs()
@@ -120,6 +124,9 @@ public class EntityStats : StatsController, IDamagable
             Value = hp.Value,
             MaxValue = hp.MaxValue,
         });
+
+        // Hiển thị số máu hồi phục màu xanh lá nhảy lên trên đầu nhân vật
+        UIEvent.HealPopup?.Invoke(value, transform.position + Vector3.up * 1.5f);
     }
 
     protected virtual void HandleDeath()

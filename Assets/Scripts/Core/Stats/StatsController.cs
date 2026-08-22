@@ -193,10 +193,13 @@ public class StatsController : CoreComponent, IEffectable
             OnEffectAdded?.Invoke(clone);
 
             // Hiển thị tên hiệu ứng lên UI khi nhận mới
-            if (clone.Data != null)
+            if (clone.Data != null && clone.Data.Name != 0 && LocalizationManager.Instance != null)
             {
                 string effectName = LocalizationManager.Instance.GetLocalizedValue(clone.Data.Name);
-                UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(clone.Data));
+                if (!string.IsNullOrEmpty(effectName))
+                {
+                    UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(clone.Data));
+                }
             }
             return;
         }
@@ -224,10 +227,13 @@ public class StatsController : CoreComponent, IEffectable
         }
 
         // Hiển thị tên hiệu ứng lên UI khi làm mới/tăng stack
-        if (existEffect.Data != null)
+        if (existEffect.Data != null && existEffect.Data.Name != 0 && LocalizationManager.Instance != null)
         {
             string effectName = LocalizationManager.Instance.GetLocalizedValue(existEffect.Data.Name);
-            UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(existEffect.Data));
+            if (!string.IsNullOrEmpty(effectName))
+            {
+                UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(existEffect.Data));
+            }
         }
     }
 

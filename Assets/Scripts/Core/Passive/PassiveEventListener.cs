@@ -103,7 +103,30 @@ public static class PassiveEventListener
                 return false;
             }
 
-            // 4. So khớp tag thông thường
+            // 4. Kiểm tra điều kiện Target có Debuff (TargetHasDebuff)
+            if (requiredTag.Equals("TargetHasDebuff", System.StringComparison.OrdinalIgnoreCase) ||
+                requiredTag.Equals("TargetDebuffed", System.StringComparison.OrdinalIgnoreCase))
+            {
+                var targetStats = context.Target != null ? context.Target.GetCoreComponent<EntityStats>() : null;
+                if (targetStats != null)
+                {
+                    var defStat = targetStats.GetStat(StatType.DEF);
+                    var spdStat = targetStats.GetStat(StatType.SPEED);
+                    var atkStat = targetStats.GetStat(StatType.ATK);
+
+                    bool hasNegativeMod = (defStat != null && defStat.Modifiers != null && defStat.Modifiers.Exists(m => m.Value < 0)) ||
+                                          (spdStat != null && spdStat.Modifiers != null && spdStat.Modifiers.Exists(m => m.Value < 0)) ||
+                                          (atkStat != null && atkStat.Modifiers != null && atkStat.Modifiers.Exists(m => m.Value < 0));
+
+                    if (hasNegativeMod || context.HasTag("Debuff") || context.HasTag("Vulnerable") || context.HasTag("Poison") || context.HasTag("Burn") || context.HasTag("Stun"))
+                    {
+                        continue;
+                    }
+                }
+                return false;
+            }
+
+            // 5. So khớp tag thông thường
             if (!context.HasTag(requiredTag))
             {
                 return false; // Thiếu 1 tag yêu cầu -> Match thất bại
@@ -134,6 +157,7 @@ public static class PassiveEventListener
         if (stats == null) return;
 
         // 4. Ủy quyền (Delegate) cho EffectFactory xử lý logic thực thi
+        context.EventContextInfo = evtConfig.EffectParam.ToString();
         PassiveEffectFactory.ExecuteEffect(evtConfig.EffectId, finalTarget, effectValue, context);
     }
 

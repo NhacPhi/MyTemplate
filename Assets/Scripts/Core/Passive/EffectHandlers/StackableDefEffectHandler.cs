@@ -47,7 +47,6 @@ public class StackableDefEffectHandler : IEffectHandler
                 {
                     float healAmount = hpAttr.MaxValue * 0.10f;
                     stats.HealingHP(healAmount);
-                    UIEvent.HealPopup?.Invoke(healAmount, recipient.transform.position);
                 }
             }
         }

@@ -14,11 +14,13 @@ public static class PassiveEffectFactory
         { "Eff_AddShield", new AddShieldEffectHandler() },
 
         // ------ SỬ DỤNG CHUNG CLASS CHO CÁC CHỈ SỐ ------
-        { "Eff_ReduceDefense", new StatModifierEffectHandler(StatType.DEF, true) },
-        { "Eff_IncreaseAttack", new StatModifierEffectHandler(StatType.ATK, true) },
-        { "Eff_ReduceSpeed", new StatModifierEffectHandler(StatType.SPEED, true) },
-        { "Eff_IncreaseCritRate", new StatModifierEffectHandler(StatType.CRIT_RATE, false) },
-        { "Eff_IncreaseCritDmg", new StatModifierEffectHandler(StatType.CRIT_DMG, false) },
+        { "Eff_ReduceDefense", new StatModifierEffectHandler(StatType.DEF, true, true) },
+        { "Eff_IncreaseAttack", new StatModifierEffectHandler(StatType.ATK, true, false) },
+        { "Eff_ReduceSpeed", new StatModifierEffectHandler(StatType.SPEED, true, true) },
+        { "Eff_IncreaseCritRate", new StatModifierEffectHandler(StatType.CRIT_RATE, false, false) },
+        { "Eff_IncreaseCritDmg", new StatModifierEffectHandler(StatType.CRIT_DMG, false, false) },
+        { "Eff_DamageBonus", new StatModifierEffectHandler(StatType.ATK, true, false) },
+        { "Eff_Buff_Enhance", new StatModifierEffectHandler(StatType.ATK, true, false) },
 
         // ------ CÁC HANDLER SÁT THƯƠNG ĐẶC BIỆT ------
         { "Eff_HPScalingDamage", new HPScalingDamageEffectHandler() },

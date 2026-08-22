@@ -78,7 +78,16 @@ public class PassiveInstance : IDisposable
                     }
                     break;
                 case "OnAfterDealDamage":
-                    ownerEntity.OnAfterDealDamage += (attacker, target, damage, tags) => TriggerPassiveEffect(evtConfig, ownerEntity, target != null ? target.transform : null, damage, tags);
+                    ownerEntity.OnAfterDealDamage += (attacker, target, damage, tags) =>
+                    {
+                        var eventTags = new HashSet<string>();
+                        if (tags != null)
+                        {
+                            foreach (var t in tags) eventTags.Add(t);
+                        }
+                        eventTags.Add("IsSkill");
+                        TriggerPassiveEffect(evtConfig, ownerEntity, target != null ? target.transform : null, damage, eventTags);
+                    };
                     break;
                 case "OnAfterSkillExecute":
                 case "OnAfterSkillExcute":

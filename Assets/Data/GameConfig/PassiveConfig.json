@@ -60,6 +60,18 @@
                     54.0,
                     60.0
                 ]
+            },
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    12.0,
+                    14.0,
+                    17.0,
+                    20.0,
+                    25.0
+                ]
             }
         ],
         "combat_events": [
@@ -228,21 +240,46 @@
     },
     "psv_nimbus_cloud": {
         "desc_template_hash": 2341285404,
-        "static_modifiers": [],
+        "static_modifiers": [
+            {
+                "stat_type": "SPEED",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    4.0,
+                    5.0,
+                    6.0,
+                    7.0,
+                    8.5,
+                    10.0
+                ]
+            },
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    5.0,
+                    6.5,
+                    8.0,
+                    10.0,
+                    12.0,
+                    15.0
+                ]
+            }
+        ],
         "combat_events": [
             {
-                "event_type": "OnAfterTakeDamage",
+                "event_type": "OnTurnStart",
                 "effect_id": "Eff_Action_Point_Boost",
                 "modify_by_upgrade": [
                     10.0,
-                    15.0,
-                    20.0,
-                    25.0,
-                    30.0,
-                    40.0
+                    12.0,
+                    14.0,
+                    16.0,
+                    18.0,
+                    20.0
                 ],
                 "target": "self",
-                "condition_filter": "AoEAttack",
+                "condition_filter": "",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
             }
@@ -359,34 +396,144 @@
         "desc_template_hash": 731094218,
         "static_modifiers": [
             {
-                "stat_type": "DEF",
+                "stat_type": "SPEED",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    5.0,
-                    7.5,
+                    8.0,
                     10.0,
-                    12.5,
-                    17.0,
-                    23.0
+                    12.0,
+                    15.0,
+                    18.0,
+                    25.0
                 ]
             },
             {
                 "stat_type": "ATK",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    5.0,
-                    7.5,
                     10.0,
-                    12.5,
+                    12.0,
+                    14.0,
                     17.0,
-                    24.0
+                    20.0,
+                    25.0
                 ]
             }
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterSkillExecute",
-                "effect_id": "Eff_Reduce_Cooldown",
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_Buff_Enhance",
+                "modify_by_upgrade": [
+                    40.0,
+                    50.0,
+                    60.0,
+                    70.0,
+                    80.0,
+                    100.0
+                ],
+                "target": "self",
+                "condition_filter": "",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_plantain_fan": {
+        "desc_template_hash": 2906063035,
+        "static_modifiers": [
+            {
+                "stat_type": "CRIT_DMG",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    20.0,
+                    25.0,
+                    30.0,
+                    35.0,
+                    40.0,
+                    50.0
+                ]
+            },
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    12.0,
+                    14.0,
+                    17.0,
+                    20.0,
+                    25.0
+                ]
+            }
+        ],
+        "combat_events": [
+            {
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_ReduceDefense",
+                "modify_by_upgrade": [
+                    15.0,
+                    18.0,
+                    21.0,
+                    24.0,
+                    27.0,
+                    30.0
+                ],
+                "target": "enemy",
+                "condition_filter": "IsSkill",
+                "effect_param": 60.0,
+                "internal_cooldown": 0
+            },
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_DamageBonus",
+                "modify_by_upgrade": [
+                    15.0,
+                    18.0,
+                    21.0,
+                    24.0,
+                    27.0,
+                    30.0
+                ],
+                "target": "self",
+                "condition_filter": "TargetHasDebuff",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_wings_of_phoenix": {
+        "desc_template_hash": 1253166276,
+        "static_modifiers": [
+            {
+                "stat_type": "HP",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    15.0,
+                    18.0,
+                    21.0,
+                    25.0,
+                    30.0,
+                    40.0
+                ]
+            },
+            {
+                "stat_type": "DEF",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    12.0,
+                    14.0,
+                    17.0,
+                    20.0,
+                    25.0
+                ]
+            }
+        ],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_Buff_Enhance",
                 "modify_by_upgrade": [
                     30.0,
                     40.0,
@@ -396,79 +543,9 @@
                     80.0
                 ],
                 "target": "self",
-                "condition_filter": "NonAttackSkill",
-                "effect_param": 1.0,
+                "condition_filter": "",
+                "effect_param": 0.0,
                 "internal_cooldown": 0
-            }
-        ]
-    },
-    "psv_plantain_fan": {
-        "desc_template_hash": 2906063035,
-        "static_modifiers": [
-            {
-                "stat_type": "EHR",
-                "modify_type": "Percent",
-                "modify_by_upgrade": [
-                    10.0,
-                    15.0,
-                    20.0,
-                    25.0,
-                    34.0,
-                    40.0
-                ]
-            }
-        ],
-        "combat_events": [
-            {
-                "event_type": "OnAfterSkillExecute",
-                "effect_id": "Eff_Apply_Mark_Debuff",
-                "modify_by_upgrade": [
-                    40.0,
-                    50.0,
-                    60.0,
-                    70.0,
-                    80.0,
-                    90.0
-                ],
-                "target": "enemy",
-                "condition_filter": "SingleTarget",
-                "effect_param": 1.0,
-                "internal_cooldown": 0
-            }
-        ]
-    },
-    "psv_wings_of_phoenix": {
-        "desc_template_hash": 1253166276,
-        "static_modifiers": [
-            {
-                "stat_type": "RES",
-                "modify_type": "Percent",
-                "modify_by_upgrade": [
-                    10.0,
-                    15.0,
-                    20.0,
-                    25.0,
-                    34.0,
-                    41.0
-                ]
-            }
-        ],
-        "combat_events": [
-            {
-                "event_type": "OnAfterSkillExecute",
-                "effect_id": "Eff_Dispel_Self_Debuff",
-                "modify_by_upgrade": [
-                    40.0,
-                    50.0,
-                    60.0,
-                    70.0,
-                    80.0,
-                    90.0
-                ],
-                "target": "self",
-                "condition_filter": "HasDebuff",
-                "effect_param": 2.0,
-                "internal_cooldown": 2
             }
         ]
     },

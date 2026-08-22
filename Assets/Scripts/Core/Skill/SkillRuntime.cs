@@ -57,6 +57,12 @@ public abstract class SkillRuntime
         if (GetSkillData() != null)
         {
             bonus.Tags.Add(GetSkillData().SkillType.ToString());
+            bonus.Tags.Add("IsSkill");
+            bonus.Tags.Add("Skill");
+            if (GetSkillData().MaxCoolDown > 0)
+            {
+                bonus.Tags.Add("ActiveSkill");
+            }
         }
 
         if (owner != null)
