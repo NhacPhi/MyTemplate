@@ -81,7 +81,25 @@ public class PassiveInstance : IDisposable
                     ownerEntity.OnAfterDealDamage += (attacker, target, damage, tags) => TriggerPassiveEffect(evtConfig, ownerEntity, target != null ? target.transform : null, damage, tags);
                     break;
                 case "OnAfterSkillExecute":
-                    ownerEntity.OnAfterSkillExecute += (entity) => TriggerPassiveEffect(evtConfig, ownerEntity, null);
+                case "OnAfterSkillExcute":
+                    ownerEntity.OnAfterSkillExecute += (entity) =>
+                    {
+                        GameObject tgtObj = (entity != null) ? entity.Target : null;
+                        Transform targetTransform = tgtObj != null ? tgtObj.transform : null;
+                        var tags = new HashSet<string>();
+                        tags.Add("ActiveSkill");
+                        tags.Add("IsSkill");
+                        tags.Add("SingleTarget");
+                        if (tgtObj != null)
+                        {
+                            var tgtEntity = tgtObj.GetComponent<Entity>();
+                            if (tgtEntity != null && tgtEntity.GetCoreComponent<EntityStats>() != null && !tgtEntity.GetCoreComponent<EntityStats>().IsDead)
+                            {
+                                tags.Add("TargetAlive");
+                            }
+                        }
+                        TriggerPassiveEffect(evtConfig, ownerEntity, targetTransform, 0f, tags);
+                    };
                     break;
             }
         }

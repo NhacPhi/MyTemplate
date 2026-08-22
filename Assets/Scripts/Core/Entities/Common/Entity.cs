@@ -19,7 +19,7 @@ public abstract class Entity : Tech.Composite.Core, ITurn
     //Test
     public List<GameObject> Targets { get; protected set; } = new List<GameObject>(); // Could be Enemy or Ally
 
-    public GameObject Target => Targets[0];
+    public GameObject Target => (Targets != null && Targets.Count > 0) ? Targets[0] : null;
 
     public int RenderOrder = 0;
 

@@ -1623,6 +1623,8 @@ public static class LocKeys
 
     public const long STR_SWEEP_ATTACK = 2311945029;
 
+    public const long STR_PURSUIT_ATTACK = 2392774309;
+
     public const long DEBUFF_DEF_NAME = 651413426;
 
     public const long DEBUFF_DEF_DES = 3959374962;

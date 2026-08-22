@@ -9,6 +9,15 @@ public static class PassiveEventListener
     /// </summary>
     public static void EvaluateAndExecute(CombatEventConfig evtConfig, int passiveLevel, CombatContext context)
     {
+        if (context != null && context.Target == null && context.Source != null && context.Source.Target != null)
+        {
+            context.Target = context.Source.Target.GetComponent<Entity>();
+            if (context.Source.Targets == null || context.Source.Targets.Count <= 1)
+            {
+                context.AddTag("SingleTarget");
+            }
+        }
+
         bool matched = IsConditionMatched(evtConfig, context);
         Debug.Log($"[PassiveSystem] Kiểm tra Passive '{evtConfig.EffectId}' - Cần tag '{evtConfig.ConditionFilter}' - Có các tags: [{(context.Tags != null ? string.Join(", ", context.Tags) : "none")}] - Kết quả Match: {matched}");
 

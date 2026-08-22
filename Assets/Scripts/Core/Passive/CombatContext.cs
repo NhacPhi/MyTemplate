@@ -45,7 +45,12 @@ public class CombatContext
 
     public bool HasTag(string tag)
     {
-        return Tags.Contains(tag);
+        if (Tags == null || string.IsNullOrEmpty(tag)) return false;
+        foreach (var t in Tags)
+        {
+            if (t.Equals(tag, System.StringComparison.OrdinalIgnoreCase)) return true;
+        }
+        return false;
     }
 
     public CombatContext RemoveTag(string tag)

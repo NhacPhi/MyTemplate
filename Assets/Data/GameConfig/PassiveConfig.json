@@ -88,31 +88,59 @@
                 "stat_type": "CRIT_DMG",
                 "modify_type": "Percent",
                 "modify_by_upgrade": [
-                    10.0,
-                    15.0,
                     20.0,
                     25.0,
-                    31.0,
-                    34.0
+                    30.0,
+                    35.0,
+                    40.0,
+                    50.0
+                ]
+            },
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    12.0,
+                    14.0,
+                    17.0,
+                    20.0,
+                    25.0
                 ]
             }
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterSkillExcute",
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "Eff_Action_Point_Boost",
+                "modify_by_upgrade": [
+                    15.0,
+                    18.0,
+                    21.0,
+                    24.0,
+                    27.0,
+                    30.0
+                ],
+                "target": "self",
+                "condition_filter": "IsCritical",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            },
+            {
+                "event_type": "OnAfterSkillExecute",
                 "effect_id": "Eff_FollowUp_BasicAttack",
                 "modify_by_upgrade": [
-                    30.0,
-                    40.0,
                     50.0,
                     60.0,
                     70.0,
-                    80.0
+                    80.0,
+                    90.0,
+                    100.0
                 ],
                 "target": "self",
                 "condition_filter": "SingleTarget, TargetAlive",
                 "effect_param": 0.0,
-                "internal_cooldown": 1
+                "internal_cooldown": 0
             }
         ]
     },
@@ -427,7 +455,7 @@
         ],
         "combat_events": [
             {
-                "event_type": "OnAfterSkillExcute",
+                "event_type": "OnAfterSkillExecute",
                 "effect_id": "Eff_Dispel_Self_Debuff",
                 "modify_by_upgrade": [
                     40.0,

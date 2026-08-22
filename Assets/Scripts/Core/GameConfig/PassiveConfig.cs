@@ -98,21 +98,31 @@ public class PassiveConfig
         // Chuyển đổi level thành index của mảng (Level 1 -> index 0)
         int index = Mathf.Max(0, currentUpgrade - 1);
 
-        // Khởi tạo mảng biến động để chứa các tham số {0}, {1}, {2}...
+        // Khởi tạo mảng biến động để chứa tất cả các tham số {0}, {1}, {2}, {3}...
         List<object> formatArgs = new List<object>();
 
-        // 1. Thu thập biến cho Tầng 1 (Thường là biến {0})
-        if (StaticModifiers != null && StaticModifiers.Count > 0)
+        // 1. Thu thập tất cả các biến từ Tầng 1 (StaticModifiers: {0}, {1}...)
+        if (StaticModifiers != null)
         {
-            // Mặc định lấy dòng Modifiers đầu tiên làm mốc. 
-            // (Ví dụ: Dù có tăng ATK và DEF, chúng thường mang chung một mảng giá trị)
-            formatArgs.Add(GetValueFromList(StaticModifiers[0].ModifyByUpgrade, index));
+            foreach (var sm in StaticModifiers)
+            {
+                if (sm.ModifyByUpgrade != null && sm.ModifyByUpgrade.Count > 0)
+                {
+                    formatArgs.Add(GetValueFromList(sm.ModifyByUpgrade, index));
+                }
+            }
         }
 
-        // 2. Thu thập biến cho Tầng 2 (Thường là biến {1}, hoặc đẩy lên thành {0} nếu không có Tầng 1)
-        if (CombatEvents != null && CombatEvents.Count > 0)
+        // 2. Thu thập tất cả các biến từ Tầng 2 (CombatEvents: {2}, {3}...)
+        if (CombatEvents != null)
         {
-            formatArgs.Add(GetValueFromList(CombatEvents[0].ModifyByUpgrade, index));
+            foreach (var ce in CombatEvents)
+            {
+                if (ce.ModifyByUpgrade != null && ce.ModifyByUpgrade.Count > 0)
+                {
+                    formatArgs.Add(GetValueFromList(ce.ModifyByUpgrade, index));
+                }
+            }
         }
 
         // 3. Đổ dữ liệu vào chuỗi Template
@@ -120,14 +130,28 @@ public class PassiveConfig
         {
             try
             {
-                // string.Format sẽ tự động map mảng args vào {0}, {1}...
+                // string.Format sẽ tự động map mảng args vào {0}, {1}, {2}, {3}...
                 return string.Format(template, formatArgs.ToArray());
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
-                // Bắt lỗi nếu Designer gõ sai ngoặc {0} trong file Text Localization
-                Debug.LogWarning($"[PassiveConfig] Lỗi Format Text tại Hash {DescTemplateHash}: {e.Message}");
-                return template;
+                // Fallback nếu template cũ chỉ dùng 2 tham số {0} và {1}
+                try
+                {
+                    List<object> fallbackArgs = new List<object>();
+                    if (StaticModifiers != null && StaticModifiers.Count > 0)
+                        fallbackArgs.Add(GetValueFromList(StaticModifiers[0].ModifyByUpgrade, index));
+                    if (CombatEvents != null && CombatEvents.Count > 0)
+                        fallbackArgs.Add(GetValueFromList(CombatEvents[0].ModifyByUpgrade, index));
+
+                    return string.Format(template, fallbackArgs.ToArray());
+                }
+                catch (FormatException e)
+                {
+                    // Bắt lỗi nếu Designer gõ sai ngoặc {0} trong file Text Localization
+                    Debug.LogWarning($"[PassiveConfig] Lỗi Format Text tại Hash {DescTemplateHash}: {e.Message}");
+                    return template;
+                }
             }
         }
 

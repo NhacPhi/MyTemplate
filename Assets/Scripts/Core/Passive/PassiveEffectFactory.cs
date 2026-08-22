@@ -26,7 +26,8 @@ public static class PassiveEffectFactory
         { "Eff_CounterAttack", new CounterAttackEffectHandler() },
         { "Eff_Action_Point_Boost", new ActionAdvanceEffectHandler() },
         { "Eff_Stackable_DEF_Buff", new StackableDefEffectHandler() },
-        { "Eff_Reduce_Cooldown", new CooldownReductionEffectHandler() }
+        { "Eff_Reduce_Cooldown", new CooldownReductionEffectHandler() },
+        { "Eff_FollowUp_BasicAttack", new FollowUpAttackEffectHandler() }
     };
 
     public static void ExecuteEffect(string effectId, Entity target, float effectValue, CombatContext context)
