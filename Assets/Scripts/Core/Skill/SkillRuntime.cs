@@ -25,7 +25,10 @@ public abstract class SkillRuntime
 
     public void PutOnCooldown()
     {
-        CurrentCooldown = GetSkillData().MaxCoolDown;
+        if (CurrentCooldown <= 0 && GetSkillData() != null)
+        {
+            CurrentCooldown = GetSkillData().MaxCoolDown;
+        }
     }
 
     public void ResetCooldown()
@@ -59,9 +62,37 @@ public abstract class SkillRuntime
             bonus.Tags.Add(GetSkillData().SkillType.ToString());
             bonus.Tags.Add("IsSkill");
             bonus.Tags.Add("Skill");
-            if (GetSkillData().MaxCoolDown > 0)
+
+            string skillId = GetSkillData().ID ?? "";
+            if (skillId.EndsWith("_U", System.StringComparison.OrdinalIgnoreCase))
+            {
+                bonus.Tags.Add("UltimateSkill");
+                bonus.Tags.Add("Ultimate");
+                bonus.Tags.Add("ActiveSkill");
+            }
+            else if (skillId.EndsWith("_M", System.StringComparison.OrdinalIgnoreCase))
+            {
+                bonus.Tags.Add("MajorSkill");
+                bonus.Tags.Add("Major");
+                bonus.Tags.Add("ActiveSkill");
+            }
+            else if (skillId.EndsWith("_B", System.StringComparison.OrdinalIgnoreCase) || GetSkillData().SkillType == SkillType.BasicAttack)
+            {
+                bonus.Tags.Add("BasicAttack");
+                bonus.Tags.Add("BaseSkill");
+            }
+            else if (GetSkillData().MaxCoolDown > 0)
             {
                 bonus.Tags.Add("ActiveSkill");
+            }
+
+            if (skillId == "LittleWhiteDragon_U")
+            {
+                bonus.Tags.Add("ShieldBreaker");
+            }
+            if (skillId == "LittleWhiteDragon_B")
+            {
+                bonus.PenetrationBonus += 30f;
             }
         }
 
@@ -193,6 +224,48 @@ public abstract class SkillRuntime
         }
 
         return targetList;
+    }
+
+    public Entity GetValidSingleTarget(Entity caster)
+    {
+        if (caster == null) return null;
+        if (caster.Target != null)
+        {
+            var targetEntity = caster.Target.GetComponent<Entity>();
+            if (targetEntity != null)
+            {
+                var targetStats = targetEntity.GetCoreComponent<EntityStats>();
+                if (targetStats != null && !targetStats.IsDead)
+                {
+                    return targetEntity;
+                }
+            }
+        }
+
+        // Fallback: Tìm mục tiêu hợp lệ đầu tiên từ đối phương
+        if (BattleManager.Instance != null)
+        {
+            var opposingTeam = caster.Team == TeamSide.Player ? TeamSide.Enemy : TeamSide.Player;
+            var enemies = BattleManager.Instance.GetEntitiesByTeam(opposingTeam);
+            if (enemies != null && enemies.Count > 0)
+            {
+                var targetManager = new TargetManager();
+                var validEnemies = targetManager.GetValidEtitiesByColumnLogic(enemies);
+                if (validEnemies != null && validEnemies.Count > 0)
+                {
+                    var chosen = validEnemies[0];
+                    caster.SetTarget(chosen);
+                    return chosen;
+                }
+                var anyAlive = enemies.Find(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead);
+                if (anyAlive != null)
+                {
+                    caster.SetTarget(anyAlive);
+                    return anyAlive;
+                }
+            }
+        }
+        return null;
     }
 
     public virtual void Dispose()

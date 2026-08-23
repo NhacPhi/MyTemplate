@@ -78,7 +78,7 @@ public class NezhaExecutionSkill : SkillRuntime, IAttackSkill
                 caster.StateManager.ChangeState(EntityState.MOVE_UP);
                 await state.WaitForMoveEnd();
 
-                // Tung đòn Đánh Thường càn quét (120% ATK)
+                // Tung đòn Đánh Thường càn quét (80% ATK)
                 caster.StateManager.ChangeState(EntityState.ATTACK);
                 caster.PlaySFX("ThirdPrinceNezha_Attack");
 
@@ -86,7 +86,7 @@ public class NezhaExecutionSkill : SkillRuntime, IAttackSkill
 
                 var sweepDamage = new DamageBonus()
                 {
-                    DamageMultiplier = 1.2f,
+                    DamageMultiplier = 0.8f,
                     Tags = new HashSet<string> { "BasicAttack", "SweepAttack", "PursuitAttack" }
                 };
 

@@ -79,15 +79,15 @@
                 "event_type": "OnAfterDealDamage",
                 "effect_id": "Eff_Reduce_Cooldown",
                 "modify_by_upgrade": [
-                    30.0,
-                    40.0,
-                    50.0,
-                    60.0,
-                    70.0,
-                    80.0
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0,
+                    100.0
                 ],
                 "target": "self",
-                "condition_filter": "IsSkill, SingleTarget, TargetDead",
+                "condition_filter": "ActiveSkill, SingleTarget",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
             }

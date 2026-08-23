@@ -252,7 +252,10 @@ public abstract class ShopPanelBase : MonoBehaviour
                         {
                             UUID = System.Guid.NewGuid().ToString(),
                             TemplateID = itemId,
-                            Level = 1
+                            Level = 1,
+                            Rare = itemConfig.Rarity,
+                            Equip = "",
+                            MainStatType = StatType.None
                         });
                     }
                 }
@@ -286,9 +289,17 @@ public abstract class ShopPanelBase : MonoBehaviour
             }
         }
 
-        if (rewards.Count > 0 && uiManager != null)
+        if (rewards.Count > 0)
         {
-            uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+            if (saveSystem != null)
+            {
+                saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            }
+
+            if (uiManager != null)
+            {
+                uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+            }
         }
     }
 }

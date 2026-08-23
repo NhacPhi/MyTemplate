@@ -30,7 +30,7 @@ public static class DamageFormular
 
         var sourceAtk = sourceStats.GetStat(StatType.ATK);
 
-        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
+        float damageResult = (sourceAtk.Value * damageBonus.DamageMultiplier) + damageBonus.FlatValue;
 
         // Cơ chế Diệt Giáp Ảo (Shield Breaker): x2 Sát Thương khi mục tiêu đang có Giáp Ảo
         if (damageBonus.Tags != null && (damageBonus.Tags.Contains("ShieldBreaker") || damageBonus.Tags.Contains("DoubleDamageOnShield")))
@@ -130,7 +130,7 @@ public static class DamageFormular
         if (sourceStats == null || targetStats == null) return 0;
 
         var sourceAtk = sourceStats.GetStat(StatType.ATK);
-        float damageResult = sourceAtk.Value * damageBonus.DamageMultiplier;
+        float damageResult = (sourceAtk.Value * damageBonus.DamageMultiplier) + damageBonus.FlatValue;
 
         if (damageBonus.Tags != null && (damageBonus.Tags.Contains("ShieldBreaker") || damageBonus.Tags.Contains("DoubleDamageOnShield")))
         {

@@ -1127,6 +1127,10 @@ public static class LocKeys
 
     public const long STR_ARMOR_06 = 3064201947;
 
+    public const long STR_ARMOR_07 = 2351867219;
+
+    public const long STR_ARMOR_08 = 280823560;
+
     public const long STR_HELMET = 2546173843;
 
     public const long STR_CHESTPLATE = 3433781603;

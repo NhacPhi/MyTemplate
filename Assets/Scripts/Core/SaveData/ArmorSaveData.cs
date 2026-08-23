@@ -21,7 +21,7 @@ public class ArmorSaveData
     public List<RolledSubStat> Substats;
 
     [JsonProperty("main_stat_type")]
-    public StatType MainStatType;
+    public StatType MainStatType = StatType.None;
 
     [JsonProperty("equip")]
     public string Equip;

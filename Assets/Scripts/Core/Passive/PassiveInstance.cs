@@ -85,7 +85,20 @@ public class PassiveInstance : IDisposable
                         {
                             foreach (var t in tags) eventTags.Add(t);
                         }
-                        eventTags.Add("IsSkill");
+
+                        bool isBasic = (tags != null && tags.Contains("BasicAttack")) ||
+                                       (BattleManager.Instance != null && BattleManager.Instance.CurrentSkill == SkillCharacter.Base);
+                        if (!isBasic)
+                        {
+                            eventTags.Add("ActiveSkill");
+                            eventTags.Add("IsSkill");
+                        }
+                        else
+                        {
+                            eventTags.Add("BasicAttack");
+                        }
+
+                        eventTags.Add("SingleTarget");
                         TriggerPassiveEffect(evtConfig, ownerEntity, target != null ? target.transform : null, damage, eventTags);
                     };
                     break;
@@ -98,7 +111,39 @@ public class PassiveInstance : IDisposable
                         var tags = new HashSet<string>();
                         tags.Add("ActiveSkill");
                         tags.Add("IsSkill");
-                        tags.Add("SingleTarget");
+
+                        // Kiểm tra kỹ năng vừa thi triển là Đơn Mục Tiêu (SingleTarget) hay Diện Rộng (AOE)
+                        bool isAOE = false;
+                        if (entity != null && entity.Targets != null && entity.Targets.Count > 1)
+                        {
+                            isAOE = true;
+                        }
+
+                        if (BattleManager.Instance != null && entity != null)
+                        {
+                            var skillComp = entity.GetCoreComponent<EntitySkill>();
+                            var curSkill = skillComp != null ? skillComp.GetSkill(BattleManager.Instance.CurrentSkill) : null;
+                            if (curSkill != null && curSkill.GetSkillData() != null)
+                            {
+                                var tType = curSkill.GetSkillData().TargetType;
+                                if (tType == SkillTargetType.AllEnemies || tType == SkillTargetType.AllAllies || tType == SkillTargetType.EnemyColumn || tType == SkillTargetType.EnemyRow)
+                                {
+                                    isAOE = true;
+                                }
+                            }
+                        }
+
+                        if (isAOE)
+                        {
+                            tags.Add("AOE");
+                            tags.Add("AllEnemies");
+                            tags.Add("MultiTarget");
+                        }
+                        else
+                        {
+                            tags.Add("SingleTarget");
+                        }
+
                         if (tgtObj != null)
                         {
                             var tgtEntity = tgtObj.GetComponent<Entity>();

@@ -14,9 +14,24 @@ public class HPScalingDamageEffectHandler : IEffectHandler
         var stats = source.GetCoreComponent<EntityStats>();
         if (stats == null) return;
 
-        float maxHp = (stats.GetStat(StatType.HP) != null && stats.GetStat(StatType.HP).Value > 0)
-            ? stats.GetStat(StatType.HP).Value
-            : 0f;
+        float maxHp = 0f;
+        var hpStat = stats.GetStat(StatType.HP);
+        if (hpStat != null && hpStat.Value > 0)
+        {
+            maxHp = hpStat.Value;
+        }
+        else
+        {
+            var hpAttr = stats.GetAttribute(AttributeType.Hp);
+            if (hpAttr != null && hpAttr.MaxValue > 0)
+            {
+                maxHp = hpAttr.MaxValue;
+            }
+            else if (hpAttr != null && hpAttr.Value > 0)
+            {
+                maxHp = hpAttr.Value;
+            }
+        }
 
         // effectValue là phần trăm (Ví dụ: 30 = 30% Max HP)
         float additionalFlatDamage = (effectValue / 100f) * maxHp;
@@ -27,5 +42,7 @@ public class HPScalingDamageEffectHandler : IEffectHandler
             bonus.FlatValue += additionalFlatDamage;
             context.DamageBonus = bonus;
         }
+
+        Debug.Log($"[HPScalingDamage] {source.name} thi triển Tuyệt Kỹ: Kích hoạt +{effectValue}% Máu Tối Đa (MaxHP = {maxHp:N0}) -> Sát thương phẳng cộng thêm: +{additionalFlatDamage:N0} Flat DMG!");
     }
 }

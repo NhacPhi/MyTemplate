@@ -74,10 +74,11 @@ public static class PassiveEventListener
                 continue;
             }
 
-            // 2. Kiểm tra điều kiện Kỹ năng (IsSkill)
-            if (requiredTag.Equals("IsSkill", System.StringComparison.OrdinalIgnoreCase))
+            // 2. Kiểm tra điều kiện Kỹ năng Chủ động (ActiveSkill / IsSkill) - Không áp dụng cho Đòn Đánh Thường (BasicAttack)
+            if (requiredTag.Equals("ActiveSkill", System.StringComparison.OrdinalIgnoreCase) ||
+                requiredTag.Equals("IsSkill", System.StringComparison.OrdinalIgnoreCase))
             {
-                if (context.HasTag("ActiveSkill") || context.HasTag("MajorSkill") || context.HasTag("UltimateSkill") || context.HasTag("IsSkill") || context.HasTag("Skill"))
+                if ((context.HasTag("ActiveSkill") || context.HasTag("MajorSkill") || context.HasTag("UltimateSkill")) && !context.HasTag("BasicAttack"))
                 {
                     continue;
                 }
@@ -87,16 +88,42 @@ public static class PassiveEventListener
             // 3. Kiểm tra điều kiện Target sống / chết
             if (requiredTag.Equals("TargetDead", System.StringComparison.OrdinalIgnoreCase))
             {
-                if (context.Target != null && context.Target.GetCoreComponent<EntityStats>() != null && context.Target.GetCoreComponent<EntityStats>().IsDead)
+                if (context.Target != null)
                 {
-                    continue;
+                    var targetStats = context.Target.GetCoreComponent<EntityStats>();
+                    if (targetStats != null)
+                    {
+                        var hpAttr = targetStats.GetAttribute(AttributeType.Hp);
+                        if (targetStats.IsDead || (hpAttr != null && hpAttr.Value <= 0))
+                        {
+                            continue;
+                        }
+                    }
                 }
                 return false;
             }
 
             if (requiredTag.Equals("TargetAlive", System.StringComparison.OrdinalIgnoreCase))
             {
-                if (context.Target != null && context.Target.GetCoreComponent<EntityStats>() != null && !context.Target.GetCoreComponent<EntityStats>().IsDead)
+                if (context.Target != null)
+                {
+                    var targetStats = context.Target.GetCoreComponent<EntityStats>();
+                    if (targetStats != null)
+                    {
+                        var hpAttr = targetStats.GetAttribute(AttributeType.Hp);
+                        if (!targetStats.IsDead && (hpAttr == null || hpAttr.Value > 0))
+                        {
+                            continue;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            // 3.5. Kiểm tra điều kiện Đơn Mục Tiêu (SingleTarget)
+            if (requiredTag.Equals("SingleTarget", System.StringComparison.OrdinalIgnoreCase))
+            {
+                if (context.HasTag("SingleTarget") || context.Target != null)
                 {
                     continue;
                 }

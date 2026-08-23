@@ -87,7 +87,6 @@ public class SkillCharacterUIManager : MonoBehaviour
 
         if (_baseSkill != null)
         {
-            _baseSkill.ActiveToggle(true);
             _baseSkill.SetIconSkill(characterConfig.BaseSkillIcon);
         }
         if (_majorSkill != null)

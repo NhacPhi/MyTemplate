@@ -252,17 +252,20 @@ public class GameDataBase
 
     public ItemConfig GetItemConfig(string key)
     {
+        if (string.IsNullOrEmpty(key) || ItemConfigs == null) return null;
         ItemConfigs.TryGetValue(key, out ItemConfig item);
         return item;
     }
     public CharacterConfig GetCharacterConfig(string key)
     {
+        if (string.IsNullOrEmpty(key) || CharacterConfigs == null) return null;
         CharacterConfigs.TryGetValue(key, out CharacterConfig character);
         return character;
     }
 
     public BattleConfig GetBattleConfig(string key)
     {
+        if (string.IsNullOrEmpty(key) || BattleConfigs == null) return null;
         BattleConfigs.TryGetValue(key, out BattleConfig battleConfig);
         return battleConfig;
     }

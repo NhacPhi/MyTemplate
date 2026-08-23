@@ -91,20 +91,22 @@ public class CharacterUI : MonoBehaviour
         }
         avatars.Clear();
 
-        // 1. Copy và sắp xếp danh sách nhân vật
+        // 1. Copy và sắp xếp danh sách nhân vật theo LỰC CHIẾN (Combat Power) giảm dần
         var sortedCharacters = new List<CharacterSaveData>(save.Player.Roster.Characters);
         sortedCharacters.Sort((a, b) =>
         {
+            int powerA = playerCharacterManager != null ? playerCharacterManager.GetCharacterPower(a.ID) : 0;
+            int powerB = playerCharacterManager != null ? playerCharacterManager.GetCharacterPower(b.ID) : 0;
+            int powerComparison = powerB.CompareTo(powerA);
+            if (powerComparison != 0) return powerComparison;
+
             var configA = gameDataBase.GetCharacterConfig(a.ID);
             var configB = gameDataBase.GetCharacterConfig(b.ID);
-            
             if (configA == null || configB == null) return 0;
 
-            // Ưu tiên Rarity (Giảm dần: B so với A)
             int rarityComparison = configB.Rare.CompareTo(configA.Rare);
             if (rarityComparison != 0) return rarityComparison;
 
-            // Nếu cùng độ hiếm thì xét theo Level (Giảm dần)
             return b.Level.CompareTo(a.Level);
         });
 

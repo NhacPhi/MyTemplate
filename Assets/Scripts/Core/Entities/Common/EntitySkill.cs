@@ -80,7 +80,12 @@ public class EntitySkill : CoreComponent, IAsyncInitializer
 
     public async UniTask ExecuteSkillAsync(SkillCharacter type, int currentTurnID)
     {
-        await Skills.GetValueOrDefault(type).ExecuteAsync(core as Entity, currentTurnID);
+        var skill = Skills.GetValueOrDefault(type);
+        if (skill != null)
+        {
+            skill.PutOnCooldown();
+            await skill.ExecuteAsync(core as Entity, currentTurnID);
+        }
     }
 
     [Inject] PlayerCharacterManager _playerCharacterManager;

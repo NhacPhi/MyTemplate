@@ -907,7 +907,7 @@
         "armor_data": {
             "part": "Helmet",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "hp",
                 "value": 500.0,
@@ -924,7 +924,7 @@
         "armor_data": {
             "part": "Helmet",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "hp",
                 "value": 500.0,
@@ -958,6 +958,40 @@
         "armor_data": {
             "part": "Helmet",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor07_Helmet": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Helmet",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "hp",
+                "value": 500.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor08_Helmet": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Helmet",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "hp",
@@ -1009,7 +1043,7 @@
         "armor_data": {
             "part": "Chestplate",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "def",
                 "value": 40.0,
@@ -1026,7 +1060,7 @@
         "armor_data": {
             "part": "Chestplate",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "def",
                 "value": 40.0,
@@ -1060,6 +1094,40 @@
         "armor_data": {
             "part": "Chestplate",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor07_Chestplate": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Chestplate",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "def",
+                "value": 40.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor08_Chestplate": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Chestplate",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "def",
@@ -1111,7 +1179,7 @@
         "armor_data": {
             "part": "Gloves",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "atk",
                 "value": 50.0,
@@ -1128,7 +1196,7 @@
         "armor_data": {
             "part": "Gloves",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "atk",
                 "value": 50.0,
@@ -1162,6 +1230,40 @@
         "armor_data": {
             "part": "Gloves",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor07_Gloves": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Gloves",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "atk",
+                "value": 50.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor08_Gloves": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Gloves",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "atk",
@@ -1213,7 +1315,7 @@
         "armor_data": {
             "part": "Boots",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "speed",
                 "value": 3.0,
@@ -1230,7 +1332,7 @@
         "armor_data": {
             "part": "Boots",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "speed",
                 "value": 3.0,
@@ -1264,6 +1366,40 @@
         "armor_data": {
             "part": "Boots",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "speed",
+                "value": 3.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor07_Boots": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Boots",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "speed",
+                "value": 3.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor08_Boots": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Boots",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "speed",
@@ -1315,7 +1451,7 @@
         "armor_data": {
             "part": "Belt",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "hp",
                 "value": 3.5,
@@ -1332,7 +1468,7 @@
         "armor_data": {
             "part": "Belt",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "hp",
                 "value": 3.5,
@@ -1366,6 +1502,40 @@
         "armor_data": {
             "part": "Belt",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "hp",
+                "value": 3.5,
+                "mod_type": "Percent"
+            }
+        }
+    },
+    "Armor07_Belt": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Belt",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "hp",
+                "value": 3.5,
+                "mod_type": "Percent"
+            }
+        }
+    },
+    "Armor08_Belt": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Belt",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "hp",
@@ -1417,7 +1587,7 @@
         "armor_data": {
             "part": "Ring",
             "armor_set": "Armor03",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "crit_rate",
                 "value": 5.0,
@@ -1434,7 +1604,7 @@
         "armor_data": {
             "part": "Ring",
             "armor_set": "Armor04",
-            "substat_pool_id": "Warrior_Pool",
+            "substat_pool_id": "Tanker_Pool",
             "main_stat": {
                 "type": "crit_rate",
                 "value": 5.0,
@@ -1468,6 +1638,40 @@
         "armor_data": {
             "part": "Ring",
             "armor_set": "Armor06",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor07_Ring": {
+        "name_hash": 2351867219,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Ring",
+            "armor_set": "Armor07",
+            "substat_pool_id": "Assassin_Pool",
+            "main_stat": {
+                "type": "crit_rate",
+                "value": 5.0,
+                "mod_type": "Flat"
+            }
+        }
+    },
+    "Armor08_Ring": {
+        "name_hash": 280823560,
+        "description_hash": 0,
+        "use_hash": 0,
+        "item_type": "Armor",
+        "rarity": "Legendary",
+        "armor_data": {
+            "part": "Ring",
+            "armor_set": "Armor08",
             "substat_pool_id": "Warrior_Pool",
             "main_stat": {
                 "type": "crit_rate",

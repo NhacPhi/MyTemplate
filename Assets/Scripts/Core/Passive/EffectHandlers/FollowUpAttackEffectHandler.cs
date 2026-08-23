@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -12,11 +13,13 @@ public class FollowUpAttackEffectHandler : IEffectHandler
     {
         if (context == null || context.Source == null) return;
 
-        // Chống vòng lặp truy kích vô tận (chỉ kích hoạt từ đòn đánh chủ động, không kích hoạt từ phản đòn hoặc chính đòn truy kích)
-        if (context.Tags != null && (context.Tags.Contains("FollowUp") || context.Tags.Contains("CounterAttack"))) return;
+        // Chống vòng lặp truy kích và chặn kích hoạt trên kỹ năng diện rộng (AOE)
+        if (context.Tags != null && (context.Tags.Contains("FollowUp") || context.Tags.Contains("CounterAttack") || context.Tags.Contains("AOE") || context.Tags.Contains("AllEnemies") || context.Tags.Contains("MultiTarget"))) return;
 
         var source = context.Source;
-        var sourceStats = source.GetCoreComponent<EntityStats>();
+        if (source != null && source.Targets != null && source.Targets.Count > 1) return;
+
+        var sourceStats = source != null ? source.GetCoreComponent<EntityStats>() : null;
         if (sourceStats == null || sourceStats.IsDead) return;
 
         // Tìm mục tiêu kẻ địch bị truy kích (ưu tiên context.Target, nếu không thì lấy source.Target)
@@ -65,9 +68,12 @@ public class FollowUpAttackEffectHandler : IEffectHandler
 
                 // Gán lại mục tiêu cho Caster
                 source.SetTarget(enemyTarget);
+                source.HandleTurn(enemyTarget);
 
                 // Hiển thị chữ [Truy Kích] màu cam rực rỡ trên đầu nhân vật
-                string followUpText = LocalizationManager.Instance.GetLocalizedValue("STR_PURSUIT_ATTACK");
+                string followUpText = LocalizationManager.Instance != null 
+                    ? LocalizationManager.Instance.GetLocalizedValue("STR_PURSUIT_ATTACK") 
+                    : "Truy Kích";
                 if (string.IsNullOrEmpty(followUpText) || followUpText == "STR_PURSUIT_ATTACK")
                 {
                     followUpText = "Truy Kích";
@@ -75,30 +81,51 @@ public class FollowUpAttackEffectHandler : IEffectHandler
 
                 UIEvent.TextPopup?.Invoke(followUpText, source.transform.position + Vector3.up * 1.5f, new Color(1f, 0.45f, 0.1f));
 
-                // Chờ ngắn để hiển thị hiệu ứng Text Popup
-                await UniTask.Delay(250);
+                await UniTask.Delay(150, cancellationToken: source.transform.GetCancellationTokenOnDestroy());
 
-                // Lấy kỹ năng đánh thường (BaseSkill) của nhân vật để thực thi
-                var skillComp = source.GetCoreComponent<EntitySkill>();
-                var baseSkill = skillComp != null ? skillComp.GetSkill(SkillCharacter.Base) : null;
-
-                if (baseSkill != null)
+                var state = source.GetCoreComponent<EntityStateData>();
+                if (state != null)
                 {
-                    int turnId = BattleManager.Instance != null ? BattleManager.Instance.GlobalTurnID : 0;
-                    await baseSkill.ExecuteAsync(source, turnId);
+                    state.CurrentTarget = enemyTarget;
+                    state.HandleTurn();
+
+                    source.StateManager.ChangeState(EntityState.MOVE_UP);
+                    await state.WaitForMoveEnd();
+
+                    source.StateManager.ChangeState(EntityState.ATTACK);
+                    
+                    var skillComp = source.GetCoreComponent<EntitySkill>();
+                    var baseSkill = skillComp != null ? skillComp.GetSkill(SkillCharacter.Base) : null;
+                    string sound = baseSkill != null && baseSkill.GetSkillData() != null ? baseSkill.GetSkillData().Sound : null;
+                    if (!string.IsNullOrEmpty(sound))
+                    {
+                        source.PlaySFX(sound);
+                    }
+
+                    await state.WaitForHitFrame();
+
+                    // Đòn truy kích: đúng chuẩn 60% ATK (0.6f)
+                    var followUpDamage = new DamageBonus()
+                    {
+                        DamageMultiplier = 0.6f,
+                        Tags = new HashSet<string> { "BasicAttack", "FollowUp", "PursuitAttack" }
+                    };
+
+                    DamageFormular.DealDamage(followUpDamage, source, enemyTarget);
+
+                    await state.WaitForAnimEnd();
+
+                    source.StateManager.ChangeState(EntityState.MOVE_DOWN);
+                    await state.WaitForMoveEnd();
                 }
                 else
                 {
-                    // Fallback an toàn nếu nhân vật không có BaseSkill
-                    DamageBonus bonus = new DamageBonus
+                    var followUpDamage = new DamageBonus()
                     {
-                        DamageMultiplier = 1.0f,
-                        CritRateBonus = 0,
-                        CritDmgBonus = 0,
-                        PenetrationBonus = 0
+                        DamageMultiplier = 0.6f,
+                        Tags = new HashSet<string> { "BasicAttack", "FollowUp", "PursuitAttack" }
                     };
-                    bonus.AddTag("FollowUp");
-                    DamageFormular.DealDamage(bonus, source, enemyTarget);
+                    DamageFormular.DealDamage(followUpDamage, source, enemyTarget);
                 }
             });
         }

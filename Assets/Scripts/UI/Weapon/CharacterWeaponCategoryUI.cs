@@ -71,8 +71,11 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
             var obj = Instantiate(prefabsUI, content.transform);
             var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
 
-            Sprite avatar = item.Equip != "" ? gameDataBase.GetCharacterConfig(item.Equip).Icon : null;
-            obj.GetComponent<WeaponCategoryUI>().Init(item.UUID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
+            Sprite avatar = !string.IsNullOrEmpty(item.Equip) ? gameDataBase.GetCharacterConfig(item.Equip)?.Icon : null;
+            Sprite icon = weaponConfig != null ? weaponConfig.Icon : null;
+            Sprite iconBG = weaponConfig != null ? weaponConfig.IconBG : null;
+            Rare rarity = weaponConfig != null ? weaponConfig.Rarity : Rare.Common;
+            obj.GetComponent<WeaponCategoryUI>().Init(item.UUID, rarity, icon, iconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
             obj.gameObject.SetActive(true);
             weapons.Add(obj);
         }
@@ -108,9 +111,11 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
 
             //Init data
             var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
-            Sprite avatar = item.Equip != "" ? gameDataBase.GetCharacterConfig(item.Equip).Icon : null;
-            weaponUI.Init(item.UUID, weaponConfig.Rarity, weaponConfig.Icon,
-                weaponConfig.IconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
+            Sprite avatar = !string.IsNullOrEmpty(item.Equip) ? gameDataBase.GetCharacterConfig(item.Equip)?.Icon : null;
+            Sprite icon = weaponConfig != null ? weaponConfig.Icon : null;
+            Sprite iconBG = weaponConfig != null ? weaponConfig.IconBG : null;
+            Rare rarity = weaponConfig != null ? weaponConfig.Rarity : Rare.Common;
+            weaponUI.Init(item.UUID, rarity, icon, iconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
         }
 
         for(int i = inventoryWeapons.Count; i < weapons.Count; i++)

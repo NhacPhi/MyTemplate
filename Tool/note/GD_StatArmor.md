@@ -59,16 +59,20 @@ Hệ thống quản lý trang bị hiện tại được chia thành 2 phần ch
 
 ---
 
-## 🧩 3. THIẾT KẾ CẢI TIẾN SET BONUS (BỘ GIÁP)
+## 🧩 3. THIẾT KẾ CÂN BẰNG TOÀN BỘ 8 BỘ TRANG BỊ (8 ARMOR SETS MATRIX)
 
-Khắc phục hạn chế của hệ thống cũ (bắt buộc đủ 6 món mới được $+15\%$ ATK). Chuyển sang cơ chế mốc **2 món** và **4/6 món**:
+Hệ thống 8 Bộ Giáp được chuẩn hóa toàn diện theo các Class và vai trò chiến thuật trong game:
 
-| Bộ Giáp (Armor Set) | Định hướng Archetype | Kích hoạt 2 món (Bonus 2-pc) | Kích hoạt 4/6 món (Bonus 4/6-pc) | Tác dụng chiến thuật khi đánh Boss |
-| :--- | :--- | :--- | :--- | :--- |
-| **Guardian Set (Bảo Vệ)** | Tanker / Chống chịu | $+15\%$ DEF / $+10\%$ Max HP | Giảm $15\%$ Sát thương nhận từ Boss (Damage Reduction) | Nhân vật không bị Boss solo 1-hit chết |
-| **Vanguard Set (Cuồng Phong)** | Fighter / Đấu sĩ | $+12\%$ ATK | $+10\%$ Lifesteal (Hút máu) | Có khả năng hồi phục duy trì nhịp đánh với Boss |
-| **Shadow Set (Bóng Đêm)** | Assassin / Bạo kích | $+10\%$ Crit Rate | $+35\%$ Crit DMG & $+15\%$ Armor Pen | Đánh xuyên giáp bùng nổ damage kết liễu Boss |
-| **Archmage Set (Pháp Sư)** | Mage / Xả chiêu | $+15\%$ Skill DMG | $-15\%$ Cooldown Reduction (CDR) | Xả skill liên tục ngắt nhịp tung chiêu của Boss |
+| Mã Set | Tên Bộ Giáp (VI / EN) | Phẩm Cấp | Phân Lớp Archetype | Kích Hoạt (6 Món) | Nhân Vật Phù Hợp |
+| :---: | :--- | :---: | :--- | :--- | :--- |
+| **Set 01**<br>`Armor01` | **Kim Vũ Long Lân Khải**<br>*Golden Dragon-Scale* | `Legendary` | 👑 **Đệ Nhất Đấu Sĩ (Fighter ATK)** | `+20.0% ATK` & `+15.0% CRIT_DMG` | Tôn Ngộ Không, Dương Tiễn |
+| **Set 02**<br>`Armor02` | **Hồng Vân Tịnh Đới**<br>*Red Celestial Girdle* | `Rare` | 🪽 **Hỗ Trợ Tốc Độ (Support)** | `+8.0% SPEED` & `+10.0% HP` | Quan Âm Bồ Tát, Đông Hải Long Vương, Đường Tăng |
+| **Set 03**<br>`Armor03` | **Quan Thiên Cương**<br>*Celestial Vanguard* | `Uncommon` | 🩸 **Tanker Bể Máu (Tanker HP)** | `+20.0% HP` | Trư Bát Giới, Sa Tăng, Lý Tịnh |
+| **Set 04**<br>`Armor04` | **Viêm Ngưu Thần Khải**<br>*Inferno Minotaur Divine* | `Epic` | 🛡️ **Tanker Chống Chịu (Tanker HP/DEF)** | `+10.0% HP` & `+10.0% DEF` | Ngưu Ma Vương, Lý Tịnh |
+| **Set 05**<br>`Armor05` | **Trọng Sơn Trấn Nhạc**<br>*Mountain-Subduing* | `Common` | ⚔️ **Tân Thủ Cơ Bản (Starter)** | `+8.0% ATK` & `+8.0% HP` | Mọi tướng giai đoạn đầu game |
+| **Set 06**<br>`Armor06` | **Hoàng Kim Nữ Vương Giáp**<br>*Golden Empress* | `Epic` | 🔮 **Pháp Sư (Mage / Spell & Crit DMG)** | `+15.0% ATK` & `+15.0% CRIT_DMG` | Thiết Phiến Công Chúa, Đường Tam Tạng |
+| **Set 07**<br>`Armor07` | **Huyết Chiến Vương Giáp**<br>*Blood-Battle Lord's Armor* | `Legendary` | 🗡️ **Sát Thủ Chí Mạng (Assassin)** | `+10.0% CRIT_RATE` & `+20.0% CRIT_DMG` | Na Tra, Lục Nhĩ Mỹ Hầu, The Boy Sage, Kim Giác |
+| **Set 08**<br>`Armor08` | **Thanh Long Bố Lân Bào**<br>*Azure Dragon Scaled Robe* | `Legendary` | 🐉 **Đấu Sĩ Xuyên Phá (Fighter Pen)** | `+12.0% ATK` & `+10.0% PENETRATION` | Dương Tiễn, Tôn Ngộ Không, Tiểu Bạch Long |
 
 ---
 

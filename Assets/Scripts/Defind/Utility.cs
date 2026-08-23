@@ -123,6 +123,7 @@ public static class Utility
         if (IsPercentStat(statType, modType))
         {
             if (statType == StatType.CRIT_RATE || statType == StatType.CRIT_DMG) return 2.5f;
+            if (statType == StatType.PENETRATION) return 1.5f;
             return 3.5f;
         }
         else

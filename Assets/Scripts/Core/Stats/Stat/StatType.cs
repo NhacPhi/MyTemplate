@@ -2,7 +2,8 @@ using System;
 
 public enum StatType
 {
-    HP,// MaxHP
+    None = 0,
+    HP,
     ATK,
     DEF,
     SPEED,
@@ -13,6 +14,5 @@ public enum StatType
     CRIT_DMG_RES,
     SHIELD,
     EHR, //Effect Hit Rate
-    RES,
-    None
+    RES
 }

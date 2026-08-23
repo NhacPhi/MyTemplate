@@ -34,10 +34,22 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
     public async UniTask PerformSkillAsync(SkillData config, Entity caster)
     {
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        var enemy = GetValidSingleTarget(caster);
+        if (enemy == null)
+        {
+            PutOnCooldown();
+            return;
+        }
+
         caster.HandleTurn(enemy);
 
         var state = caster.GetCoreComponent<EntityStateData>();
+        if (state == null)
+        {
+            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            PutOnCooldown();
+            return;
+        }
 
         caster.StateManager.ChangeState(EntityState.MOVE_UP);
 

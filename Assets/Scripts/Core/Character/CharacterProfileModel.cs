@@ -583,7 +583,8 @@ public class CharacterProfileModel : IStatProvider
     }
 
     /// <summary>
-    /// Tính toán Tổng Điểm Chiến Lực (Combat Power) của nhân vật dựa theo công thức Damage & EHP thực chiến.
+    /// Tính toán Tổng Điểm Chiến Lực (Combat Power) chuẩn hóa cân bằng giữa tất cả các hệ (Sát Thủ, Đấu Sĩ, Tanker, Hỗ Trợ).
+    /// Tôn vinh phẩm cấp (UR > SSR > SR > R) và phân bổ công bằng giữa Tấn Công (ATK), Sinh Tồn (HP/DEF), Tốc Độ và Tiện Ích.
     /// </summary>
     public int CalculatePower()
     {
@@ -601,27 +602,38 @@ public class CharacterProfileModel : IStatProvider
         float ehr = GetTotalStat(StatType.EHR);
         float res = GetTotalStat(StatType.RES);
 
-        // 1. Điểm Tấn Công (Offensive Rating)
-        // Base Crit DMG = 150% (tức là bonus +50% khi nổ bạo kích)
-        float critMultiplier = 1.0f + (critRate / 100f) * ((50f + critDmg) / 100f);
-        float penFactor = 1.0f + (pen / 100f) + (defShred / 100f);
-        float offensivePower = atk * critMultiplier * penFactor;
+        // 1. Điểm Tấn Công (Offensive Rating) - Trọng số chuẩn RPG (ATK x5.0 cùng đóng góp Bạo Kích & Xuyên Giáp)
+        float critPower = atk * (critRate / 100f) * (critDmg / 100f) * 1.2f;
+        float penPower = atk * (pen / 100f) * 0.8f + (defShred * 30.0f);
+        float offensiveRating = (atk * 5.0f) + critPower + penPower;
 
-        // 2. Điểm Sinh Tồn (Defensive Rating / Effective HP)
-        // EHP = HP * (1 + DEF / 400), quy đổi theo tỷ lệ HP/ATK (2.5)
-        float ehp = hp * (1.0f + (def / 400f));
-        float critResFactor = 1.0f + (critRes / 100f);
-        float defensivePower = (ehp / 2.5f) * critResFactor;
+        // 2. Điểm Sinh Tồn (Defensive Rating) - Bể Máu (HP x1.2) và Giáp Trụ (DEF x8.0)
+        float critResPower = hp * (critRes / 100f) * 0.3f;
+        float defensiveRating = (hp * 1.2f) + (def * 8.0f) + critResPower;
 
-        // 3. Hệ Số Tốc Độ & Tiện Ích (Speed & Utility Factor)
-        float speedFactor = speed / 100f;
-        float utilityPoints = (ehr * 15f) + (res * 15f);
+        // 3. Hệ Số Tốc Độ Chuẩn Hóa (0.6 + 0.4 * Spd / 100)
+        float speedFactor = 0.6f + (speed / 100f) * 0.4f;
 
-        // 4. Điểm Thức Tỉnh Sao (Star Level Bonus)
+        // 4. Hệ số Phẩm Cấp (Rarity Prestige Multiplier) tôn vinh UR > SSR > SR > R
+        float rarityMult = 1.0f;
+        if (BaseConfig != null)
+        {
+            switch (BaseConfig.Rare)
+            {
+                case CharacterRare.UR: rarityMult = 1.25f; break;
+                case CharacterRare.SSR: rarityMult = 1.00f; break;
+                case CharacterRare.SR: rarityMult = 0.85f; break;
+                case CharacterRare.R: rarityMult = 0.70f; break;
+            }
+        }
+
+        // 5. Tiện Ích & Sao Thức Tỉnh (Utility & Star Bonus)
+        float utilityPoints = (ehr + res) * 20.0f;
         int starLevel = SaveData != null ? SaveData.StarUp : 0;
-        float starBonus = starLevel * 250f;
+        float starBonus = starLevel * 2000.0f;
 
-        float totalPower = (offensivePower + defensivePower) * speedFactor + utilityPoints + starBonus;
+        float baseCombatPower = (offensiveRating + defensiveRating) * speedFactor + utilityPoints;
+        float totalPower = baseCombatPower * rarityMult + starBonus;
 
         return Mathf.Max(1, Mathf.RoundToInt(totalPower));
     }

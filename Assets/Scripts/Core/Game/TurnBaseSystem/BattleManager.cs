@@ -289,6 +289,12 @@ public class BattleManager : MonoBehaviour
 
         if (_currentCaster == null) return;
 
+        // Chỉ cho phép highlight / làm mờ mục tiêu khi đang ở lượt chọn kỹ năng của Player (ActionState / BeginTurnBase)
+        if (StateMachine != null && StateMachine.CurrentState != null && !(StateMachine.CurrentState is ActionState || StateMachine.CurrentState is BeginTurnBase))
+        {
+            return;
+        }
+
         var entitySkill = _currentCaster.GetCoreComponent<EntitySkill>();
         if (entitySkill == null || entitySkill.Skills == null) return;
 

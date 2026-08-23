@@ -27,11 +27,22 @@ public class MeleeAttack : SkillRuntime, IAttackSkill
 
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        var enemy = GetValidSingleTarget(caster);
+        if (enemy == null)
+        {
+            PutOnCooldown();
+            return;
+        }
 
         caster.HandleTurn(enemy);
 
         var state = caster.GetCoreComponent<EntityStateData>();
+        if (state == null)
+        {
+            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            PutOnCooldown();
+            return;
+        }
 
         caster.StateManager.ChangeState(EntityState.MOVE_UP);
 

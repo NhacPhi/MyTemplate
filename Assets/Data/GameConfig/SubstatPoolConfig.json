@@ -45,8 +45,8 @@
             },
             {
                 "stat_type": "PENETRATION",
-                "min": 3.0,
-                "max": 8.0,
+                "min": 0.8,
+                "max": 2.0,
                 "modifier_type": "Percent",
                 "weight": 75
             },
@@ -66,8 +66,8 @@
             },
             {
                 "stat_type": "DEF_SHRED",
-                "min": 30.0,
-                "max": 90.0,
+                "min": 8.0,
+                "max": 24.0,
                 "modifier_type": "Flat",
                 "weight": 25
             },
@@ -151,15 +151,15 @@
             },
             {
                 "stat_type": "DEF_SHRED",
-                "min": 50.0,
-                "max": 150.0,
+                "min": 15.0,
+                "max": 40.0,
                 "modifier_type": "Flat",
                 "weight": 75
             },
             {
                 "stat_type": "PENETRATION",
-                "min": 4.0,
-                "max": 10.0,
+                "min": 1.0,
+                "max": 2.5,
                 "modifier_type": "Percent",
                 "weight": 40
             },

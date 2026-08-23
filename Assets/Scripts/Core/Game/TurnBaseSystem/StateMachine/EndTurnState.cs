@@ -12,6 +12,12 @@ public class EndTurnState : BattleBaseState
 
     public override void Enter()
     {
+        // Luôn khôi phục độ sáng và tắt vòng tròn hitbox cho toàn bộ nhân vật khi kết thúc lượt
+        if (battleManager != null && battleManager.TargetSystem != null && battleManager.ActiveEntities != null)
+        {
+            battleManager.TargetSystem.ResetTargetVisuals(battleManager.ActiveEntities);
+        }
+
         var stats = battleManager.CurrentCaster.GetCoreComponent<StatsController>();
         stats.ProcessEndOfTurn(battleManager.GlobalTurnID);
 

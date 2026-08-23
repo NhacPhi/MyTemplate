@@ -173,7 +173,10 @@ public class ResultState : BattleBaseState
                                         {
                                             UUID = System.Guid.NewGuid().ToString(),
                                             TemplateID = r.ItemID,
-                                            Level = 1
+                                            Level = 1,
+                                            Rare = itemConfig.Rarity,
+                                            Equip = "",
+                                            MainStatType = StatType.None
                                         };
                                         battleManager.InventoryManager.AddArmor(newArmor);
                                     }

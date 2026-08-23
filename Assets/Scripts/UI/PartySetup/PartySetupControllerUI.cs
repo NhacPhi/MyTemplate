@@ -10,6 +10,7 @@ public class PartySetupControllerUI : MonoBehaviour
 {
     [Inject] private SaveSystem _saveSystem;
     [Inject] private GameDataBase _gameData;
+    [Inject] private PlayerCharacterManager _playerCharacterManager;
 
     [SerializeField] private List<GameObject> _slotPositions;
 
@@ -62,19 +63,22 @@ public class PartySetupControllerUI : MonoBehaviour
             }
         }
 
+        // Sắp xếp danh sách nhân vật theo LỰC CHIẾN (Combat Power) giảm dần
         var sortedCharacters = new List<CharacterSaveData>(_saveSystem.Player.Roster.Characters);
         sortedCharacters.Sort((a, b) =>
         {
+            int powerA = _playerCharacterManager != null ? _playerCharacterManager.GetCharacterPower(a.ID) : 0;
+            int powerB = _playerCharacterManager != null ? _playerCharacterManager.GetCharacterPower(b.ID) : 0;
+            int powerComparison = powerB.CompareTo(powerA);
+            if (powerComparison != 0) return powerComparison;
+
             var configA = _gameData.GetCharacterConfig(a.ID);
             var configB = _gameData.GetCharacterConfig(b.ID);
-            
             if (configA == null || configB == null) return 0;
 
-            // Ưu tiên Rarity (Giảm dần: B so với A)
             int rarityComparison = configB.Rare.CompareTo(configA.Rare);
             if (rarityComparison != 0) return rarityComparison;
 
-            // Nếu cùng độ hiếm thì xét theo Level (Giảm dần)
             return b.Level.CompareTo(a.Level);
         });
 

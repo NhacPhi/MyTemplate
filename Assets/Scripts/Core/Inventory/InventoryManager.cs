@@ -48,7 +48,10 @@ public class InventoryManager : IDisposable
                     {
                         UUID = System.Guid.NewGuid().ToString(),
                         TemplateID = itemID,
-                        Level = 1
+                        Level = 1,
+                        Rare = config.Rarity,
+                        Equip = "",
+                        MainStatType = StatType.None
                     });
                 }
             }
@@ -216,7 +219,25 @@ public class InventoryManager : IDisposable
         var config = _gameDataBase.GetItemConfig(armor.TemplateID);
         if (config == null || config.Type != ItemType.Armor || config.Armor == null) return;
 
-        if (armor.MainStatType == StatType.None)
+        armor.Rare = config.Rarity;
+        if (armor.Equip == null) armor.Equip = "";
+
+        // 1. Phân loại chỉ số chính (Main Stat):
+        // 3 Món Giáp thân trên: Cố định 100% theo đúng chuẩn
+        if (config.Armor.Part == ArmorPart.Helmet)
+        {
+            armor.MainStatType = StatType.HP;
+        }
+        else if (config.Armor.Part == ArmorPart.Chestplate)
+        {
+            armor.MainStatType = StatType.DEF;
+        }
+        else if (config.Armor.Part == ArmorPart.Gloves)
+        {
+            armor.MainStatType = StatType.ATK;
+        }
+        // 3 Món Thân dưới & Phụ kiện (Boots, Belt, Ring): Random ngẫu nhiên nếu chưa có
+        else if (armor.MainStatType == StatType.None)
         {
             armor.MainStatType = GetRandomMainStatType(config.Armor.Part, config.Armor.MainStat?.Type ?? StatType.ATK);
         }

@@ -4,14 +4,38 @@
         "pieces": 6,
         "stat": "atk",
         "value": 20.0,
-        "modifier_type": "Percent"
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "atk",
+                "value": 20.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "crit_dmg",
+                "value": 15.0,
+                "modifier_type": "Percent"
+            }
+        ]
     },
     "Armor02": {
         "name_hash": 2070463015,
         "pieces": 6,
-        "stat": "atk",
-        "value": 15.0,
-        "modifier_type": "Percent"
+        "stat": "speed",
+        "value": 8.0,
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "speed",
+                "value": 8.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "hp",
+                "value": 10.0,
+                "modifier_type": "Percent"
+            }
+        ]
     },
     "Armor03": {
         "name_hash": 383522891,
@@ -43,14 +67,76 @@
         "name_hash": 3189975230,
         "pieces": 6,
         "stat": "atk",
-        "value": 15.0,
-        "modifier_type": "Percent"
+        "value": 8.0,
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "atk",
+                "value": 8.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "hp",
+                "value": 8.0,
+                "modifier_type": "Percent"
+            }
+        ]
     },
     "Armor06": {
         "name_hash": 3064201947,
         "pieces": 6,
         "stat": "atk",
         "value": 15.0,
-        "modifier_type": "Percent"
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "atk",
+                "value": 15.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "crit_dmg",
+                "value": 15.0,
+                "modifier_type": "Percent"
+            }
+        ]
+    },
+    "Armor07": {
+        "name_hash": 2351867219,
+        "pieces": 6,
+        "stat": "crit_rate",
+        "value": 10.0,
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "crit_rate",
+                "value": 10.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "crit_dmg",
+                "value": 20.0,
+                "modifier_type": "Percent"
+            }
+        ]
+    },
+    "Armor08": {
+        "name_hash": 280823560,
+        "pieces": 6,
+        "stat": "atk",
+        "value": 12.0,
+        "modifier_type": "Percent",
+        "stats": [
+            {
+                "stat": "atk",
+                "value": 12.0,
+                "modifier_type": "Percent"
+            },
+            {
+                "stat": "penetration",
+                "value": 10.0,
+                "modifier_type": "Percent"
+            }
+        ]
     }
 }

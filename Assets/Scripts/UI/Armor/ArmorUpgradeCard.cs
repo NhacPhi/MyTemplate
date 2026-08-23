@@ -278,11 +278,11 @@ public class ArmorUpgradeCard : MonoBehaviour
                 }
             }
 
-            var slot = subStatSlots.FirstOrDefault(s => s.Type == sub.Type);
+            var slot = subStatSlots[i];
             if (slot != null)
             {
                 slot.gameObject.SetActive(true);
-                slot.UpdateStat(sub.Value, sub.Level, sub.ModifierType);
+                slot.UpdateStat(sub.Type, sub.Value, sub.Level, sub.ModifierType, gameDataBase);
             }
         }
     }

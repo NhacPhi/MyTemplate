@@ -15,14 +15,7 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
     public override DamageBonus CalculateRawDamage()
     {
-        var bonus = base.CalculateRawDamage();
-        if (bonus.Tags == null) bonus.Tags = new HashSet<string>();
-        bonus.Tags.Add("UltimateSkill");
-        if (skillData != null && skillData.ID == "LittleWhiteDragon_U")
-        {
-            bonus.Tags.Add("ShieldBreaker");
-        }
-        return bonus;
+        return base.CalculateRawDamage();
     }
 
     public void OnDealDamage(ref float damageInput)
@@ -32,11 +25,22 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        var enemy = caster.Target.gameObject.GetComponent<Entity>();
+        var enemy = GetValidSingleTarget(caster);
+        if (enemy == null)
+        {
+            PutOnCooldown();
+            return;
+        }
 
         caster.HandleTurn(enemy);
 
         var state = caster.GetCoreComponent<EntityStateData>();
+        if (state == null)
+        {
+            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            PutOnCooldown();
+            return;
+        }
 
         caster.StateManager.ChangeState(EntityState.MOVE_UP);
 
@@ -48,7 +52,8 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         await state.WaitForHitFrame();
 
-        if (!enemy.GetCoreComponent<EntityStats>().IsDead)
+        var enemyStats = enemy.GetCoreComponent<EntityStats>();
+        if (enemyStats != null && !enemyStats.IsDead)
         {
             ApplyEffectsToTarget(caster, currentTurnID);
         }

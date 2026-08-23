@@ -84,25 +84,25 @@ class CharacterConfigBuilder(BaseBuilder):
         rarity_mult = {'R': 1.0, 'SR': 1.2, 'SSR': 1.45, 'UR': 1.7}
         rarity_tier = {'R': 0, 'SR': 1, 'SSR': 2, 'UR': 3}
         role_base_data = {
-            'Tanker':   {'hp': 4000, 'atk': 900,  'def': 375, 'speed': 80,  'crit_rate': 5,  'crit_dmg': 0,  'def_shred': 0,  'penetration': 0, 'crit_dmg_res': 5},
-            'Fighter':  {'hp': 2750, 'atk': 1650, 'def': 275, 'speed': 90,  'crit_rate': 5,  'crit_dmg': 5,  'def_shred': 5,  'penetration': 2, 'crit_dmg_res': 0},
-            'Assassin': {'hp': 2500, 'atk': 2250, 'def': 250, 'speed': 105, 'crit_rate': 10, 'crit_dmg': 15, 'def_shred': 10, 'penetration': 5, 'crit_dmg_res': 0},
-            'Mage':     {'hp': 2250, 'atk': 2100, 'def': 210, 'speed': 95,  'crit_rate': 5,  'crit_dmg': 10, 'def_shred': 0,  'penetration': 5, 'crit_dmg_res': 0},
-            'Support':  {'hp': 3000, 'atk': 1050, 'def': 250, 'speed': 100, 'crit_rate': 5,  'crit_dmg': 0,  'def_shred': 0,  'penetration': 0, 'crit_dmg_res': 3},
-            'ADCarry':  {'hp': 2200, 'atk': 2200, 'def': 220, 'speed': 100, 'crit_rate': 8,  'crit_dmg': 10, 'def_shred': 5,  'penetration': 4, 'crit_dmg_res': 0}
+            'Tanker':   {'hp': 4000, 'atk': 900,  'def': 375, 'speed': 80,  'crit_rate': 5, 'crit_dmg': 0, 'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 5},
+            'Fighter':  {'hp': 2750, 'atk': 1750, 'def': 275, 'speed': 90,  'crit_rate': 5, 'crit_dmg': 5, 'def_shred': 5, 'penetration': 2, 'crit_dmg_res': 0},
+            'Assassin': {'hp': 2500, 'atk': 1850, 'def': 250, 'speed': 100, 'crit_rate': 6, 'crit_dmg': 8, 'def_shred': 5, 'penetration': 3, 'crit_dmg_res': 0},
+            'Mage':     {'hp': 2250, 'atk': 1800, 'def': 210, 'speed': 95,  'crit_rate': 5, 'crit_dmg': 5, 'def_shred': 0, 'penetration': 3, 'crit_dmg_res': 0},
+            'Support':  {'hp': 3000, 'atk': 1050, 'def': 250, 'speed': 100, 'crit_rate': 5, 'crit_dmg': 0, 'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 3},
+            'ADCarry':  {'hp': 2200, 'atk': 1800, 'def': 220, 'speed': 100, 'crit_rate': 6, 'crit_dmg': 5, 'def_shred': 3, 'penetration': 2, 'crit_dmg_res': 0}
         }
         role_inc_data = {
-            'Tanker':   {'speed': 2, 'crit_rate': 0, 'crit_dmg': 0,  'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 2},
-            'Fighter':  {'speed': 2, 'crit_rate': 1, 'crit_dmg': 3,  'def_shred': 2, 'penetration': 1, 'crit_dmg_res': 0},
-            'Assassin': {'speed': 3, 'crit_rate': 2, 'crit_dmg': 3,  'def_shred': 3, 'penetration': 2, 'crit_dmg_res': 0},
-            'Mage':     {'speed': 2, 'crit_rate': 1, 'crit_dmg': 3,  'def_shred': 0, 'penetration': 2, 'crit_dmg_res': 0},
-            'Support':  {'speed': 3, 'crit_rate': 0, 'crit_dmg': 0,  'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 2},
-            'ADCarry':  {'speed': 3, 'crit_rate': 2, 'crit_dmg': 3,  'def_shred': 2, 'penetration': 1, 'crit_dmg_res': 0}
+            'Tanker':   {'speed': 2, 'crit_rate': 0, 'crit_dmg': 0, 'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 2},
+            'Fighter':  {'speed': 2, 'crit_rate': 1, 'crit_dmg': 2, 'def_shred': 2, 'penetration': 1, 'crit_dmg_res': 0},
+            'Assassin': {'speed': 2, 'crit_rate': 1, 'crit_dmg': 2, 'def_shred': 1, 'penetration': 1, 'crit_dmg_res': 0},
+            'Mage':     {'speed': 2, 'crit_rate': 1, 'crit_dmg': 2, 'def_shred': 0, 'penetration': 1, 'crit_dmg_res': 0},
+            'Support':  {'speed': 2, 'crit_rate': 0, 'crit_dmg': 0, 'def_shred': 0, 'penetration': 0, 'crit_dmg_res': 2},
+            'ADCarry':  {'speed': 2, 'crit_rate': 1, 'crit_dmg': 2, 'def_shred': 1, 'penetration': 1, 'crit_dmg_res': 0}
         }
         class_dict = {
             'Character': (1.0, 1.0, 1.0, 0),
-            'Creep':     (1.0, 1.4, 1.2, 0),
-            'Boss':      (1.5, 1.2, 1.2, 10)
+            'Creep':     (3.0, 1.2, 1.4, 10),
+            'Boss':      (3.0, 1.2, 1.4, 25)
         }
         bias_dict = {
             'Balanced':  (1.00, 1.00, 1.00,  0, 0, 0,  0, 0, 0),
@@ -150,7 +150,7 @@ class CharacterConfigBuilder(BaseBuilder):
                     calc_def = round(base_st['def'] * r_mult * c_def_mult * b_def)
                     calc_spd = base_st['speed'] + (r_tier * inc_st['speed']) + b_spd
                     calc_shred = base_st['def_shred'] + (r_tier * inc_st['def_shred']) + b_shred
-                    calc_cr = base_st['crit_rate'] + (r_tier * inc_st['crit_rate']) + b_cr
+                    calc_cr = 50 if cls == 'Boss' else (base_st['crit_rate'] + (r_tier * inc_st['crit_rate']) + b_cr)
                     calc_cd = base_st['crit_dmg'] + (r_tier * inc_st['crit_dmg']) + b_cd
                     calc_pen = base_st['penetration'] + (r_tier * inc_st['penetration']) + b_pen
                     calc_res = base_st['crit_dmg_res'] + (r_tier * inc_st['crit_dmg_res']) + c_res_bonus + b_res
