@@ -19,7 +19,8 @@ public class CounterAttackEffectHandler : IEffectHandler
         var sourceStats = source.GetCoreComponent<EntityStats>();
         var targetStats = target.GetCoreComponent<EntityStats>();
 
-        if (sourceStats == null || sourceStats.IsDead || targetStats == null || targetStats.IsDead) return;
+        // Không thể phản kích nếu đã chết HOẶC đang bị Khống Chế Cứng (Choáng / Đóng Băng - CanTakeTurn == false)
+        if (sourceStats == null || sourceStats.IsDead || !sourceStats.CanTakeTurn() || targetStats == null || targetStats.IsDead) return;
 
         // 1. Kiểm tra tỷ lệ xác suất phản kích (effectValue là % cơ hội, ví dụ: 50 -> 50% cơ hội)
         float chance = effectValue > 0 ? effectValue : 100f;
@@ -42,7 +43,7 @@ public class CounterAttackEffectHandler : IEffectHandler
                 if (source == null || target == null) return;
                 var sStats = source.GetCoreComponent<EntityStats>();
                 var tStats = target.GetCoreComponent<EntityStats>();
-                if (sStats == null || sStats.IsDead || tStats == null || tStats.IsDead) return;
+                if (sStats == null || sStats.IsDead || !sStats.CanTakeTurn() || tStats == null || tStats.IsDead) return;
 
                 source.SetTarget(target);
                 source.HandleTurn(target);

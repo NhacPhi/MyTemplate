@@ -16,26 +16,23 @@ public class CooldownReductionEffectHandler : IEffectHandler
         if (recipient == null && context != null) recipient = context.Source;
         if (recipient == null) return;
 
-        int currentTurn = BattleManager.Instance != null ? BattleManager.Instance.GlobalTurnID : -1;
+        int currentTurn = BattleManager.Instance != null ? BattleManager.Instance.GlobalTurnID : Time.frameCount;
         int entityId = recipient.GetInstanceID();
 
-        // Kiểm tra giới hạn: Trong cùng 1 lượt, mỗi nhân vật chỉ được giảm hồi chiêu tối đa 1 lần (-1 CD)
-        if (currentTurn >= 0 && _lastTriggeredTurn.TryGetValue(entityId, out int lastTurn) && lastTurn == currentTurn)
+        // Kiểm tra giới hạn: Trong cùng 1 lần tung skill / lượt, mỗi nhân vật chỉ được giảm hồi chiêu tối đa 1 lần duy nhất
+        if (_lastTriggeredTurn.TryGetValue(entityId, out int lastTurn) && lastTurn == currentTurn)
         {
             return;
         }
 
-        // effectValue đại diện cho % xác suất kích hoạt (ví dụ: 50% -> 100%)
+        // effectValue đại diện cho % xác suất kích hoạt
         float roll = Random.Range(0f, 100f);
         if (roll <= effectValue)
         {
             var skillManager = recipient.GetCoreComponent<EntitySkill>();
             if (skillManager != null)
             {
-                if (currentTurn >= 0)
-                {
-                    _lastTriggeredTurn[entityId] = currentTurn;
-                }
+                _lastTriggeredTurn[entityId] = currentTurn;
 
                 skillManager.ReduceAllCooldowns(1);
                 

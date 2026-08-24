@@ -34,10 +34,35 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         caster.HandleTurn(enemy);
 
+        // Thu thập danh sách mục tiêu (Hỗ trợ Đơn Mục Tiêu, Toàn Hàng, Toàn Bộ Kẻ Địch)
+        List<Entity> targetEnemies = new List<Entity>();
+        if (skillData.TargetType == SkillTargetType.AllEnemies || skillData.TargetType == SkillTargetType.EnemyRow)
+        {
+            if (BattleManager.Instance != null && BattleManager.Instance.TargetSystem != null)
+            {
+                targetEnemies = BattleManager.Instance.TargetSystem.GetTargets(caster, skillData.TargetType, enemy, BattleManager.Instance.ActiveEntities);
+            }
+            if (targetEnemies == null || targetEnemies.Count == 0)
+            {
+                targetEnemies = new List<Entity>() { enemy };
+            }
+        }
+        else
+        {
+            targetEnemies = new List<Entity>() { enemy };
+        }
+
         var state = caster.GetCoreComponent<EntityStateData>();
         if (state == null)
         {
-            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            ApplyEffectsToTarget(caster, currentTurnID);
+            foreach (var target in targetEnemies)
+            {
+                if (target != null && target.GetCoreComponent<EntityStats>() != null && !target.GetCoreComponent<EntityStats>().IsDead)
+                {
+                    DamageFormular.DealDamage(CalculateRawDamage(), caster, target);
+                }
+            }
             PutOnCooldown();
             return;
         }
@@ -52,13 +77,15 @@ public class EmpoweredAttack : SkillRuntime, IAttackSkill
 
         await state.WaitForHitFrame();
 
-        var enemyStats = enemy.GetCoreComponent<EntityStats>();
-        if (enemyStats != null && !enemyStats.IsDead)
-        {
-            ApplyEffectsToTarget(caster, currentTurnID);
-        }
+        ApplyEffectsToTarget(caster, currentTurnID);
 
-        DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+        foreach (var target in targetEnemies)
+        {
+            if (target != null && target.GetCoreComponent<EntityStats>() != null && !target.GetCoreComponent<EntityStats>().IsDead)
+            {
+                DamageFormular.DealDamage(CalculateRawDamage(), caster, target);
+            }
+        }
 
         await state.WaitForAnimEnd();
 

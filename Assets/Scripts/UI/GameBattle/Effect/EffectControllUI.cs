@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +16,7 @@ public class EffectControllUI : MonoBehaviour
 
     [SerializeField] Sprite _iconBuff;
     [SerializeField] Sprite _iconDebuff;
+    [SerializeField] Sprite _iconSilent;
 
     Dictionary<string, EffectControllUI> _effects = new Dictionary<string, EffectControllUI>();
 
@@ -125,6 +126,9 @@ public class EffectControllUI : MonoBehaviour
         {
             case EffectType.Poison:
                 return _iconPoison;
+
+            case EffectType.Silence:
+                return _iconSilent;
 
             case EffectType.StatDebuff or EffectType.StatBuff:
                 switch (data.TargetStat)

@@ -16,6 +16,7 @@ public class FrozenBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
 
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
+        _currentTurnID = currentTurnID;
         await PerformSummon(skillData, caster);
     }
 
@@ -77,14 +78,17 @@ public class FrozenBallSkill : SkillRuntime, IAttackSkill, IAsyncInitializer, II
         }
     }
 
+    private int _currentTurnID = 0;
+
     public void OnDealDamage(ref float damageInput)
     {
-
     }
 
     public void OnProjectileImpact(Entity target, Vector2 contactPoint)
     {
         DamageFormular.DealDamage(CalculateRawDamage(), _caster, target);
+
+        ApplyEffectsToTarget(_caster, _currentTurnID);
 
         _skillEnd.TrySetResult();
     }

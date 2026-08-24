@@ -87,7 +87,7 @@
                     100.0
                 ],
                 "target": "self",
-                "condition_filter": "ActiveSkill, SingleTarget",
+                "condition_filter": "IsSkill, SingleTarget",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
             }
@@ -848,6 +848,41 @@
                 ],
                 "target": "self",
                 "condition_filter": "IsCritical",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_thirddragon_major": {
+        "desc_template_hash": 3284827641,
+        "static_modifiers": [
+            {
+                "stat_type": "ATK",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    10.0,
+                    15.0,
+                    20.0,
+                    25.0,
+                    30.0,
+                    35.0
+                ]
+            }
+        ],
+        "combat_events": [
+            {
+                "event_type": "OnAfterDealDamage",
+                "effect_id": "EFF_DefSpd_def",
+                "modify_by_upgrade": [
+                    -20.0,
+                    -25.0,
+                    -30.0,
+                    -35.0,
+                    -40.0,
+                    -50.0
+                ],
+                "target": "target",
+                "condition_filter": "MajorSkill",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
             }

@@ -220,7 +220,16 @@ public abstract class SkillRuntime
                 }
                 break;
 
-                // Xử lý các trường hợp đặc biệt khác (Column, Row, DeadAlly...)
+            case SkillTargetType.EnemyRow:
+                if (caster.Target != null)
+                {
+                    targetList.Add(caster.Target.gameObject.GetComponent<Entity>());
+                }
+                else if (caster.Targets != null)
+                {
+                    foreach (var target in caster.Targets) { targetList.Add(target.gameObject.GetComponent<Entity>()); }
+                }
+                break;
         }
 
         return targetList;

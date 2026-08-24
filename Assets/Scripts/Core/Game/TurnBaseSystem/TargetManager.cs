@@ -75,6 +75,8 @@ public class TargetManager
                 return allyTeam;
             case SkillTargetType.SameRowAllies:
                 return allyTeam.Where(e => !e.GetCoreComponent<EntityStats>().IsDead && e.Row == caster.Row).ToList();
+            case SkillTargetType.EnemyRow:
+                return enemyTeam.Where(e => !e.GetCoreComponent<EntityStats>().IsDead).ToList();
 
             default:
                 return new List<Entity>();
@@ -110,6 +112,17 @@ public class TargetManager
             case SkillTargetType.SameRowAllies:
                 targets = allEntities
                     .Where(e => e.Team == caster.Team && !e.GetCoreComponent<EntityStats>().IsDead && e.Row == caster.Row).ToList();
+                break;
+            case SkillTargetType.EnemyRow:
+                BattleRow targetRow = selectedEntity != null ? selectedEntity.Row : BattleRow.Front;
+                var rowEnemies = allEntities
+                    .Where(e => e.Team != caster.Team && !e.GetCoreComponent<EntityStats>().IsDead && e.Row == targetRow).ToList();
+                if (rowEnemies.Count == 0)
+                {
+                    rowEnemies = allEntities
+                        .Where(e => e.Team != caster.Team && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                }
+                targets = rowEnemies;
                 break;
         }
 

@@ -98,6 +98,23 @@ public class PassiveInstance : IDisposable
                             eventTags.Add("BasicAttack");
                         }
 
+                        if (target != null)
+                        {
+                            var targetStats = target.GetCoreComponent<EntityStats>();
+                            if (targetStats != null)
+                            {
+                                var hpAttr = targetStats.GetAttribute(AttributeType.Hp);
+                                if (targetStats.IsDead || (hpAttr != null && hpAttr.Value <= 0))
+                                {
+                                    eventTags.Add("TargetDead");
+                                }
+                                else
+                                {
+                                    eventTags.Add("TargetAlive");
+                                }
+                            }
+                        }
+
                         eventTags.Add("SingleTarget");
                         TriggerPassiveEffect(evtConfig, ownerEntity, target != null ? target.transform : null, damage, eventTags);
                     };

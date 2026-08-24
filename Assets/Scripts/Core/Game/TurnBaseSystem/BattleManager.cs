@@ -33,6 +33,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private List<Transform> _enemiesPositions;
     [SerializeField] public GameObject SeletionCircle;
     public List<Entity> ActiveEntities => _activeEntities;
+    public List<Entity> AllEntities => _activeEntities;
     public Dictionary<string, Entity> Characters => _characters;
     public List<Entity> Enemies => _enemies; 
 
@@ -73,33 +74,169 @@ public class BattleManager : MonoBehaviour
         await UniTask.Delay(500); // 0.5s thinking
 
         var skillManager = CurrentCaster.GetCoreComponent<EntitySkill>();
-        SkillCharacter chosenSkill = SkillCharacter.Base;
+        var casterStats = CurrentCaster != null ? CurrentCaster.GetCoreComponent<EntityStats>() : null;
+        bool isSilenced = casterStats != null && casterStats.IsSilenced();
 
-        if (skillManager != null)
+        SkillCharacter chosenSkill = SkillCharacter.Base;
+        Entity chosenTarget = null;
+
+        var myTeam = GetEntitiesByTeam(CurrentCaster.Team);
+        var opposingTeam = GetEntitiesByTeam(CurrentCaster.Team == TeamSide.Player ? TeamSide.Enemy : TeamSide.Player);
+
+        // -------------------------------------------------------------
+        // BƯỚC 1: ƯU TIÊN SỐ 1 - KỸ NĂNG BUFF CHỈ SỐ / KHIÊN HỘ THỂ CHO BẢN THÂN / ĐỒNG ĐỘI
+        // -------------------------------------------------------------
+        if (!isSilenced && skillManager != null)
         {
-            if (skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0)
-                chosenSkill = SkillCharacter.Ultimate;
-            else if (skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0)
-                chosenSkill = SkillCharacter.Major;
+            if (skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0 && EnemyBrain.IsSelfOrAllyBuffSkill(skillManager.Skills[SkillCharacter.Ultimate]))
+            {
+                var ultSkill = skillManager.Skills[SkillCharacter.Ultimate];
+                var validTargets = TargetSystem.GetValidTargetsForSkill(ultSkill, CurrentCaster, myTeam, opposingTeam);
+                var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                if (aliveTargets.Count > 0)
+                {
+                    chosenSkill = SkillCharacter.Ultimate;
+                    chosenTarget = aliveTargets[0];
+                }
+            }
+            else if (skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0 && EnemyBrain.IsSelfOrAllyBuffSkill(skillManager.Skills[SkillCharacter.Major]))
+            {
+                var majorSkill = skillManager.Skills[SkillCharacter.Major];
+                var validTargets = TargetSystem.GetValidTargetsForSkill(majorSkill, CurrentCaster, myTeam, opposingTeam);
+                var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                if (aliveTargets.Count > 0)
+                {
+                    chosenSkill = SkillCharacter.Major;
+                    chosenTarget = aliveTargets[0];
+                }
+            }
         }
 
-        var skillRuntime = skillManager.Skills[chosenSkill];
-        
-        var validTargets = TargetSystem.GetValidTargetsForSkill(
-            skillRuntime, 
-            CurrentCaster, 
-            Characters.Values.ToList(), 
-            Enemies);
-
-        Entity chosenTarget = null;
-        if (validTargets.Count > 0)
+        // -------------------------------------------------------------
+        // BƯỚC 2: ƯU TIÊN SỐ 2 - KỸ NĂNG HỒI MÁU (KHI CÓ ĐỒNG ĐỘI < 50% HP)
+        // -------------------------------------------------------------
+        if (chosenTarget == null && !isSilenced && skillManager != null)
         {
-            chosenTarget = validTargets
-                .Where(e => !e.GetCoreComponent<EntityStats>().IsDead)
-                .OrderBy(e => e.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value)
-                .FirstOrDefault();
+            Entity lowHpAlly = EnemyBrain.GetLowestHpAllyBelowThreshold(myTeam, 0.5f);
+            if (lowHpAlly != null)
+            {
+                if (skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0 && EnemyBrain.IsHealingSkill(skillManager.Skills[SkillCharacter.Ultimate]))
+                {
+                    chosenSkill = SkillCharacter.Ultimate;
+                    chosenTarget = lowHpAlly;
+                }
+                else if (skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0 && EnemyBrain.IsHealingSkill(skillManager.Skills[SkillCharacter.Major]))
+                {
+                    chosenSkill = SkillCharacter.Major;
+                    chosenTarget = lowHpAlly;
+                }
+            }
+        }
 
-            if (chosenTarget == null) chosenTarget = validTargets[0];
+        // -------------------------------------------------------------
+        // BƯỚC 3: ƯU TIÊN SỐ 3 - TUYỆT KỸ ULTIMATE TẤN CÔNG / KHỐNG CHẾ
+        // -------------------------------------------------------------
+        if (chosenTarget == null && !isSilenced && skillManager != null && skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0)
+        {
+            var ultSkill = skillManager.Skills[SkillCharacter.Ultimate];
+            var ultData = ultSkill.GetSkillData();
+
+            // Nếu không phải là chiêu Heal đang chờ (vì Heal đã kiểm tra ở Bước 2)
+            if (!EnemyBrain.IsHealingSkill(ultSkill))
+            {
+                var validTargets = TargetSystem.GetValidTargetsForSkill(ultSkill, CurrentCaster, Characters.Values.ToList(), Enemies);
+                var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+
+                if (aliveTargets.Count > 0)
+                {
+                    if (ultData != null && ultData.Effect != null && (ultData.Effect.Type == EffectType.Stun || ultData.Effect.Type == EffectType.Frozen))
+                    {
+                        // Chiêu Khống chế cứng: Ưu tiên mục tiêu chưa bị CC có ATK cao nhất
+                        var nonCCed = aliveTargets.Where(e => e.GetCoreComponent<EntityStats>().CanTakeTurn()).OrderByDescending(e => e.GetCoreComponent<EntityStats>().GetStat(StatType.ATK)?.Value ?? 0f).FirstOrDefault();
+                        if (nonCCed != null)
+                        {
+                            chosenSkill = SkillCharacter.Ultimate;
+                            chosenTarget = nonCCed;
+                        }
+                    }
+                    else if (ultData != null && ultData.Effect != null && ultData.Effect.Type == EffectType.Silence)
+                    {
+                        // Chiêu Câm Lặng: Ưu tiên mục tiêu chưa bị Silence / CC
+                        var validSil = aliveTargets.Where(e => e.GetCoreComponent<EntityStats>().CanTakeTurn() && !e.GetCoreComponent<EntityStats>().IsSilenced()).OrderByDescending(e => e.GetCoreComponent<EntityStats>().GetStat(StatType.ATK)?.Value ?? 0f).FirstOrDefault();
+                        if (validSil != null)
+                        {
+                            chosenSkill = SkillCharacter.Ultimate;
+                            chosenTarget = validSil;
+                        }
+                    }
+                    else
+                    {
+                        // Chiêu Sát Thương / AoE: Dồn vào mục tiêu thấp máu nhất để kết liễu
+                        chosenSkill = SkillCharacter.Ultimate;
+                        chosenTarget = aliveTargets.OrderBy(e => e.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value).FirstOrDefault();
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // BƯỚC 4: ƯU TIÊN SỐ 4 - KỸ NĂNG MAJOR TẤN CÔNG / KHỐNG CHẾ
+        // -------------------------------------------------------------
+        if (chosenTarget == null && !isSilenced && skillManager != null && skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0)
+        {
+            var majorSkill = skillManager.Skills[SkillCharacter.Major];
+            var majorData = majorSkill.GetSkillData();
+
+            if (!EnemyBrain.IsHealingSkill(majorSkill))
+            {
+                var validTargets = TargetSystem.GetValidTargetsForSkill(majorSkill, CurrentCaster, Characters.Values.ToList(), Enemies);
+                var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+
+                if (aliveTargets.Count > 0)
+                {
+                    if (majorData != null && majorData.Effect != null && (majorData.Effect.Type == EffectType.Stun || majorData.Effect.Type == EffectType.Frozen))
+                    {
+                        var nonCCed = aliveTargets.Where(e => e.GetCoreComponent<EntityStats>().CanTakeTurn()).OrderByDescending(e => e.GetCoreComponent<EntityStats>().GetStat(StatType.ATK)?.Value ?? 0f).FirstOrDefault();
+                        if (nonCCed != null)
+                        {
+                            chosenSkill = SkillCharacter.Major;
+                            chosenTarget = nonCCed;
+                        }
+                    }
+                    else if (majorData != null && majorData.Effect != null && majorData.Effect.Type == EffectType.Silence)
+                    {
+                        var validSil = aliveTargets.Where(e => e.GetCoreComponent<EntityStats>().CanTakeTurn() && !e.GetCoreComponent<EntityStats>().IsSilenced()).OrderByDescending(e => e.GetCoreComponent<EntityStats>().GetStat(StatType.ATK)?.Value ?? 0f).FirstOrDefault();
+                        if (validSil != null)
+                        {
+                            chosenSkill = SkillCharacter.Major;
+                            chosenTarget = validSil;
+                        }
+                    }
+                    else
+                    {
+                        chosenSkill = SkillCharacter.Major;
+                        chosenTarget = aliveTargets.OrderBy(e => e.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value).FirstOrDefault();
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // BƯỚC 5: ĐÒN ĐÁNH CƠ BẢN (BASE ATTACK) - KẾT LIỄU MỤC TIÊU THẤP MÁU
+        // -------------------------------------------------------------
+        if (chosenTarget == null)
+        {
+            chosenSkill = SkillCharacter.Base;
+            var baseSkill = skillManager != null && skillManager.Skills.ContainsKey(SkillCharacter.Base) ? skillManager.Skills[SkillCharacter.Base] : null;
+            if (baseSkill != null)
+            {
+                var validTargets = TargetSystem.GetValidTargetsForSkill(baseSkill, CurrentCaster, Characters.Values.ToList(), Enemies);
+                var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                if (aliveTargets.Count > 0)
+                {
+                    chosenTarget = aliveTargets.OrderBy(e => e.GetCoreComponent<EntityStats>().GetAttribute(AttributeType.Hp).Value).FirstOrDefault();
+                }
+            }
         }
 
         return new EnemyDecision

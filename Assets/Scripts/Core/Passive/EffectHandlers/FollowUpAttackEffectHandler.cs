@@ -20,7 +20,7 @@ public class FollowUpAttackEffectHandler : IEffectHandler
         if (source != null && source.Targets != null && source.Targets.Count > 1) return;
 
         var sourceStats = source != null ? source.GetCoreComponent<EntityStats>() : null;
-        if (sourceStats == null || sourceStats.IsDead) return;
+        if (sourceStats == null || sourceStats.IsDead || !sourceStats.CanTakeTurn()) return;
 
         // Tìm mục tiêu kẻ địch bị truy kích (ưu tiên context.Target, nếu không thì lấy source.Target)
         Entity enemyTarget = context.Target;
@@ -64,7 +64,7 @@ public class FollowUpAttackEffectHandler : IEffectHandler
                 if (source == null || enemyTarget == null) return;
                 var sStats = source.GetCoreComponent<EntityStats>();
                 var tStats = enemyTarget.GetCoreComponent<EntityStats>();
-                if (sStats == null || sStats.IsDead || tStats == null || tStats.IsDead) return;
+                if (sStats == null || sStats.IsDead || !sStats.CanTakeTurn() || tStats == null || tStats.IsDead) return;
 
                 // Gán lại mục tiêu cho Caster
                 source.SetTarget(enemyTarget);

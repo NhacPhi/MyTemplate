@@ -1451,6 +1451,12 @@ public static class LocKeys
 
     public const long STR_COOLDOWN_REDUCED = 2448984470;
 
+    public const long STR_NEZHA_ULT_PASSIVE = 3606654452;
+
+    public const long STR_SWEEP_ATTACK = 2311945029;
+
+    public const long STR_PURSUIT_ATTACK = 2392774309;
+
     public const long SUNWUKONG_B_NAME = 1067287368;
 
     public const long SUNWUKONG_B_DES = 3336390912;
@@ -1623,11 +1629,17 @@ public static class LocKeys
 
     public const long LIJING_U_DES = 1426498449;
 
-    public const long STR_NEZHA_ULT_PASSIVE = 3606654452;
+    public const long THIRDDRAGONPRINCE_B_NAME = 273710416;
 
-    public const long STR_SWEEP_ATTACK = 2311945029;
+    public const long THIRDDRAGONPRINCE_M_NAME = 1393091217;
 
-    public const long STR_PURSUIT_ATTACK = 2392774309;
+    public const long THIRDDRAGONPRINCE_U_NAME = 1184995530;
+
+    public const long THIRDDRAGONPRINCE_B_DES = 3967694703;
+
+    public const long THIRDDRAGONPRINCE_M_DES = 671931666;
+
+    public const long THIRDDRAGONPRINCE_U_DES = 1199868114;
 
     public const long DEBUFF_DEF_NAME = 651413426;
 
@@ -1676,5 +1688,9 @@ public static class LocKeys
     public const long DEBUFF_FRONZEN_NAME = 4115114132;
 
     public const long DEBUFF_FRONZEN_DES = 655552443;
+
+    public const long EFF_SILENCE_NAME = 3221519800;
+
+    public const long EFF_SILENCE_DES = 2834996488;
 
 }

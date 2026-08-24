@@ -19,6 +19,8 @@ public class EffectFactory
                 return new StunEffect(efectfID, effectData, target);
             case EffectType.Frozen:
                 return new FrozenEffect(efectfID, effectData, target);
+            case EffectType.Silence:
+                return new SilenceEffect(efectfID, effectData, target);
             case EffectType.StatBuff:
             case EffectType.StatDebuff:
                 return new StatBuffEffect(efectfID, effectData, target);

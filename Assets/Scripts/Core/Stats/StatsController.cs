@@ -247,6 +247,8 @@ public class StatsController : CoreComponent, IEffectable
             case EffectType.Stun:
             case EffectType.Frozen:
                 return new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết
+            case EffectType.Silence:
+                return new Color(0.75f, 0.45f, 0.95f); // Tím huyền bí Câm Lặng
             case EffectType.StatDebuff:
                 return new Color(0.95f, 0.35f, 0.35f); // Đỏ cam suy yếu / giảm chỉ số
             case EffectType.StatBuff:
@@ -351,6 +353,16 @@ public class StatsController : CoreComponent, IEffectable
             if (effect != null && effect.Data != null && (effect.Data.Type == EffectType.Stun || effect.Data.Type == EffectType.Frozen)) return false;
         }
         return true;
+    }
+
+    public bool IsSilenced()
+    {
+        if (statusEffects == null) return false;
+        foreach (var effect in statusEffects)
+        {
+            if (effect != null && effect.Data != null && effect.Data.Type == EffectType.Silence) return true;
+        }
+        return false;
     }
 
 

@@ -29,10 +29,10 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
     public override async UniTask ExecuteAsync(Entity caster, int currentTurnID)
     {
-        await PerformSkillAsync(skillData, caster);
+        await PerformSkillAsync(skillData, caster, currentTurnID);
     }
 
-    public async UniTask PerformSkillAsync(SkillData config, Entity caster)
+    public async UniTask PerformSkillAsync(SkillData config, Entity caster, int currentTurnID)
     {
         var enemy = GetValidSingleTarget(caster);
         if (enemy == null)
@@ -43,10 +43,35 @@ public class MajorAttack : SkillRuntime, IAttackSkill
 
         caster.HandleTurn(enemy);
 
+        // Thu thập danh sách mục tiêu (Hỗ trợ cả Đơn Mục Tiêu, Toàn Đội và Toàn Hàng)
+        List<Entity> targetEnemies = new List<Entity>();
+        if (skillData.TargetType == SkillTargetType.EnemyRow || skillData.TargetType == SkillTargetType.AllEnemies)
+        {
+            if (BattleManager.Instance != null && BattleManager.Instance.TargetSystem != null)
+            {
+                targetEnemies = BattleManager.Instance.TargetSystem.GetTargets(caster, skillData.TargetType, enemy, BattleManager.Instance.ActiveEntities);
+            }
+            if (targetEnemies == null || targetEnemies.Count == 0)
+            {
+                targetEnemies = new List<Entity>() { enemy };
+            }
+        }
+        else
+        {
+            targetEnemies = new List<Entity>() { enemy };
+        }
+
         var state = caster.GetCoreComponent<EntityStateData>();
         if (state == null)
         {
-            DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+            foreach (var target in targetEnemies)
+            {
+                if (target != null && target.GetCoreComponent<EntityStats>() != null && !target.GetCoreComponent<EntityStats>().IsDead)
+                {
+                    DamageFormular.DealDamage(CalculateRawDamage(), caster, target);
+                }
+            }
+            ApplyEffectsToTarget(caster, currentTurnID);
             PutOnCooldown();
             return;
         }
@@ -59,7 +84,15 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         caster.PlaySFX(skillData.Sound);
         await state.WaitForHitFrame();
 
-        DamageFormular.DealDamage(CalculateRawDamage(), caster, enemy);
+        foreach (var target in targetEnemies)
+        {
+            if (target != null && target.GetCoreComponent<EntityStats>() != null && !target.GetCoreComponent<EntityStats>().IsDead)
+            {
+                DamageFormular.DealDamage(CalculateRawDamage(), caster, target);
+            }
+        }
+
+        ApplyEffectsToTarget(caster, currentTurnID);
 
         await state.WaitForAnimEnd();
 
@@ -68,15 +101,6 @@ public class MajorAttack : SkillRuntime, IAttackSkill
         await state.WaitForMoveEnd();
 
         PutOnCooldown();
-
-        //await UniTask.Delay(2000);
-        //var damage = new DamageBonus()
-        //{
-        //    FlatValue = 0,
-        //    DamageMultiplier = 1.5f
-        //};
-
-        //DamageFormular.DealDamage(damage, caster, caster.Target.GetComponent<Entity>());
     }
 }
 

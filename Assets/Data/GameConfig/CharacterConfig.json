@@ -1471,18 +1471,18 @@
                 "des_hash": 909228250,
                 "skill": "MajorAttack",
                 "skill_type": "ActiveSkill",
-                "target_type": "SingleEnemy",
+                "target_type": "EnemyRow",
                 "damage_multiplier": [
-                    1.0,
-                    1.5,
-                    1.5
+                    0.7,
+                    0.85,
+                    1.0
                 ],
                 "max_cooldown": [
-                    4,
-                    4,
+                    3,
+                    3,
                     3
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_Silence_def",
                 "sound": "GoldfishDemon_Major",
                 "passive_id": ""
             },
@@ -1494,13 +1494,13 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
                     1.8,
-                    1.8
+                    2.0,
+                    2.3
                 ],
                 "max_cooldown": [
-                    5,
-                    5,
+                    4,
+                    4,
                     4
                 ],
                 "effect_id": "EFF_Stun_def",
@@ -2892,7 +2892,7 @@
                 "skill_type": "BasicAttack",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    0.8,
+                    0.9,
                     1.0,
                     1.2
                 ],
@@ -2914,17 +2914,17 @@
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
                     1.0,
-                    1.5,
-                    1.5
+                    1.2,
+                    1.4
                 ],
                 "max_cooldown": [
-                    4,
-                    4,
+                    3,
+                    3,
                     3
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_DefSpd_def",
                 "sound": "ThirdDragonPrince_Major",
-                "passive_id": ""
+                "passive_id": "psv_thirddragon_major"
             },
             "Ultimate": {
                 "id": "ThirdDragonPrince_U",
@@ -2934,13 +2934,13 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
-                    1.5,
                     1.8,
-                    1.8
+                    2.0,
+                    2.3
                 ],
                 "max_cooldown": [
-                    5,
-                    5,
+                    4,
+                    4,
                     4
                 ],
                 "effect_id": "EFF_Frozen_def",
@@ -2949,11 +2949,11 @@
             }
         },
         "stats": {
-            "hp": 14025,
-            "atk": 3570,
-            "def": 654,
-            "speed": 96,
-            "def_shred": 11,
+            "hp": 14500,
+            "atk": 3600,
+            "def": 580,
+            "speed": 98,
+            "def_shred": 15,
             "crit_rate": 60,
             "crit_dmg": 100,
             "penetration": 20,
@@ -2970,9 +2970,9 @@
             }
         },
         "upgrades": {
-            "hp": 701,
-            "atk": 178,
-            "def": 33
+            "hp": 725,
+            "atk": 180,
+            "def": 29
         }
     }
 }

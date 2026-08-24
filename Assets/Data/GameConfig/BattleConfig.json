@@ -52,8 +52,20 @@
                 "boss": false
             },
             {
+                "slot": 4,
+                "enemy_id": "GoldfishDemon",
+                "enemy_level": 20,
+                "boss": false
+            },
+            {
                 "slot": 5,
                 "enemy_id": "ThirdDragonPrince",
+                "enemy_level": 20,
+                "boss": true
+            },
+            {
+                "slot": 6,
+                "enemy_id": "SquidSolider",
                 "enemy_level": 20,
                 "boss": true
             }
@@ -69,25 +81,25 @@
             {
                 "slot": 1,
                 "enemy_id": "Benborba",
-                "enemy_level": 15,
+                "enemy_level": 10,
                 "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "Baborben",
-                "enemy_level": 15,
+                "enemy_level": 10,
                 "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "Benborba",
-                "enemy_level": 15,
+                "enemy_level": 10,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "GoldfishDemon",
-                "enemy_level": 10,
+                "enemy_level": 12,
                 "boss": true
             }
         ]
@@ -102,25 +114,25 @@
             {
                 "slot": 1,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 15,
+                "enemy_level": 25,
                 "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 15,
+                "enemy_level": 25,
                 "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 15,
+                "enemy_level": 25,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "TheBoySage",
-                "enemy_level": 25,
+                "enemy_level": 30,
                 "boss": true
             }
         ]
@@ -135,7 +147,7 @@
             {
                 "slot": 1,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 20,
+                "enemy_level": 25,
                 "boss": false
             },
             {
@@ -147,13 +159,7 @@
             {
                 "slot": 3,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 20,
-                "boss": false
-            },
-            {
-                "slot": 5,
-                "enemy_id": "TheBoySage",
-                "enemy_level": 30,
+                "enemy_level": 25,
                 "boss": false
             },
             {
@@ -163,9 +169,15 @@
                 "boss": false
             },
             {
+                "slot": 5,
+                "enemy_id": "TheBoySage",
+                "enemy_level": 30,
+                "boss": false
+            },
+            {
                 "slot": 6,
                 "enemy_id": "YoungBufflalo",
-                "enemy_level": 20,
+                "enemy_level": 25,
                 "boss": false
             }
         ]
@@ -180,25 +192,25 @@
             {
                 "slot": 1,
                 "enemy_id": "VanguardTiger",
-                "enemy_level": 15,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "RatMonster",
-                "enemy_level": 15,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "VanguardTiger",
-                "enemy_level": 15,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "YellowWindMonster",
-                "enemy_level": 20,
+                "enemy_level": 28,
                 "boss": true
             }
         ]
@@ -213,31 +225,37 @@
             {
                 "slot": 1,
                 "enemy_id": "Minions",
-                "enemy_level": 20,
+                "enemy_level": 25,
                 "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "Minions",
-                "enemy_level": 20,
+                "enemy_level": 25,
                 "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "Minions",
-                "enemy_level": 20,
+                "enemy_level": 25,
+                "boss": false
+            },
+            {
+                "slot": 4,
+                "enemy_id": "SilverHornKing",
+                "enemy_level": 26,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "GoldHornKing",
-                "enemy_level": 25,
+                "enemy_level": 28,
                 "boss": true
             },
             {
-                "slot": 4,
-                "enemy_id": "SilverHornKing",
-                "enemy_level": 20,
+                "slot": 6,
+                "enemy_id": "Minions",
+                "enemy_level": 25,
                 "boss": false
             }
         ]
@@ -282,7 +300,7 @@
             {
                 "slot": 6,
                 "enemy_id": "HeavenlySoddier",
-                "enemy_level": 25,
+                "enemy_level": 20,
                 "boss": false
             }
         ]
@@ -297,25 +315,25 @@
             {
                 "slot": 1,
                 "enemy_id": "HeavenlySoddier",
-                "enemy_level": 25,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 2,
                 "enemy_id": "HeavenlySoddier",
-                "enemy_level": 25,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 3,
                 "enemy_id": "HeavenlySoddier",
-                "enemy_level": 25,
+                "enemy_level": 20,
                 "boss": false
             },
             {
                 "slot": 5,
                 "enemy_id": "ErlangShen_Boss",
-                "enemy_level": 30,
+                "enemy_level": 25,
                 "boss": true
             }
         ]
