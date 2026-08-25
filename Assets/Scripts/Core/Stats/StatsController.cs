@@ -8,6 +8,7 @@ public class StatsController : CoreComponent, IEffectable
 {
     //protected CharacterProfileModel statsHolder;
     protected IStatProvider _statProvider;
+    public IStatProvider StatProvider => _statProvider;
 
     [field: SerializeField] public string EntityID { get; protected set; }
 
@@ -198,7 +199,8 @@ public class StatsController : CoreComponent, IEffectable
                 string effectName = LocalizationManager.Instance.GetLocalizedValue(clone.Data.Name);
                 if (!string.IsNullOrEmpty(effectName))
                 {
-                    UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(clone.Data));
+                    string stackDisplay = clone.CurrentStack > 1 ? $"{effectName} x{clone.CurrentStack}" : effectName;
+                    UIEvent.TextPopup?.Invoke(stackDisplay, this.transform.position + Vector3.up * 1.5f, GetEffectTextColor(clone.Data));
                 }
             }
             return;
@@ -226,13 +228,14 @@ public class StatsController : CoreComponent, IEffectable
             existEffect.ResetDuration();
         }
 
-        // Hiển thị tên hiệu ứng lên UI khi làm mới/tăng stack
+        // Hiển thị tên hiệu ứng kèm số tầng (Stack) lên UI khi làm mới/tăng stack
         if (existEffect.Data != null && existEffect.Data.Name != 0 && LocalizationManager.Instance != null)
         {
             string effectName = LocalizationManager.Instance.GetLocalizedValue(existEffect.Data.Name);
             if (!string.IsNullOrEmpty(effectName))
             {
-                UIEvent.TextPopup?.Invoke(effectName, this.transform.position, GetEffectTextColor(existEffect.Data));
+                string stackDisplay = existEffect.CurrentStack > 1 ? $"{effectName} x{existEffect.CurrentStack}" : effectName;
+                UIEvent.TextPopup?.Invoke(stackDisplay, this.transform.position + Vector3.up * 1.5f, GetEffectTextColor(existEffect.Data));
             }
         }
     }
@@ -242,6 +245,8 @@ public class StatsController : CoreComponent, IEffectable
         if (data == null) return new Color(0.35f, 0.85f, 1f);
         switch (data.Type)
         {
+            case EffectType.Burn:
+                return new Color(1f, 0.45f, 0.1f); // Đỏ cam lửa rực cháy cho Thiêu Đốt
             case EffectType.Poison:
                 return new Color(0.6f, 1f, 0.35f); // Xanh ngọc độc
             case EffectType.Stun:

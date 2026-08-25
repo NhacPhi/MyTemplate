@@ -15,6 +15,8 @@ public class EffectFactory
                 return null;
             case EffectType.Poison:
                 return new PoisonEffect(efectfID, effectData, target);
+            case EffectType.Burn:
+                return new BurnEffect(efectfID, effectData, target);
             case EffectType.Stun:
                 return new StunEffect(efectfID, effectData, target);
             case EffectType.Frozen:

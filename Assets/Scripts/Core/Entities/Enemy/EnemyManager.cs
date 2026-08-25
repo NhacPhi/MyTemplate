@@ -60,7 +60,7 @@ public class EnemyManager
 
                 var enemycf = _gameDataBase.GetCharacterConfig(config.EnemyID);
 
-                IStatProvider enemyProfile = new EnemyProfileModel(enemycf, config.EnemyLevel, config.EnemyID);
+                IStatProvider enemyProfile = new EnemyProfileModel(enemycf, config.EnemyLevel, config.EnemyID, config.WeaponID, config.WeaponLevel, _gameDataBase);
 
                 var statsController = enemyInstance.GetComponent<StatsController>();
 
@@ -75,8 +75,19 @@ public class EnemyManager
                 var hitbox = _objectResolver.Instantiate(targetHitboxPrefab,
                     targetHitboxPrefab.transform.position, Quaternion.identity, enemyInstance.transform);
 
-                //enemyUI.transform.SetParent(enemyInstance.transform);
-                await enemyInstance.gameObject.GetComponent<EntitySkill>().InitializeAsync(token: cancellation);
+                // Khởi tạo Skill và Passive cho Enemy / Boss
+                if (enemyInstance.GetComponent<EntitySkill>() != null)
+                {
+                    await enemyInstance.GetComponent<EntitySkill>().InitializeAsync(token: cancellation);
+                }
+
+                var entityPassive = enemyInstance.GetCoreComponent<EntityPassive>();
+                if (entityPassive == null)
+                {
+                    entityPassive = enemyInstance.gameObject.AddComponent<EntityPassive>();
+                    enemyInstance.AddCoreComponent(entityPassive);
+                }
+                await entityPassive.InitializeAsync(token: cancellation);
 
                 RectTransform rect = enemyUI.GetComponent<RectTransform>();
 

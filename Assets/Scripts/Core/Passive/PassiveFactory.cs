@@ -6,7 +6,7 @@ public static class PassiveFactory
     /// Factory để khởi tạo PassiveInstance.
     /// Trong tương lai, nếu có nhiều loại Passive phức tạp khác nhau, có thể áp dụng Builder Pattern tại đây.
     /// </summary>
-    public static PassiveInstance CreatePassive(PassiveConfig config, int level, CharacterProfileModel owner)
+    public static PassiveInstance CreatePassive(PassiveConfig config, int level, IStatProvider owner = null)
     {
         return new PassiveInstance(config, level, owner);
     }

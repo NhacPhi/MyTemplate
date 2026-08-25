@@ -7,12 +7,15 @@ public class PassiveInstance : IDisposable
     public PassiveConfig Config { get; private set; }
     private int _level;
     public int Level => _level;
-    private CharacterProfileModel _owner;
+    private IStatProvider _owner;
 
     // Danh sách các modifier (tăng chỉ số) đang được active bởi Passive này
     public List<EquipModifier> Modifiers { get; private set; } = new List<EquipModifier>();
 
-    public PassiveInstance(PassiveConfig config, int level, CharacterProfileModel owner)
+    // Số stack tích lũy trong trận đấu (dành cho các nội tại cộng dồn theo hiệp/chịu đòn)
+    public int StackCount { get; set; } = 0;
+
+    public PassiveInstance(PassiveConfig config, int level, IStatProvider owner = null)
     {
         Config = config;
         _level = level;

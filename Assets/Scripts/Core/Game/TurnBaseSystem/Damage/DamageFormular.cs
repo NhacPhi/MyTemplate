@@ -93,7 +93,8 @@ public static class DamageFormular
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        // Giảm sát thương nhận vào từ nội tại bảo vật (ví dụ: Lung Linh Bảo Tháp psv_linglong_pagoda giảm 10% ST)
+        // Giảm sát thương nhận vào từ nội tại bảo vật Lung Linh Bảo Tháp (psv_linglong_pagoda)
+        // Cơ chế (Option A Cân Bằng): Giảm 15% sát thương ở đòn đầu tiên; các đòn tiếp theo có 40% tỉ lệ kích hoạt giảm 10% sát thương.
         var targetPassive = target.GetComponent<EntityPassive>();
         if (targetPassive != null && targetPassive.ActivePassives != null)
         {
@@ -101,7 +102,38 @@ public static class DamageFormular
             {
                 if (p.Config != null && p.Config.ID == "psv_linglong_pagoda")
                 {
-                    damageResult *= 0.90f;
+                    bool triggerReduction = false;
+                    float reductionFactor = 1f;
+
+                    if (p.StackCount == 0)
+                    {
+                        // Đòn đánh đầu tiên: Chắc chắn 100% kích hoạt giảm 15%
+                        triggerReduction = true;
+                        reductionFactor = 0.85f; // Giảm 15%
+                        p.StackCount = 1;
+                    }
+                    else
+                    {
+                        // Các đòn tiếp theo: 40% tỉ lệ kích hoạt giảm 10%
+                        if (UnityEngine.Random.Range(0f, 100f) < 40f)
+                        {
+                            triggerReduction = true;
+                            reductionFactor = 0.90f; // Giảm 10%
+                        }
+                    }
+
+                    if (triggerReduction)
+                    {
+                        damageResult *= reductionFactor;
+
+                        // Hiển thị Text Popup thông qua LocalizationManager (không hardcode)
+                        string popupText = LocalizationManager.Instance != null 
+                            ? LocalizationManager.Instance.GetLocalizedValue(LocKeys.STR_DAMAGE_REDUCED) 
+                            : "";
+                        if (string.IsNullOrEmpty(popupText)) popupText = "Giảm Sát Thương!";
+
+                        UIEvent.TextPopup?.Invoke(popupText, target.transform.position + Vector3.up * 1.5f, new Color(0.3f, 0.85f, 1f));
+                    }
                     break;
                 }
             }
@@ -165,15 +197,22 @@ public static class DamageFormular
             targetSkill.ApplyDefenseSkill(ref damageResult, source.transform);
         }
 
-        // Giảm sát thương nhận vào từ nội tại bảo vật (ví dụ: Lung Linh Bảo Tháp psv_linglong_pagoda giảm 10% ST)
-        var targetPassive = target.GetComponent<EntityPassive>();
-        if (targetPassive != null && targetPassive.ActivePassives != null)
+        // Giảm sát thương nhận vào từ nội tại bảo vật Lung Linh Bảo Tháp (psv_linglong_pagoda)
+        var simTargetPassive = target.GetComponent<EntityPassive>();
+        if (simTargetPassive != null && simTargetPassive.ActivePassives != null)
         {
-            foreach (var p in targetPassive.ActivePassives)
+            foreach (var p in simTargetPassive.ActivePassives)
             {
                 if (p.Config != null && p.Config.ID == "psv_linglong_pagoda")
                 {
-                    damageResult *= 0.90f;
+                    if (p.StackCount == 0)
+                    {
+                        damageResult *= 0.85f; // Giảm 15% đòn đầu
+                    }
+                    else
+                    {
+                        damageResult *= 0.96f; // Kỳ vọng giảm 40% * 10% = 4%
+                    }
                     break;
                 }
             }

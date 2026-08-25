@@ -5,6 +5,7 @@ public enum EffectType
     None,
 
     Poison,
+    Burn,
     Stun,
     Frozen,
     Silence,
@@ -49,7 +50,7 @@ public class EffectConfig
 
     public bool IsEffectUI()
     {
-        if(Type == EffectType.StatBuff || Type == EffectType.StatDebuff || Type == EffectType.Poison || Type == EffectType.Silence) return true;
+        if(Type == EffectType.StatBuff || Type == EffectType.StatDebuff || Type == EffectType.Poison || Type == EffectType.Burn || Type == EffectType.Silence) return true;
         return false;
     }
 }

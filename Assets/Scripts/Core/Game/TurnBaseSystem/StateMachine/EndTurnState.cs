@@ -10,7 +10,7 @@ public class EndTurnState : BattleBaseState
     //Reset các chỉ số tạm thời
     public EndTurnState(BattleManager battleManager) : base(battleManager) { }
 
-    public override void Enter()
+    public override async void Enter()
     {
         // Luôn khôi phục độ sáng và tắt vòng tròn hitbox cho toàn bộ nhân vật khi kết thúc lượt
         if (battleManager != null && battleManager.TargetSystem != null && battleManager.ActiveEntities != null)
@@ -20,6 +20,11 @@ public class EndTurnState : BattleBaseState
 
         var stats = battleManager.CurrentCaster.GetCoreComponent<StatsController>();
         stats.ProcessEndOfTurn(battleManager.GlobalTurnID);
+
+        if (CombatText.Instance != null && battleManager != null)
+        {
+            await CombatText.Instance.WaitForAllPopupsAsync(battleManager.DestroyCancellationToken);
+        }
 
         bool isAllEnemiesDead = battleManager.Enemies.All(e => e.GetCoreComponent<EntityStats>().IsDead);
 

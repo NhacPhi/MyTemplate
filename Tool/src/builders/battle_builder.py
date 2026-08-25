@@ -67,11 +67,16 @@ class BattleConfigBuilder(BaseBuilder):
                 battle_id = str(row['BattleID']).strip()
 
                 if battle_id in battle_data:
+                    w_id = str(row['Weapon_ID']).strip() if 'Weapon_ID' in row and pd.notna(row['Weapon_ID']) and str(row['Weapon_ID']).strip() not in ['None', 'nan', ''] else ""
+                    w_lvl = int(row['Weapon_Level']) if 'Weapon_Level' in row and pd.notna(row['Weapon_Level']) else 1
+
                     enemy_comp = StageEnemiesComponent(
                         slot = int(row['Slot']) if pd.notna(row['Slot']) else 1,
                         enemy_id = str(row['Enemy_ID']).strip() if pd.notna(row['Enemy_ID']) else "",
                         enemy_level = int(row['Level']) if pd.notna(row['Level']) else 1,
-                        boss = bool(row['Boss']) if pd.notna(row['Boss']) else False
+                        boss = bool(row['Boss']) if pd.notna(row['Boss']) else False,
+                        weapon_id = w_id,
+                        weapon_level = w_lvl
                     )
                     battle_data[battle_id].enemies.append(enemy_comp)
 

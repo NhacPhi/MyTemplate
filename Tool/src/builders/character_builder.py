@@ -101,8 +101,8 @@ class CharacterConfigBuilder(BaseBuilder):
         }
         class_dict = {
             'Character': (1.0, 1.0, 1.0, 0),
-            'Creep':     (3.0, 1.2, 1.4, 10),
-            'Boss':      (3.0, 1.2, 1.4, 25)
+            'Creep':     (3.0, 1.5, 1.5, 10),
+            'Boss':      (3.0, 1.5, 1.5, 25)
         }
         bias_dict = {
             'Balanced':  (1.00, 1.00, 1.00,  0, 0, 0,  0, 0, 0),
@@ -150,21 +150,32 @@ class CharacterConfigBuilder(BaseBuilder):
                     calc_def = round(base_st['def'] * r_mult * c_def_mult * b_def)
                     calc_spd = base_st['speed'] + (r_tier * inc_st['speed']) + b_spd
                     calc_shred = base_st['def_shred'] + (r_tier * inc_st['def_shred']) + b_shred
-                    calc_cr = 50 if cls == 'Boss' else (base_st['crit_rate'] + (r_tier * inc_st['crit_rate']) + b_cr)
-                    calc_cd = base_st['crit_dmg'] + (r_tier * inc_st['crit_dmg']) + b_cd
-                    calc_pen = base_st['penetration'] + (r_tier * inc_st['penetration']) + b_pen
-                    calc_res = base_st['crit_dmg_res'] + (r_tier * inc_st['crit_dmg_res']) + c_res_bonus + b_res
+                    calc_cr = 60 if cls == 'Boss' else (50 if cls == 'Creep' else (base_st['crit_rate'] + (r_tier * inc_st['crit_rate']) + b_cr))
+                    calc_cd = 50 if cls in ['Boss', 'Creep'] else (base_st['crit_dmg'] + (r_tier * inc_st['crit_dmg']) + b_cd)
+                    calc_pen = 20 if cls in ['Boss', 'Creep'] else (base_st['penetration'] + (r_tier * inc_st['penetration']) + b_pen)
+                    calc_res = 25 if cls == 'Boss' else (10 if cls == 'Creep' else (base_st['crit_dmg_res'] + (r_tier * inc_st['crit_dmg_res']) + c_res_bonus + b_res))
 
                     char_stats = {}
-                    char_stats['hp'] = parse_val(row.get('hp')) or calc_hp
-                    char_stats['atk'] = parse_val(row.get('atk')) or calc_atk
-                    char_stats['def'] = parse_val(row.get('def')) or calc_def
-                    char_stats['speed'] = parse_val(row.get('speed')) or calc_spd
-                    char_stats['def_shred'] = parse_val(row.get('def_shred')) if parse_val(row.get('def_shred')) is not None else calc_shred
-                    char_stats['crit_rate'] = parse_val(row.get('crit_rate')) or parse_val(row.get('crit_rare')) or calc_cr
-                    char_stats['crit_dmg'] = parse_val(row.get('crit_dmg')) if parse_val(row.get('crit_dmg')) is not None else calc_cd
-                    char_stats['penetration'] = parse_val(row.get('penetration')) or parse_val(row.get('pen')) or calc_pen
-                    char_stats['crit_dmg_res'] = parse_val(row.get('crit_dmg_res')) if parse_val(row.get('crit_dmg_res')) is not None else calc_res
+                    if cls in ['Boss', 'Creep']:
+                        char_stats['hp'] = calc_hp
+                        char_stats['atk'] = calc_atk
+                        char_stats['def'] = calc_def
+                        char_stats['speed'] = calc_spd
+                        char_stats['def_shred'] = calc_shred
+                        char_stats['crit_rate'] = calc_cr
+                        char_stats['crit_dmg'] = calc_cd
+                        char_stats['penetration'] = calc_pen
+                        char_stats['crit_dmg_res'] = calc_res
+                    else:
+                        char_stats['hp'] = parse_val(row.get('hp')) or calc_hp
+                        char_stats['atk'] = parse_val(row.get('atk')) or calc_atk
+                        char_stats['def'] = parse_val(row.get('def')) or calc_def
+                        char_stats['speed'] = parse_val(row.get('speed')) or calc_spd
+                        char_stats['def_shred'] = parse_val(row.get('def_shred')) if parse_val(row.get('def_shred')) is not None else calc_shred
+                        char_stats['crit_rate'] = parse_val(row.get('crit_rate')) or parse_val(row.get('crit_rare')) or calc_cr
+                        char_stats['crit_dmg'] = parse_val(row.get('crit_dmg')) if parse_val(row.get('crit_dmg')) is not None else calc_cd
+                        char_stats['penetration'] = parse_val(row.get('penetration')) or parse_val(row.get('pen')) or calc_pen
+                        char_stats['crit_dmg_res'] = parse_val(row.get('crit_dmg_res')) if parse_val(row.get('crit_dmg_res')) is not None else calc_res
                         
                     character_data[char_id].stats = char_stats
 

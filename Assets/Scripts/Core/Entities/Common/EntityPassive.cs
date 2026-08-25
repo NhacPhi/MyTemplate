@@ -16,21 +16,43 @@ public class EntityPassive : CoreComponent, IAsyncInitializer
 
     public async UniTask InitializeAsync(CancellationToken token)
     {
-        _entity = core as Entity;
-        _entityStats = gameObject.GetComponent<EntityStats>();
+        _entity = (core as Entity) ?? GetComponent<Entity>() ?? GetComponentInParent<Entity>();
+        _entityStats = (_entity != null ? _entity.GetCoreComponent<EntityStats>() : null) ?? GetComponent<EntityStats>() ?? GetComponentInParent<EntityStats>();
 
-        // 1. Lấy Data nhân vật
-        var characterProfile = _playerCharacterManager.GetCharacter(_entityStats.EntityID);
-        if (characterProfile == null || characterProfile.PassivesManager == null) 
+        IReadOnlyList<PassiveInstance> passivesToLoad = null;
+
+        // 1. Nếu là Enemy / Boss có EnemyProfileModel
+        if (_entityStats != null && _entityStats.StatProvider is EnemyProfileModel enemyProfile && enemyProfile.PassivesManager != null)
         {
-            UnityEngine.Debug.LogWarning($"[EntityPassive] Không tìm thấy Data nhân vật hoặc PassivesManager cho Entity: {_entityStats.EntityID}");
+            passivesToLoad = enemyProfile.PassivesManager.Passives;
+        }
+        // 2. Nếu là Nhân vật của Player
+        else if (_playerCharacterManager != null && _entityStats != null && !string.IsNullOrEmpty(_entityStats.EntityID))
+        {
+            var characterProfile = _playerCharacterManager.GetCharacter(_entityStats.EntityID);
+            if (characterProfile != null && characterProfile.PassivesManager != null)
+            {
+                passivesToLoad = characterProfile.PassivesManager.Passives;
+            }
+        }
+        // 3. Fallback khác
+        if (passivesToLoad == null && _entityStats != null)
+        {
+            if (_entityStats.StatProvider is CharacterProfileModel charProfile && charProfile.PassivesManager != null)
+            {
+                passivesToLoad = charProfile.PassivesManager.Passives;
+            }
+        }
+
+        if (passivesToLoad == null || passivesToLoad.Count == 0)
+        {
             return;
         }
 
-        UnityEngine.Debug.Log($"[EntityPassive] Entity {_entityStats.EntityID} nạp thành công {characterProfile.PassivesManager.Passives.Count} nội tại.");
+        UnityEngine.Debug.Log($"[EntityPassive] Entity {_entityStats?.EntityID} nạp thành công {passivesToLoad.Count} nội tại (Passives).");
 
-        // 2. Nạp toàn bộ PassiveInstance đang được trang bị/mở khóa
-        foreach (var passiveInstance in characterProfile.PassivesManager.Passives)
+        // 3. Nạp toàn bộ PassiveInstance đang được trang bị/mở khóa
+        foreach (var passiveInstance in passivesToLoad)
         {
             string firstEffectId = (passiveInstance.Config?.CombatEvents != null && passiveInstance.Config.CombatEvents.Count > 0) 
                 ? passiveInstance.Config.CombatEvents[0].EffectId 
@@ -38,7 +60,7 @@ public class EntityPassive : CoreComponent, IAsyncInitializer
             UnityEngine.Debug.Log($"[EntityPassive] Đang đăng ký nội tại: {firstEffectId}");
             ActivePassives.Add(passiveInstance);
 
-            // 3. Truyền Entity vào để Passive tự động đăng ký Event
+            // 4. Truyền Entity vào để Passive tự động đăng ký Event
             passiveInstance.SubscribeToEntity(_entity);
         }
 

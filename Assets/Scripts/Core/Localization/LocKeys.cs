@@ -1447,6 +1447,8 @@ public static class LocKeys
 
     public const long STR_FERROUS_CHAOS_NAME = 600008155;
 
+    public const long STR_FERROUS_CHAOS_DES = 2367791754;
+
     public const long STR_FERROUS_CHAOS_SKILL = 2047482786;
 
     public const long STR_COOLDOWN_REDUCED = 2448984470;
@@ -1456,6 +1458,10 @@ public static class LocKeys
     public const long STR_SWEEP_ATTACK = 2311945029;
 
     public const long STR_PURSUIT_ATTACK = 2392774309;
+
+    public const long STR_DAMAGE_REDUCED = 4186065562;
+
+    public const long STR_THEBOYSAGE_ULTIMATE_PASSIVE = 50173263;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 
@@ -1692,5 +1698,9 @@ public static class LocKeys
     public const long EFF_SILENCE_NAME = 3221519800;
 
     public const long EFF_SILENCE_DES = 2834996488;
+
+    public const long EFF_BURN_NAME = 1647067074;
+
+    public const long EFF_BURN_DES = 2825649722;
 
 }

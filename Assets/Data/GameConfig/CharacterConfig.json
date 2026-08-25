@@ -70,12 +70,12 @@
         },
         "stats": {
             "hp": 4441,
-            "atk": 3273,
+            "atk": 3086,
             "def": 444,
             "speed": 96,
             "def_shred": 16,
             "crit_rate": 10,
-            "crit_dmg": 19,
+            "crit_dmg": 22,
             "penetration": 5,
             "crit_dmg_res": 0
         },
@@ -91,7 +91,7 @@
         },
         "upgrades": {
             "hp": 222,
-            "atk": 164,
+            "atk": 154,
             "def": 22
         }
     },
@@ -166,13 +166,13 @@
         },
         "stats": {
             "hp": 2250,
-            "atk": 1800,
+            "atk": 2100,
             "def": 210,
             "speed": 95,
             "def_shred": 0,
             "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 3,
+            "crit_dmg": 10,
+            "penetration": 5,
             "crit_dmg_res": 0
         },
         "attributes": {
@@ -186,9 +186,9 @@
             }
         },
         "upgrades": {
-            "hp": 112,
-            "atk": 90,
-            "def": 10
+            "hp": 113,
+            "atk": 105,
+            "def": 11
         }
     },
     "ZhuBaJie": {
@@ -284,7 +284,7 @@
         "upgrades": {
             "hp": 240,
             "atk": 54,
-            "def": 22
+            "def": 23
         }
     },
     "ShaWujing": {
@@ -456,7 +456,7 @@
             "hp": 4140,
             "atk": 1134,
             "def": 330,
-            "speed": 102,
+            "speed": 103,
             "def_shred": 0,
             "crit_rate": 5,
             "crit_dmg": 0,
@@ -476,7 +476,7 @@
         "upgrades": {
             "hp": 207,
             "atk": 57,
-            "def": 16
+            "def": 17
         }
     },
     "ThirdPrinceNezha": {
@@ -549,14 +549,14 @@
             }
         },
         "stats": {
-            "hp": 3444,
-            "atk": 2951,
-            "def": 344,
-            "speed": 104,
-            "def_shred": 12,
-            "crit_rate": 10,
-            "crit_dmg": 20,
-            "penetration": 5,
+            "hp": 2755,
+            "atk": 3589,
+            "def": 276,
+            "speed": 111,
+            "def_shred": 21,
+            "crit_rate": 16,
+            "crit_dmg": 29,
+            "penetration": 9,
             "crit_dmg_res": 0
         },
         "attributes": {
@@ -570,9 +570,9 @@
             }
         },
         "upgrades": {
-            "hp": 172,
-            "atk": 148,
-            "def": 17
+            "hp": 138,
+            "atk": 179,
+            "def": 14
         }
     },
     "LittleWhiteDragon": {
@@ -646,13 +646,13 @@
         },
         "stats": {
             "hp": 2090,
-            "atk": 1710,
+            "atk": 2090,
             "def": 209,
             "speed": 108,
-            "def_shred": 3,
-            "crit_rate": 11,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "def_shred": 5,
+            "crit_rate": 13,
+            "crit_dmg": 10,
+            "penetration": 4,
             "crit_dmg_res": 0
         },
         "attributes": {
@@ -666,8 +666,8 @@
             }
         },
         "upgrades": {
-            "hp": 104,
-            "atk": 86,
+            "hp": 105,
+            "atk": 105,
             "def": 10
         }
     },
@@ -742,7 +742,7 @@
         },
         "stats": {
             "hp": 6670,
-            "atk": 1174,
+            "atk": 1175,
             "def": 598,
             "speed": 84,
             "def_shred": 0,
@@ -822,9 +822,9 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
+                    1.0,
                     1.2,
-                    1.5,
-                    1.8
+                    1.5
                 ],
                 "max_cooldown": [
                     5,
@@ -838,12 +838,12 @@
         },
         "stats": {
             "hp": 4675,
-            "atk": 2975,
+            "atk": 2805,
             "def": 468,
             "speed": 96,
             "def_shred": 11,
             "crit_rate": 12,
-            "crit_dmg": 11,
+            "crit_dmg": 14,
             "penetration": 5,
             "crit_dmg_res": 0
         },
@@ -859,7 +859,7 @@
         },
         "upgrades": {
             "hp": 234,
-            "atk": 149,
+            "atk": 140,
             "def": 23
         }
     },
@@ -934,13 +934,13 @@
         },
         "stats": {
             "hp": 3825,
-            "atk": 3060,
+            "atk": 3570,
             "def": 357,
             "speed": 101,
             "def_shred": 0,
             "crit_rate": 8,
-            "crit_dmg": 11,
-            "penetration": 6,
+            "crit_dmg": 19,
+            "penetration": 11,
             "crit_dmg_res": 0
         },
         "attributes": {
@@ -955,7 +955,7 @@
         },
         "upgrades": {
             "hp": 191,
-            "atk": 153,
+            "atk": 179,
             "def": 18
         }
     },
@@ -1030,12 +1030,12 @@
         },
         "stats": {
             "hp": 7838,
-            "atk": 2310,
-            "def": 366,
+            "atk": 2888,
+            "def": 392,
             "speed": 90,
             "def_shred": 10,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1050,9 +1050,9 @@
             }
         },
         "upgrades": {
-            "hp": 392,
-            "atk": 116,
-            "def": 18
+            "hp": 196,
+            "atk": 109,
+            "def": 16
         }
     },
     "TheBoySage": {
@@ -1090,15 +1090,15 @@
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
                     1.0,
-                    1.5,
-                    1.5
+                    1.2,
+                    1.4
                 ],
                 "max_cooldown": [
                     4,
                     4,
                     3
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_Burn_def",
                 "sound": "TheBoySage_Major",
                 "passive_id": ""
             },
@@ -1110,8 +1110,8 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
+                    1.2,
                     1.5,
-                    1.8,
                     1.8
                 ],
                 "max_cooldown": [
@@ -1119,19 +1119,19 @@
                     5,
                     4
                 ],
-                "effect_id": "None",
+                "effect_id": "EFF_Burn_def",
                 "sound": "TheBoySage_Main",
-                "passive_id": ""
+                "passive_id": "psv_theboysage_ultimate"
             }
         },
         "stats": {
             "hp": 12750,
-            "atk": 3774,
-            "def": 595,
+            "atk": 4718,
+            "def": 638,
             "speed": 106,
             "def_shred": 8,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1146,9 +1146,9 @@
             }
         },
         "upgrades": {
-            "hp": 638,
-            "atk": 189,
-            "def": 30
+            "hp": 255,
+            "atk": 230,
+            "def": 20
         }
     },
     "GoldHornKing": {
@@ -1222,12 +1222,12 @@
         },
         "stats": {
             "hp": 10331,
-            "atk": 3541,
-            "def": 482,
+            "atk": 4426,
+            "def": 517,
             "speed": 104,
             "def_shred": 12,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1242,9 +1242,9 @@
             }
         },
         "upgrades": {
-            "hp": 517,
-            "atk": 177,
-            "def": 24
+            "hp": 207,
+            "atk": 215,
+            "def": 17
         }
     },
     "SilverHornKing": {
@@ -1318,12 +1318,12 @@
         },
         "stats": {
             "hp": 10331,
-            "atk": 3541,
-            "def": 482,
+            "atk": 4426,
+            "def": 517,
             "speed": 104,
             "def_shred": 12,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1338,9 +1338,9 @@
             }
         },
         "upgrades": {
-            "hp": 517,
-            "atk": 177,
-            "def": 24
+            "hp": 207,
+            "atk": 215,
+            "def": 17
         }
     },
     "YellowWindMonster": {
@@ -1414,12 +1414,12 @@
         },
         "stats": {
             "hp": 13324,
-            "atk": 3927,
-            "def": 622,
+            "atk": 4909,
+            "def": 666,
             "speed": 96,
             "def_shred": 16,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1434,9 +1434,9 @@
             }
         },
         "upgrades": {
-            "hp": 666,
-            "atk": 196,
-            "def": 31
+            "hp": 333,
+            "atk": 185,
+            "def": 27
         }
     },
     "GoldfishDemon": {
@@ -1510,12 +1510,12 @@
         },
         "stats": {
             "hp": 11364,
-            "atk": 3350,
-            "def": 530,
+            "atk": 4187,
+            "def": 568,
             "speed": 94,
             "def_shred": 14,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -1606,13 +1606,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2100,
-            "def": 385,
+            "atk": 2625,
+            "def": 412,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -1626,9 +1626,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 105,
-            "def": 19
+            "hp": 138,
+            "atk": 116,
+            "def": 17
         }
     },
     "YoungBufflalo": {
@@ -1702,13 +1702,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2100,
-            "def": 385,
+            "atk": 2625,
+            "def": 412,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -1722,9 +1722,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 105,
-            "def": 19
+            "hp": 138,
+            "atk": 116,
+            "def": 17
         }
     },
     "Minions": {
@@ -1798,13 +1798,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2100,
-            "def": 385,
+            "atk": 2625,
+            "def": 412,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -1818,9 +1818,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 105,
-            "def": 19
+            "hp": 138,
+            "atk": 116,
+            "def": 17
         }
     },
     "RatMonster": {
@@ -1894,13 +1894,13 @@
         },
         "stats": {
             "hp": 7838,
-            "atk": 1995,
-            "def": 366,
+            "atk": 2494,
+            "def": 392,
             "speed": 98,
             "def_shred": 5,
-            "crit_rate": 10,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -1914,9 +1914,9 @@
             }
         },
         "upgrades": {
-            "hp": 392,
-            "atk": 100,
-            "def": 18
+            "hp": 131,
+            "atk": 110,
+            "def": 16
         }
     },
     "CrabSolider": {
@@ -1990,14 +1990,14 @@
         },
         "stats": {
             "hp": 9488,
-            "atk": 1890,
-            "def": 424,
+            "atk": 2362,
+            "def": 454,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
-            "crit_dmg_res": 15
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
+            "crit_dmg_res": 10
         },
         "attributes": {
             "shield": {
@@ -2010,9 +2010,9 @@
             }
         },
         "upgrades": {
-            "hp": 474,
-            "atk": 94,
-            "def": 21
+            "hp": 158,
+            "atk": 104,
+            "def": 18
         }
     },
     "SquidSolider": {
@@ -2086,13 +2086,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2205,
-            "def": 404,
+            "atk": 2756,
+            "def": 433,
             "speed": 85,
             "def_shred": 20,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -2106,9 +2106,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 110,
-            "def": 20
+            "hp": 138,
+            "atk": 121,
+            "def": 17
         }
     },
     "Benborba": {
@@ -2182,13 +2182,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2100,
-            "def": 385,
+            "atk": 2625,
+            "def": 412,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -2202,9 +2202,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 105,
-            "def": 19
+            "hp": 138,
+            "atk": 116,
+            "def": 17
         }
     },
     "Baborben": {
@@ -2278,13 +2278,13 @@
         },
         "stats": {
             "hp": 8250,
-            "atk": 2100,
-            "def": 385,
+            "atk": 2625,
+            "def": 412,
             "speed": 90,
             "def_shred": 5,
-            "crit_rate": 5,
-            "crit_dmg": 5,
-            "penetration": 2,
+            "crit_rate": 50,
+            "crit_dmg": 50,
+            "penetration": 20,
             "crit_dmg_res": 10
         },
         "attributes": {
@@ -2298,9 +2298,9 @@
             }
         },
         "upgrades": {
-            "hp": 412,
-            "atk": 105,
-            "def": 19
+            "hp": 138,
+            "atk": 116,
+            "def": 17
         }
     },
     "LiJing": {
@@ -2374,7 +2374,7 @@
         },
         "stats": {
             "hp": 6670,
-            "atk": 1174,
+            "atk": 1175,
             "def": 598,
             "speed": 84,
             "def_shred": 0,
@@ -2470,12 +2470,12 @@
         },
         "stats": {
             "hp": 17400,
-            "atk": 1644,
-            "def": 799,
+            "atk": 2055,
+            "def": 856,
             "speed": 79,
             "def_shred": 15,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -2490,9 +2490,9 @@
             }
         },
         "upgrades": {
-            "hp": 870,
+            "hp": 435,
             "atk": 82,
-            "def": 40
+            "def": 34
         }
     },
     "ThirdPrinceNezha_Boss": {
@@ -2566,12 +2566,12 @@
         },
         "stats": {
             "hp": 10331,
-            "atk": 3541,
-            "def": 482,
+            "atk": 4426,
+            "def": 517,
             "speed": 104,
             "def_shred": 12,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -2586,9 +2586,9 @@
             }
         },
         "upgrades": {
-            "hp": 517,
-            "atk": 177,
-            "def": 24
+            "hp": 207,
+            "atk": 215,
+            "def": 17
         }
     },
     "BullDemonKing_Boss": {
@@ -2662,12 +2662,12 @@
         },
         "stats": {
             "hp": 20010,
-            "atk": 1409,
-            "def": 837,
+            "atk": 1762,
+            "def": 897,
             "speed": 84,
             "def_shred": 0,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -2682,9 +2682,9 @@
             }
         },
         "upgrades": {
-            "hp": 1000,
+            "hp": 500,
             "atk": 70,
-            "def": 42
+            "def": 36
         }
     },
     "ErlangShen_Boss": {
@@ -2742,9 +2742,9 @@
                 "skill_type": "ActiveSkill",
                 "target_type": "SingleEnemy",
                 "damage_multiplier": [
+                    1.0,
                     1.2,
-                    1.5,
-                    1.8
+                    1.5
                 ],
                 "max_cooldown": [
                     5,
@@ -2758,12 +2758,12 @@
         },
         "stats": {
             "hp": 14025,
-            "atk": 3570,
-            "def": 654,
+            "atk": 4462,
+            "def": 701,
             "speed": 96,
             "def_shred": 11,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -2778,9 +2778,9 @@
             }
         },
         "upgrades": {
-            "hp": 701,
-            "atk": 178,
-            "def": 33
+            "hp": 351,
+            "atk": 168,
+            "def": 28
         }
     },
     "LiJing_Boss": {
@@ -2854,12 +2854,12 @@
         },
         "stats": {
             "hp": 20010,
-            "atk": 1409,
-            "def": 837,
+            "atk": 1762,
+            "def": 897,
             "speed": 84,
             "def_shred": 0,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },
@@ -2874,9 +2874,9 @@
             }
         },
         "upgrades": {
-            "hp": 1000,
+            "hp": 500,
             "atk": 70,
-            "def": 42
+            "def": 36
         }
     },
     "ThirdDragonPrince": {
@@ -2949,13 +2949,13 @@
             }
         },
         "stats": {
-            "hp": 14500,
-            "atk": 3600,
-            "def": 580,
-            "speed": 98,
-            "def_shred": 15,
+            "hp": 14025,
+            "atk": 4462,
+            "def": 701,
+            "speed": 96,
+            "def_shred": 11,
             "crit_rate": 60,
-            "crit_dmg": 100,
+            "crit_dmg": 50,
             "penetration": 20,
             "crit_dmg_res": 25
         },

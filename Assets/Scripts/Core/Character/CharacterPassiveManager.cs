@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class CharacterPassiveManager
 {
-    private CharacterProfileModel _owner;
+    private IStatProvider _owner;
     private List<PassiveInstance> _activePassives = new List<PassiveInstance>();
     public IReadOnlyList<PassiveInstance> Passives => _activePassives;
 
-    public void Init(CharacterProfileModel owner) 
+    public void Init(IStatProvider owner) 
     { 
         _owner = owner; 
     }

@@ -42,4 +42,10 @@ public class StageEnemyComponent
 
     [JsonProperty("boss")]
     public bool IsBoss;
+
+    [JsonProperty("weapon_id")]
+    public string WeaponID;
+
+    [JsonProperty("weapon_level")]
+    public int WeaponLevel = 1;
 }

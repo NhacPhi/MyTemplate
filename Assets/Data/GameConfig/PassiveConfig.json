@@ -87,7 +87,7 @@
                     100.0
                 ],
                 "target": "self",
-                "condition_filter": "IsSkill, SingleTarget",
+                "condition_filter": "IsSkill, SingleTarget, TargetDead",
                 "effect_param": 1.0,
                 "internal_cooldown": 0
             }
@@ -883,6 +883,28 @@
                 ],
                 "target": "target",
                 "condition_filter": "MajorSkill",
+                "effect_param": 0.0,
+                "internal_cooldown": 0
+            }
+        ]
+    },
+    "psv_theboysage_ultimate": {
+        "desc_template_hash": 50173263,
+        "static_modifiers": [],
+        "combat_events": [
+            {
+                "event_type": "OnBeforeDealDamage",
+                "effect_id": "Eff_ArmorPenetration",
+                "modify_by_upgrade": [
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0,
+                    30.0
+                ],
+                "target": "self",
+                "condition_filter": "UltimateSkill",
                 "effect_param": 0.0,
                 "internal_cooldown": 0
             }

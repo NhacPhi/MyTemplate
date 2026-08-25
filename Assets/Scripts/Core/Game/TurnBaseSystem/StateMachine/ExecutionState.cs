@@ -33,6 +33,12 @@ public class ExecutionState : BattleBaseState
                 UIEvent.OnUpdateBossUI?.Invoke(battleManager.Boss);
             }
 
+            // Chờ cho toàn bộ hàng đợi sát thương và chữ bay lên hoàn tất trước khi chuyển turn
+            if (CombatText.Instance != null && battleManager != null)
+            {
+                await CombatText.Instance.WaitForAllPopupsAsync(battleManager.DestroyCancellationToken);
+            }
+
             battleManager.StateMachine.ChangeState(BattleState.EndTurnState);
         }
         catch (System.OperationCanceledException)

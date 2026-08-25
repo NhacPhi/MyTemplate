@@ -17,6 +17,7 @@ public class EffectControllUI : MonoBehaviour
     [SerializeField] Sprite _iconBuff;
     [SerializeField] Sprite _iconDebuff;
     [SerializeField] Sprite _iconSilent;
+    [SerializeField] Sprite _iconBurn;
 
     Dictionary<string, EffectControllUI> _effects = new Dictionary<string, EffectControllUI>();
 
@@ -124,6 +125,9 @@ public class EffectControllUI : MonoBehaviour
 
         switch (data.Type)
         {
+            case EffectType.Burn:
+                return _iconBurn;
+
             case EffectType.Poison:
                 return _iconPoison;
 

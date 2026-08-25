@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -85,7 +85,23 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
     public virtual int RemoveStack() => 0;
     public abstract StatusEffect Clone();
 
-    public virtual string GetID() => this.ID;
+    public virtual string GetID()
+    {
+        if (Data != null)
+        {
+            if (Data.Type == EffectType.StatBuff || Data.Type == EffectType.StatDebuff)
+            {
+                return $"{Data.Type}_{Data.TargetStat}";
+            }
+            if (Data.Name != 0)
+            {
+                return $"{Data.Type}_{Data.Name}";
+            }
+            return Data.Type.ToString();
+        }
+        return this.ID;
+    }
+
     public virtual bool Equals(StatusEffect other)
     {
         if (other == null) return false;

@@ -20,6 +20,8 @@ class StageEnemiesComponent:
     enemy_id: str
     enemy_level: int
     boss: bool
+    weapon_id: str = ""
+    weapon_level: int = 1
 
 @dataclass
 class BattleModel:
