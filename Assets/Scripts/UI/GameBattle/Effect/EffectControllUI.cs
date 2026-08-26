@@ -18,6 +18,7 @@ public class EffectControllUI : MonoBehaviour
     [SerializeField] Sprite _iconDebuff;
     [SerializeField] Sprite _iconSilent;
     [SerializeField] Sprite _iconBurn;
+    [SerializeField] Sprite _iconHornKing;
 
     Dictionary<string, EffectControllUI> _effects = new Dictionary<string, EffectControllUI>();
 
@@ -118,10 +119,16 @@ public class EffectControllUI : MonoBehaviour
         _activeUIEffects.Clear();
     }
 
-    // --- HÀM HỖ TRỢ LẤY ĐÚNG ICON ---
     private Sprite GetIconByEffectID(StatusEffect effect)
     {
+        if (effect == null) return null;
+        if (effect.GetID() == "EFF_SilverMark_def" || (effect.Data != null && effect.Data.Type == EffectType.SilverMark))
+        {
+            return _iconHornKing != null ? _iconHornKing : _iconDebuff;
+        }
+
         var data = effect.Data;
+        if (data == null) return null;
 
         switch (data.Type)
         {
@@ -133,6 +140,9 @@ public class EffectControllUI : MonoBehaviour
 
             case EffectType.Silence:
                 return _iconSilent;
+
+            case EffectType.SilverMark:
+                return _iconHornKing != null ? _iconHornKing : _iconDebuff;
 
             case EffectType.StatDebuff or EffectType.StatBuff:
                 switch (data.TargetStat)

@@ -131,12 +131,14 @@ public class CharacterCardAscend : CharacterCard
         if (currentSkillUI != null)
         {
             currentSkillUI.SetSkillUI(skillIcon, currentLevel);
+            currentSkillUI.SetCharacterID(currentCharacter, targetSkill);
         }
 
         // Next: trạng thái sau khi nâng cấp
         if (nextSkillUI != null)
         {
             nextSkillUI.SetSkillUI(skillIcon, nextLevel);
+            nextSkillUI.SetCharacterID(currentCharacter, targetSkill);
         }
     }
 

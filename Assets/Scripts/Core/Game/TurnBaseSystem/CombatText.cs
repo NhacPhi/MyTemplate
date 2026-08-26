@@ -76,10 +76,10 @@ public class CombatText : IInitializable, IDisposable
         {
             Type = CombatPopupType.Damage,
             Value = damage,
-            Position = position,
+            Position = position + new Vector3(0.35f, 0.5f, 0f), // Số damage nảy ở tầm thân hơi lệch sang phải
             IsCritical = isCris,
-            Color = isCris ? Color.yellow : Color.white,
-            Priority = 0
+            Color = isCris ? new Color(1f, 0.85f, 0.15f) : Color.white,
+            Priority = 0 // Ưu tiên số damage hiển thị trước
         });
     }
 
@@ -92,7 +92,7 @@ public class CombatText : IInitializable, IDisposable
             Type = CombatPopupType.Heal,
             Value = heal,
             Text = $"+{Mathf.CeilToInt(heal)}",
-            Position = position,
+            Position = position + new Vector3(0f, 0.9f, 0f),
             IsCritical = false,
             Color = new Color(0.25f, 1f, 0.35f),
             Priority = 0
@@ -107,10 +107,10 @@ public class CombatText : IInitializable, IDisposable
         {
             Type = CombatPopupType.Text,
             Text = text,
-            Position = position,
+            Position = position + new Vector3(-0.3f, 0.4f, 0f), // Chữ hiệu ứng hiển thị ở đỉnh đầu lệch sang trái
             IsCritical = false,
             Color = color ?? new Color(0.35f, 0.85f, 1f),
-            Priority = 1
+            Priority = 1 // Chữ hiệu ứng hiển thị tiếp theo sau số damage
         });
     }
 
@@ -140,7 +140,7 @@ public class CombatText : IInitializable, IDisposable
                 {
                     if (_popupQueue.Count > 0)
                     {
-                        // Lấy request có độ ưu tiên cao nhất trước (Damage/Heal trước, Text sau)
+                        // Lấy request có độ ưu tiên cao nhất trước (Damage/Heal trước, Text hiệu ứng sau)
                         int bestIndex = 0;
                         for (int i = 1; i < _popupQueue.Count; i++)
                         {
@@ -165,28 +165,28 @@ public class CombatText : IInitializable, IDisposable
                     await UniTask.Yield(_cts.Token);
                 }
 
-                // 1. Tính toán vị trí không bị đè chữ (Stagger Offset Y)
+                // 1. Tính toán vị trí chống đè chữ (Stagger Offset Y khi xuất hiện nhiều popup liên tiếp)
                 Vector3 spawnPos = nextRequest.Position;
                 float now = Time.time;
-                if (Vector3.Distance(spawnPos, _lastSpawnPos) < 1.2f && (now - _lastSpawnTime) < 1.2f)
+                if (Vector3.Distance(spawnPos, _lastSpawnPos) < 1.5f && (now - _lastSpawnTime) < 1.5f)
                 {
                     _consecutiveStackCount++;
-                    // Dịch chuyển nhẹ lên trên và hơi lệch ngẫu nhiên để tạo hiệu ứng cascade rõ ràng
-                    spawnPos += new Vector3((_consecutiveStackCount % 2 == 1 ? 0.25f : -0.25f), _consecutiveStackCount * 0.42f, 0f);
+                    // Dịch chuyển bậc thang lên trên để các chữ xếp chồng rõ ràng không che nhau
+                    spawnPos += new Vector3((_consecutiveStackCount % 2 == 1 ? -0.2f : 0.2f), _consecutiveStackCount * 0.45f, 0f);
                 }
                 else
                 {
                     _consecutiveStackCount = 0;
                 }
 
-                _lastSpawnPos = nextRequest.Position;
+                _lastSpawnPos = spawnPos;
                 _lastSpawnTime = now;
 
                 // 2. Sinh popup từ Pool
                 SpawnPopup(nextRequest, spawnPos);
 
-                // 3. Nghỉ một nhịp Stagger ngắn (160ms) theo chuẩn các game turn-based
-                // để người chơi đọc từng dòng sát thương / hiệu ứng rõ ràng
+                // 3. Nghỉ một nhịp Stagger (280ms) chuẩn mực giữa các popup trên cùng mục tiêu
+                // để người chơi kịp nhìn thấy số sát thương rồi đọc tiếp dòng hiệu ứng giải thích
                 int remainingCount;
                 lock (_popupQueue)
                 {
@@ -195,7 +195,7 @@ public class CombatText : IInitializable, IDisposable
 
                 if (remainingCount > 0)
                 {
-                    await UniTask.Delay(160, cancellationToken: _cts.Token);
+                    await UniTask.Delay(280, cancellationToken: _cts.Token);
                 }
             }
         }

@@ -96,9 +96,9 @@ public class CharacterCardInfo : CharacterCard
             Utility.GetSkillEnhancementLevel(SkillCharacter.Ultimate, starUp));
 
         // Truyền character context cho tooltip handler
-        baseSkill.SetCharacterID(id);
-        mainSkill.SetCharacterID(id);
-        ultimateSkill.SetCharacterID(id);
+        baseSkill.SetCharacterID(id, SkillCharacter.Base);
+        mainSkill.SetCharacterID(id, SkillCharacter.Major);
+        ultimateSkill.SetCharacterID(id, SkillCharacter.Ultimate);
     }
 
     public void UpdateCardInfoWithCurrentCharacter()

@@ -21,6 +21,20 @@ public class BossUI : MonoBehaviour
 
     [Inject] private GameDataBase _gameData;
 
+    private void Awake()
+    {
+        var tooltipUI = GetComponentInChildren<SkillTooltipUI>(true);
+        if (tooltipUI == null)
+        {
+            tooltipUI = FindFirstObjectByType<SkillTooltipUI>(FindObjectsInactive.Include);
+        }
+        if (tooltipUI != null && !tooltipUI.gameObject.activeSelf)
+        {
+            tooltipUI.gameObject.SetActive(true);
+            tooltipUI.Hide();
+        }
+    }
+
     private void Start()
     {
         if (BattleManager.Instance != null)
@@ -61,9 +75,23 @@ public class BossUI : MonoBehaviour
         var majorSkill = characterConfig.MajorSkillIcon;
         var ultimateSKill = characterConfig.UltimateSkillIcon;
 
-        if (_baseSkill != null) _baseSkill.SetIconSkill(baseSkill);
-        if (_majorSkill != null) _majorSkill.SetIconSkill(majorSkill);
-        if (_ultimateSkill != null) _ultimateSkill.SetIconSkill(ultimateSKill);
+        string bossID = boss.GetEntityID();
+
+        if (_baseSkill != null)
+        {
+            _baseSkill.SetIconSkill(baseSkill);
+            _baseSkill.SetCharacterID(bossID);
+        }
+        if (_majorSkill != null)
+        {
+            _majorSkill.SetIconSkill(majorSkill);
+            _majorSkill.SetCharacterID(bossID);
+        }
+        if (_ultimateSkill != null)
+        {
+            _ultimateSkill.SetIconSkill(ultimateSKill);
+            _ultimateSkill.SetCharacterID(bossID);
+        }
 
         var skillConfig = characterConfig.Skills;
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Tech.Composite;
 using UnityEngine;
 
@@ -39,6 +40,21 @@ public static class DamageFormular
             if (shieldAttr != null && shieldAttr.Value > 0)
             {
                 damageResult *= 2f;
+            }
+        }
+
+        // Cơ chế Cặp Song Sát: Chỉ khi đòn đánh có Tag Song Sát (Kim Giác) VÀ mục tiêu đang dính Ngân Ấn
+        if (damageBonus.Tags != null && (damageBonus.Tags.Contains("SilverMarkSynergy") || damageBonus.Tags.Contains("SilverMarkBonus")))
+        {
+            var targetEffectHolder = target.GetCoreComponent<StatsController>();
+            if (targetEffectHolder != null && targetEffectHolder.StatusEffect != null)
+            {
+                bool hasSilverMark = targetEffectHolder.StatusEffect.Any(e => e.Data != null && (e.Data.Type == EffectType.SilverMark || e.ID == "EFF_SilverMark_def"));
+                if (hasSilverMark)
+                {
+                    damageResult *= 1.20f;
+                    UIEvent.TextPopup?.Invoke("Song Sát +20%!", target.transform.position + Vector3.up * 1.5f, new Color(1f, 0.85f, 0.2f));
+                }
             }
         }
 
@@ -170,6 +186,19 @@ public static class DamageFormular
             if (shieldAttr != null && shieldAttr.Value > 0)
             {
                 damageResult *= 2f;
+            }
+        }
+
+        if (damageBonus.Tags != null && (damageBonus.Tags.Contains("SilverMarkSynergy") || damageBonus.Tags.Contains("SilverMarkBonus")))
+        {
+            var targetEffectHolder = target.GetCoreComponent<StatsController>();
+            if (targetEffectHolder != null && targetEffectHolder.StatusEffect != null)
+            {
+                bool hasSilverMark = targetEffectHolder.StatusEffect.Any(e => e.Data != null && (e.Data.Type == EffectType.SilverMark || e.ID == "EFF_SilverMark_def"));
+                if (hasSilverMark)
+                {
+                    damageResult *= 1.20f;
+                }
             }
         }
 

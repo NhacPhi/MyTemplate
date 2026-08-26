@@ -23,23 +23,61 @@ public class SkillTooltipHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _trigger.OnTooltipShow += HandleShow;
-        _trigger.OnTooltipHide += HandleHide;
+        if (_trigger == null)
+            _trigger = GetComponent<TooltipTrigger>();
+
+        if (_trigger != null)
+        {
+            _trigger.OnTooltipShow -= HandleShow;
+            _trigger.OnTooltipShow += HandleShow;
+            _trigger.OnTooltipHide -= HandleHide;
+            _trigger.OnTooltipHide += HandleHide;
+        }
     }
 
     private void OnDisable()
     {
-        _trigger.OnTooltipShow -= HandleShow;
-        _trigger.OnTooltipHide -= HandleHide;
+        if (_trigger != null)
+        {
+            _trigger.OnTooltipShow -= HandleShow;
+            _trigger.OnTooltipHide -= HandleHide;
+        }
+    }
+
+    /// <summary>
+    /// Thiết lập skill type cho handler.
+    /// </summary>
+    public void SetSkillType(SkillCharacter skillType)
+    {
+        _skillType = skillType;
     }
 
     /// <summary>
     /// Thiết lập character ID cho context.
-    /// Gọi bởi CharacterCardInfo hoặc bất kỳ parent nào quản lý skill UI.
+    /// Gọi bởi CharacterCardInfo, ToggleSkillCharacterUI, SkillBossUI hoặc bất kỳ parent nào quản lý skill UI.
     /// </summary>
     public void SetCharacterID(string id)
     {
         _characterID = id;
+    }
+
+    private void EnsureDependencies()
+    {
+        if (_gameDataBase == null || _playerCharacterManager == null)
+        {
+            var rootScope = FindFirstObjectByType<RootScope>();
+            if (rootScope != null && rootScope.Container != null)
+            {
+                if (_gameDataBase == null)
+                {
+                    try { _gameDataBase = rootScope.Container.Resolve<GameDataBase>(); } catch { }
+                }
+                if (_playerCharacterManager == null)
+                {
+                    try { _playerCharacterManager = rootScope.Container.Resolve<PlayerCharacterManager>(); } catch { }
+                }
+            }
+        }
     }
 
     private void HandleShow()
@@ -47,38 +85,53 @@ public class SkillTooltipHandler : MonoBehaviour
         Debug.Log($"[SkillTooltipHandler] HandleShow called. CharacterID: {_characterID}, SkillType: {_skillType}");
         if (string.IsNullOrEmpty(_characterID)) return;
 
+        EnsureDependencies();
+
+        if (_gameDataBase == null)
+        {
+            Debug.LogWarning("[SkillTooltipHandler] GameDataBase is null!");
+            return;
+        }
+
         var config = _gameDataBase.GetCharacterConfig(_characterID);
         if (config == null) 
         {
-            Debug.LogWarning("[SkillTooltipHandler] CharacterConfig is null!");
+            Debug.LogWarning($"[SkillTooltipHandler] CharacterConfig is null for ID: {_characterID}!");
             return;
         }
-        if (!config.Skills.ContainsKey(_skillType))
+        if (config.Skills == null || !config.Skills.ContainsKey(_skillType))
         {
             Debug.LogWarning($"[SkillTooltipHandler] CharacterConfig does not contain skill type: {_skillType}");
             return;
         }
 
-        var profile = _playerCharacterManager.GetCharacter(_characterID);
-        if (profile == null)
+        int starUp = 0;
+        if (_playerCharacterManager != null)
         {
-            Debug.LogWarning("[SkillTooltipHandler] Character profile is null!");
-            return;
+            var profile = _playerCharacterManager.GetCharacter(_characterID);
+            if (profile != null && profile.SaveData != null)
+            {
+                starUp = profile.SaveData.StarUp;
+            }
         }
         
-        int starUp = profile.SaveData.StarUp;
         int enhancementLevel = Utility.GetSkillEnhancementLevel(_skillType, starUp);
 
         SkillComponent skillComp = config.Skills[_skillType];
+        if (skillComp == null) return;
 
-        // Lấy icon tương ứng
-        Sprite icon = _skillType switch
+        // Lấy icon tương ứng (ưu tiên IconSprite đã nạp trong SkillComponent, fallback sang config property)
+        Sprite icon = skillComp.IconSprite;
+        if (icon == null)
         {
-            SkillCharacter.Base     => config.BaseSkillIcon,
-            SkillCharacter.Major    => config.MajorSkillIcon,
-            SkillCharacter.Ultimate => config.UltimateSkillIcon,
-            _ => null
-        };
+            icon = _skillType switch
+            {
+                SkillCharacter.Base     => config.BaseSkillIcon,
+                SkillCharacter.Major    => config.MajorSkillIcon,
+                SkillCharacter.Ultimate => config.UltimateSkillIcon,
+                _ => null
+            };
+        }
 
         // Lấy các chỉ số skill theo enhancement level
         float damageMultiplier = skillComp.GetDamageMultiplier(enhancementLevel);
@@ -200,6 +253,8 @@ public class SkillTooltipHandler : MonoBehaviour
             Icon = icon
         };
 
+        RectTransform triggerRect = transform as RectTransform;
+
         // Lấy đúng camera dựa trên Canvas render mode
         Canvas handlerCanvas = GetComponentInParent<Canvas>();
         Camera cam = (handlerCanvas != null && handlerCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
@@ -208,12 +263,40 @@ public class SkillTooltipHandler : MonoBehaviour
 
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, transform.position);
 
-        Debug.Log($"[SkillTooltipHandler] Invoking OnShowSkillTooltip for {_skillType} at {screenPos}");
-        if (UIEvent.OnShowSkillTooltip == null)
+        Debug.Log($"[SkillTooltipHandler] Invoking OnShowSkillTooltip for {_skillType}");
+
+        if (UIEvent.OnShowSkillTooltipWithRect == null && UIEvent.OnShowSkillTooltip == null)
         {
-            Debug.LogError("[SkillTooltipHandler] UIEvent.OnShowSkillTooltip is NULL! No one is listening. (Check if SkillTooltipUI is active in the scene!)");
+            // Tự động tìm và kích hoạt SkillTooltipUI trong scene nếu ban đầu nó bị inactive
+            var tooltipUI = FindFirstObjectByType<SkillTooltipUI>(FindObjectsInactive.Include);
+            if (tooltipUI != null)
+            {
+                tooltipUI.gameObject.SetActive(true);
+                if (triggerRect != null)
+                {
+                    tooltipUI.Show(data, triggerRect);
+                }
+                else
+                {
+                    tooltipUI.Show(data, screenPos);
+                }
+                return;
+            }
+            else
+            {
+                Debug.LogError("[SkillTooltipHandler] UIEvent.OnShowSkillTooltip is NULL! Không tìm thấy SkillTooltipUI trong scene. Vui lòng đảm bảo prefab SkillToolTips đã được thêm vào Canvas của Scene!");
+                return;
+            }
         }
-        UIEvent.OnShowSkillTooltip?.Invoke(data, screenPos);
+
+        if (triggerRect != null && UIEvent.OnShowSkillTooltipWithRect != null)
+        {
+            UIEvent.OnShowSkillTooltipWithRect.Invoke(data, triggerRect);
+        }
+        else
+        {
+            UIEvent.OnShowSkillTooltip?.Invoke(data, screenPos);
+        }
     }
 
     private void HandleHide()

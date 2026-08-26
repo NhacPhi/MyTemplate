@@ -75,7 +75,7 @@
         "type": "Frozen",
         "target_stat": "None",
         "modify_type": "None",
-        "duration": 2,
+        "duration": 1,
         "max_stack": 1,
         "value": 100
     },
@@ -158,5 +158,35 @@
         "duration": 2,
         "max_stack": 3,
         "value": 8
+    },
+    "EFF_Blind_def": {
+        "name_hash": 745036149,
+        "des_hash": 1534987971,
+        "type": "StatDebuff",
+        "target_stat": "SPEED",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": -20
+    },
+    "EFF_SilverMark_def": {
+        "name_hash": 2566970998,
+        "des_hash": 3137133647,
+        "type": "SilverMark",
+        "target_stat": "CRIT_DMG_RES",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": -10
+    },
+    "EFF_Weaken_DEF_def": {
+        "name_hash": 2486934699,
+        "des_hash": 46354390,
+        "type": "StatDebuff",
+        "target_stat": "DEF",
+        "modify_type": "Percent",
+        "duration": 2,
+        "max_stack": 1,
+        "value": -20
     }
 }

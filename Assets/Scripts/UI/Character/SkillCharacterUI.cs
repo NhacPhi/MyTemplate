@@ -56,14 +56,29 @@ public class SkillCharacterUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Thiết lập character context cho tooltip handler (nếu có gắn).
+    /// Thiết lập character context cho tooltip handler (tự động gắn nếu chưa có).
     /// </summary>
-    public void SetCharacterID(string characterID)
+    public void SetCharacterID(string characterID, SkillCharacter? skillType = null)
     {
         var handler = GetComponent<SkillTooltipHandler>();
+        if (handler == null)
+        {
+            handler = gameObject.AddComponent<SkillTooltipHandler>();
+        }
         if (handler != null)
         {
+            if (skillType.HasValue)
+            {
+                handler.SetSkillType(skillType.Value);
+            }
             handler.SetCharacterID(characterID);
+
+            var trigger = handler.GetComponent<TooltipTrigger>();
+            if (trigger != null)
+            {
+                // Ở CharacterScreen: Chỉ cần click/tap để hiện tooltip
+                trigger.SetTriggerOnClickOnMobile(true);
+            }
         }
     }
 }

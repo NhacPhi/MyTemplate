@@ -67,6 +67,31 @@ public class BossBrain : EnemyBrain
         }
 
         // -------------------------------------------------------------
+        // BƯỚC 2.5: ƯU TIÊN KỸ NĂNG ÁP ĐẶT DẤU ẤN / DEBUFF (SETUP SKILL)
+        // Nếu sở hữu kỹ năng Major khắc Dấu Ấn / Debuff và đối phương chưa bị dính ấn, ưu tiên dùng trước để setup combo!
+        // -------------------------------------------------------------
+        if (!isSilenced && skillManager != null)
+        {
+            if (skillManager.IsSkillReady(SkillCharacter.Major) && skillManager.Skills.ContainsKey(SkillCharacter.Major))
+            {
+                var majorRuntime = skillManager.Skills[SkillCharacter.Major];
+                if (IsMarkOrSetupSkill(majorRuntime))
+                {
+                    var effectType = majorRuntime.GetSkillData().Effect.Type;
+                    var unmarkedTarget = aliveTargets.FirstOrDefault(e => {
+                        var stats = e.GetCoreComponent<EntityStats>();
+                        return stats != null && !stats.StatusEffect.Any(eff => eff.Data != null && eff.Data.Type == effectType);
+                    });
+
+                    if (unmarkedTarget != null)
+                    {
+                        return new EnemyDecision { SkillType = SkillCharacter.Major, Target = unmarkedTarget };
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
         // BƯỚC 3: ƯU TIÊN SỐ 3 - TUYỆT KỸ ULTIMATE TẤN CÔNG / KHỐNG CHẾ
         // -------------------------------------------------------------
         if (!isSilenced && skillManager != null && skillManager.IsSkillReady(SkillCharacter.Ultimate) && skillManager.Skills.ContainsKey(SkillCharacter.Ultimate))

@@ -33,6 +33,14 @@ public class BattleUIScene : WindowController
         {
             _btnAuto.onClick.AddListener(OnAutoClicked);
         }
+
+        // Đánh thức SkillTooltipUI nếu ban đầu bị inactive trong prefab
+        var tooltipUI = GetComponentInChildren<SkillTooltipUI>(true);
+        if (tooltipUI != null && !tooltipUI.gameObject.activeSelf)
+        {
+            tooltipUI.gameObject.SetActive(true);
+            tooltipUI.Hide();
+        }
     }
 
     private void OnEnable()

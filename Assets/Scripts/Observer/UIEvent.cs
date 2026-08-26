@@ -67,6 +67,7 @@ public static class UIEvent
 
     // Skill Tooltip
     public static Action<SkillTooltipData, Vector2> OnShowSkillTooltip;
+    public static Action<SkillTooltipData, RectTransform> OnShowSkillTooltipWithRect;
     public static Action OnHideSkillTooltip;
 
     // GamePlay

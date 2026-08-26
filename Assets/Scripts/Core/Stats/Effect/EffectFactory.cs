@@ -25,6 +25,7 @@ public class EffectFactory
                 return new SilenceEffect(efectfID, effectData, target);
             case EffectType.StatBuff:
             case EffectType.StatDebuff:
+            case EffectType.SilverMark:
                 return new StatBuffEffect(efectfID, effectData, target);
 
             case EffectType.ResetDebuff:

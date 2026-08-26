@@ -28,7 +28,7 @@ public static class Definition
     public static int MAX_STAR_UP = 6;
 
     // Tooltip Settings
-    public const float TOOLTIP_HOVER_DELAY = 0.3f;            // Delay trước khi hiện tooltip (Windows)
+    public const float TOOLTIP_HOVER_DELAY = 0.5f;            // Delay 0.5s trước khi hiện tooltip (Windows) để không ảnh hưởng khi click nhanh
     public const float TOOLTIP_LONG_PRESS_THRESHOLD = 0.5f;   // Thời gian giữ để hiện tooltip (Android)
 
     // Tooltip Localization Keys

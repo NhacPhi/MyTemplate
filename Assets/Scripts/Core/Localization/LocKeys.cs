@@ -1703,4 +1703,16 @@ public static class LocKeys
 
     public const long EFF_BURN_DES = 2825649722;
 
+    public const long EFF_BLIND_NAME = 745036149;
+
+    public const long EFF_BLIND_DES = 1534987971;
+
+    public const long EFF_SILVERMARK_NAME = 2566970998;
+
+    public const long EFF_SILVERMARK_DES = 3137133647;
+
+    public const long EFF_WEAKEN_DEF_NAME = 2486934699;
+
+    public const long EFF_WEAKEN_DEF_DES = 46354390;
+
 }

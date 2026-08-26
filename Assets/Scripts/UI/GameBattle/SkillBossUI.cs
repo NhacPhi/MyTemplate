@@ -10,9 +10,42 @@ public class SkillBossUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _txtNumberCooldown;
     [SerializeField] private Image _imgCooldown;
 
+    private SkillTooltipHandler _tooltipHandler;
+
+    private void Awake()
+    {
+        InitTooltipHandler();
+    }
+
+    private void InitTooltipHandler()
+    {
+        if (_tooltipHandler == null)
+        {
+            _tooltipHandler = GetComponent<SkillTooltipHandler>();
+            if (_tooltipHandler == null)
+            {
+                _tooltipHandler = gameObject.AddComponent<SkillTooltipHandler>();
+            }
+            _tooltipHandler.SetSkillType(_type);
+        }
+    }
+
+    public void SetCharacterID(string characterID)
+    {
+        InitTooltipHandler();
+        if (_tooltipHandler != null)
+        {
+            _tooltipHandler.SetSkillType(_type);
+            _tooltipHandler.SetCharacterID(characterID);
+        }
+    }
+
     public void SetIconSkill(Sprite sprite)
     {
-        _icon.sprite = sprite;
+        if (_icon != null && sprite != null)
+        {
+            _icon.sprite = sprite;
+        }
     }
     public void UpdateSkillUI(SkillComponent skillData, int currentCooldown)
     {

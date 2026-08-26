@@ -254,6 +254,8 @@ public class StatsController : CoreComponent, IEffectable
                 return new Color(0.4f, 0.9f, 1f); // Xanh băng tuyết
             case EffectType.Silence:
                 return new Color(0.75f, 0.45f, 0.95f); // Tím huyền bí Câm Lặng
+            case EffectType.SilverMark:
+                return new Color(0.85f, 0.9f, 1f); // Bạc ánh kim Ngân Ấn
             case EffectType.StatDebuff:
                 return new Color(0.95f, 0.35f, 0.35f); // Đỏ cam suy yếu / giảm chỉ số
             case EffectType.StatBuff:

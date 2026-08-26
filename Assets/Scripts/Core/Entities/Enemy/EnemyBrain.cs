@@ -145,5 +145,17 @@ public abstract class EnemyBrain : CoreComponent
         return null;
     }
 
+    /// <summary>
+    /// Kiểm tra kỹ năng có phải là Kỹ năng Áp Đặt Dấu Ấn / Hiệu Ứng Bất Lợi Đặc Biệt (Mark / Debuff Setup) hay không.
+    /// </summary>
+    public static bool IsMarkOrSetupSkill(SkillRuntime skill)
+    {
+        if (skill == null) return false;
+        var data = skill.GetSkillData();
+        if (data == null || data.Effect == null) return false;
+
+        return data.Effect.Type == EffectType.SilverMark || data.Effect.Type == EffectType.StatDebuff;
+    }
+
     public abstract UniTask<EnemyDecision> DecideAsync(List<Entity> playerTeam);
 }

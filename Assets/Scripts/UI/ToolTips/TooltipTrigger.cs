@@ -12,11 +12,14 @@ public class TooltipTrigger : MonoBehaviour,
     IPointerEnterHandler,
     IPointerExitHandler,
     IPointerDownHandler,
-    IPointerUpHandler
+    IPointerUpHandler,
+    IPointerClickHandler
 {
     [Header("Settings")]
     [SerializeField] private float _longPressThreshold = Definition.TOOLTIP_LONG_PRESS_THRESHOLD;
     [SerializeField] private float _hoverDelay = Definition.TOOLTIP_HOVER_DELAY;
+    [Tooltip("Nếu true: Chỉ cần click/tap để hiện tooltip (dùng cho CharacterScene). Nếu false: Cần giữ long-press (dùng cho BattleUIScene).")]
+    [SerializeField] private bool _triggerOnClickOnMobile = false;
 
     /// <summary>
     /// Callback khi tooltip nên hiển thị.
@@ -30,14 +33,22 @@ public class TooltipTrigger : MonoBehaviour,
 
     private float _pressTimer;
     private bool _isPressed;
-    private bool _isTooltipShowing;
     private bool _isHovering;
     private float _hoverTimer;
+    private bool _isShowing;
+
+    /// <summary>
+    /// Bật/tắt chế độ click/tap để hiện tooltip (dùng cho CharacterScene).
+    /// </summary>
+    public void SetTriggerOnClickOnMobile(bool enable)
+    {
+        _triggerOnClickOnMobile = enable;
+    }
 
     private void Update()
     {
-        // Android: Long press detection
-        if (_isPressed && !_isTooltipShowing)
+        // 1. Mobile Long Press (Áp dụng khi KHÔNG ở chế độ click-on-mobile, tức là trong Battle)
+        if (_isPressed && !_isShowing && !_triggerOnClickOnMobile)
         {
             _pressTimer += Time.unscaledDeltaTime;
             if (_pressTimer >= _longPressThreshold)
@@ -46,8 +57,8 @@ public class TooltipTrigger : MonoBehaviour,
             }
         }
 
-        // Windows: Hover delay
-        if (_isHovering && !_isTooltipShowing && !IsTouchDevice())
+        // 2. PC / Windows Hover (Chỉ hiển thị sau khi hover đủ 0.5s)
+        if (_isHovering && !_isShowing)
         {
             _hoverTimer += Time.unscaledDeltaTime;
             if (_hoverTimer >= _hoverDelay)
@@ -63,43 +74,59 @@ public class TooltipTrigger : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsTouchDevice()) return;
-
         _isHovering = true;
         _hoverTimer = 0f;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (IsTouchDevice())
-        {
-            // Trên mobile, exit không ẩn tooltip (dùng tap ngoài để ẩn)
-            return;
-        }
-
         _isHovering = false;
         _hoverTimer = 0f;
-        HideTooltip();
+
+        // Nếu không phải đang mở tooltip bằng click trong CharacterScene -> di chuột ra ngoài sẽ ẩn
+        if (!_triggerOnClickOnMobile)
+        {
+            HideTooltip();
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!IsTouchDevice()) return;
-
         _isPressed = true;
         _pressTimer = 0f;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!IsTouchDevice()) return;
-
         _isPressed = false;
         _pressTimer = 0f;
 
-        // Nếu tooltip đang hiện, nhả tay sẽ ẩn
-        if (_isTooltipShowing)
+        // Nếu ở chế độ Long Press (trong Battle) và tooltip đang hiện: Nhấc tay sẽ ẩn
+        if (!_triggerOnClickOnMobile && _isShowing)
         {
+            HideTooltip();
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_triggerOnClickOnMobile)
+        {
+            // Trong CharacterScene: Click / Tap để bật/tắt (Toggle) tooltip
+            if (_isShowing)
+            {
+                HideTooltip();
+            }
+            else
+            {
+                ShowTooltip();
+            }
+        }
+        else
+        {
+            // Trong Battle: Click là để chọn/dùng kỹ năng -> Hủy hover và ẩn tooltip ngay lập tức
+            _isHovering = false;
+            _hoverTimer = 0f;
             HideTooltip();
         }
     }
@@ -110,34 +137,21 @@ public class TooltipTrigger : MonoBehaviour,
 
     private void ShowTooltip()
     {
-        if (_isTooltipShowing) return;
-        _isTooltipShowing = true;
+        _isShowing = true;
         OnTooltipShow?.Invoke();
     }
 
     private void HideTooltip()
     {
-        if (!_isTooltipShowing) return;
-        _isTooltipShowing = false;
+        _isShowing = false;
+        _isHovering = false;
+        _hoverTimer = 0f;
         OnTooltipHide?.Invoke();
-    }
-
-    private bool IsTouchDevice()
-    {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        return true;
-#else
-        return false;
-#endif
     }
 
     private void OnDisable()
     {
-        // Cleanup khi disable
-        if (_isTooltipShowing)
-        {
-            HideTooltip();
-        }
+        HideTooltip();
         _isPressed = false;
         _isHovering = false;
         _pressTimer = 0f;

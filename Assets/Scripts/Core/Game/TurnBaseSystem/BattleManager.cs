@@ -134,6 +134,35 @@ public class BattleManager : MonoBehaviour
         }
 
         // -------------------------------------------------------------
+        // BƯỚC 2.5: ƯU TIÊN KỸ NĂNG ÁP ĐẶT DẤU ẤN / DEBUFF (SETUP SKILL)
+        // Nếu sở hữu kỹ năng Major khắc Dấu Ấn / Debuff và đối phương chưa bị dính ấn, ưu tiên dùng trước để setup combo!
+        // -------------------------------------------------------------
+        if (chosenTarget == null && !isSilenced && skillManager != null)
+        {
+            if (skillManager.Skills.ContainsKey(SkillCharacter.Major) && skillManager.Skills[SkillCharacter.Major].CurrentCooldown == 0)
+            {
+                var majorSkill = skillManager.Skills[SkillCharacter.Major];
+                if (EnemyBrain.IsMarkOrSetupSkill(majorSkill))
+                {
+                    var validTargets = TargetSystem.GetValidTargetsForSkill(majorSkill, CurrentCaster, Characters.Values.ToList(), Enemies);
+                    var aliveTargets = validTargets.Where(e => e != null && e.GetCoreComponent<EntityStats>() != null && !e.GetCoreComponent<EntityStats>().IsDead).ToList();
+                    
+                    var effectType = majorSkill.GetSkillData().Effect.Type;
+                    var unmarkedTarget = aliveTargets.FirstOrDefault(e => {
+                        var stats = e.GetCoreComponent<EntityStats>();
+                        return stats != null && !stats.StatusEffect.Any(eff => eff.Data != null && eff.Data.Type == effectType);
+                    });
+
+                    if (unmarkedTarget != null)
+                    {
+                        chosenSkill = SkillCharacter.Major;
+                        chosenTarget = unmarkedTarget;
+                    }
+                }
+            }
+        }
+
+        // -------------------------------------------------------------
         // BƯỚC 3: ƯU TIÊN SỐ 3 - TUYỆT KỸ ULTIMATE TẤN CÔNG / KHỐNG CHẾ
         // -------------------------------------------------------------
         if (chosenTarget == null && !isSilenced && skillManager != null && skillManager.Skills.ContainsKey(SkillCharacter.Ultimate) && skillManager.Skills[SkillCharacter.Ultimate].CurrentCooldown == 0)

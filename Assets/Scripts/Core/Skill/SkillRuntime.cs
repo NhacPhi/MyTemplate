@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class SkillRuntime
@@ -93,6 +94,11 @@ public abstract class SkillRuntime
             if (skillId == "LittleWhiteDragon_B")
             {
                 bonus.PenetrationBonus += 30f;
+            }
+
+            if (skillId.StartsWith("GoldHornKing", System.StringComparison.OrdinalIgnoreCase) || (GetSkillData().PassiveID != null && GetSkillData().PassiveID.Contains("silvermark")))
+            {
+                bonus.Tags.Add("SilverMarkSynergy");
             }
         }
 

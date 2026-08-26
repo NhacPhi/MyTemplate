@@ -11,7 +11,8 @@ public enum EffectType
     Silence,
     StatBuff,
     StatDebuff,
-    ResetDebuff
+    ResetDebuff,
+    SilverMark
 }
 
 
@@ -50,7 +51,7 @@ public class EffectConfig
 
     public bool IsEffectUI()
     {
-        if(Type == EffectType.StatBuff || Type == EffectType.StatDebuff || Type == EffectType.Poison || Type == EffectType.Burn || Type == EffectType.Silence) return true;
+        if(Type == EffectType.StatBuff || Type == EffectType.StatDebuff || Type == EffectType.Poison || Type == EffectType.Burn || Type == EffectType.Silence || Type == EffectType.SilverMark) return true;
         return false;
     }
 }

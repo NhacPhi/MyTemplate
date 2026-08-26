@@ -17,7 +17,23 @@ public class SkillCharacterUIManager : MonoBehaviour
     [SerializeField] private GameObject _skill;
 
     [SerializeField] private GameObject _bossUI;
+
     [Inject] private GameDataBase _gameData;
+
+    private void Awake()
+    {
+        var tooltipUI = GetComponentInChildren<SkillTooltipUI>(true);
+        if (tooltipUI == null)
+        {
+            tooltipUI = FindFirstObjectByType<SkillTooltipUI>(FindObjectsInactive.Include);
+        }
+        if (tooltipUI != null && !tooltipUI.gameObject.activeSelf)
+        {
+            tooltipUI.gameObject.SetActive(true);
+            tooltipUI.Hide();
+        }
+    }
+
     private void OnEnable()
     {
         UIEvent.OnUpdateSkillCharacterUI += UpdateSkillCharacterUI;
@@ -85,17 +101,22 @@ public class SkillCharacterUIManager : MonoBehaviour
             }
         }
 
+        string characterID = character.GetEntityID();
+
         if (_baseSkill != null)
         {
             _baseSkill.SetIconSkill(characterConfig.BaseSkillIcon);
+            _baseSkill.SetCharacterID(characterID);
         }
         if (_majorSkill != null)
         {
             _majorSkill.SetIconSkill(characterConfig.MajorSkillIcon);
+            _majorSkill.SetCharacterID(characterID);
         }
         if (_ultimateSkill != null)
         {
             _ultimateSkill.SetIconSkill(characterConfig.UltimateSkillIcon);
+            _ultimateSkill.SetCharacterID(characterID);
         }
 
         var skillConfig = characterConfig.Skills;

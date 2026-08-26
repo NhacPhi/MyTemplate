@@ -157,10 +157,10 @@ class CharacterConfigBuilder(BaseBuilder):
 
                     char_stats = {}
                     if cls in ['Boss', 'Creep']:
-                        char_stats['hp'] = calc_hp
-                        char_stats['atk'] = calc_atk
-                        char_stats['def'] = calc_def
-                        char_stats['speed'] = calc_spd
+                        char_stats['hp'] = parse_val(row.get('hp')) or calc_hp
+                        char_stats['atk'] = parse_val(row.get('atk')) or calc_atk
+                        char_stats['def'] = parse_val(row.get('def')) or calc_def
+                        char_stats['speed'] = parse_val(row.get('speed')) or calc_spd
                         char_stats['def_shred'] = calc_shred
                         char_stats['crit_rate'] = calc_cr
                         char_stats['crit_dmg'] = calc_cd
