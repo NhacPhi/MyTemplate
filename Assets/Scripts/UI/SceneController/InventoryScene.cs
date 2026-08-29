@@ -13,6 +13,7 @@ public class InventoryScene : WindowController
     [Inject] private CurrencyManager currencyMM;
     [Inject] private InventoryManager inventoryManager;
     [Inject] private GameDataBase gameDataBase;
+    [Inject] private ForgeManager forgeManager;
 
     [Inject] private SaveSystem save;
     private bool _isFirstOpen = true;
@@ -30,9 +31,9 @@ public class InventoryScene : WindowController
             if (inventoryManager.IsDirty)
             {
                 inventoryManager.SortAllByRare();
-                inventory.Init(inventoryManager, gameDataBase);
                 inventoryManager.IsDirty = false;
             }
+            inventory.Init(inventoryManager, gameDataBase, forgeManager, uiManager);
         }
 
         if (_isFirstOpen)

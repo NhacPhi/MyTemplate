@@ -197,6 +197,18 @@ public class InventoryManager : IDisposable
         }
     }
 
+    public void RemoveWeapons(IEnumerable<string> uuids)
+    {
+        if (uuids == null) return;
+        var uuidSet = new HashSet<string>(uuids);
+        int removed = _save.Player.Inventory.Weapons.RemoveAll(w => uuidSet.Contains(w.UUID));
+        if (removed > 0)
+        {
+            IsDirty = true;
+            UIEvent.OnInventoryChanged?.Invoke();
+        }
+    }
+
     public WeaponSaveData GetWeapon(string uuid)
     {
         return _save.Player.Inventory.GetWeapon(uuid);
@@ -318,6 +330,19 @@ public class InventoryManager : IDisposable
         if(armorToRemove != null)
         {
             _save.Player.Inventory.Armors.Remove(armorToRemove);
+            IsDirty = true;
+            UIEvent.OnInventoryChanged?.Invoke();
+        }
+    }
+
+    public void RemoveArmors(IEnumerable<string> uuids)
+    {
+        if (uuids == null) return;
+        var uuidSet = new HashSet<string>(uuids);
+        int removed = _save.Player.Inventory.Armors.RemoveAll(a => uuidSet.Contains(a.UUID));
+        if (removed > 0)
+        {
+            IsDirty = true;
             UIEvent.OnInventoryChanged?.Invoke();
         }
     }

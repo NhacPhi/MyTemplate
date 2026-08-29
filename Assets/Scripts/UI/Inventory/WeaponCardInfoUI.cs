@@ -49,28 +49,43 @@ public class WeaponCardInfoUI : MonoBehaviour
     public void UpdateWeaponCardInfor(string uuid)
     {
         currentWeapon = uuid;   
+        if (save == null || save.Player == null || save.Player.Inventory == null) return;
         WeaponSaveData weapon = save.Player.Inventory.GetWeapon(uuid);
-        if (weapon == null) return;
+        if (weapon == null || gameDataBase == null) return;
         var weaponConfig = gameDataBase.GetItemConfig(weapon.TemplateID);
+        if (weaponConfig == null || weaponConfig.Weapon == null) return;
+        
         var passiveConfig = gameDataBase.GetPassiveConfig(weaponConfig.Weapon.PassiveID);
         
-        if (weaponConfig != null)
+        if (txtWeaponName != null) txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
+        if (txtLevel != null) txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  " + weapon.CurrentLevel.ToString();
+
+        if (txtHPNumber != null) txtHPNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.HP, weapon.CurrentLevel).ToString();
+        if (txtATKNumber != null) txtATKNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.ATK, weapon.CurrentLevel).ToString();
+
+        if (txtDes != null) 
         {
-            txtWeaponName.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Name);
-            txtLevel.text = LocalizationManager.Instance.GetLocalizedValue("UI_LEVEL") + "  " + weapon.CurrentLevel.ToString();
-
-            txtHPNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.HP, weapon.CurrentLevel).ToString();
-            txtATKNumber.text = weaponConfig.Weapon.GetStatByLevel(StatType.ATK, weapon.CurrentLevel).ToString();
-
             txtDes.text = LocalizationManager.Instance.GetLocalizedValue(weaponConfig.Description);
-            txtSkillDes.text = passiveConfig.GetDescription(weapon.CurrentUpgrade);
-
             LayoutRebuilder.ForceRebuildLayoutImmediate(txtDes.rectTransform);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(txtSkillDes.rectTransform);
+        }
 
-            // Force rebuild UI layout
+        if (txtSkillDes != null)
+        {
+            txtSkillDes.text = passiveConfig != null ? passiveConfig.GetDescription(weapon.CurrentUpgrade) : "";
+            LayoutRebuilder.ForceRebuildLayoutImmediate(txtSkillDes.rectTransform);
+        }
+
+        // Force rebuild UI layout
+        if (content != null)
+        {
             LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
-            weaponUI.Init(weapon.UUID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, weapon.CurrentLevel, weapon.CurrentUpgrade);
+        }
+
+        if (weaponUI != null)
+        {
+            bool isEquipped = !string.IsNullOrEmpty(weapon.Equip);
+            bool isUnselectable = isEquipped || weaponConfig.Rarity == Rare.Legendary;
+            weaponUI.Init(weapon.UUID, weaponConfig.Rarity, weaponConfig.Icon, weaponConfig.IconBG, weapon.CurrentLevel, weapon.CurrentUpgrade, isUnselectable);
         }
     }    
 }

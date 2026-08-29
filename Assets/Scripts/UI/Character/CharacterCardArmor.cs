@@ -84,6 +84,8 @@ public class CharacterCardArmor : CharacterCard
         hp = atk = def = spd = defShred = critRate = critDMG = penetration = critDMGRes = 0;
 
         var characterProfile = playerCharacterManager.GetCharacter(id);
+        if (characterProfile == null || characterProfile.SaveData == null) return;
+
         var characterSaveData = characterProfile.SaveData;
 
         ArmorSaveDatas.Clear();

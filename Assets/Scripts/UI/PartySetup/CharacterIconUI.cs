@@ -14,23 +14,53 @@ public class CharacterIconUI : GameItemUI, IPointerClickHandler
     private PartySetupControllerUI _controller;
     private void Awake()
     {
-        upgrades = parent.GetComponentsInChildren<UpgradeUI>();
+        EnsureInitialized();
+    }
+
+    private void EnsureInitialized()
+    {
+        if (upgrades == null || upgrades.Length == 0)
+        {
+            if (parent != null)
+            {
+                upgrades = parent.GetComponentsInChildren<UpgradeUI>(true);
+            }
+            else
+            {
+                upgrades = GetComponentsInChildren<UpgradeUI>(true);
+            }
+        }
+
+        if (txtLevel == null)
+        {
+            txtLevel = GetComponentInChildren<TextMeshProUGUI>(true);
+        }
     }
 
     public void Init(string id, Rare rare, Sprite icon, Sprite background, int level, int upgradeNumber, PartySetupControllerUI controller)
     {
+        EnsureInitialized();
         base.Setup(id, rare, icon, background);
-        txtLevel.text = level.ToString();
 
-        for (int i = 0; i < upgrades.Length; i++)
+        if (txtLevel != null)
         {
-            if (i < upgradeNumber)
+            txtLevel.text = level.ToString();
+        }
+
+        if (upgrades != null)
+        {
+            for (int i = 0; i < upgrades.Length; i++)
             {
-                upgrades[i].ActiveLayer(1);
-            }
-            else
-            {
-                upgrades[i].ActiveLayer(0);
+                if (upgrades[i] == null) continue;
+
+                if (i < upgradeNumber)
+                {
+                    upgrades[i].ActiveLayer(1);
+                }
+                else
+                {
+                    upgrades[i].ActiveLayer(0);
+                }
             }
         }
 

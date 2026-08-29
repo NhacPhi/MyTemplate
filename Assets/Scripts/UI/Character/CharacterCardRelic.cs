@@ -192,6 +192,45 @@ public class CharacterCardRelic : CharacterCard
             return;
         }
 
+        currentWeaponSeleted = uuid;
+
+        WeaponSaveData data = inventoryManager.GetWeapon(uuid);
+        if (data == null)
+        {
+            ItemConfig unownedConfig = gameDataBase.GetItemConfig(uuid);
+            if (unownedConfig != null && unownedConfig.Weapon != null)
+            {
+                statInfo.gameObject.SetActive(true);
+                weaponEmpty.gameObject.SetActive(false);
+
+                // Ẩn hết tất cả các nút trong Relic Card khi vũ khí chưa mở khóa
+                if (btnEquip != null) btnEquip.gameObject.SetActive(false);
+                if (btnUnEquip != null) btnUnEquip.gameObject.SetActive(false);
+                if (btnChange != null) btnChange.gameObject.SetActive(false);
+                if (btnUpgrade != null) btnUpgrade.gameObject.SetActive(false);
+                if (btnOpenWeaponCategory != null) btnOpenWeaponCategory.gameObject.SetActive(false);
+
+                var unownedPassiveConfig = gameDataBase.GetPassiveConfig(unownedConfig.Weapon.PassiveID);
+
+                if (txtName != null) txtName.text = LocalizationManager.Instance.GetLocalizedValue(unownedConfig.Name);
+                if (txtLevel != null) txtLevel.text = "1";
+
+                if (txtHP != null) txtHP.text = unownedConfig.Weapon.Stats.GetValueOrDefault(StatType.HP).ToString();
+                if (txtATK != null) txtATK.text = unownedConfig.Weapon.Stats.GetValueOrDefault(StatType.ATK).ToString();
+
+                if (upgrades != null) upgrades.UpdateUI(0);
+                if (txtUpgrade != null) txtUpgrade.text = LocalizationManager.Instance.GetLocalizedValue(unownedConfig.Name) + " (Lv.0)";
+                if (txtSkill != null) txtSkill.text = unownedPassiveConfig != null ? unownedPassiveConfig.GetDescription(0) : "";
+                return;
+            }
+
+            statInfo.gameObject.SetActive(false);
+            weaponEmpty.gameObject.SetActive(true);
+            return;
+        }
+
+        if (btnUpgrade != null) btnUpgrade.gameObject.SetActive(true);
+
         if (weaponOfCharacter != "")
         {
             if (uuid == weaponOfCharacter)
@@ -215,16 +254,6 @@ public class CharacterCardRelic : CharacterCard
 
             btnUnEquip.gameObject.SetActive(false);
             btnChange.gameObject.SetActive(false);
-        }
-
-        currentWeaponSeleted = uuid;
-
-        WeaponSaveData data = inventoryManager.GetWeapon(uuid);
-        if (data == null)
-        {
-            statInfo.gameObject.SetActive(false);
-            weaponEmpty.gameObject.SetActive(true);
-            return;
         }
 
         ItemConfig config = gameDataBase.GetItemConfig(data.TemplateID);

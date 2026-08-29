@@ -42,6 +42,7 @@ public class QuestScene : WindowController
     [Inject] private GameDataBase gameDataBase;
     [Inject] private InventoryManager inventoryManager;
     [Inject] private CurrencyManager currencyManager;
+    [Inject] private SaveSystem saveSystem;
 
     private QuestManager questManager;
     private DailyQuestManager dailyQuestManager;
@@ -487,26 +488,80 @@ public class QuestScene : WindowController
                                 var rewardConfig = gameDataBase.GetRewardConfig(config.RewardID);
                                 if (rewardConfig != null && rewardConfig.Rewards != null)
                                 {
-                                    List<RewardItemData> rewards = new List<RewardItemData>();
+                                    List<GachaItemResult> gachaResults = new List<GachaItemResult>();
+                                    List<RewardItemData> otherRewards = new List<RewardItemData>();
+
                                     foreach (var r in rewardConfig.Rewards)
                                     {
-                                        rewards.Add(new RewardItemData(r.ItemID, r.Amount));
+                                        if (r == null || string.IsNullOrEmpty(r.ItemID) || r.Amount <= 0) continue;
+
                                         var itemConfig = gameDataBase.GetItemConfig(r.ItemID);
-                                        if (itemConfig != null && inventoryManager != null && currencyManager != null)
+                                        var charConfig = gameDataBase.GetCharacterConfig(r.ItemID);
+
+                                        if (charConfig != null)
                                         {
-                                            if (itemConfig.Type == ItemType.Weapon)
+                                            var save = saveSystem != null ? saveSystem : SaveSystem.Instance;
+                                            bool alreadyOwned = save?.Player?.Roster?.Characters != null && save.Player.Roster.Characters.Exists(c => c.ID == r.ItemID);
+                                            int shardsAdded = 0;
+
+                                            if (!alreadyOwned)
                                             {
-                                                for (int i = 0; i < r.Amount; i++)
+                                                save?.Player?.Roster?.Characters?.Add(new CharacterSaveData
                                                 {
-                                                    inventoryManager.AddWeapon(new WeaponSaveData
-                                                    {
-                                                        UUID = System.Guid.NewGuid().ToString(),
-                                                        TemplateID = r.ItemID,
-                                                        CurrentLevel = 1
-                                                    });
-                                                }
+                                                    ID = r.ItemID,
+                                                    Level = 1,
+                                                    Exp = 0,
+                                                    AscensionTier = 0,
+                                                    StarUp = 0,
+                                                    Weapon = "",
+                                                    Armors = new List<PartSaveData>()
+                                                });
+                                                UIEvent.OnCharacterAdded?.Invoke(r.ItemID);
                                             }
-                                            else if (itemConfig.Type == ItemType.Armor)
+                                            else
+                                            {
+                                                shardsAdded = Utility.GetDuplicateCharacterShardAmount(charConfig.Rare);
+                                                inventoryManager.AddStackableItem(r.ItemID, ItemType.Shard, shardsAdded);
+                                            }
+                                            save?.SaveDataToDisk(GameSaveType.PlayerInfo);
+
+                                            string charName = LocalizationManager.Instance != null ? LocalizationManager.Instance.GetLocalizedValue(charConfig.Name) : r.ItemID;
+                                            gachaResults.Add(new GachaItemResult
+                                            {
+                                                itemId = r.ItemID,
+                                                itemName = !string.IsNullOrEmpty(charName) ? charName : r.ItemID,
+                                                rarity = Utility.ConvertCharacterRareToItemRare(charConfig.Rare),
+                                                isCharacter = true,
+                                                isConverted = alreadyOwned,
+                                                convertedShardAmount = shardsAdded
+                                            });
+                                        }
+                                        else if (itemConfig != null && itemConfig.Type == ItemType.Weapon)
+                                        {
+                                            for (int i = 0; i < r.Amount; i++)
+                                            {
+                                                inventoryManager.AddWeapon(new WeaponSaveData
+                                                {
+                                                    UUID = System.Guid.NewGuid().ToString(),
+                                                    TemplateID = r.ItemID,
+                                                    CurrentLevel = 1
+                                                });
+
+                                                string weaponName = LocalizationManager.Instance != null ? LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name) : r.ItemID;
+                                                gachaResults.Add(new GachaItemResult
+                                                {
+                                                    itemId = r.ItemID,
+                                                    itemName = !string.IsNullOrEmpty(weaponName) ? weaponName : r.ItemID,
+                                                    rarity = itemConfig.Rarity,
+                                                    isCharacter = false,
+                                                    isConverted = false,
+                                                    convertedShardAmount = 0
+                                                });
+                                            }
+                                        }
+                                        else if (itemConfig != null)
+                                        {
+                                            if (itemConfig.Type == ItemType.Armor)
                                             {
                                                 for (int i = 0; i < r.Amount; i++)
                                                 {
@@ -526,11 +581,27 @@ public class QuestScene : WindowController
                                             {
                                                 inventoryManager.AddStackableItem(r.ItemID, itemConfig.Type, r.Amount);
                                             }
+
+                                            otherRewards.Add(new RewardItemData(r.ItemID, r.Amount));
                                         }
                                     }
-                                    if (rewards.Count > 0 && uiManager != null)
+
+                                    if (uiManager != null)
                                     {
-                                        uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+                                        if (gachaResults.Count > 0)
+                                        {
+                                            uiManager.ShowGachaRewardResults(gachaResults, () =>
+                                            {
+                                                if (otherRewards.Count > 0)
+                                                {
+                                                    uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(otherRewards));
+                                                }
+                                            });
+                                        }
+                                        else if (otherRewards.Count > 0)
+                                        {
+                                            uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(otherRewards));
+                                        }
                                     }
                                 }
                             }

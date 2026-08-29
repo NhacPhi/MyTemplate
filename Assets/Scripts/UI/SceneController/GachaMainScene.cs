@@ -30,6 +30,7 @@ public class GachaMainScene : WindowController
     [Inject] private CurrencyManager currencyManager;
     [Inject] private GameDataBase db;
     [Inject] private GachaRuntimeManager gachaRuntimeManager;
+    [Inject] private InventoryManager inventoryManager;
 
     private string _currentBannerId;
 
@@ -213,25 +214,33 @@ public class GachaMainScene : WindowController
 
     private void HandleRollRequest(string bannerId, int count)
     {
-        // 1. Kiểm tra tài nguyên trước khi quay
-        if (db != null && currencyManager != null)
+        var config = db != null ? db.GetGachaConfig(bannerId) : null;
+
+        // 1. Kiểm tra giới hạn túi Pháp bảo nếu quay banner Weapon (tối đa 100 món)
+        if (config != null && config.Type == GachaBannerType.Weapon && inventoryManager != null)
         {
-            var config = db.GetGachaConfig(bannerId);
-            if (config != null)
+            if (inventoryManager.Weapons != null && inventoryManager.Weapons.Count >= 100)
             {
-                int totalCost = count; // Mặc định mỗi roll tốn 1 vé/nguyên liệu
-                
-                if (System.Enum.TryParse<CurrencyType>(config.Cost.Type, true, out var currencyType))
+                ShowWeaponInventoryFullPopup();
+                return; // Dừng lại, không cho roll
+            }
+        }
+
+        // 2. Kiểm tra tài nguyên trước khi quay
+        if (config != null && currencyManager != null)
+        {
+            int totalCost = count; // Mặc định mỗi roll tốn 1 vé/nguyên liệu
+            
+            if (System.Enum.TryParse<CurrencyType>(config.Cost.Type, true, out var currencyType))
+            {
+                if (currencyManager.GetQuantityCurrecy(currencyType) < totalCost)
                 {
-                    if (currencyManager.GetQuantityCurrecy(currencyType) < totalCost)
-                    {
-                        ShowInsufficientCurrencyPopup();
-                        return; // Dừng lại, không cho roll
-                    }
-                    
-                    // 2. Trừ tiền
-                    currencyManager.Spend(currencyType, totalCost);
+                    ShowInsufficientCurrencyPopup();
+                    return; // Dừng lại, không cho roll
                 }
+                
+                // Trừ tiền
+                currencyManager.Spend(currencyType, totalCost);
             }
         }
 
@@ -239,6 +248,8 @@ public class GachaMainScene : WindowController
         
         GachaRollState.LastBannerType = bannerId;
         GachaRollState.LastRollCount = count;
+        GachaRollState.IsFromGacha = true;
+        GachaRollState.OnCloseCustomCallback = null;
 
         // 3. Gọi GachaManager xử lý random và lấy kết quả
         if (gachaManager != null)
@@ -252,6 +263,32 @@ public class GachaMainScene : WindowController
         {
             UI_Close();
             uiManager.OpenWindowScene(ScreenIds.GachaCutsceneScene);
+        }
+    }
+
+    private void ShowWeaponInventoryFullPopup()
+    {
+        if (uiManager != null)
+        {
+            Action confirmAction = () => {
+                uiManager.CloseWindowScene(ScreenIds.GachaMainScene);
+                uiManager.OpenWindowScene(ScreenIds.InventoryScene);
+            };
+            
+            Action cancelAction = () => {
+                uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
+            };
+
+            var popupProps = new ConfirmationPopupProperties(
+                LocalizationManager.Instance.GetLocalizedValue("UI_REMIND"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_WEAPON_INVENTORY_FULL"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_GO_TO_INVENTORY"), 
+                LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"), 
+                confirmAction, 
+                cancelAction
+            );
+
+            uiManager.OpenWindowScene(ScreenIds.PopupConfirm, popupProps);
         }
     }
 
@@ -320,4 +357,6 @@ public static class GachaRollState
     public static int LastRollCount = 1;
     public static string LastBannerType = "banner_char_01";
     public static System.Action<int> OnRequestRollAgain;
+    public static bool IsFromGacha = true;
+    public static System.Action OnCloseCustomCallback;
 }

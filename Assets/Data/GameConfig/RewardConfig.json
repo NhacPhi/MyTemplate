@@ -3,16 +3,326 @@
         "reward_id": "Default_01",
         "rewards": [
             {
-                "item_id": "Jade",
-                "amount": 100
-            },
-            {
                 "item_id": "Coin",
                 "amount": 10000
             },
             {
-                "item_id": "common_exp",
+                "item_id": "Jade",
+                "amount": 30
+            },
+            {
+                "item_id": "fine_exp",
                 "amount": 5
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 100
+            }
+        ]
+    },
+    "Reward_Daily_Easy": {
+        "reward_id": "Reward_Daily_Easy",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 20000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 30
+            },
+            {
+                "item_id": "fine_exp",
+                "amount": 10
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 200
+            }
+        ]
+    },
+    "Reward_Daily_Medium": {
+        "reward_id": "Reward_Daily_Medium",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 40000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 50
+            },
+            {
+                "item_id": "rare_exp",
+                "amount": 5
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 400
+            }
+        ]
+    },
+    "Reward_Daily_Hard": {
+        "reward_id": "Reward_Daily_Hard",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 80000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 100
+            },
+            {
+                "item_id": "supreme_exp",
+                "amount": 3
+            },
+            {
+                "item_id": "RelicEssence",
+                "amount": 500
+            }
+        ]
+    },
+    "Reward_Battle_Tutorial": {
+        "reward_id": "Reward_Battle_Tutorial",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 20000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 50
+            },
+            {
+                "item_id": "common_exp",
+                "amount": 30
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 300
+            }
+        ]
+    },
+    "Reward_Battle_GoldfishDemon": {
+        "reward_id": "Reward_Battle_GoldfishDemon",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 40000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 80
+            },
+            {
+                "item_id": "fine_exp",
+                "amount": 15
+            },
+            {
+                "item_id": "Garnet_Sliver",
+                "amount": 8
+            }
+        ]
+    },
+    "Reward_Battle_ThirdDragonPrince": {
+        "reward_id": "Reward_Battle_ThirdDragonPrince",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 60000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 100
+            },
+            {
+                "item_id": "fine_exp",
+                "amount": 25
+            },
+            {
+                "item_id": "Jade_Sliver",
+                "amount": 10
+            }
+        ]
+    },
+    "Reward_Battle_ErlangShen_Boss": {
+        "reward_id": "Reward_Battle_ErlangShen_Boss",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 100000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 150
+            },
+            {
+                "item_id": "rare_exp",
+                "amount": 10
+            },
+            {
+                "item_id": "RelicEssence",
+                "amount": 1500
+            }
+        ]
+    },
+    "Reward_Battle_LiJing_Boss": {
+        "reward_id": "Reward_Battle_LiJing_Boss",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 150000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 200
+            },
+            {
+                "item_id": "rare_exp",
+                "amount": 15
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 1200
+            }
+        ]
+    },
+    "Reward_Battle_YellowWindMonster": {
+        "reward_id": "Reward_Battle_YellowWindMonster",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 200000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 250
+            },
+            {
+                "item_id": "supreme_exp",
+                "amount": 5
+            },
+            {
+                "item_id": "Yellow_Jade_Fragment",
+                "amount": 8
+            }
+        ]
+    },
+    "Reward_Battle_GoldHornKing": {
+        "reward_id": "Reward_Battle_GoldHornKing",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 200000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 250
+            },
+            {
+                "item_id": "supreme_exp",
+                "amount": 5
+            },
+            {
+                "item_id": "RelicEssence",
+                "amount": 3000
+            }
+        ]
+    },
+    "Reward_Battle_TheBoySage": {
+        "reward_id": "Reward_Battle_TheBoySage",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 200000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 250
+            },
+            {
+                "item_id": "supreme_exp",
+                "amount": 5
+            },
+            {
+                "item_id": "Garnet_Fragment",
+                "amount": 8
+            }
+        ]
+    },
+    "Reward_Battle_BullDemonKing": {
+        "reward_id": "Reward_Battle_BullDemonKing",
+        "rewards": [
+            {
+                "item_id": "Coin",
+                "amount": 350000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 400
+            },
+            {
+                "item_id": "supreme_exp",
+                "amount": 12
+            },
+            {
+                "item_id": "Ticket",
+                "amount": 5
+            }
+        ]
+    },
+    "Reward_MainQuest_01": {
+        "reward_id": "Reward_MainQuest_01",
+        "rewards": [
+            {
+                "item_id": "Nimbus_Cudgel",
+                "amount": 1
+            },
+            {
+                "item_id": "RelicEssence",
+                "amount": 1500
+            },
+            {
+                "item_id": "ArmorPrimorite",
+                "amount": 800
+            },
+            {
+                "item_id": "Coin",
+                "amount": 50000
+            },
+            {
+                "item_id": "Jade",
+                "amount": 100
+            }
+        ]
+    },
+    "Reward_MainQuest_02": {
+        "reward_id": "Reward_MainQuest_02",
+        "rewards": [
+            {
+                "item_id": "Armor01_Helmet",
+                "amount": 1
+            },
+            {
+                "item_id": "Armor01_Chestplate",
+                "amount": 1
+            },
+            {
+                "item_id": "Armor01_Gloves",
+                "amount": 1
+            },
+            {
+                "item_id": "Armor01_Boots",
+                "amount": 1
+            },
+            {
+                "item_id": "Armor01_Belt",
+                "amount": 1
+            },
+            {
+                "item_id": "Armor01_Ring",
+                "amount": 1
             }
         ]
     }

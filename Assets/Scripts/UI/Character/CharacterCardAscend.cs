@@ -74,7 +74,12 @@ public class CharacterCardAscend : CharacterCard
     {
         currentCharacter = id;
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
+        if (config == null) return;
+
+        var charProfile = playerCharacterManager.GetCharacter(id);
+        if (charProfile == null || charProfile.SaveData == null) return;
+
+        CharacterSaveData data = charProfile.SaveData;
 
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);
         txtLevel.text = data.Level.ToString() + "/" + Definition.MAX_CHARACTER_LEVEL.ToString();
@@ -87,17 +92,17 @@ public class CharacterCardAscend : CharacterCard
         ItemConfig itemConfig = gameDataBase.GetItemConfig(id);
         if (itemConfig != null)
         {
-            //int requiredShard = Utility.GetShardNeedToUpgradeAscend(data.StarUp + 1);
-            //int ownShard = inventoryManager.GetItemQuantity(id);
-            itemUI.Init(id, itemConfig.Rarity, itemConfig.Icon, gameDataBase.GetBGItemByRare(itemConfig.Rarity),0);
+            itemUI.Init(id, itemConfig.Rarity, itemConfig.Icon, gameDataBase.GetBGItemByRare(itemConfig.Rarity), 0);
             itemUI.ActiveFragIcon(true); 
         }
 
         var upgrader = playerCharacterManager.GetUpgradeManager(id);
-        upgrader.GetNextStarUpRequirements(out int nextTier, out int requiredCoin, out int requiredQuantity);
-
-        txtNumberShard.text = inventoryManager.GetItemQuantity(id).ToString() + "/" + requiredQuantity;
-        txtCoin.text = Utility.FormatCurrency(requiredCoin);
+        if (upgrader != null)
+        {
+            upgrader.GetNextStarUpRequirements(out int nextTier, out int requiredCoin, out int requiredQuantity);
+            txtNumberShard.text = inventoryManager.GetItemQuantity(id).ToString() + "/" + requiredQuantity;
+            txtCoin.text = Utility.FormatCurrency(requiredCoin);
+        }
 
         // Update skill enhancement preview
         UpdateSkillEnhancementPreview(config, data.StarUp);

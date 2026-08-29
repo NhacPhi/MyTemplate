@@ -19,8 +19,26 @@ public class AccountSaveData
     [JsonProperty("avatar_icon")]
     public string AvatarIcon;
 
+    [JsonProperty("claimed_redeem_codes")]
+    public List<string> ClaimedRedeemCodes = new List<string>();
+
     public void SetAvatarIcon(string id)
     {
         AvatarIcon = id;
+    }
+
+    public bool HasClaimedRedeemCode(string code)
+    {
+        if (ClaimedRedeemCodes == null) ClaimedRedeemCodes = new List<string>();
+        return ClaimedRedeemCodes.Contains(code);
+    }
+
+    public void AddClaimedRedeemCode(string code)
+    {
+        if (ClaimedRedeemCodes == null) ClaimedRedeemCodes = new List<string>();
+        if (!ClaimedRedeemCodes.Contains(code))
+        {
+            ClaimedRedeemCodes.Add(code);
+        }
     }
 }

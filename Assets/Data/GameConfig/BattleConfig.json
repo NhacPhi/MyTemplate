@@ -3,8 +3,8 @@
         "name_hash": 441973586,
         "des_hash": 4050375059,
         "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
+        "reward": "Reward_Battle_Tutorial",
+        "exp_reward": 500,
         "enemies": [
             {
                 "slot": 1,
@@ -32,12 +32,53 @@
             }
         ]
     },
+    "Battle_GoldfishDemon": {
+        "name_hash": 346211959,
+        "des_hash": 2959475336,
+        "background": "Default",
+        "reward": "Reward_Battle_GoldfishDemon",
+        "exp_reward": 1000,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "Benborba",
+                "enemy_level": 10,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 2,
+                "enemy_id": "Baborben",
+                "enemy_level": 10,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 3,
+                "enemy_id": "Benborba",
+                "enemy_level": 10,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 5,
+                "enemy_id": "GoldfishDemon",
+                "enemy_level": 12,
+                "boss": true,
+                "weapon_id": "Bronze_Hammer",
+                "weapon_level": 1
+            }
+        ]
+    },
     "Battle_ThirdDragonPrince": {
         "name_hash": 754011555,
         "des_hash": 774483833,
         "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
+        "reward": "Reward_Battle_ThirdDragonPrince",
+        "exp_reward": 1800,
         "enemies": [
             {
                 "slot": 1,
@@ -89,240 +130,44 @@
             }
         ]
     },
-    "Battle_GoldfishDemon": {
-        "name_hash": 346211959,
-        "des_hash": 2959475336,
+    "Battle_ErlangShen_Boss": {
+        "name_hash": 3300412753,
+        "des_hash": 1287106680,
         "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
+        "reward": "Reward_Battle_ErlangShen_Boss",
+        "exp_reward": 2800,
         "enemies": [
             {
                 "slot": 1,
-                "enemy_id": "Benborba",
-                "enemy_level": 10,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
                 "weapon_level": 1
             },
             {
                 "slot": 2,
-                "enemy_id": "Baborben",
-                "enemy_level": 10,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
                 "weapon_level": 1
             },
             {
                 "slot": 3,
-                "enemy_id": "Benborba",
-                "enemy_level": 10,
+                "enemy_id": "HeavenlySoddier",
+                "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
                 "weapon_level": 1
             },
             {
                 "slot": 5,
-                "enemy_id": "GoldfishDemon",
-                "enemy_level": 12,
+                "enemy_id": "ErlangShen_Boss",
+                "enemy_level": 25,
                 "boss": true,
-                "weapon_id": "Bronze_Hammer",
-                "weapon_level": 1
-            }
-        ]
-    },
-    "Battle_TheBoySage": {
-        "name_hash": 2608597311,
-        "des_hash": 249125669,
-        "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
-        "enemies": [
-            {
-                "slot": 1,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 2,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 3,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 5,
-                "enemy_id": "TheBoySage",
-                "enemy_level": 30,
-                "boss": true,
-                "weapon_id": "",
-                "weapon_level": 1
-            }
-        ]
-    },
-    "Battle_BullDemonKing": {
-        "name_hash": 3378151451,
-        "des_hash": 844036956,
-        "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
-        "enemies": [
-            {
-                "slot": 1,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 2,
-                "enemy_id": "BullDemonKing_Boss",
-                "enemy_level": 30,
-                "boss": true,
-                "weapon_id": "Ferrous_Chaos",
+                "weapon_id": "Triple_Edged_Blade",
                 "weapon_level": 2
-            },
-            {
-                "slot": 3,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 4,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 5,
-                "enemy_id": "TheBoySage",
-                "enemy_level": 30,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 6,
-                "enemy_id": "YoungBufflalo",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            }
-        ]
-    },
-    "Battle_YellowWindMonster": {
-        "name_hash": 2821861175,
-        "des_hash": 1540643446,
-        "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
-        "enemies": [
-            {
-                "slot": 1,
-                "enemy_id": "VanguardTiger",
-                "enemy_level": 20,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 2,
-                "enemy_id": "RatMonster",
-                "enemy_level": 20,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 3,
-                "enemy_id": "VanguardTiger",
-                "enemy_level": 20,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 5,
-                "enemy_id": "YellowWindMonster",
-                "enemy_level": 28,
-                "boss": true,
-                "weapon_id": "",
-                "weapon_level": 1
-            }
-        ]
-    },
-    "Battle_GoldHornKing": {
-        "name_hash": 1677697152,
-        "des_hash": 591810896,
-        "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
-        "enemies": [
-            {
-                "slot": 1,
-                "enemy_id": "Minions",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 2,
-                "enemy_id": "Minions",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 3,
-                "enemy_id": "Minions",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 4,
-                "enemy_id": "SilverHornKing",
-                "enemy_level": 26,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 5,
-                "enemy_id": "GoldHornKing",
-                "enemy_level": 28,
-                "boss": true,
-                "weapon_id": "",
-                "weapon_level": 1
-            },
-            {
-                "slot": 6,
-                "enemy_id": "Minions",
-                "enemy_level": 25,
-                "boss": false,
-                "weapon_id": "",
-                "weapon_level": 1
             }
         ]
     },
@@ -330,8 +175,8 @@
         "name_hash": 1568688131,
         "des_hash": 994832587,
         "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
+        "reward": "Reward_Battle_LiJing_Boss",
+        "exp_reward": 4000,
         "enemies": [
             {
                 "slot": 1,
@@ -383,16 +228,16 @@
             }
         ]
     },
-    "Battle_ErlangShen_Boss": {
-        "name_hash": 3300412753,
-        "des_hash": 1287106680,
+    "Battle_YellowWindMonster": {
+        "name_hash": 2821861175,
+        "des_hash": 1540643446,
         "background": "Default",
-        "reward": "Default_01",
-        "exp_reward": 600,
+        "reward": "Reward_Battle_YellowWindMonster",
+        "exp_reward": 5000,
         "enemies": [
             {
                 "slot": 1,
-                "enemy_id": "HeavenlySoddier",
+                "enemy_id": "VanguardTiger",
                 "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
@@ -400,7 +245,7 @@
             },
             {
                 "slot": 2,
-                "enemy_id": "HeavenlySoddier",
+                "enemy_id": "RatMonster",
                 "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
@@ -408,7 +253,7 @@
             },
             {
                 "slot": 3,
-                "enemy_id": "HeavenlySoddier",
+                "enemy_id": "VanguardTiger",
                 "enemy_level": 20,
                 "boss": false,
                 "weapon_id": "",
@@ -416,11 +261,166 @@
             },
             {
                 "slot": 5,
-                "enemy_id": "ErlangShen_Boss",
-                "enemy_level": 25,
+                "enemy_id": "YellowWindMonster",
+                "enemy_level": 28,
                 "boss": true,
-                "weapon_id": "Triple_Edged_Blade",
+                "weapon_id": "",
+                "weapon_level": 1
+            }
+        ]
+    },
+    "Battle_GoldHornKing": {
+        "name_hash": 1677697152,
+        "des_hash": 591810896,
+        "background": "Default",
+        "reward": "Reward_Battle_GoldHornKing",
+        "exp_reward": 5000,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "Minions",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 2,
+                "enemy_id": "Minions",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 3,
+                "enemy_id": "Minions",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 4,
+                "enemy_id": "SilverHornKing",
+                "enemy_level": 26,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 5,
+                "enemy_id": "GoldHornKing",
+                "enemy_level": 28,
+                "boss": true,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 6,
+                "enemy_id": "Minions",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            }
+        ]
+    },
+    "Battle_TheBoySage": {
+        "name_hash": 2608597311,
+        "des_hash": 249125669,
+        "background": "Default",
+        "reward": "Reward_Battle_TheBoySage",
+        "exp_reward": 5000,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 2,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 3,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 5,
+                "enemy_id": "TheBoySage",
+                "enemy_level": 30,
+                "boss": true,
+                "weapon_id": "",
+                "weapon_level": 1
+            }
+        ]
+    },
+    "Battle_BullDemonKing": {
+        "name_hash": 3378151451,
+        "des_hash": 844036956,
+        "background": "Default",
+        "reward": "Reward_Battle_BullDemonKing",
+        "exp_reward": 8000,
+        "enemies": [
+            {
+                "slot": 1,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 2,
+                "enemy_id": "BullDemonKing_Boss",
+                "enemy_level": 30,
+                "boss": true,
+                "weapon_id": "Ferrous_Chaos",
                 "weapon_level": 2
+            },
+            {
+                "slot": 3,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 4,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 5,
+                "enemy_id": "TheBoySage",
+                "enemy_level": 30,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
+            },
+            {
+                "slot": 6,
+                "enemy_id": "YoungBufflalo",
+                "enemy_level": 25,
+                "boss": false,
+                "weapon_id": "",
+                "weapon_level": 1
             }
         ]
     }

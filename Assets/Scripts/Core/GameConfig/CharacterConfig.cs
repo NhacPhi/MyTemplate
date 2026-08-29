@@ -16,6 +16,12 @@ public class CharacterConfig
     [JsonProperty("type")]
     public CharacterType Type;
 
+    [JsonProperty("character_class")]
+    public string CharacterClass = "Character";
+
+    [JsonIgnore]
+    public bool IsPlayableCharacter => string.Equals(CharacterClass, "Character", StringComparison.OrdinalIgnoreCase);
+
     [JsonProperty("stats")]
     public Dictionary<StatType, int> Stats;
 

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+
 public class DialogueUIManager : MonoBehaviour
 {
     [SerializeField] private TypewriterEffect typeWriteEffect;
@@ -14,7 +15,7 @@ public class DialogueUIManager : MonoBehaviour
 
     [SerializeField] private DialogueChoicesUIManager choicesManager;
 
-    [Inject] UIManager uiManager;
+    [Inject] private UIManager uiManager;
 
     private void UpdateSkipButtonState()
     {
@@ -35,21 +36,19 @@ public class DialogueUIManager : MonoBehaviour
         btnSkip.interactable = !isMainQuest;
     }
 
-    // Event show Choices
-    // Start is called before the first frame update
     private void Awake()
     {
+        GameEvent.OnStartDialogue += HandleStartDialogue;
         GameEvent.OnOpenDialogue += OpenUIDialogue;
         GameEvent.OnEndDialogue += CloseUIDialogue;
-
         GameEvent.OnShowChoiceUI += ShowChoices;
     }
 
     private void OnDestroy()
     {
+        GameEvent.OnStartDialogue -= HandleStartDialogue;
         GameEvent.OnOpenDialogue -= OpenUIDialogue;
         GameEvent.OnEndDialogue -= CloseUIDialogue;
-
         GameEvent.OnShowChoiceUI -= ShowChoices;
     }
 
@@ -59,7 +58,7 @@ public class DialogueUIManager : MonoBehaviour
         {
             btnAdvance.onClick.AddListener(() =>
             {
-                if(typeWriteEffect.IsCompleted)
+                if (typeWriteEffect.IsCompleted)
                 {
                     GameEvent.OnAdvanceDialogueEvent?.Invoke();
                 }
@@ -81,30 +80,73 @@ public class DialogueUIManager : MonoBehaviour
         GameEvent.OnEndDialogue?.Invoke(DialogueType.Default);
     }
 
+    private void HandleStartDialogue(DialogueConfig config)
+    {
+        EnsureDialogueWindowOpen();
+    }
+
     private void OpenUIDialogue(string str, ActorConfig actor)
     {
+        EnsureDialogueWindowOpen();
         SetDialogue(str, actor);
+    }
+
+    private void EnsureDialogueWindowOpen()
+    {
+        if (uiManager == null && GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            try { uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
+        }
+
+        if (uiManager != null)
+        {
+            uiManager.OpenWindowScene(ScreenIds.DialogueScene);
+        }
     }
 
     void CloseUIDialogue(DialogueType type)
     {
-        uiManager.CloseWindowScene(ScreenIds.DialogueScene);
-        uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
+        if (uiManager == null && GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+        {
+            try { uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
+        }
+
+        if (uiManager != null)
+        {
+            uiManager.CloseWindowScene(ScreenIds.DialogueScene);
+        }
     }
 
     public void SetDialogue(string str, ActorConfig actor)
     {
         UpdateSkipButtonState();
-        choicesManager.DisableAllCHoiceUI();
-        choicesManager.gameObject.SetActive(false);
-        typeWriteEffect.Play(str);
-        avatarActor.sprite = actor.ActorSo.Texture;
-        nameActor.text = LocalizationManager.Instance.GetLocalizedValue(actor.Name);
+        if (choicesManager != null)
+        {
+            choicesManager.DisableAllCHoiceUI();
+            choicesManager.gameObject.SetActive(false);
+        }
+        if (typeWriteEffect != null)
+        {
+            typeWriteEffect.Play(str);
+        }
+        if (avatarActor != null && actor != null && actor.ActorSo != null)
+        {
+            avatarActor.sprite = actor.ActorSo.Texture;
+        }
+        if (nameActor != null && actor != null)
+        {
+            nameActor.text = LocalizationManager.Instance != null 
+                ? LocalizationManager.Instance.GetLocalizedValue(actor.Name) 
+                : actor.Name.ToString();
+        }
     }
 
     private void ShowChoices(List<ChoiceComponent> choices)
     {
-        choicesManager.FillChoices(choices);
-        choicesManager.gameObject.SetActive(true);
+        if (choicesManager != null)
+        {
+            choicesManager.FillChoices(choices);
+            choicesManager.gameObject.SetActive(true);
+        }
     }
 }

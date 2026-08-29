@@ -50,17 +50,32 @@ public class CurrencyManager
 
     private void Save()
     {
-        save.Player.Inventory.SetCurrency(currencies);
-        save.SaveDataToDisk(GameSaveType.PlayerInfo);
+        var s = save ?? SaveSystem.Instance;
+        if (s == null || s.Player == null) return;
+        if (s.Player.Inventory == null) s.Player.Inventory = new InventorySaveData();
+
+        s.Player.Inventory.SetCurrency(currencies);
+        s.SaveDataToDisk(GameSaveType.PlayerInfo);
     }
 
     private void Load()
     {
-        currencies = save.Player.Inventory.Currencies;
-        if (currencies == null)
+        var s = save ?? SaveSystem.Instance;
+        if (s != null && s.Player != null)
         {
-            currencies = new Dictionary<CurrencyType, int>();
-            save.Player.Inventory.Currencies = currencies;
+            if (s.Player.Inventory == null) s.Player.Inventory = new InventorySaveData();
+
+            if (s.Player.Inventory.Currencies != null)
+            {
+                currencies = s.Player.Inventory.Currencies;
+                return;
+            }
+        }
+
+        currencies = new Dictionary<CurrencyType, int>();
+        if (s != null && s.Player?.Inventory != null)
+        {
+            s.Player.Inventory.Currencies = currencies;
         }
     }
     public void UpdateCurrency()

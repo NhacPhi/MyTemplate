@@ -637,4 +637,34 @@ public class CharacterProfileModel : IStatProvider
 
         return Mathf.Max(1, Mathf.RoundToInt(totalPower));
     }
+
+    public static int CalculateBasePower(CharacterConfig config)
+    {
+        if (config == null) return 0;
+
+        float hp = config.GetStat(StatType.HP);
+        float atk = config.GetStat(StatType.ATK);
+        float def = config.GetStat(StatType.DEF);
+        float speed = Mathf.Max(1f, config.GetStat(StatType.SPEED));
+
+        float critRate = Mathf.Clamp(config.GetStat(StatType.CRIT_RATE), 0f, 100f);
+        float critDmg = config.GetStat(StatType.CRIT_DMG) + 175;
+
+        float critPower = atk * (critRate / 100f) * (critDmg / 100f) * 1.2f;
+        float offensiveRating = (atk * 5.0f) + critPower;
+        float defensiveRating = (hp * 1.2f) + (def * 8.0f);
+        float speedFactor = 0.6f + (speed / 100f) * 0.4f;
+
+        float rarityMult = 1.0f;
+        switch (config.Rare)
+        {
+            case CharacterRare.UR: rarityMult = 1.25f; break;
+            case CharacterRare.SSR: rarityMult = 1.00f; break;
+            case CharacterRare.SR: rarityMult = 0.85f; break;
+            case CharacterRare.R: rarityMult = 0.70f; break;
+        }
+
+        float baseCombatPower = (offensiveRating + defensiveRating) * speedFactor;
+        return Mathf.Max(1, Mathf.RoundToInt(baseCombatPower * rarityMult));
+    }
 }

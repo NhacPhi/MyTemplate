@@ -78,6 +78,7 @@ class CharacterConfigBuilder(BaseBuilder):
                     name_hash=self.get_hash(row['Name']),
                     rare=str(row['Rare']),
                     type=str(row['Type']),
+                    character_class=char_class_map[character_id],
                     skills=skill_data
                 )
 

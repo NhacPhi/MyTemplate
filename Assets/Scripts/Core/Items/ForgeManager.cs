@@ -501,19 +501,108 @@ public class ForgeManager
     }
 
     /// <summary>
-    /// Quy đổi nhiều armor cùng lúc thành ArmorPrimorite.
+    /// Quy đổi nhiều armor cùng lúc thành ArmorPrimorite (Batching 1 lần duy nhất).
     /// </summary>
     public int SalvageArmors(System.Collections.Generic.List<string> armorUUIDs)
     {
-        int totalSalvaged = 0;
+        if (armorUUIDs == null || armorUUIDs.Count == 0) return 0;
+
+        int totalPrimorite = 0;
+        var validUUIDs = new System.Collections.Generic.List<string>();
+
         foreach (var uuid in armorUUIDs)
         {
-            if (SalvageArmor(uuid))
+            var armorSave = _inventoryManager.GetArmor(uuid);
+            if (armorSave == null) continue;
+            if (!string.IsNullOrEmpty(armorSave.Equip)) continue; // Đang mặc
+
+            totalPrimorite += Utility.GetArmorPrimoriteFromSalvage(armorSave.Rare, armorSave.Level);
+            validUUIDs.Add(uuid);
+        }
+
+        if (validUUIDs.Count > 0)
+        {
+            _inventoryManager.RemoveArmors(validUUIDs);
+            if (totalPrimorite > 0)
             {
-                totalSalvaged++;
+                _currencyManager.Add(CurrencyType.ArmorPrimorite, totalPrimorite);
             }
         }
-        return totalSalvaged;
+
+        return validUUIDs.Count;
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // WEAPON RECALL / SALVAGE SYSTEM
+    // ═══════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Trả về lượng RelicEssence nhận được khi quy đổi vũ khí (Base Lv1 + 70% đã nâng cấp).
+    /// </summary>
+    public int GetSalvageWeaponEssenceValue(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return 0;
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        Rare rare = config != null ? config.Rarity : Rare.Common;
+        return Utility.GetWeaponSalvageEssence(rare, weaponSave.CurrentLevel);
+    }
+
+    /// <summary>
+    /// Quy đổi 1 weapon thành RelicEssence. Vũ khí đang equipped hoặc Legendary sẽ bị từ chối.
+    /// </summary>
+    public bool SalvageWeapon(string weaponUUID)
+    {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null) return false;
+        if (!string.IsNullOrEmpty(weaponSave.Equip)) return false; // Đang trang bị
+
+        var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+        if (config != null && config.Rarity == Rare.Legendary) return false; // Legendary không quy đổi
+
+        Rare rare = config != null ? config.Rarity : Rare.Common;
+        int essence = Utility.GetWeaponSalvageEssence(rare, weaponSave.CurrentLevel);
+
+        _inventoryManager.RemoveWeapon(weaponUUID);
+        _currencyManager.Add(CurrencyType.RelicEssence, essence);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Quy đổi nhiều weapon cùng lúc thành RelicEssence (Batching 1 lần duy nhất).
+    /// </summary>
+    public int SalvageWeapons(System.Collections.Generic.List<string> weaponUUIDs)
+    {
+        if (weaponUUIDs == null || weaponUUIDs.Count == 0) return 0;
+
+        int totalEssence = 0;
+        var validUUIDs = new System.Collections.Generic.List<string>();
+
+        foreach (var uuid in weaponUUIDs)
+        {
+            var weaponSave = _inventoryManager.GetWeapon(uuid);
+            if (weaponSave == null) continue;
+            if (!string.IsNullOrEmpty(weaponSave.Equip)) continue;
+
+            var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
+            if (config != null && config.Rarity == Rare.Legendary) continue;
+
+            Rare rare = config != null ? config.Rarity : Rare.Common;
+            totalEssence += Utility.GetWeaponSalvageEssence(rare, weaponSave.CurrentLevel);
+            validUUIDs.Add(uuid);
+        }
+
+        if (validUUIDs.Count > 0)
+        {
+            _inventoryManager.RemoveWeapons(validUUIDs);
+            if (totalEssence > 0)
+            {
+                _currencyManager.Add(CurrencyType.RelicEssence, totalEssence);
+            }
+        }
+
+        return validUUIDs.Count;
     }
 }
 

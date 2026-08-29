@@ -1,0 +1,57 @@
+{
+    "GIFT_COIN": {
+        "code": "GIFT_COIN",
+        "is_active": true,
+        "rewards": [
+            {
+                "type": "Currency",
+                "id": "Coin",
+                "amount": 100000
+            }
+        ]
+    },
+    "GIFT_JADE": {
+        "code": "GIFT_JADE",
+        "is_active": true,
+        "rewards": [
+            {
+                "type": "Currency",
+                "id": "Jade",
+                "amount": 2000
+            }
+        ]
+    },
+    "GIFT_RELIC": {
+        "code": "GIFT_RELIC",
+        "is_active": true,
+        "rewards": [
+            {
+                "type": "Currency",
+                "id": "RelicEssence",
+                "amount": 5000
+            }
+        ]
+    },
+    "GIFT_ARMOR": {
+        "code": "GIFT_ARMOR",
+        "is_active": true,
+        "rewards": [
+            {
+                "type": "Currency",
+                "id": "ArmorPrimorite",
+                "amount": 5000
+            }
+        ]
+    },
+    "GIFT_TICKET": {
+        "code": "GIFT_TICKET",
+        "is_active": true,
+        "rewards": [
+            {
+                "type": "Currency",
+                "id": "Ticket",
+                "amount": 10
+            }
+        ]
+    }
+}

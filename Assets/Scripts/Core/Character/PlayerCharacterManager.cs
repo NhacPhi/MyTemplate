@@ -187,10 +187,21 @@ public class PlayerCharacterManager : IInitializable, IDisposable
 
     public int GetCharacterPower(string id)
     {
+        if (string.IsNullOrEmpty(id)) return 0;
+
         _unlockedCharacters.TryGetValue(id, out CharacterProfileModel profile);
 
-        if (profile == null) return 0;
+        if (profile != null)
+        {
+            return profile.CalculatePower();
+        }
 
-        return profile.CalculatePower();
+        var config = _gameDataBase != null ? _gameDataBase.GetCharacterConfig(id) : null;
+        if (config != null)
+        {
+            return CharacterProfileModel.CalculateBasePower(config);
+        }
+
+        return 0;
     }
 }

@@ -54,3 +54,57 @@ class ShopConfigBuilder(BaseBuilder):
                         })
                         
         self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, master_data, "ShopConfig")
+
+        # Parse and export SevenDayLogin rewards sheet if present
+        if "SevenDayLogin" in all_sheets:
+            df_seven = all_sheets["SevenDayLogin"]
+            seven_day_data = []
+            for _, row in df_seven.iterrows():
+                if pd.isna(row['Day']): continue
+                day_num = int(row['Day'])
+                
+                custom_name = ""
+                if 'CustomName' in row and pd.notna(row['CustomName']):
+                    custom_name = str(row['CustomName']).strip()
+                elif 'Name' in row and pd.notna(row['Name']):
+                    custom_name = str(row['Name']).strip()
+
+                seven_day_data.append({
+                    "day_number": day_num,
+                    "reward_type": str(row['Type']).strip() if pd.notna(row['Type']) else "Item",
+                    "reward_id": str(row['RewardID']).strip() if pd.notna(row['RewardID']) else "",
+                    "amount": int(row['Amount']) if pd.notna(row['Amount']) else 1,
+                    "custom_name": custom_name
+                })
+            self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, seven_day_data, "SevenDayLoginConfig")
+            print(f"Successfully exported SevenDayLoginConfig.json with {len(seven_day_data)} days.")
+
+        # Parse and export RedeemCode sheet if present
+        if "RedeemCode" in all_sheets:
+            df_redeem = all_sheets["RedeemCode"]
+            redeem_dict = {}
+            for _, row in df_redeem.iterrows():
+                if pd.isna(row.get('Code')): continue
+                code = str(row['Code']).strip().upper()
+                if not code: continue
+
+                if code not in redeem_dict:
+                    redeem_dict[code] = {
+                        "code": code,
+                        "is_active": bool(row['IsActive']) if pd.notna(row.get('IsActive')) else True,
+                        "rewards": []
+                    }
+
+                reward_type = str(row['Type']).strip() if pd.notna(row.get('Type')) else "Item"
+                reward_id = str(row['RewardID']).strip() if pd.notna(row.get('RewardID')) else ""
+                amount = int(row['Amount']) if pd.notna(row.get('Amount')) else 1
+
+                redeem_dict[code]["rewards"].append({
+                    "type": reward_type,
+                    "id": reward_id,
+                    "amount": amount
+                })
+
+            self.export_json(config.OUTPUT_GAME_CONFIG_FOLDER, redeem_dict, "RedeemCodeConfig")
+            print(f"Successfully exported RedeemCodeConfig.json with {len(redeem_dict)} codes.")
+

@@ -263,6 +263,26 @@ public static class LocKeys
 
     public const long TICKET = 1517191102;
 
+    public const long UI_CHARACTER_EMPTY = 411088789;
+
+    public const long UI_EDIT_NAME = 1283324817;
+
+    public const long UI_ENTER_NEW_NAME = 2799358338;
+
+    public const long UI_REDEEM_CODE_TITLE = 82470059;
+
+    public const long UI_REDEEM_CODE_PLACEHOLDER = 1987532964;
+
+    public const long UI_REDEEM_CODE_USED = 2670048400;
+
+    public const long UI_REDEEM_CODE_INVALID = 632313114;
+
+    public const long UI_REDEEM_CODE_SUCCESS = 3592634979;
+
+    public const long UI_WEAPON_INVENTORY_FULL = 1668401052;
+
+    public const long UI_GO_TO_INVENTORY = 246333826;
+
     public const long STR_JADE_EMPEROR = 2602519814;
 
     public const long STR_BODHI_PATRIARCH = 826052787;
@@ -1462,6 +1482,38 @@ public static class LocKeys
     public const long STR_DAMAGE_REDUCED = 4186065562;
 
     public const long STR_THEBOYSAGE_ULTIMATE_PASSIVE = 50173263;
+
+    public const long STR_TICKET_GACHA = 731831140;
+
+    public const long STR_TICKET_GACHA_DES = 2688885261;
+
+    public const long STR_TICKET_GACHA_DES_USE = 870989956;
+
+    public const long STR_LOGIN_REWARDS = 291262452;
+
+    public const long STR_LOGIN_REWARDS_DES = 1595228292;
+
+    public const long STR_DAY_01 = 3622850555;
+
+    public const long STR_DAY_02 = 221310152;
+
+    public const long STR_DAY_03 = 2310510227;
+
+    public const long STR_DAY_04 = 1756975240;
+
+    public const long STR_DAY_05 = 913393220;
+
+    public const long STR_DAY_06 = 1752148777;
+
+    public const long STR_DAY_07 = 705727568;
+
+    public const long STR_TAP_TO_SELECT = 3581096152;
+
+    public const long STR_WOODEN_STAFF_NAME = 2738150560;
+
+    public const long STR_WOODEN_STAFF_DES = 3906415238;
+
+    public const long STR_WOODEN_STAFF_SKILL = 1387054842;
 
     public const long SUNWUKONG_B_NAME = 1067287368;
 

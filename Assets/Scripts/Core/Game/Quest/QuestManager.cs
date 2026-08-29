@@ -21,7 +21,20 @@ public class QuestManager
     private string currentQuestLineIndex;
 
     public QuestComponent CurrentQuest => currentQuest;
+    public StepComponent CurrentStep => currentStep;
     public bool IsMainQuestActive => currentQuest != null && (currentQuest.Type == QuestType.Main || currentQuest.Type == QuestType.None);
+
+    public QuestComponent GetQuestByID(string questID)
+    {
+        if (string.IsNullOrEmpty(questID) || questLines == null) return null;
+        foreach (var kvp in questLines)
+        {
+            if (kvp.Value?.Quests == null) continue;
+            var q = kvp.Value.Quests.FirstOrDefault(quest => quest.ID == questID);
+            if (q != null) return q;
+        }
+        return null;
+    }
 
     [Inject] GameNarrativeData gameNarrativeData;
     [Inject] GameDataBase gameDataBase;
@@ -469,34 +482,138 @@ public class QuestManager
         var rewardConfig = (gameDataBase != null) ? gameDataBase.GetRewardConfig(rewardID) : null;
         if (rewardConfig != null && rewardConfig.Rewards != null)
         {
-            List<RewardItemData> rewards = new List<RewardItemData>();
+            List<GachaItemResult> gachaResults = new List<GachaItemResult>();
+            List<RewardItemData> otherRewards = new List<RewardItemData>();
+
             foreach (var r in rewardConfig.Rewards)
             {
                 if (r == null || string.IsNullOrEmpty(r.ItemID) || r.Amount <= 0) continue;
 
-                // Grant reward item via GameEvent.OnRequestPickupItem (handled by InventoryManager)
-                GameEvent.OnRequestPickupItem?.Invoke(r.ItemID, r.Amount);
-                rewards.Add(new RewardItemData(r.ItemID, r.Amount));
+                var itemConfig = gameDataBase != null ? gameDataBase.GetItemConfig(r.ItemID) : null;
+                var charConfig = gameDataBase != null ? gameDataBase.GetCharacterConfig(r.ItemID) : null;
+
+                // 1. Nếu là Nhân Vật (Character)
+                if (charConfig != null)
+                {
+                    int shardsAdded = AddCharacterRewardToPlayer(r.ItemID, charConfig);
+                    bool isConverted = shardsAdded > 0;
+                    Rare rare = Utility.ConvertCharacterRareToItemRare(charConfig.Rare);
+                    string charName = LocalizationManager.Instance != null 
+                        ? LocalizationManager.Instance.GetLocalizedValue(charConfig.Name) 
+                        : r.ItemID;
+
+                    gachaResults.Add(new GachaItemResult
+                    {
+                        itemId = r.ItemID,
+                        itemName = !string.IsNullOrEmpty(charName) ? charName : r.ItemID,
+                        rarity = rare,
+                        isCharacter = true,
+                        isConverted = isConverted,
+                        convertedShardAmount = shardsAdded
+                    });
+                }
+                // 2. Nếu là Vũ Khí (Weapon)
+                else if (itemConfig != null && itemConfig.Type == ItemType.Weapon)
+                {
+                    GameEvent.OnRequestPickupItem?.Invoke(r.ItemID, r.Amount);
+
+                    Rare rare = itemConfig.Rarity;
+                    string weaponName = LocalizationManager.Instance != null 
+                        ? LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name) 
+                        : r.ItemID;
+
+                    for (int i = 0; i < r.Amount; i++)
+                    {
+                        gachaResults.Add(new GachaItemResult
+                        {
+                            itemId = r.ItemID,
+                            itemName = !string.IsNullOrEmpty(weaponName) ? weaponName : r.ItemID,
+                            rarity = rare,
+                            isCharacter = false,
+                            isConverted = false,
+                            convertedShardAmount = 0
+                        });
+                    }
+                }
+                // 3. Các vật phẩm khác (Currency, Exp, Gemstone, Armor, Material...)
+                else
+                {
+                    GameEvent.OnRequestPickupItem?.Invoke(r.ItemID, r.Amount);
+                    otherRewards.Add(new RewardItemData(r.ItemID, r.Amount));
+                }
+
                 Debug.Log($"[QuestManager] Granted reward item: {r.ItemID} x{r.Amount}");
             }
 
-            // Show Receive Item Popup if UIManager is available
-            if (rewards.Count > 0)
+            // Hiển thị phần thưởng qua UI
+            UIManager uiManager = null;
+            if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
             {
-                UIManager uiManager = null;
-                if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+                try { uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
+            }
+
+            if (uiManager != null)
+            {
+                if (gachaResults.Count > 0)
                 {
-                    try { uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
+                    // Có Character / Weapon -> Mở GachaResultScene khoe Splash Art trước
+                    uiManager.ShowGachaRewardResults(gachaResults, () =>
+                    {
+                        if (otherRewards.Count > 0)
+                        {
+                            uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(otherRewards));
+                        }
+                    });
                 }
-                if (uiManager != null)
+                else if (otherRewards.Count > 0)
                 {
-                    uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+                    // Chỉ có vật phẩm tiêu hao -> Mở trực tiếp PopupReceiveItem
+                    uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(otherRewards));
                 }
             }
         }
         else
         {
             Debug.LogWarning($"[QuestManager] RewardConfig for ID '{rewardID}' was not found in GameNarrativeData!");
+        }
+    }
+
+    private int AddCharacterRewardToPlayer(string characterId, CharacterConfig charConfig)
+    {
+        if (string.IsNullOrEmpty(characterId) || saveSystem == null || saveSystem.Player?.Roster == null) return 0;
+
+        if (saveSystem.Player.Roster.Characters == null)
+        {
+            saveSystem.Player.Roster.Characters = new List<CharacterSaveData>();
+        }
+
+        bool alreadyOwned = saveSystem.Player.Roster.Characters.Exists(c => c.ID == characterId);
+        if (!alreadyOwned)
+        {
+            var newChar = new CharacterSaveData
+            {
+                ID = characterId,
+                Level = 1,
+                Exp = 0,
+                AscensionTier = 0,
+                StarUp = 0,
+                Weapon = "",
+                Armors = new List<PartSaveData>()
+            };
+            saveSystem.Player.Roster.Characters.Add(newChar);
+            UIEvent.OnCharacterAdded?.Invoke(characterId);
+            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            return 0;
+        }
+        else
+        {
+            int shardAmount = charConfig != null 
+                ? Utility.GetDuplicateCharacterShardAmount(charConfig.Rare) 
+                : 30;
+
+            GameEvent.OnRequestPickupItem?.Invoke(characterId, shardAmount);
+            saveSystem.SaveDataToDisk(GameSaveType.PlayerInfo);
+            return shardAmount;
         }
     }
 

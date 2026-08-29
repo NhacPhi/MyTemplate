@@ -1,0 +1,411 @@
+{
+  "account_info": {
+    "player_name": "NewHero",
+    "level": 1,
+    "current_exp": 0,
+    "avatar_icon": "Wukong03_avatar",
+    "claimed_redeem_codes": []
+  },
+  "inventory": {
+    "currencies": {
+      "Energy": 120,
+      "Jade": 500,
+      "Coin": 150000,
+      "RelicEssence": 3500,
+      "ArmorPrimorite": 2500,
+      "Ticket": 10
+    },
+    "items": [
+      {
+        "id": "common_exp",
+        "type": "Exp",
+        "quantity": 60
+      },
+      {
+        "id": "fine_exp",
+        "type": "Exp",
+        "quantity": 30
+      },
+      {
+        "id": "rare_exp",
+        "type": "Exp",
+        "quantity": 10
+      },
+      {
+        "id": "Garnet_Sliver",
+        "type": "Gemstone",
+        "quantity": 15
+      },
+      {
+        "id": "Jade_Sliver",
+        "type": "Gemstone",
+        "quantity": 15
+      },
+      {
+        "id": "Yellow_Jade_Sliver",
+        "type": "Gemstone",
+        "quantity": 15
+      },
+      {
+        "id": "Amethyst_Sliver",
+        "type": "Gemstone",
+        "quantity": 15
+      },
+      {
+        "id": "Lamian_Noodies",
+        "type": "Food",
+        "quantity": 5
+      },
+      {
+        "id": "Tofu_Soup",
+        "type": "Food",
+        "quantity": 5
+      },
+      {
+        "id": "Peach",
+        "type": "Food",
+        "quantity": 5
+      },
+      {
+        "id": "Slime",
+        "type": "Material",
+        "quantity": 10
+      }
+    ],
+    "weapons": [
+      {
+        "uuid": "10000000-0000-0000-0000-000000000001",
+        "template_id": "Wooden_Staff",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": "SunWukong"
+      },
+      {
+        "uuid": "10000000-0000-0000-0000-000000000002",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": "TangSanZang"
+      },
+      {
+        "uuid": "10000000-0000-0000-0000-000000000003",
+        "template_id": "Crescent_Axe",
+        "current_level": 1,
+        "current_updgrade": 0,
+        "equip": "LittleWhiteDragon"
+      }
+    ],
+    "armors": [
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000001",
+        "template_id": "Armor05_Helmet",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000002",
+        "template_id": "Armor05_Chestplate",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000003",
+        "template_id": "Armor05_Gloves",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000004",
+        "template_id": "Armor05_Boots",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000005",
+        "template_id": "Armor05_Belt",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000006",
+        "template_id": "Armor05_Ring",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000007",
+        "template_id": "Armor02_Helmet",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000008",
+        "template_id": "Armor02_Chestplate",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000009",
+        "template_id": "Armor02_Gloves",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000010",
+        "template_id": "Armor02_Boots",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000011",
+        "template_id": "Armor02_Belt",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000012",
+        "template_id": "Armor02_Ring",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": ""
+      }
+    ]
+  },
+  "roster": {
+    "characters": [
+      {
+        "id": "SunWukong",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "10000000-0000-0000-0000-000000000001",
+        "armors": [
+          {
+            "id": "20000000-0000-0000-0000-000000000001",
+            "type": "Helmet"
+          },
+          {
+            "id": "20000000-0000-0000-0000-000000000002",
+            "type": "Chestplate"
+          },
+          {
+            "id": "20000000-0000-0000-0000-000000000003",
+            "type": "Gloves"
+          },
+          {
+            "id": "20000000-0000-0000-0000-000000000004",
+            "type": "Boots"
+          },
+          {
+            "id": "20000000-0000-0000-0000-000000000005",
+            "type": "Belt"
+          },
+          {
+            "id": "20000000-0000-0000-0000-000000000006",
+            "type": "Ring"
+          }
+        ]
+      },
+      {
+        "id": "TangSanZang",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "10000000-0000-0000-0000-000000000002",
+        "armors": []
+      },
+      {
+        "id": "LittleWhiteDragon",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "10000000-0000-0000-0000-000000000003",
+        "armors": []
+      }
+    ],
+    "active_slots": [
+      {
+        "position": 1,
+        "character_id": "SunWukong"
+      },
+      {
+        "position": 2,
+        "character_id": "TangSanZang"
+      },
+      {
+        "position": 3,
+        "character_id": "LittleWhiteDragon"
+      },
+      {
+        "position": 4,
+        "character_id": ""
+      },
+      {
+        "position": 5,
+        "character_id": ""
+      },
+      {
+        "position": 6,
+        "character_id": ""
+      }
+    ],
+    "active_global_buffs": []
+  },
+  "shop": {
+    "last_reset_time": 0,
+    "purchase_history": {}
+  },
+  "gacha": {
+    "banner_data_map": {
+      "banner_char_01": {
+        "banner_id": "banner_char_01",
+        "pity_count": 0,
+        "selected_target_id": "",
+        "is_next_ssr_guaranteed": false,
+        "total_summon_count": 0
+      },
+      "banner_weap_01": {
+        "banner_id": "banner_weap_01",
+        "pity_count": 0,
+        "selected_target_id": "",
+        "is_next_ssr_guaranteed": false,
+        "total_summon_count": 0
+      },
+      "SevenDayLogin_Day07": {
+        "banner_id": "SevenDayLogin_Day07",
+        "pity_count": 0,
+        "selected_target_id": "",
+        "is_next_ssr_guaranteed": false,
+        "total_summon_count": 0
+      }
+    }
+  },
+  "world_state": {
+    "last_scene_name": "Tutorial",
+    "destroyed_resources": {}
+  },
+  "quest": {
+    "CompletedQuestLineIDs": [],
+    "CompletedQuestIDs": [],
+    "ClaimableQuestIDs": [],
+    "ActiveQuestID": "",
+    "ActiveStepIndex": 0,
+    "ActiveStepProgress": 0
+  },
+  "daily_quest": {
+    "last_reset_time_ticks": 0,
+    "active_daily_quests": {
+      "dq_upgrade_character": 0,
+      "dq_kill_slime": 0,
+      "dp_gacha_character": 0,
+      "dq_shopping": 0,
+      "dq_upgrade_weapon": 0
+    },
+    "completed_daily_quests": [],
+    "tracked_quest_id": "dq_upgrade_character"
+  },
+  "seven_day_login": {
+    "selected_day7_character_id": "",
+    "claimed_days": [],
+    "last_login_date": "",
+    "current_login_day": 1
+  }
+}

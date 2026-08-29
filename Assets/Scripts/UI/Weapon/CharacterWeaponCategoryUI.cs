@@ -12,11 +12,23 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     [SerializeField] private WeaponCategoryUI prefabsUI;
     [SerializeField] private GameObject content;
 
-
     [Inject] private GameDataBase gameDataBase;
     [Inject] private InventoryManager inventory;
 
     private List<WeaponCategoryUI> weapons = new();
+
+    private struct WeaponDisplayData
+    {
+        public string ID;
+        public string TemplateID;
+        public Rare Rarity;
+        public Sprite Icon;
+        public Sprite IconBG;
+        public Sprite Avatar;
+        public int Level;
+        public int Upgrade;
+        public bool IsUnlocked;
+    }
 
     private void Awake()
     {
@@ -46,14 +58,17 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     {
         UIEvent.OnSelectCharacterChangeWeapon -= ResetWeaponCardCategory;
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        btnClose.onClick.AddListener(() =>
+        if (btnClose != null)
         {
-            UIEvent.OnCloseCharacterWeapon?.Invoke(true);
-            UIEvent.OnSelectToggleCharacterTap?.Invoke(CharacterTap.Relic);
-        });
+            btnClose.onClick.AddListener(() =>
+            {
+                UIEvent.OnCloseCharacterWeapon?.Invoke(true);
+                UIEvent.OnSelectToggleCharacterTap?.Invoke(CharacterTap.Relic);
+            });
+        }
         Init();
 
         if (inventory.Weapons != null && inventory.Weapons.Count > 0)
@@ -64,39 +79,102 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
 
     public void Init()
     {
-        if (weapons.Count > 0) return;
-
-        foreach (var item in inventory.Weapons)
-        {
-            var obj = Instantiate(prefabsUI, content.transform);
-            var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
-
-            Sprite avatar = !string.IsNullOrEmpty(item.Equip) ? gameDataBase.GetCharacterConfig(item.Equip)?.Icon : null;
-            Sprite icon = weaponConfig != null ? weaponConfig.Icon : null;
-            Sprite iconBG = weaponConfig != null ? weaponConfig.IconBG : null;
-            Rare rarity = weaponConfig != null ? weaponConfig.Rarity : Rare.Common;
-            obj.GetComponent<WeaponCategoryUI>().Init(item.UUID, rarity, icon, iconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
-            obj.gameObject.SetActive(true);
-            weapons.Add(obj);
-        }
-
-        // Force rebuild UI layout
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
+        RefreshUI();
     }
 
-    // Thiết kế với mấy object pooling
     public void RefreshUI()
     {
-        var inventoryWeapons = inventory.Weapons;
-        if (inventoryWeapons == null) return;
+        if (gameDataBase == null || inventory == null) return;
 
-        for(int i = 0; i < inventoryWeapons.Count; i++)
+        var displayList = new List<WeaponDisplayData>();
+
+        // 1. Danh sách vũ khí ĐÃ SỞ HỮU
+        var ownedWeapons = inventory.Weapons != null ? new List<WeaponSaveData>(inventory.Weapons) : new List<WeaponSaveData>();
+        
+        // Sắp xếp vũ khí sở hữu theo Rarity giảm dần, Level giảm dần, Upgrade giảm dần
+        ownedWeapons.Sort((a, b) =>
         {
-            var item = inventoryWeapons[i];
+            var cfgA = gameDataBase.GetItemConfig(a.TemplateID);
+            var cfgB = gameDataBase.GetItemConfig(b.TemplateID);
+            Rare rareA = cfgA != null ? cfgA.Rarity : Rare.Common;
+            Rare rareB = cfgB != null ? cfgB.Rarity : Rare.Common;
 
+            int rareComp = rareB.CompareTo(rareA);
+            if (rareComp != 0) return rareComp;
+
+            int levelComp = b.CurrentLevel.CompareTo(a.CurrentLevel);
+            if (levelComp != 0) return levelComp;
+
+            return b.CurrentUpgrade.CompareTo(a.CurrentUpgrade);
+        });
+
+        foreach (var item in ownedWeapons)
+        {
+            var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
+            if (weaponConfig == null) continue;
+
+            Sprite avatar = !string.IsNullOrEmpty(item.Equip) ? gameDataBase.GetCharacterConfig(item.Equip)?.Icon : null;
+            displayList.Add(new WeaponDisplayData
+            {
+                ID = item.UUID,
+                TemplateID = item.TemplateID,
+                Rarity = weaponConfig.Rarity,
+                Icon = weaponConfig.Icon,
+                IconBG = weaponConfig.IconBG,
+                Avatar = avatar,
+                Level = item.CurrentLevel,
+                Upgrade = item.CurrentUpgrade,
+                IsUnlocked = true
+            });
+        }
+
+        // 2. Danh sách vũ khí CHƯA SỞ HỮU
+        var ownedTemplateIDs = new HashSet<string>(ownedWeapons.Select(w => w.TemplateID));
+        var allWeaponConfigs = gameDataBase.GetAllWeaponConfigs();
+        var unownedList = new List<KeyValuePair<string, ItemConfig>>();
+
+        if (allWeaponConfigs != null)
+        {
+            foreach (var kvp in allWeaponConfigs)
+            {
+                if (!ownedTemplateIDs.Contains(kvp.Key) && kvp.Value != null && kvp.Value.Weapon != null)
+                {
+                    unownedList.Add(kvp);
+                }
+            }
+        }
+
+        // Sắp xếp vũ khí chưa sở hữu theo Rarity giảm dần
+        unownedList.Sort((a, b) =>
+        {
+            int rareComp = b.Value.Rarity.CompareTo(a.Value.Rarity);
+            if (rareComp != 0) return rareComp;
+            return string.Compare(a.Key, b.Key, System.StringComparison.Ordinal);
+        });
+
+        foreach (var kvp in unownedList)
+        {
+            displayList.Add(new WeaponDisplayData
+            {
+                ID = kvp.Key,
+                TemplateID = kvp.Key,
+                Rarity = kvp.Value.Rarity,
+                Icon = kvp.Value.Icon,
+                IconBG = kvp.Value.IconBG,
+                Avatar = null,
+                Level = 1,
+                Upgrade = 0,
+                IsUnlocked = false
+            });
+        }
+
+        // 3. Render danh sách lên UI (tái sử dụng pool)
+        for (int i = 0; i < displayList.Count; i++)
+        {
+            var data = displayList[i];
             WeaponCategoryUI weaponUI;
 
-            if(i < weapons.Count)
+            if (i < weapons.Count)
             {
                 weaponUI = weapons[i];
                 weaponUI.gameObject.SetActive(true);
@@ -109,40 +187,34 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
                 weapons.Add(weaponUI);
             }
 
-            //Init data
-            var weaponConfig = gameDataBase.GetItemConfig(item.TemplateID);
-            Sprite avatar = !string.IsNullOrEmpty(item.Equip) ? gameDataBase.GetCharacterConfig(item.Equip)?.Icon : null;
-            Sprite icon = weaponConfig != null ? weaponConfig.Icon : null;
-            Sprite iconBG = weaponConfig != null ? weaponConfig.IconBG : null;
-            Rare rarity = weaponConfig != null ? weaponConfig.Rarity : Rare.Common;
-            weaponUI.Init(item.UUID, rarity, icon, iconBG, avatar, item.CurrentLevel, item.CurrentUpgrade);
+            weaponUI.Init(data.ID, data.Rarity, data.Icon, data.IconBG, data.Avatar, data.Level, data.Upgrade, data.IsUnlocked);
         }
 
-        for(int i = inventoryWeapons.Count; i < weapons.Count; i++)
+        for (int i = displayList.Count; i < weapons.Count; i++)
         {
             weapons[i].gameObject.SetActive(false);
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
-    // Nếu số lượng object quá lớn thì việc tiêm data cho tất cả khá tốn CPU
-    // Update data cho đúng UI đó
+
     public void UpdateSingleUI(string uuid)
     {
         if (string.IsNullOrEmpty(uuid)) return;
         var weaponUI = weapons.Find(x => x != null && x.ID == uuid);
-        if(weaponUI != null) 
+        if (weaponUI != null) 
         {
             var itemData = inventory.GetWeapon(uuid);
             if (itemData != null)
             {
                 var weaponConfig = gameDataBase.GetItemConfig(itemData.TemplateID);
-                Sprite avatar = itemData.Equip != "" ? gameDataBase.GetCharacterConfig(itemData.Equip).Icon : null;
+                Sprite avatar = !string.IsNullOrEmpty(itemData.Equip) ? gameDataBase.GetCharacterConfig(itemData.Equip)?.Icon : null;
                 weaponUI.Init(itemData.UUID, weaponConfig.Rarity, weaponConfig.Icon,
-                    weaponConfig.IconBG, avatar, itemData.CurrentLevel, itemData.CurrentUpgrade);
+                    weaponConfig.IconBG, avatar, itemData.CurrentLevel, itemData.CurrentUpgrade, true);
             }
         }
     }
+
     public void SelectedWeaponCard(string id)
     {
         ResetWeaponCards();
@@ -152,30 +224,26 @@ public class CharacterWeaponCategoryUI : MonoBehaviour
     {
         foreach (var weapon in weapons)
         {
-            weapon.GetComponent<WeaponCategoryUI>().OnSwitchStatusBoder(false);
+            if (weapon != null) weapon.OnSwitchStatusBoder(false);
         }
     }
 
     public void ResetWeaponCardCategory(string id)
     {
-        if (id == "")
+        if (string.IsNullOrEmpty(id))
         {
             foreach (var weapon in weapons)
             {
-                weapon.GetComponent<WeaponCategoryUI>().OnSwitchStatusBoder(false);
+                if (weapon != null) weapon.OnSwitchStatusBoder(false);
             }
         }
         else
         {
             foreach (var weapon in weapons)
             {
-                weapon.GetComponent<WeaponCategoryUI>().OnSwitchStatusBoder(false);
-
-                if (weapon.GetComponent<WeaponCategoryUI>().ID == id)
-                {
-                    weapon.GetComponent<WeaponCategoryUI>().OnSwitchStatusBoder(true);
-                }
+                if (weapon == null) continue;
+                weapon.OnSwitchStatusBoder(weapon.ID == id);
             }
         }
     }
-} 
+}

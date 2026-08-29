@@ -64,9 +64,36 @@ public class CharacterCardInfo : CharacterCard
         }
 
         CharacterConfig characterConfig = gameDataBase.GetCharacterConfig(id);
-        if (characterManager == null || characterProfile == null)
+        if (characterConfig == null)
         {
-            LogCommon.Log("Character Data null with id: " + id);
+            LogCommon.Log("Character config null with id: " + id);
+            return;
+        }
+
+        if (characterProfile == null)
+        {
+            if (upgrades != null) upgrades.UpdateUI(0);
+            if (txtName != null) txtName.text = LocalizationManager.Instance != null ? LocalizationManager.Instance.GetLocalizedValue(characterConfig.Name) : characterConfig.Name.ToString();
+            if (txtLevel != null) txtLevel.text = "1/" + Definition.MAX_CHARACTER_LEVEL.ToString();
+            if (iconRare != null) iconRare.sprite = gameDataBase.GetCharacterRareIcon(characterConfig.Rare);
+
+            if (txtHP != null) txtHP.text = characterConfig.GetStat(StatType.HP).ToString();
+            if (txtATK != null) txtATK.text = characterConfig.GetStat(StatType.ATK).ToString();
+            if (txtDEF != null) txtDEF.text = characterConfig.GetStat(StatType.DEF).ToString();
+            if (txtSPD != null) txtSPD.text = characterConfig.GetStat(StatType.SPEED).ToString();
+            if (txtDEFShred != null) txtDEFShred.text = characterConfig.GetStat(StatType.DEF_SHRED).ToString();
+            if (txtCritRate != null) txtCritRate.text = characterConfig.GetStat(StatType.CRIT_RATE).ToString() + "%";
+            if (txtCriteDMG != null) txtCriteDMG.text = (characterConfig.GetStat(StatType.CRIT_DMG) + 175).ToString() + "%";
+            if (txtPenetration != null) txtPenetration.text = characterConfig.GetStat(StatType.PENETRATION).ToString() + "%";
+            if (txtCritDGMRes != null) txtCritDGMRes.text = characterConfig.GetStat(StatType.CRIT_DMG_RES).ToString() + "%";
+
+            if (baseSkill != null) baseSkill.SetSkillUI(characterConfig.BaseSkillIcon, 1);
+            if (mainSkill != null) mainSkill.SetSkillUI(characterConfig.MajorSkillIcon, 1);
+            if (ultimateSkill != null) ultimateSkill.SetSkillUI(characterConfig.UltimateSkillIcon, 1);
+
+            if (baseSkill != null) baseSkill.SetCharacterID(id, SkillCharacter.Base);
+            if (mainSkill != null) mainSkill.SetCharacterID(id, SkillCharacter.Major);
+            if (ultimateSkill != null) ultimateSkill.SetCharacterID(id, SkillCharacter.Ultimate);
             return;
         }
 

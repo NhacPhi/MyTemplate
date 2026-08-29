@@ -37,6 +37,11 @@ public class GachaResultScene : WindowController
         Time.timeScale = 1f;
         PopulateResults();
         UpdateRollAgainButtonText();
+
+        if (btnRollAgain != null)
+        {
+            btnRollAgain.gameObject.SetActive(GachaRollState.IsFromGacha);
+        }
     }
 
     private void PopulateResults()
@@ -78,26 +83,15 @@ public class GachaResultScene : WindowController
 
             if (db != null && !string.IsNullOrEmpty(item.itemId))
             {
-                var itemConfig = db.GetItemConfig(item.itemId);
-                if (itemConfig != null)
+                if (item.isCharacter)
                 {
-                    string localizedName = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
-                    Sprite displayIcon = itemConfig.Icon;
-
-                    // Nếu là character, ưu tiên dùng BigIcon
-                    if (item.isCharacter)
-                    {
-                        var charConfig = db.GetCharacterConfig(item.itemId);
-                        if (charConfig != null && charConfig.BigIcon != null)
-                        {
-                            displayIcon = charConfig.BigIcon;
-                        }
-                    }
-                    // Nếu là weapon, lấy BigIcon từ component vũ khí
-                    else if (itemConfig.Type == ItemType.Weapon && itemConfig.Weapon != null && itemConfig.Weapon.BigIcon != null)
-                    {
-                        displayIcon = itemConfig.Weapon.BigIcon;
-                    }
+                    var charConfig = db.GetCharacterConfig(item.itemId);
+                    string localizedName = charConfig != null 
+                        ? LocalizationManager.Instance.GetLocalizedValue(charConfig.Name) 
+                        : item.itemName;
+                    Sprite displayIcon = charConfig != null 
+                        ? (charConfig.BigIcon != null ? charConfig.BigIcon : (charConfig.Image != null ? charConfig.Image : charConfig.Icon))
+                        : null;
 
                     if (item.isConverted)
                     {
@@ -107,7 +101,6 @@ public class GachaResultScene : WindowController
                         }
                         else
                         {
-                            // Fallback if the user hasn't updated the prefab script yet
                             localizedName += $"\n<size=80%>(+{item.convertedShardAmount} mảnh)</size>";
                         }
                     }
@@ -117,6 +110,26 @@ public class GachaResultScene : WindowController
                     }
                     
                     card.Setup(localizedName, displayIcon, item.rarity);
+                }
+                else
+                {
+                    var itemConfig = db.GetItemConfig(item.itemId);
+                    if (itemConfig != null)
+                    {
+                        string localizedName = LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);
+                        Sprite displayIcon = itemConfig.Icon;
+
+                        if (itemConfig.Type == ItemType.Weapon && itemConfig.Weapon != null && itemConfig.Weapon.BigIcon != null)
+                        {
+                            displayIcon = itemConfig.Weapon.BigIcon;
+                        }
+
+                        card.Setup(localizedName, displayIcon, item.rarity);
+                    }
+                    else
+                    {
+                        card.Setup(item.itemName, null, item.rarity);
+                    }
                 }
             }
             else
@@ -229,6 +242,9 @@ public class GachaResultScene : WindowController
 
         Debug.Log($"[GachaResultScene] Rerolling {count}x on banner {bannerId}.");
         
+        GachaRollState.IsFromGacha = true;
+        GachaRollState.OnCloseCustomCallback = null;
+
         if (gachaManager != null)
         {
             var results = gachaManager.RollGacha(bannerId, count);
@@ -244,8 +260,20 @@ public class GachaResultScene : WindowController
 
     private void OnCloseClicked()
     {
+        var customClose = GachaRollState.OnCloseCustomCallback;
+        bool wasFromGacha = GachaRollState.IsFromGacha;
+
+        // Reset state về mặc định cho các lần gacha tiếp theo
+        GachaRollState.OnCloseCustomCallback = null;
+        GachaRollState.IsFromGacha = true;
+
         UI_Close();
-        if (uiManager != null)
+
+        if (customClose != null)
+        {
+            customClose.Invoke();
+        }
+        else if (wasFromGacha && uiManager != null)
         {
             uiManager.OpenWindowScene(ScreenIds.GachaMainScene);
         }

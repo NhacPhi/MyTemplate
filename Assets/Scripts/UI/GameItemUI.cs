@@ -24,11 +24,11 @@ public class GameItemUI : MonoBehaviour
     public virtual void Setup(string id, Rare rare, Sprite icon, Sprite background)
     {
         this.id = id;
-        this.icon.sprite = icon;
-        this.background.sprite = background;
+        if (this.icon != null) this.icon.sprite = icon;
+        if (this.background != null) this.background.sprite = background;
         this.rare = rare;
         SetBoderFollowRare();
-        color = boder.color;
+        if (this.boder != null) color = this.boder.color;
 
         if (amountText != null)
         {
@@ -47,7 +47,7 @@ public class GameItemUI : MonoBehaviour
 
     public void OnSwitchStatusBoder(bool selected)
     {
-        if (canClick)
+        if (canClick && boder != null)
         {
             boder.color = selected ? Definition.SeletedColor : color;
         }
@@ -55,6 +55,7 @@ public class GameItemUI : MonoBehaviour
 
     private void SetBoderFollowRare()
     {
+        if (boder == null) return;
         switch (rare)
         {
             case Rare.Common:

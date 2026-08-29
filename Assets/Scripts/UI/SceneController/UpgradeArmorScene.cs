@@ -22,9 +22,11 @@ public class UpgradeArmorScene : WindowController
 
             uiManager.CloseWindowScene(ScreenIds.UpgradeArmorScene);
 
-            UIEvent.OnSelectInventoryItem?.Invoke(currentArmor);
-
-            UIEvent.OnArmorUpgraded?.Invoke(currentArmor);
+            if (!string.IsNullOrEmpty(currentArmor))
+            {
+                UIEvent.OnSelectInventoryItem?.Invoke(currentArmor);
+                UIEvent.OnArmorUpgraded?.Invoke(currentArmor);
+            }
         });
     }
 

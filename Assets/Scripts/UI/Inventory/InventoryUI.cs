@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class InventoryUI : MonoBehaviour
@@ -18,9 +19,20 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject iteamCardInfo;
     [SerializeField] private GameObject armorCardInfo;
 
+    [Header("Recall References")]
+    [SerializeField] private Button btnRecall;
+    [SerializeField] private GameObject objRecall;
+    [SerializeField] private Button btnCloseRecall;
+    [SerializeField] private Button btnConfirmRecall;
+    [SerializeField] private TextMeshProUGUI txtSelectedCount;
+    [SerializeField] private TextMeshProUGUI txtTotalRelicEssence;
+
     private ItemType currentItemType = ItemType.None;
+    private bool isRecallMode = false;
+    private HashSet<string> selectedRecallWeaponUUIDs = new HashSet<string>();
 
     private List<GameObject> weapons = new();
+    private List<WeaponUI> weaponUIs = new();
     private List<GameObject> items = new();
     //private List<GameObject> matterials = new();
     private List<GameObject> armors = new();
@@ -34,10 +46,15 @@ public class InventoryUI : MonoBehaviour
 
     private InventoryManager _inventoryManager;
     private GameDataBase _gameDataBase;
+    private ForgeManager _forgeManager;
+    private UIManager _uiManager;
 
     private void Awake()
     {
         itemCard = iteamCardInfo.GetComponent<ItemCardInfoUI>();
+        if (btnRecall != null) btnRecall.onClick.AddListener(OnToggleRecall);
+        if (btnCloseRecall != null) btnCloseRecall.onClick.AddListener(() => SetRecallMode(false));
+        if (btnConfirmRecall != null) btnConfirmRecall.onClick.AddListener(OnConfirmRecall);
     }
     private void Start()
     {
@@ -66,29 +83,41 @@ public class InventoryUI : MonoBehaviour
         
         UIEvent.OnInventoryChanged -= RefreshData;
     }
-    public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase)
+    public void Init(InventoryManager inventoryManager, GameDataBase gameDataBase, ForgeManager forgeManager = null, UIManager uiManager = null)
     {
         _inventoryManager = inventoryManager;
-
         _gameDataBase = gameDataBase;
+        if (forgeManager != null) _forgeManager = forgeManager;
+        if (uiManager != null) _uiManager = uiManager;
 
         RefreshData(); // Gọi lần đầu để vẽ UI và tự động hiển thị tab hiện tại
     }
 
     private void RefreshData()
     {
+        if (_inventoryManager == null || _gameDataBase == null) return;
         ClearAllOldUI();
 
         // 2. VẼ WEAPONS
-        foreach (var item in _inventoryManager.Weapons)
+        weaponUIs.Clear();
+        if (_inventoryManager.Weapons != null)
         {
-            var obj = Instantiate(prefabWeapon, content.transform);
-            var weaponConfig = _gameDataBase.GetItemConfig(item.TemplateID); 
+            foreach (var item in _inventoryManager.Weapons)
             {
-                obj.GetComponent<WeaponUI>().Init(item.UUID, weaponConfig.Rarity, 
-                    weaponConfig.Icon, weaponConfig.IconBG, item.CurrentLevel, item.CurrentUpgrade);
-                obj.SetActive(false);
-                weapons.Add(obj);
+                var weaponConfig = _gameDataBase.GetItemConfig(item.TemplateID); 
+                if (weaponConfig != null)
+                {
+                    var obj = Instantiate(prefabWeapon, content.transform);
+                    var weaponUI = obj.GetComponent<WeaponUI>();
+                    bool isEquipped = !string.IsNullOrEmpty(item.Equip);
+                    bool isUnselectable = isEquipped || weaponConfig.Rarity == Rare.Legendary;
+                    weaponUI.Init(item.UUID, weaponConfig.Rarity, 
+                        weaponConfig.Icon, weaponConfig.IconBG, item.CurrentLevel, item.CurrentUpgrade, isUnselectable);
+                    weaponUI.OnRecallSelectionToggled = OnWeaponRecallSelectionChanged;
+                    obj.SetActive(false);
+                    weapons.Add(obj);
+                    weaponUIs.Add(weaponUI);
+                }
             }
         }
         dictionaryObject[ItemType.Weapon] = weapons;
@@ -151,8 +180,18 @@ public class InventoryUI : MonoBehaviour
     {
         if (currentItemType == type) return;
 
+        if (type != ItemType.Weapon && isRecallMode)
+        {
+            SetRecallMode(false);
+        }
+
         DeActiveAllObjectInContent();
         currentItemType = type;
+
+        if (btnRecall != null)
+        {
+            btnRecall.gameObject.SetActive(type == ItemType.Weapon);
+        }
 
         List<GameObject> listItems = dictionaryObject.GetValueOrDefault(type);
         if (listItems == null || listItems.Count == 0)
@@ -175,14 +214,17 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        weaponCardInfo.SetActive(type == ItemType.Weapon);
+        weaponCardInfo.SetActive(!isRecallMode && type == ItemType.Weapon);
         iteamCardInfo.SetActive(type == ItemType.Item || type == ItemType.Material || type == ItemType.Shard || type == ItemType.Exp);
         armorCardInfo.SetActive(type == ItemType.Armor);
 
-        // 🌟 Lấy món đồ đầu tiên một cách an toàn
-        InventoryItemUI itemUI = listItems[0].GetComponent<InventoryItemUI>();
-        itemUI.OnSwitchStatusBoder(true);
-        UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
+        // 🌟 Lấy món đồ đầu tiên một cách an toàn nếu không trong chế độ recall
+        if (!isRecallMode)
+        {
+            InventoryItemUI itemUI = listItems[0].GetComponent<InventoryItemUI>();
+            itemUI.OnSwitchStatusBoder(true);
+            UIEvent.OnSelectInventoryItem?.Invoke(itemUI.ID);
+        }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(content.GetComponent<RectTransform>());
     }
@@ -190,6 +232,8 @@ public class InventoryUI : MonoBehaviour
 
     public void OnClickItemUI(string id)
     {
+        if (isRecallMode && currentItemType == ItemType.Weapon) return;
+
         List<GameObject> listItem = dictionaryObject.GetValueOrDefault(currentItemType);
         if (listItem == null) return;
         foreach (var item in listItem)
@@ -229,6 +273,7 @@ public class InventoryUI : MonoBehaviour
         }
         dictionaryObject.Clear();
         weapons.Clear();
+        weaponUIs.Clear();
         items.Clear();
         armors.Clear();
         shards.Clear();
@@ -327,12 +372,17 @@ public class InventoryUI : MonoBehaviour
             {
                 foreach (var go in currentList)
                 {
-                    var uiComp = go.GetComponent<InventoryItemUI>();
+                    var uiComp = go.GetComponent<WeaponUI>();
                     if (uiComp != null && uiComp.ID == id)
                     {
                         var config = _gameDataBase.GetItemConfig(weaponSave.TemplateID);
-                        // Gọi Init để reset lại các thông số UI
-                        go.GetComponent<WeaponUI>().Init(id, config.Rarity, config.Icon, config.IconBG, weaponSave.CurrentLevel, weaponSave.CurrentUpgrade);
+                        bool isEquipped = !string.IsNullOrEmpty(weaponSave.Equip);
+                        bool isUnselectable = isEquipped || (config != null && config.Rarity == Rare.Legendary);
+                        uiComp.Init(id, config.Rarity, config.Icon, config.IconBG, weaponSave.CurrentLevel, weaponSave.CurrentUpgrade, isUnselectable);
+                        if (isRecallMode)
+                        {
+                            uiComp.SetRecallMode(isRecallMode, isUnselectable);
+                        }
                         break;
                     }
                 }
@@ -340,5 +390,144 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    public void OnToggleRecall()
+    {
+        SetRecallMode(!isRecallMode);
+    }
+
+    public void SetRecallMode(bool active)
+    {
+        isRecallMode = active;
+        selectedRecallWeaponUUIDs.Clear();
+
+        if (objRecall != null && objRecall.activeSelf != isRecallMode)
+        {
+            objRecall.SetActive(isRecallMode);
+        }
+
+        if (weaponCardInfo != null && weaponCardInfo.activeSelf != (!isRecallMode && currentItemType == ItemType.Weapon))
+        {
+            weaponCardInfo.SetActive(!isRecallMode && currentItemType == ItemType.Weapon);
+        }
+
+        // Cập nhật tất cả Weapon UI cực nhanh (sử dụng cache weaponUIs)
+        for (int i = 0; i < weaponUIs.Count; i++)
+        {
+            var wUI = weaponUIs[i];
+            if (wUI != null)
+            {
+                wUI.SetRecallMode(isRecallMode);
+                wUI.OnSwitchStatusBoder(false);
+            }
+        }
+
+        UpdateRecallUIStats();
+
+        // Nếu thoát chế độ Recall và đang ở tab Weapon, chọn lại món đầu tiên
+        if (!isRecallMode && currentItemType == ItemType.Weapon && weaponUIs.Count > 0)
+        {
+            var firstUI = weaponUIs[0];
+            if (firstUI != null)
+            {
+                firstUI.OnSwitchStatusBoder(true);
+                UIEvent.OnSelectInventoryItem?.Invoke(firstUI.ID);
+            }
+        }
+    }
+
+    private void OnWeaponRecallSelectionChanged(string uuid, bool isSelected)
+    {
+        if (isSelected)
+            selectedRecallWeaponUUIDs.Add(uuid);
+        else
+            selectedRecallWeaponUUIDs.Remove(uuid);
+
+        UpdateRecallUIStats();
+    }
+
+    public int GetTotalSelectableWeaponsCount()
+    {
+        int total = 0;
+        for (int i = 0; i < weaponUIs.Count; i++)
+        {
+            if (weaponUIs[i] != null && !weaponUIs[i].IsUnselectable)
+            {
+                total++;
+            }
+        }
+        return total;
+    }
+
+    private void UpdateRecallUIStats()
+    {
+        int selectedCount = selectedRecallWeaponUUIDs.Count;
+        int totalSelectable = 0;
+        int totalEssence = 0;
+
+        for (int i = 0; i < weaponUIs.Count; i++)
+        {
+            var wUI = weaponUIs[i];
+            if (wUI != null && !wUI.IsUnselectable)
+            {
+                totalSelectable++;
+                if (selectedRecallWeaponUUIDs.Contains(wUI.ID))
+                {
+                    totalEssence += wUI.SalvageEssenceValue;
+                }
+            }
+        }
+
+        if (txtSelectedCount != null)
+        {
+            txtSelectedCount.text = $"{selectedCount}/{totalSelectable}";
+        }
+
+        if (txtTotalRelicEssence != null)
+        {
+            txtTotalRelicEssence.text = Utility.FormatCurrency(totalEssence);
+        }
+    }
+
+    private void OnConfirmRecall()
+    {
+        if (selectedRecallWeaponUUIDs == null || selectedRecallWeaponUUIDs.Count == 0) return;
+
+        int totalEssence = 0;
+        for (int i = 0; i < weaponUIs.Count; i++)
+        {
+            var wUI = weaponUIs[i];
+            if (wUI != null && selectedRecallWeaponUUIDs.Contains(wUI.ID))
+            {
+                totalEssence += wUI.SalvageEssenceValue;
+            }
+        }
+
+        var uuidsToSalvage = new List<string>(selectedRecallWeaponUUIDs);
+        int count = 0;
+        if (_forgeManager != null)
+        {
+            count = _forgeManager.SalvageWeapons(uuidsToSalvage);
+        }
+        else if (_inventoryManager != null)
+        {
+            _inventoryManager.RemoveWeapons(uuidsToSalvage);
+            count = uuidsToSalvage.Count;
+        }
+
+        if (count > 0)
+        {
+            selectedRecallWeaponUUIDs.Clear();
+            SetRecallMode(false);
+
+            if (totalEssence > 0 && _uiManager != null)
+            {
+                var rewards = new List<RewardItemData>
+                {
+                    new RewardItemData("RelicEssence", totalEssence)
+                };
+                _uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+            }
+        }
+    }
 }
  

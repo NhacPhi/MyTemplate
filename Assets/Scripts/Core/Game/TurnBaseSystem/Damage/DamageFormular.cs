@@ -144,9 +144,9 @@ public static class DamageFormular
 
                         // Hiển thị Text Popup thông qua LocalizationManager (không hardcode)
                         string popupText = LocalizationManager.Instance != null 
-                            ? LocalizationManager.Instance.GetLocalizedValue(LocKeys.STR_DAMAGE_REDUCED) 
+                            ? LocalizationManager.Instance.GetLocalizedValue("STR_DAMAGE_REDUCED") 
                             : "";
-                        if (string.IsNullOrEmpty(popupText)) popupText = "Giảm Sát Thương!";
+                        if (string.IsNullOrEmpty(popupText) || popupText == "STR_DAMAGE_REDUCED") popupText = "Giảm Sát Thương!";
 
                         UIEvent.TextPopup?.Invoke(popupText, target.transform.position + Vector3.up * 1.5f, new Color(0.3f, 0.85f, 1f));
                     }

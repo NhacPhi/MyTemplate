@@ -23,6 +23,8 @@ public class ScreenIds
     public const string GachaResultScene = "GachaResultScene";
     public const string QuestScene = "QuestScene";
     public const string PauseBattleScene = "PauseBattleScene";
+    public const string SevenDayLogin = "SevenDayLogin";
+    public const string SevenDayLoginScene = "SevenDayLogin";
 
     // Panel
     public const string PanelStartGame = "PanelStartGame";
@@ -38,4 +40,5 @@ public class ScreenIds
     public const string PopupReceiveItem = "PopupReceiveItem";
     public const string PopupBattleResult = "PopupBattleResult";
     public const string PopupGachaSelectTarget = "PopupGachaSelectTarget";
+    public const string PopupInput = "PopupInput";
 }

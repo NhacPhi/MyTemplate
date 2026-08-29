@@ -9,6 +9,8 @@ using System.Linq;
 
 public class GameDataBase
 {
+    public static GameDataBase Instance { get; private set; }
+
     [Inject] AtlasProvider atlasProvider;
 
     private Dictionary<string, ItemConfig> ItemConfigs = new Dictionary<string, ItemConfig>();
@@ -24,6 +26,8 @@ public class GameDataBase
     private Dictionary<string, ShopProductConfig> ShopConfigs = new Dictionary<string, ShopProductConfig>();
     private Dictionary<string, RewardConfig> RewardConfigs = new Dictionary<string, RewardConfig>();
     private Dictionary<string, GachaConfig> GachaConfigs = new Dictionary<string, GachaConfig>();
+    private List<UIFramework.SevenDayLoginConfigData> SevenDayConfigs = new List<UIFramework.SevenDayLoginConfigData>();
+    private Dictionary<string, RedeemCodeConfig> RedeemCodeConfigs = new Dictionary<string, RedeemCodeConfig>();
 
     private const string ItemConfigsAddress = "ItemsConfig";
 
@@ -48,9 +52,12 @@ public class GameDataBase
     private const string ShopConfigAddress = "ShopConfig";
     private const string RewardConfigAddress = "RewardConfig";
     private const string GachaConfigAddress = "GachaConfig";
+    private const string SevenDayConfigAddress = "SevenDayLoginConfig";
+    private const string RedeemCodeConfigAddress = "RedeemCodeConfig";
 
     public async UniTask Init(CancellationToken cancellationToken = default)
     {
+        Instance = this;
         // 1. Load JSON
         var (itemText, characterText, battleText, effectText) = await UniTask.WhenAll(
             AddressablesManager.Instance.LoadAssetAsync<TextAsset>(ItemConfigsAddress, token: cancellationToken),
@@ -105,6 +112,37 @@ public class GameDataBase
         {
             GachaConfigs = Json.DeserializeObject<Dictionary<string, GachaConfig>>(gachaText.text);
             AddressablesManager.Instance.RemoveAsset(GachaConfigAddress);
+        }
+
+        var sevenDayText = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(SevenDayConfigAddress, token: cancellationToken);
+        if (sevenDayText != null)
+        {
+            SevenDayConfigs = Json.DeserializeObject<List<UIFramework.SevenDayLoginConfigData>>(sevenDayText.text);
+            AddressablesManager.Instance.RemoveAsset(SevenDayConfigAddress);
+        }
+
+        try
+        {
+            var redeemText = await AddressablesManager.Instance.LoadAssetAsync<TextAsset>(RedeemCodeConfigAddress, token: cancellationToken);
+            if (redeemText != null)
+            {
+                RedeemCodeConfigs = Json.DeserializeObject<Dictionary<string, RedeemCodeConfig>>(redeemText.text);
+                AddressablesManager.Instance.RemoveAsset(RedeemCodeConfigAddress);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning($"[GameDataBase] Addressables load failed for {RedeemCodeConfigAddress}: {ex.Message}. Loading from local JSON fallback.");
+            try
+            {
+                string path = System.IO.Path.Combine(Application.dataPath, "Data/GameConfig/RedeemCodeConfig.json");
+                if (System.IO.File.Exists(path))
+                {
+                    string json = System.IO.File.ReadAllText(path);
+                    RedeemCodeConfigs = Json.DeserializeObject<Dictionary<string, RedeemCodeConfig>>(json);
+                }
+            }
+            catch { }
         }
 
         AddressablesManager.Instance.RemoveAsset(ItemConfigsAddress);
@@ -197,7 +235,6 @@ public class GameDataBase
     {
         get
         {
-            // cache
             if (avatarDict == null)
             {
                 avatarDict = ItemConfigs
@@ -206,6 +243,32 @@ public class GameDataBase
             }
             return avatarDict;
         }
+    }
+
+    private Dictionary<string, ItemConfig> weaponDict;
+
+    public Dictionary<string, ItemConfig> WeaponDict
+    {
+        get
+        {
+            if (weaponDict == null)
+            {
+                weaponDict = ItemConfigs
+                    .Where(x => x.Value.Type == ItemType.Weapon)
+                    .ToDictionary(x => x.Key, x => x.Value);
+            }
+            return weaponDict;
+        }
+    }
+
+    public Dictionary<string, ItemConfig> GetAllItemConfigs()
+    {
+        return ItemConfigs;
+    }
+
+    public Dictionary<string, ItemConfig> GetAllWeaponConfigs()
+    {
+        return WeaponDict;
     }
 
     public string GetRarityID(Rare type)
@@ -261,6 +324,11 @@ public class GameDataBase
         if (string.IsNullOrEmpty(key) || CharacterConfigs == null) return null;
         CharacterConfigs.TryGetValue(key, out CharacterConfig character);
         return character;
+    }
+
+    public Dictionary<string, CharacterConfig> GetAllCharacterConfigs()
+    {
+        return CharacterConfigs;
     }
 
     public BattleConfig GetBattleConfig(string key)
@@ -404,6 +472,48 @@ public class GameDataBase
     public Dictionary<string, GachaConfig> GetAllGachaConfigs()
     {
         return GachaConfigs;
+    }
+
+    public List<UIFramework.SevenDayLoginConfigData> GetSevenDayLoginConfigs()
+    {
+        return SevenDayConfigs;
+    }
+
+    public UIFramework.SevenDayLoginConfigData GetSevenDayLoginConfig(int day)
+    {
+        return SevenDayConfigs?.Find(c => c.DayNumber == day);
+    }
+
+    public RedeemCodeConfig GetRedeemCodeConfig(string code)
+    {
+        if (string.IsNullOrEmpty(code)) return null;
+        string upper = code.Trim().ToUpper();
+
+        if (RedeemCodeConfigs == null || RedeemCodeConfigs.Count == 0)
+        {
+            try
+            {
+                string path = System.IO.Path.Combine(Application.dataPath, "Data/GameConfig/RedeemCodeConfig.json");
+                if (System.IO.File.Exists(path))
+                {
+                    string json = System.IO.File.ReadAllText(path);
+                    RedeemCodeConfigs = Json.DeserializeObject<Dictionary<string, RedeemCodeConfig>>(json);
+                }
+            }
+            catch { }
+        }
+
+        if (RedeemCodeConfigs != null && RedeemCodeConfigs.TryGetValue(upper, out var cfg))
+        {
+            return cfg;
+        }
+
+        if (RedeemCodeConfigs != null)
+        {
+            return RedeemCodeConfigs.Values.FirstOrDefault(x => string.Equals(x.Code, upper, System.StringComparison.OrdinalIgnoreCase));
+        }
+
+        return null;
     }
 }
 

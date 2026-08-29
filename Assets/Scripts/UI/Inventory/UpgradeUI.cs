@@ -12,19 +12,19 @@ public class UpgradeUI : MonoBehaviour
     }
     public void ActiveLayer(int layer)
     {
-        zeroLayer.SetActive(false);
-        firstLayer.SetActive(false);
-        secondLayer.SetActive(false);
+        if (zeroLayer != null) zeroLayer.SetActive(false);
+        if (firstLayer != null) firstLayer.SetActive(false);
+        if (secondLayer != null) secondLayer.SetActive(false);
         switch (layer)
         {
             case 0:
-                zeroLayer.SetActive(true);
+                if (zeroLayer != null) zeroLayer.SetActive(true);
                 break;
             case 1:
-                firstLayer.SetActive(true);
+                if (firstLayer != null) firstLayer.SetActive(true);
                 break;
             case 2:
-                secondLayer.SetActive(true);
+                if (secondLayer != null) secondLayer.SetActive(true);
                 break;
         }
     }

@@ -57,7 +57,12 @@ public class CharacterCardCultivate : CharacterCard
     {
         currentCharacter = id;
         CharacterConfig config = gameDataBase.GetCharacterConfig(id);
-        CharacterSaveData data = playerCharacterManager.GetCharacter(id).SaveData;
+        if (config == null) return;
+
+        var charProfile = playerCharacterManager.GetCharacter(id);
+        if (charProfile == null || charProfile.SaveData == null) return;
+
+        CharacterSaveData data = charProfile.SaveData;
 
         // Base info
         txtName.text = LocalizationManager.Instance.GetLocalizedValue(config.Name);

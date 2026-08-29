@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using deVoid.Utils;
 using UIFramework;
 using UnityEngine;
@@ -98,6 +99,20 @@ public class UIManager : MonoBehaviour
         OpenWindowScene(ScreenIds.PopupNotification, notificationProps);
     }
 
+    public void ShowInputPopup(string title, Action<string> confirmAction, string defaultText = "", string placeholder = "Enter text...", Action cancelAction = null)
+    {
+        PopupInputProperties inputProps = new PopupInputProperties(
+            title,
+            defaultText,
+            placeholder,
+            LocalizationManager.Instance.GetLocalizedValue("UI_CONFIRM"),
+            LocalizationManager.Instance.GetLocalizedValue("UI_CANCEL"),
+            confirmAction,
+            cancelAction
+        );
+        OpenWindowScene(ScreenIds.PopupInput, inputProps);
+    }
+
     public void ShowNotEnoughResourceNotification(CurrencyType type, Action confirmAction = null)
     {
         ShowNotEnoughResourceNotification(type.ToString(), confirmAction);
@@ -190,6 +205,31 @@ public class UIManager : MonoBehaviour
     {
         EnsureScreenLoaded(ScreenIds.PopupReceiveItem);
         _uiFrame.OpenWindow(ScreenIds.PopupReceiveItem, popup);
+    }
+
+    public void ShowGachaRewardResult(GachaItemResult itemResult, System.Action onCloseCallback = null)
+    {
+        if (itemResult == null) return;
+        ShowGachaRewardResults(new List<GachaItemResult> { itemResult }, onCloseCallback);
+    }
+
+    public void ShowGachaRewardResults(List<GachaItemResult> results, System.Action onCloseCallback = null)
+    {
+        if (results == null || results.Count == 0) return;
+
+        Rare highest = Rare.Common;
+        foreach (var item in results)
+        {
+            if (item.rarity > highest) highest = item.rarity;
+        }
+
+        GachaRollState.LastResults = results;
+        GachaRollState.HighestRarity = highest;
+        GachaRollState.LastRollCount = results.Count;
+        GachaRollState.IsFromGacha = false;
+        GachaRollState.OnCloseCustomCallback = onCloseCallback;
+
+        OpenWindowScene(ScreenIds.GachaResultScene);
     }
 
     public void ShowBattleResultPopup(BattleResultProperties popup)

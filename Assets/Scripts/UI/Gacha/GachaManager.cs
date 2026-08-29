@@ -190,15 +190,7 @@ public class GachaManager
             {
                 // Đã sở hữu -> Quy đổi thành mảnh
                 string shardId = item.itemId; // Sử dụng chung ID tướng làm ID mảnh
-                int shardAmount = 0;
-                switch (item.rarity)
-                {
-                    case Rare.Uncommon: shardAmount = 10; break; // Rarity 2
-                    case Rare.Rare: shardAmount = 20; break;     // Rarity 3
-                    case Rare.Epic: shardAmount = 30; break;     // Rarity 4
-                    case Rare.Legendary: shardAmount = 60; break;// Rarity 5
-                    default: shardAmount = 10; break;
-                }
+                int shardAmount = Utility.GetDuplicateCharacterShardAmount(item.rarity);
 
                 _inventoryManager.AddStackableItem(shardId, ItemType.Shard, shardAmount);
                 item.isConverted = true;

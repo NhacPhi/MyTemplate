@@ -51,11 +51,13 @@ public static class Utility
     }
 
     // Stat Growth level
-    //Stat(level)=Base+Growth×(level-1)×(0.7+0.03×(level-1))
+    // Stat(level) = Base + Growth × (level-1) × (1.0 + 0.005 × (level-1))
+    // Exp required for each level step (from level-1 to level)
+    // Total for Lv 1 -> 100 = ~2.8M EXP (~280 supreme_exp books)
     public static int GetCharacterExpByLevel(int level)
     {
         if (level <= 1) return 0;
-        return 500 + 300 * (level - 1) + 20 * (level - 1) * (level - 1);
+        return (int)(300 + 120 * (level - 1) + 6.5f * (level - 1) * (level - 1));
     }
 
     public static string GetExpConfigIDByCharacterRare(CharacterRare rare)
@@ -80,6 +82,60 @@ public static class Utility
             case CharacterRare.UR: return "starup_ur";
         }
         return "";
+    }
+
+    public static Rare ConvertCharacterRareToItemRare(CharacterRare rare)
+    {
+        switch (rare)
+        {
+            case CharacterRare.UR:
+            case CharacterRare.SSR:
+                return Rare.Legendary;
+            case CharacterRare.SR:
+                return Rare.Epic;
+            case CharacterRare.R:
+            default:
+                return Rare.Rare;
+        }
+    }
+
+    /// <summary>
+    /// Số lượng mảnh nhận được khi quy đổi nhân vật đã sở hữu theo CharacterRare
+    /// </summary>
+    public static int GetDuplicateCharacterShardAmount(CharacterRare rare)
+    {
+        switch (rare)
+        {
+            case CharacterRare.UR:
+                return 90;
+            case CharacterRare.SSR:
+                return 60;
+            case CharacterRare.SR:
+                return 30;
+            case CharacterRare.R:
+            default:
+                return 20;
+        }
+    }
+
+    /// <summary>
+    /// Số lượng mảnh nhận được khi quy đổi nhân vật đã sở hữu theo Item Rare
+    /// </summary>
+    public static int GetDuplicateCharacterShardAmount(Rare rare)
+    {
+        switch (rare)
+        {
+            case Rare.Legendary:
+                return 60;
+            case Rare.Epic:
+                return 30;
+            case Rare.Rare:
+                return 20;
+            case Rare.Uncommon:
+            case Rare.Common:
+            default:
+                return 10;
+        }
     }
 
     public static string GetContextByStatType(StatType type)
@@ -176,55 +232,82 @@ public static class Utility
         }
         return "ascension_common";
     }
-    //Exp to upgrade
-    //ExpRequired(n)=1800+1000×(n-1)+600×(n-1)2
+
+    // Stat Growth level
     public static int GetStatGrowthLevel(int level, float growth)
     {
         return Convert.ToInt32(growth * (level - 1) * (1.0f + 0.005f * (level - 1)));
     }
 
-    //Coin to upgrade
-    //Cost(level)=BaseCost+Growth×(level−1)2
+    // Cumulative Coin required to level up character from Level 1 to 'level'
+    // Total for Lv 1 -> 100 = ~1.45M Coin (smooth progression)
     public static int GetCoinNeedToUpgradeCacultivate(int level)
     {
-        return 3000 + 2000 * (level - 1) * (level - 1);
+        if (level <= 1) return 0;
+        int l = level - 1;
+        return (int)(1000 * l + 80f * l * l + 1.2f * l * l * l);
     }
 
-    public static int GetShardNeedToUpgradeAscend(int boostStat )
+    public static int GetShardNeedToUpgradeAscend(int boostStat)
     {
         int boost = (boostStat - 1) / 3;
         return 60 + 60 * boost;
     }
-    public static int GetCoinNeedToAscendCharacter(int boostStat)
+
+    // Coin cost for Character Ascension by Tier (1 to 5)
+    public static int GetCoinNeedToAscendCharacter(int tier)
     {
-        return 8000 + 4000 * (boostStat - 1) * (boostStat - 1);
+        return tier switch
+        {
+            1 => 5000,    // Lv 20 -> 40
+            2 => 20000,   // Lv 40 -> 60
+            3 => 60000,   // Lv 60 -> 80
+            4 => 150000,  // Lv 80 -> 90
+            5 => 350000,  // Lv 90 -> 100
+            _ => 10000 * tier * tier
+        };
     }
 
+    // Cumulative Essence required to reach weapon 'level' from level 1
+    // Total for Lv 1 -> 100 = ~23,000 Essence (~80-120 dungeon runs)
     public static int GetEssenceNeedToUpgradeWeapon(int level)
     {
-        return 4200 + 320 * (level - 1) * (level - 1);
+        if (level <= 1) return 0;
+        int l = level - 1;
+        return (int)(15 * l + 2.2f * l * l);
     }
 
     public static int GetMaxLevelWithEssence(int availableEssence)
     {
-        if (availableEssence < 4200)
-        {
-            return 0;
-        }
-
-        float calculatedLevel = 1f + Mathf.Sqrt((availableEssence - 4200f) / 320f);
-
-        return Mathf.FloorToInt(calculatedLevel);
+        if (availableEssence <= 0) return 1;
+        // Solve: 2.2 * l^2 + 15 * l - availableEssence = 0
+        float delta = 225f + 8.8f * availableEssence;
+        float l = (-15f + Mathf.Sqrt(delta)) / 4.4f;
+        int level = 1 + Mathf.FloorToInt(l);
+        return Mathf.Clamp(level, 1, Definition.MAX_WEAPON_LEVEL);
     }
 
+    // Cumulative Coin required to reach weapon 'level' from level 1
+    // Total for Lv 1 -> 100 = ~642,000 Coin
     public static int GetCoinNeedToUpgradeWeapon(int level)
     {
-        return 5000 + 480 * (level - 1) * (level - 1);
+        if (level <= 1) return 0;
+        int l = level - 1;
+        return (int)(50 * l + 6.5f * l * l);
     }
 
-    public static int GetCoinNeedToAsscendWeapon(int level)
+    // Coin cost for Weapon Ascension by Tier (1 to 5)
+    public static int GetCoinNeedToAsscendWeapon(int tier)
     {
-        return 12000 + 6000 * (level - 1) * (level - 1);
+        return tier switch
+        {
+            1 => 4000,
+            2 => 15000,
+            3 => 45000,
+            4 => 100000,
+            5 => 250000,
+            _ => 8000 * tier * tier
+        };
     }
 
 
@@ -244,39 +327,37 @@ public static class Utility
     // ═══════════════════════════════════════
 
     /// <summary>
-    /// Tính coin cần để nâng cấp armor lên level chỉ định.
-    /// Cost(level) = 2000 + 800 × (level - 1)²
+    /// Tính coin tích lũy cần để nâng cấp armor lên level chỉ định (1 -> 15).
+    /// Lv 1 -> 15 = ~92,400 Coin / món (~554,400 Coin cho bộ 6 món).
     /// </summary>
     public static int GetCoinNeedToUpgradeArmor(int level)
     {
-        return 2000 + 800 * (level - 1) * (level - 1);
+        if (level <= 1) return 0;
+        int l = level - 1;
+        return 1000 * l + 400 * l * l;
     }
 
     /// <summary>
-    /// Tính ArmorPrimorite cần để nâng cấp armor lên level chỉ định.
-    /// Cost(level) = 500 + 200 × (level - 1)²
+    /// Tính ArmorPrimorite tích lũy cần để nâng cấp armor lên level chỉ định (1 -> 15).
+    /// Common: ~770, Epic: ~1,925, Legendary: ~3,080 Primorite / món.
     /// </summary>
     public static int GetPrimoriteNeedToUpgradeArmor(Rare rare, int level)
     {
-        // Level 1 là mặc định khi nhận đồ, không tốn phí nâng cấp
         if (level <= 1) return 0;
+        int l = level - 1;
+        float basePrimorite = 20f * l + 2.5f * l * l;
 
-        // 1. Hệ số nhân dựa trên độ hiếm (Đồ càng hiếm nâng càng đắt)
         float rareMultiplier = rare switch
         {
             Rare.Common => 1.0f,
-            Rare.Uncommon => 1.5f,
-            Rare.Rare => 2.0f,
-            Rare.Epic => 3.0f,
-            Rare.Legendary => 5.0f,
+            Rare.Uncommon => 1.3f,
+            Rare.Rare => 1.8f,
+            Rare.Epic => 2.5f,
+            Rare.Legendary => 4.0f,
             _ => 1.0f
         };
 
-        // 2. Công thức gốc: Level càng cao tốn càng nhiều (Mốc đầu 500, mỗi cấp tăng 200)
-        int baseCost = 500 + 200 * (level - 1) * (level - 1);
-
-        // 3. Nhân hệ số và làm tròn
-        return Mathf.RoundToInt(baseCost * rareMultiplier);
+        return Mathf.RoundToInt(basePrimorite * rareMultiplier);
     }
 
     /// <summary>
@@ -307,29 +388,46 @@ public static class Utility
 
     /// <summary>
     /// Tính ArmorPrimorite nhận được khi quy đổi (salvage) armor.
-    /// BaseValue × RarityMultiplier + 50 × Level
+    /// Hoàn trả: Giá trị phôi gốc + 80% số Primorite đã đầu tư nâng cấp.
     /// </summary>
     public static int GetArmorPrimoriteFromSalvage(Rare rare, int level)
     {
-        // 1. Giá trị gốc của phôi (Tùy theo độ hiếm)
         int baseValue = rare switch
         {
-            Rare.Common => 100,
-            Rare.Uncommon => 200,
-            Rare.Rare => 400,
-            Rare.Epic => 800,
-            Rare.Legendary => 1600,
-            _ => 100
+            Rare.Common => 10,
+            Rare.Uncommon => 25,
+            Rare.Rare => 60,
+            Rare.Epic => 150,
+            Rare.Legendary => 400,
+            _ => 10
         };
 
-        // Nếu đồ chưa nâng cấp gì (Level 1), chỉ trả lại giá trị gốc
         if (level <= 1) return baseValue;
 
-        // 2. Tính tổng tài nguyên đã tiêu tốn từ Level 1 đến Level hiện tại
         int totalInvested = GetPrimoriteNeedToUpgradeArmor(rare, level);
-
-        // 3. Hoàn trả 80% số nguyên liệu đã nâng cấp + Giá trị gốc
         return baseValue + Mathf.RoundToInt(totalInvested * 0.8f);
+    }
+
+    /// <summary>
+    /// Tính RelicEssence nhận được khi quy đổi (salvage/recall) vũ khí.
+    /// Hoàn trả: Giá trị phôi gốc (Lv 1) theo Rare + 70% số RelicEssence đã đầu tư nâng cấp.
+    /// </summary>
+    public static int GetWeaponSalvageEssence(Rare rare, int level)
+    {
+        int baseValue = rare switch
+        {
+            Rare.Common => 10,
+            Rare.Uncommon => 25,
+            Rare.Rare => 60,
+            Rare.Epic => 150,
+            Rare.Legendary => 400,
+            _ => 10
+        };
+
+        if (level <= 1) return baseValue;
+
+        int totalInvested = GetEssenceNeedToUpgradeWeapon(level);
+        return baseValue + Mathf.RoundToInt(totalInvested * 0.7f);
     }
 
     /// <summary>

@@ -190,7 +190,7 @@ public abstract class ShopPanelBase : MonoBehaviour
     {
         Debug.Log($"Buy Product: {config.ProductID} for {config.Price * quantity} {config.CurrencyType} - Amount: {quantity}");
         
-        // 1. Trừ tiền (Jade/Coin)
+        // 1. Trừ tiền (Jade/Coin/RelicEssence/...)
         if (System.Enum.TryParse<CurrencyType>(config.CurrencyType, true, out var currencyType))
         {
             if (currencyManager != null)
@@ -200,7 +200,10 @@ public abstract class ShopPanelBase : MonoBehaviour
                 if (!success)
                 {
                     Debug.LogWarning($"[Shop] Not enough {config.CurrencyType} to buy {config.ProductID}");
-                    // Optionally show a "Not enough currency" popup here
+                    if (uiManager != null)
+                    {
+                        uiManager.ShowNotEnoughResourceNotification(currencyType);
+                    }
                     return;
                 }
             }
@@ -208,6 +211,10 @@ public abstract class ShopPanelBase : MonoBehaviour
         else
         {
             Debug.LogError($"[Shop] Unknown currency type: {config.CurrencyType}");
+            if (uiManager != null)
+            {
+                uiManager.ShowNotEnoughResourceNotification(config.CurrencyType);
+            }
             return; // Can't buy if currency type is invalid
         }
 

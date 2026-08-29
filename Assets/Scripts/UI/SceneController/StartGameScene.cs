@@ -2,6 +2,7 @@ using UIFramework;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+
 public class StartGameScene : WindowController
 {
     [SerializeField] private Button btnPlayGame;
@@ -22,6 +23,5 @@ public class StartGameScene : WindowController
 
             uiManager.OpenWindowScene(ScreenIds.GamePlayScene); 
         });
-
     }
 }

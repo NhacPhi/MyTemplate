@@ -46,13 +46,15 @@ public class ArmorCardInforUI : MonoBehaviour
 
     public void UpdateArmorItemCardInfor(string id)
     {
+        if (string.IsNullOrEmpty(id)) return;
+
         currentArmorPart = id;
 
         ArmorSaveData item = inventory.GetArmor(id);
+        if (item == null) return;
 
         var itemConfig = gameDataBase.GetItemConfig(item.TemplateID);
-
-        if(itemConfig != null)
+        if (itemConfig == null) return;
         {
             txtNameItem.text = Utility.GetArmorPartName(itemConfig.Armor.Part) + " " + Utility.GetArmorRaretName(item.Rare)
                 + "-" + LocalizationManager.Instance.GetLocalizedValue(itemConfig.Name);

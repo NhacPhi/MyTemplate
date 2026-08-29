@@ -7,16 +7,16 @@ using UnityEngine;
 public class InventorySaveData 
 {
     [JsonProperty("currencies")]
-    public Dictionary<CurrencyType, int> Currencies;
+    public Dictionary<CurrencyType, int> Currencies = new Dictionary<CurrencyType, int>();
 
     [JsonProperty("items")]
-    public List<ItemSaveData> Items;
+    public List<ItemSaveData> Items = new List<ItemSaveData>();
 
     [JsonProperty("weapons")]
-    public List<WeaponSaveData> Weapons;
+    public List<WeaponSaveData> Weapons = new List<WeaponSaveData>();
 
     [JsonProperty("armors")]
-    public List<ArmorSaveData> Armors;
+    public List<ArmorSaveData> Armors = new List<ArmorSaveData>();
 
     public WeaponSaveData GetWeapon(string id)
     {

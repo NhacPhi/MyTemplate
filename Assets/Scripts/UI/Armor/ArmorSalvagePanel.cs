@@ -23,6 +23,7 @@ public class ArmorSalvagePanel : MonoBehaviour
     [Inject] private GameDataBase gameDataBase;
     [Inject] private InventoryManager inventoryManager;
     [Inject] private ForgeManager forgeManager;
+    [Inject] private UIManager uiManager;
 
     private List<ArmorSalvageItemUI> itemUIs = new List<ArmorSalvageItemUI>();
     private HashSet<string> selectedUUIDs = new HashSet<string>();
@@ -136,12 +137,27 @@ public class ArmorSalvagePanel : MonoBehaviour
     {
         if (selectedUUIDs.Count == 0) return;
 
+        int totalPrimorite = 0;
+        foreach (var uuid in selectedUUIDs)
+        {
+            totalPrimorite += forgeManager.GetSalvagePrimoriteValue(uuid);
+        }
+
         var uuidsToSalvage = new List<string>(selectedUUIDs);
         int count = forgeManager.SalvageArmors(uuidsToSalvage);
 
         if (count > 0)
         {
             RefreshList();
+
+            if (totalPrimorite > 0 && uiManager != null)
+            {
+                var rewards = new List<RewardItemData>
+                {
+                    new RewardItemData("ArmorPrimorite", totalPrimorite)
+                };
+                uiManager.ShowReceiveItemPopup(new ReceiveItemProperties(rewards));
+            }
         }
     }
 }

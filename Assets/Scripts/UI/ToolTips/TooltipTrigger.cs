@@ -2,10 +2,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
+public enum TooltipTriggerMode
+{
+    Battle,             // Dùng trong Battle: Click để chọn skill, Long press / Hover delay để xem tooltip
+    CharacterScreen     // Dùng trong Character Screen: Hover hiện ngay lập tức, PointerExit ẩn ngay lập tức, Click/Tap để toggle
+}
+
 /// <summary>
 /// Component đa nền tảng xử lý hover/long-press để hiển thị tooltip.
 /// - Windows: Hover (PointerEnter/PointerExit)
-/// - Android: Long Press (PointerDown giữ > threshold)
+/// - Android: Long Press / Tap Toggle
 /// Gắn lên bất kỳ UI element nào cần tooltip.
 /// </summary>
 public class TooltipTrigger : MonoBehaviour,
@@ -16,10 +22,11 @@ public class TooltipTrigger : MonoBehaviour,
     IPointerClickHandler
 {
     [Header("Settings")]
+    [SerializeField] private TooltipTriggerMode _triggerMode = TooltipTriggerMode.Battle;
     [SerializeField] private float _longPressThreshold = Definition.TOOLTIP_LONG_PRESS_THRESHOLD;
     [SerializeField] private float _hoverDelay = Definition.TOOLTIP_HOVER_DELAY;
-    [Tooltip("Nếu true: Chỉ cần click/tap để hiện tooltip (dùng cho CharacterScene). Nếu false: Cần giữ long-press (dùng cho BattleUIScene).")]
-    [SerializeField] private bool _triggerOnClickOnMobile = false;
+
+    public TooltipTriggerMode Mode => _triggerMode;
 
     /// <summary>
     /// Callback khi tooltip nên hiển thị.
@@ -38,32 +45,43 @@ public class TooltipTrigger : MonoBehaviour,
     private bool _isShowing;
 
     /// <summary>
-    /// Bật/tắt chế độ click/tap để hiện tooltip (dùng cho CharacterScene).
+    /// Thiết lập chế độ trigger cho Tooltip.
+    /// </summary>
+    public void SetTriggerMode(TooltipTriggerMode mode)
+    {
+        _triggerMode = mode;
+    }
+
+    /// <summary>
+    /// Tương thích ngược: Bật/tắt chế độ CharacterScreen.
     /// </summary>
     public void SetTriggerOnClickOnMobile(bool enable)
     {
-        _triggerOnClickOnMobile = enable;
+        _triggerMode = enable ? TooltipTriggerMode.CharacterScreen : TooltipTriggerMode.Battle;
     }
 
     private void Update()
     {
-        // 1. Mobile Long Press (Áp dụng khi KHÔNG ở chế độ click-on-mobile, tức là trong Battle)
-        if (_isPressed && !_isShowing && !_triggerOnClickOnMobile)
+        if (_triggerMode == TooltipTriggerMode.Battle)
         {
-            _pressTimer += Time.unscaledDeltaTime;
-            if (_pressTimer >= _longPressThreshold)
+            // 1. Battle Mobile Long Press
+            if (_isPressed && !_isShowing)
             {
-                ShowTooltip();
+                _pressTimer += Time.unscaledDeltaTime;
+                if (_pressTimer >= _longPressThreshold)
+                {
+                    ShowTooltip();
+                }
             }
-        }
 
-        // 2. PC / Windows Hover (Chỉ hiển thị sau khi hover đủ 0.5s)
-        if (_isHovering && !_isShowing)
-        {
-            _hoverTimer += Time.unscaledDeltaTime;
-            if (_hoverTimer >= _hoverDelay)
+            // 2. Battle PC Hover Delay
+            if (_isHovering && !_isShowing)
             {
-                ShowTooltip();
+                _hoverTimer += Time.unscaledDeltaTime;
+                if (_hoverTimer >= _hoverDelay)
+                {
+                    ShowTooltip();
+                }
             }
         }
     }
@@ -76,6 +94,12 @@ public class TooltipTrigger : MonoBehaviour,
     {
         _isHovering = true;
         _hoverTimer = 0f;
+
+        if (_triggerMode == TooltipTriggerMode.CharacterScreen)
+        {
+            // Trong Character Scene: Di chuột vào là hiển thị ngay lập tức không cần chờ delay
+            ShowTooltip();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -83,11 +107,8 @@ public class TooltipTrigger : MonoBehaviour,
         _isHovering = false;
         _hoverTimer = 0f;
 
-        // Nếu không phải đang mở tooltip bằng click trong CharacterScene -> di chuột ra ngoài sẽ ẩn
-        if (!_triggerOnClickOnMobile)
-        {
-            HideTooltip();
-        }
+        // Bất kể ở Battle hay Character Scene: Rê chuột ra ngoài icon là ẩn đi ngay lập tức
+        HideTooltip();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -101,8 +122,8 @@ public class TooltipTrigger : MonoBehaviour,
         _isPressed = false;
         _pressTimer = 0f;
 
-        // Nếu ở chế độ Long Press (trong Battle) và tooltip đang hiện: Nhấc tay sẽ ẩn
-        if (!_triggerOnClickOnMobile && _isShowing)
+        // Nếu ở Battle và đang giữ hiện tooltip: Nhả tay ra thì ẩn
+        if (_triggerMode == TooltipTriggerMode.Battle && _isShowing)
         {
             HideTooltip();
         }
@@ -110,9 +131,9 @@ public class TooltipTrigger : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_triggerOnClickOnMobile)
+        if (_triggerMode == TooltipTriggerMode.CharacterScreen)
         {
-            // Trong CharacterScene: Click / Tap để bật/tắt (Toggle) tooltip
+            // Trong Character Scene: Click/Tap có thể dùng để Toggle hiển thị trên thiết bị cảm ứng
             if (_isShowing)
             {
                 HideTooltip();

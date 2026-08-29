@@ -20,8 +20,8 @@ class RewardConfigBuilder(BaseBuilder):
                 reward_id = str(row['reward_id']).strip()
                 
                 rewards_list = []
-                # Quét qua 4 cột item_01/amount_01 đến item_04/amount_04
-                for i in range(1, 5):
+                # Quét qua các cột item_01/amount_01 đến item_12/amount_12
+                for i in range(1, 15):
                     item_col = f"item_{i:02d}"
                     amount_col = f"amount_{i:02d}"
                     

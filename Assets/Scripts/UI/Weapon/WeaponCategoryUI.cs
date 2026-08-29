@@ -2,40 +2,71 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class WeaponCategoryUI : GameItemUI,IPointerClickHandler
+
+public class WeaponCategoryUI : GameItemUI, IPointerClickHandler
 {
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private UpgradesUI upgrades;
     [SerializeField] private Image avatarIcon;
+    [SerializeField] private GameObject locked;
 
-    public void Init(string id, Rare rare, Sprite icon, Sprite background, Sprite avatar, int level, int upgradeNumber)
+    public bool IsUnlocked { get; private set; } = true;
+
+    private void Awake()
+    {
+        EnsureLockedObject();
+    }
+
+    private void EnsureLockedObject()
+    {
+        if (locked == null)
+        {
+            var t = transform.Find("locked");
+            if (t != null) locked = t.gameObject;
+        }
+    }
+
+    public void Init(string id, Rare rare, Sprite icon, Sprite background, Sprite avatar, int level, int upgradeNumber, bool unlocked = true)
     {
         base.Setup(id, rare, icon, background);
-        txtLevel.text = level.ToString();
-        upgrades.UpdateUI(upgradeNumber);
-        
+        IsUnlocked = unlocked;
 
-        if(avatar == null)
+        EnsureLockedObject();
+
+        if (txtLevel != null)
         {
-            avatarIcon.gameObject.SetActive(false);
+            txtLevel.gameObject.SetActive(unlocked);
+            if (unlocked) txtLevel.text = level.ToString();
+        }
+
+        if (upgrades != null)
+        {
+            upgrades.gameObject.SetActive(unlocked);
+            if (unlocked) upgrades.UpdateUI(upgradeNumber);
+        }
+
+        if (avatar == null || !unlocked)
+        {
+            if (avatarIcon != null) avatarIcon.gameObject.SetActive(false);
         }
         else
         {
-            avatarIcon.gameObject.SetActive(true);
-            avatarIcon.sprite = avatar;
+            if (avatarIcon != null)
+            {
+                avatarIcon.gameObject.SetActive(true);
+                avatarIcon.sprite = avatar;
+            }
+        }
+
+        if (locked != null)
+        {
+            locked.SetActive(!unlocked);
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //UIEvent.OnSelectInventoryItem?.Invoke(id);
         UIEvent.OnSelectWeaponCard?.Invoke(id);
         OnSwitchStatusBoder(true);
     }
-
-    //public void SelectedWeaponCardUI()
-    //{
-    //    UIEvent.OnSelectWeaponCard?.Invoke(id);
-    //    OnSwitchStatusBoder(true);
-    //}
 }

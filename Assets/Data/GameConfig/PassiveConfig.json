@@ -909,5 +909,23 @@
                 "internal_cooldown": 0
             }
         ]
+    },
+    "psv_wooden_staff": {
+        "desc_template_hash": 1387054842,
+        "static_modifiers": [
+            {
+                "stat_type": "SPEED",
+                "modify_type": "Percent",
+                "modify_by_upgrade": [
+                    5.0,
+                    7.5,
+                    10.0,
+                    12.5,
+                    15.0,
+                    20.0
+                ]
+            }
+        ],
+        "combat_events": []
     }
 }

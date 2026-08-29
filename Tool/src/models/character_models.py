@@ -52,6 +52,7 @@ class CharacterModel:
     name_hash: int
     rare: str
     type: str
+    character_class: str = "Character"
     skills: Dict[str, SkillComponent]= field(default_factory=dict) # skill config
     stats: Dict[str, int] = field(default_factory=dict) # stats config
     attributes: Dict[str, AttributeComponent] = field(default_factory=dict) # attribute config

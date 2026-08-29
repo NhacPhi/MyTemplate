@@ -3,6 +3,7 @@
         "name_hash": 2444176861,
         "rare": "UR",
         "type": "Fighter",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "SunWukong_B",
@@ -99,6 +100,7 @@
         "name_hash": 3001573445,
         "rare": "R",
         "type": "Mage",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "TangSanZang_B",
@@ -195,6 +197,7 @@
         "name_hash": 2972224548,
         "rare": "SR",
         "type": "Tanker",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "ZhuBaJie_B",
@@ -291,6 +294,7 @@
         "name_hash": 3239655590,
         "rare": "SR",
         "type": "Tanker",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "ShaWujing_B",
@@ -387,6 +391,7 @@
         "name_hash": 2884431123,
         "rare": "SR",
         "type": "Support",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "DragonKing_B",
@@ -453,15 +458,15 @@
             }
         },
         "stats": {
-            "hp": 4140,
-            "atk": 1134,
-            "def": 330,
+            "hp": 12420,
+            "atk": 1701,
+            "def": 495,
             "speed": 102,
             "def_shred": 0,
-            "crit_rate": 5,
-            "crit_dmg": 0,
-            "penetration": 0,
-            "crit_dmg_res": 10
+            "crit_rate": 60,
+            "crit_dmg": 50,
+            "penetration": 20,
+            "crit_dmg_res": 25
         },
         "attributes": {
             "shield": {
@@ -474,15 +479,16 @@
             }
         },
         "upgrades": {
-            "hp": 207,
-            "atk": 57,
-            "def": 16
+            "hp": 621,
+            "atk": 85,
+            "def": 25
         }
     },
     "ThirdPrinceNezha": {
         "name_hash": 249484924,
         "rare": "SSR",
         "type": "Assassin",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "ThirdPrinceNezha_B",
@@ -579,6 +585,7 @@
         "name_hash": 916722960,
         "rare": "R",
         "type": "ADCarry",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "LittleWhiteDragon_B",
@@ -675,6 +682,7 @@
         "name_hash": 2040095356,
         "rare": "SSR",
         "type": "Tanker",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "BullDemonKing_B",
@@ -771,6 +779,7 @@
         "name_hash": 279287384,
         "rare": "UR",
         "type": "Fighter",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "ErlangShen_B",
@@ -867,6 +876,7 @@
         "name_hash": 1698233879,
         "rare": "UR",
         "type": "Mage",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "GuanyinBodhisattva_B",
@@ -933,15 +943,15 @@
             }
         },
         "stats": {
-            "hp": 3825,
-            "atk": 3060,
-            "def": 357,
+            "hp": 11475,
+            "atk": 4590,
+            "def": 536,
             "speed": 101,
             "def_shred": 0,
-            "crit_rate": 8,
-            "crit_dmg": 11,
-            "penetration": 6,
-            "crit_dmg_res": 0
+            "crit_rate": 60,
+            "crit_dmg": 50,
+            "penetration": 20,
+            "crit_dmg_res": 25
         },
         "attributes": {
             "shield": {
@@ -954,15 +964,16 @@
             }
         },
         "upgrades": {
-            "hp": 191,
-            "atk": 153,
-            "def": 18
+            "hp": 574,
+            "atk": 230,
+            "def": 27
         }
     },
     "VanguardTiger": {
         "name_hash": 2865654881,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "VanguardTiger_B",
@@ -1059,6 +1070,7 @@
         "name_hash": 1785742370,
         "rare": "UR",
         "type": "Assassin",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "TheBoySage_B",
@@ -1155,6 +1167,7 @@
         "name_hash": 364139391,
         "rare": "SSR",
         "type": "Assassin",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "GoldHornKing_B",
@@ -1251,6 +1264,7 @@
         "name_hash": 3794146551,
         "rare": "SSR",
         "type": "Assassin",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "SilverHornKing_B",
@@ -1347,6 +1361,7 @@
         "name_hash": 3634311150,
         "rare": "UR",
         "type": "Fighter",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "YellowWindMonster_B",
@@ -1443,6 +1458,7 @@
         "name_hash": 2441987291,
         "rare": "SSR",
         "type": "Fighter",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "GoldfishDemon_B",
@@ -1539,6 +1555,7 @@
         "name_hash": 2635507213,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "HeavenlySoddier_B",
@@ -1635,6 +1652,7 @@
         "name_hash": 708051223,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "YoungBufflalo_B",
@@ -1731,6 +1749,7 @@
         "name_hash": 848672198,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "Minions_B",
@@ -1827,6 +1846,7 @@
         "name_hash": 2688236324,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "RatMonster_B",
@@ -1923,6 +1943,7 @@
         "name_hash": 2392969024,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "CrabSolider_B",
@@ -2019,6 +2040,7 @@
         "name_hash": 1053526018,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "SquidSolider_B",
@@ -2115,6 +2137,7 @@
         "name_hash": 1385735148,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "Benborba_B",
@@ -2211,6 +2234,7 @@
         "name_hash": 1782549332,
         "rare": "R",
         "type": "Fighter",
+        "character_class": "Creep",
         "skills": {
             "Base": {
                 "id": "Baborben_B",
@@ -2307,6 +2331,7 @@
         "name_hash": 77400843,
         "rare": "SSR",
         "type": "Tanker",
+        "character_class": "Character",
         "skills": {
             "Base": {
                 "id": "LiJing_B",
@@ -2403,6 +2428,7 @@
         "name_hash": 3570677524,
         "rare": "SSR",
         "type": "Tanker",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "MarshalTianpeng_B",
@@ -2499,6 +2525,7 @@
         "name_hash": 249484924,
         "rare": "SSR",
         "type": "Assassin",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "ThirdPrinceNezha_B",
@@ -2595,6 +2622,7 @@
         "name_hash": 2040095356,
         "rare": "SSR",
         "type": "Tanker",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "BullDemonKing_B",
@@ -2691,6 +2719,7 @@
         "name_hash": 279287384,
         "rare": "UR",
         "type": "Fighter",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "ErlangShen_B",
@@ -2787,6 +2816,7 @@
         "name_hash": 77400843,
         "rare": "SSR",
         "type": "Tanker",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "LiJing_B",
@@ -2883,6 +2913,7 @@
         "name_hash": 2865475329,
         "rare": "UR",
         "type": "Fighter",
+        "character_class": "Boss",
         "skills": {
             "Base": {
                 "id": "ThirdDragonPrince_B",

@@ -76,8 +76,8 @@ public class SkillCharacterUI : MonoBehaviour
             var trigger = handler.GetComponent<TooltipTrigger>();
             if (trigger != null)
             {
-                // Ở CharacterScreen: Chỉ cần click/tap để hiện tooltip
-                trigger.SetTriggerOnClickOnMobile(true);
+                // Ở CharacterScreen: Hover chuột hiện ngay lập tức, rê ra ngoài ẩn ngay lập tức
+                trigger.SetTriggerMode(TooltipTriggerMode.CharacterScreen);
             }
         }
     }

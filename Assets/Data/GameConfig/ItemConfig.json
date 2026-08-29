@@ -266,14 +266,14 @@
         }
     },
     "Wooden_Staff": {
-        "name_hash": 2492557400,
-        "description_hash": 2540878339,
-        "use_hash": 1957201871,
+        "name_hash": 2738150560,
+        "description_hash": 3906415238,
+        "use_hash": 1387054842,
         "item_type": "Weapon",
-        "rarity": "Epic",
+        "rarity": "Common",
         "weapon_data": {
             "weapon_type": "Normal",
-            "passive_id": "",
+            "passive_id": "psv_wooden_staff",
             "stats": {
                 "hp": 300,
                 "atk": 40
@@ -479,7 +479,18 @@
         "description_hash": 712344324,
         "use_hash": 3568455205,
         "item_type": "Food",
-        "rarity": "Common"
+        "rarity": "Common",
+        "food_data": {
+            "effects": [
+                {
+                    "effect_type": "RestoreEnergy",
+                    "value": 10.0,
+                    "stat_type": null,
+                    "mod_type": null,
+                    "duration_minutes": null
+                }
+            ]
+        }
     },
     "Lotus": {
         "name_hash": 3496503863,
@@ -513,6 +524,13 @@
         "name_hash": 100649268,
         "description_hash": 2868836483,
         "use_hash": 3444652369,
+        "item_type": "Currency",
+        "rarity": "Legendary"
+    },
+    "Ticket": {
+        "name_hash": 731831140,
+        "description_hash": 2688885261,
+        "use_hash": 870989956,
         "item_type": "Currency",
         "rarity": "Legendary"
     },
