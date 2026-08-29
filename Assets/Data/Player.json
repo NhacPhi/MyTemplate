@@ -9,10 +9,10 @@
   "inventory": {
     "currencies": {
       "Energy": 120,
-      "Jade": 500,
+      "Jade": 1570,
       "Coin": 150000,
       "RelicEssence": 3500,
-      "ArmorPrimorite": 2500,
+      "ArmorPrimorite": 4500,
       "Ticket": 10
     },
     "items": [
@@ -97,18 +97,178 @@
     ],
     "armors": [
       {
-        "instance_id": "20000000-0000-0000-0000-000000000007",
-        "template_id": "Armor02_Helmet",
+        "instance_id": "0a6a2f19-6dde-4728-be08-3cdb7162b941",
+        "template_id": "Armor01_Ring",
         "level": 1,
         "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "CRIT_RATE",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "bb000430-fc37-404f-a618-1c0343578958",
+        "template_id": "Armor01_Boots",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "PENETRATION",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
           {
             "type": "HP",
             "level": 1,
             "modifier_type": "Flat"
           }
         ],
+        "main_stat_type": "SPEED",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "7b87d9fb-f861-47da-aaa7-a6ef3549fd7b",
+        "template_id": "Armor01_Gloves",
+        "level": 1,
+        "substats": [
+          {
+            "type": "CRIT_RATE",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "c12a4e2d-f7de-45bf-bfa1-b4d11ccb870a",
+        "template_id": "Armor01_Chestplate",
+        "level": 1,
+        "substats": [
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "9e018e5d-ecab-480c-b5bd-15892c73d2ce",
+        "template_id": "Armor01_Helmet",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF_SHRED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "PENETRATION",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Percent"
+          }
+        ],
         "main_stat_type": "HP",
-        "equip": ""
+        "equip": "SunWukong"
+      },
+      {
+        "instance_id": "d91521e4-83c1-47af-b787-dcba8a23826c",
+        "template_id": "Armor01_Belt",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "CRIT_DMG_RES",
+            "level": 1,
+            "modifier_type": "Percent"
+          },
+          {
+            "type": "DEF_SHRED",
+            "level": 1,
+            "modifier_type": "Flat"
+          },
+          {
+            "type": "SPEED",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "PENETRATION",
+        "equip": "SunWukong"
       },
       {
         "instance_id": "20000000-0000-0000-0000-000000000008",
@@ -181,8 +341,8 @@
         "equip": ""
       },
       {
-        "instance_id": "20000000-0000-0000-0000-000000000001",
-        "template_id": "Armor05_Helmet",
+        "instance_id": "20000000-0000-0000-0000-000000000007",
+        "template_id": "Armor02_Helmet",
         "level": 1,
         "substats": [
           {
@@ -192,7 +352,7 @@
           }
         ],
         "main_stat_type": "HP",
-        "equip": "SunWukong"
+        "equip": ""
       },
       {
         "instance_id": "20000000-0000-0000-0000-000000000002",
@@ -206,21 +366,7 @@
           }
         ],
         "main_stat_type": "DEF",
-        "equip": "SunWukong"
-      },
-      {
-        "instance_id": "20000000-0000-0000-0000-000000000003",
-        "template_id": "Armor05_Gloves",
-        "level": 1,
-        "substats": [
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": "SunWukong"
+        "equip": ""
       },
       {
         "instance_id": "20000000-0000-0000-0000-000000000004",
@@ -234,7 +380,7 @@
           }
         ],
         "main_stat_type": "HP",
-        "equip": "SunWukong"
+        "equip": ""
       },
       {
         "instance_id": "20000000-0000-0000-0000-000000000005",
@@ -248,7 +394,7 @@
           }
         ],
         "main_stat_type": "DEF",
-        "equip": "SunWukong"
+        "equip": ""
       },
       {
         "instance_id": "20000000-0000-0000-0000-000000000006",
@@ -262,7 +408,35 @@
           }
         ],
         "main_stat_type": "ATK",
-        "equip": "SunWukong"
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000001",
+        "template_id": "Armor05_Helmet",
+        "level": 1,
+        "substats": [
+          {
+            "type": "HP",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "HP",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000003",
+        "template_id": "Armor05_Gloves",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": ""
       }
     ]
   },
@@ -277,28 +451,28 @@
         "weapon": "10000000-0000-0000-0000-000000000001",
         "armors": [
           {
-            "id": "20000000-0000-0000-0000-000000000001",
-            "type": "Helmet"
+            "id": "0a6a2f19-6dde-4728-be08-3cdb7162b941",
+            "type": "Ring"
           },
           {
-            "id": "20000000-0000-0000-0000-000000000002",
-            "type": "Chestplate"
-          },
-          {
-            "id": "20000000-0000-0000-0000-000000000003",
-            "type": "Gloves"
-          },
-          {
-            "id": "20000000-0000-0000-0000-000000000004",
+            "id": "bb000430-fc37-404f-a618-1c0343578958",
             "type": "Boots"
           },
           {
-            "id": "20000000-0000-0000-0000-000000000005",
-            "type": "Belt"
+            "id": "7b87d9fb-f861-47da-aaa7-a6ef3549fd7b",
+            "type": "Gloves"
           },
           {
-            "id": "20000000-0000-0000-0000-000000000006",
-            "type": "Ring"
+            "id": "c12a4e2d-f7de-45bf-bfa1-b4d11ccb870a",
+            "type": "Chestplate"
+          },
+          {
+            "id": "9e018e5d-ecab-480c-b5bd-15892c73d2ce",
+            "type": "Helmet"
+          },
+          {
+            "id": "d91521e4-83c1-47af-b787-dcba8a23826c",
+            "type": "Belt"
           }
         ]
       },
@@ -351,7 +525,18 @@
   },
   "shop": {
     "last_reset_time": 0,
-    "purchase_history": {}
+    "purchase_history": {
+      "SHOP_ARMOR_Armor01_A": {
+        "product_id": "SHOP_ARMOR_Armor01_A",
+        "purchase_count": 1,
+        "last_purchase_time": 639236409441121137
+      },
+      "SHOP_ARMOR_Armor01_B": {
+        "product_id": "SHOP_ARMOR_Armor01_B",
+        "purchase_count": 1,
+        "last_purchase_time": 639236409473362333
+      }
+    }
   },
   "gacha": {
     "banner_data_map": {
@@ -394,7 +579,7 @@
     "last_reset_time_ticks": 639236592000000000,
     "active_daily_quests": {
       "dp_gacha_weapon": 0,
-      "dq_shopping": 0,
+      "dq_shopping": 1,
       "dq_kill_slime": 0
     },
     "completed_daily_quests": [],
@@ -402,7 +587,9 @@
   },
   "seven_day_login": {
     "selected_day7_character_id": "",
-    "claimed_days": [],
+    "claimed_days": [
+      1
+    ],
     "last_login_date": "2026-08-30",
     "current_login_day": 1
   }

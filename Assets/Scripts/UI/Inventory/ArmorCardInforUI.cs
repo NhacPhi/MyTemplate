@@ -69,10 +69,21 @@ public class ArmorCardInforUI : MonoBehaviour
             ModifyType modType = mainStat != null ? mainStat.ModifierType : ModifyType.Flat;
             float baseMainValue = Utility.GetAppropriateArmorMainBaseValue(actualMainType, modType, mainStat != null ? mainStat.Value : 0f);
 
-            iconMainStat.sprite = gameDataBase.GetStatIcon(actualMainType);
-            txtStatType.text = Utility.GetContextByStatType(actualMainType);
+            var statIcon = gameDataBase.GetStatIcon(actualMainType);
+            if (iconMainStat != null)
+            {
+                iconMainStat.sprite = statIcon;
+                iconMainStat.gameObject.SetActive(statIcon != null);
+            }
+            if (txtStatType != null)
+            {
+                txtStatType.text = Utility.GetContextByStatType(actualMainType);
+            }
             float calculatedMainVal = Utility.GetArmorMainStatByLevel(baseMainValue, item.Level, item.Rare);
-            txtStatValue.text = Utility.GetConvertStatValueToString(calculatedMainVal, modType, actualMainType);
+            if (txtStatValue != null)
+            {
+                txtStatValue.text = Utility.GetConvertStatValueToString(calculatedMainVal, modType, actualMainType);
+            }
 
             armor.Init(item.UUID, item.Rare, itemConfig.Icon, gameDataBase.GetBGItemByRare(item.Rare), item.Level);
             armor.CanClick = false;
@@ -85,11 +96,8 @@ public class ArmorCardInforUI : MonoBehaviour
 
             if (item.Substats != null && item.Substats.Count > 0)
             {
-                int slotIdx = 0;
                 foreach (var obj in item.Substats)
                 {
-                    if (slotIdx >= armorStats.Count) break;
-
                     if (poolConfig != null && poolConfig.Pools != null)
                     {
                         var poolComp = poolConfig.Pools.Find(p => p.Type == obj.Type && p.ModifierType == obj.ModifierType)
@@ -101,14 +109,7 @@ public class ArmorCardInforUI : MonoBehaviour
                             obj.SetCalculatedValue(calculatedVal);
                         }
                     }
-
-                    var slot = armorStats[slotIdx];
-                    if (slot != null)
-                    {
-                        slot.gameObject.SetActive(true);
-                        slot.UpdateStat(obj.Type, obj.Value, obj.Level, obj.ModifierType, gameDataBase);
-                    }
-                    slotIdx++;
+                    UpdateArmorStatsUI(obj);
                 }
             }
 

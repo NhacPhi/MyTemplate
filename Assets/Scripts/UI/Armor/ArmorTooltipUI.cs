@@ -152,11 +152,8 @@ public class ArmorTooltipUI : MonoBehaviour
 
         if (armorSaveData.Substats != null && armorSaveData.Substats.Count > 0)
         {
-            int slotIdx = 0;
             foreach (var obj in armorSaveData.Substats)
             {
-                if (slotIdx >= armorStats.Count) break;
-
                 if (poolConfig != null && poolConfig.Pools != null)
                 {
                     var poolComp = poolConfig.Pools.Find(p => p.Type == obj.Type && p.ModifierType == obj.ModifierType)
@@ -168,14 +165,7 @@ public class ArmorTooltipUI : MonoBehaviour
                         obj.SetCalculatedValue(calculatedVal);
                     }
                 }
-
-                var slot = armorStats[slotIdx];
-                if (slot != null)
-                {
-                    slot.gameObject.SetActive(true);
-                    slot.UpdateStat(obj.Type, obj.Value, obj.Level, obj.ModifierType, gameDataBase);
-                }
-                slotIdx++;
+                UpdateArmorSubstatsUI(obj);
             }
         }
 
