@@ -341,7 +341,12 @@ public class ArmorUpgradeCard : MonoBehaviour
                 : mainStat.Type;
 
             txtMainStatName.text = Utility.GetContextByStatType(actualMainType);
-            iconMainStat.sprite = gameDataBase.GetStatIcon(actualMainType);
+            var statIcon = gameDataBase.GetStatIcon(actualMainType);
+            if (iconMainStat != null)
+            {
+                iconMainStat.sprite = statIcon;
+                iconMainStat.gameObject.SetActive(statIcon != null);
+            }
 
             float baseMainValue = Utility.GetAppropriateArmorMainBaseValue(actualMainType, mainStat.ModifierType, mainStat.Value);
 

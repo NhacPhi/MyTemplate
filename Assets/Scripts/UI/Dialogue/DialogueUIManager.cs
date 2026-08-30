@@ -20,20 +20,8 @@ public class DialogueUIManager : MonoBehaviour
     private void UpdateSkipButtonState()
     {
         if (btnSkip == null) return;
-
-        QuestManager qMgr = null;
-        if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
-        {
-            try
-            {
-                qMgr = GameplayScope.Instance.Container.Resolve<QuestManager>();
-            }
-            catch { }
-        }
-
-        bool isMainQuest = qMgr != null && qMgr.IsMainQuestActive;
-        btnSkip.gameObject.SetActive(!isMainQuest);
-        btnSkip.interactable = !isMainQuest;
+        btnSkip.gameObject.SetActive(true);
+        btnSkip.interactable = true;
     }
 
     private void Awake()
@@ -93,6 +81,8 @@ public class DialogueUIManager : MonoBehaviour
 
     private void EnsureDialogueWindowOpen()
     {
+        UIEvent.OnToggleGamePlayScene?.Invoke(false);
+
         if (uiManager == null && GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
         {
             try { uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
@@ -115,6 +105,8 @@ public class DialogueUIManager : MonoBehaviour
         {
             uiManager.CloseWindowScene(ScreenIds.DialogueScene);
         }
+
+        UIEvent.OnToggleGamePlayScene?.Invoke(true);
     }
 
     public void SetDialogue(string str, ActorConfig actor)

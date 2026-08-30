@@ -27,6 +27,7 @@ public class LightStreakTeleporter : MonoBehaviour
 
     // Trạng thái runtime
     private Protagonist _protagonist;
+    private Vector3 _originalPlayerPosition;
     private bool _isPlayerInRange = false;
     private bool _isAtDestination = false;
     private bool _isProcessing = false;
@@ -34,6 +35,28 @@ public class LightStreakTeleporter : MonoBehaviour
     private void Awake()
     {
         InitMaterial();
+    }
+
+    private void OnEnable()
+    {
+        GameEvent.OnPlayerTransform += HandlePlayerTransform;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.OnPlayerTransform -= HandlePlayerTransform;
+    }
+
+    private void HandlePlayerTransform()
+    {
+        if (_isAtDestination && !_isProcessing)
+        {
+            if (_protagonist == null)
+            {
+                _protagonist = FindObjectOfType<Protagonist>();
+            }
+            StartCoroutine(RoutineDescend());
+        }
     }
 
     public void ExecuteTeleport()
@@ -110,11 +133,12 @@ public class LightStreakTeleporter : MonoBehaviour
 
         float duration = CalculateEffectDuration();
 
-        // 1. NGAY KHI ẤN: Ẩn Protagonist & Tắt di chuyển lập tức
+        // 1. NGAY KHI ẤN: Lưu vị trí cũ chính xác, Ẩn Protagonist & Tắt di chuyển lập tức
         if (_protagonist != null)
         {
+            _originalPlayerPosition = _protagonist.transform.position;
             SetProtagonistVisibility(_protagonist, false);
-            Debug.Log("<color=yellow>[LightStreakTeleporter] 1. Ấn phím -> Ẩn Protagonist & Tắt di chuyển ngay lập tức.</color>");
+            Debug.Log("<color=yellow>[LightStreakTeleporter] 1. Ấn phím -> Lưu vị trí cũ & Ẩn Protagonist & Tắt di chuyển ngay lập tức.</color>");
         }
 
         // 2. Kích hoạt hiệu ứng dải sáng bay từ DƯỚI lên TRÊN (_Reverse = 0)
@@ -168,11 +192,15 @@ public class LightStreakTeleporter : MonoBehaviour
         // 3. Chờ hiệu ứng dải sáng bay xuống xong
         yield return new WaitForSeconds(duration + _extraDelay);
 
-        // 4. KHI BAY XONG: Hiện lại Protagonist & Mở lại di chuyển
+        // 4. KHI BAY XONG: Trả lại đúng vị trí cũ của Protagonist & Hiện lại & Mở lại di chuyển
         if (_protagonist != null)
         {
+            if (_originalPlayerPosition != Vector3.zero)
+            {
+                _protagonist.transform.position = _originalPlayerPosition;
+            }
             SetProtagonistVisibility(_protagonist, true);
-            Debug.Log("<color=green>[LightStreakTeleporter] 3. Bay xong -> Hiển thị lại Protagonist & Mở lại di chuyển!</color>");
+            Debug.Log("<color=green>[LightStreakTeleporter] 3. Bay xong -> Trả lại đúng vị trí cũ của Protagonist & Mở lại di chuyển!</color>");
         }
 
         _isAtDestination = false;

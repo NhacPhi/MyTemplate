@@ -39,6 +39,11 @@ public abstract class ShopPanelBase : MonoBehaviour
     {
         gameObject.SetActive(true);
         
+        if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
+        {
+            saveSystem.Player.Shop.CheckAndResetShopLimits(gameDataBase);
+        }
+
         // Reset sub tab về vị trí đầu tiên mỗi khi panel được show ra
         if (subCategoryUIConfigs.Count > 0 && subCategoryUIConfigs[0].toggle != null)
         {
@@ -130,7 +135,7 @@ public abstract class ShopPanelBase : MonoBehaviour
         {
             if (saveSystem.Player.Shop != null)
             {
-                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID).PurchaseCount;
+                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID, gameDataBase).PurchaseCount;
             }
             
             if (saveSystem.Player.Inventory != null)

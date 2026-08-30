@@ -9,17 +9,17 @@
   "inventory": {
     "currencies": {
       "Energy": 120,
-      "Jade": 1570,
-      "Coin": 150000,
-      "RelicEssence": 3500,
-      "ArmorPrimorite": 4500,
-      "Ticket": 10
+      "Jade": 120,
+      "Coin": 247671,
+      "RelicEssence": 4000,
+      "ArmorPrimorite": 4900,
+      "Ticket": 20
     },
     "items": [
       {
         "id": "rare_exp",
         "type": "Exp",
-        "quantity": 10
+        "quantity": 14
       },
       {
         "id": "Lamian_Noodies",
@@ -29,7 +29,7 @@
       {
         "id": "fine_exp",
         "type": "Exp",
-        "quantity": 30
+        "quantity": 55
       },
       {
         "id": "common_exp",
@@ -70,6 +70,16 @@
         "id": "Slime",
         "type": "Material",
         "quantity": 10
+      },
+      {
+        "id": "LittleWhiteDragon",
+        "type": "Shard",
+        "quantity": 20
+      },
+      {
+        "id": "supreme_exp",
+        "type": "Exp",
+        "quantity": 3
       }
     ],
     "weapons": [
@@ -444,8 +454,8 @@
     "characters": [
       {
         "id": "SunWukong",
-        "level": 1,
-        "exp": 0,
+        "level": 3,
+        "exp": 112,
         "ascension_tier": 0,
         "star_up": 0,
         "weapon": "10000000-0000-0000-0000-000000000001",
@@ -524,28 +534,17 @@
     "active_global_buffs": []
   },
   "shop": {
-    "last_reset_time": 0,
-    "purchase_history": {
-      "SHOP_ARMOR_Armor01_A": {
-        "product_id": "SHOP_ARMOR_Armor01_A",
-        "purchase_count": 1,
-        "last_purchase_time": 639236409441121137
-      },
-      "SHOP_ARMOR_Armor01_B": {
-        "product_id": "SHOP_ARMOR_Armor01_B",
-        "purchase_count": 1,
-        "last_purchase_time": 639236409473362333
-      }
-    }
+    "last_reset_time": 639263245428596349,
+    "purchase_history": {}
   },
   "gacha": {
     "banner_data_map": {
       "banner_char_01": {
         "banner_id": "banner_char_01",
-        "pity_count": 0,
+        "pity_count": 1,
         "selected_target_id": "",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 0
+        "total_summon_count": 1
       },
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
@@ -564,7 +563,7 @@
     }
   },
   "world_state": {
-    "last_scene_name": "Tutorial",
+    "last_scene_name": "Home",
     "destroyed_resources": {}
   },
   "quest": {
@@ -576,11 +575,11 @@
     "ActiveStepProgress": 0
   },
   "daily_quest": {
-    "last_reset_time_ticks": 639236592000000000,
+    "last_reset_time_ticks": 639263376000000000,
     "active_daily_quests": {
-      "dp_gacha_weapon": 0,
-      "dq_shopping": 1,
-      "dq_kill_slime": 0
+      "dq_shopping": 0,
+      "dq_kill_slime": 0,
+      "dq_upgrade_weapon": 0
     },
     "completed_daily_quests": [],
     "tracked_quest_id": ""
@@ -590,7 +589,7 @@
     "claimed_days": [
       1
     ],
-    "last_login_date": "2026-08-30",
-    "current_login_day": 1
+    "last_login_date": "2026-09-30",
+    "current_login_day": 3
   }
 }

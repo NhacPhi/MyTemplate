@@ -45,7 +45,7 @@ public class ShopBundlePanel : ShopPanelBase
             int currentPurchase = 0;
             if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
             {
-                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID).PurchaseCount;
+                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID, gameDataBase).PurchaseCount;
             }
 
             // Xử lý thông tin chi tiết từng Item bên trong Bundle

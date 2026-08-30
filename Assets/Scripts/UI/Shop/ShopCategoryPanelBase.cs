@@ -74,7 +74,7 @@ public class ShopCategoryPanelBase : ShopPanelBase
             int currentPurchase = 0;
             if (saveSystem != null && saveSystem.Player != null && saveSystem.Player.Shop != null)
             {
-                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID).PurchaseCount;
+                currentPurchase = saveSystem.Player.Shop.GetRecord(config.ProductID, gameDataBase).PurchaseCount;
             }
 
             productUI.Setup(config, itemRare, itemSprite, itemBg, currencySprite, OnBuyProduct);

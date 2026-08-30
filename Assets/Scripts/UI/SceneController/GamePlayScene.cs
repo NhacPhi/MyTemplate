@@ -31,6 +31,9 @@ public class GamePlayScene : WindowController
         UIEvent.OnToggleGamePlayScene += ToggleScene;
         GameEvent.OnQuestUpdated += UpdateMainQuestTracker;
         GameEvent.OnCompleteStep += OnStepCompleted;
+        GameEvent.OnStartDialogue += HandleStartDialogue;
+        GameEvent.OnOpenDialogue += HandleOpenDialogue;
+        GameEvent.OnEndDialogue += HandleEndDialogue;
     }
 
     protected override void OnDestroy()
@@ -39,6 +42,24 @@ public class GamePlayScene : WindowController
         UIEvent.OnToggleGamePlayScene -= ToggleScene;
         GameEvent.OnQuestUpdated -= UpdateMainQuestTracker;
         GameEvent.OnCompleteStep -= OnStepCompleted;
+        GameEvent.OnStartDialogue -= HandleStartDialogue;
+        GameEvent.OnOpenDialogue -= HandleOpenDialogue;
+        GameEvent.OnEndDialogue -= HandleEndDialogue;
+    }
+
+    private void HandleStartDialogue(DialogueConfig config)
+    {
+        ToggleScene(false);
+    }
+
+    private void HandleOpenDialogue(string str, ActorConfig actor)
+    {
+        ToggleScene(false);
+    }
+
+    private void HandleEndDialogue(DialogueType type)
+    {
+        ToggleScene(true);
     }
 
     private void OnStepCompleted()
