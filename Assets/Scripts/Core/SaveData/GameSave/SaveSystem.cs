@@ -31,6 +31,16 @@ public class SaveSystem
     {
         FileManager.LoadFromFile(saveSettingsFileName, out settings);
         FileManager.LoadFromFile(savePlayerFileName, out player);
+
+        if (player != null && player.SevenDayLogin != null)
+        {
+            if (string.IsNullOrEmpty(player.SevenDayLogin.LastLoginDate))
+            {
+                player.SevenDayLogin.LastLoginDate = DateTime.Now.ToString("yyyy-MM-dd");
+                player.SevenDayLogin.CurrentLoginDay = 1;
+                FileManager.WriteToFile(savePlayerFileName, player);
+            }
+        }
     }
 
     public void SaveDataToDisk(GameSaveType type)
