@@ -296,7 +296,7 @@ public static class Utility
         return (int)(50 * l + 6.5f * l * l);
     }
 
-    // Coin cost for Weapon Ascension by Tier (1 to 5)
+    // Coin cost for Weapon Ascension by Tier (1 to 6)
     public static int GetCoinNeedToAsscendWeapon(int tier)
     {
         return tier switch
@@ -306,6 +306,7 @@ public static class Utility
             3 => 45000,
             4 => 100000,
             5 => 250000,
+            6 => 500000,
             _ => 8000 * tier * tier
         };
     }

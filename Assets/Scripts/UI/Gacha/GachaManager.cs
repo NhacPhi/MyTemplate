@@ -102,11 +102,19 @@ public class GachaManager
         // Xử lý 50/50 cho thẻ 5 sao (Nếu config.Rates quy định IsGuarantee)
         if (config.Rates.TryGetValue(rarity.ToString(), out var rateConfig) && rateConfig.IsGuarantee)
         {
-            // Lọc danh sách Rate Up hoặc Target người chơi đã chọn
-            var rateUpPool = poolForRarity.Where(p => 
-                p.IsRateUp || 
-                (config.AllowSelection && p.ItemId == runtimeData.SelectedTargetId)
-            ).ToList();
+            List<GachaPoolItem> rateUpPool;
+
+            // Nếu banner cho phép chọn Target và người chơi ĐÃ chọn target cụ thể
+            if (config.AllowSelection && !string.IsNullOrEmpty(runtimeData.SelectedTargetId))
+            {
+                // Target được chọn là mục tiêu Rate Up độc quyền duy nhất (100% trúng target khi nổ Rate Up / Bảo hiểm)
+                rateUpPool = poolForRarity.Where(p => p.ItemId == runtimeData.SelectedTargetId).ToList();
+            }
+            else
+            {
+                // Banner thường hoặc người chơi chưa chọn target -> Lọc theo isRateUp mặc định
+                rateUpPool = poolForRarity.Where(p => p.IsRateUp).ToList();
+            }
 
             var standardPool = poolForRarity.Where(p => !rateUpPool.Contains(p)).ToList();
 
@@ -114,7 +122,7 @@ public class GachaManager
             {
                 if (runtimeData.IsNextSSRGuaranteed)
                 {
-                    // Lần trước thua 50/50 -> Lần này chắc chắn trúng Rate Up
+                    // Lần trước thua 50/50 (lệch rate) -> Lần này chắc chắn 100% trúng Rate Up / Target
                     poolForRarity = rateUpPool;
                     runtimeData.IsNextSSRGuaranteed = false; 
                 }
@@ -123,15 +131,15 @@ public class GachaManager
                     // Lần trước đã trúng hoặc mới bắt đầu -> Tung 50/50
                     if (Random.value <= 0.5f)
                     {
-                        // Thắng 50/50 (Nổ vàng Rate Up)
+                        // Thắng 50/50 (Nổ vàng đúng Target / Rate Up)
                         poolForRarity = rateUpPool;
                         runtimeData.IsNextSSRGuaranteed = false;
                     }
                     else
                     {
-                        // Thua 50/50 (Nổ vàng Lệch rate)
+                        // Thua 50/50 (Nổ vàng Lệch rate sang các item 5 sao khác)
                         poolForRarity = standardPool.Count > 0 ? standardPool : poolForRarity;
-                        runtimeData.IsNextSSRGuaranteed = true; // Bật bảo hiểm cho lần 5 sao kế tiếp
+                        runtimeData.IsNextSSRGuaranteed = true; // Bật bảo hiểm cho lần 5 sao kế tiếp: Chắc chắn 100% ra Target
                     }
                 }
             }

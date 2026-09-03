@@ -29,6 +29,7 @@ public class CharacterUpdateLevel : MonoBehaviour
     {
         btnUpdate.onClick.AddListener(OnBtnUpdateClicked);
         btnUpdateTo.onClick.AddListener(OnBtnUpdateToClicked);
+        RefreshUI();
     }
 
     private void OnDisable()
@@ -100,6 +101,8 @@ public class CharacterUpdateLevel : MonoBehaviour
     public void UpdateCharacterUpdateLevel(string id)
     {
         currentCharacter = id;
+        RefreshUI();
+
         var character = playerCharacterManager.GetCharacter(id);
         var upgrader  = playerCharacterManager.GetUpgradeManager(id);
         var data = character.SaveData;

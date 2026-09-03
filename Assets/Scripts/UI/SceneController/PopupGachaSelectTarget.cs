@@ -130,6 +130,10 @@ public class PopupGachaSelectTarget : WindowController<GachaSelectTargetProperti
     {
         // Click vào target slot phía trên thì remove target
         _currentSelectedId = string.Empty;
+        if (gachaRuntimeManager != null)
+        {
+            gachaRuntimeManager.SetSelectedTarget(_bannerId, _currentSelectedId);
+        }
         RefreshCurrentTargetUI();
         RefreshGridUI();
     }
@@ -138,6 +142,10 @@ public class PopupGachaSelectTarget : WindowController<GachaSelectTargetProperti
     {
         // Click vào item trong danh sách thì set target
         _currentSelectedId = clickedItemId;
+        if (gachaRuntimeManager != null)
+        {
+            gachaRuntimeManager.SetSelectedTarget(_bannerId, _currentSelectedId);
+        }
         RefreshCurrentTargetUI();
         RefreshGridUI();
     }

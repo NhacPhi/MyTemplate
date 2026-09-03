@@ -12,7 +12,7 @@ public class DialogueChoiceUI : MonoBehaviour
     {
         content.text = LocalizationManager.Instance != null 
             ? LocalizationManager.Instance.GetLocalizedValue(choice.Text)
-            : choice.Text;
+            : choice.Text.ToString();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {

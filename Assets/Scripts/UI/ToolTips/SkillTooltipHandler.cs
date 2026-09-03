@@ -61,6 +61,16 @@ public class SkillTooltipHandler : MonoBehaviour
         _characterID = id;
     }
 
+    private int? _overrideEnhancementLevel;
+
+    /// <summary>
+    /// Cho phép ghi đè cấp độ cường hóa khi preview (ví dụ nextSkillUI trong CharacterCardAscend).
+    /// </summary>
+    public void SetOverrideEnhancementLevel(int? level)
+    {
+        _overrideEnhancementLevel = level;
+    }
+
     private void EnsureDependencies()
     {
         if (_gameDataBase == null || _playerCharacterManager == null)
@@ -105,17 +115,24 @@ public class SkillTooltipHandler : MonoBehaviour
             return;
         }
 
-        int starUp = 0;
-        if (_playerCharacterManager != null)
+        int enhancementLevel;
+        if (_overrideEnhancementLevel.HasValue)
         {
-            var profile = _playerCharacterManager.GetCharacter(_characterID);
-            if (profile != null && profile.SaveData != null)
-            {
-                starUp = profile.SaveData.StarUp;
-            }
+            enhancementLevel = _overrideEnhancementLevel.Value;
         }
-        
-        int enhancementLevel = Utility.GetSkillEnhancementLevel(_skillType, starUp);
+        else
+        {
+            int starUp = 0;
+            if (_playerCharacterManager != null)
+            {
+                var profile = _playerCharacterManager.GetCharacter(_characterID);
+                if (profile != null && profile.SaveData != null)
+                {
+                    starUp = profile.SaveData.StarUp;
+                }
+            }
+            enhancementLevel = Utility.GetSkillEnhancementLevel(_skillType, starUp);
+        }
 
         SkillComponent skillComp = config.Skills[_skillType];
         if (skillComp == null) return;

@@ -37,10 +37,25 @@ public class CharacterCardCultivate : CharacterCard
         UIEvent.OnSelectCharacterAvatar += UpdateCharacterCardCultivate;
     }
 
+    private void OnEnable()
+    {
+        if (playerCharacterManager != null)
+        {
+            string id = !string.IsNullOrEmpty(currentCharacter)
+                ? currentCharacter
+                : playerCharacterManager.CurrentSelectedCharacterID;
+            if (string.IsNullOrEmpty(id) && playerCharacterManager.GetFirstCharacter() != null)
+                id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                UpdateCharacterCardCultivate(id);
+            }
+        }
+    }
+
     void Start()
     {
-        UpdateLevelHub.RefreshUI();
-
         string id = playerCharacterManager.CurrentSelectedCharacterID;
         if (string.IsNullOrEmpty(id)) id = playerCharacterManager.GetFirstCharacter().SaveData.ID;
         UpdateCharacterCardCultivate(id);

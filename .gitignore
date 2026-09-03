@@ -97,3 +97,12 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Tool & Python
+/[Tt]ool/src/models/
+/[Tt]ool/src/modes/
+**/__pycache__/
+*.py[cod]
+*$py.class
+/[Tt]ool/venv/
+

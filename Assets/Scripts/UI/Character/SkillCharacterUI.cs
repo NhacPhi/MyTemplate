@@ -58,7 +58,7 @@ public class SkillCharacterUI : MonoBehaviour
     /// <summary>
     /// Thiết lập character context cho tooltip handler (tự động gắn nếu chưa có).
     /// </summary>
-    public void SetCharacterID(string characterID, SkillCharacter? skillType = null)
+    public void SetCharacterID(string characterID, SkillCharacter? skillType = null, int? overrideEnhancementLevel = null)
     {
         var handler = GetComponent<SkillTooltipHandler>();
         if (handler == null)
@@ -72,6 +72,7 @@ public class SkillCharacterUI : MonoBehaviour
                 handler.SetSkillType(skillType.Value);
             }
             handler.SetCharacterID(characterID);
+            handler.SetOverrideEnhancementLevel(overrideEnhancementLevel);
 
             var trigger = handler.GetComponent<TooltipTrigger>();
             if (trigger != null)
