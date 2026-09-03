@@ -23,6 +23,14 @@ namespace Gameplay.MapCharacter.Enemy.States
                 return;
             }
 
+            IDamageable targetDamageable = controller.Target.GetComponentInParent<IDamageable>();
+            if (targetDamageable == null || !targetDamageable.IsTargetable)
+            {
+                controller.Target = null;
+                controller.ChangeState(controller.IdleState);
+                return;
+            }
+
             // Tính tọa độ 2D của Player
             Vector3 targetPosXZ = new Vector3(controller.Target.position.x, controller.transform.position.y, controller.Target.position.z);
             

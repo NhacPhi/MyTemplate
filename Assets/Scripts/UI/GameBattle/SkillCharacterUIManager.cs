@@ -144,6 +144,30 @@ public class SkillCharacterUIManager : MonoBehaviour
                     break;
             }
         }
+
+        // Tự động reset kỹ năng đã chọn về Base Skill khi đến lượt
+        ResetSkillSelection();
+    }
+
+    public void ResetSkillSelection()
+    {
+        if (_majorSkill != null)
+        {
+            _majorSkill.ActiveToggle(false);
+            _majorSkill.OnSelected(false);
+        }
+
+        if (_ultimateSkill != null)
+        {
+            _ultimateSkill.ActiveToggle(false);
+            _ultimateSkill.OnSelected(false);
+        }
+
+        if (_baseSkill != null)
+        {
+            _baseSkill.ActiveToggle(true);
+            _baseSkill.OnSelected(true);
+        }
     }
 
     public void UpdatePredictionAvatar(List<Entity> entities)
@@ -180,6 +204,11 @@ public class SkillCharacterUIManager : MonoBehaviour
     {
         if (_skill != null) _skill.gameObject.SetActive(isOn);
         
+        if (isOn)
+        {
+            ResetSkillSelection();
+        }
+
         if (_preditionAvatar != null && _preditionAvatar.Count > 0)
         {
             var largeAvatar = _preditionAvatar[_preditionAvatar.Count - 1];

@@ -139,6 +139,9 @@ public class ForgeManager
     /// </summary>
     public bool AscendWeapon(string weaponUUID)
     {
+        var weaponSave = _inventoryManager.GetWeapon(weaponUUID);
+        if (weaponSave == null || weaponSave.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND) return false;
+
         var duplicates = GetDuplicateWeapons(weaponUUID);
         if (duplicates.Count == 0) return false;
 
@@ -155,6 +158,7 @@ public class ForgeManager
 
         if (weaponSave == null || consumeWeapon == null) return false;
         if (weaponSave.TemplateID != consumeWeapon.TemplateID) return false;
+        if (weaponSave.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND) return false;
 
         int targetUpgrade = weaponSave.CurrentUpgrade + 1;
         int coinNeeded = Utility.GetCoinNeedToAsscendWeapon(targetUpgrade);

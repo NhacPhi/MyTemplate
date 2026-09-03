@@ -1,11 +1,11 @@
 using System;
-
+using UnityEngine;
 
 [Serializable]
 public class SettingSave 
 {
     private int fps = 60;
-    private int musicVolune = 80;
+    private int musicVolune = 10;
     private string currentLocalized = "VIETNAMESE";
 
     public int FPS
@@ -15,8 +15,8 @@ public class SettingSave
     }
     public int MusicVolune
     {
-        get { return musicVolune >= 0 ? musicVolune : 80; }
-        set { musicVolune = value; }
+        get { return musicVolune >= 0 ? Mathf.Clamp(musicVolune, 0, 10) : 10; }
+        set { musicVolune = Mathf.Clamp(value, 0, 10); }
     }
 
     public string CurrentLocalized
@@ -29,7 +29,7 @@ public class SettingSave
     {
         this.currentLocalized = currentLocalizaed;
         this.fps = fps;
-        this.musicVolune = musicVolume;
+        this.musicVolune = Mathf.Clamp(musicVolume, 0, 10);
     }
 
     public void SaveGraphicSettings(int fps)
@@ -39,7 +39,7 @@ public class SettingSave
 
     public void SaveMusicSettings(int volume)
     {
-        this.musicVolune = volume;
+        this.musicVolune = Mathf.Clamp(volume, 0, 10);
     }
 
     public void SaveLanguageSettings(string localized)

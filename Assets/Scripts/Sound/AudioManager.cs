@@ -73,7 +73,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
         float volumeRatio = 1f;
         if (_saveSystem != null && _saveSystem.Settings != null)
         {
-            volumeRatio = _saveSystem.Settings.MusicVolune / 100f;
+            volumeRatio = _saveSystem.Settings.MusicVolune / 10f;
         }
         UpdateVolume(volumeRatio);
 

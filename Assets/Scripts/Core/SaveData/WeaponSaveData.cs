@@ -11,10 +11,10 @@ public class WeaponSaveData
     public string TemplateID;
 
     [JsonProperty("current_level")]
-    public int CurrentLevel;
+    public int CurrentLevel = 1;
 
     [JsonProperty("current_updgrade")]
-    public int CurrentUpgrade;
+    public int CurrentUpgrade = 1;
 
     [JsonProperty("equip")]
     public string Equip;

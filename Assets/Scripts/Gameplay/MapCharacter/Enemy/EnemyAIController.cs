@@ -85,6 +85,16 @@ namespace Gameplay.MapCharacter.Enemy
 
         private void Update()
         {
+            if (Target != null)
+            {
+                IDamageable d = Target.GetComponentInParent<IDamageable>();
+                if (d == null || !d.IsTargetable)
+                {
+                    Target = null;
+                    ChangeState(IdleState);
+                }
+            }
+
             if (currentState != null)
                 currentState.Update();
         }
@@ -108,7 +118,7 @@ namespace Gameplay.MapCharacter.Enemy
             if (currentState == DieState) return;
 
             IDamageable damageable = playerTransform.GetComponentInParent<IDamageable>();
-            if (damageable != null && !damageable.IsTargetable) return;
+            if (damageable == null || !damageable.IsTargetable) return;
 
             Target = playerTransform;
             

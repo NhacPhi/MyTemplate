@@ -11,7 +11,8 @@ public enum ProtagonistState
 {
     Normal,     // Trạng thái bình thường (di chuyển, tấn công, tương tác)
     Dialogue,   // Đang trong hội thoại (Khóa di chuyển, ngắt input, tắt collision)
-    Dead        // Nhân vật đã chết
+    Dead,       // Nhân vật đã chết
+    Static      // Trạng thái tĩnh (khi mở bất kỳ UI/Panel nào khác ngoài GamePlayScene)
 }
 
 public class Protagonist : MonoBehaviour, IDamageable
@@ -23,7 +24,7 @@ public class Protagonist : MonoBehaviour, IDamageable
     public int CurrentHP { get; private set; }
     public int AttackDamage;
 
-    public bool IsTargetable => playerCollider != null ? playerCollider.enabled : !isClone;
+    public bool IsTargetable => (CurrentState == ProtagonistState.Normal) && (playerCollider != null ? playerCollider.enabled : !isClone);
 
     [SerializeField] private TransformAnchor gameplayCameraTransform = default;
     [SerializeField] private TransformAnchor playerTranform = default;
@@ -76,6 +77,15 @@ public class Protagonist : MonoBehaviour, IDamageable
         GameEvent.OnStartDialogue += HandleStartDialogue;
         GameEvent.OnEndDialogue += HandleEndDialogue;
         playerTranform.Provide(transform);
+
+        if (IsInMainGameplay())
+        {
+            ChangeState(ProtagonistState.Normal);
+        }
+        else
+        {
+            ChangeState(ProtagonistState.Static);
+        }
     }
 
     private void OnDisable()
@@ -89,7 +99,25 @@ public class Protagonist : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Update()
     {
-        if (CurrentState != ProtagonistState.Normal) return; // Chỉ xử lý khi ở trạng thái Normal
+        if (CurrentState == ProtagonistState.Dead) return;
+        if (CurrentState == ProtagonistState.Dialogue) return;
+
+        bool inMainGame = IsInMainGameplay();
+        if (inMainGame)
+        {
+            if (CurrentState == ProtagonistState.Static)
+            {
+                ChangeState(ProtagonistState.Normal);
+            }
+        }
+        else
+        {
+            if (CurrentState == ProtagonistState.Normal)
+            {
+                ChangeState(ProtagonistState.Static);
+            }
+            return;
+        }
 
         if (equipWeapon && countDown > 0)
         {
@@ -176,24 +204,26 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     [Inject] private UIManager _uiManager;
 
+    private UIManager GetUIManager()
+    {
+        if (_uiManager == null)
+        {
+            if (GameplayScope.Instance != null && GameplayScope.Instance.Container != null)
+            {
+                try { _uiManager = GameplayScope.Instance.Container.Resolve<UIManager>(); } catch { }
+            }
+            if (_uiManager == null)
+            {
+                _uiManager = FindObjectOfType<UIManager>();
+            }
+        }
+        return _uiManager;
+    }
+
     private bool CanAcceptInput()
     {
         if (CurrentState != ProtagonistState.Normal) return false;
-        if (Time.timeScale == 0f) return false;
-
-        // Trả về false nếu đang trong màn Trận đánh (Battle)
-        if (BattleManager.Instance != null && BattleManager.Instance.gameObject.activeInHierarchy)
-        {
-            return false;
-        }
-
-        // Trả về false nếu đang mở bất kỳ UI Window nào khác ngoài GamePlay (Inventory, Shop, Quests, Settings...)
-        if (_uiManager != null)
-        {
-            return _uiManager.IsInMainGameplay();
-        }
-
-        return true;
+        return IsInMainGameplay();
     }
 
     private bool IsInMainGameplay()
@@ -207,10 +237,11 @@ public class Protagonist : MonoBehaviour, IDamageable
             return false;
         }
 
-        // Trả về false nếu đang mở bất kỳ UI Window nào khác ngoài GamePlay (Inventory, Shop, Quests, Settings...)
-        if (_uiManager != null)
+        // Trả về false nếu đang mở bất kỳ UI Window/Panel nào khác ngoài GamePlayScene
+        var uiMgr = GetUIManager();
+        if (uiMgr != null)
         {
-            return _uiManager.IsInMainGameplay();
+            return uiMgr.IsInMainGameplay();
         }
 
         return true;
@@ -478,7 +509,7 @@ public class Protagonist : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        if (CurrentState == ProtagonistState.Dialogue || CurrentState == ProtagonistState.Dead) return;
+        if (CurrentState != ProtagonistState.Normal) return;
 
         CurrentHP -= damage;
         Debug.Log($"Protagonist HP: {CurrentHP}/{MaxHP}");
@@ -519,9 +550,11 @@ public class Protagonist : MonoBehaviour, IDamageable
             case ProtagonistState.Normal:
                 SetCollisionActive(!isClone);
                 break;
+            case ProtagonistState.Static:
             case ProtagonistState.Dialogue:
                 _idleTimer = 0f;
                 movement = Vector2.zero;
+                moveVector = Vector3.zero;
                 var rb = GetComponent<Rigidbody>();
                 if (rb != null) rb.velocity = Vector3.zero;
                 var rb2d = GetComponent<Rigidbody2D>();
@@ -538,6 +571,7 @@ public class Protagonist : MonoBehaviour, IDamageable
     {
         switch (state)
         {
+            case ProtagonistState.Static:
             case ProtagonistState.Dialogue:
                 SetCollisionActive(!isClone);
                 break;
@@ -553,7 +587,14 @@ public class Protagonist : MonoBehaviour, IDamageable
     {
         if (CurrentState == ProtagonistState.Dialogue)
         {
-            ChangeState(ProtagonistState.Normal);
+            if (IsInMainGameplay())
+            {
+                ChangeState(ProtagonistState.Normal);
+            }
+            else
+            {
+                ChangeState(ProtagonistState.Static);
+            }
         }
     }
 

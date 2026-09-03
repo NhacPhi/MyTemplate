@@ -53,7 +53,7 @@ public class ShopProductUI : MonoBehaviour
             imgCurrency.gameObject.SetActive(false);
         }
         
-        if (txtPrice != null) txtPrice.text = config.Price.ToString();
+        if (txtPrice != null) txtPrice.text = Utility.FormatCurrency(config.Price);
         
         if (soldOutOverlay != null)
         {

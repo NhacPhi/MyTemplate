@@ -157,7 +157,7 @@ public class PopupBattleResultController : WindowController
     {
         if (txtExpProgress != null)
         {
-            txtExpProgress.text = $"{currentVal}/{_properties.MaxExpForCurrentLevel}";
+            txtExpProgress.text = $"{Utility.FormatCurrency(currentVal)}/{Utility.FormatCurrency(_properties.MaxExpForCurrentLevel)}";
         }
     }
 

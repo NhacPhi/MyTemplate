@@ -4,18 +4,27 @@
     "level": 1,
     "current_exp": 0,
     "avatar_icon": "Wukong03_avatar",
-    "claimed_redeem_codes": []
+    "claimed_redeem_codes": [
+      "GIFT_COIN",
+      "GIFT_JADE",
+      "GIFT_TICKET"
+    ]
   },
   "inventory": {
     "currencies": {
       "Energy": 120,
-      "Jade": 120,
-      "Coin": 247671,
-      "RelicEssence": 4000,
+      "Jade": 92800,
+      "Coin": 1247671,
+      "RelicEssence": 19000,
       "ArmorPrimorite": 4900,
-      "Ticket": 20
+      "Ticket": 55
     },
     "items": [
+      {
+        "id": "supreme_exp",
+        "type": "Exp",
+        "quantity": 43
+      },
       {
         "id": "rare_exp",
         "type": "Exp",
@@ -74,12 +83,12 @@
       {
         "id": "LittleWhiteDragon",
         "type": "Shard",
-        "quantity": 20
+        "quantity": 400
       },
       {
-        "id": "supreme_exp",
-        "type": "Exp",
-        "quantity": 3
+        "id": "TangSanZang",
+        "type": "Shard",
+        "quantity": 190
       }
     ],
     "weapons": [
@@ -87,22 +96,197 @@
         "uuid": "10000000-0000-0000-0000-000000000001",
         "template_id": "Wooden_Staff",
         "current_level": 1,
-        "current_updgrade": 0,
+        "current_updgrade": 1,
         "equip": "SunWukong"
       },
       {
         "uuid": "10000000-0000-0000-0000-000000000002",
         "template_id": "Sunburst_Spade",
         "current_level": 1,
-        "current_updgrade": 0,
+        "current_updgrade": 1,
         "equip": "TangSanZang"
       },
       {
         "uuid": "10000000-0000-0000-0000-000000000003",
         "template_id": "Crescent_Axe",
         "current_level": 1,
-        "current_updgrade": 0,
+        "current_updgrade": 1,
         "equip": "LittleWhiteDragon"
+      },
+      {
+        "uuid": "b316e84f-744b-4d92-9ec6-45408c8ef0a4",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "ea7d69d5-b776-4db0-bd4f-e17f13d8cee5",
+        "template_id": "Sunburst_Spade",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "3fb8bdb3-b5af-4f70-996a-3bbd2d8dc3be",
+        "template_id": "Nimbus_Cloud",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "45b9f640-ac21-4a95-80fe-3d5baadd66d0",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "3c077767-cfd4-45e6-bc44-0523dc99dd2f",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "4a67da1b-d341-4b8c-99da-629e4354bba1",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "3b428b26-6ba7-4708-b4f1-ee14f9d877b0",
+        "template_id": "Reincarnation",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "326d55da-400d-4120-9cf1-d89d97fd13b6",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "c2b17d6a-dfad-4661-a6d0-054e6a6c31cb",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "c9ed1af7-40dc-4633-8ddd-03f8720df28c",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "dbdba6dd-3803-4363-932f-0b0938173b15",
+        "template_id": "Nine_ToolThed_Rake",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "378049ed-ffed-4b26-b4f4-0644aa4abc88",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "d17a7b67-b236-401a-8d42-d369591c59fe",
+        "template_id": "Wooden_Staff",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "538e12d3-7ca0-4efa-a8d0-f411748c05a3",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "457d211c-0e89-42c0-a9fd-9cc688798d81",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "5d94f695-2ec9-46bb-a72c-d6da7839b676",
+        "template_id": "Ninefold_Staff",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "8b007850-b928-4f6b-ba63-ab5c977d999e",
+        "template_id": "Crescent_Axe",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "cf4437d8-cb8b-4680-88e6-4f9db0d70567",
+        "template_id": "Reincarnation",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "84adeffe-8ec9-4531-84ef-b99637fafe56",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "23c697ba-6208-46d1-b853-9bc6399a3b48",
+        "template_id": "Ninefold_Staff",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "16871621-8f8c-4adf-a0a8-c754fc9051e5",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "15914ac6-89f9-4511-8496-e25463431b2d",
+        "template_id": "Wings_of_Phoenix",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "b910caab-11d0-4b37-bafa-613809eef3e9",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "e1670df3-f6aa-474a-9591-0722f5609b33",
+        "template_id": "Ennead_spear",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
+      },
+      {
+        "uuid": "bdf7791c-0c72-4033-ae38-c92ca6cc95d5",
+        "template_id": "Bronze_Hammer",
+        "current_level": 1,
+        "current_updgrade": 1,
+        "equip": ""
       }
     ],
     "armors": [
@@ -281,36 +465,8 @@
         "equip": "SunWukong"
       },
       {
-        "instance_id": "20000000-0000-0000-0000-000000000008",
-        "template_id": "Armor02_Chestplate",
-        "level": 1,
-        "substats": [
-          {
-            "type": "DEF",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "DEF",
-        "equip": ""
-      },
-      {
-        "instance_id": "20000000-0000-0000-0000-000000000009",
-        "template_id": "Armor02_Gloves",
-        "level": 1,
-        "substats": [
-          {
-            "type": "ATK",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "ATK",
-        "equip": ""
-      },
-      {
-        "instance_id": "20000000-0000-0000-0000-000000000010",
-        "template_id": "Armor02_Boots",
+        "instance_id": "20000000-0000-0000-0000-000000000007",
+        "template_id": "Armor02_Helmet",
         "level": 1,
         "substats": [
           {
@@ -320,20 +476,6 @@
           }
         ],
         "main_stat_type": "HP",
-        "equip": ""
-      },
-      {
-        "instance_id": "20000000-0000-0000-0000-000000000011",
-        "template_id": "Armor02_Belt",
-        "level": 1,
-        "substats": [
-          {
-            "type": "DEF",
-            "level": 1,
-            "modifier_type": "Flat"
-          }
-        ],
-        "main_stat_type": "DEF",
         "equip": ""
       },
       {
@@ -351,8 +493,22 @@
         "equip": ""
       },
       {
-        "instance_id": "20000000-0000-0000-0000-000000000007",
-        "template_id": "Armor02_Helmet",
+        "instance_id": "20000000-0000-0000-0000-000000000011",
+        "template_id": "Armor02_Belt",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000010",
+        "template_id": "Armor02_Boots",
         "level": 1,
         "substats": [
           {
@@ -362,6 +518,34 @@
           }
         ],
         "main_stat_type": "HP",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000009",
+        "template_id": "Armor02_Gloves",
+        "level": 1,
+        "substats": [
+          {
+            "type": "ATK",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "ATK",
+        "equip": ""
+      },
+      {
+        "instance_id": "20000000-0000-0000-0000-000000000008",
+        "template_id": "Armor02_Chestplate",
+        "level": 1,
+        "substats": [
+          {
+            "type": "DEF",
+            "level": 1,
+            "modifier_type": "Flat"
+          }
+        ],
+        "main_stat_type": "DEF",
         "equip": ""
       },
       {
@@ -503,6 +687,24 @@
         "star_up": 0,
         "weapon": "10000000-0000-0000-0000-000000000003",
         "armors": []
+      },
+      {
+        "id": "ZhuBaJie",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "",
+        "armors": []
+      },
+      {
+        "id": "BullDemonKing",
+        "level": 1,
+        "exp": 0,
+        "ascension_tier": 0,
+        "star_up": 0,
+        "weapon": "",
+        "armors": []
       }
     ],
     "active_slots": [
@@ -534,24 +736,40 @@
     "active_global_buffs": []
   },
   "shop": {
-    "last_reset_time": 639263245428596349,
-    "purchase_history": {}
+    "last_reset_time": 639240076702395398,
+    "purchase_history": {
+      "SHOP_COMBO_DAY7": {
+        "product_id": "SHOP_COMBO_DAY7",
+        "purchase_count": 1,
+        "last_purchase_time": 639240076676347691
+      },
+      "SHOP_JADE_TICKET_10": {
+        "product_id": "SHOP_JADE_TICKET_10",
+        "purchase_count": 3,
+        "last_purchase_time": 639240076732898416
+      },
+      "SHOP_JADE_TICKET_01": {
+        "product_id": "SHOP_JADE_TICKET_01",
+        "purchase_count": 10,
+        "last_purchase_time": 639240076771879857
+      }
+    }
   },
   "gacha": {
     "banner_data_map": {
       "banner_char_01": {
         "banner_id": "banner_char_01",
         "pity_count": 1,
-        "selected_target_id": "",
+        "selected_target_id": "BullDemonKing",
         "is_next_ssr_guaranteed": false,
-        "total_summon_count": 1
+        "total_summon_count": 41
       },
       "banner_weap_01": {
         "banner_id": "banner_weap_01",
-        "pity_count": 0,
-        "selected_target_id": "",
-        "is_next_ssr_guaranteed": false,
-        "total_summon_count": 0
+        "pity_count": 14,
+        "selected_target_id": "Vanguard_Of_Volition",
+        "is_next_ssr_guaranteed": true,
+        "total_summon_count": 25
       },
       "SevenDayLogin_Day07": {
         "banner_id": "SevenDayLogin_Day07",
@@ -577,7 +795,7 @@
   "daily_quest": {
     "last_reset_time_ticks": 639263376000000000,
     "active_daily_quests": {
-      "dq_shopping": 0,
+      "dq_shopping": 1,
       "dq_kill_slime": 0,
       "dq_upgrade_weapon": 0
     },
@@ -589,7 +807,7 @@
     "claimed_days": [
       1
     ],
-    "last_login_date": "2026-09-30",
-    "current_login_day": 3
+    "last_login_date": "2026-09-03",
+    "current_login_day": 4
   }
 }

@@ -21,7 +21,7 @@ public static class Definition
     public static int MAX_ARMOR_SUBSTATS = 4;
     public static int ARMOR_SUBSTAT_INTERVAL = 3;
     public static int MAX_WEAPON_LEVEL = 100;
-    public static int MAX_WEAPON_ASCEND = 6;
+    public static int MAX_WEAPON_ASCEND = 5;
 
     public static int MAX_CHARACTER_LEVEL = 100;
     public static int MAX_SLOT_CHARACTER = 6;

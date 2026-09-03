@@ -322,6 +322,30 @@ public static class Utility
         return amount.ToString();
     }
 
+    public static string FormatCurrency(float amount)
+    {
+        if (amount >= 1000000000f)
+            return (amount / 1000000000f).ToString("0.##") + "B";
+        if (amount >= 1000000f)
+            return (amount / 1000000f).ToString("0.##") + "M";
+        
+        return Mathf.Approximately(amount, Mathf.Round(amount)) 
+            ? ((int)amount).ToString() 
+            : amount.ToString("0.##");
+    }
+
+    public static string FormatCurrency(double amount)
+    {
+        if (amount >= 1000000000.0)
+            return (amount / 1000000000.0).ToString("0.##") + "B";
+        if (amount >= 1000000.0)
+            return (amount / 1000000.0).ToString("0.##") + "M";
+        
+        return Math.Abs(amount - Math.Round(amount)) < 0.0001 
+            ? ((long)amount).ToString() 
+            : amount.ToString("0.##");
+    }
+
     // ═══════════════════════════════════════
     // Armor Upgrade Formulas
     // ═══════════════════════════════════════

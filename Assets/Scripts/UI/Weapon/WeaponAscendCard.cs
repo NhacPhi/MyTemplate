@@ -109,12 +109,23 @@ public class WeaponAscendCard : MonoBehaviour
 
     private void ToggleSlotMaterial(int slotIndex)
     {
+        if (string.IsNullOrEmpty(currentTargetWeaponID) || save == null) return;
+        var data = save.Player.Inventory.GetWeapon(currentTargetWeaponID);
+        if (data == null) return;
+
         var slot = materialSlots[slotIndex];
 
         // Nếu slot đã có nguyên liệu -> Bỏ chọn (gỡ khỏi slot)
         if (!string.IsNullOrEmpty(slot.SelectedWeaponUUID))
         {
             OnMaterialSelected(slot.SelectedWeaponUUID);
+            return;
+        }
+
+        // Kiểm tra xem đã chọn đủ số phôi để lên max sao chưa
+        int remainingNeeded = Definition.MAX_WEAPON_ASCEND - data.CurrentUpgrade;
+        if (remainingNeeded <= 0 || GetSelectedMaterials().Count >= remainingNeeded)
+        {
             return;
         }
 
@@ -136,13 +147,19 @@ public class WeaponAscendCard : MonoBehaviour
 
     private void OnBtnAscendClicked()
     {
-        if (forgeManager == null || string.IsNullOrEmpty(currentTargetWeaponID)) return;
+        if (forgeManager == null || string.IsNullOrEmpty(currentTargetWeaponID) || save == null) return;
+
+        var data = save.Player.Inventory.GetWeapon(currentTargetWeaponID);
+        if (data == null || data.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND) return;
 
         var selectedMaterials = GetSelectedMaterials();
         if (selectedMaterials.Count == 0) return;
 
+        int successCount = 0;
         foreach (var materialUUID in selectedMaterials)
         {
+            if (data.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND) break;
+
             // Thực hiện đột phá liên tiếp bằng tất cả phôi đã chọn
             bool success = forgeManager.AscendWeapon(currentTargetWeaponID, materialUUID);
             if (!success)
@@ -150,12 +167,21 @@ public class WeaponAscendCard : MonoBehaviour
                 // Ngưng nếu có lỗi (chẳng hạn hết tiền giữa chừng)
                 break;
             }
+            successCount++;
+        }
+
+        if (successCount > 0)
+        {
+            save.SaveDataToDisk(GameSaveType.PlayerInfo);
         }
     }
 
     private void OnMaterialSelected(string materialUUID)
     {
-        if (materialSlots == null) return;
+        if (materialSlots == null || string.IsNullOrEmpty(currentTargetWeaponID) || save == null) return;
+
+        var data = save.Player.Inventory.GetWeapon(currentTargetWeaponID);
+        if (data == null) return;
 
         // 1. Kiểm tra xem nguyên liệu này đã nằm trong slot nào chưa, nếu có thì bỏ chọn
         var existingSlot = materialSlots.Find(s => s.SelectedWeaponUUID == materialUUID);
@@ -164,6 +190,13 @@ public class WeaponAscendCard : MonoBehaviour
             existingSlot.SetWeaponEmpty();
             if (materialCategory != null) materialCategory.ToggleMaterialVisibility(materialUUID, true);
             UpdateCoinText();
+            return;
+        }
+
+        // Kiểm tra xem đã chọn đủ số phôi để lên max sao chưa
+        int remainingNeeded = Definition.MAX_WEAPON_ASCEND - data.CurrentUpgrade;
+        if (remainingNeeded <= 0 || GetSelectedMaterials().Count >= remainingNeeded)
+        {
             return;
         }
 
@@ -189,11 +222,17 @@ public class WeaponAscendCard : MonoBehaviour
         WeaponSaveData data = save.Player.Inventory.GetWeapon(currentTargetWeaponID);
         if (data == null) return;
         
+        if (data.CurrentUpgrade >= Definition.MAX_WEAPON_ASCEND)
+        {
+            txtCoin.text = "0";
+            return;
+        }
+
         int selectedCount = GetSelectedMaterials().Count;
         
         if (selectedCount == 0)
         {
-            txtCoin.text = Utility.GetCoinNeedToAsscendWeapon(data.CurrentUpgrade + 1).ToString();
+            txtCoin.text = Utility.FormatCurrency(Utility.GetCoinNeedToAsscendWeapon(data.CurrentUpgrade + 1));
             return;
         }
 
@@ -203,7 +242,7 @@ public class WeaponAscendCard : MonoBehaviour
             totalCoin += Utility.GetCoinNeedToAsscendWeapon(data.CurrentUpgrade + 1 + i);
         }
         
-        txtCoin.text = totalCoin.ToString();
+        txtCoin.text = Utility.FormatCurrency(totalCoin);
     }
 
     public void UpdateWeaponAscendCard(string weaponID)

@@ -226,7 +226,7 @@ public class GachaManager
                     UUID = System.Guid.NewGuid().ToString(),
                     TemplateID = item.itemId,
                     CurrentLevel = 1,
-                    CurrentUpgrade = 0,
+                    CurrentUpgrade = 1,
                     Equip = ""
                 };
                 _inventoryManager.AddWeapon(newWeapon);

@@ -50,6 +50,7 @@ public class ToggleSkillCharacterUI : ToggleBase
 
     public override void OnSelected(bool isOn)
     {
+        base.OnSelected(isOn);
         if (isOn)
         {
             UIEvent.OnChooseSkillCharacter?.Invoke(_type);

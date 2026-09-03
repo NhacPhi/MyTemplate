@@ -36,7 +36,7 @@ namespace Core.Scope
             saveSystem.LoadSaveDataFromDisk();
             if (saveSystem.Settings != null)
             {
-                audioManager.UpdateVolume(saveSystem.Settings.MusicVolune / 100f);
+                audioManager.UpdateVolume(saveSystem.Settings.MusicVolune / 10f);
             }
             currencyMM.Init();
 

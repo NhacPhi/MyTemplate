@@ -103,6 +103,10 @@ public class SpawnSystem : MonoBehaviour
         }
 
         Protagonist playerInstance = Instantiate(_playerPrefabs, spawnPos, spawnRot);
+        if (rootScope != null && rootScope.Container != null)
+        {
+            try { rootScope.Container.Inject(playerInstance); } catch { }
+        }
 
         // Provide the spawned player's transform to the anchor so other systems can access it.
         _playerTransformAnchor.Provide(playerInstance.transform);

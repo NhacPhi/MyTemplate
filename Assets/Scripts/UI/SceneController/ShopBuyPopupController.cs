@@ -162,7 +162,7 @@ public class ShopBuyPopupController : WindowController<ShopBuyPopupProperties>
         
         if (txtUnitPrice != null)
         {
-            txtUnitPrice.text = Properties.Config.Price.ToString();
+            txtUnitPrice.text = Utility.FormatCurrency(Properties.Config.Price);
         }
         
         if (imgUnitCurrency != null && Properties.CurrencySprite != null)
@@ -186,7 +186,7 @@ public class ShopBuyPopupController : WindowController<ShopBuyPopupProperties>
         if (txtQuantity != null) txtQuantity.text = currentSelectedQuantity.ToString();
         
         float totalPrice = Properties.Config.Price * currentSelectedQuantity;
-        if (txtTotalPrice != null) txtTotalPrice.text = totalPrice.ToString();
+        if (txtTotalPrice != null) txtTotalPrice.text = Utility.FormatCurrency(totalPrice);
         
         UpdateButtonState(btnSub1, currentSelectedQuantity > 1);
         UpdateButtonState(btnSub10, currentSelectedQuantity > 1);

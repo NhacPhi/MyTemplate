@@ -54,7 +54,7 @@ public class GameSettingsScene : WindowController
                 if (SaveData?.Settings != null) SaveData.Settings.MusicVolune = (int)v;
                 if (audioManager != null)
                 {
-                    audioManager.UpdateVolume(v / 100f);
+                    audioManager.UpdateVolume(v / 10f);
                 }
             });
         }

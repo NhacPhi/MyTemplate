@@ -41,7 +41,7 @@ public class GameItemUI : MonoBehaviour
         if (amountText != null)
         {
             amountText.gameObject.SetActive(amount > 0);
-            amountText.text = $"x{amount}";
+            amountText.text = $"x{Utility.FormatCurrency(amount)}";
         }
     }
 

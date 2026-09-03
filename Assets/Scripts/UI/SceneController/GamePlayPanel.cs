@@ -26,6 +26,8 @@ public class GamePlayPanel : PanelController
     [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private TextMeshProUGUI txtPlayerName;
     [SerializeField] private Button btnEditName;
+    [SerializeField] private Slider sliderExp;
+    [SerializeField] private TextMeshProUGUI txtCurrentExp;
 
     [Inject] private UIManager uiManager;
     [Inject] private SaveSystem save;
@@ -115,12 +117,40 @@ public class GamePlayPanel : PanelController
     private void OnEnable()
     {
         Time.timeScale = 0f;
-        txtLevel.text = save.Player.Account.Level.ToString();
+        if (txtLevel != null && save?.Player?.Account != null)
+        {
+            txtLevel.text = save.Player.Account.Level.ToString();
+        }
 
-        UpdatePlayerName(save.Player.Account.PlayerName);
-        UpdateAvatarIconOnPanel(save.Player.Account.AvatarIcon);
+        if (save?.Player?.Account != null)
+        {
+            UpdatePlayerName(save.Player.Account.PlayerName);
+            UpdateAvatarIconOnPanel(save.Player.Account.AvatarIcon);
+            UpdateExpBar(save.Player.Account.CurrentExp, save.Player.Account.Level);
+        }
 
         UIEvent.OnChanageAvatarPanel += UpdateAvatarIconOnPanel;
+    }
+
+    public void UpdateExpBar(int currentExp, int currentLevel)
+    {
+        int maxExp = currentLevel * 1000;
+        SetExp(currentExp, maxExp);
+    }
+
+    public void SetExp(int currentExp, int maxExp)
+    {
+        if (sliderExp != null)
+        {
+            sliderExp.minValue = 0;
+            sliderExp.maxValue = maxExp;
+            sliderExp.value = currentExp;
+        }
+
+        if (txtCurrentExp != null)
+        {
+            txtCurrentExp.text = $"{currentExp}/{maxExp}";
+        }
     }
 
     private void OnDisable()

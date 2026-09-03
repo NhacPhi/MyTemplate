@@ -275,13 +275,20 @@ public class UIManager : MonoBehaviour
         return _uiFrame != null ? _uiFrame.GetCurrentWindow() : null;
     }
 
+    public bool IsPanelVisible(string panelId)
+    {
+        return _uiFrame != null && _uiFrame.IsPanelVisible(panelId);
+    }
+
     public bool IsInMainGameplay()
     {
         if (_uiFrame == null) return true;
+        if (IsPanelVisible(ScreenIds.GamePlayPanel)) return false;
+
         var currentWindow = _uiFrame.GetCurrentWindow();
         if (currentWindow == null) return true;
 
         string id = currentWindow.ScreenId;
-        return id == ScreenIds.GamePlayScene || id == ScreenIds.GamePlayPanel;
+        return id == ScreenIds.GamePlayScene;
     }
 }

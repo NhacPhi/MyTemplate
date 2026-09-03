@@ -11,13 +11,13 @@ public class ItemUI : InventoryItemUI
     public void Init(string id, Rare rare, Sprite icon, Sprite background, int number)
     {
         base.Setup(id, rare, icon, background);
-        txtNumber.text = number.ToString();
+        txtNumber.text = Utility.FormatCurrency(number);
     }
 
     public void InitRequirement(string id, Rare rare, Sprite icon, Sprite background, int ownAmount, int requireAmount)
     {
         base.Setup(id, rare, icon, background);
-        txtNumber.text = $"{requireAmount}/{ownAmount}";
+        txtNumber.text = $"{Utility.FormatCurrency(requireAmount)}/{Utility.FormatCurrency(ownAmount)}";
         txtNumber.color = ownAmount >= requireAmount ? Color.white : Color.red;
     }
 

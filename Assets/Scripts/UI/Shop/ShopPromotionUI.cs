@@ -64,13 +64,13 @@ public class ShopPromotionUI : MonoBehaviour
         }
         
         // Setup Prices
-        if (txtPrice != null) txtPrice.text = config.Price.ToString();
+        if (txtPrice != null) txtPrice.text = Utility.FormatCurrency(config.Price);
         
         if (txtOriginalPrice != null)
         {
             if (config.OriginalPrice > config.Price)
             {
-                txtOriginalPrice.text = config.OriginalPrice.ToString();
+                txtOriginalPrice.text = Utility.FormatCurrency(config.OriginalPrice);
                 txtOriginalPrice.gameObject.SetActive(true);
             }
             else

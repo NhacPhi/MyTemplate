@@ -75,6 +75,13 @@ namespace UIFramework
             panelLayer.HideScreenById(screenId);
         }
 
+        public bool IsPanelVisible(string screenId) {
+            if (panelLayer != null) {
+                return panelLayer.IsPanelVisible(screenId);
+            }
+            return false;
+        }
+
         public void OpenWindow(string screenId) {
             windowLayer.ShowScreenById(screenId);
         }
