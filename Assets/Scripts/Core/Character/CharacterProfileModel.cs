@@ -336,29 +336,14 @@ public class CharacterProfileModel : IStatProvider
 
     public void QuickEquipArmor()
     {
-        List<ArmorSaveData> bestAvailableArmors = _inventory.GetBestArmorsToEquip();
+        List<ArmorSaveData> bestAvailableArmors = _inventory.GetBestArmorsToEquip(SaveData.ID);
         if (bestAvailableArmors == null || bestAvailableArmors.Count == 0) return;
 
         foreach (var newArmor in bestAvailableArmors)
         {
-            var newConfig  = _gameDataBase.GetItemConfig(newArmor.TemplateID);
-            var targetPart = newConfig.Armor.Part;
-
-            PartSaveData currentPart = SaveData.Armors.Find(p => p.Type == targetPart);
-
-            if (currentPart != null)
+            if (SaveData.Armors.Exists(p => p.ID == newArmor.UUID))
             {
-                var currentArmor = _inventory.GetArmor(currentPart.ID);
-                if (currentArmor != null)
-                {
-                    var currentConfig = _gameDataBase.GetItemConfig(currentArmor.TemplateID);
-
-                    int rarityComparison = newConfig.Rarity.CompareTo(currentConfig.Rarity);
-                    int levelComparison  = newArmor.Level.CompareTo(currentArmor.Level);
-
-                    if (rarityComparison < 0 || (rarityComparison == 0 && levelComparison <= 0))
-                        continue;
-                }
+                continue;
             }
 
             ChangeArmor(newArmor.UUID);

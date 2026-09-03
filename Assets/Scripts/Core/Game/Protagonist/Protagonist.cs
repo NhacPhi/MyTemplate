@@ -587,14 +587,7 @@ public class Protagonist : MonoBehaviour, IDamageable
     {
         if (CurrentState == ProtagonistState.Dialogue)
         {
-            if (IsInMainGameplay())
-            {
-                ChangeState(ProtagonistState.Normal);
-            }
-            else
-            {
-                ChangeState(ProtagonistState.Static);
-            }
+            ChangeState(ProtagonistState.Normal);
         }
     }
 

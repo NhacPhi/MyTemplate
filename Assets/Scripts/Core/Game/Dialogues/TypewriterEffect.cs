@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using System.Collections;
 
@@ -46,7 +46,7 @@ public class TypewriterEffect : MonoBehaviour
             string text = currentText.Substring(0, currentIndexCharacter);
             text += "<color=#00000000>" + currentText.Substring(currentIndexCharacter) + "</color>";
             textUI.text = text;
-            yield return new WaitForSeconds(typeSpeed);
+            yield return new WaitForSecondsRealtime(typeSpeed);
         }
        IsTyping = false;
     }

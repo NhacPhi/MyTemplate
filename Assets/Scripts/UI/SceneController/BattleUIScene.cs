@@ -50,6 +50,11 @@ public class BattleUIScene : WindowController
         UpdateAutoUI();
     }
 
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
+    }
+
     private void OnAutoClicked()
     {
         IsAutoBattle = !IsAutoBattle;

@@ -443,6 +443,7 @@ public class SceneLoader : MonoBehaviour
 
     private void StartGameplay()
     {
+        Time.timeScale = 1f;
         Debug.Log("[TransitionLog] SceneLoader: StartGameplay - Setting IsSceneReady = true and invoking GameEvent.OnSceneReady.");
         GameEvent.IsSceneReady = true;
         GameEvent.OnSceneReady?.Invoke(); //Spawn system will spawn the PigChef in a gameplay scene

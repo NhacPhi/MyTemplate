@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using VContainer;
 using System;
 using NPOI.SS.Formula.Functions;
@@ -432,36 +433,129 @@ public class InventoryManager : IDisposable
         });
     }
 
-    public List<ArmorSaveData> GetBestArmorsToEquip()
+    public List<ArmorSaveData> GetBestArmorsToEquip(string characterID = null)
     {
-        // 1. Chắc chắn danh sách đã xếp đồ xịn lên đầu
-        SortArmors();
+        if (Armors == null || Armors.Count == 0) return new List<ArmorSaveData>();
 
-        List<ArmorSaveData> bestArmors = new List<ArmorSaveData>();
+        // 1. Lấy tất cả các giáp khả dụng: Chưa ai mặc HOẶC đang do chính nhân vật này mặc
+        List<ArmorSaveData> candidateArmors = Armors.Where(a => 
+            string.IsNullOrEmpty(a.Equip) || (!string.IsNullOrEmpty(characterID) && a.Equip == characterID)
+        ).ToList();
 
-        // SỬ DỤNG TRỰC TIẾP ENUM ArmorPart ĐỂ ĐÁNH DẤU
-        HashSet<ArmorPart> filledSlots = new HashSet<ArmorPart>();
+        if (candidateArmors.Count == 0) return new List<ArmorSaveData>();
 
-        foreach (var armor in Armors)
+        // Helper so sánh giá trị 2 món trang bị (Rarity giảm dần -> Level giảm dần)
+        int CompareArmor(ArmorSaveData a, ArmorSaveData b)
         {
-            if (!string.IsNullOrEmpty(armor.Equip))
-            {
-                continue;
-            }
+            var cfgA = _gameDataBase.GetItemConfig(a.TemplateID);
+            var cfgB = _gameDataBase.GetItemConfig(b.TemplateID);
 
+            if (cfgA == null && cfgB == null) return b.Level.CompareTo(a.Level);
+            if (cfgA == null) return 1;
+            if (cfgB == null) return -1;
+
+            int rarityComparison = cfgB.Rarity.CompareTo(cfgA.Rarity);
+            if (rarityComparison != 0) return rarityComparison;
+
+            return b.Level.CompareTo(a.Level);
+        }
+
+        // 2. Nhóm các trang bị theo Set (ArmorSet)
+        Dictionary<string, Dictionary<ArmorPart, ArmorSaveData>> setGroups = new Dictionary<string, Dictionary<ArmorPart, ArmorSaveData>>();
+
+        foreach (var armor in candidateArmors)
+        {
             var config = _gameDataBase.GetItemConfig(armor.TemplateID);
             if (config == null || config.Armor == null) continue;
 
-            // Lấy loại giáp từ config (Giả sử thuộc tính trong config tên là ArmorPart)
+            string setName = config.Armor.ArmorSet;
+            if (string.IsNullOrEmpty(setName)) continue;
+
+            ArmorPart part = config.Armor.Part;
+
+            if (!setGroups.ContainsKey(setName))
+            {
+                setGroups[setName] = new Dictionary<ArmorPart, ArmorSaveData>();
+            }
+
+            if (!setGroups[setName].ContainsKey(part))
+            {
+                setGroups[setName][part] = armor;
+            }
+            else
+            {
+                // Nếu cùng 1 slot trong cùng 1 set có nhiều món, lấy món có giá trị cao hơn
+                if (CompareArmor(armor, setGroups[setName][part]) < 0)
+                {
+                    setGroups[setName][part] = armor;
+                }
+            }
+        }
+
+        // 3. Tìm các Set có đủ 6 món (Helmet, Chestplate, Gloves, Boots, Belt, Ring)
+        List<Dictionary<ArmorPart, ArmorSaveData>> fullSixPieceSets = new List<Dictionary<ArmorPart, ArmorSaveData>>();
+        foreach (var kvp in setGroups)
+        {
+            if (kvp.Value.Count == 6)
+            {
+                fullSixPieceSets.Add(kvp.Value);
+            }
+        }
+
+        // 4. Nếu có Set đủ 6 món -> Ưu tiên chọn Set 6 món có tổng giá trị (Rarity -> Level) cao nhất
+        if (fullSixPieceSets.Count > 0)
+        {
+            Dictionary<ArmorPart, ArmorSaveData> bestSet = null;
+            int bestRaritySum = -1;
+            int bestLevelSum = -1;
+
+            foreach (var setDict in fullSixPieceSets)
+            {
+                int raritySum = 0;
+                int levelSum = 0;
+
+                foreach (var item in setDict.Values)
+                {
+                    var cfg = _gameDataBase.GetItemConfig(item.TemplateID);
+                    if (cfg != null)
+                    {
+                        raritySum += (int)cfg.Rarity;
+                    }
+                    levelSum += item.Level;
+                }
+
+                if (bestSet == null || raritySum > bestRaritySum || (raritySum == bestRaritySum && levelSum > bestLevelSum))
+                {
+                    bestSet = setDict;
+                    bestRaritySum = raritySum;
+                    bestLevelSum = levelSum;
+                }
+            }
+
+            if (bestSet != null)
+            {
+                return bestSet.Values.ToList();
+            }
+        }
+
+        // 5. Trường hợp KHÔNG có Set nào đủ 6 món -> Lấy item có value cao nhất cho từng ô
+        candidateArmors.Sort(CompareArmor);
+
+        List<ArmorSaveData> bestArmors = new List<ArmorSaveData>();
+        HashSet<ArmorPart> filledSlots = new HashSet<ArmorPart>();
+
+        foreach (var armor in candidateArmors)
+        {
+            var config = _gameDataBase.GetItemConfig(armor.TemplateID);
+            if (config == null || config.Armor == null) continue;
+
             ArmorPart currentArmorType = config.Armor.Part;
 
-            // Nếu loại giáp này chưa có trong danh sách đồ xịn nhất
             if (!filledSlots.Contains(currentArmorType))
             {
                 bestArmors.Add(armor);
                 filledSlots.Add(currentArmorType);
 
-                // Khi gom đủ 6 loại (Helmet, Chestplate, Gloves, Boots, Belt, Ring) thì dừng
                 if (filledSlots.Count == 6)
                 {
                     break;
