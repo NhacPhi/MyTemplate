@@ -104,6 +104,12 @@ public class DialogueUIManager : MonoBehaviour
         if (uiManager != null)
         {
             uiManager.CloseWindowScene(ScreenIds.DialogueScene);
+
+            var currentWindow = uiManager.GetCurrentWindow();
+            if (currentWindow == null || currentWindow.ScreenId != ScreenIds.GamePlayScene)
+            {
+                uiManager.OpenWindowScene(ScreenIds.GamePlayScene);
+            }
         }
 
         UIEvent.OnToggleGamePlayScene?.Invoke(true);

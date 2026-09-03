@@ -10,7 +10,10 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void FillChoice(ChoiceComponent choice)
     {
-        content.text = LocalizationManager.Instance.GetLocalizedValue(choice.Text);
+        content.text = LocalizationManager.Instance != null 
+            ? LocalizationManager.Instance.GetLocalizedValue(choice.Text)
+            : choice.Text;
+        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
             GameEvent.OnMakeChoiceUI?.Invoke(choice);

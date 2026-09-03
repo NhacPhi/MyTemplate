@@ -64,5 +64,19 @@ namespace UIFramework
                 shouldAnimate = false;
             }
         }
+
+        private void OnDisable() {
+            if (shouldAnimate) {
+                shouldAnimate = false;
+                if (canvasGroup != null) {
+                    canvasGroup.alpha = 1f;
+                }
+                if (currentAction != null) {
+                    var action = currentAction;
+                    currentAction = null;
+                    action();
+                }
+            }
+        }
     }
 }

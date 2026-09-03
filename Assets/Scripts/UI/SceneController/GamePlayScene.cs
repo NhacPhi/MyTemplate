@@ -72,6 +72,13 @@ public class GamePlayScene : WindowController
         gameObject.SetActive(show);
         if (show)
         {
+            var cg = GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = 1f;
+                cg.interactable = true;
+                cg.blocksRaycasts = true;
+            }
             UpdateMainQuestTracker();
         }
     }
@@ -177,6 +184,13 @@ public class GamePlayScene : WindowController
 
     private void OnEnable()
     {
+        var cg = GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = 1f;
+            cg.interactable = true;
+            cg.blocksRaycasts = true;
+        }
         UpdateMainQuestTracker();
     }
 
