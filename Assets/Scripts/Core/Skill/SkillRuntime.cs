@@ -118,6 +118,27 @@ public abstract class SkillRuntime
         return bonus;
     }
 
+    public float GetHealAndShieldBonusPercent(Entity caster)
+    {
+        float bonusPercent = 0f;
+        if (caster != null)
+        {
+            var casterPassive = caster.GetComponent<EntityPassive>();
+            if (casterPassive != null && casterPassive.ActivePassives != null)
+            {
+                foreach (var passive in casterPassive.ActivePassives)
+                {
+                    if (passive.Config != null && (passive.Config.ID == "psv_wings_of_phoenix" || passive.Config.ID == "psv_moonlit_firefly"))
+                    {
+                        bonusPercent += passive.GetCombatEventValue(0);
+                        break;
+                    }
+                }
+            }
+        }
+        return bonusPercent;
+    }
+
     protected virtual void ApplyEffectsToTarget(Entity caster, int currentTurnID)
     {
         var targetEnities = GetEffectTargets(caster);
@@ -134,7 +155,7 @@ public abstract class SkillRuntime
             var attachedEffect = GetSkillData().Effect;
             if (attachedEffect == null) continue;
 
-            // Kiểm tra khuếch đại hiệu quả Buff từ nội tại vũ khí (ví dụ Cửu Hằng Trượng psv_ninefold_staff)
+            // Kiểm tra khuếch đại hiệu quả Buff từ nội tại vũ khí (ví dụ Cửu Hằng Trượng psv_ninefold_staff, Quạt Quế Phách psv_moonlit_firefly)
             float bonusBuffPercent = 0f;
             if (caster != null && (attachedEffect.IsBuff() || GetSkillData().IsBuffSkill))
             {
@@ -143,7 +164,7 @@ public abstract class SkillRuntime
                 {
                     foreach (var passive in casterPassive.ActivePassives)
                     {
-                        if (passive.Config != null && passive.Config.ID == "psv_ninefold_staff")
+                        if (passive.Config != null && (passive.Config.ID == "psv_ninefold_staff" || passive.Config.ID == "psv_moonlit_firefly"))
                         {
                             bonusBuffPercent += passive.GetCombatEventValue(0);
                             break;

@@ -27,7 +27,10 @@ public class BuffShieldSkill : SkillRuntime
             ? stat.GetStat(StatType.HP).Value
             : (stat.GetStat(StatType.ATK) != null ? stat.GetStat(StatType.ATK).Value : 1000f);
 
-        var shieldAmount = CalculateRawDamage().DamageMultiplier * baseStat;
+        float healShieldBonus = GetHealAndShieldBonusPercent(caster);
+        float baseMultiplier = skillData != null ? skillData.DamageMultiplier : 0.2f;
+        float effectiveMultiplier = baseMultiplier * (1f + (healShieldBonus / 100f));
+        var shieldAmount = effectiveMultiplier * baseStat;
 
         if (targetType == SkillTargetType.SameRowAllies && BattleManager.Instance != null)
         {
