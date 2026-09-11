@@ -27,12 +27,17 @@ public class HealingSkill : SkillRuntime
 
         caster.StateManager.ChangeState(caster.GetCoreComponent<EntitySkill>().MatchSkillCharacterToEntityState(this));
         caster.PlaySFX(config.Sound);
+        EntityStats stat = caster.GetCoreComponent<EntityStats>();
         float healShieldBonus = GetHealAndShieldBonusPercent(caster);
         float baseMultiplier = skillData != null ? skillData.DamageMultiplier : 1.0f;
         float effectiveMultiplier = baseMultiplier * (1f + (healShieldBonus / 100f));
-        var hp = effectiveMultiplier * stat.GetStat(StatType.ATK).Value;
+        float atkValue = (stat != null && stat.GetStat(StatType.ATK) != null) ? stat.GetStat(StatType.ATK).Value : 1000f;
+        var hp = effectiveMultiplier * atkValue;
 
-        stat.HealingHP(hp);
+        if (stat != null)
+        {
+            stat.HealingHP(hp);
+        }
 
         await state.WaitForAnimEnd();
 
