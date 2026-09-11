@@ -91,11 +91,23 @@ public abstract class StatusEffect : IEquatable<StatusEffect>
         {
             if (Data.Type == EffectType.StatBuff || Data.Type == EffectType.StatDebuff)
             {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    return $"{Data.Type}_{Data.TargetStat}_{ID}";
+                }
                 return $"{Data.Type}_{Data.TargetStat}";
             }
             if (Data.Name != 0)
             {
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    return $"{Data.Type}_{Data.Name}_{ID}";
+                }
                 return $"{Data.Type}_{Data.Name}";
+            }
+            if (!string.IsNullOrEmpty(ID))
+            {
+                return $"{Data.Type}_{ID}";
             }
             return Data.Type.ToString();
         }
