@@ -264,21 +264,21 @@ Hệ thống nhân vật và chiến đấu của trò chơi được xây dựn
 ### 🐉 11. BẠCH LONG MÃ / TIỂU BẠCH LONG (LittleWhiteDragon)
 * **Phẩm chất:** `R` | **Hệ/Vai trò:** `ADCarry` (Sát Thương Chủ Lực Tốc Độ - Diệt Giáp Ảo & Xuyên Giáp)
 * **Vũ khí đặc trưng:** **Võng Sinh (`Reincarnation`)** / **Xiên Chín Đầu (`Ennead_spear`)**
-* **Chỉ số cơ bản:** **HP:** `3,830` | **ATK:** `1,532` | **DEF:** `306` | **Speed:** `96`
+* **Chỉ số cơ bản:** **HP:** `2,090` | **ATK:** `1,710` | **DEF:** `209` | **Speed:** `108`
 
 #### 🗡️ Bộ Kỹ Năng:
 1. **Đánh Thường (`LittleWhiteDragon_B` - Bạch Long Kiếm Trảm):**
    - **Loại:** `MeleeAttack` | **Mục tiêu:** `SingleEnemy`
-   - **Hệ số ST:** `[80%, 100%, 120%]` ATK | **Hồi chiêu:** `0` lượt.
-   - **Nội tại:** Đòn đánh tự nhiên sở hữu **`30% Xuyên Giáp (Armor Penetration)`**, bỏ qua 30% Phòng Thủ của mục tiêu.
+   - **Hệ số ST:** `[70%, 80%, 90%]` ATK | **Hồi chiêu:** `0` lượt.
+   - **Nội tại:** Đòn đánh tự nhiên sở hữu **`15% Xuyên Giáp (Armor Penetration)`**, bỏ qua 15% Phòng Thủ của mục tiêu.
 2. **Kỹ Năng Major (`LittleWhiteDragon_M` - Càn Lôi Truy Phong):**
    - **Loại:** `ThunderBall` (`ActiveSkill` - Vừa tấn công vừa buff tốc) | **Mục tiêu:** `SingleEnemy`
-   - **Hệ số ST:** `[100%, 150%, 150%]` ATK | **Hồi chiêu:** `[4, 4, 3]` lượt.
-   - **Cơ chế Buff Tốc:** Phóng cầu sét lôi long tấn công kẻ địch, đồng thời bản thân lập tức nhận trạng thái **[Truy Phong] - Tăng `30%` Tốc Độ (`SPEED`) trong `2 hiệp` (`EFF_Dragon_Speed`)**.
+   - **Hệ số ST:** `[80%, 100%, 110%]` ATK | **Hồi chiêu:** `[4, 4, 3]` lượt.
+   - **Cơ chế Buff Tốc:** Phóng cầu sét lôi long tấn công kẻ địch, đồng thời bản thân lập tức nhận trạng thái **[Truy Phong] - Tăng `15%` Tốc Độ (`SPEED`) trong `2 hiệp` (`EFF_Dragon_Speed`)**.
 3. **Tuyệt Kỹ Ultimate (`LittleWhiteDragon_U` - Hải Sóng Nộ Trào):**
    - **Loại:** `EmpowerAttack` (`ActiveSkill`) | **Mục tiêu:** `SingleEnemy`
-   - **Hệ số ST:** `[150%, 180%, 180%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
-   - **CƠ CHẾ DIỆT GIÁP ẢO (`ShieldBreaker`):** Nếu mục tiêu **ĐANG CÓ GIÁP ẢO (`Shield > 0`)**, sát thương gây ra được **NHÂN ĐÔI ($\times 200\% \rightarrow \mathbf{360\%}$ ATK)**!
+   - **Hệ số ST:** `[120%, 140%, 150%]` ATK | **Hồi chiêu:** `[5, 5, 4]` lượt.
+   - **CƠ CHẾ DIỆT GIÁP ẢO (`ShieldBreaker`):** Nếu mục tiêu **ĐANG CÓ GIÁP ẢO (`Shield > 0`)**, sát thương gây ra được **NHÂN ĐÔI ($\times 200\% \rightarrow \mathbf{240\% \to 300\%}$ ATK)**!
 
 ---
 

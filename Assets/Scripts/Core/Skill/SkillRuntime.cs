@@ -93,7 +93,7 @@ public abstract class SkillRuntime
             }
             if (skillId == "LittleWhiteDragon_B")
             {
-                bonus.PenetrationBonus += 30f;
+                bonus.PenetrationBonus += 15f;
             }
 
             if (skillId.StartsWith("GoldHornKing", System.StringComparison.OrdinalIgnoreCase) || (GetSkillData().PassiveID != null && GetSkillData().PassiveID.Contains("silvermark")))
