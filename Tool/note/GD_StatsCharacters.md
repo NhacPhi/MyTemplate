@@ -91,9 +91,9 @@ Phân loại Class quyết định vai trò thực tế của Entity trên chi�
 
 | Class | HP Multiplier | ATK Multiplier | DEF Multiplier | Điều Chỉnh Chỉ Số Phụ & Đặc Điểm Chiến Thuật |
 | :--- | :---: | :---: | :---: | :--- |
-| 🧑‍💻 **`Character`** | **1.0x** (100%) | **1.0x** (100%) | **1.0x** (100%) | Đội hình 3-4 Tướng của người chơi. Giữ nguyên chỉ số chuẩn. |
-| 👾 **`Creep`** | **0.5x** (50%) | **0.7x** (70%) | **0.6x** (60%) | Quái nhỏ / Quái thường. Máu & Dame thấp để làm bao cát tích Ulti. |
-| 👑 **`Boss`** | **4.0x** (400%) | **1.3x** (130%) | **1.4x** (140%) | Trùm màn chơi (1-3 Boss/màn). **HP x4 lần**, giáp dày + **`crit_dmg_res` +20%**. |
+| 🧑‍💻 **`Character`** | **1.0x** (100%) | **1.0x** (100%) | **1.0x** (100%) | Đội hình 3-4 Tướng của người chơi. Hưởng đầy đủ trang bị, vũ khí, set bonus. |
+| 👾 **`Creep`** | **2.8x** (280%) | **1.4x** (140%) | **1.5x** (150%) | Quái nhỏ / Quái thường. HP ~7,300 - 8,800, giáp ~412, **`crit_dmg_res` +10%** để không bị one-hit bởi đòn thường của Hero có trang bị. |
+| 👑 **`Boss`** | **3.0x - 4.0x** | **1.2x - 1.5x** | **1.2x - 1.5x** | Trùm màn chơi (1-3 Boss/màn). HP dày (10k - 20k), giáp lớn + **`crit_dmg_res` +25%**. |
 
 ---
 
